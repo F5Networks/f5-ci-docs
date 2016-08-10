@@ -1,0 +1,339 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>lwp-controller &mdash; F5 Container Integration 0.1_a documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="F5 Container Integration 0.1_a documentation" href="../index.html"/>
+        <link rel="prev" title="Light Weight Proxy (LWP)" href="../lightweight-proxy/index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> F5 Container Integration
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1_a
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../f5-marathon-lb/index.html">f5-marathon-lb</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lightweight-proxy/index.html">Light Weight Proxy (LWP)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">lwp-controller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#intro">Intro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#overriding-controller-configuration">Overriding Controller Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuring-the-lwp-not-yet-implemented">Configuring the LWP (not yet implemented)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#known-limitations">Known Limitations</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">F5 Container Integration</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>lwp-controller</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/lwp-controller/index.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="lwp-controller">
+<h1>lwp-controller<a class="headerlink" href="#lwp-controller" title="Permalink to this headline">¶</a></h1>
+<p>Status: <a class="reference external" href="https://bldr-git.int.lineratesystems.com/velcro/lwp-controller/commits/master"><img alt="build status" src="https://bldr-git.int.lineratesystems.com/velcro/lwp-controller/badges/master/build.svg" /></a></p>
+<div class="section" id="intro">
+<h2>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h2>
+<p>The lwp-controller is designed to run as a docker container in
+Mesos+Marathon. It watches applications being created and destroyed.
+When an application with the proper labels is created a new LWP is
+created for that application and it is scaled to have the requested
+number of tasks.</p>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>Environment variables are used to configure the lwp-controller. The
+variables are:</p>
+<ul class="simple">
+<li>MARATHON_URL (URL of the Marathon API. default: <a class="reference external" href="http://127.0.0.1:8080">http://127.0.0.1:8080</a>)</li>
+<li>LWP_ENABLE_LABEL (label used to determine LWP requirements. default: f5-lwp)</li>
+<li>LWP_DEFAULT_CPU (amount of CPU for LWP tasks. default: 0.1)</li>
+<li>LWP_DEFAULT_MEM (amount of memory for LWP tasks. default: 64)</li>
+<li>LWP_DEFAULT_STORAGE (amount of memory for LWP tasks. default: 0)</li>
+<li>LWP_DEFAULT_COUNT_PER_APP (number of LWP tasks per application. default: 1)</li>
+<li>LWP_DEFAULT_CONTAINER (location of docker image to pull. default: f5networks/lwp)</li>
+<li>LWP_DEFAULT_CONTAINER_PORT (container port to expose. default: 8000)</li>
+<li>LWP_DEFAULT_URIS (comma separated list of URIs to pass to Marathon. default: EMPTY)</li>
+<li>LWP_DEFAULT_VS_KEEP_ALIVE (Virtual server keep alive, in msecs. default: 1000)</li>
+<li>LWP_DEFAULT_VS_PROTOCOL (protocol for virtual server, http or tcp. default: http)</li>
+<li>LWP_DEFAULT_STATS_URL (Url for sending stats. default: None)</li>
+<li>LWP_DEFAULT_STATS_TOKEN (Stats authentication token. default: None)</li>
+<li>LWP_DEFAULT_STATS_FLUSH_INTERVAL (Stats flush intercal, in msecs. default: 10000)</li>
+<li>LWP_DEFAULT_STATS_BACKEND (Stats backend type, i.e. splunk. default: None)</li>
+<li>LWP_DEFAULT_FORCE_PULL (Sets Marathon to force pull every time the LWP starts. default: true)</li>
+<li>LWP_ENV_PREFIX (prefix for environment variables to pass to the LWP. default: LWP_ENV_)</li>
+<li>LWP_DEFAULT_LOG_LEVEL (logging level. default: INFO)</li>
+<li>LWP_DEFAULT_VS_FLAGS (flags for configuring LWP behavior. Only bools (true or false) are permitted as values. default: {})</li>
+</ul>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>Usually, the lwp-controller is deployed by Marathon. This is an example
+of how it would be run by a human on the command-line. This is provided
+for enhanced understanding, not as a recommendation.</p>
+<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="o">-</span><span class="n">d</span> \
+  <span class="o">-</span><span class="n">e</span> <span class="n">MARATHON_URL</span><span class="o">=</span><span class="s2">&quot;http://172.28.128.3:8080&quot;</span> \
+  <span class="o">-</span><span class="n">e</span> <span class="n">LWP_ENABLE_LABEL</span> <span class="n">lwp</span><span class="o">-</span><span class="n">myapp</span> \
+  <span class="o">-</span><span class="n">e</span> <span class="n">LWP_DEFAULT_CONTAINER</span> <span class="n">f5networks</span><span class="o">/</span><span class="n">lwp</span>
+  <span class="n">f5velcro</span><span class="o">/</span><span class="n">lwp</span><span class="o">-</span><span class="n">controller</span>
+</pre></div>
+</div>
+<p>Then create your application in the Marathon instance running at
+172.28.128.3 and label it with the label:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lwp</span><span class="o">-</span><span class="n">myapp</span><span class="p">:</span><span class="n">enable</span>
+</pre></div>
+</div>
+<p>The lwp-controller will create a new application in your Marathon
+cluster to be the LWP for your application.</p>
+</div>
+<div class="section" id="overriding-controller-configuration">
+<h2>Overriding Controller Configuration<a class="headerlink" href="#overriding-controller-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Default values configured for the LWP Controller can be modified on a
+per-app basis. The following labels can be applied to the application
+being controlled and will override the corresponding LWP Controller
+default value.</p>
+<ul class="simple">
+<li>LWP_VS_KEEP_ALIVE (overrides LWP_DEFAULT_VS_KEEP_ALIVE)</li>
+<li>LWP_VS_PROTOCOL (overrides LWP_DEFAULT_VS_PROTOCOL)</li>
+<li>LWP_LOG_LEVEL (overrides LWP_DEFAULT_LOG_LEVEL)</li>
+<li>LWP_STATS_URL (overrides LWP_DEFAULT_STATS_URL)</li>
+<li>LWP_STATS_TOKEN (overrides LWP_DEFAULT_STATS_TOKEN)</li>
+<li>LWP_STATS_FLUSH_INTERVAL (overrides
+LWP_DEFAULT_STATS_FLUSH_INTERVAL)</li>
+<li>LWP_STATS_BACKEND (overrides LWP_DEFAULT_STATS_BACKEND)</li>
+<li>LWP_FORCE_PULL (overrides LWP_DEFAULT_FORCE_PULL)</li>
+<li>LWP_CPU (overrides LWP_DEFAULT_CPU)</li>
+<li>LWP_MEM (overrides LWP_DEFAULT_MEM)</li>
+<li>LWP_STORAGE (overrides LWP_DEFAULT_STORAGE)</li>
+<li>LWP_COUNT_PER_APP (overrides LWP_DEFAULT_COUNT_PER_APP)</li>
+<li>LWP_CONTAINER (overrides LWP_DEFAULT_CONTAINER)</li>
+<li>LWP_URIS (overrides LWP_DEFAULT_URIS)</li>
+<li>LWP_VS_FLAGS (merges with and overrides collisions on
+LWP_DEFAULT_VS_FLAGS)</li>
+</ul>
+</div>
+<div class="section" id="configuring-the-lwp-not-yet-implemented">
+<h2>Configuring the LWP (not yet implemented)<a class="headerlink" href="#configuring-the-lwp-not-yet-implemented" title="Permalink to this headline">¶</a></h2>
+<p>LWP is configured by adding a special label to your app containing the
+desired configuration in JSON format. The special label is
+<code class="docutils literal"><span class="pre">LWP_CONFIG</span></code>. See documentation at
+<a class="reference external" href="https://bldr-git.int.lineratesystems.com/velcro/traffic-director-proxy">https://bldr-git.int.lineratesystems.com/velcro/traffic-director-proxy</a>
+for details. Note, values specified in this config will not be
+overwritten by the LWP Controller. Specifying the app name and port
+might lead to misconfiguration or unexpected behavior. Avoid this in
+general. There are no known use cases for specifying these yet.</p>
+<p>The LWP Controller (TDC) can also pass through environment variables for
+additional configuration. Add labels to your application to pass through
+to the LWP using the LWP_ENV_PREFIX.</p>
+</div>
+<div class="section" id="id1">
+<h2>Example<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Add to pass through the environment <code class="docutils literal"><span class="pre">FOO=bar</span></code> just add this label to
+your application:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">LWP_ENV_FOO</span><span class="p">:</span><span class="n">bar</span>
+</pre></div>
+</div>
+<p>Also, any of the <code class="docutils literal"><span class="pre">LWP_DEFAULT_*</span></code> environment variables can be
+overriden by adding a label. For example, override the LWP_DEFAULT_CPU
+and set it to 2.3 by adding the label:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">LWP_ENV_LWP_CPU</span><span class="p">:</span><span class="mf">2.3</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="known-limitations">
+<h2>Known Limitations<a class="headerlink" href="#known-limitations" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Changes to LWP_ENABLE_LABEL cause the lwp-controller to start
+controlling a new set of apps which have the new value as a label.
+All apps with the old label will be ignored. Since the lwp-controller
+is stateless with respect to Marathon it needs to be this way. An
+easy way to avoid this problem is to never change the
+LWP_ENABLE_LABEL of an existing lwp-controller. Always just destroy
+the lwp-controller and create a new one. This way there is no
+confusion or expectation of a different behavior.</li>
+<li>More than 1 Mesos slave is required. By default, Marathon&#8217;s restart
+policy starts a new instance of the app being modified before killing
+the old version. When there is only 1 slave the LWP reserves a port
+on that slave and then a new version cannot be started when there is
+a configuration modification. This will be addressed in a future
+version by permitting Marathon&#8217;s restart policy to be configurable on
+a per lwp-controller or per app basis.</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../lightweight-proxy/index.html" class="btn btn-neutral" title="Light Weight Proxy (LWP)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, F5 Networks.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1_a',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

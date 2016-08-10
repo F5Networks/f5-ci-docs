@@ -1,0 +1,632 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>f5-marathon-lb &mdash; F5 Container Integration 0.1_a documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="F5 Container Integration 0.1_a documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> F5 Container Integration
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1_a
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">f5-marathon-lb</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lightweight-proxy/index.html">Light Weight Proxy (LWP)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lwp-controller/index.html">lwp-controller</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">F5 Container Integration</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>f5-marathon-lb</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/f5-marathon-lb/README.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="f5-marathon-lb">
+<span id="f5-marathon-lb"></span><h1>f5-marathon-lb<a class="headerlink" href="#f5-marathon-lb" title="Permalink to this headline">¶</a></h1>
+<p>f5-marathon-lb is a tool for managing F5 BIG-IP, by consuming <a class="reference external" href="https://github.com/mesosphere/marathon">Marathon&#8217;s</a> app state.</p>
+<div class="section" id="architecture">
+<span id="architecture"></span><h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h2>
+<p>The f5-marathon-lb is a service discovery and load balancing tool for Marathon to configure an F5 BIG-IP. It reads the Marathon task information and dynamically generates BIG-IP configuration details.</p>
+<p>f5-marathon-lb listens to the Marathon event stream and automatically updates the configuration of the BIG-IP and does the following:</p>
+<ul class="simple">
+<li>Matches Marathon apps by the specified BIG-IP partition</li>
+<li>Creates a Virtual Server and pool for each app type in Marathon that matches the BIG-IP partition</li>
+<li>For each task, creates a pool member and adds the member to the server pool</li>
+<li>If the app has a Marathon Health Monitor configured, creates a corresponding health monitor for each BIG-IP pool member</li>
+</ul>
+<p>To gather the task information, f5-marathon-lb needs to know where to find Marathon. The service configuration details are stored in labels.</p>
+</div>
+<div class="section" id="configuration">
+<span id="configuration"></span><h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>First, f5-marathon-lb needs to know how to connect to Marathon and the BIG-IP, which is done via the command-line arguments:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">usage: f5_marathon_lb.py [-h] [--longhelp]</span>
+<span class="go">                         [--marathon MARATHON [MARATHON ...]]</span>
+<span class="go">                         [--listening LISTENING] [--callback-url CALLBACK_URL]</span>
+<span class="go">                         [--hostname HOSTNAME] [--username USERNAME]</span>
+<span class="go">                         [--password PASSWORD] [--partition PARTITION] [--sse]</span>
+<span class="go">                         [--health-check] [--syslog-socket SYSLOG_SOCKET]</span>
+<span class="go">                         [--log-format LOG_FORMAT]</span>
+<span class="go">                         [--marathon-auth-credential-file MARATHON_AUTH_CREDENTIAL_FILE]</span>
+
+<span class="go">If an arg is specified in more than one place, then commandline values</span>
+<span class="go">override environment variables which override defaults.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --longhelp            Print out configuration details (default: False)</span>
+<span class="go">  --marathon MARATHON [MARATHON ...], -m MARATHON [MARATHON ...]</span>
+<span class="go">                        [required] Marathon endpoint, eg. -m</span>
+<span class="go">                        http://marathon1:8080 http://marathon2:8080 [env var:</span>
+<span class="go">                        MARATHON_URL] (default: None)</span>
+<span class="go">  --listening LISTENING, -l LISTENING</span>
+<span class="go">                        The address this script listens on for marathon events</span>
+<span class="go">                        [env var: F5_CSI_LISTENING_ADDR] (default: None)</span>
+<span class="go">  --callback-url CALLBACK_URL, -u CALLBACK_URL</span>
+<span class="go">                        The HTTP address that Marathon can call this script</span>
+<span class="go">                        back at (http://lb1:8080) [env var:</span>
+<span class="go">                        F5_CSI_CALLBACK_URL] (default: None)</span>
+<span class="go">  --hostname HOSTNAME   F5 BIG-IP hostname [env var: F5_CSI_BIGIP_HOSTNAME]</span>
+<span class="go">                        (default: None)</span>
+<span class="go">  --username USERNAME   F5 BIG-IP username [env var: F5_CSI_BIGIP_USERNAME]</span>
+<span class="go">                        (default: None)</span>
+<span class="go">  --password PASSWORD   F5 BIG-IP password [env var: F5_CSI_BIGIP_PASSWORD]</span>
+<span class="go">                        (default: None)</span>
+<span class="go">  --partition PARTITION</span>
+<span class="go">                        [required] Only generate config for apps which match</span>
+<span class="go">                        the specified partition. Use &#39;*&#39; to match all</span>
+<span class="go">                        partitions. Can use this arg multiple times to specify</span>
+<span class="go">                        multiple partitions [env var: F5_CSI_PARTITIONS]</span>
+<span class="go">                        (default: [])</span>
+<span class="go">  --sse, -s             Use Server Sent Events instead of HTTP Callbacks [env</span>
+<span class="go">                        var: F5_CSI_USE_SSE] (default: False)</span>
+<span class="go">  --health-check, -H    If set, respect Marathon&#39;s health check statuses</span>
+<span class="go">                        before adding the app instance into the backend pool.</span>
+<span class="go">                        [env var: F5_CSI_USE_HEALTHCHECK] (default: False)</span>
+<span class="go">  --sse-timeout SSE_TIMEOUT, -t SSE_TIMEOUT</span>
+<span class="go">                        Marathon event stream timeout [env var:</span>
+<span class="go">                        F5_CSI_SSE_TIMEOUT] (default: 30)</span>
+<span class="go">  --syslog-socket SYSLOG_SOCKET</span>
+<span class="go">                        Socket to write syslog messages to. Use &#39;/dev/null&#39; to</span>
+<span class="go">                        disable logging to syslog [env var:</span>
+<span class="go">                        F5_CSI_SYSLOG_SOCKET] (default: /var/run/syslog)</span>
+<span class="go">  --log-format LOG_FORMAT</span>
+<span class="go">                        Set log message format [env var: F5_CSI_LOG_FORMAT]</span>
+<span class="go">                        (default: %(asctime)s %(name)s: %(levelname) -8s:</span>
+<span class="gp">                        %</span><span class="o">(</span>message<span class="o">)</span>s<span class="o">)</span>
+<span class="go">  --marathon-auth-credential-file MARATHON_AUTH_CREDENTIAL_FILE</span>
+<span class="go">                        Path to file containing a user/pass for the Marathon</span>
+<span class="go">                        HTTP API in the format of &#39;user:pass&#39;. [env var:</span>
+<span class="go">                        F5_CSI_MARATHON_AUTH] (default: None)</span>
+</pre></div>
+</div>
+<p><em>The <strong>marathon</strong>, <strong>hostname</strong>, <strong>username</strong>, <strong>password</strong>, and <strong>partition</strong> arguments are mandatory</em>.</p>
+<p>Use the &#8211;partition argument multiple times to specify multiple BIG-IP partitions to be managed (e.g. &#8211;partition foo &#8211;partition bar).</p>
+<div class="section" id="partitions">
+<span id="partitions"></span><h3>Partitions<a class="headerlink" href="#partitions" title="Permalink to this headline">¶</a></h3>
+<p>The partitions managed by f5-marathon-lb must already exist, and f5-marathon-lb can manage any partitions except &#8220;Common&#8221;.</p>
+<p>f5-marathon-lb takes ownership of certain resource types in the partitions it is given to manage, and modifications to these resource types in other ways (GUI, REST, etc) than via f5-marathon-lb will lead to unpredictable behavior.</p>
+<p>The resource types managed by f5-marathon-lb are:</p>
+<ul class="simple">
+<li>Virtual Servers</li>
+<li>Virtual Addresses</li>
+<li>Pools</li>
+<li>Pool Members</li>
+<li>Nodes</li>
+<li>Health Monitors</li>
+<li>Application Services</li>
+</ul>
+<p>To prevent conflict with f5-marathon-lb, <strong>no</strong> user-managed items should be configured within partitions that are managed by f5-marathon-lb.</p>
+</div>
+<div class="section" id="application-labels">
+<span id="application-labels"></span><h3>Application Labels<a class="headerlink" href="#application-labels" title="Permalink to this headline">¶</a></h3>
+<p>Applications to be managed by f5-marathon-lb are identified and configured via their <em>Marathon Labels</em>. Some labels are specified <em>per service port</em>. These are denoted with the <code class="docutils literal"><span class="pre">{n}</span></code> parameter in the label key, where <code class="docutils literal"><span class="pre">{n}</span></code> corresponds to the service port index, beginning at <code class="docutils literal"><span class="pre">0</span></code>.</p>
+<p>The list of labels which can be specified are:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span> <span class="n">F5_PARTITION</span>
+
+    <span class="n">The</span> <span class="n">BIG</span><span class="o">-</span><span class="n">IP</span> <span class="n">partition</span> <span class="n">to</span> <span class="n">be</span> <span class="n">configured</span>
+    <span class="n">Resources</span> <span class="n">like</span> <span class="n">virtual</span> <span class="n">servers</span> <span class="ow">and</span> <span class="n">pool</span> <span class="n">members</span> <span class="n">are</span> <span class="n">configured</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">partition</span> <span class="n">on</span> <span class="n">BIG</span><span class="o">-</span><span class="n">IP</span><span class="o">.</span>  <span class="n">It</span> <span class="n">must</span> <span class="n">be</span> <span class="n">one</span> <span class="n">of</span> <span class="n">the</span> <span class="n">partitions</span> <span class="n">that</span> <span class="n">f5</span><span class="o">-</span><span class="n">marathon</span><span class="o">-</span><span class="n">lb</span> <span class="n">owns</span> <span class="p">(</span><span class="n">via</span> <span class="n">the</span> <span class="s2">&quot;--partition&quot;</span> <span class="n">argument</span> <span class="n">to</span> <span class="n">f5</span><span class="o">-</span><span class="n">marathon</span><span class="o">-</span><span class="n">lb</span><span class="p">)</span><span class="o">.</span>
+
+ <span class="n">F5_</span><span class="p">{</span><span class="n">n</span><span class="p">}</span><span class="n">_BIND_ADDR</span>
+
+    <span class="n">Bind</span> <span class="n">to</span> <span class="n">the</span> <span class="n">specific</span> <span class="n">address</span> <span class="k">for</span> <span class="n">the</span> <span class="n">service</span>
+    <span class="n">Ex</span><span class="p">:</span> <span class="s2">&quot;F5_0_BIND_ADDR&quot;</span><span class="p">:</span> <span class="s2">&quot;10.0.0.42&quot;</span>
+
+ <span class="n">F5_</span><span class="p">{</span><span class="n">n</span><span class="p">}</span><span class="n">_PORT</span>
+
+    <span class="n">Bind</span> <span class="n">to</span> <span class="n">the</span> <span class="n">specific</span> <span class="n">port</span> <span class="k">for</span> <span class="n">the</span> <span class="n">service</span>
+    <span class="n">This</span> <span class="n">overrides</span> <span class="n">the</span> <span class="n">servicePort</span> <span class="n">which</span> <span class="n">has</span> <span class="n">to</span> <span class="n">be</span> <span class="n">unique</span>
+    <span class="n">Ex</span><span class="p">:</span> <span class="s2">&quot;F5_0_PORT&quot;</span><span class="p">:</span> <span class="s2">&quot;80&quot;</span>
+
+ <span class="n">F5_</span><span class="p">{</span><span class="n">n</span><span class="p">}</span><span class="n">_MODE</span>
+
+    <span class="n">Set</span> <span class="n">the</span> <span class="n">connection</span> <span class="n">mode</span> <span class="n">to</span> <span class="n">either</span> <span class="n">TCP</span> <span class="ow">or</span> <span class="n">HTTP</span><span class="o">.</span> <span class="n">The</span> <span class="n">default</span> <span class="ow">is</span> <span class="n">TCP</span><span class="o">.</span>
+    <span class="n">Ex</span><span class="p">:</span> <span class="s2">&quot;F5_0_MODE&quot;</span><span class="p">:</span> <span class="s2">&quot;http&quot;</span>
+
+ <span class="n">F5_</span><span class="p">{</span><span class="n">n</span><span class="p">}</span><span class="n">_BALANCE</span>
+
+    <span class="n">Set</span> <span class="n">the</span> <span class="n">load</span> <span class="n">balancing</span> <span class="n">algorithm</span> <span class="n">to</span> <span class="n">be</span> <span class="n">used</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">backend</span><span class="o">.</span> <span class="n">The</span> <span class="n">default</span> <span class="ow">is</span> <span class="n">roundrobin</span><span class="o">.</span>
+    <span class="n">Ex</span><span class="p">:</span> <span class="s2">&quot;F5_0_BALANCE&quot;</span><span class="p">:</span> <span class="s2">&quot;leastconn&quot;</span>
+
+ <span class="n">F5_</span><span class="p">{</span><span class="n">n</span><span class="p">}</span><span class="n">_SSL_PROFILE</span>
+
+    <span class="n">Set</span> <span class="n">the</span> <span class="n">SSL</span> <span class="n">profile</span> <span class="n">to</span> <span class="n">be</span> <span class="n">used</span> <span class="k">for</span> <span class="n">the</span> <span class="n">HTTPS</span> <span class="n">Virtual</span> <span class="n">Server</span>
+    <span class="n">Ex</span><span class="p">:</span> <span class="s2">&quot;F5_0_SSL_PROFILE&quot;</span><span class="p">:</span> <span class="s2">&quot;Common/clentssl&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="building-and-running">
+<span id="building-and-running"></span><h3>Building and Running<a class="headerlink" href="#building-and-running" title="Permalink to this headline">¶</a></h3>
+<p>The following shows how to build and launch f5-marathon-lb as a Docker container.</p>
+<p>Build a Docker container:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">    docker build -t docker-registry.pdbld.f5net.com/darzins/f5-marathon-lb:latest .</span>
+</pre></div>
+</div>
+<p>Push it to a Docker registry:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">    docker push docker-registry.pdbld.f5net.com/darzins/f5-marathon-lb:latest</span>
+</pre></div>
+</div>
+<p>Launch it in Marathon:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">    curl -X POST -H &quot;Content-Type: application/json&quot; http://10.141.141.10:8080/v2/apps -d @f5-marathon-lb.json</span>
+</pre></div>
+</div>
+<p>Where &#8220;f5-marathon-lb.json&#8221; contains the details needed to deploy the container in Marathon, e.g.:</p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;f5-marathon-lb&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;cpus&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+  <span class="nt">&quot;mem&quot;</span><span class="p">:</span> <span class="mf">128.0</span><span class="p">,</span>
+  <span class="nt">&quot;instances&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;container&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DOCKER&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;forcePullImage&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">&quot;docker&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;docker-registry.pdbld.f5net.com/darzins/f5-marathon-lb:latest&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;network&quot;</span><span class="p">:</span> <span class="s2">&quot;BRIDGE&quot;</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;args&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;sse&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;--marathon&quot;</span><span class="p">,</span> <span class="s2">&quot;http://10.141.141.10:8080&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;--partition&quot;</span><span class="p">,</span> <span class="s2">&quot;mesos_1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;--hostname&quot;</span><span class="p">,</span> <span class="s2">&quot;10.128.1.145&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;--username&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;--password&quot;</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Or launch it this way, using <strong>env</strong> variables instead of <strong>args</strong>.</p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;f5-mlb&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;cpus&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+  <span class="nt">&quot;mem&quot;</span><span class="p">:</span> <span class="mf">128.0</span><span class="p">,</span>
+  <span class="nt">&quot;instances&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;container&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DOCKER&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;forcePullImage&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">&quot;docker&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;docker-registry.pdbld.f5net.com/velcro/f5-marathon-lb:latest&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;network&quot;</span><span class="p">:</span> <span class="s2">&quot;BRIDGE&quot;</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;env&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;F5_CSI_USE_SSE&quot;</span><span class="p">:</span> <span class="s2">&quot;True&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;MARATHON_URL&quot;</span><span class="p">:</span> <span class="s2">&quot;http://10.141.141.10:8080&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;F5_CSI_PARTITIONS&quot;</span><span class="p">:</span> <span class="s2">&quot;[mesos_1, mesos_test]&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;F5_CSI_BIGIP_HOSTNAME&quot;</span><span class="p">:</span> <span class="s2">&quot;10.128.1.145&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;F5_CSI_BIGIP_USERNAME&quot;</span><span class="p">:</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;F5_CSI_BIGIP_PASSWORD&quot;</span><span class="p">:</span> <span class="s2">&quot;default&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The following is an example for an application deployment in Marathon, with the appropriate f5-marathon-lb labels configured. In this example, the app (server-app4) has three service ports configured, but only the first two are exposed via the BIG-IP (i.e. only port indices 0 and 1 are configured in the <em>labels</em> section). Marathon health monitors are configured for all three service ports.</p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;server-app4&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;cpus&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+  <span class="nt">&quot;mem&quot;</span><span class="p">:</span> <span class="mf">16.0</span><span class="p">,</span>
+  <span class="nt">&quot;instances&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="nt">&quot;container&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DOCKER&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;docker&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;edarzins/node-web-app&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;network&quot;</span><span class="p">:</span> <span class="s2">&quot;BRIDGE&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;forcePullImage&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="nt">&quot;portMappings&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="nt">&quot;containerPort&quot;</span><span class="p">:</span> <span class="mi">8088</span><span class="p">,</span>
+          <span class="nt">&quot;hostPort&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="nt">&quot;protocol&quot;</span><span class="p">:</span> <span class="s2">&quot;tcp&quot;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nt">&quot;containerPort&quot;</span><span class="p">:</span> <span class="mi">8188</span><span class="p">,</span>
+          <span class="nt">&quot;hostPort&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="nt">&quot;protocol&quot;</span><span class="p">:</span> <span class="s2">&quot;tcp&quot;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nt">&quot;containerPort&quot;</span><span class="p">:</span> <span class="mi">8288</span><span class="p">,</span>
+          <span class="nt">&quot;hostPort&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="nt">&quot;protocol&quot;</span><span class="p">:</span> <span class="s2">&quot;tcp&quot;</span> <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;labels&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;F5_PARTITION&quot;</span><span class="p">:</span> <span class="s2">&quot;mesos&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;F5_0_BIND_ADDR&quot;</span><span class="p">:</span> <span class="s2">&quot;10.128.10.240&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;F5_0_MODE&quot;</span><span class="p">:</span> <span class="s2">&quot;http&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;F5_0_PORT&quot;</span><span class="p">:</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;F5_1_BIND_ADDR&quot;</span><span class="p">:</span> <span class="s2">&quot;10.128.10.242&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;F5_1_MODE&quot;</span><span class="p">:</span> <span class="s2">&quot;http&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;F5_1_PORT&quot;</span><span class="p">:</span> <span class="s2">&quot;8090&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;healthChecks&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;protocol&quot;</span><span class="p">:</span> <span class="s2">&quot;HTTP&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;portIndex&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;gracePeriodSeconds&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+      <span class="nt">&quot;intervalSeconds&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+      <span class="nt">&quot;maxConsecutiveFailures&quot;</span><span class="p">:</span> <span class="mi">3</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;protocol&quot;</span><span class="p">:</span> <span class="s2">&quot;HTTP&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;portIndex&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;gracePeriodSeconds&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+      <span class="nt">&quot;intervalSeconds&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+      <span class="nt">&quot;maxConsecutiveFailures&quot;</span><span class="p">:</span> <span class="mi">3</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;protocol&quot;</span><span class="p">:</span> <span class="s2">&quot;HTTP&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;portIndex&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;gracePeriodSeconds&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+      <span class="nt">&quot;intervalSeconds&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+      <span class="nt">&quot;maxConsecutiveFailures&quot;</span><span class="p">:</span> <span class="mi">3</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The following shows the BIG-IP configuration produced by f5-marathon-lb for the preceding Marathon configuration; showing virtual servers, pools, and health monitors.</p>
+<p>If a Marathon health monitor exists for a service port, f5-marathon-lb will also create a health monitor for it on the BIG-IP. The exception to this is when the &#8220;&#8211;health-check&#8221; option is used when starting f5-marathon-lb. If this option is set, f5-marathon-lb will respect the Marathon health status for the service port before adding it to the backend pool.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ltm</span> <span class="n">monitor</span> <span class="n">http</span> <span class="n">server</span><span class="o">-</span><span class="n">app4_10</span><span class="o">.</span><span class="mf">128.10</span><span class="o">.</span><span class="mi">240</span><span class="n">_8080</span> <span class="p">{</span>
+    <span class="n">adaptive</span> <span class="n">disabled</span>
+    <span class="n">defaults</span><span class="o">-</span><span class="kn">from</span> <span class="o">/</span><span class="n">Common</span><span class="o">/</span><span class="n">http</span>
+    <span class="n">destination</span> <span class="o">*</span><span class="p">:</span><span class="o">*</span>
+    <span class="n">interval</span> <span class="mi">20</span>
+    <span class="n">ip</span><span class="o">-</span><span class="n">dscp</span> <span class="mi">0</span>
+    <span class="n">partition</span> <span class="n">mesos</span>
+    <span class="n">send</span> <span class="s2">&quot;GET /</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+    <span class="n">time</span><span class="o">-</span><span class="n">until</span><span class="o">-</span><span class="n">up</span> <span class="mi">0</span>
+    <span class="n">timeout</span> <span class="mi">61</span>
+<span class="p">}</span>
+<span class="n">ltm</span> <span class="n">monitor</span> <span class="n">http</span> <span class="n">server</span><span class="o">-</span><span class="n">app4_10</span><span class="o">.</span><span class="mf">128.10</span><span class="o">.</span><span class="mi">242</span><span class="n">_8090</span> <span class="p">{</span>
+    <span class="n">adaptive</span> <span class="n">disabled</span>
+    <span class="n">defaults</span><span class="o">-</span><span class="kn">from</span> <span class="o">/</span><span class="n">Common</span><span class="o">/</span><span class="n">http</span>
+    <span class="n">destination</span> <span class="o">*</span><span class="p">:</span><span class="o">*</span>
+    <span class="n">interval</span> <span class="mi">20</span>
+    <span class="n">ip</span><span class="o">-</span><span class="n">dscp</span> <span class="mi">0</span>
+    <span class="n">partition</span> <span class="n">mesos</span>
+    <span class="n">send</span> <span class="s2">&quot;GET /</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+    <span class="n">time</span><span class="o">-</span><span class="n">until</span><span class="o">-</span><span class="n">up</span> <span class="mi">0</span>
+    <span class="n">timeout</span> <span class="mi">61</span>
+<span class="p">}</span>
+<span class="n">ltm</span> <span class="n">node</span> <span class="mf">10.141</span><span class="o">.</span><span class="mf">141.10</span> <span class="p">{</span>
+    <span class="n">address</span> <span class="mf">10.141</span><span class="o">.</span><span class="mf">141.10</span>
+    <span class="n">partition</span> <span class="n">mesos</span>
+    <span class="n">session</span> <span class="n">monitor</span><span class="o">-</span><span class="n">enabled</span>
+    <span class="n">state</span> <span class="n">up</span>
+<span class="p">}</span>
+<span class="n">ltm</span> <span class="n">persistence</span> <span class="k">global</span><span class="o">-</span><span class="n">settings</span> <span class="p">{</span> <span class="p">}</span>
+<span class="n">ltm</span> <span class="n">pool</span> <span class="n">server</span><span class="o">-</span><span class="n">app4_10</span><span class="o">.</span><span class="mf">128.10</span><span class="o">.</span><span class="mi">240</span><span class="n">_8080</span> <span class="p">{</span>
+    <span class="n">members</span> <span class="p">{</span>
+        <span class="mf">10.141</span><span class="o">.</span><span class="mf">141.10</span><span class="p">:</span><span class="mi">31383</span> <span class="p">{</span>
+            <span class="n">address</span> <span class="mf">10.141</span><span class="o">.</span><span class="mf">141.10</span>
+            <span class="n">session</span> <span class="n">monitor</span><span class="o">-</span><span class="n">enabled</span>
+            <span class="n">state</span> <span class="n">up</span>
+        <span class="p">}</span>
+        <span class="mf">10.141</span><span class="o">.</span><span class="mf">141.10</span><span class="p">:</span><span class="mi">31775</span> <span class="p">{</span>
+            <span class="n">address</span> <span class="mf">10.141</span><span class="o">.</span><span class="mf">141.10</span>
+            <span class="n">session</span> <span class="n">monitor</span><span class="o">-</span><span class="n">enabled</span>
+            <span class="n">state</span> <span class="n">up</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">monitor</span> <span class="n">server</span><span class="o">-</span><span class="n">app4_10</span><span class="o">.</span><span class="mf">128.10</span><span class="o">.</span><span class="mi">240</span><span class="n">_8080</span>
+    <span class="n">partition</span> <span class="n">mesos</span>
+<span class="p">}</span>
+<span class="n">ltm</span> <span class="n">pool</span> <span class="n">server</span><span class="o">-</span><span class="n">app4_10</span><span class="o">.</span><span class="mf">128.10</span><span class="o">.</span><span class="mi">242</span><span class="n">_8090</span> <span class="p">{</span>
+    <span class="n">members</span> <span class="p">{</span>
+        <span class="mf">10.141</span><span class="o">.</span><span class="mf">141.10</span><span class="p">:</span><span class="mi">31384</span> <span class="p">{</span>
+            <span class="n">address</span> <span class="mf">10.141</span><span class="o">.</span><span class="mf">141.10</span>
+            <span class="n">session</span> <span class="n">monitor</span><span class="o">-</span><span class="n">enabled</span>
+            <span class="n">state</span> <span class="n">up</span>
+        <span class="p">}</span>
+        <span class="mf">10.141</span><span class="o">.</span><span class="mf">141.10</span><span class="p">:</span><span class="mi">31776</span> <span class="p">{</span>
+            <span class="n">address</span> <span class="mf">10.141</span><span class="o">.</span><span class="mf">141.10</span>
+            <span class="n">session</span> <span class="n">monitor</span><span class="o">-</span><span class="n">enabled</span>
+            <span class="n">state</span> <span class="n">up</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">monitor</span> <span class="n">server</span><span class="o">-</span><span class="n">app4_10</span><span class="o">.</span><span class="mf">128.10</span><span class="o">.</span><span class="mi">242</span><span class="n">_8090</span>
+    <span class="n">partition</span> <span class="n">mesos</span>
+<span class="p">}</span>
+<span class="n">ltm</span> <span class="n">virtual</span> <span class="n">server</span><span class="o">-</span><span class="n">app4_10</span><span class="o">.</span><span class="mf">128.10</span><span class="o">.</span><span class="mi">240</span><span class="n">_8080</span> <span class="p">{</span>
+    <span class="n">destination</span> <span class="mf">10.128</span><span class="o">.</span><span class="mf">10.240</span><span class="p">:</span><span class="n">webcache</span>
+    <span class="n">ip</span><span class="o">-</span><span class="n">protocol</span> <span class="n">tcp</span>
+    <span class="n">mask</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.255</span>
+    <span class="n">partition</span> <span class="n">mesos</span>
+    <span class="n">pool</span> <span class="n">server</span><span class="o">-</span><span class="n">app4_10</span><span class="o">.</span><span class="mf">128.10</span><span class="o">.</span><span class="mi">240</span><span class="n">_8080</span>
+    <span class="n">profiles</span> <span class="p">{</span>
+        <span class="o">/</span><span class="n">Common</span><span class="o">/</span><span class="n">http</span> <span class="p">{</span> <span class="p">}</span>
+        <span class="o">/</span><span class="n">Common</span><span class="o">/</span><span class="n">tcp</span> <span class="p">{</span> <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">source</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>
+    <span class="n">source</span><span class="o">-</span><span class="n">address</span><span class="o">-</span><span class="n">translation</span> <span class="p">{</span>
+        <span class="nb">type</span> <span class="n">automap</span>
+    <span class="p">}</span>
+    <span class="n">vs</span><span class="o">-</span><span class="n">index</span> <span class="mi">153</span>
+<span class="p">}</span>
+<span class="n">ltm</span> <span class="n">virtual</span> <span class="n">server</span><span class="o">-</span><span class="n">app4_10</span><span class="o">.</span><span class="mf">128.10</span><span class="o">.</span><span class="mi">242</span><span class="n">_8090</span> <span class="p">{</span>
+    <span class="n">destination</span> <span class="mf">10.128</span><span class="o">.</span><span class="mf">10.242</span><span class="p">:</span><span class="mi">8090</span>
+    <span class="n">ip</span><span class="o">-</span><span class="n">protocol</span> <span class="n">tcp</span>
+    <span class="n">mask</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.255</span>
+    <span class="n">partition</span> <span class="n">mesos</span>
+    <span class="n">pool</span> <span class="n">server</span><span class="o">-</span><span class="n">app4_10</span><span class="o">.</span><span class="mf">128.10</span><span class="o">.</span><span class="mi">242</span><span class="n">_8090</span>
+    <span class="n">profiles</span> <span class="p">{</span>
+        <span class="o">/</span><span class="n">Common</span><span class="o">/</span><span class="n">http</span> <span class="p">{</span> <span class="p">}</span>
+        <span class="o">/</span><span class="n">Common</span><span class="o">/</span><span class="n">tcp</span> <span class="p">{</span> <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">source</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>
+    <span class="n">source</span><span class="o">-</span><span class="n">address</span><span class="o">-</span><span class="n">translation</span> <span class="p">{</span>
+        <span class="nb">type</span> <span class="n">automap</span>
+    <span class="p">}</span>
+    <span class="n">vs</span><span class="o">-</span><span class="n">index</span> <span class="mi">154</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="iapps">
+<span id="iapps"></span><h3>iApps<a class="headerlink" href="#iapps" title="Permalink to this headline">¶</a></h3>
+<p>iApps is the BIG-IP system framework for deploying services-based, template-driven configurations on BIG-IP systems running TMOS 11.0.0 and later. It consists of three components: Templates, Application Services, and Analytics. An iApps Template is where the application is described and the objects (required and optional) are defined through presentation and implementation language. An iApps Application Service is the deployment process of an iApps Template which bundles all of the configuration options for a particular application together.</p>
+<div class="section" id="iapp-labels">
+<span id="iapp-labels"></span><h4>iApp Labels<a class="headerlink" href="#iapp-labels" title="Permalink to this headline">¶</a></h4>
+<p>f5-marathon-lb can be used to instantiate and manage an iApp Application Service, with the iApp template and variables specicified via the LABELS in a Marathon application.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>
+ <span class="n">F5_</span><span class="p">{</span><span class="n">n</span><span class="p">}</span><span class="n">_IAPP_TEMPLATE</span>
+
+    <span class="n">The</span> <span class="n">iApp</span> <span class="n">template</span> <span class="n">to</span> <span class="n">create</span> <span class="n">the</span> <span class="n">Application</span> <span class="n">Service</span><span class="o">.</span> <span class="n">The</span> <span class="n">template</span> <span class="n">must</span> <span class="n">already</span> <span class="n">be</span> <span class="n">installed</span> <span class="n">on</span> <span class="n">the</span> <span class="n">BIG</span><span class="o">-</span><span class="n">IP</span>
+    <span class="n">Ex</span><span class="p">:</span> <span class="s2">&quot;F5_0_IAPP_TEMPLATE&quot;</span><span class="p">:</span> <span class="s2">&quot;/Common/f5.http&quot;</span>
+
+ <span class="n">F5_</span><span class="p">{</span><span class="n">n</span><span class="p">}</span><span class="n">_IAPP_OPTION_</span><span class="o">*</span>
+
+    <span class="n">The</span> <span class="n">predicate</span> <span class="n">that</span> <span class="n">defines</span> <span class="n">configuration</span> <span class="n">options</span> <span class="k">for</span> <span class="n">the</span> <span class="n">service</span>
+    <span class="n">Ex</span><span class="p">:</span> <span class="s2">&quot;F5_0_IAPP_OPTION_description&quot;</span><span class="p">:</span> <span class="s2">&quot;This is a test iApp&quot;</span>
+
+ <span class="n">F5_</span><span class="p">{</span><span class="n">n</span><span class="p">}</span><span class="n">_IAPP_VARIABLE_</span><span class="o">*</span>
+
+    <span class="n">The</span> <span class="n">predicate</span> <span class="n">that</span> <span class="n">defines</span> <span class="n">the</span> <span class="n">variables</span> <span class="n">needed</span> <span class="n">by</span> <span class="n">the</span> <span class="n">iApp</span> <span class="n">to</span> <span class="n">create</span> <span class="n">the</span> <span class="n">service</span><span class="o">.</span> <span class="n">The</span> <span class="n">variable</span> <span class="n">names</span> <span class="ow">and</span> <span class="n">values</span> <span class="n">are</span> <span class="n">specific</span> <span class="n">to</span> <span class="n">the</span> <span class="n">template</span> <span class="n">being</span> <span class="n">used</span><span class="o">.</span> <span class="n">The</span> <span class="s2">&quot;/#create_new#&quot;</span> <span class="n">value</span> <span class="n">directs</span> <span class="n">the</span> <span class="n">service</span> <span class="n">to</span> <span class="n">create</span> <span class="n">the</span> <span class="n">resource</span><span class="p">,</span> <span class="n">otherwise</span> <span class="n">it</span> <span class="n">will</span> <span class="n">use</span> <span class="n">an</span> <span class="n">existing</span><span class="p">,</span> <span class="n">specified</span> <span class="n">resource</span><span class="o">.</span>
+
+    <span class="n">Ex</span><span class="p">:</span> <span class="s2">&quot;F5_0_IAPP_VARIABLE_pool__addr&quot;</span><span class="p">:</span> <span class="s2">&quot;10.128.10.240&quot;</span>
+    <span class="n">Ex</span><span class="p">:</span> <span class="s2">&quot;F5_0_IAPP_VARIABLE_pool__pool_to_use&quot;</span><span class="p">:</span> <span class="s2">&quot;/#create_new#&quot;</span>
+
+ <span class="n">F5_</span><span class="p">{</span><span class="n">n</span><span class="p">}</span><span class="n">_IAPP_POOL_MEMBER_TABLE_NAME</span>
+
+    <span class="n">The</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">iApp</span> <span class="n">table</span> <span class="n">entry</span> <span class="n">that</span> <span class="n">specifies</span> <span class="n">the</span> <span class="n">pool</span> <span class="n">members</span><span class="p">:</span> <span class="n">THIS</span> <span class="n">NAME</span> <span class="n">IS</span> <span class="n">NOT</span> <span class="n">STANDARD</span> <span class="n">AND</span> <span class="n">CAN</span> <span class="n">BE</span> <span class="n">DIFFERENT</span> <span class="n">FOR</span> <span class="n">EACH</span> <span class="n">iApp</span> <span class="n">TEMPLATE</span><span class="o">.</span>
+    <span class="n">Ex</span><span class="p">:</span> <span class="s2">&quot;F5_0_IAPP_POOL_MEMBER_TABLE_NAME&quot;</span><span class="p">:</span> <span class="s2">&quot;pool__members&quot;</span>
+</pre></div>
+</div>
+<div class="section" id="iapp-configuration-example">
+<span id="iapp-configuration-example"></span><h5>iApp Configuration Example<a class="headerlink" href="#iapp-configuration-example" title="Permalink to this headline">¶</a></h5>
+<p>The following shows an example Marathon app definition configured to use the &#8220;f5.http&#8221; template to define an HTTP service. Note that the only label needed other than the IAPP labels, is the F5_PARTITION label. The parameters that were specified earlier for F5_0_BIND_ADDR and F5_0_PORT are now accounted for as iApp variables (pool__addr and pool__port, respectively).</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;server-app2&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;cpus&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+  <span class="s2">&quot;mem&quot;</span><span class="p">:</span> <span class="mf">16.0</span><span class="p">,</span>
+  <span class="s2">&quot;instances&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+  <span class="s2">&quot;container&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DOCKER&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;docker&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;edarzins/node-web-app&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;network&quot;</span><span class="p">:</span> <span class="s2">&quot;BRIDGE&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;forcePullImage&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s2">&quot;portMappings&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="s2">&quot;containerPort&quot;</span><span class="p">:</span> <span class="mi">8088</span><span class="p">,</span>
+          <span class="s2">&quot;hostPort&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="s2">&quot;protocol&quot;</span><span class="p">:</span> <span class="s2">&quot;tcp&quot;</span> <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;F5_PARTITION&quot;</span><span class="p">:</span> <span class="s2">&quot;mesos&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;F5_0_IAPP_TEMPLATE&quot;</span><span class="p">:</span> <span class="s2">&quot;/Common/f5.http&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;F5_0_IAPP_POOL_MEMBER_TABLE_NAME&quot;</span><span class="p">:</span> <span class="s2">&quot;pool__members&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;F5_0_IAPP_VARIABLE_net__server_mode&quot;</span><span class="p">:</span> <span class="s2">&quot;lan&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;F5_0_IAPP_VARIABLE_pool__addr&quot;</span><span class="p">:</span> <span class="s2">&quot;10.128.10.240&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;F5_0_IAPP_VARIABLE_pool__pool_to_use&quot;</span><span class="p">:</span> <span class="s2">&quot;/#create_new#&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;F5_0_IAPP_VARIABLE_monitor__monitor&quot;</span><span class="p">:</span> <span class="s2">&quot;/#create_new#&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;F5_0_IAPP_VARIABLE_monitor__uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;F5_0_IAPP_VARIABLE_monitor__response&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;F5_0_IAPP_VARIABLE_net__client_mode&quot;</span><span class="p">:</span> <span class="s2">&quot;wan&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;F5_0_IAPP_VARIABLE_pool__port&quot;</span><span class="p">:</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;F5_0_IAPP_OPTION_description&quot;</span><span class="p">:</span> <span class="s2">&quot;This is a test iApp&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;healthChecks&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;protocol&quot;</span><span class="p">:</span> <span class="s2">&quot;TCP&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;portIndex&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;gracePeriodSeconds&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+      <span class="s2">&quot;intervalSeconds&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+      <span class="s2">&quot;maxConsecutiveFailures&quot;</span><span class="p">:</span> <span class="mi">3</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, F5 Networks.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1_a',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
