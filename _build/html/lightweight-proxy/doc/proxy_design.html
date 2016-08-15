@@ -1,0 +1,662 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Light Weight Proxy (LWP) Design &mdash; F5 Container Integration 0.1_a documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="F5 Container Integration 0.1_a documentation" href="../../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> F5 Container Integration
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1_a
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../f5-marathon-lb/index.html">f5-marathon-lb</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Light Weight Proxy (LWP)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lwp-controller/index.html">lwp-controller</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">F5 Container Integration</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+    <li>Light Weight Proxy (LWP) Design</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/lightweight-proxy/doc/proxy_design.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="light-weight-proxy-lwp-design">
+<span id="light-weight-proxy-lwp-design"></span><h1>Light Weight Proxy (LWP) Design<a class="headerlink" href="#light-weight-proxy-lwp-design" title="Permalink to this headline">¶</a></h1>
+<p>LWP is designed to collect and report various statistics, and load balance
+client requests or connections across a pool of applications deployed in a
+distibuted data center environment. The initial release will support:</p>
+<ul class="simple">
+<li>deployment in a MESOS / Marathon framework</li>
+<li>HTTP and TCP proxying functionality</li>
+</ul>
+<p>LWP is built on a modular, pluggable architecture much like common node.js middleware
+frameworks. On a high-level, it consists of the following components.</p>
+<div class="section" id="lwp-proxy">
+<span id="lwp-proxy"></span><h2>LWP Proxy<a class="headerlink" href="#lwp-proxy" title="Permalink to this headline">¶</a></h2>
+<p>The LWP-proxy acts as the middleware framework and provides logic for
+adding pluggable modules (also referred to as the middleware), and invoking the
+callbacks provided by the modules in the order they were added.</p>
+</div>
+<div class="section" id="lwp-pluggable-modules">
+<span id="lwp-pluggable-modules"></span><h2>LWP Pluggable Modules<a class="headerlink" href="#lwp-pluggable-modules" title="Permalink to this headline">¶</a></h2>
+<p>All middleware modules export a method which takes an optional configuration object
+and return an object with the methods that get attached into the proxy datapath
+by the LWP Proxy middleware framework.</p>
+<div class="section" id="api">
+<span id="api"></span><h3>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h3>
+<p>The middleware API described below is inspired by Express framework.</p>
+<div class="section" id="function-intercepthttpreq-proxyreq-clires-reqnextcb">
+<span id="function-intercepthttpreq-proxyreq-clires-reqnextcb"></span><h4>function interceptHttpReq(proxyReq, cliRes, reqNextCb)<a class="headerlink" href="#function-intercepthttpreq-proxyreq-clires-reqnextcb" title="Permalink to this headline">¶</a></h4>
+<p>Invoked when an HTTP request is received by the proxy from the client (only
+applicable when service-type is HTTP).<strong>Arguments:</strong></p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">proxyReq</span></code> - LwpHttpIncoming object:<ul>
+<li>Created from the client request, this object can be manipulated by each
+middleware layer and gets passed on to the next layer by the middleware
+framework.</li>
+<li>The final middleware module in the request path uses this to construct the
+HTTP request that gets sent out to the backend server.</li>
+<li>A middleware module can choose to manipulate headers, method, url, etc.
+using this object.</li>
+<li>A middleware module can choose to stack additional readable streams on to
+this object (data is read from the stack of streams in bottom to top order).</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">cliRes</span></code> - HTTP.ServerResponse object:A middleware module can choose to write a response back to the client using this
+object.</li>
+<li><code class="docutils literal"><span class="pre">reqNextCb</span></code> - callback function:The current middleware module calls this function when it is done processing
+the request. Invoking the callback triggers different termination behavior
+depending on the arguments passed into the callback.Signature: <code class="docutils literal"><span class="pre">function(err,</span> <span class="pre">proxyReq,</span> <span class="pre">proxyResCb)</span></code><strong>Arguments:</strong><ul>
+<li>no arguments: In this case, we advance to the next middleware module in
+the request path.</li>
+<li><code class="docutils literal"><span class="pre">err</span></code> - Error object:If not null, this causes the middleware stack to terminate in both
+directions and an error response to be sent back to the client.</li>
+<li><code class="docutils literal"><span class="pre">proxyReq</span></code> - LwpHttpIncoming or Http.ClientRequest object:<ul>
+<li>If a LwpHttpIncoming object is passed in, it gets passed on as the
+proxyReq object to the next module in the request path middleware stack.
+The framework then advances to the next middleware module in the request path.</li>
+<li>If an Http.ClientRequest object is passed in, the request path
+middleware stack is terminated. In this case, the current middleware
+is also expected to send the Http.ClientRequest request to the backend
+server (typically used by forwarding middleware). The framework uses
+this object to hook the response path middleware stack for this request.</li>
+<li>If null, the middleware stack is terminated in both directions.
+In this case, the middleware is also expected to send a response
+back to the client using cliRes (typically used when proxy wants
+to write the response back to client and terminate the transaction).</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">proxyResCb</span></code> - callback function:This function gets inserted into the middleware stack in the response path.
+<strong>Note:</strong> Callbacks in the middleware stack for the response path are
+invoked in the reverse order they are added.Signature: <code class="docutils literal"><span class="pre">function(proxyRes,</span> <span class="pre">resNextCb)</span></code><strong>Arguments:</strong><ul>
+<li><code class="docutils literal"><span class="pre">proxyRes</span></code> - LwpHttpIncoming object:<ul>
+<li>Created from the server response, this object can be manipulated
+by each middleware layer in the response path and gets passed on to
+the next layer by the middleware framework.</li>
+<li>The final middleware module in the response path uses this to
+write out the response that gets sent out to the client.</li>
+<li>A middleware module can choose to manipulate headers, method, url, etc.
+using this object.</li>
+<li>A middleware module can choose to stack additional readable streams on to
+this object (data is read from the stack of streams in bottom to top order).</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">resNextCb</span></code> - callback function:The current middleware module calls this function when it is done
+processing the response. Invoking this callback triggers different
+termination behavior depending on the arguments passed into the
+callback.Signature: <code class="docutils literal"><span class="pre">function(err,</span> <span class="pre">proxyRes)</span></code><strong>Arguments:</strong><ul>
+<li>no arguments: In this case, we advance to the next module in the
+response path middleware stack.</li>
+<li><code class="docutils literal"><span class="pre">err</span></code> - Error object: If not null, this causes the middleware
+stack to terminate in both directions and an error response to be
+sent back to the client.</li>
+<li><code class="docutils literal"><span class="pre">proxyRes</span></code> - LwpHttpIncoming object:<ul>
+<li>If a LwpHttpIncoming object is passed in, it gets passed on as
+the proxyRes object to the next module in the response path
+middleware stack.</li>
+<li>If null, the middleware stack is terminated in both directions.
+In this case, the middleware is also expected to send a response
+back to the client using cliRes.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Example usage for <code class="docutils literal"><span class="pre">reqNextCb</span></code>:</strong></p>
+<ul class="simple">
+<li>Terminate middleware in both directions and send error response:</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span>  <span class="nx">reqNextCb</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;error while processing request&#39;</span><span class="p">));</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Manipulate headers and pass it on to the next middleware module:</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span>  <span class="nx">proxyReq</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s1">&#39;X-forwarded-for&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">proxyReq</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">remoteAddress</span><span class="p">;</span>
+  <span class="nx">reqNextCb</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">proxyReq</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Transform request body and pass it on to the next middleware module:</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span>  <span class="nx">proxyReq</span><span class="p">.</span><span class="nx">pushStream</span><span class="p">(</span><span class="nx">proxyReq</span><span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">zlib</span><span class="p">.</span><span class="nx">createGunzip</span><span class="p">()));</span>
+  <span class="nx">reqNextCb</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">proxyReq</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Terminate middleware in both directions and send response:</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span>  <span class="nx">cliRes</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;response from proxy&#39;</span><span class="p">);</span>
+  <span class="nx">reqNextCb</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Create and write to new Http.ClientRequest out to backend server:</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span>  <span class="c1">// create http.ClientRequest from proxyReq </span>
+  <span class="kd">var</span> <span class="nx">newHttpReq</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">http</span><span class="p">.</span><span class="nx">request</span><span class="p">(</span><span class="nx">proxyReq</span><span class="p">.</span><span class="nx">options</span><span class="p">);</span>
+  <span class="nx">newHttpReq</span><span class="p">.</span><span class="nx">headers</span> <span class="o">=</span> <span class="nx">proxyReq</span><span class="p">.</span><span class="nx">headers</span><span class="p">;</span> 
+  <span class="nx">proxyReq</span><span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">newHttpReq</span><span class="p">);</span>
+  <span class="nx">reqNextCb</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">newHttpReq</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Register a response callback:</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span>  <span class="kd">var</span> <span class="nx">proxyResCb</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">proxyRes</span><span class="p">,</span> <span class="nx">resNextCb</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">proxyRes</span><span class="p">.</span><span class="nx">pushStream</span><span class="p">(</span><span class="nx">proxyRes</span><span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">zlib</span><span class="p">.</span><span class="nx">createGzip</span><span class="p">()));</span>
+    <span class="nx">resNextCb</span><span class="p">();</span>
+  <span class="p">};</span>
+  <span class="nx">reqNextCb</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">proxyReq</span><span class="p">,</span> <span class="nx">proxyResCb</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="function-intercepttcpconnection-clisock-clinextcb">
+<span id="function-intercepttcpconnection-clisock-clinextcb"></span><h4>function interceptTcpConnection(cliSock, cliNextCb)<a class="headerlink" href="#function-intercepttcpconnection-clisock-clinextcb" title="Permalink to this headline">¶</a></h4>
+<p>Invoked when the proxy accepts a new TCP connection from the client (only
+applicable when service-type is TCP).
+<strong>Arguments:</strong></p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">cliSock</span></code> - LwpTcpSocket object:<ul>
+<li>Created from the client connection net.Socket object, this object can
+be manipulated by each middleware layer and gets passed on to the next
+layer by the middleware framework.</li>
+<li>A middleware module can choose to stack additional readable streams on to
+this object (data is read from the stack of streams in bottom to top order).</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">cliNextCb</span></code>: Callback function:
+The current middleware module calls this function when it is done processing
+the client-to-server path. Invoking this callback can trigger different
+termination behavior depending on the arguments passed into the callback.Signature: <code class="docutils literal"><span class="pre">function(err,</span> <span class="pre">cliSock,</span> <span class="pre">srvToCliCb)</span></code><strong>Arguments:</strong><ul>
+<li>no arguments: In this case, we advance to the next middleware module in the
+client-to-server path.</li>
+<li><code class="docutils literal"><span class="pre">err</span></code>: Error object:If not null, this causes the middleware stack to terminate in both directions
+and the client connection to be closed.</li>
+<li><code class="docutils literal"><span class="pre">cliSock</span></code>: LwpTcpSocket or Net.Socket object:<ul>
+<li>If a LwpTcpSocket object is passed in, it gets passed on as the
+cliSock object to the next module in the client-to-server path
+middleware stack. The framework then advances to the next middleware
+module in the client-to-server path.</li>
+<li>If a Net.Socket object is passed in, the client-to-server path
+middleware stack is terminated. In this case, the current middleware is also
+expected to connect to the backend server and forward data to it
+(typically used by forwarding middleware). The framework uses
+this object to hook the server-to-client path middleware stack for
+this client connection.</li>
+<li>If null, the client-to-server path middleware stack is terminated.</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">srvToCliCb</span></code> - callback function:This function gets inserted into the middleware stack in the
+server-to-client path. <strong>Note:</strong> Callbacks in the middleware stack for the
+server-to-client path are invoked in the reverse order they are added.Signature: <code class="docutils literal"><span class="pre">function(srvSock,</span> <span class="pre">srvNextCb)</span></code><strong>Arguments:</strong><ul>
+<li><code class="docutils literal"><span class="pre">srvSock</span></code>: LwpTcpSocket object:<ul>
+<li>Created from the server connection net.Socket object, this object can
+be manipulated by each middleware layer and gets passed on to the next
+layer by the middleware framework server-to-client path.</li>
+<li>A middleware module can choose to stack additional readable streams on to
+this object (data is read from the stack of streams in bottom to top order).</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">srvNextCb</span></code> - callback function:The current middleware module calls this function when it is done
+processing the server-to-client path. Invoking this callback triggers
+different termination behavior depending on the arguments passed into
+the callback.Signature: <code class="docutils literal"><span class="pre">function(err,</span> <span class="pre">srvSock)</span></code><strong>Arguments:</strong><ul>
+<li>no arguments: In this case, we advance to the next module in the
+server-to-client path middleware stack.</li>
+<li><code class="docutils literal"><span class="pre">err</span></code> - Error object: If not null, this causes the middleware
+stack to terminate in both directions and both client and server
+connections to be terminated.</li>
+<li><code class="docutils literal"><span class="pre">srvSock</span></code>: LwpTcpSocket object:<ul>
+<li>If a LwpTcpSocket object is passed in, it gets passed on as the
+srvSock object to the next module in the server-to-client path
+middleware stack.</li>
+<li>If null, the server-to-client path middleware stack is terminated.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Example usage for <code class="docutils literal"><span class="pre">cliNextCb</span></code>:</strong></p>
+<ul class="simple">
+<li>Terminate middleware in both directions and close client connection:</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span>  <span class="nx">cliNextCb</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;error while processing client connection&#39;</span><span class="p">));</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Transform data on client connection and pass it on to next middleware module:</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span>  <span class="nx">cliSock</span><span class="p">.</span><span class="nx">pushStream</span><span class="p">(</span><span class="nx">cliSock</span><span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">zlib</span><span class="p">.</span><span class="nx">createGunzip</span><span class="p">()));</span>
+  <span class="nx">cliNextCb</span><span class="p">();</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Terminate middleware in both directions and gracefuly close client connection:</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span>  <span class="nx">cliSock</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;goodbye\n&#39;</span><span class="p">);</span>
+  <span class="nx">cliNextCb</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Create and write to net.Socket connection out to backend server:</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span>  <span class="kd">var</span> <span class="nx">srvSock</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">net</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span>
+    <span class="p">{</span><span class="nx">host</span><span class="o">:</span> <span class="nx">cliSock</span><span class="p">.</span><span class="nx">targetHost</span><span class="p">,</span> <span class="nx">port</span><span class="o">:</span> <span class="nx">cliSock</span><span class="p">.</span><span class="nx">targetPort</span><span class="p">});</span>
+  <span class="nx">cliSock</span><span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">srvSock</span><span class="p">);</span>
+  <span class="nx">cliNextCb</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">srvSock</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Register a callback in server-to-client path:</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span>  <span class="kd">var</span> <span class="nx">srvToCliCb</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">srvSock</span><span class="p">,</span> <span class="nx">srvNextCb</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">srvSock</span><span class="p">.</span><span class="nx">pushStream</span><span class="p">(</span><span class="nx">srvSock</span><span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">zlib</span><span class="p">.</span><span class="nx">createGzip</span><span class="p">()));</span>
+    <span class="nx">srvNextCb</span><span class="p">();</span>
+  <span class="p">};</span>
+  <span class="nx">cliNextCb</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">cliSock</span><span class="p">,</span> <span class="nx">srvToCliCb</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="sample-code">
+<span id="sample-code"></span><h3>Sample Code<a class="headerlink" href="#sample-code" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://bldr-git.int.lineratesystems.com/velcro/lightweight-proxy/blob/master/doc/middlewareAPIUseCases.md">middlewareAPIUseCases</a></p>
+</div>
+</div>
+<div class="section" id="configuration">
+<span id="configuration"></span><h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="startup-static-configuration">
+<span id="startup-static-configuration"></span><h3>Startup / Static Configuration<a class="headerlink" href="#startup-static-configuration" title="Permalink to this headline">¶</a></h3>
+<p>This module is responsible for the startup initial configuration. This first
+release will only support static configuration at startup. Configuration changes
+must be made through LWP process restarts.</p>
+<p>The main configurable component is the virtual server. The LWP will support
+multiple virtual server configurations; a single LWP can support and load
+balance multiple services using virtual server configurations.</p>
+<p>Supporting multiple virtual server configurations can offer a clear road map
+towards dynamic reconfiguration. New virtual server configurations can
+gracefully replace old configurations; on reconfiguration the old listening
+socket is closed and the underlying node-http-proxy will gracefully shutdown
+once its connections are drained. All new connections are received on the new
+listening socket.</p>
+<p>Startup configurations can be added via two methods. Provide a configuration
+file to read from, or set the configuration as a string to an environment
+parameter. By default the LWP will attempt to read from &#8220;LWP_CONFIG&#8221;.</p>
+<p>Additional configuration variables will be passed through by the controller
+which are configured in the marathon app. Environment parameters prefixed with
+LWP_ENV_ will be passed through unchanged.</p>
+<p>Configuration is now located in:
+<a class="reference external" href="https://bldr-git.int.lineratesystems.com/velcro/lightweight-proxy/blob/master/README.md">README.md</a></p>
+</div>
+<div class="section" id="dynamic-backend-configuration">
+<span id="dynamic-backend-configuration"></span><h3>Dynamic Backend Configuration<a class="headerlink" href="#dynamic-backend-configuration" title="Permalink to this headline">¶</a></h3>
+<p>Backend configuration will be accomplished through MesosDNS. The LWP must be
+deployed in an environment configured with MesosDNS support. The LWP will prefer
+to use the built-in, native service discovery supported in Mesos cluster
+environments.</p>
+<p>Requests for load balancing decisions will cause a DNS SRV record query based on
+the configured virtual server &#8220;service-name&#8221;. MesosDNS constructs SRV records in
+this form:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">task</span><span class="p">}</span><span class="o">.</span><span class="p">{</span><span class="n">protocol</span><span class="p">}</span><span class="o">.</span><span class="n">framework</span><span class="o">.</span><span class="n">domain</span>
+</pre></div>
+</div>
+<p>In the target Marathon/Mesos environment an &#8220;service-name&#8221; of &#8220;web-service&#8221; can
+be queried at this URI (Note: Marathon uses the term tasks for our concept of
+&#8220;service-name&#8221;; these values are prepended with an underscore for SRV queries):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">_web</span><span class="o">-</span><span class="n">service</span><span class="o">.</span><span class="n">tcp</span><span class="o">.</span><span class="n">marathon</span><span class="o">.</span><span class="n">mesos</span>
+</pre></div>
+</div>
+<p>Middlewares interested in the current state of an applications deployment can
+query the MesosDNS service via the provided API:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">getBackendServers</span><span class="p">(</span><span class="nx">serviceName</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">array</span><span class="o">&lt;</span><span class="nx">string</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Middleware components are discouraged from caching MesosDNS results as the
+cluster may change an application&#8217;s deployment between requests. Since the
+application topology may change requests should be made at the time the backend
+list is required. The MesosDNS module (to prevent overload of the DNS system) will periodically query for the state of the application topology. This state will be returned when queried via the module API.</p>
+</div>
+</div>
+<div class="section" id="statistics">
+<span id="statistics"></span><h2>Statistics<a class="headerlink" href="#statistics" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>LWP provides a library that allows stats to be generated in a format that is compatible with Splunk and BigIQ (or do we call it LEO?).</li>
+<li>LWP will create an instance of LWP-stats-client and pass it on into the lwp-proxy
+module. Pluggable modules will have access to the stats-client via the lwp-proxy module.</li>
+<li>The F5Stats library usage is documented at <a class="reference external" href="https://bldr-git.int.lineratesystems.com/velcro/lightweight-proxy/blob/master/lib/f5stats/doc/API.md">StatsAPI</a></li>
+<li>Currently generated stats:
+<a class="reference external" href="https://bldr-git.int.lineratesystems.com/velcro/lightweight-proxy/blob/master/README.md">README.md</a></li>
+</ul>
+</div>
+<div class="section" id="logging">
+<span id="logging"></span><h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Use the winston logger npm which allows for multiple logging levels and multiple
+transports configured at different levels (for example, storing error logs in a
+persistent remote location and all logs output to the console or a local file).</li>
+<li>At a minimum, log all errors. Work with stats team to figure out what else needs
+to be logged and how frequently.</li>
+<li>Export logs to stdout and let orchestration framework manage it.</li>
+</ul>
+</div>
+<div class="section" id="support-for-external-load-balancers-stats-reporting-only">
+<span id="support-for-external-load-balancers-stats-reporting-only"></span><h2>Support for External load balancers (stats reporting only)<a class="headerlink" href="#support-for-external-load-balancers-stats-reporting-only" title="Permalink to this headline">¶</a></h2>
+<p>In this mode, LWP is used mainly to collect statistics and forward all requests
+and connections to an external load balancer. LWP&#8217;s pluggable architecture allows
+us multiple options to implement this:</p>
+<ul class="simple">
+<li>Option 1: Use the normal load balancing model and configure external LB as
+the only real-server.</li>
+<li>Option 2: Omit the load balancing module and leave all other modules in.</li>
+</ul>
+</div>
+<div class="section" id="health-monitoring">
+<span id="health-monitoring"></span><h2>Health Monitoring<a class="headerlink" href="#health-monitoring" title="Permalink to this headline">¶</a></h2>
+<p>LWP will not support active health monitoring initially. Instead, we rely on
+the orchestration system to remove unhealthy servers from the server pool.</p>
+</div>
+<div class="section" id="graceful-restart">
+<span id="graceful-restart"></span><h2>Graceful restart<a class="headerlink" href="#graceful-restart" title="Permalink to this headline">¶</a></h2>
+<p>The initial implementation of LWP will not implement graceful restart.
+Future versions will add support for graceful restart (having the notion of multiple
+instances of LWP proxy will help us achieve this).</p>
+</div>
+<div class="section" id="sample-api">
+<span id="sample-api"></span><h2>Sample API<a class="headerlink" href="#sample-api" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span>    <span class="c1">// create a lwp-proxy</span>
+    <span class="kd">var</span> <span class="nx">lwp_proxy</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;lwp-proxy&#39;</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;http&quot;</span><span class="p">,</span> <span class="c1">// or tcp</span>
+      <span class="p">...</span>
+    <span class="p">};</span>
+    <span class="kd">var</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="nx">lwp_proxy</span><span class="p">.</span><span class="nx">createProxy</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
+
+    <span class="c1">// add load-balancing module</span>
+    <span class="kd">var</span> <span class="nx">lb_options</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="nx">algorithm</span><span class="o">:</span> <span class="s2">&quot;round-robin&quot;</span><span class="p">,</span>
+      <span class="p">...</span>
+    <span class="p">};</span>
+    <span class="kd">var</span> <span class="nx">lb</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;load-balancer&#39;</span><span class="p">);</span>
+    <span class="nx">proxy</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">lb</span><span class="p">(</span><span class="nx">lb_options</span><span class="p">));</span>
+
+    <span class="c1">// add forwarder module</span>
+    <span class="kd">var</span> <span class="nx">forwarder_options</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="p">...</span>
+    <span class="p">};</span>
+    <span class="kd">var</span> <span class="nx">forwarder</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;forwarder&#39;</span><span class="p">);</span>
+    <span class="nx">proxy</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">forwarder</span><span class="p">(</span><span class="nx">forwarder_options</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-strategy">
+<span id="testing-strategy"></span><h2>Testing strategy<a class="headerlink" href="#testing-strategy" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>LWP&#8217;s modular design enables unit testing of individual modules, ability to use
+dependency injection and mock implementations.</li>
+<li>Unit and functional tests will be written with the intent of trying to reduce or
+eliminate dependencies on other components, i.e., ability to test LWP in
+Mesos / Marathon environment without LWP Controller and Analytics framework.</li>
+</ul>
+</div>
+<div class="section" id="unsupported-features">
+<span id="unsupported-features"></span><h2>Unsupported Features<a class="headerlink" href="#unsupported-features" title="Permalink to this headline">¶</a></h2>
+<p>The initial version will not have support for the following features:</p>
+<ul class="simple">
+<li>HTTPS</li>
+<li>websockets</li>
+<li>CONNECT support</li>
+<li>HTTP2</li>
+<li>scripting / programmability support</li>
+<li>dynamic reconfigurability (except for adding / removing pool members)</li>
+</ul>
+</div>
+<div class="section" id="roadmap">
+<span id="roadmap"></span><h2>Roadmap<a class="headerlink" href="#roadmap" title="Permalink to this headline">¶</a></h2>
+<p>Significant feature enhancements for future iterations of the LWP</p>
+<div class="section" id="http-2">
+<span id="http-2"></span><h3>HTTP/2<a class="headerlink" href="#http-2" title="Permalink to this headline">¶</a></h3>
+<p>HTTP/2 functionality will be handled via an existing or future node module (e.g.
+node-spdy, spdy, node-http2, etc.). These modules follow NodeJs http and https
+APIs which will fit into the design of LWP&#8217;s middleware. At time of integration
+the team will re-evaluate whether the http module can simply be replaced by the
+http2 module or if LWP must listen for and handle the upgrade itself; handling
+the upgrade manually would only need to be an option if bugs or functional
+inconsistencies were discovered.</p>
+</div>
+<div class="section" id="websockets">
+<span id="websockets"></span><h3>WebSockets<a class="headerlink" href="#websockets" title="Permalink to this headline">¶</a></h3>
+<p>WebSockets support will be handled via a stack upgrade. The underlying
+node-http-proxy will identify the web sockets upgrade and fire its specialized
+callback. The LWP will update the HTTP middleware stack to the TCP middleware
+interface thus changing the implementation from a request/response based pattern
+to a stream pattern. Specialized middlewares must be built as TCP middlewares in
+order to parse and act on the underlying framed protocol marshaled via the web
+sockets upgrade.</p>
+</div>
+<div class="section" id="udp">
+<span id="udp"></span><h3>UDP<a class="headerlink" href="#udp" title="Permalink to this headline">¶</a></h3>
+<p>UDP will be handled by a third datagram messaging API. This api will be parallel
+to both the HTTP, and TCP APIs, using the same similar signatures, usage
+semantics, and continuation callback approach. The basic nature of UDP being
+that of connectionless and message based removes the requirement and ability to
+track responses (if any). Individual middlewares aware of protocols built on a
+UDP base can extend any response characteristics into individual state machines
+as any message from either direction will still be visible via these patterns.</p>
+<p>UDP&#8217;s message based semantics will require a new set of LWP wrapper objects to
+encapsulate UDP datagrams and allow for transformations.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">interceptDatagram</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">incomingDatagram</span><span class="p">,</span> <span class="nx">nextDatagramCb</span><span class="p">)</span>
+<span class="cm">/*</span>
+<span class="cm">incomingDataGram = lwpIncomingDatagram</span>
+<span class="cm">nextDatagramCb = function(err, nextDatagram)</span>
+<span class="cm">nextDatagram = lwpIncomingDatagram or Buffer</span>
+<span class="cm">Request chain termination on following:</span>
+<span class="cm">  1) Non Null Error</span>
+<span class="cm">  2) Null nextDatagram</span>
+<span class="cm">  3) nextDatagram is object type Buffer</span>
+<span class="cm">  4) Exception</span>
+<span class="cm">UDP is not a connection based request/response protocol. Middleware modules</span>
+<span class="cm">aware of higher level protocols based on UDP must track their own state native</span>
+<span class="cm">to that protocol.</span>
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, F5 Networks.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1_a',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

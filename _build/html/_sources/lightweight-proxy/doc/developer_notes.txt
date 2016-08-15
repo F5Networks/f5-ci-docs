@@ -1,0 +1,10 @@
+# Debugging tips
+* Enable debug logging on console:
+    - If being run via LWP controller, set LWP Controller configuration
+    environment variable LWP_DEFAULT_LOG_LEVEL to "DEBUG".
+    - If being run manually set the LWP global configuration variable
+    console-log-level to "debug".
+* While debugging issues with node_modules, it may be easier to copy the
+specific module under lib/node_modules, make your changes to the module
+source to allow it to be bundled with the docker image.
+
