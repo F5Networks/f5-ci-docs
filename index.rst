@@ -12,6 +12,8 @@ Contents:
 .. toctree::
     :maxdepth: 2
 
+    usage-marathon-poc.rst
+
     f5-marathon-lb/index.rst
     lightweight-proxy/index.rst
     lwp-controller/index.rst
