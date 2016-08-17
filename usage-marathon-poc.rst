@@ -1,7 +1,7 @@
 Usage Guide: F5 Container Integration in a Mesos/Marathon Environment
 =====================================================================
 
-This guides describes how to set up a reference F5 Container Integration in an
+This guide describes how to set up a reference F5 Container Integration in an
 environment with Mesos and Marathon. We suggest that you start by following
 these steps to understand the components and services that we provide.
 
