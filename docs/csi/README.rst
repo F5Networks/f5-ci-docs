@@ -8,8 +8,7 @@ f5-marathon-lb
     self
 
 
-
-The f5-marathon-lb tool allows users to manage F5® BIG-IP® with `Marathon <https://github.com/mesosphere/marathon>`_ in a `Mesos <https://mesos.apache.org/>`_ environment.
+Part of the F5® Container Services Integration suite, f5-marathon-lb allows users to manage BIG-IP® devices in a  `Mesos <https://mesos.apache.org/>`_ / `Marathon <https://github.com/mesosphere/marathon>`_ environment.
 
 Architecture
 ------------
@@ -34,9 +33,8 @@ f5-marathon-lb allows you to manage resources in specific partitions on a BIG-IP
 
     * f5-marathon-lb can not manage the "Common" partition.
 
-Because f5-marathon-lb takes ownership of certain resource types in the partitions it manages,
 
-The BIG-IP object types listed below are managed by the f5-marathon-lb application and should not be manually added, changed, or deleted, as this may result in unexpected behavior.
+The BIG-IP object types listed below are managed by the f5-marathon-lb application; these should not be manually added, changed, or deleted, as this may result in unexpected behavior.
 
 -  Virtual Servers
 -  Virtual Addresses
@@ -216,9 +214,7 @@ For example:
 
 .. topic:: args
 
-    .. code-block:: json
-        :linenos:
-        :emphasize-lines: 14-20
+    .. code-block:: javascript
 
         {
           "id": "f5-marathon-lb",
@@ -247,9 +243,7 @@ For example:
 
 .. topic:: env variables
 
-    .. code-block:: json
-        :linenos:
-        :emphasize-lines: 14-20
+    .. code-block:: javascript
 
         {
           "id": "f5-mlb",
