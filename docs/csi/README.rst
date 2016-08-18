@@ -280,9 +280,7 @@ The following example demonstrates an application deployment in Marathon with th
 - The app (``server-app4``) has three service ports configured; only the first two are exposed via the BIG-IP (in other words, only port indices 0 and 1 are configured in the *labels* section).
 - Marathon health monitors are configured for all three service ports.
 
-.. code-block:: json
-    :linenos:
-    :emphasize-lines: 29, 32
+.. code-block:: javascript
 
     {
       "id": "server-app4",
@@ -353,8 +351,7 @@ For our Marathon application, f5-marathon-lb configures the BIG-IP as demonstrat
 
     If the ``--health-check`` option is set, f5-marathon-lb will respect the Marathon health status for the service port before adding it to the backend pool.
 
-.. code-block:: bash
-    :linenos:
+.. code-block:: shell
 
     ltm monitor http server-app4_10.128.10.240_8080 {
         adaptive disabled
@@ -461,8 +458,7 @@ The following example uses the "f5.http" iApp template to define an HTTP service
     Only the the IAPP labels and the ``F5_PARTITION`` label are needed to deploy using an iApp template. For example, the ``F5_0_BIND_ADDR`` and ``F5_0_PORT`` parameters are accounted for by iApp variables (``pool__addr`` and ``pool__port``, respectively).
 
 
-.. code-block:: json
-    :linenos:
+.. code-block:: javascript
 
     {
       "id": "server-app2",
