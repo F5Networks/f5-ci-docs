@@ -1,4 +1,5 @@
 .idea/*
 .idea/vcs.xml
 venv/*
+docs/_build/*
 _build/*
