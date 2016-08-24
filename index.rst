@@ -12,13 +12,8 @@ Contents:
 .. toctree::
     :maxdepth: 2
 
-<<<<<<< HEAD
-    usage-marathon-poc.rst
-
-=======
     f5-mesos-integration.rst
     usage-marathon-poc.rst
->>>>>>> deployment-guide
     f5-marathon-lb/index.rst
     lightweight-proxy/index.rst
     lwp-controller/index.rst
