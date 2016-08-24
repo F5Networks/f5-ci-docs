@@ -5,10 +5,10 @@ This guide describes how to set up a reference F5 Container Integration in an
 environment with Mesos and Marathon. We suggest that you start by following
 these steps to understand the components and services that we provide.
 
-You do not need a Mesos and Marathon environment. If you do not have one, the
-first few steps will help you set one up. If you do have an existing
-environment that you would like to use, you can skip these steps.
-(**TODO: Fill in which steps can be skipped.**)
+You do not need a pre-existing Mesos and Marathon environment. This guide
+will help you set one up in AWS using a cloud formation template (CFT). If you
+do have an existing environment that you would like to use, you can skip step
+three below.
 
 This usage guide will also describe how to configure the analytics providers
 (e.g. Big-IP and the Lightweight Proxy) to send data to a Splunk instance.
@@ -22,17 +22,14 @@ https://www.splunk.com/en_us/download/splunk-enterprise.html.
 Introduction
 ============
 
-**NOTE: Assuming another doc has provided the high-level architecture**
-
 The components in this usage guide have been tested on these environments and
 versions:
 
-| Mesos: 0.27.1
-| Marathon: 0.15.3
-| Docker: 1.9.1
+| Mesos: 0.28.1
+| Marathon: 1.1.1
+| Docker: 1.7.1
 | Splunk: 6.4.2
 | F5 Analytics Splunk App: 0.9.5
-| F5 Lightweight Proxy Splunk App: 0.1.0
 |
 
 Step 1: Installing and Configure Splunk to receive data
@@ -154,33 +151,40 @@ produced will delete all associated resources: you should do this once you are
 satisfied with the completion of these steps.
 
 As a participant in the Container Integration beta program, you were granted
-access to an AWS CloudFormation template called **TODO**. Download
-this CloudFormation template and start it in your account.
+access to an AWS CloudFormation template called f5-ci.beta.cloudformation.json.
+Download this CloudFormation template and start it in your account.
 
-Inputs:
+Parameters:
 
-KeyName: You must select an SSH keypair that is configured in AWS. You'll
+*KeyName*: You must select an SSH keypair that is configured in AWS. You'll
 need this to log in to the VMs that are started.
 
-AdminLocation: This is a CIDR subnet that is configured to limit access to
+*AdminLocation*: This is a CIDR subnet that is configured to limit access to
 the stack that is produced. Only IPs in this subnet can get to the BIG-IP,
 Mesos, or Marathon administrative interface. The default is "0.0.0.0/0" which
-allows access from any host.
+allows access from any host. You may want to restrict access to just your
+external ip (e.g. 63.149.112.92/32).  There are several ways to find your
+external IP address (this may not necessarily be the IP address of your
+local host).  For instance, on Linux, you can issue the command "curl
+https://api.ipify.org" and it will display your external IP address.
 
-BIGIPRegKey: Use the evaluation registration key that was provided to you
+*BIGIPRegKey*: Use the evaluation registration key that was provided to you
 as a member of the beta program.
-
-**TODO: Any EULAs for Mesosphere? Hopefully getting rid of that**
 
 All other inputs leave at their default.
 
-Once the stack is set up, check the stack outputs:
+Outputs:
 
-BIGIPAdminUI: Navigate to this URL in a browser and log in with the username
-"admin" and the password from the *BIGIPAdminPassword* output.
+Once the stack is set up, you will have a BigIP running along side the
+MesoSphere DC/OS environment.  The CFT outputs will provide the necessary
+information for accessing these resources
 
-MarathonUI: Navigate to this URL in a browser and confirm that you see
-a Marathon user interface, with no applications running.
+*BIGIPAdminUI*: Navigate to this URL in a browser and log in with the username
+"admin" and the password from the *BIGIPAdminPassword* output. A special
+partition named 'mesos' should have been created just for the demo.
+
+*MarathonUI*: Navigate to this URL in a browser and confirm that you see a
+Marathon user interface, with no applications running.
 
 Step 4: Deploy f5-marathon-lb (CSI)
 -----------------------------------
@@ -189,68 +193,462 @@ Step 4: Deploy f5-marathon-lb (CSI)
 is packaged in a container and it runs in the Marathon environment. It will
 connect to Marathon as well as the BIG-IP. It watches changes in Marathon
 and configures new elements like virtual servers and pool members on BIG-IP
-in response. For detailed information, see **TODO**. For now,
-we'll set up a few simple configurations.
+in response.
 
-Go to the Marathon UI, click on "Create", and fill out the options in the UI
-like the following:
+To install the **f5-marathon-lb** application, use the following curl command
+(or similar program), substituting the appropriate values from the AWS CFT
+**Parameter** and **Output** variables::
 
-**TODO**
+    curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' \
+    [AWS_OUTPUT:DnsAddress]/service/marathon/v2/apps -d '
+    {
+      "container": {
+        "docker": {
+          "portMappings": [
+            {}
+          ],
+          "privileged": false,
+          "image": "[AWS_PARAMETER:DockerRepo]:f5-marathon-lb-v0.1.0",
+          "network": "BRIDGE",
+          "forcePullImage": true
+        },
+        "type": "DOCKER",
+        "volumes": []
+      },
+      "mem": 64,
+      "args": [
+        "sse",
+        "--marathon",
+        "[AWS_OUTPUTS:InternalMarathonURL]",
+        "--partition",
+        "mesos",
+        "--hostname",
+        "[AWS_OUTPUTS:BIGIPExternalPrivateIP]",
+        "--username",
+        "admin",
+        "--password",
+        "[AWS_OUTPUTS:BIGIPAdminPassword]"
+      ],
+      "cpus": 0.5,
+      "uris": [
+        "file:///etc/dockercfg.tgz"
+      ],
+      "instances": 1,
+      "id": "/f5-csi/f5-marathon-lb"
+    }'
 
-Click "Create" and then observe that the application is created in Marathon.
-You may see the application show as "Staged" while Marathon and Mesos schedule
-the application task, download the container, and start it. You will see it
-show as "Started" once it has started.
+
+After issuing the command, you should be able to observe the creation of
+the application in the Marathon UI. You may see the application shown as
+"Staged" while Marathon schedules the application task, downloads the
+container, and starts it. You will see it show as "Started" once the process
+has completed.
 
 Click on the application *f5-marathon-lb* and you will see a page showing the
 tasks (there is only 1 task for f5-marathon-lb). Click on the task and you can
 see more details. There will be a row saying "Mesos details: link"; click on
 this link to see Mesos details. Then, click on "Sandbox" to see the container
 sandbox that it is running in. Click on "stdout" and "stderr" to see the logs
-from the *f5-marathon-lb*. It should say:
+for the *f5-marathon-lb* instance.
 
-**TODO: Example of a happy f5-marathon-lb**
+Step 4: Deploy lwp-controller (CSI)
+-----------------------------------
+
+**lwp-controller** is a component of the Container Service Integrator (CSI). It
+is packaged in a container and it runs in the Marathon environment. It will
+be configured to listen to Marathon events related to the management of
+applications. If an application is spun up or down that it is responsible for
+controlling, it will insert (or remove) the light-weight-proxy in front of
+the application, providing east-west management of that particular application.
+
+To install the **lwp-controller** application, use the following curl command
+(or similar program), substituting the appropriate values from the AWS CFT
+Parameter and Output
+variables::
+
+    curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' \
+    [AWS_OUTPUT:DnsAddress]/service/marathon/v2/apps -d '
+    {
+      "container": {
+        "docker": {
+          "portMappings": [],
+          "privileged": false,
+          "image": "f5networks/f5-ci-beta:lwp-controller-v0.1.0",
+          "network": "BRIDGE",
+          "forcePullImage": true
+        },
+        "type": "DOCKER",
+        "volumes": []
+      },
+      "mem": 128,
+      "cpus": 1,
+      "uris": [
+        "file:///etc/dockercfg.tgz"
+      ],
+      "instances": 1,
+      "env": {
+        "LWP_DEFAULT_LOG_LEVEL": "info",
+        "LWP_DEFAULT_CONTAINER": "f5networks/f5-ci-beta:light-weight-proxy-v0.1.0",
+        "LWP_DEFAULT_STATS_TOKEN": "[SPLUNK_TOKEN]",
+        "LWP_DEFAULT_STATS_BACKEND": "splunk",
+        "LWP_DEFAULT_STATS_URL": "https://[SPLUNK_IP]:8088",
+        "LWP_ENABLE_LABEL": "lwp",
+        "LWP_DEFAULT_URIS": "file:///etc/dockercfg.tgz",
+        "LWP_DEFAULT_MEM": "128",
+        "LWP_DEFAULT_STATS_FLUSH_INTERVAL": "10000",
+        "LWP_DEFAULT_CPU": "1",
+        "MARATHON_URL": "http://marathon.mesos:8080",
+        "LWP_DEFAULT_FORCE_PULL": "True"
+      },
+      "upgradeStrategy": {
+        "maximumOverCapacity": 1,
+        "minimumHealthCapacity": 1
+      },
+      "id": "/f5-csi/lwp-controller"
+    }'
+
+After issuing the command, you should be able to observe the creation of
+the application in the Marathon UI.
+
+Step 5: Deploy F5 Analytics IApp
+---------------------------------
+To enable the sending of stats from within the Big-IP, you need to
+download and then install an IApp template file from F5.
+
+ * Download the file **f5.analytics.tmpl** from beta.f5.com to your local drive.
+
+ * From the BigIP GUI, select the **Import** from **IApps/Templates** and
+ upload the file.
+
+ * In the GUI, select **Create** from **IApps/Application Services** page and
+ choose the **f5.analytics** template.
+
+ * Fill in the following fields (unspecified fields should be left at their
+ defaults) before clicking on the finished button:
+   * Name - user defined
+   * Module HSL Streams - No
+   * Local System Logging (syslog) - No
+   * System SNMP Alerts - No
+   * iHealth Snapshot Information - No
+   * Your Facility Name - [user defined]
+   * Default Tenant - [user defined]
+   * Alternative Device Group - [user defined]
+   * IP Address or Hostname - [SPLUNK_IP]
+   * Port - 8088
+   * Protocol - HTTPS
+   * API Key - [SPLUNK_TOKEN]
+   * Push Interval - 20
+   * Mapping Table (1) - **Type**=App Name **From**=Virtual Name **Regex**=(.*)_d **Action**=Map
+   * Mapping Table (2) - **Type**=Tenant Name **From**=Partition **Regex**=(.*) **Action**=Map
 
 Deployment Test Cases
 =====================
 
 Deploy the frontend-service as a North-South Service
 ----------------------------------------------------
+The CSI demo provides a secure front-end web server that communicates with
+several backend services.  The previously installed f5-marathon-lb will be
+notified when the web server is launched and take action.  It will configure
+the Big-IP to install a virtual server on the **mesos** partition if one is
+not already configured. It will then ass the server to the pool associated
+with the virtual server.
 
-coming soon!
+To install the **front-end** web server application, use the following curl
+command (or similar program), substituting the appropriate values from the
+AWS CFT Parameter and Output variables::
+
+    curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' \
+    [AWS_OUTPUT:DnsAddress]/service/marathon/v2/apps -d '
+    {
+      "container": {
+        "docker": {
+          "portMappings": [
+            {
+              "protocol": "tcp",
+              "containerPort": 80,
+              "hostPort": 0
+            }
+          ],
+          "privileged": false,
+          "image": "f5networks/f5-ci-beta:microservice-demo-v0.14",
+          "network": "BRIDGE",
+          "forcePullImage": true
+        },
+        "type": "DOCKER",
+        "volumes": []
+      },
+      "mem": 128,
+      "labels": {
+        "F5_0_BIND_ADDR": "[AWS_OUTPUTS:BIGIPExternalPrivateIP]",
+        "F5_0_PORT": "443",
+        "F5_0_SSL_PROFILE": "Common/clientssl",
+        "F5_PARTITION": "mesos",
+        "F5_0_MODE": "tcp"
+      },
+      "cpus": 0.25,
+      "uris": [
+        "file:///etc/dockercfg.tgz"
+      ],
+      "instances": 1,
+      "upgradeStrategy": {
+        "maximumOverCapacity": 1,
+        "minimumHealthCapacity": 1
+      },
+      "healthChecks": [
+        {
+          "portIndex": 0,
+          "protocol": "HTTP",
+          "timeoutSeconds": 20,
+          "intervalSeconds": 20,
+          "ignoreHttp1xx": false,
+          "gracePeriodSeconds": 300,
+          "maxConsecutiveFailures": 3,
+          "path": "/healthcheck"
+        }
+      ],
+      "id": "/frontend-server"
+    }
+
+Once the application has been deployed, you will notice that the Big-IP is
+configured with a virtual server and one pool member for the front-end web
+service in the **mesos** partition.  It will also have a health monitor
+configured.
+
+At this point you will be able to access the web server but any actions
+requiring access to the back-end services fronted by the web server will fail
+because we have not created them.  To access the server, point your browser at
+[AWS_OUTPUTS:FrontendExample].  You will see several tabs with labels such as
+**Example**, **Browse**, and **Watch**.
 
 Scale the frontend-service up
 -----------------------------
+At this point you have one web service running fronted by a Big-IP virtual
+server.  You can scale up or down the number of web servers by using the
+marathon UI (you obtain the URL from [DOCKER_OUTPUTS:MarathonUI]).
 
-coming soon!
+To scale the number of web services to two, click on **frontend-server** in
+the Applications panel.  A **Scale Application** button will appear that will
+allow you to choose the number of instances desired.
+
+You should notice that the f5-lb-marathon app will adjust the pool members of
+ the Big-IP virtual server to match the value you entered.
 
 Reconfigure the frontend-service to use the f5.http iApp
 --------------------------------------------------------
+The **f5-lb-marathon** app also offers the flexibility of installing
+arbitrary iapps. We will use this option to install another insecure version
+of the web service running on the standard HTTP port 80.  We will use the
+pre-packaged iapp **f5.http**.
 
-coming soon!
+To install the **front-end** web server application, use the following curl
+command (or similar program), substituting the appropriate values from the
+AWS CFT Parameter and Output variables::
 
-Configure the lwp-controller (CSI)
-----------------------------------
+    curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' \
+    [AWS_OUTPUT:DnsAddress]/service/marathon/v2/apps -d '
+    {
+      "container": {
+        "docker": {
+          "portMappings": [
+            {
+              "protocol": "tcp",
+              "containerPort": 80,
+              "hostPort": 0
+            }
+          ],
+          "privileged": false,
+          "image": "f5networks/f5-ci-beta:microservice-demo-v0.14",
+          "network": "BRIDGE",
+          "forcePullImage": true
+        },
+        "type": "DOCKER",
+        "volumes": []
+      },
+      "mem": 128,
+      "labels": {
+        "F5_PARTITION": "mesos",
+        "F5_0_IAPP_VARIABLE_pool__pool_to_use": "/#create_new#",
+        "F5_0_IAPP_OPTION_description": "iApp for insecure (HTTP) frontend-server",
+        "F5_0_IAPP_VARIABLE_monitor__monitor": "/#create_new#",
+        "F5_0_IAPP_VARIABLE_pool__addr": "[AWS_OUTPUTS:BIGIPExternalPrivateIP]",
+        "F5_0_IAPP_TEMPLATE": "/Common/f5.http",
+        "F5_0_IAPP_VARIABLE_monitor__response": "none",
+        "F5_0_IAPP_VARIABLE_net__server_mode": "lan",
+        "F5_0_IAPP_POOL_MEMBER_TABLE_NAME": "pool__members",
+        "F5_0_IAPP_VARIABLE_net__client_mode": "wan",
+        "F5_0_IAPP_VARIABLE_monitor__uri": "/healthcheck",
+        "F5_0_IAPP_VARIABLE_pool__port": "80"
+      },
+      "cpus": 0.25,
+      "uris": [
+        "file:///etc/dockercfg.tgz"
+      ],
+      "instances": 2,
+      "upgradeStrategy": {
+        "maximumOverCapacity": 1,
+        "minimumHealthCapacity": 1
+      },
+      "env": {
+        "INSECURE": "1"
+      },
+      "healthChecks": [
+        {
+          "portIndex": 0,
+          "protocol": "HTTP",
+          "timeoutSeconds": 20,
+          "intervalSeconds": 20,
+          "ignoreHttp1xx": false,
+          "gracePeriodSeconds": 300,
+          "maxConsecutiveFailures": 3,
+          "path": "/healthcheck"
+        }
+      ],
+      "id": "/frontend-server-insecure"
+    }
 
-coming soon!
+When the script has completed, there will be two instances of the insecure
+web service deployed.  You can verify this through the marathon UI or by
+pointing your browser to [AWS_OUTPUTS:FrontendExampleInsecure].
 
 Deploy an example East-West Service
 -----------------------------------
+The front-end web service makes uses of several backend services.  We will
+spin up one such service so show how easy it is to insert the lightweight
+proxy to front and load balance the service.
 
-coming soon!
+To install the **example** backend service, use the following curl
+command (or similar program), substituting the appropriate values from the
+AWS CFT Parameter and Output variables::
+
+    curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' \
+    [AWS_OUTPUT:DnsAddress]/service/marathon/v2/apps -d '
+    {
+      "container": {
+        "docker": {
+          "portMappings": [
+            {
+              "servicePort": 11099,
+              "protocol": "tcp",
+              "containerPort": 80,
+              "hostPort": 0
+            }
+          ],
+          "privileged": false,
+          "image": "f5networks/f5-ci-beta:microservice-demo-v0.14",
+          "network": "BRIDGE",
+          "forcePullImage": true
+        },
+        "type": "DOCKER",
+        "volumes": []
+      },
+      "mem": 128,
+      "labels": {
+        "lwp": "enable"
+      },
+      "cpus": 0.25,
+      "uris": [
+        "file:///etc/dockercfg.tgz"
+      ],
+      "instances": 2,
+      "upgradeStrategy": {
+        "maximumOverCapacity": 1,
+        "minimumHealthCapacity": 1
+      },
+      "id": "example"
+    }
+
+The **lwp-controller** will notice that an application is being spun up that
+it needs to control and will therefore make sure the service is fronted by
+the lightweight proxy.  At this point, there is only one such service so we
+won't we load balancing.  However, you can confirm that the service is now
+accessible by clicking on the **example** tab in the main panel of your web
+browser.  The ID of the backend service will be printed to the web page.  You
+can confirm this is the same ID as was reported in the marathon UI for the
+**example** service.
 
 Scale the example service up
 ----------------------------
+To run additional instances of the example service, simply go to the marathon
+UI and increase the number of instances for it.  This is similar to the
+previous exercise where we spun up an additional web service.
 
-coming soon!
+Now when you click on the **example** tab, you will notice that the returned
+ID value will be balanced among the running instances.
 
 Deploy complex microservices topology
 -------------------------------------
+The front-end web service can communicated with various additional backend
+services. You can spin these services up by issuing the previous curl for the
+**example** app, but replacing the **id** and **servicePort** fields using
+the following table:
 
-coming soon!
++-------------------+-----------------+
+| ID                | Port            |
++===================+=================+
+| auth-svc          | 11001           |
++-------------------+-----------------+
+| list-manager-svc  | 11002           |
++-------------------+-----------------+
+| title-detail-svc  | 11003           |
++-------------------+-----------------+
+| trending-svc      | 11004           |
++-------------------+-----------------+
+| activity-svc      | 11005           |
++-------------------+-----------------+
+| suggestions-svc   | 11006           |
++-------------------+-----------------+
+| drm-svc           | 11007           |
++-------------------+-----------------+
+
+At this point you have a fully functioning environment and should be able to
+click on any of the tabs presented by the front-end web service in your
+browser.
+
 
 Inject, diagnose, and address errors
 ------------------------------------
 
-coming soon!
+In your browser that is pointing at the front-end web server, click on the
+**repeat** button and then one of the subsequent tabs to continuously send
+requests to the server.
 
+You can then view the analytics that are being collected for both the
+North-South traffic (reported by the Big-IP) as well as the East-West traffic
+to the individual apps (reported by the lightweight proxies).  Open a
+browser and point it at your Splunk Instance (**http://[SPLUNK_IP]:8000**).
+The **F5 Networks** app will display panels for the North-South traffic,
+while the **F5 Lightweight Proxy** app will display panels for the
+East-West traffic. Go ahead and view the F5 Lightweight Proxy app.  Change
+the time range to a realtime 5-minute window. If the environment is properly
+setup, you should only see 2xx responses in the **Virtual Server Requests**
+panel.
+
+To inject some errors into the East-West, change the URL of the web service
+from **[AWS_OUTPUTS:FrontendExample]** to
+**[AWS_OUTPUTS:FrontendExample]?forceFailures=true**.  Then turn the repeat
+option on for the Example requests. To speed up the degradation, you will
+want to scale the Example services to one using the Marathon UI.  To make the
+analytics more interesting, you could start a second browser but repeat
+either the Browse or Watch applications.
+
+Slowly over time, HTTP errors will start to occur in the example app.  The
+rate of errors will start to increase after a few minutes. At a certain
+point (around 5 minutes), the service will no longer successfully respond to
+requests.
+
+As you look at the panels, you will notice that 5xx errors will start to show
+up in the **Virtual Server Requests** panel.  This gives you a quick view
+that something bad is starting to occur in the back-end applications, but you
+cannot tell which application may be the one experiencing the trouble.  If
+you click on the 5xx line, you will get a drill down panel populated which
+will show you which applications are reporting the 5xx errors.  As you would
+expect, all the errors are coming from the Example application.
+
+Since it looks like the Example application has a catastrophic error
+condition, you can try to fix it by going to the Marathon UI and restarting
+the instance.  Go ahead and perform this step, and then observe the Splunk
+panels to see if that solved anything (at least, for the next 5 minutes).
+
+This concludes the demonstration of many of the F5 Container Integration
+features.  Remember that if you started the Marathon-Mesos environment in
+AWS, you will continue to be billed until you delete your stack.
