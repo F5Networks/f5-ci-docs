@@ -1,7 +1,7 @@
-F5 Integration for Mesos Environments Guide
-==========================
+F5 Integration for Mesos Environments
+=====================================
 
 .. toctree::
 
-  guides/map_f5-mesos-intro
-  guides/map_f5-mesos-install
+  docs/guides/map_f5-mesos-intro
+  docs/guides/map_f5-mesos-install

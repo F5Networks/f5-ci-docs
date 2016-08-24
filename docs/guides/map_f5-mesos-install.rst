@@ -1,11 +1,9 @@
-.. _index:
+.. _mesos-install:
 
 F5 Container Services Installation
-=========
+==================================
 
-.. todo::
-
-  Place some Mesos/Marathon prerequistes? Like enable Docker containerization, etc?
+.. todo:: Place some Mesos/Marathon prerequistes? Like enable Docker containerization, etc?
 
 Both the f5-marathon-lb and lightweight-proxy-controller run as dockerized container applications inside of Marathon.
 
@@ -26,4 +24,5 @@ From the command line on your sysytem, add the following to your local docker co
 For Windows users, the file is located at *%HOME%\.docker\config.json*
 
 .. include:: includes/topic_f5-mesos-csi-install.rst
+
 .. include:: includes/topic_f5-mesos-lwp-install.rst
