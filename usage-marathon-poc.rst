@@ -11,9 +11,14 @@ This usage guide also describes how to configure the analytics providers (BIG-IP
 
 Prerequisites
 -------------
-* BIG-IP with an active license (Good, Better, or Best). BIG-IP VEs with lab licenses are available for the purposes of this demo; ask your F5 sales rep for details.
-* Internet access (required to pull images from Docker Hub)
-* Amazon AWS account with an SSH keypair configured.
+
+* A `Mesos <http://mesos.apache.org/gettingstarted/>`_ `Marathon <https://mesosphere.github.io/marathon/docs/>`_ environment with containerization enabled. See `Running Docker Containers on Marathon <https://mesosphere.github.io/marathon/docs/native-docker.html>`_ for configuration instructions.
+* Access to the F5 Integration for Mesos Environments beta site. This is where all components are available for download.
+* An Amazon AWS account that can incur small charges, -OR-
+* An existing Mesos+Marathon environment.
+* A BIG-IP registration key (Good, Better, or Best license); a VE lab license that can be used in AWS can be provided by your F5 sales rep.
+* Internet access (required for AWS and to pull images from Docker).
+* `Docker <https://docs.docker.com/engine/getstarted/>`_ installed and at least one running container.
 
 
 Compatibility
@@ -41,15 +46,23 @@ F5 Container Integration Setup
 Install and Configure Splunk
 ````````````````````````````
 
-Follow the instructions in this section to set up a new Splunk Enterprise installation.
+.. tip:: If you already have a Splunk instance set up, skip to step 3.
 
-.. tip:: If you already have Splunk set up, skip to step two.
+You'll need to install Splunk somewhere that data from the web applications will be able to reach it (read: probably not on your local machine). We recommend launching an `Amazon EC2 instance <https://us-west-2.console.aws.amazon.com/ec2/v2/home?region=us-west-2#LaunchInstanceWizard>`_ running the OS of your choice. Be sure to configure the security group so that the instance is **not** openly accessible.
 
-#. Download the free trial of `Splunk Enterprise <https://www.splunk.com/en_us/download/splunk-enterprise.html>`_.
+#. Download the free trial of `Splunk Enterprise <https://www.splunk.com/en_us/download/splunk-enterprise.html>`_ to your EC2 instance.
 
-#. Follow the `Install Splunk Enterprise <http://docs.splunk.com/Documentation/Splunk/6.4.2/SearchTutorial/InstallSplunk>`_ guide to install and start splunk for the first time.
+    .. code-block:: bash
 
-#. Log in to the Splunk GUI at http://<your_splunk_ip_address>:8000 using the following credentials:
+        wget -O splunk-6.4.3-b03109c2bad4-linux-2.6-amd64.deb 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=6.4.3&product=splunk&filename=splunk-6.4.3-b03109c2bad4-linux-2.6-amd64.deb&wget=true'
+
+#. Follow the `Install Splunk Enterprise <http://docs.splunk.com/Documentation/Splunk/6.4.2/Installation/InstallonLinux>`_ guide to install and start Splunk for the first time.
+
+    .. note::
+
+        You may need ``chmod`` or ``chown`` the directory in which Splunk (``/opt/splunk``) is installed to complete the startup.
+
+#. Log in to the Splunk GUI, at the URL provided, using the following credentials:
 
     * Username: admin
     * Password: changeme
@@ -58,7 +71,8 @@ Follow the instructions in this section to set up a new Splunk Enterprise instal
 
 #. Add a new :guilabel:`HTTP Event Collector`:
 
-    * Go to ::menuselection:`Settings --> Data inputs`.
+    * Click on the gear icon next to :guilabel:`Apps`.
+    * Go to :menuselection:`Settings --> Data inputs`.
     * For :guilabel:`HTTP Event Collector`, select :guilabel:`Add new`.
     * Enter a name for the collector; all other fields can use the default values.
     * Click :guilabel:`Next`, then :guilabel:`Review`, then :guilabel:`Submit`.
@@ -66,9 +80,9 @@ Follow the instructions in this section to set up a new Splunk Enterprise instal
 
 #. Enable the :guilabel:`HTTP Event Collector`:
 
-    * Go to ::menuselection:`Settings --> Data inputs`.
-    * For :guilabel:`HTTP Event Collector`, click on :guilabel:`Global Settings`.
-    * Click on :guilabel:`Enabled` button.
+    * Go to :menuselection:`Settings --> Data inputs`.
+    * Click on :guilabel:`HTTP Event Collector`, then on :guilabel:`Global Settings`.
+    * Click on :guilabel:`Enabled`.
     * Click :guilabel:`Save`.
 
     .. important::
@@ -88,11 +102,8 @@ In the previous step, you configured your Splunk instance to receive data from t
 #. Install the Sankey App:
 
      * In the Splunk GUI, click on :menuselection:`Apps --> Find More Apps`.
-
-        .. note:: From the main dashboard, you will have to first click on the gear next to the side bar header named "Apps".
-
      * Search for "Sankey".
-     * Click "Install" and enter your Splunk credentials (not the local user name for the Splunk instance).
+     * Click "Install" and enter your splunk.com credentials (this is your actual Splunk account, not the instance login).
      * Accept the license agreement, then click the :guilabel:`Login and Install` button.
      * Restart Splunk when prompted, then log back in.
 
@@ -106,9 +117,9 @@ In the previous step, you configured your Splunk instance to receive data from t
 
 #. Install the F5 Lightweight Proxy Analytics App:
 
-     * Download :file:`f5-lightweight-proxy-analytics.tgz` from beta.f5.com to your local drive.
+     * Download :file:`f5-lightweight-proxy-analytics-v0.1.0.tgz` from beta.f5.com to your local drive.
      * Click :guilabel:`Install app from file`.
-     * Click :guilabel:`Choose File` and select :file:`f5-lightweight-proxy-analytics.tgz`.
+     * Click :guilabel:`Choose File` and select :file:`f5-lightweight-proxy-analytics-v0.1.0.tgz`.
      * Click :guilabel:`Upload`.
 
 #. Verify installation:
@@ -131,7 +142,21 @@ In this section, we guide you through the installation of a new Mesos and Marath
 
     **This demo uses an AWS CloudFormation template (CFT) that incurs charges while the stack is running.** Delete the stack when you have completed the demo to ensure that you will not continue to be charged.
 
-    The CFT, :file:`f5-ci.beta.cloudformation.json`, is included in the F5 Container Service Integration beta package. You will need to download this file to proceed with the steps in this section.
+#. Accept the EULA for BIG-IP VE in Amazon.
+
+    * Go to the BIG-IP VE Amazon Marketplace page for `F5 BIG-IP Virtual Edition Good (BYOL) <http://aws.amazon.com/marketplace/pp?sku=dzweylwc4hxloqophyoi3oihr>`_.
+     * Select your region from the drop-down menu.
+     * Click on the :guilabel:`Continue` button.
+     * Click on :guilabel:`Accept Software Terms`.
+
+     .. warning::
+
+        If you do not complete this step before launching the CloudFormation template, your stack creation will fail.
+
+
+#. Download the CloudFormation template:
+
+    :download:`f5-ci-beta.cloudformation.json <docs/_static/f5-ci-beta.cloudformation.json>`
 
 #. Launch the CFT in AWS:
 
@@ -139,49 +164,51 @@ In this section, we guide you through the installation of a new Mesos and Marath
     * Go to CloudFormation (https://console.aws.amazon.com/cloudformation)
     * Click :guilabel:`Create New Stack`.
     * Upload the CloudFormation template.
-
-        * Choose :menuselection:`Upload a template to Amazon S3`.
-        * Click :guilabel:`Choose File` and select the CloudFormation template from its download location.
     * Click :guilabel:`Next`.
+    * Enter the required :guilabel:`Parameters`:
 
-#. Configure your stack:
-
-    * Parameters:
-
-        - *KeyName*: You must select an SSH keypair that is configured in AWS; this will be used to log in to the VMs that are started by the template.
-
-        - *AdminLocation*: This is a CIDR subnet that will limit access to your stack.
+        - AdminLocation: This is a CIDR subnet that will limit access to your stack.
 
             * Only IPs in this subnet can get to the BIG-IP, Mesos, and Marathon administrative interface.
             * The default, "0.0.0.0/0",  allows access from any host.
             * You may want to restrict access to just your external ip (e.g., 63.149.112.92/32). There are several ways to find your external IP address (note: this is not necessarily  the IP address of your local host). For example, on Linux, issue the command ``curl https://api.ipify.org`` and your external IP address will be displayed.
 
-        - *BIGIPRegKey*: Use the evaluation registration key that was provided to you by your F5 sales rep.
+        - BIGIPRegKey: Use the evaluation registration key that was provided to you by your F5 sales rep.
+        - KeyName: You must select an SSH keypair that is configured in AWS; this will be used to log in to the VMs that are started by the template.
+        - OAuthEnabled: Use the default setting.
+        - SlaveInstanceCount: Use the default setting.
+    * Click :guilabel:`Next`.
+    * :guilabel:`Options`: Enter tags and/or edit Advanced configurations; or, just click :guilabel:`Next`.
+    * :guilabel:`Review`: Review the information provided, then check the Identity and Access Management "I acknowledge.."  box.
+    * Click :guilabel:`Create`.
 
-        - *All other parameters*: Use the default settings.
+#. View your stack.
 
-    * Outputs:
+    * Click the refresh button to view the stack list. The status of your stack will initially be displayed as "CREATE_IN_PROGRESS". If you wish to view the creation events, click on the :guilabel:`Events` tab.
+    * Once the stack is created, you will have a BIG-IP running alongside the MesoSphere DC/OS environment. These are listed under the :guilabel:`Resources` tab.
+    * The :guilabel:`Outputs` tab contains the necessary information for accessing the stack resources. The following Outputs allow you to access your BIG-IP and the Marathon UI.
 
-        Once the stack is set up, you will have a BIG-IP running alongside the MesoSphere DC/OS environment. The CFT outputs provide the necessary information for accessing these resources. Two examples of the CFT outputs are shown below.
+        - **BIGIPAdminUI**: the IP address for the BIG-IP configuration utility (aka, the UI).
+        - **BIGIPAdminPassword**: the password for the 'admin' user on the BIG-IP.
+        - **MarathonUI**: the URL for the Marathon UI.
 
-        - *BIGIPAdminUI*: Navigate to this URL in a browser and log in (username is "admin"; password is provided in the CFT output as *BIGIPAdminPassword*).
+.. note::
 
-            .. note:: A new partition, called 'mesos', was created for use with this demo. All LTM objects created from Mesos can be found in this partition.
-
-        - *MarathonUI*: Navigate to this URL in a browser; verify that your Marathon user interface has no applications running.
+    * The first time you access the BIG-IP configuration utility, you may see the "Configuration Utility restarting..." message. This message should resolve after about 5 minutes. *If it does not resolve*, please contact your F5 Beta rep.
+    * A partition called "mesos" was created on the BIG-IP for use with this demo. All LTM objects originating in Mesos will be created in this partition.
 
 
 Deploy f5-marathon-lb (CSI)
 ```````````````````````````
 
-The **f5-marathon-lb** component of the Container Service Integrator (CSI) is packaged in a container and runs in the Marathon environment. This component connects Marathon to the BIG-IP. It watches changes in Marathon and configures new objects, like virtual servers and pool members, on the BIG-IP accordingly.
+The **f5-marathon-lb** component of the F5 Container Service Integration (CSI) is packaged in a container and runs in the Marathon environment. This component connects Marathon to the BIG-IP. It watches changes in Marathon and configures new objects, like virtual servers and pool members, on the BIG-IP accordingly.
 
 #. Install **f5-marathon-lb**:
 
     .. note::
 
         * We use a ``curl`` command here; you may substitute the command of your choice (e.g., ``wget``).
-        * You will need to substitute the appropriate values from the AWS CFT **Parameter** and **Output** variables in the JSON blob.
+        * You will need to substitute the appropriate values from your AWS stack for the AWS_OUTPUTs shown in the sample JSON blob.
 
     .. code-block:: text
         :linenos:
@@ -196,7 +223,7 @@ The **f5-marathon-lb** component of the Container Service Integrator (CSI) is pa
                 {}
               ],
               "privileged": false,
-              "image": "f5networks/:f5-marathon-lb-v0.1.0",
+              "image": "f5networks/f5-ci-beta:f5-marathon-lb-v0.1.0",
               "network": "BRIDGE",
               "forcePullImage": true
             },
@@ -225,9 +252,87 @@ The **f5-marathon-lb** component of the Container Service Integrator (CSI) is pa
           "id": "/f5-csi/f5-marathon-lb"
         }'
 
+    The ``curl`` command will return a JSON blob like that shown below:
+
+    .. code-block:: json
+
+        {
+            "id": "/f5-csi/f5-marathon-lb",
+            "cmd": null,
+            "args": ["sse", "--marathon",
+                "http://internal-csi-beta2-Internal-1JTBFE9E6UIRN-483548438.us-west-2.elb.amazonaws.com/service/marathon",
+                "--partition", "mesos", "--hostname", "10.0.9.79", "--username", "admin", "--password", "i-f9de536d"
+            ],
+            "user": null,
+            "env": {},
+            "instances": 1,
+            "cpus": 0.5,
+            "mem": 64,
+            "disk": 0,
+            "executor": "",
+            "constraints": [],
+            "uris": ["file:///etc/dockercfg.tgz"],
+            "fetch": [{
+                "uri": "file:///etc/dockercfg.tgz",
+                "extract": true,
+                "executable": false,
+                "cache": false
+            }],
+            "storeUrls": [],
+            "ports": [0],
+            "portDefinitions": [{
+                "port": 0,
+                "protocol": "tcp",
+                "labels": {}
+            }],
+            "requirePorts": false,
+            "backoffSeconds": 1,
+            "backoffFactor": 1.15,
+            "maxLaunchDelaySeconds": 3600,
+            "container": {
+                "type": "DOCKER",
+                "volumes": [],
+                "docker": {
+                    "image": "f5networks/f5-ci-beta:f5-marathon-lb-v0.1.0",
+                    "network": "BRIDGE",
+                    "portMappings": [{
+                        "containerPort": 0,
+                        "hostPort": 0,
+                        "servicePort": 0,
+                        "protocol": "tcp",
+                        "labels": {}
+                    }],
+                    "privileged": false,
+                    "parameters": [],
+                    "forcePullImage": true
+                }
+            },
+            "healthChecks": [],
+            "readinessChecks": [],
+            "dependencies": [],
+            "upgradeStrategy": {
+                "minimumHealthCapacity": 1,
+                "maximumOverCapacity": 1
+            },
+            "labels": {},
+            "acceptedResourceRoles": null,
+            "ipAddress": null,
+            "version": "2016-08-25T20:26:49.257Z",
+            "residency": null,
+            "tasksStaged": 0,
+            "tasksRunning": 0,
+            "tasksHealthy": 0,
+            "tasksUnhealthy": 0,
+            "deployments": [{
+                "id": "f1718cbb-4ad3-4abb-aacd-25fdb6e51041"
+            }],
+            "tasks": []
+        }
+
+
 #. Go to your Marathon UI and watch the app creation.
 
-    The application's status may be "Staged" while Marathon schedules the application task, downloads the container, and starts it. It will change to "Started" once the process is complete.
+    The application's status may be "Waiting", "Delayed", or "Deploying" while Marathon schedules the application task, downloads the container, and starts it. It will change to "Running" once the process is complete.
 
 #. Click on the application called *f5-marathon-lb*.
 
@@ -293,6 +398,84 @@ The **lwp-controller** component of the CSI is packaged in a container and runs 
           "id": "/f5-csi/lwp-controller"
         }'
 
+    The ``curl`` command will return a JSON blob like the one shown below.
+
+    .. code-block:: json
+        :linenos:
+
+        {
+            "id": "/f5-csi/lwp-controller",
+            "cmd": null,
+            "args": null,
+            "user": null,
+            "env": {
+                "LWP_DEFAULT_CONTAINER": "f5networks/f5-ci-beta:light-weight-proxy-v0.1.0",
+                "MARATHON_URL": "http://marathon.mesos:8080",
+                "LWP_DEFAULT_CPU": "1",
+                "LWP_DEFAULT_STATS_FLUSH_INTERVAL": "10000",
+                "LWP_DEFAULT_FORCE_PULL": "True",
+                "LWP_DEFAULT_MEM": "128",
+                "LWP_DEFAULT_LOG_LEVEL": "info",
+                "LWP_ENABLE_LABEL": "lwp",
+                "LWP_DEFAULT_STATS_TOKEN": "C6F63B3A-366F-4A3F-8025-4F32031C5D0B",
+                "LWP_DEFAULT_STATS_BACKEND": "splunk",
+                "LWP_DEFAULT_URIS": "file:///etc/dockercfg.tgz",
+                "LWP_DEFAULT_STATS_URL": "https://192.168.88.146:8088"
+            },
+            "instances": 1,
+            "cpus": 1,
+            "mem": 128,
+            "disk": 0,
+            "executor": "",
+            "constraints": [],
+            "uris": ["file:///etc/dockercfg.tgz"],
+            "fetch": [{
+                "uri": "file:///etc/dockercfg.tgz",
+                "extract": true,
+                "executable": false,
+                "cache": false
+            }],
+            "storeUrls": [],
+            "ports": [],
+            "portDefinitions": [],
+            "requirePorts": false,
+            "backoffSeconds": 1,
+            "backoffFactor": 1.15,
+            "maxLaunchDelaySeconds": 3600,
+            "container": {
+                "type": "DOCKER",
+                "volumes": [],
+                "docker": {
+                    "image": "f5networks/f5-ci-beta:lwp-controller-v0.1.0",
+                    "network": "BRIDGE",
+                    "portMappings": [],
+                    "privileged": false,
+                    "parameters": [],
+                    "forcePullImage": true
+                }
+            },
+            "healthChecks": [],
+            "readinessChecks": [],
+            "dependencies": [],
+            "upgradeStrategy": {
+                "minimumHealthCapacity": 1,
+                "maximumOverCapacity": 1
+            },
+            "labels": {},
+            "acceptedResourceRoles": null,
+            "ipAddress": null,
+            "version": "2016-08-25T20:53:05.063Z",
+            "residency": null,
+            "tasksStaged": 0,
+            "tasksRunning": 0,
+            "tasksHealthy": 0,
+            "tasksUnhealthy": 0,
+            "deployments": [{
+                "id": "f7276efa-eaf6-468f-b5dc-09bf872e71f6"
+            }],
+            "tasks": []
+        }
+
 #. Go to your Marathon UI and watch the app creation.
 
 #. Click on the application called *lwp-controller* to view its details.
@@ -304,9 +487,7 @@ Use an F5 iApps® template file to enable stats collection on your BIG-IP and se
 
 #. Download :file:`f5.analytics.tmpl` from beta.f5.com.
 
-#. Log in to the BIG-IP configuration utility. T
-
-    * The IP address and password are provided in the AWS CFT outputs.
+#. Log in to the BIG-IP configuration utility.
 
 #. Select :menuselection:`IApps/Templates --> Import`.
 
@@ -331,8 +512,8 @@ Use an F5 iApps® template file to enable stats collection on your BIG-IP and se
     * Protocol - ``HTTPS``
     * API Key - [SPLUNK_TOKEN]
     * Push Interval - ``20``
-    * Mapping Table (1) - ``Type=[App Name] From=[Virtual Name] Regex=(.*)_d Action=Map``
-    * Mapping Table (2) - ``Type=[Tenant Name] From=[Partition] Regex=(.*) Action=Map``
+    * Mapping Table: 1 - ``Type=[App Name] From=[Virtual Name] Regex= (.*)_\d  Action=Map``
+    * Mapping Table: 2 - ``Type=[Tenant Name] From=[Partition] Regex=(.*) Action=Map``
 
 #. Click :guilabel:`Finished`.
 
@@ -375,7 +556,7 @@ To install the **front-end** web server application:
       },
       "mem": 128,
       "labels": {
-        "F5_0_BIND_ADDR": "[AWS_OUTPUTS:BIGIPAdminPrivateIP]",
+        "F5_0_BIND_ADDR": "[AWS_OUTPUTS:BIGIPExternalPrivateIP]",
         "F5_0_PORT": "443",
         "F5_0_SSL_PROFILE": "Common/clientssl",
         "F5_PARTITION": "mesos",
@@ -415,14 +596,14 @@ Scale up the frontend-service
 
 You can scale the number of web servers up or down via the Marathon UI.
 
-.. tip:: The Marathon UI URL is available in [DOCKER_OUTPUTS:MarathonUI]).
-
 To scale the number of web services to two:
 
 #. Click on :guilabel:`frontend-server` in the :guilabel:`Applications` panel.
-#. Choose the number of instances using the :guilabel`Scale Application` button.
+#. Click :guilabel:`Scale Application`.
+#. Enter "2" in the instances window.
+#. Click :guilabel:`SCale Application`.
 
-Once you have scaled up the number of web servers, check the **mesos** partition on the BIG-IP. The f5-lb-marathon app adjusts the number of pool members on the virtual server accordingly.
+Once the status of the second instance changes to "Started", check the **mesos** partition on the BIG-IP. The f5-lb-marathon app has added another pool member on the virtual server for the second instance.
 
 
 Launch a service with an iApp
@@ -464,7 +645,7 @@ The **f5-lb-marathon** app also supports the installation of arbitrary iApps. Ne
             "F5_0_IAPP_VARIABLE_pool__pool_to_use": "/#create_new#",
             "F5_0_IAPP_OPTION_description": "iApp for insecure (HTTP) frontend-server",
             "F5_0_IAPP_VARIABLE_monitor__monitor": "/#create_new#",
-            "F5_0_IAPP_VARIABLE_pool__addr": "[AWS_OUTPUTS:BIGIPAdminPrivateIP]",
+            "F5_0_IAPP_VARIABLE_pool__addr": "[AWS_OUTPUTS:BIGIPExternalPrivateIP]",
             "F5_0_IAPP_TEMPLATE": "/Common/f5.http",
             "F5_0_IAPP_VARIABLE_monitor__response": "none",
             "F5_0_IAPP_VARIABLE_net__server_mode": "lan",
@@ -553,7 +734,7 @@ The front-end web service makes uses of several backend services.  We will spin 
           "id": "example"
         }'
 
-The **lwp-controller** will notice an application is being spun up that it needs to control; it will then add the lightweight proxy in front of the application. We will not be load balancing, as there is only one service at present, but you can confirm that the service is accessible. Click on the :guilabel:`example` tab in the main panel of the Front End Example at [AWS_OUTPUTS:FrontendExample]. The ID of the backend service will be displayed on the web page. You can confirm this is the same ID reported in the Marathon UI for the **example** service.
+The **lwp-controller** will notice an application is being spun up that it needs to control; it will then add the lightweight proxy in front of the application. We will not be load balancing, as there is only one service at present, but you can confirm that the service is accessible. Click on the :guilabel:`example` tab in the main panel of the Front End Example at [AWS_OUTPUTS:FrontendExample]. The ID of the backend service will be displayed on the web page. You can confirm this is the same ID reported in the Marathon UI for the **Example** service.
 
 Scale the Example service up
 ````````````````````````````
@@ -627,7 +808,7 @@ The front-end web service can communicate with various additional backend servic
           "id": "auth-svc"
         }
 
-\
+
    .. code-block:: text
         :linenos:
 
@@ -675,29 +856,27 @@ At this point, you have a fully functioning environment and should be able to cl
 Inject, diagnose, and address errors
 ````````````````````````````````````
 
-#. Click on the :guilabel:`repeat` button in the front-end web service,  then on one of the other tabs, to continuously send requests to the server.
+Analytics are collected for both the North-South traffic (reported by the BIG-IP) and the East-West traffic to the individual apps (reported by the lightweight proxies). The traffic exercise below demonstrates how to inject, diagnose, and address errors with your Marathon applications.
 
-Analytics are collected for both the North-South traffic (reported by the BIG-IP) and the East-West traffic to the individual apps (reported by the lightweight proxies).
+.. tip::
 
-To view the analytics:
+    * Click on the :guilabel:`repeat` button in the front-end web service,  then on one of the other tabs, to continuously send requests to the server.
+    * The **F5 Networks** app in Splunk displays panels for North-South traffic.
+    * The **F5 Lightweight Proxy** app in Splunk displays panels for East-West traffic.
 
-    * Open a browser and point it at your Splunk Instance (**http://[SPLUNK_IP]:8000**).
 
-        - The **F5 Networks** app displays panels for North-South traffic.
-        - The **F5 Lightweight Proxy** app displays panels for East-West traffic.
+.. rubric:: Traffic Exercise:
 
-.. topic:: Traffic Exercise:
-
-    * View the **F5 Lightweight Proxy** app in Splunk.
-    * Change the time range to a realtime 5-minute window. If the environment is properly set up, you should only see 2xx responses in the :guilabel:`Virtual Server Requests` panel.
-    * To inject some errors into the East-West traffic, change the URL of the front-end web service from **[AWS_OUTPUTS:FrontendExample]** to **[AWS_OUTPUTS:FrontendExample]?forceFailures=true**.
-    * Then, turn on the repeat option for the Example requests.
-    * To speed up the degradation, use the Marathon UI to scale the Example services to one instance.
-    * To make the analytics more interesting, access the front-end web service in a different browser and repeat a different application (Browse or Watch).
-    * HTTP errors will start to occur in the Example app. The rate of errors will start to increase after a few minutes. At around 5 minutes, the service will no longer successfully respond to requests.
-    * As you look at the panels, you will notice that 5xx errors will start to show up in the :guilabel:`Virtual Server Requests` panel. This lets you know that something is going wrong in the back-end applications, but you can't tell which application is the one having trouble.
-    * If you click on the 5xx line, you'll see a drill-down panel that shows which applications are reporting the 5xx errors. As you would expect, all the errors are coming from the Example application.
-    * Since it looks like the Example application has a catastrophic error condition, you can try to fix it by going to the Marathon UI and restarting the instance. Go ahead and restart the instance, then observe the Splunk panels to see if that solved anything (give it at least 5 minutes).
+#. View the **F5 Lightweight Proxy** app in Splunk.
+#. Change the time range to a realtime 5-minute window. If the environment is properly set up, you should only see 2xx responses in the :guilabel:`Virtual Server Requests` panel.
+#. To inject some errors into the East-West traffic, change the URL of the front-end web service from **[AWS_OUTPUTS:FrontendExample]** to **[AWS_OUTPUTS:FrontendExample]?forceFailures=true**.
+#. Then, turn on the repeat option for the Example requests.
+#. To speed up the degradation, use the Marathon UI to scale the Example services to one instance.
+#. To make the analytics more interesting, access the front-end web service in a different browser and repeat a different application (Browse or Watch).
+#. HTTP errors will start to occur in the Example app. The rate of errors will start to increase after a few minutes. At around 5 minutes, the service will no longer successfully respond to requests.
+#. As you look at the panels, you will notice that 5xx errors will start to show up in the :guilabel:`Virtual Server Requests` panel. This lets you know that something is going wrong in the back-end applications, but you can't tell which application is the one having trouble.
+#. If you click on the 5xx line, you'll see a drill-down panel that shows which applications are reporting the 5xx errors. As you would expect, all the errors are coming from the Example application.
+#. Since it looks like the Example application has a catastrophic error condition, you can try to fix it by going to the Marathon UI and restarting the instance. Go ahead and restart the instance, then observe the Splunk panels. You should see 5xx errors immediately drop to zero.
 
 
 Conclusion
