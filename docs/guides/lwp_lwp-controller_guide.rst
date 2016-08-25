@@ -10,19 +10,13 @@ The F5 Lightweight Proxy (LWP) Controller is a component of the F5 Container Ser
 Operation
 ---------
 
-For each application that the Marathon scheduler starts or stops that has a specific label defined, the LWP Controller will check to see if an existing lightweight proxy already exists for that application. Depending on the Marathon event messages, there are several possible actions the Lightweight Proxy Controller will perform:
+For each application that the Marathon scheduler starts or stops that has a specific label defined, the LWP Controller will ensure a lightweight proxy, with the proper configuration, exists for the application . Depending on the Marathon event messages, there are several possible actions the Lightweight Proxy Controller will perform.
 
-If no LWP exists for the application:
+* If no LWP exists for the application, LWP Controller will create a new LWP instance and add the application instance to the pool to be load balanced.
 
--  LWP Controller will create a new LWP instance and add the application instance to the pool to be load balanced.
+* If a LWP already exists for the application, LWP Controller will update the LWP instance(s) for the application by adding or removing pool members.
 
-If a LWP already exists for the application:
-
--  LWP Controller will update the LWP instance(s) for the application by adding or removing pool members.
-
-If a LWP already exists, but the last instance of the application has been terminated:
-
--  LWP Controller will terminate the LWP instance(s) for the application.
+* When an application is removed from Marathon, the LWP Controller will remove any LWP(s) it created for that application.
 
 
 .. figure:: ../_static/mesos-flow-diagram.png
