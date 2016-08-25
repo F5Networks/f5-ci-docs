@@ -7,7 +7,7 @@ This guide describes how to set up a reference F5® Container Integration in an 
 
 You do not need a pre-existing Mesos and Marathon environment. This guide will help you set one up in Amazon Web Services (AWS) using a cloud formation template (CFT). **If you do have an existing environment that you would like to use, you can skip step three below.**
 
-This usage guide also describes how to configure the analytics providers (e.g. BIG-IP® and the F5 Lightweight Proxy) to send data to a Splunk instance. Additionally, instructions are provided on how to install several F5 Splunk apps on the Splunk instance in order to process and display the data. If you do not have an available instance, Splunk offers a 60-day evaluation program at https://www.splunk.com/en_us/download/splunk-enterprise.html.
+This usage guide also describes how to configure the analytics providers (BIG-IP® and the F5 Lightweight Proxy) to send data to a Splunk instance. Additionally, instructions are provided for installing several F5 Splunk apps on the Splunk instance to process and display the data. If you do not already have an instance, Splunk offers a 60-day evaluation program at https://www.splunk.com/en_us/download/splunk-enterprise.html.
 
 Prerequisites
 -------------
@@ -162,7 +162,7 @@ In this section, we guide you through the installation of a new Mesos and Marath
 
     * Outputs:
 
-    Once the stack is set up, you will have a BIG-IP running alongside the MesoSphere DC/OS environment. The CFT outputs provide the necessary information for accessing these resources.
+        Once the stack is set up, you will have a BIG-IP running alongside the MesoSphere DC/OS environment. The CFT outputs provide the necessary information for accessing these resources. Two examples of the CFT outputs are shown below.
 
         - *BIGIPAdminUI*: Navigate to this URL in a browser and log in (username is "admin"; password is provided in the CFT output as *BIGIPAdminPassword*).
 
@@ -196,7 +196,7 @@ The **f5-marathon-lb** component of the Container Service Integrator (CSI) is pa
                 {}
               ],
               "privileged": false,
-              "image": "[AWS_PARAMETER:DockerRepo]:f5-marathon-lb-v0.1.0",
+              "image": "f5networks/:f5-marathon-lb-v0.1.0",
               "network": "BRIDGE",
               "forcePullImage": true
             },
@@ -211,7 +211,7 @@ The **f5-marathon-lb** component of the Container Service Integrator (CSI) is pa
             "--partition",
             "mesos",
             "--hostname",
-            "[AWS_OUTPUTS:BIGIPExternalPrivateIP]",
+            "[AWS_OUTPUTS:BIGIPAdminPrivateIP]",
             "--username",
             "admin",
             "--password",
@@ -343,7 +343,7 @@ Deployment Test Cases
 Deploy the frontend-service as a North-South Service
 ````````````````````````````````````````````````````
 
-The CSI demo provides a secure front-end web server that communicates with several backend services. When the server is launched, f5-marathon-lb is notified takes action accordingly. It creates a virtual server in the **mesos** partition on the BIG-IP (if one is not already configured); creates a pool on the virtual server; and assigns the web server to the pool.
+The CSI demo provides a secure front-end web server that communicates with several backend services. When the server is launched, f5-marathon-lb is notified and takes action accordingly. It creates a virtual server in the **mesos** partition on the BIG-IP (if one is not already configured); creates a pool on the virtual server; and assigns the web server to the pool.
 
 To install the **front-end** web server application:
 
@@ -375,7 +375,7 @@ To install the **front-end** web server application:
       },
       "mem": 128,
       "labels": {
-        "F5_0_BIND_ADDR": "[AWS_OUTPUTS:BIGIPExternalPrivateIP]",
+        "F5_0_BIND_ADDR": "[AWS_OUTPUTS:BIGIPAdminPrivateIP]",
         "F5_0_PORT": "443",
         "F5_0_SSL_PROFILE": "Common/clientssl",
         "F5_PARTITION": "mesos",
@@ -402,8 +402,8 @@ To install the **front-end** web server application:
           "path": "/healthcheck"
         }
       ],
-      "id": "/frontend-server"
-    }
+      "id": "frontend-server"
+    }'
 
 
 Once the application has deployed, the virtual server, pool, and pool member will appear in the **mesos** partition on the BIG-IP. A health monitor is also configured on the BIG-IP.
@@ -430,7 +430,7 @@ Launch a service with an iApp
 
 The **f5-lb-marathon** app also supports the installation of arbitrary iApps. Next, we'll install the :file:`f5.http` iApp to launch an insecure version of the web service, running on the standard HTTP port 80.
 
-#. Install the **front-end** web server application:
+#. Install the front-end web server application:
 
     .. note:: Remember to substitute the highlighted values with the correct data from AWS.
 
@@ -464,7 +464,7 @@ The **f5-lb-marathon** app also supports the installation of arbitrary iApps. Ne
             "F5_0_IAPP_VARIABLE_pool__pool_to_use": "/#create_new#",
             "F5_0_IAPP_OPTION_description": "iApp for insecure (HTTP) frontend-server",
             "F5_0_IAPP_VARIABLE_monitor__monitor": "/#create_new#",
-            "F5_0_IAPP_VARIABLE_pool__addr": "[AWS_OUTPUTS:BIGIPExternalPrivateIP]",
+            "F5_0_IAPP_VARIABLE_pool__addr": "[AWS_OUTPUTS:BIGIPAdminPrivateIP]",
             "F5_0_IAPP_TEMPLATE": "/Common/f5.http",
             "F5_0_IAPP_VARIABLE_monitor__response": "none",
             "F5_0_IAPP_VARIABLE_net__server_mode": "lan",
@@ -497,8 +497,8 @@ The **f5-lb-marathon** app also supports the installation of arbitrary iApps. Ne
               "path": "/healthcheck"
             }
           ],
-          "id": "/frontend-server-insecure"
-        }
+          "id": "frontend-server-insecure"
+        }'
 
 
 When the script has completed, there will be two instances of the insecure web service deployed. You can verify this through the Marathon UI or by pointing your browser to [AWS_OUTPUTS:FrontendExampleInsecure].
@@ -545,25 +545,25 @@ The front-end web service makes uses of several backend services.  We will spin 
           "uris": [
             "file:///etc/dockercfg.tgz"
           ],
-          "instances": 2,
+          "instances": 1,
           "upgradeStrategy": {
             "maximumOverCapacity": 1,
             "minimumHealthCapacity": 1
           },
           "id": "example"
-        }
+        }'
 
-The **lwp-controller** will notice an application is being spun up that it needs to control; it will then add the lightweight proxy in front of the application. We will not be load balancing, as there is only one service at present, but you can confirm that the service is accessible. Click on the :guilabel:`example` tab in the main panel of the Front End Example at [AWS_OUTPUTS:FrontendExample]. The ID of the backend service will be printed to the web page. You can confirm this is the same ID reported in the Marathon UI for the **example** service.
+The **lwp-controller** will notice an application is being spun up that it needs to control; it will then add the lightweight proxy in front of the application. We will not be load balancing, as there is only one service at present, but you can confirm that the service is accessible. Click on the :guilabel:`example` tab in the main panel of the Front End Example at [AWS_OUTPUTS:FrontendExample]. The ID of the backend service will be displayed on the web page. You can confirm this is the same ID reported in the Marathon UI for the **example** service.
 
-Scale the example service up
+Scale the Example service up
 ````````````````````````````
 
-You can follow the steps in :ref:`Scale up the frontend-service` to run additional instances of the example service using the Marathon UI. When you click on the :guilabel:`example` tab after adding instances, the returned ID value will be balanced among the running instances.
+You can follow the steps provided in :ref:`Scale up the frontend-service` to run additional instances of the Example service using the Marathon UI. When you click on the :guilabel:`Example` tab after adding instances, the returned ID value will be balanced among the running instances.
 
 Deploy complex microservices topology
 `````````````````````````````````````
 
-The front-end web service can communicate with various additional backend services. You can spin these services up using the ``curl`` command for the **example** app, with any of the following **id** and **servicePort** fields substituted for "example" and "11099".
+The front-end web service can communicate with various additional backend services. You can spin these services up using the ``curl`` command for the Example app, with any of the following ``id`` and ``servicePort`` fields substituted for "example" and "11099".
 
 
 +-------------------+-----------------+
@@ -690,9 +690,9 @@ To view the analytics:
 
     * View the **F5 Lightweight Proxy** app in Splunk.
     * Change the time range to a realtime 5-minute window. If the environment is properly set up, you should only see 2xx responses in the :guilabel:`Virtual Server Requests` panel.
-    * To inject some errors into the East-West traffic, change the URL of the web service from **[AWS_OUTPUTS:FrontendExample]** to **[AWS_OUTPUTS:FrontendExample]?forceFailures=true**.
+    * To inject some errors into the East-West traffic, change the URL of the front-end web service from **[AWS_OUTPUTS:FrontendExample]** to **[AWS_OUTPUTS:FrontendExample]?forceFailures=true**.
     * Then, turn on the repeat option for the Example requests.
-    * To speed up the degradation, scale the Example services to one using the Marathon UI.
+    * To speed up the degradation, use the Marathon UI to scale the Example services to one instance.
     * To make the analytics more interesting, access the front-end web service in a different browser and repeat a different application (Browse or Watch).
     * HTTP errors will start to occur in the Example app. The rate of errors will start to increase after a few minutes. At around 5 minutes, the service will no longer successfully respond to requests.
     * As you look at the panels, you will notice that 5xx errors will start to show up in the :guilabel:`Virtual Server Requests` panel. This lets you know that something is going wrong in the back-end applications, but you can't tell which application is the one having trouble.
