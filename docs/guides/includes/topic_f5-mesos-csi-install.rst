@@ -1,7 +1,9 @@
 f5-marathon-lb Setup
 ====================
 
-The instructions provided here demonstrate how to install the f5-marathon-lb service and configure your BIG-IP device for edge load balancing with Mesos and Marathon.
+The instructions provided here demonstrate how to install the f5-marathon-lb service and configure your Mesos cluster to use your existing BIG-IP device for edge load balancing.
+
+.. tip:: If your Mesos cluster doesn't have internet access, take the steps below to store a copy of the image locally.
 
 #. Pull the f5-marathon-lb image from Docker Hub:
 
@@ -16,9 +18,10 @@ The instructions provided here demonstrate how to install the f5-marathon-lb ser
         $ docker images | grep f5-ci-beta
         f5networks/f5-ci-beta  f5-marathon-lb-v0.1.0 a072bbd759e4 6 days ago 327.7 MB
 
-        # Next tag and push the downloaded image to create the repository in your private registry.
-        $ docker tag a072bbd759e4 <your_registry>/f5-marathon-lb:v0.1.0
-        $ docker push <your_registry>/f5-marathon-lb:v0.1.0
+        # Tag and push the downloaded image to your private Docker registry.
+        docker pull f5networks/f5-ci-beta:f5-marathon-lb-v0.1.0
+        docker tag f5networks/f5-ci-beta:f5-marathon-lb-v0.1.0 <your_registry>/f5-marathon-lb:v0.1.0
+        docker push <your_registry>/f5-marathon-lb:v0.1.0
 
 
 Deploy f5-marathon-lb
@@ -44,19 +47,14 @@ Deploy f5-marathon-lb
           "--password","<bigip_password>"
         ],
         "labels": {},
+        "uris": [
+            "file:///etc/dockercfg.tgz"
+        ],
         "container": {
           "docker": {
             "network": "BRIDGE",
             "parameters": [],
             "image": "<your_registry>/f5-marathon-lb:v0.1.0",
-            "portMappings": [
-              {
-                "containerPort": 0,
-                "protocol": "tcp",
-                "name": null,
-                "labels": null
-              }
-            ]
           },
           "type": "DOCKER",
           "volumes": []
