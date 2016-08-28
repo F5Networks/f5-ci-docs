@@ -1,7 +1,7 @@
-Edge Load Balancing with F5 Container Service Integrator
-````````````````````````````````````````````````````````
+Edge Load Balancing with f5-marathon-lb
+---------------------------------------
 
-To provide edge load balancing for applications running in Marathon, F5's f5-marathon-lb is used to dynamically configure an F5 BIG-IP device.
+F5®'s f5-marathon-lb is used to dynamically configure an F5 BIG-IP® device to provide edge load balancing for applications running in Marathon.
 
 f5-marathon-lb listens to the Marathon event stream and automatically updates the configuration of the BIG-IP as follows:
 

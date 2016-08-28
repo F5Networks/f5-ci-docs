@@ -1,6 +1,4 @@
 Internal Load Balancing with F5 Lightweight Proxy
-`````````````````````````````````````````````````
+-------------------------------------------------
 
-Internal load balancing and service discovery is provided by F5's Lightweight Proxy Controller.
-
-The lwp-controller subscribes to Marathon's event stream and will automatically launch a lightweight proxy (LWP) configured with each task within Maraton. As tasks are scaled or failed tasks are moved to a new node, the lwp-controller configures the LWP in real-time to correct direct traffic to the correct applciation or service.
+F5's Lightweight Proxy Controller (lwp-controller) provides internal load balancing and service discovery in a Mesos cluster. It watches Marathon's event stream for changes in applications and automatically starts, stops, and/or reconfigures the lightweight proxy (LWP) app as needed. The LWP, in turn, watches Marathon to automatically load balance across an application's tasks as the application is scaled.

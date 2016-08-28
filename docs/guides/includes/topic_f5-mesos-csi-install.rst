@@ -1,79 +1,75 @@
-F5 Container Service Integrator Installation
-````````````````````````````````````````````
+f5-marathon-lb Setup
+====================
 
-To install the f5-marathon-lb service to configure your BIG-IP for edge load balancing with Mesos and Marathon, you must first pull the proper docker image:
+The instructions provided here demonstrate how to install the f5-marathon-lb service and configure your Mesos cluster to use your existing BIG-IP device for edge load balancing.
 
-.. code:: bash
+.. tip:: If your Mesos cluster doesn't have internet access, take the steps below to store a copy of the image locally.
 
-  $ docker pull f5networks/f5-ci-beta:f5-marathon-lb-v0.1.0
+#. Pull the f5-marathon-lb image from Docker Hub:
 
-The following commands can be used to push the container service integrator image to your own docker repository:
+    .. code-block:: bash
 
-.. code:: bash
+      $ docker pull f5networks/f5-ci-beta:f5-marathon-lb-v0.1.0
 
-    $ docker images | grep f5-ci-beta
-    f5networks/f5-ci-beta  f5-marathon-lb-v0.1.0 a072bbd759e4 6 days ago 327.7 MB
+#. Push the image to your own Docker repository for easy access (optional):
 
-    # Next tag and push the downloaded image to create the repository in your private registry.
-    $ docker tag a072bbd759e4 <your_registry>/f5-marathon-lb:v0.1.0
-    $ docker push <your_registry>/f5-marathon-lb:v0.1.0
+    .. code-block:: bash
 
-Deploy the F5 Container Service Integrator
-``````````````````````````````````````````
+        $ docker images | grep f5-ci-beta
+        f5networks/f5-ci-beta  f5-marathon-lb-v0.1.0 a072bbd759e4 6 days ago 327.7 MB
 
-To deploy the f5-marathon-lb container, add the following JSON to a file named f5-marathon-lb.json:
+        # Tag and push the downloaded image to your private Docker registry.
+        docker pull f5networks/f5-ci-beta:f5-marathon-lb-v0.1.0
+        docker tag f5networks/f5-ci-beta:f5-marathon-lb-v0.1.0 <your_registry>/f5-marathon-lb:v0.1.0
+        docker push <your_registry>/f5-marathon-lb:v0.1.0
 
-.. code:: javascript
 
-  {
-    "id": "f5-marathon-lb",
-    "cmd": null,
-    "cpus": 1,
-    "mem": 128,
-    "disk": 0,
-    "instances": 1,
-    "args": [
-      "sse",
-      "--marathon","<marathon_url>:8080",
-      "--partition","<bigip_partition_for_mesos_apps>",
-      "--hostname","<bigip_admin_console>",
-      "--username","<bigip_username>",
-      "--password","<bigip_password>"
-    ],
-    "labels": {},
-    "container": {
-      "docker": {
-        "network": "BRIDGE",
-        "parameters": [],
-        "image": "<your_registry>/f5-marathon-lb:v0.1.0",
-        "portMappings": [
-          {
-            "containerPort": 0,
-            "protocol": "tcp",
-            "name": null,
-            "labels": null
-          }
-        ]
-      },
-      "type": "DOCKER",
-      "volumes": []
-    }
-  }
+Deploy f5-marathon-lb
+---------------------
 
-Replace all the options with the <> symbols with the corresponding information for your environment.
+#. To deploy the f5-marathon-lb container, add the following JSON to a file named f5-marathon-lb.json:
 
-.. note::
+    .. code-block:: javascript
 
-  DC/OS users: Use http://mesos.master:8080 as your value for <marathon_url> in the example above.
+      {
+        "id": "f5-marathon-lb",
+        "cmd": null,
+        "cpus": 1,
+        "mem": 128,
+        "disk": 0,
+        "instances": 1,
+        "args": [
+          "sse",
+          "--marathon","<marathon_url>:8080",
+          "--partition","<bigip_partition_for_mesos_apps>",
+          "--hostname","<bigip_admin_console>",
+          "--username","<bigip_username>",
+          "--password","<bigip_password>"
+        ],
+        "labels": {},
+        "uris": [
+            "file:///etc/dockercfg.tgz"
+        ],
+        "container": {
+          "docker": {
+            "network": "BRIDGE",
+            "parameters": [],
+            "image": "<your_registry>/f5-marathon-lb:v0.1.0",
+          },
+          "type": "DOCKER",
+          "volumes": []
+        }
+      }
 
-Next, create the application in Marathon from the command line with the following command referencing the file created earlier:
+.. important::
 
-.. code:: bash
+    * All options enclosed with "<>" -- for example, "<your_registry>/f5-marathon-lb:v0.1.0" -- must be replaced with the appropriate information for your environment.
+    * DC/OS users: Use http://mesos.master:8080 as the value for <marathon_url> in the example above.
 
-  $ curl -X POST -H "Content-Type: application/json" http://<marathon_url>:8080/v2/apps -d @f5-marathon-lb.json
+#. Next, create the application in Marathon from the command line with the following command referencing the file created earlier:
 
-.. todo::
+    .. code-block:: bash
 
-  Link to the BIG-IP f5-marathon-lb README
+      $ curl -X POST -H "Content-Type: application/json" http://<marathon_url>:8080/v2/apps -d @f5-marathon-lb.json
 
-For advanced configuration and configuring Marathon applications for edge load balancing, see the BIG-IP f5-marathon-lb README.
+
