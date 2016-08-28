@@ -43,6 +43,70 @@ F5 BIG-IP               12.0
 F5 Container Integration Setup
 ------------------------------
 
+Set up Mesos and Marathon
+`````````````````````````
+
+In this section, we guide you through the installation of a new Mesos and Marathon environment in AWS.
+
+.. important::
+
+    **This demo uses an AWS CloudFormation template (CFT) that incurs charges while the stack is running.** Delete the stack when you have completed the demo to ensure that you will not continue to be charged.
+
+#. Accept the EULA for BIG-IP VE in Amazon.
+
+    * Go to the BIG-IP VE Amazon Marketplace page for `F5 BIG-IP Virtual Edition Good (BYOL) <http://aws.amazon.com/marketplace/pp?sku=dzweylwc4hxloqophyoi3oihr>`_.
+     * Select your region from the drop-down menu.
+     * Click on the :guilabel:`Continue` button.
+     * Click on :guilabel:`Accept Software Terms`.
+
+     .. warning::
+
+        If you do not complete this step before launching the CloudFormation template, your stack creation will fail.
+
+
+#. Download the CloudFormation template:
+
+    :download:`f5-ci-beta.cloudformation.json <docs/_static/f5-ci-beta.cloudformation.json>`
+
+#. Launch the CFT in AWS:
+
+    * Log in to your AWS account.
+    * Go to CloudFormation (https://console.aws.amazon.com/cloudformation)
+    * Click :guilabel:`Create New Stack`.
+    * Upload the CloudFormation template.
+    * Click :guilabel:`Next`.
+    * Enter the required :guilabel:`Parameters`:
+
+        - AdminLocation: This is a CIDR subnet that will limit access to your stack.
+
+            * Only IPs in this subnet can get to the BIG-IP, Mesos, and Marathon administrative interface.
+            * The default, "0.0.0.0/0",  allows access from any host.
+            * You may want to restrict access to just your external ip (e.g., 63.149.112.92/32). There are several ways to find your external IP address (note: this is not necessarily  the IP address of your local host). For example, on Linux, issue the command ``curl https://api.ipify.org`` and your external IP address will be displayed.
+
+        - BIGIPRegKey: Use the evaluation registration key that was provided to you by your F5 sales rep.
+        - KeyName: You must select an SSH keypair that is configured in AWS; this will be used to log in to the VMs that are started by the template.
+        - OAuthEnabled: Use the default setting.
+        - SlaveInstanceCount: Use the default setting.
+    * Click :guilabel:`Next`.
+    * :guilabel:`Options`: Enter tags and/or edit Advanced configurations; or, just click :guilabel:`Next`.
+    * :guilabel:`Review`: Review the information provided, then check the Identity and Access Management "I acknowledge.."  box.
+    * Click :guilabel:`Create`.
+
+#. View your stack.
+
+    * Click the refresh button to view the stack list. The status of your stack will initially be displayed as "CREATE_IN_PROGRESS". If you wish to view the creation events, click on the :guilabel:`Events` tab.
+    * Once the stack is created, you will have a BIG-IP running alongside the MesoSphere DC/OS environment. These are listed under the :guilabel:`Resources` tab.
+    * The :guilabel:`Outputs` tab contains the necessary information for accessing the stack resources. The following Outputs allow you to access your BIG-IP and the Marathon UI.
+
+        - **BIGIPAdminUI**: the IP address for the BIG-IP configuration utility (aka, the UI).
+        - **BIGIPAdminPassword**: the password for the 'admin' user on the BIG-IP.
+        - **MarathonUI**: the URL for the Marathon UI.
+
+.. note::
+
+    * The first time you access the BIG-IP configuration utility, you may see the "Configuration Utility restarting..." message. This message should resolve after about 5 minutes. *If it does not resolve*, please contact your F5 Beta rep.
+    * A partition called "mesos" was created on the BIG-IP for use with this demo. All LTM objects originating in Mesos will be created in this partition.
+
 Install and Configure Splunk
 ````````````````````````````
 
@@ -131,71 +195,6 @@ In the previous step, you configured your Splunk instance to receive data from t
     * Click :guilabel:`Choose a home dashboard`.
     * Click :guilabel:`F5 Networks Lightweight Proxy`.
     * Click :guilabel:`Save`.
-
-
-Set up Mesos and Marathon
-`````````````````````````
-
-In this section, we guide you through the installation of a new Mesos and Marathon environment in AWS.
-
-.. important::
-
-    **This demo uses an AWS CloudFormation template (CFT) that incurs charges while the stack is running.** Delete the stack when you have completed the demo to ensure that you will not continue to be charged.
-
-#. Accept the EULA for BIG-IP VE in Amazon.
-
-    * Go to the BIG-IP VE Amazon Marketplace page for `F5 BIG-IP Virtual Edition Good (BYOL) <http://aws.amazon.com/marketplace/pp?sku=dzweylwc4hxloqophyoi3oihr>`_.
-     * Select your region from the drop-down menu.
-     * Click on the :guilabel:`Continue` button.
-     * Click on :guilabel:`Accept Software Terms`.
-
-     .. warning::
-
-        If you do not complete this step before launching the CloudFormation template, your stack creation will fail.
-
-
-#. Download the CloudFormation template:
-
-    :download:`f5-ci-beta.cloudformation.json <docs/_static/f5-ci-beta.cloudformation.json>`
-
-#. Launch the CFT in AWS:
-
-    * Log in to your AWS account.
-    * Go to CloudFormation (https://console.aws.amazon.com/cloudformation)
-    * Click :guilabel:`Create New Stack`.
-    * Upload the CloudFormation template.
-    * Click :guilabel:`Next`.
-    * Enter the required :guilabel:`Parameters`:
-
-        - AdminLocation: This is a CIDR subnet that will limit access to your stack.
-
-            * Only IPs in this subnet can get to the BIG-IP, Mesos, and Marathon administrative interface.
-            * The default, "0.0.0.0/0",  allows access from any host.
-            * You may want to restrict access to just your external ip (e.g., 63.149.112.92/32). There are several ways to find your external IP address (note: this is not necessarily  the IP address of your local host). For example, on Linux, issue the command ``curl https://api.ipify.org`` and your external IP address will be displayed.
-
-        - BIGIPRegKey: Use the evaluation registration key that was provided to you by your F5 sales rep.
-        - KeyName: You must select an SSH keypair that is configured in AWS; this will be used to log in to the VMs that are started by the template.
-        - OAuthEnabled: Use the default setting.
-        - SlaveInstanceCount: Use the default setting.
-    * Click :guilabel:`Next`.
-    * :guilabel:`Options`: Enter tags and/or edit Advanced configurations; or, just click :guilabel:`Next`.
-    * :guilabel:`Review`: Review the information provided, then check the Identity and Access Management "I acknowledge.."  box.
-    * Click :guilabel:`Create`.
-
-#. View your stack.
-
-    * Click the refresh button to view the stack list. The status of your stack will initially be displayed as "CREATE_IN_PROGRESS". If you wish to view the creation events, click on the :guilabel:`Events` tab.
-    * Once the stack is created, you will have a BIG-IP running alongside the MesoSphere DC/OS environment. These are listed under the :guilabel:`Resources` tab.
-    * The :guilabel:`Outputs` tab contains the necessary information for accessing the stack resources. The following Outputs allow you to access your BIG-IP and the Marathon UI.
-
-        - **BIGIPAdminUI**: the IP address for the BIG-IP configuration utility (aka, the UI).
-        - **BIGIPAdminPassword**: the password for the 'admin' user on the BIG-IP.
-        - **MarathonUI**: the URL for the Marathon UI.
-
-.. note::
-
-    * The first time you access the BIG-IP configuration utility, you may see the "Configuration Utility restarting..." message. This message should resolve after about 5 minutes. *If it does not resolve*, please contact your F5 Beta rep.
-    * A partition called "mesos" was created on the BIG-IP for use with this demo. All LTM objects originating in Mesos will be created in this partition.
 
 
 Deploy f5-marathon-lb (CSI)
