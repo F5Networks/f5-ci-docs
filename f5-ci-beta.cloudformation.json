@@ -947,6 +947,83 @@
             }
          }
       },
+      "SplunkSecurityGroup" : {
+         "Properties" : {
+            "SecurityGroupIngress" : [
+               {
+                  "FromPort" : "22",
+                  "CidrIp" : { "Ref" : "AdminLocation" },
+                  "ToPort" : "22",
+                  "IpProtocol" : "tcp"
+               },
+               {
+                  "IpProtocol" : "tcp",
+                  "ToPort" : "8000",
+                  "CidrIp" : { "Ref" : "AdminLocation" },
+                  "FromPort" : "8000"
+               },
+               {
+                  "IpProtocol" : "tcp",
+                  "ToPort" : "8088",
+                  "CidrIp" : { "Ref" : "AdminLocation" },
+                  "FromPort" : "8088"
+               },
+               {
+                  "CidrIp" : {
+                    "Fn::FindInMap" : [
+                      "Parameters",
+                      "VPCSubnetRange",
+                      "default"
+                    ]
+                  },
+                  "FromPort" : "22",
+                  "ToPort" : "22",
+                  "IpProtocol": "tcp"
+               },
+               {
+                  "CidrIp" : {
+                    "Fn::FindInMap" : [
+                      "Parameters",
+                      "VPCSubnetRange",
+                      "default"
+                    ]
+                  },
+                  "FromPort" : "8000",
+                  "ToPort" : "8000",
+                  "IpProtocol": "tcp"
+               },
+               {
+                  "CidrIp" : {
+                    "Fn::FindInMap" : [
+                      "Parameters",
+                      "VPCSubnetRange",
+                      "default"
+                    ]
+                  },
+                  "FromPort" : "8088",
+                  "ToPort" : "8088",
+                  "IpProtocol": "tcp"
+               },
+               {
+                  "CidrIp" : {
+                    "Fn::FindInMap" : [
+                      "Parameters",
+                      "VPCSubnetRange",
+                      "default"
+                    ]
+                  },
+                  "FromPort" : "-1",
+                  "ToPort" : "-1",
+                  "IpProtocol": "icmp"
+               }
+            ],
+            "GroupDescription" : "Enable access to splunk",
+            "VpcId" : {
+               "Ref" : "Vpc"
+            }
+         },
+         "Type" : "AWS::EC2::SecurityGroup"
+      },
       "AdminSecurityGroup" : {
          "Properties" : {
             "SecurityGroupIngress" : [
@@ -1148,7 +1225,9 @@
             { "Key" : "FromCloudStack",
               "Value" : { "Ref" : "AWS::StackName" } },
             { "Key" : "role",
-              "Value" : "North-south ADC" }
+              "Value" : "North-south ADC" },
+            { "Key" : "Name",
+              "Value" : "BIG-IP" }
           ],
           "UserData" : {
             "Fn::Base64": {
@@ -1333,6 +1412,83 @@
               }
             }
           }
+        }
+      },
+      "SplunkReadyAdminXface" : {
+        "Type" : "AWS::EC2::NetworkInterface",
+        "Properties": {
+          "SubnetId" : {
+            "Ref" : "AdminSubnet"
+          },
+          "GroupSet" : [
+            {
+              "Ref" : "SplunkSecurityGroup"
+            }
+          ]
+        }
+      },
+      "SplunkReadyAdminEIP" : {
+        "Type": "AWS::EC2::EIP",
+        "DependsOn": "GatewayToInternet",
+        "Properties" : {
+          "Domain" : "vpc"
+        }
+      },
+      "SplunkReadyAdminEIPAssociation" : {
+        "Type": "AWS::EC2::EIPAssociation",
+        "DependsOn": [
+          "SplunkReadyAdminEIP",
+          "SplunkReadyAdminXface",
+          "SplunkReadyInstance"
+        ],
+        "Properties" : {
+          "AllocationId": { "Fn::GetAtt" :
+            [ "SplunkReadyAdminEIP", "AllocationId" ]
+          },
+          "NetworkInterfaceId" : { "Ref" : "SplunkReadyAdminXface" }
+        }
+      },
+      "SplunkReadyPrivateXface" : {
+        "Type" : "AWS::EC2::NetworkInterface",
+        "Properties": {
+          "SubnetId" : {
+            "Ref" : "InternalSubnet"
+          },
+          "GroupSet" : [
+            {
+              "Ref" : "SlaveSecurityGroup"
+            }
+          ]
+        }
+      },
+      "SplunkReadyInstance" : {
+        "Type": "AWS::EC2::Instance",
+        "DependsOn": "GatewayToInternet",
+        "Properties": {
+          "ImageId" : { "Fn::FindInMap" : [ "AmazonLinuxHVMAmiMap",
+                                            { "Ref" : "AWS::Region" },
+                                            "ami" ] },
+          "InstanceType" : "t2.medium",
+          "KeyName" : { "Ref" : "KeyName" },
+          "AvailabilityZone" : {
+              "Fn::GetAtt" : [ "AdminSubnet", "AvailabilityZone" ]
+          },
+          "NetworkInterfaces" : [
+            {
+              "DeviceIndex" : "0",
+              "NetworkInterfaceId" : { "Ref" : "SplunkReadyAdminXface" }
+            },
+            {
+              "DeviceIndex" : "1",
+              "NetworkInterfaceId" : { "Ref" : "SplunkReadyPrivateXface" }
+            }
+          ],
+          "Tags" : [
+            { "Key" : "Name",
+              "Value" : "SplunkReadyInstance" },
+            { "Key" : "FromCloudStack",
+              "Value" : { "Ref" : "AWS::StackName" } }
+          ]
         }
       },
       "InternalSubnetNetworkAclAssociation" : {
@@ -2027,6 +2183,15 @@
             "/"
           ] ]
         }
+      },
+      "SplunkReadySSH" : {
+        "Description": "SSH to an instance that is ready to install Splunk",
+        "Value" : {
+          "Fn::Join" : [ "", [
+            "ssh ec2-user@",
+            { "Ref": "SplunkReadyAdminEIP" }
+          ] ]
+        }
       }
    },
    "Conditions" : {
@@ -2050,6 +2215,17 @@
        "eu-central-1" : { "ami": "ami-734dac1c" },
        "eu-west-1" : { "ami": "ami-17ca4964" },
        "sa-east-1" : { "ami": "ami-8b2aa5e7" }
+      },
+      "AmazonLinuxHVMAmiMap" : {
+        "ap-southeast-1" : { "ami": "ami-a59b49c6" },
+        "ap-southeast-2" : { "ami": "ami-dc361ebf" },
+        "us-west-2" : { "ami": "ami-7172b611" },
+        "us-east-1" : { "ami": "ami-6869aa05" },
+        "ap-northeast-1" : { "ami": "ami-374db956" },
+        "us-west-1" : { "ami" : "ami-31490d51" },
+        "eu-central-1" : { "ami": "ami-ea26ce85" },
+        "eu-west-1" : { "ami": "ami-f9dd458a" },
+        "sa-east-1" : { "ami": "ami-6dd04501" }
       },
       "Parameters" : {
          "InternalSubnetRange" : {
