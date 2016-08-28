@@ -156,7 +156,7 @@ You'll need to install Splunk somewhere that data from the web applications will
 
 #. Configure your firewall to allow port 8088 to be open to Splunk.
 
-    .. note:: If you are running in AWS, this will be configured as part of your security group.
+    .. note:: If you are using the provided cloud stack, this has already been done.
 
 
 Install the F5 Splunk Apps
