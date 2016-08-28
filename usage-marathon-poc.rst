@@ -101,6 +101,7 @@ In this section, we guide you through the installation of a new Mesos and Marath
         - **BIGIPAdminUI**: the IP address for the BIG-IP configuration utility (aka, the UI).
         - **BIGIPAdminPassword**: the password for the 'admin' user on the BIG-IP.
         - **MarathonUI**: the URL for the Marathon UI.
+        - **SplunkReadySSH**: the ssh command to log into an instance ready for Splunk installation.
 
 .. note::
 
@@ -112,13 +113,13 @@ Install and Configure Splunk
 
 .. tip:: If you already have a Splunk instance set up, skip to step 3.
 
-You'll need to install Splunk somewhere that data from the web applications will be able to reach it (read: probably not on your local machine). We recommend launching an `Amazon EC2 instance <https://us-west-2.console.aws.amazon.com/ec2/v2/home?region=us-west-2#LaunchInstanceWizard>`_ running the OS of your choice. Be sure to configure the security group so that the instance is **not** openly accessible.
+You'll need to install Splunk somewhere that data from the web applications will be able to reach it (read: probably not on your local machine). If you created the cloud stack in the previous step, it has an Amazon Linux instance that is ready for Splunk installation (see the **SplunkReadySSH** cloud output).
 
 #. Download the free trial of `Splunk Enterprise <https://www.splunk.com/en_us/download/splunk-enterprise.html>`_ to your EC2 instance.
 
     .. code-block:: bash
 
-        wget -O splunk-6.4.3-b03109c2bad4-linux-2.6-amd64.deb 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=6.4.3&product=splunk&filename=splunk-6.4.3-b03109c2bad4-linux-2.6-amd64.deb&wget=true'
+        wget -O splunk-6.4.3-b03109c2bad4-Linux-x86_64.tgz 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=6.4.3&product=splunk&filename=splunk-6.4.3-b03109c2bad4-Linux-x86_64.tgz&wget=true'
 
 #. Follow the `Install Splunk Enterprise <http://docs.splunk.com/Documentation/Splunk/6.4.2/Installation/InstallonLinux>`_ guide to install and start Splunk for the first time.
 
