@@ -1,23 +1,27 @@
-.. F5 Container Integrations documentation master file, created by
-   sphinx-quickstart on Wed Aug 10 13:36:59 2016.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. _home:
 
-Welcome to F5 Container Integrations's documentation!
-=====================================================
+F5 Container Integrations Documentation
+=======================================
 
-This documentation set supports the beta release of the F5® Container Service Integration. This product suite enables the use of BIG-IP® as an edge load balancer in a Mesos+Marathon environment and introduces a new lightweight proxy tool that load balances inside Marathon.
+This documentation set supports the projects that comprise the F5® Container Services Integration. This product suite enables the use of BIG-IP® in containerized environments.
+
+Release |release|
+-----------------
+
+This release introduces the following:
+* f5-marathon-lb: enables use of BIG-IP as an edge load balancer in a Mesos+Marathon environment (North-South traffic).
+* lightweight-proxy and lwp-controller: provide load balancing inside a Mesos cluster (East-West traffic).
 
 
 Content Overview
 ----------------
-The Usage Guide provides instructions for setting up a fully functional Mesos+Marathon environment with the F5 Container Services Integration.
+* The Usage Guide provides instructions for setting up a fully functional Mesos+Marathon environment with the F5 Container Services Integration.
 
-The F5 Mesos Integration guide provides insight into how and why the f5-marathon-lb tool is used in Marathon to integrate BIG-IP.
+* The F5 Mesos Integration guide provides insight into how and why the f5-marathon-lb tool is used in Marathon to integrate BIG-IP.
 
-The LWP / LWP Controller Guide provides insight into how and why the F5 lightweight proxy and lwp-controller provide loadbalancing within Marathon.
+* The LWP / LWP Controller Guide provides insight into how and why the F5 lightweight proxy and lwp-controller provide loadbalancing within Marathon.
 
-Finally, each of the project READMEs contains detailed information and instructions for installation and configuration.
+* Each of the project READMEs contains detailed information and instructions for installation and configuration.
 
 Contents:
 ---------
