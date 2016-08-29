@@ -29,7 +29,7 @@ Caveats
 Docker authorization
 ````````````````````
 
-Both the f5-marathon-lb and lightweight-proxy-controller run as Dockerized container applications inside of Marathon. Because the F5 CSI beta Docker repository is private, you will need to add the Docker authorization to Marathon. [1]_
+Both the f5-marathon-lb and lightweight-proxy-controller run as Dockerized container applications inside of Marathon. Because the F5 CSI beta Docker repository is private, you will need to add the Docker authorization to Marathon. [#]_
 
 If you are running the F5 Integration for Mesos Environments beta in your own Marathon environment, take the following steps to add the Docker authorization to the "URIs" property of the Marathon app.
 
@@ -40,12 +40,12 @@ If you want to push the Docker image into your own registry, you can use Docker 
 
 The command in the example below will extract the .tgz file from the Downloads directory; change the location of the .tgz as appropriate for your environment.
 
-    .. code-block::
+    .. code-block:: bash
 
         cd $HOME
         tar -xvf ~/Downloads/dockercfg-beta.tgz
 
-.. [1] If you are running the beta from the AWS CloudFormation template, the authorization is set up automatically.
+.. [#] If you are running the beta from the AWS CloudFormation template, the authorization is set up automatically.
 
 
 Configuration
