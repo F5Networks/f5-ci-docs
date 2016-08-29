@@ -37,7 +37,7 @@ Deploy lwp-controller
 Deploy lightweight-proxy
 ------------------------
 
-#. Set up your preferred configuration options. [1]_
+#. Set up your preferred configuration options. [#]_
 
     Example: A JSON configuration file with two virtual server sections.
 
@@ -80,7 +80,7 @@ Deploy lightweight-proxy
 .. important::
 
     * You must provide the appropriate information for your environment in the highlighted lines.
-    * In this example, Splunk is being used as the stats collector. [2]_
+    * In this example, Splunk is being used as the stats collector. [#]_
 
 
 #. Deploy the lightweight proxy in your docker container:
@@ -91,5 +91,5 @@ Deploy lightweight-proxy
 
 
 
-.. [1] See the :ref:`Lightweight Proxy Controller README <Lightweight Proxy Controller>` for more information.
-.. [2] See the :ref:`Usage Guide <usage-guide>` for more information.
+.. [#] See the :ref:`Lightweight Proxy Controller README <Lightweight Proxy Controller>` for more information.
+.. [#] See the :ref:`Usage Guide <usage-guide>` for more information.

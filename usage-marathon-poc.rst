@@ -55,13 +55,13 @@ In this section, we guide you through the installation of a new Mesos and Marath
 #. Accept the EULA for BIG-IP VE in Amazon.
 
     * Go to the BIG-IP VE Amazon Marketplace page for `F5 BIG-IP Virtual Edition Good (BYOL) <http://aws.amazon.com/marketplace/pp?sku=dzweylwc4hxloqophyoi3oihr>`_.
-     * Select your region from the drop-down menu.
-     * Click on the :guilabel:`Continue` button.
-     * Click on :guilabel:`Accept Software Terms`.
+    * Select your region from the drop-down menu.
+    * Click on the :guilabel:`Continue` button.
+    * Click on :guilabel:`Accept Software Terms`.
 
-     .. warning::
+    .. warning::
 
-        If you do not complete this step before launching the CloudFormation template, your stack creation will fail.
+       If you do not complete this step before launching the CloudFormation template, your stack creation will fail.
 
 
 #. Download the CloudFormation template:
