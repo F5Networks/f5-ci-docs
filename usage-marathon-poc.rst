@@ -43,96 +43,6 @@ F5 BIG-IP               12.0
 F5 Container Integration Setup
 ------------------------------
 
-Install and Configure Splunk
-````````````````````````````
-
-.. tip:: If you already have a Splunk instance set up, skip to step 3.
-
-You'll need to install Splunk somewhere that data from the web applications will be able to reach it (read: probably not on your local machine). We recommend launching an `Amazon EC2 instance <https://us-west-2.console.aws.amazon.com/ec2/v2/home?region=us-west-2#LaunchInstanceWizard>`_ running the OS of your choice. Be sure to configure the security group so that the instance is **not** openly accessible.
-
-#. Download the free trial of `Splunk Enterprise <https://www.splunk.com/en_us/download/splunk-enterprise.html>`_ to your EC2 instance.
-
-    .. code-block:: bash
-
-        wget -O splunk-6.4.3-b03109c2bad4-linux-2.6-amd64.deb 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=6.4.3&product=splunk&filename=splunk-6.4.3-b03109c2bad4-linux-2.6-amd64.deb&wget=true'
-
-#. Follow the `Install Splunk Enterprise <http://docs.splunk.com/Documentation/Splunk/6.4.2/Installation/InstallonLinux>`_ guide to install and start Splunk for the first time.
-
-    .. note::
-
-        You may need ``chmod`` or ``chown`` the directory in which Splunk (``/opt/splunk``) is installed to complete the startup.
-
-#. Log in to the Splunk GUI, at the URL provided, using the following credentials:
-
-    * Username: admin
-    * Password: changeme
-
-    .. note:: Change the default password when prompted.
-
-#. Add a new :guilabel:`HTTP Event Collector`:
-
-    * Click on the gear icon next to :guilabel:`Apps`.
-    * Go to :menuselection:`Settings --> Data inputs`.
-    * For :guilabel:`HTTP Event Collector`, select :guilabel:`Add new`.
-    * Enter a name for the collector; all other fields can use the default values.
-    * Click :guilabel:`Next`, then :guilabel:`Review`, then :guilabel:`Submit`.
-    * Record the :guilabel:`Token Value` Splunk created for your HTTP Event Collector; **the analytics providers will need this value**.
-
-#. Enable the :guilabel:`HTTP Event Collector`:
-
-    * Go to :menuselection:`Settings --> Data inputs`.
-    * Click on :guilabel:`HTTP Event Collector`, then on :guilabel:`Global Settings`.
-    * Click on :guilabel:`Enabled`.
-    * Click :guilabel:`Save`.
-
-    .. important::
-
-        The event collector listens on port 8088 and requires HTTPS.
-
-#. Configure your firewall to allow port 8088 to be open to Splunk.
-
-    .. note:: If you are running in AWS, this will be configured as part of your security group.
-
-
-Install the F5 Splunk Apps
-``````````````````````````
-
-In the previous step, you configured your Splunk instance to receive data from the analytics providers. Now, you will configure Splunk apps that provide data visualization: Sankey; F5's Network Analytics; and F5's Lightweight Proxy Analytics.
-
-#. Install the Sankey App:
-
-     * In the Splunk GUI, click on :menuselection:`Apps --> Find More Apps`.
-     * Search for "Sankey".
-     * Click "Install" and enter your splunk.com credentials (this is your actual Splunk account, not the instance login).
-     * Accept the license agreement, then click the :guilabel:`Login and Install` button.
-     * Restart Splunk when prompted, then log back in.
-
-#. Install the F5 Networks Analytics App:
-
-     * Download the file :file:`f5-networks-analytics-new_095.tgz` from beta.f5.com to your local drive.
-     * In the Splunk GUI, click on :menuselection:`Apps --> Manage Apps`.
-     * Click :guilabel:`Install app from file`.
-     * Click :guilabel:`Choose File` and select :file:`f5-networks-analytics-new_095.tgz`.
-     * Click :guilabel:`Upload`.
-
-#. Install the F5 Lightweight Proxy Analytics App:
-
-     * Download :file:`f5-lightweight-proxy-analytics-v0.1.0.tgz` from beta.f5.com to your local drive.
-     * Click :guilabel:`Install app from file`.
-     * Click :guilabel:`Choose File` and select :file:`f5-lightweight-proxy-analytics-v0.1.0.tgz`.
-     * Click :guilabel:`Upload`.
-
-#. Verify installation:
-
-     * Click the :guilabel:`splunk>` logo to view the main panel. The installed apps should be displayed on the left side of the panel.
-
-#. **Optional**: Set the F5 Lightweight Proxy app as the default display panel:
-
-    * Click :guilabel:`Choose a home dashboard`.
-    * Click :guilabel:`F5 Networks Lightweight Proxy`.
-    * Click :guilabel:`Save`.
-
-
 Set up Mesos and Marathon
 `````````````````````````
 
@@ -191,11 +101,101 @@ In this section, we guide you through the installation of a new Mesos and Marath
         - **BIGIPAdminUI**: the IP address for the BIG-IP configuration utility (aka, the UI).
         - **BIGIPAdminPassword**: the password for the 'admin' user on the BIG-IP.
         - **MarathonUI**: the URL for the Marathon UI.
+        - **SplunkReadySSH**: the ssh command to log into an instance ready for Splunk installation.
 
 .. note::
 
     * The first time you access the BIG-IP configuration utility, you may see the "Configuration Utility restarting..." message. This message should resolve after about 5 minutes. *If it does not resolve*, please contact your F5 Beta rep.
     * A partition called "mesos" was created on the BIG-IP for use with this demo. All LTM objects originating in Mesos will be created in this partition.
+
+Install and Configure Splunk
+````````````````````````````
+
+.. tip:: If you already have a Splunk instance set up, skip to step 3.
+
+You'll need to install Splunk somewhere that data from the web applications will be able to reach it (read: probably not on your local machine). If you created the cloud stack in the previous step, it has an Amazon Linux instance that is ready for Splunk installation (see the **SplunkReadySSH** cloud output).
+
+#. Download the free trial of `Splunk Enterprise <https://www.splunk.com/en_us/download/splunk-enterprise.html>`_ to your EC2 instance.
+
+    .. code-block:: bash
+
+        wget -O splunk-6.4.3-b03109c2bad4-Linux-x86_64.tgz 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=6.4.3&product=splunk&filename=splunk-6.4.3-b03109c2bad4-Linux-x86_64.tgz&wget=true'
+
+#. Follow the `Install Splunk Enterprise <http://docs.splunk.com/Documentation/Splunk/6.4.2/Installation/InstallonLinux>`_ guide to install and start Splunk for the first time.
+
+    .. note::
+
+        You may need ``chmod`` or ``chown`` the directory in which Splunk (``/opt/splunk``) is installed to complete the startup.
+
+#. Log in to the Splunk GUI, at the URL provided, using the following credentials:
+
+    * Username: admin
+    * Password: changeme
+
+    .. note:: Change the default password when prompted.
+
+#. Add a new :guilabel:`HTTP Event Collector`:
+
+    * Click on the gear icon next to :guilabel:`Apps`.
+    * Go to :menuselection:`Settings --> Data inputs`.
+    * For :guilabel:`HTTP Event Collector`, select :guilabel:`Add new`.
+    * Enter a name for the collector; all other fields can use the default values.
+    * Click :guilabel:`Next`, then :guilabel:`Review`, then :guilabel:`Submit`.
+    * Record the :guilabel:`Token Value` Splunk created for your HTTP Event Collector; **the analytics providers will need this value**.
+
+#. Enable the :guilabel:`HTTP Event Collector`:
+
+    * Go to :menuselection:`Settings --> Data inputs`.
+    * Click on :guilabel:`HTTP Event Collector`, then on :guilabel:`Global Settings`.
+    * Click on :guilabel:`Enabled`.
+    * Click :guilabel:`Save`.
+
+    .. important::
+
+        The event collector listens on port 8088 and requires HTTPS.
+
+#. Configure your firewall to allow port 8088 to be open to Splunk.
+
+    .. note:: If you are using the provided cloud stack, this has already been done.
+
+
+Install the F5 Splunk Apps
+``````````````````````````
+
+In the previous step, you configured your Splunk instance to receive data from the analytics providers. Now, you will configure Splunk apps that provide data visualization: Sankey; F5's Network Analytics; and F5's Lightweight Proxy Analytics.
+
+#. Install the Sankey App:
+
+     * In the Splunk GUI, click on :menuselection:`Apps --> Find More Apps`.
+     * Search for "Sankey".
+     * Click "Install" and enter your splunk.com credentials (this is your actual Splunk account, not the instance login).
+     * Accept the license agreement, then click the :guilabel:`Login and Install` button.
+     * Restart Splunk when prompted, then log back in.
+
+#. Install the F5 Networks Analytics App:
+
+     * Download the file :file:`f5-networks-analytics-new_095.tgz` from beta.f5.com to your local drive.
+     * In the Splunk GUI, click on :menuselection:`Apps --> Manage Apps`.
+     * Click :guilabel:`Install app from file`.
+     * Click :guilabel:`Choose File` and select :file:`f5-networks-analytics-new_095.tgz`.
+     * Click :guilabel:`Upload`.
+
+#. Install the F5 Lightweight Proxy Analytics App:
+
+     * Download :file:`f5-lightweight-proxy-analytics-v0.1.0.tgz` from beta.f5.com to your local drive.
+     * Click :guilabel:`Install app from file`.
+     * Click :guilabel:`Choose File` and select :file:`f5-lightweight-proxy-analytics-v0.1.0.tgz`.
+     * Click :guilabel:`Upload`.
+
+#. Verify installation:
+
+     * Click the :guilabel:`splunk>` logo to view the main panel. The installed apps should be displayed on the left side of the panel.
+
+#. **Optional**: Set the F5 Lightweight Proxy app as the default display panel:
+
+    * Click :guilabel:`Choose a home dashboard`.
+    * Click :guilabel:`F5 Networks Lightweight Proxy`.
+    * Click :guilabel:`Save`.
 
 
 Deploy f5-marathon-lb (CSI)
