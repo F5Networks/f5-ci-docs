@@ -1,9 +1,14 @@
 F5 Integration for Mesos Environments
 =====================================
 
-.. toctree::
-    :titlesonly:
+.. include:: docs/includes/concept_f5-mesos-intro.rst
 
-    docs/guides/map_f5-mesos-intro
-    docs/guides/lwp_lwp-controller_guide
-    docs/guides/map_f5-mesos-install
+.. include:: docs/includes/concept_f5-mesos-overview.rst
+
+.. toctree::
+    :maxdepth: 2
+
+    docs/includes/topic_f5-mesos-integration
+    docs/map_f5mlb-guide
+    docs/map_lwp-lwpc-guide
+

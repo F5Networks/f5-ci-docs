@@ -1,5 +1,5 @@
-F5 Lightweight Proxy and LWP-Controller Setup
-=============================================
+Installation and Setup
+----------------------
 
 The instructions provided here demonstrate how to install the lwp-controller and lightweight-proxy, and provide a basic configuration example.
 
@@ -32,7 +32,7 @@ The instructions provided here demonstrate how to install the lwp-controller and
         docker push <your_registry>/light-weight-proxy:v0.1.0
 
 Deploy lwp-controller
----------------------
+`````````````````````
 
 #. Deploy the lwp-controller in your Docker container:
 
@@ -40,14 +40,14 @@ Deploy lwp-controller
 
         docker run -it -d -e MARATHON_URL="http://api.mesos.example.com:8080" -e LWP_ENABLE_LABEL lwp-myapp -e LWP_DEFAULT_CONTAINER f5networks/lwp f5velcro/lwp-controller
 
-#. Create your application in the Marathon instance running in Marathon and label it with the label ``lwp-myapp:enable``. The lwp-controller will create a new application in your Marathon cluster to be the LWP for your application.
+#. Create your application in the Marathon instance and label it with ``lwp-myapp:enable``. The lwp-controller will create a new application in your Marathon cluster to be the LWP for your application.
 
 
 .. note:: Advanced configuration options are provided in the :ref:`lwp-controller README <Lightweight Proxy Controller>`.
 
 
 Deploy lightweight-proxy
-------------------------
+````````````````````````
 
 #. Set up your preferred configuration options. [#]_
 
