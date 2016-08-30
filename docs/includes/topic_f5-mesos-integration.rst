@@ -21,7 +21,7 @@ Prerequisites
 Caveats
 ```````
 
-Docker authorization
+Docker Authorization
 ~~~~~~~~~~~~~~~~~~~~
 
 Both the f5-marathon-lb and lightweight-proxy-controller run as Dockerized container applications inside of Marathon. Because the F5 CSI beta Docker repository is private, you will need to add the Docker authorization to Marathon. [#]_
