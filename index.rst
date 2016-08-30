@@ -5,12 +5,13 @@ F5 Container Integrations Documentation
 
 This documentation set supports the projects that comprise the F5® Container Services Integration. This product suite enables the use of BIG-IP® in containerized environments.
 
-Release |release|
+Release |version|
 -----------------
 
 This release introduces the following:
-* f5-marathon-lb: enables use of BIG-IP as an edge load balancer in a Mesos+Marathon environment (North-South traffic).
-* lightweight-proxy and lwp-controller: provide load balancing inside a Mesos cluster (East-West traffic).
+
+* f5-marathon-lb |f5mlb_version|: enables use of BIG-IP as an edge load balancer in a Mesos+Marathon environment (North-South traffic).
+* lightweight-proxy |lwp_version| and lwp-controller |lwpc_version|: provide load balancing inside a Mesos cluster (East-West traffic).
 
 
 Content Overview
@@ -21,7 +22,8 @@ Content Overview
 
 * The LWP / LWP Controller Guide provides insight into how and why the F5 lightweight proxy and lwp-controller provide loadbalancing within Marathon.
 
-* Each of the project READMEs contains detailed information and instructions for installation and configuration.
+* Each of the project READMEs contains detailed info
+rmation and instructions for installation and configuration.
 
 Contents:
 ---------
