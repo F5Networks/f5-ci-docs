@@ -31,9 +31,9 @@ Contents:
 
     Usage Guide <usage-marathon-poc.rst>
     f5-mesos-integration.rst
-    f5-marathon-lb README <f5-marathon-lb/index>
-    lightweight-proxy README <lightweight-proxy/index>
-    lwp-controller README <lwp-controller/index>
+    f5-marathon-lb README <f5mlb/README>
+    lightweight-proxy README <f5lwp/README>
+    lwp-controller README <f5lwpc/README>
     releases_and_versioning.rst
 
 
