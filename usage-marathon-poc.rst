@@ -12,11 +12,13 @@ This usage guide also describes how to configure the analytics providers (BIG-IP
 Prerequisites
 -------------
 
-* A `Mesos <http://mesos.apache.org/gettingstarted/>`_ `Marathon <https://mesosphere.github.io/marathon/docs/>`_ environment with containerization enabled. See `Running Docker Containers on Marathon <https://mesosphere.github.io/marathon/docs/native-docker.html>`_ for configuration instructions.
 * Access to the F5 Integration for Mesos Environments beta site. This is where all components are available for download.
-* An Amazon AWS account that can incur small charges, -OR-
-* An existing Mesos+Marathon environment.
-* A BIG-IP registration key (Good, Better, or Best license); a VE lab license that can be used in AWS can be provided by your F5 sales rep.
+* To setup in AWS, which is recommended, you will need:
+    * An Amazon AWS account that can incur small charges to setup a POC environment
+    * A BIG-IP registration key (Good, Better, or Best license); a VE lab license that can be used in AWS can be provided by your F5 sales rep.
+* To setup manually in an existing environment, you will need:
+    * A `Mesos <http://mesos.apache.org/gettingstarted/>`_ `Marathon <https://mesosphere.github.io/marathon/docs/>`_ environment with docker containerization enabled. See `Running Docker Containers on Marathon <https://mesosphere.github.io/marathon/docs/native-docker.html>`_ for configuration instructions.
+    * A licensed BIG-IP device or VE (Good, Better, or Best license); a VE lab license that can be used in AWS can be provided by your F5 sales rep.
 * Internet access (required for AWS and to pull images from Docker).
 * `Docker <https://docs.docker.com/engine/getstarted/>`_ installed and at least one running container.
 
