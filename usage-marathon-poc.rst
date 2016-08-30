@@ -102,6 +102,7 @@ In this section, we guide you through the installation of a new Mesos and Marath
         - **BIGIPAdminPassword**: the password for the 'admin' user on the BIG-IP.
         - **MarathonUI**: the URL for the Marathon UI.
         - **SplunkReadySSH**: the ssh command to log into an instance ready for Splunk installation.
+        - **SplunkReadyPrivateIP**: if you install Splunk on the Splunk-ready instance, substitute this for [SPLUNK_IP].
 
 .. note::
 
@@ -156,7 +157,7 @@ You'll need to install Splunk somewhere that data from the web applications will
 
 #. Configure your firewall to allow port 8088 to be open to Splunk.
 
-    .. note:: If you are using the provided cloud stack, this has already been done.
+    .. note:: If you are using the provided cloud stack, this has already been done. The BIG-IP and Mesos nodes can send data to splunk at the **SplunkReadyPrivateIP** above.
 
 
 Install the F5 Splunk Apps
