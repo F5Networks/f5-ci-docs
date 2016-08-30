@@ -50,6 +50,6 @@ Further Reading
 For advanced configuration options and additional information regarding configuring Marathon applications for edge load balancing, see the project READMEs and the Usage Guide.
 
     - :ref:`f5-marathon-lb`
-    - :ref:`Light Weight Proxy (LWP)`
+    - :ref:`Lightweight Proxy`
     - :ref:`Lightweight Proxy Controller`
     - :ref:`Usage Guide: F5 Container Integration in a Mesos/Marathon Environment`
