@@ -13,7 +13,7 @@ The instructions provided here demonstrate how to install the lwp-controller and
     .. code-block:: bash
 
         docker pull f5networks/f5-ci-beta:light-weight-proxy-v0.1.0
-        docker pull f5networks/f5-ci-beta:lwp-controller-v0.1.0
+        docker pull f5networks/f5-ci-beta:lwp-controller-v0.1.1
 
 #. Push the images to your own Docker repository for easy access (optional):
 
