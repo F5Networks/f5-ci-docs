@@ -36,7 +36,7 @@ Deploy lwp-controller
 
 #. Deploy the lwp-controller in your Docker container:
 
-.. code-block:: shell
+    .. code-block:: shell
 
         docker run -it -d -e MARATHON_URL="http://api.mesos.example.com:8080" -e LWP_ENABLE_LABEL lwp-myapp -e LWP_DEFAULT_CONTAINER f5networks/lwp f5velcro/lwp-controller
 
@@ -89,10 +89,10 @@ Deploy lightweight-proxy
           ]
         }
 
-.. important::
+    .. important::
 
-    * You must provide the appropriate information for your environment in the highlighted lines.
-    * In this example, Splunk is being used as the stats collector. [#]_
+        * You must provide the appropriate information for your environment in the highlighted lines.
+        * In this example, Splunk is being used as the stats collector. [#]_
 
 
 #. Deploy the lightweight proxy in your docker container:

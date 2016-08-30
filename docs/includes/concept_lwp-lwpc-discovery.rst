@@ -5,6 +5,7 @@ The LWP and lwp-controller monitor the important attributes of applications from
 
 By convention, the DNS name of a LWP for an application is “lwp-<application name>.<domain name>”. So, for example, if an application is named “app1” and the domain is “marathon.mesos”, the DNS name of the LWP for that application will be “lwp-app1.marathon.mesos”.
 
-By default, lwp-controller starts one LWP instance per application. The default behavior can be overridden using labels, as described in the LWP Controller Project README (:ref:`Override Controller Configuration`).
+By default, lwp-controller starts one LWP instance per application. The default behavior can be overridden using labels, as described in the LWP Controller Project README (:ref:`Override Controller Configuration <Override Controller Configuration>`).
 
 The LWP collects traffic statistics for the applications that it is load balancing, which can be sent to an analytics application. The location and type of the analytics application can be configured on the LWP controller via the ``LWP_DEFAULT_STATS_URL`` option.
+

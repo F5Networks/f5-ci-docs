@@ -40,10 +40,10 @@ How to Deploy f5-marathon-lb in Marathon
         }
       }
 
-.. important::
-
-    * All options enclosed with "<>" -- for example, "<your_registry>/f5-marathon-lb:v0.1.1" -- must be replaced with the appropriate information for your environment.
-    * DC/OS users: Use http://mesos.master:8080 as the value for <marathon_url> in the example above.
+    .. important::
+    
+        * All options enclosed with "<>" -- for example, "<your_registry>/f5-marathon-lb:v0.1.1" -- must be replaced with the appropriate information for your environment.
+        * DC/OS users: Use http://mesos.master:8080 as the value for <marathon_url> in the example above.
 
 #. Next, create the application in Marathon from the command line with the following command referencing the file created earlier:
 
