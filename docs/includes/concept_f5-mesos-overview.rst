@@ -14,4 +14,5 @@ The F5 Container Service Integration includes the following services:
 - advanced persistence profiles;
 - dynamic pool member discovery and updates;
 - application visibility via stats collection and per-transaction metrics;
-- iApps to manage customizations, advanced policy and iRules.
+- iApps® to manage customizations, advanced policy, and iRules®.
+

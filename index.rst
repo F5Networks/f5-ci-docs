@@ -16,14 +16,11 @@ This release introduces the following:
 
 Content Overview
 ----------------
-* The Usage Guide provides instructions for setting up a fully functional Mesos+Marathon environment with the F5 Container Services Integration.
+* The Usage Guide provides instructions for setting up a fully functional Mesos+Marathon environment with the F5 Container Services Integration via Amazon AWS.
 
-* The F5 Mesos Integration guide provides insight into how and why the f5-marathon-lb tool is used in Marathon to integrate BIG-IP.
+* The F5 Mesos Integration guide provides high-level information, as well as instructions for deploying the F5 Container Integration in your own Mesos environment.
 
-* The LWP / LWP Controller Guide provides insight into how and why the F5 lightweight proxy and lwp-controller provide loadbalancing within Marathon.
-
-* Each of the project READMEs contains detailed info
-rmation and instructions for installation and configuration.
+* Each of the project READMEs contains detailed information and instructions for installation and configuration.
 
 Contents:
 ---------
@@ -36,6 +33,6 @@ Contents:
     f5-marathon-lb README <f5mlb/README>
     lightweight-proxy README <f5lwp/README>
     lwp-controller README <f5lwpc/README>
-    releases_and_versioning.rst
+    Releases and Support Matrix <releases_and_versioning.rst>
 
 
