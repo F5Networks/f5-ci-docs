@@ -493,7 +493,7 @@ Use an F5 iApps® template file to enable stats collection on your BIG-IP and se
 
 #. Upload the iApp template (:file:`f5.analytics.tmpl`).
 
-#. Select :menuselection:`IApps/Application Services --> Create`.
+#. Ensure you are in the Common partition (top-right), then select :menuselection:`IApps/Application Services --> Create`.
 
 #. Choose the :file:`f5.analytics` template.
 
