@@ -17,7 +17,19 @@ The instructions provided here demonstrate how to install the lwp-controller and
 
 #. Push the images to your own Docker repository for easy access (optional):
 
-    .. todo:: add instructions here
+    .. code-block:: bash
+
+        $ docker images | grep f5-ci-beta
+        f5networks/f5-ci-beta  lwp-controller-v0.1.1     60b6f67c97fd 2 days ago 270.5 MB
+        f5networks/f5-ci-beta  light-weight-proxy-v0.1.0 33baaa62f2a5 2 days ago 319.3 MB
+
+        # Tag and push the downloaded images to your private Docker registry.
+        docker pull f5networks/f5-ci-beta:lwp-controller-v0.1.1
+        docker tag f5networks/f5-ci-beta:lwp-controller-v0.1.1 <your_registry>/lwp-controller:v0.1.1
+        docker push <your_registry>/lwp-controller:v0.1.1
+        docker pull f5networks/f5-ci-beta:light-weight-proxy-v0.1.0
+        docker tag f5networks/f5-ci-beta:light-weight-proxy-v0.1.0 <your_registry>/light-weight-proxy:v0.1.0
+        docker push <your_registry>/light-weight-proxy:v0.1.0
 
 Deploy lwp-controller
 ---------------------
