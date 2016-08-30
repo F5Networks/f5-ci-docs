@@ -9,8 +9,8 @@ Release |release|
 -----------------
 
 This release introduces the following:
-* f5-marathon-lb: enables use of BIG-IP as an edge load balancer in a Mesos+Marathon environment (North-South traffic).
-* lightweight-proxy and lwp-controller: provide load balancing inside a Mesos cluster (East-West traffic).
+ * f5-marathon-lb: enables use of BIG-IP as an edge load balancer in a Mesos+Marathon environment (North-South traffic).
+ * lightweight-proxy and lwp-controller: provide load balancing inside a Mesos cluster (East-West traffic).
 
 
 Content Overview
