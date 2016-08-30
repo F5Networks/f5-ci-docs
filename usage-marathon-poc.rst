@@ -884,7 +884,4 @@ Conclusion
 
 This concludes the F5 Container Service Integration usage guide. Remember, **AWS will continue to charge you until you delete your stack**.
 
-Thank you for participating in F5's Beta program! Please send any questions and/or feedback to us at <enter-email-here>.
-
-.. todo:: enter email address
-
+Thank you for participating in F5's Beta program! Please send any questions and/or feedback to us at beta@f5.com.
