@@ -40,10 +40,10 @@ How to Deploy f5-marathon-lb in Marathon
         }
       }
 
-.. important::
-
-    * All options enclosed with "<>" -- for example, "<your_registry>/f5-marathon-lb:v0.1.1" -- must be replaced with the appropriate information for your environment.
-    * DC/OS users: Use http://mesos.master:8080 as the value for <marathon_url> in the example above.
+    .. important::
+    
+        * All options enclosed with "<>" -- for example, "<your_registry>/f5-marathon-lb:v0.1.1" -- must be replaced with the appropriate information for your environment.
+        * DC/OS users: Use http://mesos.master:8080 as the value for <marathon_url> in the example above.
 
 #. Next, create the application in Marathon from the command line with the following command referencing the file created earlier:
 
@@ -54,23 +54,23 @@ How to Deploy f5-marathon-lb in Marathon
 
 .. tip:: If your Mesos cluster doesn't have internet access, take the steps below to store a copy of the image locally.
 
-How to Save the Docker Image Locally
-````````````````````````````````````
+How to Save the Docker Image Locally (Optional)
+```````````````````````````````````````````````
 
 #. Pull the f5-marathon-lb image from Docker Hub:
 
-    .. code-block:: bash
-
-      $ docker pull f5networks/f5-ci-beta:f5-marathon-lb-v0.1.1
-
-#. Push the image to your own Docker repository for easy access (optional):
+    .. note::
+        
+         See :ref:`Docker Authorization <Docker Authorization>` to enable access to the private beta repository.
 
     .. code-block:: bash
 
-        $ docker images | grep f5-ci-beta
-        f5networks/f5-ci-beta  f5-marathon-lb-v0.1.1 a072bbd759e4 6 days ago 327.7 MB
+      docker pull f5networks/f5-ci-beta:f5-marathon-lb-v0.1.1
+
+#. Push the image to your own Docker repository:
+
+    .. code-block:: bash
 
         # Tag and push the downloaded image to your private Docker registry.
-        docker pull f5networks/f5-ci-beta:f5-marathon-lb-v0.1.1
         docker tag f5networks/f5-ci-beta:f5-marathon-lb-v0.1.1 <your_registry>/f5-marathon-lb:v0.1.1
         docker push <your_registry>/f5-marathon-lb:v0.1.1

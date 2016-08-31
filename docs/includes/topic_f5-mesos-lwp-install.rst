@@ -8,35 +8,12 @@ The instructions provided here demonstrate how to install the lwp-controller and
     Normally, the lwp-controller is deployed from within Marathon. It dynamically deploys the lightweight-proxy as needed. The examples and instructions here are provided for informational and/or development purposes. We recommend following the :ref:`Usage Guide <usage-guide>` to test deployment of these tools in Marathon.
 
 
-#. Pull the lightweight-proxy and lwp-controller from Docker Hub:
-
-    .. code-block:: bash
-
-        docker pull f5networks/f5-ci-beta:light-weight-proxy-v0.1.0
-        docker pull f5networks/f5-ci-beta:lwp-controller-v0.1.1
-
-#. Push the images to your own Docker repository for easy access (optional):
-
-    .. code-block:: bash
-
-        $ docker images | grep f5-ci-beta
-        f5networks/f5-ci-beta  lwp-controller-v0.1.1     60b6f67c97fd 2 days ago 270.5 MB
-        f5networks/f5-ci-beta  light-weight-proxy-v0.1.0 33baaa62f2a5 2 days ago 319.3 MB
-
-        # Tag and push the downloaded images to your private Docker registry.
-        docker pull f5networks/f5-ci-beta:lwp-controller-v0.1.1
-        docker tag f5networks/f5-ci-beta:lwp-controller-v0.1.1 <your_registry>/lwp-controller:v0.1.1
-        docker push <your_registry>/lwp-controller:v0.1.1
-        docker pull f5networks/f5-ci-beta:light-weight-proxy-v0.1.0
-        docker tag f5networks/f5-ci-beta:light-weight-proxy-v0.1.0 <your_registry>/light-weight-proxy:v0.1.0
-        docker push <your_registry>/light-weight-proxy:v0.1.0
-
 Deploy lwp-controller
 `````````````````````
 
 #. Deploy the lwp-controller in your Docker container:
 
-.. code-block:: shell
+    .. code-block:: shell
 
         docker run -it -d -e MARATHON_URL="http://api.mesos.example.com:8080" -e LWP_ENABLE_LABEL lwp-myapp -e LWP_DEFAULT_CONTAINER f5networks/lwp f5velcro/lwp-controller
 
@@ -89,10 +66,10 @@ Deploy lightweight-proxy
           ]
         }
 
-.. important::
+    .. important::
 
-    * You must provide the appropriate information for your environment in the highlighted lines.
-    * In this example, Splunk is being used as the stats collector. [#]_
+        * You must provide the appropriate information for your environment in the highlighted lines.
+        * In this example, Splunk is being used as the stats collector. [#]_
 
 
 #. Deploy the lightweight proxy in your docker container:
@@ -101,6 +78,34 @@ Deploy lightweight-proxy
 
         $ lwp_proxy --config-file=/home/proxy/config.json
 
+
+.. tip:: If your Mesos cluster doesn't have internet access, take the steps below to store a copy of the image locally.
+
+How to Save the Docker Image Locally (Optional)
+```````````````````````````````````````````````
+
+#. Pull the lightweight-proxy and lwp-controller from Docker Hub:
+
+    .. note::
+        
+         See :ref:`Docker Authorization <Docker Authorization>` to enable access to the private beta repository.
+
+
+    .. code-block:: bash
+
+        docker pull f5networks/f5-ci-beta:light-weight-proxy-v0.1.0
+        docker pull f5networks/f5-ci-beta:lwp-controller-v0.1.1
+
+#. Push the images to your own Docker repository:
+
+    .. code-block:: bash
+
+        # Tag and push the downloaded images to your private Docker registry.
+        docker tag f5networks/f5-ci-beta:lwp-controller-v0.1.1 <your_registry>/lwp-controller:v0.1.1
+        docker push <your_registry>/lwp-controller:v0.1.1
+
+        docker tag f5networks/f5-ci-beta:light-weight-proxy-v0.1.0 <your_registry>/light-weight-proxy:v0.1.0
+        docker push <your_registry>/light-weight-proxy:v0.1.1
 
 
 .. [#] See the :ref:`Lightweight Proxy Controller README <Lightweight Proxy Controller>` for more information.
