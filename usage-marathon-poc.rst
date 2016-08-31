@@ -3,23 +3,27 @@
 Usage Guide: F5 Container Integration in a Mesos/Marathon Environment
 =====================================================================
 
+.. toctree::
+    :hidden:
+
+
 This guide describes how to set up a reference F5® Container Integration in an environment with Mesos and Marathon. This guide is intended to help users understand the components and services that F5 provides.
 
-You do not need a pre-existing Mesos and Marathon environment. This guide will help you set one up in Amazon Web Services (AWS) using a cloud formation template (CFT). **If you do have an existing environment that you would like to use, you can skip step three below.**
+You do not need a pre-existing Mesos and Marathon environment. This guide will help you set one up in Amazon Web Services (AWS) using a cloud formation template (CFT).
+
+.. tip::
+
+    If you would like to use an existing Mesos environment, please see :ref:`F5 Integration for Mesos Environments` and the project READMEs.
 
 This usage guide also describes how to configure the analytics providers (BIG-IP® and the F5 Lightweight Proxy) to send data to a Splunk instance. Additionally, instructions are provided for installing several F5 Splunk apps on the Splunk instance to process and display the data. If you do not already have an instance, Splunk offers a 60-day evaluation program at https://www.splunk.com/en_us/download/splunk-enterprise.html.
 
 Prerequisites
 -------------
 
-* A `Mesos <http://mesos.apache.org/gettingstarted/>`_ `Marathon <https://mesosphere.github.io/marathon/docs/>`_ environment with containerization enabled. See `Running Docker Containers on Marathon <https://mesosphere.github.io/marathon/docs/native-docker.html>`_ for configuration instructions.
 * Access to the F5 Integration for Mesos Environments beta site. This is where all components are available for download.
-* An Amazon AWS account that can incur small charges, -OR-
-* An existing Mesos+Marathon environment.
+* An Amazon AWS account that can incur small charges.
 * A BIG-IP registration key (Good, Better, or Best license); a VE lab license that can be used in AWS can be provided by your F5 sales rep.
-* Internet access (required for AWS and to pull images from Docker).
-* `Docker <https://docs.docker.com/engine/getstarted/>`_ installed and at least one running container.
-
+* Internet access (required for AWS to access the Docker images).
 
 Compatibility
 -------------
@@ -102,6 +106,7 @@ In this section, we guide you through the installation of a new Mesos and Marath
         - **BIGIPAdminPassword**: the password for the 'admin' user on the BIG-IP.
         - **MarathonUI**: the URL for the Marathon UI.
         - **SplunkReadySSH**: the ssh command to log into an instance ready for Splunk installation.
+        - **SplunkReadyPrivateIP**: if you install Splunk on the Splunk-ready instance, substitute this for [SPLUNK_IP].
 
 .. note::
 
@@ -156,7 +161,7 @@ You'll need to install Splunk somewhere that data from the web applications will
 
 #. Configure your firewall to allow port 8088 to be open to Splunk.
 
-    .. note:: If you are using the provided cloud stack, this has already been done.
+    .. note:: If you are using the provided cloud stack, this has already been done. The BIG-IP and Mesos nodes can send data to splunk at the **SplunkReadyPrivateIP** above.
 
 
 Install the F5 Splunk Apps
@@ -223,7 +228,7 @@ The **f5-marathon-lb** component of the F5 Container Service Integration (CSI) i
                 {}
               ],
               "privileged": false,
-              "image": "f5networks/f5-ci-beta:f5-marathon-lb-v0.1.0",
+              "image": "f5networks/f5-ci-beta:f5-marathon-lb-v0.1.1",
               "network": "BRIDGE",
               "forcePullImage": true
             },
@@ -293,7 +298,7 @@ The **f5-marathon-lb** component of the F5 Container Service Integration (CSI) i
                 "type": "DOCKER",
                 "volumes": [],
                 "docker": {
-                    "image": "f5networks/f5-ci-beta:f5-marathon-lb-v0.1.0",
+                    "image": "f5networks/f5-ci-beta:f5-marathon-lb-v0.1.1",
                     "network": "BRIDGE",
                     "portMappings": [{
                         "containerPort": 0,
@@ -364,7 +369,7 @@ The **lwp-controller** component of the CSI is packaged in a container and runs 
             "docker": {
               "portMappings": [],
               "privileged": false,
-              "image": "f5networks/f5-ci-beta:lwp-controller-v0.1.0",
+              "image": "f5networks/f5-ci-beta:lwp-controller-v0.1.1",
               "network": "BRIDGE",
               "forcePullImage": true
             },
@@ -446,7 +451,7 @@ The **lwp-controller** component of the CSI is packaged in a container and runs 
                 "type": "DOCKER",
                 "volumes": [],
                 "docker": {
-                    "image": "f5networks/f5-ci-beta:lwp-controller-v0.1.0",
+                    "image": "f5networks/f5-ci-beta:lwp-controller-v0.1.1",
                     "network": "BRIDGE",
                     "portMappings": [],
                     "privileged": false,
@@ -493,7 +498,7 @@ Use an F5 iApps® template file to enable stats collection on your BIG-IP and se
 
 #. Upload the iApp template (:file:`f5.analytics.tmpl`).
 
-#. Select :menuselection:`IApps/Application Services --> Create`.
+#. Ensure you are in the Common partition (top-right), then select :menuselection:`IApps/Application Services --> Create`.
 
 #. Choose the :file:`f5.analytics` template.
 
@@ -884,7 +889,4 @@ Conclusion
 
 This concludes the F5 Container Service Integration usage guide. Remember, **AWS will continue to charge you until you delete your stack**.
 
-Thank you for participating in F5's Beta program! Please send any questions and/or feedback to us at <enter-email-here>.
-
-.. todo:: enter email address
-
+Thank you for participating in F5's Beta program! Please send any questions and/or feedback to us at beta@f5.com.

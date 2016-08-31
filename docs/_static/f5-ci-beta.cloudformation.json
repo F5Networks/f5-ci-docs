@@ -1448,19 +1448,6 @@
           "NetworkInterfaceId" : { "Ref" : "SplunkReadyAdminXface" }
         }
       },
-      "SplunkReadyPrivateXface" : {
-        "Type" : "AWS::EC2::NetworkInterface",
-        "Properties": {
-          "SubnetId" : {
-            "Ref" : "InternalSubnet"
-          },
-          "GroupSet" : [
-            {
-              "Ref" : "SlaveSecurityGroup"
-            }
-          ]
-        }
-      },
       "SplunkReadyInstance" : {
         "Type": "AWS::EC2::Instance",
         "DependsOn": "GatewayToInternet",
@@ -1477,10 +1464,6 @@
             {
               "DeviceIndex" : "0",
               "NetworkInterfaceId" : { "Ref" : "SplunkReadyAdminXface" }
-            },
-            {
-              "DeviceIndex" : "1",
-              "NetworkInterfaceId" : { "Ref" : "SplunkReadyPrivateXface" }
             }
           ],
           "Tags" : [
@@ -2191,6 +2174,13 @@
             "ssh ec2-user@",
             { "Ref": "SplunkReadyAdminEIP" }
           ] ]
+        }
+      },
+      "SplunkReadyPrivateIP" : {
+        "Description": "Private IP that data sources should use to send to splunk",
+        "Value": {
+          "Fn::GetAtt" : [ "SplunkReadyAdminXface",
+                           "PrimaryPrivateIpAddress" ]
         }
       }
    },

@@ -29,3 +29,12 @@ Contact
 
 Email us @ [provide email].
  
+Copyright
+---------
+
+Copyright 2015-2016 F5 Networks Inc.
+
+Support
+-------
+
+See `Support <https://github.com/F5Networks/f5-csi-docs/blob/master/SUPPORT>`_.
