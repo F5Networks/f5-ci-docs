@@ -9,7 +9,11 @@ Usage Guide: F5 Container Integration in a Mesos/Marathon Environment
 
 This guide describes how to set up a reference F5® Container Integration in an environment with Mesos and Marathon. This guide is intended to help users understand the components and services that F5 provides.
 
-You do not need a pre-existing Mesos and Marathon environment. This guide will help you set one up in Amazon Web Services (AWS) using a cloud formation template (CFT). **If you have an existing Mesos environment that you would like to use, please see the** :ref:`F5 Mesos Integration <F5 Integration for Mesos Environments>` guide.
+You do not need a pre-existing Mesos and Marathon environment. This guide will help you set one up in Amazon Web Services (AWS) using a cloud formation template (CFT).
+
+.. tip::
+
+    If you would like to use an existing Mesos environment, please see :ref:`F5 Integration for Mesos Environments` and the project READMEs.
 
 This usage guide also describes how to configure the analytics providers (BIG-IP® and the F5 Lightweight Proxy) to send data to a Splunk instance. Additionally, instructions are provided for installing several F5 Splunk apps on the Splunk instance to process and display the data. If you do not already have an instance, Splunk offers a 60-day evaluation program at https://www.splunk.com/en_us/download/splunk-enterprise.html.
 
