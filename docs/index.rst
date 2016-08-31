@@ -20,7 +20,7 @@ Content Overview
 
 * The F5 Mesos Integration guide provides high-level information, as well as instructions for deploying the F5 Container Integration in your own Mesos environment.
 
-* Each of the project READMEs contains detailed information and instructions for installation and configuration.
+* Each of the projects' home pages contains detailed information and instructions for installation and configuration.
 
 Contents:
 ---------
@@ -30,9 +30,9 @@ Contents:
 
     Usage Guide <usage-marathon-poc.rst>
     f5-mesos-integration.rst
-    f5-marathon-lb README <f5mlb/README>
-    lightweight-proxy README <f5lwp/README>
-    lwp-controller README <f5lwpc/README>
+    f5-marathon-lb home <f5mlb/index>
+    lightweight-proxy home <f5lwp/index>
+    lwp-controller home <f5lwpc/index>
     Releases and Support Matrix <releases_and_versioning.rst>
 
 

@@ -811,7 +811,7 @@ The front-end web service can communicate with various additional backend servic
             "minimumHealthCapacity": 1
           },
           "id": "auth-svc"
-        }
+        }'
 
 
    .. code-block:: text
@@ -852,7 +852,7 @@ The front-end web service can communicate with various additional backend servic
             "minimumHealthCapacity": 1
           },
           "id": "list-manager-svc"
-        }
+        }'
 
 
 At this point, you have a fully functioning environment and should be able to click on any of the tabs in the front-end web service in your browser.
