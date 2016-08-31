@@ -61,7 +61,7 @@ How to Save the Docker Image Locally (Optional)
 
     .. note::
         
-         See :ref:`Docker Authorization <Docker Authorization>` to enable access to the private beta repository.
+         See :ref:`Docker Authorization` to enable access to the private beta repository.
 
     .. code-block:: bash
 
