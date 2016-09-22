@@ -1,9 +1,0 @@
-[submodule "f5lwp"]
-	path = f5lwp
-	url = git@bldr-git.int.lineratesystems.com:jputrino/lightweight-proxy.git
-[submodule "f5mlb"]
-	path = f5mlb
-	url = git@bldr-git.int.lineratesystems.com:jputrino/f5-marathon-lb.git
-[submodule "f5lwpc"]
-	path = f5lwpc
-	url = git@bldr-git.int.lineratesystems.com:jputrino/lwp-controller.git
