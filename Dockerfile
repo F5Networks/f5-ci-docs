@@ -10,7 +10,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -y -q \
     build-essential \
     git \
-    openssh-server \
+    openssh-client \
     pandoc \
     python-pip \
     python-sphinx \
