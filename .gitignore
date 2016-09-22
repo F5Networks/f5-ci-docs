@@ -3,3 +3,4 @@
 venv/*
 _build/*
 docs/_build/*
+docs/errors.txt
