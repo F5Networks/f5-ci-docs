@@ -22,17 +22,23 @@ Content Overview
 
 * Each of the projects' home pages contains detailed information and instructions for installation and configuration.
 
+
 Contents:
 ---------
 
 .. toctree::
-    :titlesonly:
+    :maxdepth: 2
 
-    Usage Guide <usage-marathon-poc.rst>
-    f5-mesos-integration.rst
-    f5-marathon-lb home <f5mlb/index>
-    lightweight-proxy home <f5lwp/index>
-    lwp-controller home <f5lwpc/index>
-    Releases and Support Matrix <releases_and_versioning.rst>
+    usage-marathon-poc.rst
+    f5-marathon-lb/index.rst
+    lightweight-proxy/index.rst
+    lwp-controller/index.rst
+
+Indices and tables
+------------------
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
 
 
