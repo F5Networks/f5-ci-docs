@@ -228,7 +228,7 @@ The **f5-marathon-lb** component of the F5 Container Service Integration (CSI) i
                 {}
               ],
               "privileged": false,
-              "image": "f5networks/f5-ci-beta:f5-marathon-lb-v0.1.1",
+              "image": "f5networks/f5-ci-beta:f5-marathon-lb-v0.1.2",
               "network": "BRIDGE",
               "forcePullImage": true
             },
@@ -298,7 +298,7 @@ The **f5-marathon-lb** component of the F5 Container Service Integration (CSI) i
                 "type": "DOCKER",
                 "volumes": [],
                 "docker": {
-                    "image": "f5networks/f5-ci-beta:f5-marathon-lb-v0.1.1",
+                    "image": "f5networks/f5-ci-beta:f5-marathon-lb-v0.1.2",
                     "network": "BRIDGE",
                     "portMappings": [{
                         "containerPort": 0,

@@ -78,12 +78,12 @@ author = u'F5 Networks'
 # The short X.Y version.
 version = 'v0.1'
 # The full version, including alpha/beta/rc tags.
-#release = 'v0.1.1'
+#release = 'v0.1.2'
 
 # Individual project versions
 
 rst_epilog = """
-.. |f5mlb_version| replace:: v0.1.1
+.. |f5mlb_version| replace:: v0.1.2
 .. |lwp_version| replace:: v0.1.0
 .. |lwpc_version| replace:: v0.1.1
 """

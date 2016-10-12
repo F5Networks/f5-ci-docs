@@ -33,7 +33,7 @@ How to Deploy f5-marathon-lb in Marathon
           "docker": {
             "network": "BRIDGE",
             "parameters": [],
-            "image": "<your_registry>/f5-marathon-lb:v0.1.1",
+            "image": "<your_registry>/f5-marathon-lb:v0.1.2",
           },
           "type": "DOCKER",
           "volumes": []
@@ -41,8 +41,8 @@ How to Deploy f5-marathon-lb in Marathon
       }
 
     .. important::
-    
-        * All options enclosed with "<>" -- for example, "<your_registry>/f5-marathon-lb:v0.1.1" -- must be replaced with the appropriate information for your environment.
+
+        * All options enclosed with "<>" -- for example, "<your_registry>/f5-marathon-lb:v0.1.2" -- must be replaced with the appropriate information for your environment.
         * DC/OS users: Use http://mesos.master:8080 as the value for <marathon_url> in the example above.
 
 #. Next, create the application in Marathon from the command line with the following command referencing the file created earlier:
@@ -60,17 +60,17 @@ How to Save the Docker Image Locally (Optional)
 #. Pull the f5-marathon-lb image from Docker Hub:
 
     .. note::
-        
+
          See :ref:`Docker Authorization` to enable access to the private beta repository.
 
     .. code-block:: bash
 
-      docker pull f5networks/f5-ci-beta:f5-marathon-lb-v0.1.1
+      docker pull f5networks/f5-ci-beta:f5-marathon-lb-v0.1.2
 
 #. Push the image to your own Docker repository:
 
     .. code-block:: bash
 
         # Tag and push the downloaded image to your private Docker registry.
-        docker tag f5networks/f5-ci-beta:f5-marathon-lb-v0.1.1 <your_registry>/f5-marathon-lb:v0.1.1
-        docker push <your_registry>/f5-marathon-lb:v0.1.1
+        docker tag f5networks/f5-ci-beta:f5-marathon-lb-v0.1.2 <your_registry>/f5-marathon-lb:v0.1.2
+        docker push <your_registry>/f5-marathon-lb:v0.1.2
