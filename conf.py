@@ -67,8 +67,8 @@ source_parsers = {
 master_doc = 'index'
 
 # General information about the project.
-project = u'F5 Container Integration'
-copyright = u'2016, F5 Networks'
+project = u'F5 Container Service Integrator'
+copyright = u'2016 F5 Networks Inc'
 author = u'F5 Networks'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -293,7 +293,7 @@ html_static_path = ['docs/_static']
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 #
-# html_show_sphinx = True
+html_show_sphinx = False
 
 # If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
 #
@@ -327,7 +327,7 @@ html_static_path = ['docs/_static']
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'F5ContainerIntegrationdoc'
+htmlhelp_basename = 'F5-Container-Service-Integrator-Mesos_doc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -353,8 +353,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'F5ContainerIntegration.tex', u'F5 Container Integration Documentation',
-     u'F5 Networks', u'user_guide'),
+    (master_doc, 'F5-Container-Service-Integrator_Mesos.tex', u'F5 Container Service Integrator for Mesos Documentation',
+     u'F5 Networks', u'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -365,7 +365,7 @@ latex_logo = 'docs/_static/f5_logo.jpg'
 # For "manual" documents, if this is true, then toplevel headings are parts,
 # not chapters.
 #
-# latex_use_parts = False
+latex_use_parts = True
 
 # If true, show page references after internal links.
 #
@@ -395,7 +395,7 @@ latex_logo = 'docs/_static/f5_logo.jpg'
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'f5containerintegration', u'F5 Container Integration Documentation',
+    (master_doc, 'F5-container-service-integrator_Mesos', u'F5 Container Service Integrator for Mesos Documentation',
      [author], 1)
 ]
 
@@ -410,8 +410,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'F5ContainerIntegration', u'F5 Container Integration Documentation',
-     author, 'F5ContainerIntegration'),
+    (master_doc, 'F5-container-service-integrator_Mesos', u'F5 Container Service Integrator for Mesos Documentation',
+     author, 'F5 Container Service Integrator for Mesos'),
 ]
 
 # Documents to append as an appendix to all manuals.
