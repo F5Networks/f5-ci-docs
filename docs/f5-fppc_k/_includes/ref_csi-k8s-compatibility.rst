@@ -1,4 +1,0 @@
-Compatibility
--------------
-
-coming soon!
