@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: flowpoint-proxy
+  namespace: kube-system
+spec:
+  template:
+    metadata:
+      labels:
+        name: flowpoint
+    spec:
+      hostNetwork: true
+      containers:
+        - name: proxy-plugin
+          image: ${TESTENV_PROXY_IMG}
+          args:
+            - --config-file
+            - /etc/configmap/flowpoint.config.json
+          securityContext:
+            privileged: false
+          volumeMounts:
+          - mountPath: /var/run/kubernetes/proxy-plugin
+            name: plugin-config
+            readOnly: true
+          - mountPath: /etc/configmap
+            name: flowpoint-config
+      volumes:
+        - name: plugin-config
+          hostPath:
+            path: /var/run/kubernetes/proxy-plugin
+        - name: flowpoint-config
+          configMap:
+            name: flowpoint-config
