@@ -102,6 +102,9 @@ You can launch ``f5-marathon-lb`` in Marathan via the `REST API <#rest_api>`_ or
       --sse-timeout SSE_TIMEOUT, -t SSE_TIMEOUT
                             Marathon event stream timeout [env var:
                             F5_CSI_SSE_TIMEOUT] (default: 30)
+      --verify-interval VERIFY_INTERVAL, -v VERIFY_INTERVAL
+                            Interval at which to verify the BIG-IP configuration.
+                            [env var: F5_CSI_VERIFY_INTERVAL] (default: 30)
       --syslog-socket SYSLOG_SOCKET
                             Socket to write syslog messages to. Use '/dev/null' to
                             disable logging to syslog [env var:
