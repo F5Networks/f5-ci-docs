@@ -1,5 +1,32 @@
+:orphan: True
+
 Prerequisities
 ==============
 
 .. comment:: This file is for internal use only. Use the prerequisites from this list in your feature topics; be sure to keep entries in your docs in the same order in which they're listed here. This helps to ensure consistency across our documentation set.
+
+- The official F5 ``k8s-controller`` image pulled from the `F5 Docker registry`_.
+
+- The official F5 ``flowpoint`` image pulled from the `F5 Docker registry`_.
+
+- Licensed, operational BIG-IP :term:`device`.
+
+- Administrative access to the BIG-IP.
+
+- Basic understanding of `system configuration`_.
+
+- Basic understanding of BIG-IP `local traffic management`_
+
+- Knowledge of BIG-IP `system configuration`_ and `local traffic management`_.
+
+- A partition (other than Common) configured on the BIG-IP.
+
+- A running `Kubernetes`_ cluster.
+
+- A functional `Kubernetes`_ or `Marathon`_ orchestration environment.
+
+- Understanding of `Node.js`_ and `Express`_.
+
+- ``curl`` and/or ``kubectl`` (the `Kubernetes`_ CLI) installed.
+
 
