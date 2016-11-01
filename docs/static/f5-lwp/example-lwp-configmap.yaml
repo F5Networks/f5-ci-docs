@@ -4,7 +4,7 @@ metadata:
   name: lwp-config
   namespace: kube-system
 data:
-  lightweightproxy.config.json: |-
+  lightweight-proxy.config.json: |-
     {
       "global": {
         "console-log-level": "info"

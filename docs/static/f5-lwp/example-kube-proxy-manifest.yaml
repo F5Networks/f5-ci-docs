@@ -7,7 +7,7 @@ spec:
   hostNetwork: true
   containers:
   - name: kube-proxy
-    image: f5networks/f5-kube-proxy:f5-v1.3.7
+    image: f5networks/f5-ci-beta:f5-kube-proxy-f5-v1.3.7
     command:
     - /proxy
     - --master=https://<MASTER_IP>
