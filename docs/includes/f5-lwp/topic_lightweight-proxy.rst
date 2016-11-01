@@ -6,32 +6,56 @@ Lightweight Proxy
 Overview
 --------
 
-F5® |lwp| |tm| is an application delivery controller (ADC) that can be deployed dynamically in containerized environments. The |lwp| proxies services for distributed applications and, by way of built in stats collection, provides visualization into distributed applications' environment and health. It also provides load balancing for client requests and connections across an application's server pool (East-West traffic).
+.. overview-body
+
+F5® |lwp| |tm| is an application delivery controller (ADC) that is well suited to be deployed dynamically in containerized environments.
+The |lwp| has built in load balancing and telemetry for L4 and L7 services.
+It is small enough that one can be deployed for every application or service.
+It is multi-tenant so it can also be deployed for several services at once.
+These features make it ideal for distributed applications and East-West traffic, where it can provide load balancing for dynamic applications' server pools, while providing visibility into those distributed applications' environment and health.
+
 
 .. _lwp_architecture:
 
 Architecture
 ````````````
 
-|lwp| comprises four (4) basic modules: config, proxy, routing, and statistics.
+|lwp| comprises four (4) basic components: config, proxy, routing, and telemetry.
 
-.. figure:: /static/f5-lwp/lightweight-proxy_architecture.png
-    :alt: Lightweight Proxy Architecture
+Config
+""""""
 
-    |lwp| Architecture
+The config component manages the configuration for the LWP.
+It merges the configuration inputs from static and dynamic sources, and normalizes the configuration for the other components.
 
-The |lwp| comes with four (4) built-in middleware functions, which run in the routing layer, and a statistics module, which records transaction based stats that can be exported to an analytics provider (such as `Splunk`_). |lwp| also has built-in helpers for `Express middleware`_, which make it easy to :ref:`customize <customize-lwp-express-middleware>` to suit the needs of your environment.
+Proxy Module
+""""""""""""
 
-.. figure:: /static/f5-lwp/lightweight-proxy_basic-stack.png
-    :alt: Lightweight Proxy Basic Stack
+The proxy module manages the virtual server configuration and creates a proxy in the routing infrastructure for each virtual server.
 
-    |lwp| Basic Stack
+Routing
+"""""""
 
-.. todo:: edit diagrams a bit for display formatting
+The routing infrastructure is the core of LWP that provides the framework to create traffic services.
+It is a middelware framework that invokes the middleware functions, and use the feedback to determine how to handle data events and the transaction lifecycle.
+The routing infrastructure also provides a consistent interface for statistics and logging that will be handled by the telemetry module.
 
+The LWP comes with a small number of built-in middleware functions.
+It also has built-in helpers for `Express middleware`_, which make it easy to :ref:`customize <customize-lwp-express-middleware>` to suit the needs of your environment.
+
+Telemetry Module
+""""""""""""""""
+
+The telemetry module manages statistics and real-time events.
+It provides a modular interface to send those details where they need to go.
+
+
+The |lwp| comes with a telemetry module which sends transaction events and statistics for both HTTP and TCP transactions to an analytics provider (such as `Splunk`_).
+
+.. overview-body-end
 
 Use Case
-````````
+--------
 
 |lwp| provides load balancing services for East-West data center traffic (in other words, traffic flowing between data passing between microservices). It deploys quickly and scales easily to keep pace with a microservices architecture.
 
@@ -48,7 +72,6 @@ Prerequisites
 
 - The official F5 ``lightweight-proxy`` image pulled from the `F5 Docker registry`_.
 - A functional `Kubernetes`_ or `Marathon`_ orchestration environment.
-- Understanding of `Node.js`_ and `Express`_.
 
 
 Caveats
@@ -57,16 +80,18 @@ Caveats
 Configuration
 -------------
 
+.. configuration-body
+
 You can configure the F5 |lwp| with a valid JSON config file. |lwp| can run in different orchestration environments, each of which has its own specific set of configuration options.
 
-The |lwp| is designed to implement virtual servers dynamically for services in a container environment, providing the flexibility to handle apps/services in the manner the orchestration environment defines. [#]_ You can also simply provide a static config file if you want to run the |lwp| for a static service.
+The |lwp| is designed to implement virtual servers dynamically for services in a container environment, providing the flexibility to handle apps/services in the manner the orchestration environment defines. [#]_ You can also simply provide a static config file if you want to run the |lwp| for static services.
 
-The |lwp| config file must contain the following sections:
+The |lwp| config file contains the following sections:
 
 -  :ref:`Global <#>`: global configurations that are not specific to an orchestration environment.
--  :ref:`Orchestration <#>`: contains parameters that allow you to specify your orchestration environment
--  :ref:`Virtual servers <#>`: contains parameters that specify list(s) of virtual server objects representing service endpoints.
 -  :ref:`Stats <#>`: contains parameters for statistics gathering and reporting.
+-  :ref:`Orchestration <#>`: contains parameters that allow you to specify your orchestration environment
+-  :ref:`Virtual servers <#>`: contains parameters that specify list(s) of virtual server objects representing service endpoints. Part or all of this section is provided by the orchestration environment.
 
 .. [#] See the :ref:`Deployment Guides <lwp-deployment-guides>` for details regarding specific orchestration environments.
 
@@ -84,15 +109,18 @@ Configuration Parameters
 
 .. include:: /includes/f5-lwp/ref_config-parameters-stats.rst
 
-.. rubric:: See :ref:`Statistics and Data Aggregation <lwp-statistics>`.
+.. rubric:: See :ref:`Telemetry <lwp-telemetry>`.
 
 .. include:: /includes/f5-lwp/ref_lwp-config-example.rst
 
+.. configuration-body-end
 
 .. _lwp-features:
 
 Features
 --------
+
+.. features-body
 
 F5 |lwp| is a Node.js application that provides a :term:`middleware` framework for handling proxied traffic.
 
@@ -113,8 +141,11 @@ The header manipulation module allows you to add, remove, or modify HTTP headers
     * If header already exists, its value will be replaced.
     * Use an array of values if you need to send header with multiple values.
 
+The following flags config parameters affect this built-in middleware. See `Flags <lwp-configs-virtual-server-flags>`.
 
-.. todo:: list the applicable config parameters for header manipulation module
+    * ``x-forwarded-for``
+    * ``x-serverd-by``
+
 
 .. versionadded:: v0.1.1
 
@@ -152,16 +183,15 @@ For HTTP and TCP connections, the forwarder provides proxy functionality between
 
 .. versionadded:: v0.1.1
 
-.. _lwp-statistics:
+.. _lwp-telemetry:
 
-Statistics and Data Aggregator
-``````````````````````````````
+Telemetry
+`````````
 
-The statistics and data aggregator module allows Node.js programs to capture various metrics and send them to a number of
-different backend systems.
+The telemetry module allows LWP and its middleware to capture and aggregate various metrics and send them to a backend system for reporting and analysis.
 
 .. versionadded:: v0.1.1
-    Supported systems in this version are `Splunk <https://www.splunk.com/>`_ (default) and Leo.
+    Supported systems in this version are `Splunk <https://www.splunk.com/>`_ (default).
 
 
 Global Stats
@@ -195,8 +225,12 @@ HTTP Transaction Stats
 
 .. include:: /includes/f5-lwp/ref_table-lwp-http-stats.rst
 
+.. features-body-end
+
 Usage
 -----
+
+.. usage-body
 
 .. _run-lwp-manually:
 
@@ -209,7 +243,7 @@ Use either of the options below to start an |lwp| instance locally from the comm
 
     .. code-block:: bash
 
-        $ lwp_proxy --config-file=/<path_to_config_file>/config.json
+        lwp_proxy --config-file=/<path_to_config_file>/config.json
 
 -- OR --
 
@@ -217,7 +251,7 @@ Use either of the options below to start an |lwp| instance locally from the comm
 
     .. code-block:: bash
 
-        $ LWP_CONFIG='{ "virtual-servers": { ... } }' lwp_proxy
+        LWP_CONFIG='{ "virtual-servers": { ... } }' lwp_proxy
 
 
 .. tip::
@@ -235,12 +269,14 @@ Use either of the options below to start an |lwp| instance locally from the comm
 Customize |lwp| with Express Middleware
 ```````````````````````````````````````
 
-You can add to the built-in functionality provided by F5's |lwp| with `Express middleware`_. We've built in helpers that make running Express or third-party middleware at the Router level of the |lwp| framework easy. [#]_ See the `Express <https://expressjs.com/>`_  documentation for installation, usage, and composition instructions.
+You can add to the built-in functionality provided by F5's |lwp| with `Express middleware`_. We've built in helpers that make running Express or third-party middleware at the Router level of the |lwp| framework easy.
 
-We recommend checking out the documentation for `third-party middleware <https://expressjs.com/en/guide/using-middleware.html#middleware.third-party>`_, which contains instructions for installing and loading Express-compatible third-party middleware functions.
+.. todo:: Adding user provided middleware is not yet supported, and interfaces may change. 
 
 .. [#] Described in the :ref:`Architecture <lwp_architecture>` overview.
 
+
+.. usage-body-end
 
 Further Reading
 ---------------

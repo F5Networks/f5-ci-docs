@@ -7,6 +7,6 @@ Features
 
 
 .. include:: /includes/f5-lwp/topic_lightweight-proxy.rst
-    :start-line: 96
-    :end-before: Usage
+    :start-after: .. features-body
+    :end-before: .. features-body-end
 

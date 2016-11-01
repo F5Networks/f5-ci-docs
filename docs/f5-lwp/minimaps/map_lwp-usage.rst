@@ -5,4 +5,5 @@ Usage
     :hidden:
 
 .. include:: /includes/f5-lwp/topic_lightweight-proxy.rst
-    :start-line: 200
+    :start-after: .. usage-body
+    :end-before: .. usage-body-end

@@ -208,7 +208,7 @@ html_short_title = 'F5 LWP'
 # of the sidebar.
 #
 
-html_logo = '/static/f5-lwp/f5-logo.png'
+html_logo = '/static/f5-lwp/f5_logo.jpg'
 
 
 # The name of an image file (relative to this directory) to use as a favicon of

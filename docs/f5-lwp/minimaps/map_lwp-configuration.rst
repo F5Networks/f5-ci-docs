@@ -6,7 +6,7 @@
 
 
 .. include:: /includes/f5-lwp/topic_lightweight-proxy.rst
-    :start-line: 59
-    :end-line: 91
+    :start-after: .. configuration-body
+    :end-before: .. configuration-body-end
 
 
