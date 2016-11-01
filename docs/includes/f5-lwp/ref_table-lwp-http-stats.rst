@@ -41,4 +41,8 @@
       - Size (in bytes) of the response headers
     * - ``response_body_size``
       -  Size (in bytes) of the response body
+    * - ``app``
+      -  Application name
+    * - ``appComponent``
+      -  Application component
 

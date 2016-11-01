@@ -13,4 +13,8 @@
       - IP address for the particular server pool member
     * - ``pool_member_port``
       - TCP port of the particular server pool member
+    * - ``app``
+      -  Application name
+    * - ``appComponent``
+      -  Application component
 

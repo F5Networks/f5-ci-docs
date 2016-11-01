@@ -27,4 +27,6 @@
       - Maximum time (in milliseconds) to connection to a server
     * - ``failed_tcp_conns``
       - Number of TCP connections that have failed
+    * - ``aggr_period``
+      - Time interval for flushing aggregate statistics
 
