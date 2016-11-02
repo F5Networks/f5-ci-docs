@@ -23,18 +23,18 @@ Architecture
 |lwp| comprises four (4) basic components: config, proxy, routing, and telemetry.
 
 Config
-""""""
+~~~~~~
 
 The config component manages the configuration for the LWP.
 It merges the configuration inputs from static and dynamic sources, and normalizes the configuration for the other components.
 
 Proxy Module
-""""""""""""
+~~~~~~~~~~~~
 
 The proxy module manages the virtual server configuration and creates a proxy in the routing infrastructure for each virtual server.
 
 Routing
-"""""""
+~~~~~~~
 
 The routing infrastructure is the core of LWP that provides the framework to create traffic services.
 It is a middelware framework that invokes the middleware functions, and use the feedback to determine how to handle data events and the transaction lifecycle.
@@ -44,7 +44,7 @@ The LWP comes with a small number of built-in middleware functions.
 It also has built-in helpers for `Express middleware`_, which make it easy to :ref:`customize <customize-lwp-express-middleware>` to suit the needs of your environment.
 
 Telemetry Module
-""""""""""""""""
+~~~~~~~~~~~~~~~~
 
 The telemetry module manages statistics and real-time events.
 It provides a modular interface to send those details where they need to go.
@@ -62,10 +62,10 @@ Use Case
 Deployments
 ```````````
 
-F5's |lwp| can be deployed in Mesos with Marathon, or in Kubernetes. Please see the deployment guide for your environment for further information.
+F5's |lwp| can be deployed in Mesos+Marathon, or in Kubernetes. Please see the guide(s)  for your environment for deployment instructions.
 
-* :ref:`Mesos + Marathon <#>`
-* :ref:`Kubernetes <deploy-lwp-kubernetes>`
+* :ref:`Mesos+Marathon <cscm-quick-start>`
+* :ref:`Kubernetes <lwp-deploy-kubernetes>`
 
 Prerequisites
 -------------
@@ -76,6 +76,8 @@ Prerequisites
 
 Caveats
 -------
+
+- None.
 
 Configuration
 -------------
@@ -88,24 +90,30 @@ The |lwp| is designed to implement virtual servers dynamically for services in a
 
 The |lwp| config file contains the following sections:
 
--  :ref:`Global <#>`: global configurations that are not specific to an orchestration environment.
--  :ref:`Stats <#>`: contains parameters for statistics gathering and reporting.
--  :ref:`Orchestration <#>`: contains parameters that allow you to specify your orchestration environment
--  :ref:`Virtual servers <#>`: contains parameters that specify list(s) of virtual server objects representing service endpoints. Part or all of this section is provided by the orchestration environment.
+-  :ref:`Global <lwp-global-config>`: global configurations that are not specific to an orchestration environment.
+-  :ref:`Orchestration <lwp-orchestration-config>`: contains parameters that allow you to specify your orchestration environment.
+-  :ref:`Virtual servers <lwp-virtual-server-config>`: contains parameters that specify list(s) of virtual server objects representing service endpoints. Part or all of this section is provided by the orchestration environment.
+-  :ref:`Telemetry <lwp-stats-config>`: contains parameters for statistics gathering and reporting.
 
 .. [#] See the :ref:`Deployment Guides <lwp-deployment-guides>` for details regarding specific orchestration environments.
 
-.. _lwp-configuration-parameters:
+.. _lwp-config-params:
 
 Configuration Parameters
 ````````````````````````
+.. _lwp-global-config:
 
 .. include:: /includes/f5-lwp/ref_config-parameters-global.rst
 
+.. _lwp-orchestration-config:
 
 .. include:: /includes/f5-lwp/ref_config-parameters-orchestration.rst
 
+.. _lwp-virtual-server-config:
+
 .. include:: /includes/f5-lwp/ref_config-parameters-virtual-server.rst
+
+.. _lwp-stats-config:
 
 .. include:: /includes/f5-lwp/ref_config-parameters-stats.rst
 
@@ -124,7 +132,7 @@ Features
 
 F5 |lwp| is a Node.js application that provides a :term:`middleware` framework for handling proxied traffic.
 
-The included :ref:`connection manager`, :ref:`load balancer`, and :ref:`forwarder` features are all :term:`built-in middleware` functions.
+The included :ref:`connection manager <lwp-connection-manager>`, :ref:`load balancer <lwp-load-balancer>`, and :ref:`forwarder <lwp-forwarder>` features are all :term:`built-in middleware` functions.
 
 |lwp| provides helper functions that make it easy to run other `Express middleware <https://expressjs.com/en/guide/using-middleware.html>`_ within our middleware framework. You can also use  `third-party middleware <https://expressjs.com/en/guide/using-middleware.html#middleware.third-party>`_ to add functionality. See the Express documentation for more information.
 
@@ -134,7 +142,8 @@ Built-in Middleware
 ```````````````````
 
 Header Manipulator
-^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~
+
 The header manipulation module allows you to add, remove, or modify HTTP headers on the ``http.ClientRequest`` and ``http.serverResponse`` objects. The module uses the Node.js header manipulation API (``setHeader``, ``getHeader``, ``removeHeader``). |lwp| has the same semantics for adding headers as the Node.js ``setHeader`` method.
 
     * Sets a single header value for implicit headers.
@@ -149,8 +158,10 @@ The following flags config parameters affect this built-in middleware. See `Flag
 
 .. versionadded:: v0.1.1
 
+.. _lwp-load-balancer:
+
 Load Balancer
-^^^^^^^^^^^^^
+~~~~~~~~~~~~~
 
 The load balancer module queries the orchestration environment for the current list of
 servers and implements a load balancing algorithm to choose a back-end server. This modules provides round-robin load balancing and collection of load balancing-related statistics.
@@ -159,8 +170,10 @@ servers and implements a load balancing algorithm to choose a back-end server. T
 
 .. versionadded:: v0.1.1
 
+.. _lwp-connection-manager:
+
 Connection Manager
-^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~
 
 The connection manager module tracks and manages server connections. It maintains a mapping of client-to-server connections; conducts lookups for client-to-server and server-to-client connections; reuses existing connections when found and creates new ones when needed; and manages the connection lifetime. Server connections are closed when the client closes the  connection or when the inactivity timeout fires.
 
@@ -168,9 +181,10 @@ The connection manager module tracks and manages server connections. It maintain
 
 .. versionadded:: v0.1.1
 
+.. _lwp-forwarder:
 
 Forwarder
-^^^^^^^^^
+~~~~~~~~~
 
 The forwarder module forwards data back and forth between client and server connections.
 
@@ -195,7 +209,7 @@ The telemetry module allows LWP and its middleware to capture and aggregate vari
 
 
 Global Stats
-^^^^^^^^^^^^
+~~~~~~~~~~~~
 
 The global stats config parameters serve as the default for all other metrics that don't require configuration.
 
@@ -207,7 +221,7 @@ The global stats config parameters serve as the default for all other metrics th
 
 
 TCP Transaction Stats
-^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~
 
 -  splunk source: lwp.transaction
 -  splunk sourcetype: f5:lwp.stats:json
@@ -217,7 +231,7 @@ TCP Transaction Stats
 
 
 HTTP Transaction Stats
-^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~
 
 -  splunk source: lwp.transaction
 -  splunk sourcetype: f5:lwp.stats:json
@@ -285,8 +299,8 @@ Further Reading
 
     * :ref:`|lwp| Deployment Guides <lwp-deployment-guides>`
     * :ref:`|lwpc| for Marathon <lwpc-m_home>`
-    * :ref:`F5 |csc| for Apache Mesos/Marathon <csc-m_home>`
-    * :ref:`F5 |csc| for Kubernetes <csc-k_home>`
+    * :ref:`F5 |csi| for Apache Mesos_Marathon <csi-m_home>`
+    * :ref:`F5 |csi| for Kubernetes <csi-k_home>`
 
 
 .. toctree::

@@ -1,8 +1,9 @@
 Deploy the F5 |lwp| for Kubernetes
 ----------------------------------
+.. lwp-deploy-guide
 
 Deploying the F5® |lwp| (LWP) in Kubernetes replaces `kube-proxy <http://kubernetes.io/docs/admin/kube-proxy/>`_.
-This allows a `Kubernetes Service`_ to be annotated to enable its ClusterIP to be implemented by the |lwp|, while other services retain the basic kube-proxy behavior.
+This allows you to annotate a `Kubernetes Service`_ to enable its ClusterIP to be implemented by the |lwp|, while other services retain the basic kube-proxy behavior.
 
 The F5 |lwp| in Kubernetes is composed of two (2) parts:
 
@@ -11,7 +12,7 @@ The F5 |lwp| in Kubernetes is composed of two (2) parts:
 
 The |lwp| should be deployed on every node in your Kubernetes cluster.
 The LWP on the same node as the client handles requests and load-balances to the backend pod.
-|lwp| will create a virtual server for every `Kubernetes Service`_ in the cluster that has the F5 annotation configured (see :ref:`Create a Virtual Server <add-lwp-kubernetes-services>`).
+|lwp| creates a virtual server for every `Kubernetes Service`_ in the cluster that has the F5 annotation configured (see :ref:`Create a Virtual Server <add-lwp-kubernetes-services>`).
 
 .. _install-lwp-kubernetes:
 
@@ -22,9 +23,12 @@ Add a |lwp| Instance to Every Node
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Every node in the cluster need to run an instance of LWP.
-This example will create a Kubernetes `DaemonSet <http://kubernetes.io/docs/admin/daemons/>`_ to ensure one |lwp| runs per node, and a Kubernetes `ConfigMap`_ to provide the same configuration file to each. 
+The steps below demonstrate how to use a Kubernetes `ConfigMap`_ and `DaemonSet <http://kubernetes.io/docs/admin/daemons/>`_ to run one |lwp| per node and apply the same configurations to each LWP instance.
 
-#. Specify the |lwp| :ref:`global <global-config-parameters>` and :ref:`orchestration <orchestration-config-parameters>` configurations in a `ConfigMap`_.
+The :dfn:`DaemonSet` ensures one |lwp| runs per node in the Kubernetes cluster.
+The :dfn:`ConfigMap` contains the configurations you want to apply to each LWP instance.
+
+#. Specify the |lwp| :ref:`global <lwp-global-config>` and :ref:`orchestration <lwp-orchestration-config>` configurations in a `ConfigMap`_.
 
     .. note::
 
@@ -42,7 +46,7 @@ This example will create a Kubernetes `DaemonSet <http://kubernetes.io/docs/admi
 
     .. note::
 
-        * As with all other Kubernetes configurations, this file can be JSON or YAML.
+        * As with most other Kubernetes configurations, this file can be JSON or YAML.
         * In the example DaemonSet shown here, we
 
             a. use the ConfigMap (set up in the previous step) to configure the |lwp|; AND
@@ -56,15 +60,20 @@ This example will create a Kubernetes `DaemonSet <http://kubernetes.io/docs/admi
     :download:`example-lwp-daemonset.yaml </static/f5-lwp/example-lwp-daemonset.yaml>`
 
 
-Replace kube-proxy with f5-kube-proxy
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Edit Pod Manifest(s) to replace kube-proxy with f5-kube-proxy
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The kube-proxy on every node in the cluster needs to support handoff to LWP.  
+For every node in your cluster, edit the static pod manifest file to ensure that kube-proxy supports handoff to LWP.
 
-    .. rubric:: Replace ``kube-proxy`` with ``f5-kube-proxy`` in the **container section** of the static pod manifest file, and add the proxy-plugin volume mount.
+#. Replace ``kube-proxy`` with the ``f5-kube-proxy`` image in the **container section**.
+
+#. Add the ``proxy-plugin`` volume mount in the **container section**.
+
+#. Add the ``plugin-config`` volume in the **volumes section**.
 
     .. literalinclude:: /static/f5-lwp/example-kube-proxy-manifest.yaml
        :language: yaml
+       :linenos:
        :emphasize-lines: 10,27-29,40-42
 
     :download:`example-kube-proxy-manifest.yaml </static/f5-lwp/example-kube-proxy-manifest.yaml>`
@@ -79,23 +88,27 @@ Create a Virtual Server with |lwp|
 Enable the |lwp| for Kubernetes Service(s)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-|lwp| will take over the virtual IP for any `Kubernetes Service`_ that has been enabled with the lwp annotation. A virtual server will be created in each LWP according to the annotation's value.
+You can add an annotation to the service definition file to enable the |lwp| on any `Kubernetes Service`_.
+The LWP annotation's values provide the virtual server configuration, similar to the :ref:`Virtual Server section <lwp-virtual-server-config>` of the LWP config file.
+Once it has been enabled, |lwp| takes over the virtual IP for the service.
+The virtual server created in each LWP uses the configuration values defined in the annotation.
 
-* The ``lwp.f5.com/config.portname`` annotation enables LWP for port named ``portname`` of the Service
-* The ``lwp.f5.com/config`` annotation enables LWP for all ports for the Service, except the ports that also have a matching named port annotation.
+* The ``lwp.f5.com/config.portname`` annotation enables LWP for the Service port named ``portname``.
+* The ``lwp.f5.com/config`` annotation enables LWP for all of the Service's ports, except those ports that already have an annotation for the named port.
+* Endpoints and destination details should not be included, as they are dynamically assigned by Kubernetes.
 
-The value for these LWP annotations provides the virtual server configuration, similar to the :ref:`Virtual Server section <lwp-configs-virtual-server>` of the LWP config file. Endpoints and destination details should not be included, as they are dynamically assigned by Kubernetes.
+.. note::
 
-.. note
-    If the configuration is not correct, LWP will reject traffic. The error message can be seen in the LWP logs
+    If the configuration is not correct, LWP will reject traffic. The error message can be seen in the LWP logs.
 
-To annotate an existing service:
+* Use the ``kubectl annotate`` command to annotate an existing service:
 
     .. code-block:: bash
 
         kubectl annotate service my-service \
           lwp.f5.com/config.http='{"ip-protocol":"http","load-balancing-mode":"round-robin"}'
 
+* Create a new Service with the F5 annotation incorporated:
 
     .. rubric:: The example below shows the F5 annotation string incorporated into a sample Service definition.
 

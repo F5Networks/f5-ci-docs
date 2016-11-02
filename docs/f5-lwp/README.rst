@@ -1,3 +1,5 @@
+.. _lwp-home:
+
 F5 |lwp|
 ========
 
@@ -8,17 +10,17 @@ F5 |lwp|
 
     map_*
 
-
-.. rubric:: Release
-
+Release
+-------
 
 The current release is |lwp_v|.
 
-.. rubric:: Overview
+Overview
+--------
 
 .. include:: /includes/f5-lwp/topic_lightweight-proxy.rst
-    :start-after: .. overview-body
-    :end-before: .. overview-body-end
+    :start-after: overview-body
+    :end-before: overview-body-end
 
 
 

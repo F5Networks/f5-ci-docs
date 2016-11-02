@@ -335,7 +335,7 @@ latex_documents = [
 # the title page.
 #
 
-latex_logo = ['static/f5_logo.jpg']
+latex_logo = 'static/f5-lwp/f5_logo.jpg'
 
 
 # For "manual" documents, if this is true, then toplevel headings are parts,

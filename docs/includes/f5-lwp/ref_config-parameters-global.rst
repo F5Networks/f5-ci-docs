@@ -1,5 +1,5 @@
 Global section
-^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~
 
 .. list-table:: Global Configuration Parameters
     :header-rows: 1

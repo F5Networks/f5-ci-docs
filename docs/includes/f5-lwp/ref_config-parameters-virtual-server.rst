@@ -55,7 +55,7 @@ Virtual Server Section
 .. _lwp-configs-virtual-server-flags:
 
 Flags
-*****
+^^^^^
 
 .. list-table:: Virtual Server Flags Configuration Parameters
     :header-rows: 1
