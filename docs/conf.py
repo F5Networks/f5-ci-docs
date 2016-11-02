@@ -68,7 +68,7 @@ source_parsers = {
 master_doc = 'index'
 
 # General information about the project.
-project = u'F5 Container Service Connector'
+project = u'F5 Container Service Integrator'
 copyright = u'2016 F5 Networks Inc'
 author = u'F5 Networks'
 
@@ -86,14 +86,10 @@ version = 'v0.1'
 rst_epilog = """
 .. |lwp| replace:: Lightweight Proxy
 .. |lwpc| replace:: Lightweight Proxy Controller
-.. |csi| replace:: Container Service Connector
-.. |csc| replace:: Container Service Connector
-.. |csi_m| replace:: CSC - Mesos
-.. |csi_m-long| replace:: |csc| for Mesos
-.. |csc_m| replace:: CSC - Mesos
-.. |csc_m-long| replace:: |csc| for Mesos
-.. |csi_m-v| replace:: |release|
-.. |csc_m-v| replace:: |release|
+.. |csi| replace:: Container Service Integrator
+.. |csi_m| replace:: CSI - Mesos+Marathon
+.. |csi_m-long| replace:: |csi| for Mesos+Marathon
+.. |csi_m-v| replace:: v0.1.3
 .. |lwp_v| replace:: v0.1.1
 .. |tm| unicode:: U+2122
     :ltrim:
@@ -288,7 +284,7 @@ html_show_sphinx = False
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'F5_Container-Service-Connector_doc'
+htmlhelp_basename = 'F5_Container-Service-Integrator_doc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -314,8 +310,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'F5_Container-Service-Connector_doc.tex',
-     u'F5 Container Service Connector Documentation',
+    (master_doc, 'F5_Container-Service-Integrator_doc.tex',
+     u'F5 Container Service Integrator Documentation',
      u'F5 Networks', u'manual'),
 ]
 
@@ -357,8 +353,8 @@ latex_logo = 'static/f5_logo.jpg'
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'F5_Container-Service-Connector_doc',
-     u'F5 Container Service Connector Documentation',
+    (master_doc, 'F5_Container-Service-Integrator_doc',
+     u'F5 Container Service Integrator Documentation',
      [author], 1)
 ]
 
@@ -373,9 +369,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'F5_Container-Service-Connector_doc',
-     u'F5 Container Service Connector Documentation',
-     author, 'F5 Container Service Connector'),
+    (master_doc, 'F5_Container-Service-Integrator_doc',
+     u'F5 Container Service Integrator Documentation',
+     author, 'F5 Container Service Integrator'),
 ]
 
 # Documents to append as an appendix to all manuals.
