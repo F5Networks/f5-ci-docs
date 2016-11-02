@@ -1,0 +1,60 @@
+{
+  "id": "server-app4",
+  "cpus": 0.1,
+  "mem": 16.0,
+  "instances": 2,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "docker-user/node-web-app",
+      "network": "BRIDGE",
+      "forcePullImage": false,
+      "portMappings": [
+        { "containerPort": 8088,
+          "hostPort": 0,
+          "protocol": "tcp" },
+        { "containerPort": 8188,
+          "hostPort": 0,
+          "protocol": "tcp" },
+        { "containerPort": 8288,
+          "hostPort": 0,
+          "protocol": "tcp" }
+      ]
+    }
+  },
+  "labels": {
+    "F5_PARTITION": "mesos",
+    "F5_0_BIND_ADDR": "10.128.10.240",
+    "F5_0_MODE": "http",
+    "F5_0_PORT": "8080",
+    "F5_1_BIND_ADDR": "10.128.10.242",
+    "F5_1_MODE": "http",
+    "F5_1_PORT": "8090"
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "path": "/",
+      "gracePeriodSeconds": 5,
+      "intervalSeconds": 20,
+      "maxConsecutiveFailures": 3
+    },
+    {
+      "protocol": "HTTP",
+      "portIndex": 1,
+      "path": "/",
+      "gracePeriodSeconds": 5,
+      "intervalSeconds": 20,
+      "maxConsecutiveFailures": 3
+    },
+    {
+      "protocol": "HTTP",
+      "portIndex": 2,
+      "path": "/",
+      "gracePeriodSeconds": 5,
+      "intervalSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ]
+}

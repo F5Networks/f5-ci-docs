@@ -1,3 +1,5 @@
+:orphan: true
+
 Glossary
 ========
 
@@ -12,5 +14,6 @@ Glossary
 
     device group
        A device group is a component of a device service cluster. It consists of a collection of `BIG-IP`_ devices that trust each other and can synchronize, and sometimes fail over, their configuration data.
+
 
 .. _BIG-IP: https://f5.com/products/big-ip
