@@ -35,7 +35,9 @@ Global Stats
 +--------------------------+----------------------------------------------------------------------------------+
 | max_server_latency       | Maximum time (in milliseconds) to connection to a server                         |
 +--------------------------+----------------------------------------------------------------------------------+
-| failed_tcp_conns         | Number of TCP connections that have failed                                       |
+| clientside_failed_conns  | Number of failed TCP connections from clients                                    |
++--------------------------+----------------------------------------------------------------------------------+
+| serverside_failed_conns  | Number of failed TCP connections to servers                                      |
 +--------------------------+----------------------------------------------------------------------------------+
 
 TCP Transaction Stats
