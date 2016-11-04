@@ -1,7 +1,5 @@
 .. code-block:: console
 
-    sse                 Use Server Sent Events instead of HTTP Callbacks [env
-                        var: F5_CSI_USE_SSE] (default: False)
     -h, --help          show this help message and exit
     --longhelp          Print out configuration details (default: False)
     --marathon MARATHON [MARATHON ...], -m MARATHON [MARATHON ...]

@@ -77,7 +77,6 @@ Install via a JSON config file
             }
           },
           "env": {
-            "F5_CSI_USE_SSE": "true",
             "MARATHON_URL": "<marathon_url>:8080",
             "F5_CSI_PARTITIONS": "<bigip_partition_for_mesos_apps>",
             "F5_CSI_BIGIP_HOSTNAME": "<bigip_admin_console>",

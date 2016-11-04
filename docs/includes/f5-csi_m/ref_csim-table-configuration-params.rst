@@ -7,12 +7,6 @@
       - Default
       - Description
       - Allowed Values
-    * - ``F5_CSI_USE_SSE``
-      - Boolean
-      - No
-      - False
-      - Use Server Sent Events instead of HTTP Callbacks
-      - True, False
     * - ``MARATHON_URL``
       - string
       - Yes
