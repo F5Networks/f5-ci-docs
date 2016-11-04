@@ -1,23 +1,32 @@
-.. _csi-m_home:
+.. _csim-home:
 
-F5 |csi_m-long|
-===============
-
-.. include:: /includes/f5-csi_m/concept_csim-overview.rst
-
-.. include:: /includes/f5-csi_m/ref_csim-compatibility.rst
+F5 |csi_m|
+==========
 
 .. rubric:: Release
-The current release of |csi_m-long| is |csi_m-v|.
+
+The current release is |csi_m-v|.
+
+.. rubric:: Overview
+
+.. include:: /includes/f5-csi_m/topic_csi-controller-mesos.rst
+    :start-after: csim-overview-body-start
+    :end-before: csim-overview-body-end
+
+.. rubric:: Architecture
+
+.. include:: /includes/f5-csi_m/topic_csi-controller-mesos.rst
+    :start-after: csim-architecture-body-start
+    :end-before: csim-architecture-body-end
+
+______________________
 
 .. toctree::
     :caption: Table of Contents
     :name: csim_toc
-    :maxdepth: 3
     :glob:
 
     map_*
-
 
 
 .. API Documentation

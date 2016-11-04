@@ -1,42 +1,50 @@
 F5 |csi_m|
 ==========
 
+
 Overview
 --------
 
+.. csim-overview-body-start
+
 The F5® |csi| (CSI) makes L4-L7 services available to users deploying miscroservices-based applications in a containerized infrastructure. [#]_ The |csi_m-long| allows you to configure load balancing on a BIG-IP®  using the `Mesos`_ `Marathon`_ orchestration platform.
-
-Architecture
-````````````
-
-The |csi_m| is a Docker container that can run as an app in `Marathon`_. Once installed, it watches for the creation/destruction of `Marathon Apps`_ with the  ``f5-marathon-lb`` labels applied. When it finds a properly-configured App, the CSI  automatically updates the configuration of the BIG-IP as follows:
-
-    - matches Marathon apps to a specified BIG-IP partition;
-    - creates a virtual server and pool in the specified partition on the BIG-IP;
-    - creates a pool member for each `task`_ and adds the member to the default pool.
-    - creates a health monitor on the BIG-IP for each pool member if the application has a Marathon Health Monitor configured.
-
 
 .. [#] See `Using Docker Container Technology with F5 Products and Services <https://f5.com/resources/white-papers/using-docker-container-technology-with-f5-products-and-services>`_.
 
+.. csim-overview-body-end
+
+Architecture
+------------
+
+.. csim-architecture-body-start
+
+The |csi_m| is a Docker container that can run as a `Marathon Application <https://mesosphere.github.io/marathon/docs/application-basics.html>`_. Once installed, it watches for the creation/destruction of Marathon Apps with the :ref:`F5 Marathon application labels <f5-application-labels>` applied. When it finds an App configured with the F5 labels, the CSI  automatically updates the configuration of the BIG-IP as follows:
+
+    - matches Marathon Apps to a specified BIG-IP partition;
+    - creates a virtual server and pool in the specified partition on the BIG-IP for each `port-mapping <https://mesosphere.github.io/marathon/docs/ports.html>`_ ;
+    - creates a pool member for each App task and adds the member to the default pool;
+    - creates a health monitor on the BIG-IP for each pool member, if the application has a Marathon Health Monitor configured.
+
+.. csim-architecture-body-end
+
 Use Case
-````````
+--------
 
 The F5 |csi_m| makes it possible to manage BIG-IP Local Traffic Manager™ (LTM®) services for North-South traffic (i.e., traffic in and out of the data center) via the Marathon API or GUI. It can be used in conjunction with the F5 :ref:`Lightweight Proxy <lwp-home>`, which provides services for East-West traffic (i.e., traffic between services/apps in the data center).
 
 Prerequisites
-`````````````
+-------------
 
-In order to use the |csi_m-long|, you will need the following:
+.. csim-prereqs-body-start
 
-- Licensed, operational BIG-IP (hardware or Virtual Edition).
+- Licensed, operational `BIG-IP`_ :term:`device`.
 - Knowledge of BIG-IP `system configuration`_ and `local traffic management`_.
-- Administrator access to both the BIG-IP and Marathon. [*]_
+- Administrative access to both the BIG-IP and Marathon. [#]_
 - An existing, functional `Mesos`_ `Marathon`_ deployment.
 - BIG-IP partitions that correspond to the Marathon apps.
 - The official F5 ``f5-marathon-lb`` image, pulled from the `F5 Docker registry`_.
 
-.. [*] Admin access to the BIG-IP is only required to create the partitions the CSI will manage. Users with permission to configure objects in the partition can do so via the CSI.
+.. [#] Admin access to the BIG-IP is only required to create the partitions the CSI will manage. Users with permission to configure objects in the partition can do so via the CSI.
 
 Caveats
 ```````
@@ -44,20 +52,26 @@ Caveats
 - |csi_m| can not manage the "Common" partition on the BIG-IP.
 - You must create the partition you wish to manage from Marathon on the BIG-IP *before* configuring the CSI.
 
-.. csim-install-section-start
+.. csim-prereqs-end
+
+
 
 .. _csim-installation-section:
+
+.. csim-install-section-start
 
 Install the |csi_m|
 -------------------
 
-The |csi_m| can be installed as a `Marathon App`_ via the `Marathon REST API <https://mesosphere.github.io/marathon/docs/generated/api.html>`_, the `Marathon UI <https://mesosphere.github.io/marathon/docs/marathon-ui.html>`_, or the command line. All options use the same set of :ref:`configuration parameters <csim_configuration-parameters>`.
+.. csim-install-body-start
+
+The |csi_m| can be installed as a `Marathon Application <https://mesosphere.github.io/marathon/docs/application-basics.html>`_ via the `Marathon REST API <https://mesosphere.github.io/marathon/docs/generated/api.html>`_, the `Marathon UI <https://mesosphere.github.io/marathon/docs/marathon-ui.html>`_, or the command line. All options use the same set of :ref:`configuration parameters <csim_configuration-parameters>`.
 
 
-Install via a JSON config file
-``````````````````````````````
+Launch the |csi_m| App via the Marathon REST API
+````````````````````````````````````````````````
 
-* Create a JSON configuration file with the correct ``env`` parameters for your BIG-IP :term:`device` and Marathon.
+#. Create a JSON configuration file with the correct ``env`` parameters for your BIG-IP :term:`device` and Marathon.
 
     .. rubric:: Example:
 
@@ -85,19 +99,15 @@ Install via a JSON config file
           }
         }
 
-
-Launch the |csi_m| App via the Marathon REST API
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* Send a POST request to the Marathon server that references your JSON config file.
+#. Send a POST request that references your JSON config file to the Marathon server.
 
     .. code-block:: bash
 
         $ curl -X POST -H "Content-Type: application/json" http://<marathon_url>:8080/v2/apps -d @f5-marathon-lb.json
 
 
-Launch the |csi_m| via the Marathon UI
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Launch the |csi_m| App via the Marathon UI
+``````````````````````````````````````````
 
 #. Click the :guilabel:`Create Application` button.
 #. Complete the :guilabel:`Docker Container Settings` section:
@@ -129,16 +139,24 @@ You can also query the Marathon REST interface for a list of all running apps. [
 
 .. [#] http://mesosphere.github.io/marathon/docs/rest-api.html#get-v2-apps
 
+
+.. csim-install-body-end
+
 .. csim-install-section-end
 
-.. csim-config-section-start
+
 
 .. _csim_configuration-section:
+
+.. csim-config-section-start
 
 Configuration
 -------------
 
-The F5 |csi_m| can be configured with valid JSON by setting the parameters below as environment variables. The service configuration details are stored in Marathon application labels.
+.. csim-configuration-body-start
+
+Use the configuration parameters, formatted as valid JSON, to configure the F5 |csi_m|.
+The service configuration details are stored in Marathon as application labels.
 
 .. _csim_configuration-parameters:
 
@@ -147,186 +165,81 @@ Configuration Parameters
 
 .. include:: /includes/f5-csi_m/ref_csim-table-configuration-params.rst
 
+.. csim-configuration-body-end
 .. csim-config-section-end
+
+.. _csim-usage-section:
 
 .. csim-usage-section-start
 
 Usage
 -----
 
-Manage Applications with |csi_m|
-````````````````````````````````
+.. csim-usage-body-start
 
-The |csi_m| identifies and configures applications via Marathon Application labels.
+The F5® |csi_m| runs as an App in Marathon. It watches for other Apps configured with a custom set of application labels and creates/manages objects on the BIG-IP as specified in the App configuration.
 
-.. tip::
+When the App deploys, the |csi_m|  does the following:
 
-    Some labels are specified *per service port*. These are denoted with the ``{n}`` parameter in the label key; ``{n}`` corresponds to the service port index, beginning at ``0``.
+   - creates the virtual server on the BIG-IP in the specified partition,
+   - assigns the virtual server to the specified `port-mapping <https://mesosphere.github.io/marathon/docs/ports.html>`_ for the App,
+   - creates pool members for each of the App's tasks.
 
+.. _f5-application-labels:
+
+F5 Application Labels
+`````````````````````
+
+The F5 application labels consist of key-value pairs that direct the |csi_m| to apply configurations to the BIG-IP. You can use the application labels to configure your App via the Marathon UI or the REST API, in a JSON config file.
 
 .. literalinclude:: /includes/f5-csi_m/ref_csim-table-application-labels.rst
 
+.. tip::
 
-Deploy Applications with |csi_m| and iApps
-``````````````````````````````````````````
+    * To configure virtual servers on the BIG-IP for specific ports, provide a port index in the F5 application label.
 
-F5's `iApps® <https://devcentral.f5.com/iapps>`_ is a user-customizable framework for deploying applications that enables you to templatize sets of functionality on your BIG-IP. You can use |csi_m| to instantiate and manage an iApp® Application Service. The iApp template and variables are defined via Marathon application labels specific to the iApp you are deploying.
+        - The labels that allow port-specific configuration include ``{n}`` in the label key.
+        - The ``{n}`` refers to an index into the port mapping array, starting at 0.
 
-.. important::
+    * If a service port has a Marathon health monitor, |csi_m| creates a corresponding health monitor on the BIG-IP.
+    * If the ``F5_CSI_USE_HEALTHCHECK`` option is set to True, |csi_m| checks the port's health status before adding it to a pool on the BIG-IP.
 
-    The iApp template you wish to deploy **must** already be installed on the BIG-IP. Variable names and values are template-specific.
+Create a Virtual Server with the F5 |csi_m| via the REST API
+````````````````````````````````````````````````````````````
 
-.. literalinclude:: /includes/f5-csi_m/ref_csim-table-application-labels-iApps.rst
-
-.. csim-usage-section-end
-
-Deployment Examples
--------------------
-
-Deploy a Marathon Application via the REST API
-``````````````````````````````````````````````
-
-In the following example, we deploy an application in Marathon with the appropriate |csi_m| labels configured.
-
-- The app (``server-app4``) has three service ports configured; only the first two are exposed via the BIG-IP (port indices 0 and 1 are configured in the ``labels`` section).
-- Marathon health monitors are configured for all three service ports.
-
-.. note:: All IP addresses shown are for demonstration purposes only.
-
-#. Deploy the application in Marathon via the REST API.
-
-    .. code-block:: shell
-
-        curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' \
-        http://<marathon_url>:8080/v2/apps -d @sample-marathon-application.json
+#. Create a JSON file containing the App service definitions and F5 labels.
 
     .. literalinclude:: /static/f5-csi_m/sample-marathon-application.json
         :caption: sample-marathon-application.json
 
     :download:`sample-marathon-application.json </static/f5-csi_m/sample-marathon-application.json>`
 
-
-#. For our Marathon application, |csi_m| configures virtual servers, pools, and health monitors on the BIG-IP.
-
-    .. note::
-
-        - If a Marathon health monitor exists for a service port, |csi_m| creates a corresponding health monitor for it on the BIG-IP.
-        - If the ``--health-check`` option is set, |csi_m| checks the Marathon health status for the service port before adding it to the backend pool.
-
-    .. code-block:: shell
-        :caption: BIG-IP configurations
-
-        user@(my-bigip)(Active)(/my-marathon-app)(tmos)# show ltm
-        ltm monitor http server-app4_10.128.10.240_8080 {
-            adaptive disabled
-            defaults-from /Common/http
-            destination *:*
-            interval 20
-            ip-dscp 0
-            partition mesos
-            send "GET /\r\n"
-            time-until-up 0
-            timeout 61
-        }
-        ltm monitor http server-app4_10.128.10.242_8090 {
-            adaptive disabled
-            defaults-from /Common/http
-            destination *:*
-            interval 20
-            ip-dscp 0
-            partition mesos
-            send "GET /\r\n"
-            time-until-up 0
-            timeout 61
-        }
-        ltm node 10.141.141.10 {
-            address 10.141.141.10
-            partition mesos
-            session monitor-enabled
-            state up
-        }
-        ltm persistence global-settings { }
-        ltm pool server-app4_10.128.10.240_8080 {
-            members {
-                10.141.141.10:31383 {
-                    address 10.141.141.10
-                    session monitor-enabled
-                    state up
-                }
-                10.141.141.10:31775 {
-                    address 10.141.141.10
-                    session monitor-enabled
-                    state up
-                }
-            }
-            monitor server-app4_10.128.10.240_8080
-            partition mesos
-        }
-        ltm pool server-app4_10.128.10.242_8090 {
-            members {
-                10.141.141.10:31384 {
-                    address 10.141.141.10
-                    session monitor-enabled
-                    state up
-                }
-                10.141.141.10:31776 {
-                    address 10.141.141.10
-                    session monitor-enabled
-                    state up
-                }
-            }
-            monitor server-app4_10.128.10.242_8090
-            partition mesos
-        }
-        ltm virtual server-app4_10.128.10.240_8080 {
-            destination 10.128.10.240:webcache
-            ip-protocol tcp
-            mask 255.255.255.255
-            partition mesos
-            pool server-app4_10.128.10.240_8080
-            profiles {
-                /Common/http { }
-                /Common/tcp { }
-            }
-            source 0.0.0.0/0
-            source-address-translation {
-                type automap
-            }
-            vs-index 153
-        }
-        ltm virtual server-app4_10.128.10.242_8090 {
-            destination 10.128.10.242:8090
-            ip-protocol tcp
-            mask 255.255.255.255
-            partition mesos
-            pool server-app4_10.128.10.242_8090
-            profiles {
-                /Common/http { }
-                /Common/tcp { }
-            }
-            source 0.0.0.0/0
-            source-address-translation {
-                type automap
-            }
-            vs-index 154
-        }
-
-
-Deploy an iApps Application via the REST API
-````````````````````````````````````````````
-
-In the following example, we deploy the "f5.http" iApp® on the BIG-IP as a Marathon Application, via the Marathon REST API. [#]_
-
-.. note::
-
-    Only the the ``IAPP`` labels and the ``F5_PARTITION`` label are needed to deploy using an iApp template. For example, the ``F5_0_BIND_ADDR`` and ``F5_0_PORT`` parameters are accounted for by iApp variables (``pool__addr`` and ``pool__port``, respectively).
-
-#. Deploy the iApp in Marathon via the REST API.
+#. Deploy the application in Marathon via the REST API using the JSON file.
 
     .. code-block:: shell
 
         curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' \
-        http://<marathon_url>:8080/v2/apps -d @sample-iapp-marathon.json
+        http://<marathon_url>:8080/v2/apps -d @sample-marathon-application.json
+
+In this sample application configuration, we have three (3) port indices. We created HTTP virtual servers on the BIG-IP for port 0 and port 1, and specified the IP address and port for each. Corresponding pools and pool members will be added automatically for each of the Application's tasks.
+
+For a detailed breakdown of the objects created on the BIG-IP, see the :ref:`REST API Deployment Examples <REST API Deployment Examples>`.
+
+
+Create a Virtual Server with the F5 |csi_m| and iApps via the REST API
+``````````````````````````````````````````````````````````````````````
+
+The |csi_m| supports the use of `iApps® <https://devcentral.f5.com/iapps>`_ to create and manage pre-defined services on the BIG-IP.
+
+Use the custom F5 iApp application labels to define variables specific to the iApp you want to deploy. Use the labels listed in the table below to create the custom labels needed for your iApp and to provide the configuration options the iApp requires.
+
+.. important::
+
+    The iApp template you wish to deploy **must** already be installed on the BIG-IP. Variable names and values are template-specific.
+
+.. include:: /includes/f5-csi_m/ref_csim-table-application-labels-iApps.rst
+
+#. Create a JSON file containing the App service definitions and F5 iApp labels.
 
     .. literalinclude:: /static/f5-csi_m/sample-iapp-marathon.json
         :caption: sample-marathon-application.json
@@ -334,26 +247,27 @@ In the following example, we deploy the "f5.http" iApp® on the BIG-IP as a Mara
     :download:`sample-marathon-application.json </static/f5-csi_m/sample-iapp-marathon.json>`
 
 
-#. To verify creation of the iApp, log into the BIG-IP config utility. Be sure to look in the correct partition!
+#.  Deploy the iApp in Marathon via the REST API.
 
-    * Go to :menuselection:`iApps --> Application Services` to view the list of Application Services.
-    * Click on ``f5.http`` to view all of the objects configured as part of the iApp deployment.
+    .. code-block:: shell
+
+        curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' \
+        http://<marathon_url>:8080/v2/apps -d @sample-iapp-marathon.json
 
 
-
-
-.. [#] The iApp template is available for download from https://downloads.f5.com/.
+.. csim-usage-body-end
+.. csim-usage-section-end
 
 
 Further Reading
 ---------------
 
-
 .. seealso::
 
-    * x
-    * y
-    * z
+    * F5 |csi_m| :ref:`User Guide <csim-user-guide>`
+    * F5 |csi_m| :ref:`Quick Start Guide <csim-quick-start>`
+    * F5 |csi_m| :ref:`Deployment Guide <csi-mesos-deployments>`
+
 
 .. toctree::
     :hidden:

@@ -40,5 +40,5 @@ First, you'll need to accept our EULA for BIG-IP VE in Amazon.
 
 Next, download our CloudFormation template:
 
-:download:`f5-csim-cloudformation.json <docs/static/f5-csi_m/f5-csim-cloudformation.json>`
+:download:`f5-csim-cloudformation.json </static/f5-csi_m/f5-csim-cloudformation.json>`
 

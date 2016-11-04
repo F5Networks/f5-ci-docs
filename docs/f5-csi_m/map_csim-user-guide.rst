@@ -19,4 +19,5 @@ User Guide
     minimaps/map_csim-getting-started
     minimaps/map_csim-configuration
     minimaps/map_csim-usage
+    minimaps/map_csim-deployments
 
