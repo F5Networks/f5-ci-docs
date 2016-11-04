@@ -3,4 +3,6 @@
 Configuration
 -------------
 
-.. include:: /includes/f5-lwpc/snippet_lwpc-configuration-section.rst
+.. include:: /includes/f5-lwpc/topic_lwp-controller.rst
+    :start-after: lwpc-configuration-body-start
+    :end-before: lwpc-configuration-body-end

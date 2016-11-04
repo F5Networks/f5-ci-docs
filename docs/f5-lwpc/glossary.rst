@@ -1,8 +1,10 @@
+:orphan: true
+
 Glossary
 ========
 
 .. glossary::
     :sorted:
 
-    add term here
-        add definition here. format matters, order does not
+    device
+        `BIG-IP`_ Virtual Edition (VE) or hardware.

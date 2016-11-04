@@ -1,16 +1,20 @@
+.. _lwpc-home:
+
 F5 |lwpc|
 =========
 
-.. include:: /includes/f5-lwpc/concept_lwpc-overview.rst
-
-.. include:: /includes/f5-csc_m/ref_cscm-compatibility.rst
-
 .. rubric:: Release
 
-The current release is |lwpc_v|.
+The current release is |lwpc-v|.
+
+.. rubric:: Overview
+
+.. include:: /includes/f5-lwpc/topic_lwp-controller.rst
+    :start-after: lwpc-overview-body-start
+    :end-before: lwpc-overview-body-end
 
 
-.. include:: /includes/f5-cpc_m/ref_cscm-compatibility.rst
+______________________
 
 .. toctree::
     :caption: Table of Contents
@@ -23,14 +27,7 @@ The current release is |lwpc_v|.
 
 
 
-
-
-
-
-
 .. API Documentation
-   -----------------
-
-.. todo:: add link to API documentation (can be external or auto-generated)
-
+    -----------------
+    [link to API documentation (can be external or auto-generated)]
 

@@ -7,5 +7,6 @@ Usage
     :hidden:
 
 .. include:: /includes/f5-lwpc/topic_lwp-controller.rst
-    :start-line: 107
+    :start-after: lwpc-usage-body-start
+    :end-before: lwpc-usage-body-end
 

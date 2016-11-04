@@ -5,7 +5,7 @@ User Guide
 
 .. include:: /includes/f5-lwpc/concept_lwpc-overview.rst
 
-.. include:: _includes/f5-lwpc/ref_lwpc-compatibility.rst
+.. include:: /includes/f5-lwpc/ref_lwpc-compatibility.rst
 
 .. toctree::
     :caption: Table of Contents

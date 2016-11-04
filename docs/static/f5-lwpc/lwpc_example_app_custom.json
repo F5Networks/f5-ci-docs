@@ -19,9 +19,7 @@
   },
   "mem": 128,
   "labels": {
-    "lwp": "enable"
-  },
-  "env": {
+    "lwp": "enable",
     "LWP_LOG_LEVEL": "debug",
     "LWP_VS_KEEP_ALIVE": 50
   },
