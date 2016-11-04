@@ -6,7 +6,7 @@ Lightweight Proxy
 Overview
 --------
 
-.. overview-body
+.. lwp-overview-body-start
 
 F5® |lwp| |tm| is an application delivery controller (ADC) that is well suited to be deployed dynamically in containerized environments.
 The |lwp| has built in load balancing and telemetry for L4 and L7 services.
@@ -14,27 +14,30 @@ It is small enough that one can be deployed for every application or service.
 It is multi-tenant so it can also be deployed for several services at once.
 These features make it ideal for distributed applications and East-West traffic, where it can provide load balancing for dynamic applications' server pools, while providing visibility into those distributed applications' environment and health.
 
+.. lwp-overview-body-end
 
 .. _lwp_architecture:
 
 Architecture
-````````````
+------------
+
+.. lwp-architecture-body-start
 
 |lwp| comprises four (4) basic components: config, proxy, routing, and telemetry.
 
 Config
-~~~~~~
+``````
 
 The config component manages the configuration for the LWP.
 It merges the configuration inputs from static and dynamic sources, and normalizes the configuration for the other components.
 
 Proxy Module
-~~~~~~~~~~~~
+````````````
 
 The proxy module manages the virtual server configuration and creates a proxy in the routing infrastructure for each virtual server.
 
 Routing
-~~~~~~~
+```````
 
 The routing infrastructure is the core of LWP that provides the framework to create traffic services.
 It is a middelware framework that invokes the middleware functions, and use the feedback to determine how to handle data events and the transaction lifecycle.
@@ -44,7 +47,7 @@ The LWP comes with a small number of built-in middleware functions.
 It also has built-in helpers for `Express middleware`_, which make it easy to :ref:`customize <customize-lwp-express-middleware>` to suit the needs of your environment.
 
 Telemetry Module
-~~~~~~~~~~~~~~~~
+````````````````
 
 The telemetry module manages statistics and real-time events.
 It provides a modular interface to send those details where they need to go.
@@ -52,23 +55,17 @@ It provides a modular interface to send those details where they need to go.
 
 The |lwp| comes with a telemetry module which sends transaction events and statistics for both HTTP and TCP transactions to an analytics provider (such as `Splunk`_).
 
-.. overview-body-end
+.. lwp-architecture-body-end
 
 Use Case
 --------
 
 |lwp| provides load balancing services for East-West data center traffic (in other words, traffic flowing between data passing between microservices). It deploys quickly and scales easily to keep pace with a microservices architecture.
 
-Deployments
-```````````
-
-F5's |lwp| can be deployed in Mesos+Marathon, or in Kubernetes. Please see the guide(s)  for your environment for deployment instructions.
-
-* :ref:`Mesos+Marathon <cscm-quick-start>`
-* :ref:`Kubernetes <lwp-deploy-kubernetes>`
-
 Prerequisites
 -------------
+
+.. lwp-prereqs-body-start
 
 - The official F5 ``lightweight-proxy`` image pulled from the `F5 Docker registry`_.
 - A functional `Kubernetes`_ or `Marathon`_ orchestration environment.
@@ -79,10 +76,25 @@ Caveats
 
 - None.
 
+.. lwp-prereqs-body-end
+
+
+Installation
+------------
+
+.. lwp-install-body-start
+
+F5's |lwp| can be installed in Mesos+Marathon or in Kubernetes. Please see the guides below for environment-specific installation instructions.
+
+* F5 |lwpc| for Mesos+Marathon :ref:`Getting Started Guide <lwpc-getting-started-guide>`
+* F5 |csi_k| :ref:`LWP Deployment Guide <csik-lwp-deployment>`
+
+.. lwp-install-body-end
+
 Configuration
 -------------
 
-.. configuration-body
+.. lwp-configuration-body-start
 
 You can configure the F5 |lwp| with a valid JSON config file. |lwp| can run in different orchestration environments, each of which has its own specific set of configuration options.
 
@@ -121,7 +133,7 @@ Configuration Parameters
 
 .. include:: /includes/f5-lwp/ref_lwp-config-example.rst
 
-.. configuration-body-end
+.. lwp-configuration-body-end
 
 .. _lwp-features:
 
@@ -246,10 +258,24 @@ Usage
 
 .. usage-body
 
+The F5® |lwp| can run in Mesos+Marathon or Kubernetes. Environment-specific deployment instructions are provided in the F5 |csi_k| and |csi_m| user guides.
+
+Create a Virtual Server via the |lwp| in Kubernetes
+```````````````````````````````````````````````````
+
+The |lwp| deploys in Kubernetes via a custom implementation of ``kube-proxy``. See the |csi_k| :ref:`LWP Deployment Guide <csik-lwp-deployment>` for instructions.
+
+Create a Virtual Server via the |lwpc| for Mesos+Marathon
+`````````````````````````````````````````````````````````
+
+The F5® |lwpc| for Mesos+Marathon deploys the |lwp| dynamically. See the |lwpc| :ref:`User Guide <lwpc-user-guide>` for deployment instructions.
+
+
 .. _run-lwp-manually:
 
 Run |lwp| Manually
 ``````````````````
+
 Use either of the options below to start an |lwp| instance locally from the command line of the client for which you wish to proxy.
 
 

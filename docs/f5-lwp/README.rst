@@ -3,6 +3,19 @@
 F5 |lwp|
 ========
 
+.. rubric:: Release
+
+The current release is |lwp_v|.
+
+.. rubric:: Overview
+
+.. include:: /includes/f5-lwp/topic_lightweight-proxy.rst
+    :start-after: lwp-overview-body-start
+    :end-before: lwp-overview-body-end
+
+______________________
+
+
 .. toctree::
     :caption: Table of Contents
     :name: lwp_toc
@@ -10,23 +23,8 @@ F5 |lwp|
 
     map_*
 
-Release
--------
-
-The current release is |lwp_v|.
-
-Overview
---------
-
-.. include:: /includes/f5-lwp/topic_lightweight-proxy.rst
-    :start-after: overview-body
-    :end-before: overview-body-end
-
-
 
 .. API Documentation
-   -----------------
-
-.. todo:: add link to API documentation (can be external or auto-generated)
-
+    -----------------
+    [link to API documentation (can be external or auto-generated)]
 

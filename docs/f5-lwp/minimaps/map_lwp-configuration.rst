@@ -6,7 +6,7 @@
 
 
 .. include:: /includes/f5-lwp/topic_lightweight-proxy.rst
-    :start-after: configuration-body
-    :end-before: configuration-body-end
+    :start-after: lwp-configuration-body-start
+    :end-before: lwp-configuration-body-end
 
 
