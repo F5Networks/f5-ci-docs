@@ -5,7 +5,9 @@ F5 |csi_k|
 
 .. rubric:: Release
 
-The current release is v |csi_k-v|.
+The current release is |csi_k_v|.
+
+.. include:: /includes/ref_compatibility.rst
 
 .. rubric:: Overview
 
@@ -28,7 +30,7 @@ ______________________
 
     map_k8s-getting-started
     map_k8s-user-guide
-    Deploy the F5 |lwp| in Kubernetes <minimaps/map_csik-lwp-deployment>
+    Deploy the F5 Lightweight Proxy in Kubernetes <minimaps/map_csik-lwp-deployment>
 
 
 

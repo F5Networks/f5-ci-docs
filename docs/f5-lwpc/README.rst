@@ -1,11 +1,13 @@
 .. _lwpc-home:
 
-F5 |lwpc|
-=========
+F5 |lwpc| for Mesos+Marathon
+============================
 
 .. rubric:: Release
 
 The current release is |lwpc-v|.
+
+.. include:: /includes/ref_compatibility.rst
 
 .. rubric:: Overview
 

@@ -7,6 +7,8 @@ F5 |csi_m|
 
 The current release is |csi_m-v|.
 
+.. include:: /includes/ref_compatibility.rst
+
 .. rubric:: Overview
 
 .. include:: /includes/f5-csi_m/topic_csi-controller-mesos.rst

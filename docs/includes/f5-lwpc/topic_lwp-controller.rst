@@ -6,27 +6,31 @@ Overview
 
 .. lwpc-overview-body-start
 
-The F5® |lwpc| |tm| (LWPC) provides internal load balancing and service discovery in a Mesos cluster. It watches Marathon's event stream for changes in applications and automatically starts, stops, and/or reconfigures the F5 |lwp| |tm| (LWP) app as needed. The |lwp|, in turn, watches Marathon to automatically load balance across an application's tasks as the application is scaled.
+The F5® |lwpc| |tm| (LWPC) deploys the :ref:`Lightweight Proxy <lwp-home>` in a Mesos+Marathon cluster. It watches Marathon's event stream for changes in applications and automatically starts, stops, and/or reconfigures the F5 |lwp| |tm| (LWP) app as needed. The |lwp|, in turn, watches Marathon to automatically load balance across an application's tasks as the application is scaled.
 
 .. lwpc-overview-body-end
 
 Use Case
 --------
 
-The F5 |lwpc| dynamically deploys the F5 |lwp|. Together, they provide responsive and scalable load balancing services for East-West data center traffic (in other words, traffic flowing between apps/microservices).
+Together, F5 |lwpc| and |lwp| provide responsive and scalable load balancing services for East-West data center traffic (in other words, traffic flowing between apps/microservices).
 
 Prerequisites
 -------------
 
+.. lwpc-prereqs-body-start
+
 - An existing, functional `Mesos`_ `Marathon`_ deployment.
-- The official F5 ``lwp-controller`` and ``light-weight-proxy`` images, pulled from the `F5 Docker registry`_.
+- The official F5 ``lwp-controller`` and ``light-weight-proxy`` images; contact your F5 Sales rep or go to `F5 DevCentral <https://devcentral.f5.com/welcome-to-the-f5-beta-program>`_ to join the Early Access program.
 - Internet access (required to pull images from Docker).
 
 
 Caveats
--------
+```````
 
-- The F5 |lwpc| can only be used in conjunction with the |lwp| to manage East-West traffic in a Mesos+Marathon cluster.
+None.
+
+.. lwpc-prereqs-body-end
 
 .. _lwpc-install-section:
 
@@ -37,7 +41,8 @@ Install the |lwpc| in Marathon
 
 .. lwpc-install-body-start
 
-The |lwpc| can be installed as a Marathon Application via the `Marathon REST API <https://mesosphere.github.io/marathon/docs/generated/api.html>`_ or the `Marathon UI <https://mesosphere.github.io/marathon/docs/marathon-ui.html>`_. Both options use the same set of :ref:`configuration parameters <cscm_configuration-parameters>`, formatted as a valid JSON blob.
+The |lwpc| is a Marathon Application that can be installed either via the `Marathon REST API <https://mesosphere.github.io/marathon/docs/generated/api.html>`_ or the `Marathon UI <https://mesosphere.github.io/marathon/docs/marathon-ui.html>`_.
+Both options use the same set of :ref:`configuration parameters <csim_configuration-parameters>`, formatted as a valid JSON blob.
 
 
 Launch the |lwpc| App via the Marathon REST API
@@ -64,11 +69,11 @@ Launch the |lwpc| via the Marathon UI
 
     ===================   ============================
     Field                 Setting
-    -------------------   ----------------------------
-    | Image               | <f5-lwp-controller-image>
-    | Network             | Bridge
-    | Force Pull Image    | user defined
-    | Privileges          | unchecked
+    ===================   ============================
+    Image                 <f5-lwp-controller-image>
+    Network               Bridge
+    Force Pull Image      user defined
+    Privileges            unchecked
     ===================   ============================
 
 #. Provide the |lwpc| :ref:`configurations <lwpc_configuration-parameters>` in the :guilabel:`Labels` section.

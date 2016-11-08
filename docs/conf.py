@@ -77,17 +77,18 @@ author = u'F5 Networks'
 # built documents.
 #
 # The short X.Y version.
-version = 'v0.1'
+#version = 'v0.1'
 # The full version, including alpha/beta/rc tags.
 #release = 'v0.1.1'
 
 # All substitutions
 
 rst_epilog = """
-.. |lwp_v| replace:: v0.1.1
-.. |lwpc-v| replace:: v0.1.1
-.. |csi_k_v| replace:: v0.1.1
-.. |csi_m-v| replace:: v0.1.3
+.. |lwp_v| replace:: v0.2.0
+.. |lwpc-v| replace:: v0.2.0
+.. |csi_k-v| replace:: v0.1.0
+.. |csi_k_v| replace:: |csi_k-v|
+.. |csi_m-v| replace:: v0.1.4
 .. |lwp| replace:: Lightweight Proxy
 .. |lwpc| replace:: Lightweight Proxy Controller
 .. |csi| replace:: Container Service Integrator
@@ -254,7 +255,7 @@ html_static_path = ['static']
 
 # If true, links to the reST sources are added to the pages.
 #
-html_show_sourcelink = True
+html_show_sourcelink = False
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 #

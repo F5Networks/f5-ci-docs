@@ -11,12 +11,13 @@ This documentation set supports the F5® |csi|. This product suite enables the u
     :caption: Table of Contents
     :name: mastertoc
     :includehidden:
-    :maxdepth: 3
+    :maxdepth: 2
 
     f5-csi_m/README
+    f5-lwpc/README
     f5-csi_k/README
     f5-lwp/README
-    f5-lwpc/README
+
 
 
 

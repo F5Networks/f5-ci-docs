@@ -7,6 +7,8 @@ F5 |lwp|
 
 The current release is |lwp_v|.
 
+.. include:: /includes/ref_compatibility.rst
+
 .. rubric:: Overview
 
 .. include:: /includes/f5-lwp/topic_lightweight-proxy.rst
