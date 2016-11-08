@@ -6,7 +6,7 @@ F5 |CSI| Releases and Support Matrix
 .. table:: F5® - Apache Mesos / Marathon compatibility
 
     +--------------------+---------+---------+
-    | Mesos edition      | Version | BIG-IP® |
+    | Edition            | Version | BIG-IP® |
     +====================+=========+=========+
     | Apache Mesos       | 0.27+   | 12.0.x, |
     |                    |         | 12.1.x  |
@@ -24,3 +24,10 @@ F5 |CSI| Releases and Support Matrix
 
 .. table:: F5® - Kubernetes compatibility
 
+    +--------------------+---------+---------+
+    | Edition            | Version | BIG-IP® |
+    +====================+=========+=========+
+    | Kubernetes         | 1.3.7   | 12.0.x, |
+    |                    |         | 12.1.x  |
+    +--------------------+---------+---------+
+    
