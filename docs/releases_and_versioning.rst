@@ -8,17 +8,15 @@ F5 |CSI| Releases and Support Matrix
     +--------------------+---------+---------+
     | Edition            | Version | BIG-IP® |
     +====================+=========+=========+
-    | Apache Mesos       | 0.27+   | 12.0.x, |
-    |                    |         | 12.1.x  |
+    | Apache Mesos       | 0.27+   | 12.1.x  |
     +--------------------+---------+---------+
-    | Apache Marathon    | 0.15+   | 12.0.x, |
-    |                    |         | 12.1.x  |
+    | Apache Marathon    | 0.15+   | 12.1.x, |
     +--------------------+---------+---------+
-    | Mesosphere DC/OS   | 1.7     | 12.0.x, |
-    | Enterprise Edition |         | 12.1.x  |
+    | Mesosphere DC/OS   | 1.7     | 12.1.x  |
+    | Enterprise Edition |         |         |
     +--------------------+---------+---------+
-    | Mesosphere DC/OS   | 1.7     | 12.0.x, |
-    | Enterprise Edition |         | 12.1.x  |
+    | Mesosphere DC/OS   | 1.7     | 12.1.x  |
+    | Enterprise Edition |         |         |
     +--------------------+---------+---------+
 
 
@@ -27,7 +25,6 @@ F5 |CSI| Releases and Support Matrix
     +--------------------+---------+---------+
     | Edition            | Version | BIG-IP® |
     +====================+=========+=========+
-    | Kubernetes         | 1.3.7   | 12.0.x, |
-    |                    |         | 12.1.x  |
+    | Kubernetes         | 1.3.7   | 12.1.x  |
     +--------------------+---------+---------+
     
