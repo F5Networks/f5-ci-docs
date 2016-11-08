@@ -9,8 +9,6 @@ Getting Started Guide
 
 .. include:: minimaps/map_lwp-getting-started.rst
 
-.. include:: minimaps/map_lwp-configuration.rst
-
 
 Next Steps
 ----------

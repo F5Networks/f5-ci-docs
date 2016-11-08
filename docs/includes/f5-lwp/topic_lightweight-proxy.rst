@@ -29,31 +29,25 @@ Config
 ``````
 
 The config component manages the configuration for the LWP.
-It merges the configuration inputs from static and dynamic sources, and normalizes the configuration for the other components.
+It merges the configuration inputs from static and dynamic sources and normalizes the configuration for the other components.
 
-Proxy Module
-````````````
+Proxy
+~~~~~
 
-The proxy module manages the virtual server configuration and creates a proxy in the routing infrastructure for each virtual server.
+The proxy module manages the virtual server configuration; it creates a proxy in the routing infrastructure for each virtual server.
 
 Routing
 ```````
 
-The routing infrastructure is the core of LWP that provides the framework to create traffic services.
-It is a middelware framework that invokes the middleware functions, and use the feedback to determine how to handle data events and the transaction lifecycle.
-The routing infrastructure also provides a consistent interface for statistics and logging that will be handled by the telemetry module.
+The routing infrastructure is the core of the |lwp|, providing the framework for creating traffic services.
+It invokes the middleware functions and uses the feedback to determine how to handle data events and the transaction lifecycle.
+The routing infrastructure provides a consistent interface for statistics and logging, which are handled by the telemetry module.
 
-The LWP comes with a small number of built-in middleware functions.
-It also has built-in helpers for `Express middleware`_, which make it easy to :ref:`customize <customize-lwp-express-middleware>` to suit the needs of your environment.
+Telemetry
+`````````
 
-Telemetry Module
-````````````````
+The telemetry module sends transaction events and statistics -- for both HTTP and TCP transactions -- to an analytics provider (such as `Splunk`_).
 
-The telemetry module manages statistics and real-time events.
-It provides a modular interface to send those details where they need to go.
-
-
-The |lwp| comes with a telemetry module which sends transaction events and statistics for both HTTP and TCP transactions to an analytics provider (such as `Splunk`_).
 
 .. lwp-architecture-body-end
 
@@ -67,14 +61,13 @@ Prerequisites
 
 .. lwp-prereqs-body-start
 
-- The official F5 ``lightweight-proxy`` image pulled from the `F5 Docker registry`_.
+- The official F5 ``lightweight-proxy`` image; contact your F5 Sales rep or go to `F5 DevCentral <https://devcentral.f5.com/welcome-to-the-f5-beta-program>`_ to join the Early Access program.
 - A functional `Kubernetes`_ or `Marathon`_ orchestration environment.
 
-
 Caveats
--------
+```````
 
-- None.
+None.
 
 .. lwp-prereqs-body-end
 
@@ -168,7 +161,7 @@ The following flags config parameters affect this built-in middleware. See `Flag
     * ``x-serverd-by``
 
 
-.. versionadded:: v0.1.1
+.. versionadded:: v0.1.0
 
 .. _lwp-load-balancer:
 
@@ -180,7 +173,7 @@ servers and implements a load balancing algorithm to choose a back-end server. T
 
 .. todo:: list the applicable config parameters for load balancer module
 
-.. versionadded:: v0.1.1
+.. versionadded:: v0.1.0
 
 .. _lwp-connection-manager:
 
@@ -191,7 +184,7 @@ The connection manager module tracks and manages server connections. It maintain
 
 .. todo:: list the applicable config parameters for connection manager module
 
-.. versionadded:: v0.1.1
+.. versionadded:: v0.1.0
 
 .. _lwp-forwarder:
 
@@ -207,7 +200,7 @@ For HTTP and TCP connections, the forwarder provides proxy functionality between
 
 .. todo:: list the applicable config parameters for forwarder
 
-.. versionadded:: v0.1.1
+.. versionadded:: v0.1.0
 
 .. _lwp-telemetry:
 
@@ -216,7 +209,7 @@ Telemetry
 
 The telemetry module allows LWP and its middleware to capture and aggregate various metrics and send them to a backend system for reporting and analysis.
 
-.. versionadded:: v0.1.1
+.. versionadded:: v0.1.0
     Supported systems in this version are `Splunk <https://www.splunk.com/>`_ (default).
 
 
