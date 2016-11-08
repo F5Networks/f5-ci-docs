@@ -77,7 +77,7 @@ author = u'F5 Networks'
 # built documents.
 #
 # The short X.Y version.
-version = 'v0.1'
+#version = 'v0.1'
 # The full version, including alpha/beta/rc tags.
 #release = 'v0.1.1'
 
@@ -254,7 +254,7 @@ html_static_path = ['static']
 
 # If true, links to the reST sources are added to the pages.
 #
-html_show_sourcelink = True
+html_show_sourcelink = False
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 #
