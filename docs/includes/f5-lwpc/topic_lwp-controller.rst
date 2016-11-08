@@ -42,7 +42,7 @@ Install the |lwpc| in Marathon
 .. lwpc-install-body-start
 
 The |lwpc| is a Marathon Application that can be installed either via the `Marathon REST API <https://mesosphere.github.io/marathon/docs/generated/api.html>`_ or the `Marathon UI <https://mesosphere.github.io/marathon/docs/marathon-ui.html>`_.
-Both options use the same set of :ref:`configuration parameters <cscm_configuration-parameters>`, formatted as a valid JSON blob.
+Both options use the same set of :ref:`configuration parameters <csim_configuration-parameters>`, formatted as a valid JSON blob.
 
 
 Launch the |lwpc| App via the Marathon REST API
