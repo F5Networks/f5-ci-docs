@@ -1,4 +1,4 @@
-.. _lwpc_user-guide:
+.. _lwpc-user-guide:
 
 Deploy the F5 Lightweight Proxy in Mesos+Marathon
 =================================================
