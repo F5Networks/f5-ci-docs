@@ -84,10 +84,10 @@ version = 'v0.1'
 # All substitutions
 
 rst_epilog = """
-.. |lwp_v| replace:: v0.1.1
-.. |lwpc-v| replace:: v0.1.1
-.. |csi_k_v| replace:: v0.1.1
-.. |csi_m-v| replace:: v0.1.3
+.. |lwp_v| replace:: v0.2.0
+.. |lwpc-v| replace:: v0.2.1
+.. |csi_k-v| replace:: v0.1.0
+.. |csi_m-v| replace:: v0.1.4
 .. |lwp| replace:: Lightweight Proxy
 .. |lwpc| replace:: Lightweight Proxy Controller
 .. |csi| replace:: Container Service Integrator
