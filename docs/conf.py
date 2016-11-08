@@ -89,12 +89,11 @@ rst_epilog = """
 .. |lwpc-v| replace:: v0.2.0
 .. |csi_k-v| replace:: v0.1.0
 .. |csi_k_v| replace:: |csi_k-v|
-.. |csi_m-v| replace:: v0.2.0
-.. |lwp-v| replace:: |lwp_v|
-.. |lwp| replace:: Application Services Proxy
-.. |lwpc| replace:: Application Services Proxy Controller
-.. |csi| replace:: Container Connector
-.. |csi_m| replace:: CC - Mesos+Marathon
+.. |csi_m-v| replace:: v0.1.4
+.. |lwp| replace:: Lightweight Proxy
+.. |lwpc| replace:: Lightweight Proxy Controller
+.. |csi| replace:: Container Service Integrator
+.. |csi_m| replace:: CSI - Mesos+Marathon
 .. |csi_m-long| replace:: |csi| for Mesos+Marathon
 .. |csi_k| replace:: CC - Kubernetes
 .. |csi_k-long| replace:: |csi| for Kubernetes
