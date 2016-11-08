@@ -42,7 +42,7 @@ Prerequisites
 - Administrative access to both the BIG-IP and Marathon. [#]_
 - An existing, functional `Mesos`_ `Marathon`_ deployment.
 - BIG-IP partitions that correspond to the Marathon apps.
-- The official F5 ``f5-marathon-lb`` image, pulled from the `F5 Docker registry`_.
+- The official F5 ``f5-marathon-lb`` image; contact your F5 Sales rep or go to `F5 DevCentral <https://devcentral.f5.com/welcome-to-the-f5-beta-program>`_ to join the Early Access program.
 
 .. [#] Admin access to the BIG-IP is only required to create the partitions the CSI will manage. Users with permission to configure objects in the partition can do so via the CSI.
 
@@ -114,15 +114,11 @@ Launch the |csi_m| App via the Marathon UI
 
     =================   =========================
     Field               Setting
-    -----------------   -------------------------
+    =================   =========================
     Image               f5-marathon-lb-container
     Network             Bridge
     Force Pull Image    user defined
-    Privileges          user defined
-    Container Port      80
-    Host Port           0
-    Service Port        user defined
-    Protocol            user defined
+    Privileges          unchecked
     =================   =========================
 
 #. Complete the :guilabel:`Environment variables` section as appropriate for your environment.
@@ -192,7 +188,7 @@ F5 Application Labels
 
 The F5 application labels consist of key-value pairs that direct the |csi_m| to apply configurations to the BIG-IP. You can use the application labels to configure your App via the Marathon UI or the REST API, in a JSON config file.
 
-.. literalinclude:: /includes/f5-csi_m/ref_csim-table-application-labels.rst
+.. include:: /includes/f5-csi_m/ref_csim-table-application-labels.rst
 
 .. tip::
 

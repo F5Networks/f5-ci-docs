@@ -10,14 +10,14 @@ Install Splunk on the CF Splunk-ready Instance
 
 Because Splunk needs to receive data from the BIG-IP and the Mesos cluster, it must run somewhere that external traffic can reach it (i.e., if you're running it from your laptop behind a firewall, it probably won't work).
 
- The instructions in this section will guide you through setting up Splunk on the Splunk-ready Amazon Linux instance created in the cloud stack.
+Follow the instructions in this section, and the Splunk `Installation <http://docs.splunk.com/Documentation/Splunk/6.4.2/Installation/InstallonLinux>`_ guide, to set up Splunk on the Splunk-ready Amazon Linux instance created in your cloud stack.
 
 #. SSH into the Splunk-ready instance using the ``SplunkReadySSH`` cloud output value.
 
-#. Download the free trial of `Splunk Enterprise <https://www.splunk.com/en_us/download/splunk-enterprise.html>`_ to your EC2 instance.
+#. Download the free trial of `Splunk Enterprise <https://www.splunk.com/en_us/download/splunk-enterprise.html>`_ from the Splunk downloads site to your EC2 instance.
 
     .. code-block:: bash
-        :caption: Example
+        :caption: Example - Use wget to download Splunk
 
         wget -O splunk-6.4.3-b03109c2bad4-Linux-x86_64.tgz 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=6.4.3&product=splunk&filename=splunk-6.4.3-b03109c2bad4-Linux-x86_64.tgz&wget=true'
 
@@ -77,7 +77,7 @@ In the previous section, you configured your Splunk instance to receive data fro
 
 #. Install the F5 Networks Analytics App:
 
-     * Download the file :file:`f5-networks-analytics-new_095.tgz` from downloads.f5.com to your local drive.
+     * Download the file :file:`f5-networks-analytics-new_095.tgz` from `downloads.f5.com <https://downloads.f5.com/>`_ to your local drive.
      * In the Splunk GUI, click on :menuselection:`Apps --> Manage Apps`.
      * Click :guilabel:`Install app from file`.
      * Click :guilabel:`Choose File` and select :file:`f5-networks-analytics-new_095.tgz`.
@@ -85,7 +85,7 @@ In the previous section, you configured your Splunk instance to receive data fro
 
 #. Install the F5 Lightweight Proxy Analytics App:
 
-     * Download :file:`f5-lightweight-proxy-analytics-v0.1.0.tgz` from downloads.f5.com to your local drive.
+     * Download :file:`f5-lightweight-proxy-analytics-v0.1.0.tgz` from `downloads.f5.com <https://downloads.f5.com/>`_ to your local drive.
      * Click :guilabel:`Install app from file`.
      * Click :guilabel:`Choose File` and select :file:`f5-lightweight-proxy-analytics-v0.1.0.tgz`.
      * Click :guilabel:`Upload`.
@@ -106,7 +106,7 @@ Deploy F5 Analytics iApp
 
 To enable stats collection on your BIG-IP and send the data to Splunk, launch the F5 analytics iApp® from your BIG-IP.
 
-#. Download :file:`f5.analytics.tmpl` from `downloads.f5.com <#>`_.
+#. Download :file:`f5.analytics.tmpl` from `downloads.f5.com <https://downloads.f5.com/>`_.
 
 #. Log in to the BIG-IP configuration utility.
 

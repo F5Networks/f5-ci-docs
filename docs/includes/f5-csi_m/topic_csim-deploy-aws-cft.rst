@@ -12,8 +12,8 @@ Upon completing this guide, you will have an Amazon Web Services (AWS) Cloud For
 Prerequisites
 `````````````
 
-- The F5 |csi_m-long| package, avilable at `downloads.f5.com <#>`_
-- An AWS account that can incur charges. While we attempt to utilize free services wherever possible, there will be a charge to run this stack in AWS.
+- The F5 |csi_m-long| package, avilable at `downloads.f5.com <https://downloads.f5.com/>`_
+- An AWS account that can incur charges. While we attempt to utilize free services wherever possible, **there will be a charge to run this stack in AWS**.
 - An SSH keypair configured in AWS and on any machine from which you want to access the VMs in your CF stack.
 - A BIG-IP registration key (Good, Better, or Best license); a VE lab license that can be used in AWS can be provided by an F5 sales rep.
 - Internet access; this is required for AWS to access the F5 Docker images.
