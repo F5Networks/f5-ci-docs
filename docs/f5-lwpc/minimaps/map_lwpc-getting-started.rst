@@ -1,6 +1,5 @@
 .. _lwpc-getting-started:
 
-
 Overview
 --------
 
@@ -12,8 +11,8 @@ Prerequisites
 -------------
 
 .. include:: /includes/f5-lwpc/topic_lwp-controller.rst
-    :start-after: lwpc-overview-body-end
-    :end-before: Install the |lwpc|
+    :start-after: lwpc-prereqs-body-start
+    :end-before: lwpc-prereqs-body-end
 
 Installation
 ------------

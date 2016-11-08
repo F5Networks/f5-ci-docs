@@ -10,12 +10,10 @@ Getting Started Guide
 
 .. include:: minimaps/map_lwpc-getting-started.rst
 
-.. include:: minimaps/map_lwpc-configuration.rst
-
 
 Next Steps
 ----------
 
-* See the :ref:`User Guide <lwpc-user-guide>` for additional information about the F5 |lwpc|.
-* See the |lwp| :ref:`User Guide <lwp-user-guide>` for information about the F5 |lwp|.
+* See the :ref:`Lightweight Proxy Deployment Guide for Mesos+Marathon <lwpc-user-guide>`.
+* See the |lwp| :ref:`User Guide <lwp-user-guide>` for additional information about the F5 |lwp|.
 
