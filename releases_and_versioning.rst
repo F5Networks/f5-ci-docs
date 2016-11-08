@@ -1,5 +1,7 @@
-F5 Container Integrations Releases and Support Matrix
-=====================================================
+.. _f5-csi_support-matrix:
+
+F5 |CSI| Releases and Support Matrix
+====================================
 
 .. table:: F5® - Apache Mesos / Marathon compatibility
 
@@ -18,3 +20,7 @@ F5 Container Integrations Releases and Support Matrix
     | Mesosphere DC/OS   | 1.7     | 12.0.x, |
     | Enterprise Edition |         | 12.1.x  |
     +--------------------+---------+---------+
+
+
+.. table:: F5® - Kubernetes compatibility
+

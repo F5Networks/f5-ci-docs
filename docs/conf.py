@@ -81,7 +81,7 @@ version = 'v0.1'
 # The full version, including alpha/beta/rc tags.
 #release = 'v0.1.1'
 
-# Individual project versions
+# All substitutions
 
 rst_epilog = """
 .. |lwp_v| replace:: v0.1.1
