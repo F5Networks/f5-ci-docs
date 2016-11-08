@@ -87,6 +87,7 @@ rst_epilog = """
 .. |lwp_v| replace:: v0.2.0
 .. |lwpc-v| replace:: v0.2.1
 .. |csi_k-v| replace:: v0.1.0
+.. |csi_k_v| replace:: |csi_k-v|
 .. |csi_m-v| replace:: v0.1.4
 .. |lwp| replace:: Lightweight Proxy
 .. |lwpc| replace:: Lightweight Proxy Controller
