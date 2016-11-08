@@ -317,9 +317,9 @@ Further Reading
 .. seealso::
 
     * :ref:`|lwp| Deployment Guides <lwp-deployment-guides>`
-    * :ref:`|lwpc| for Marathon <lwpc-m_home>`
-    * :ref:`F5 |csi| for Apache Mesos_Marathon <csi-m_home>`
-    * :ref:`F5 |csi| for Kubernetes <csi-k_home>`
+    * :ref:`|lwpc| for Marathon <lwpc-home>`
+    * :ref:`F5 |csi| for Apache Mesos_Marathon <csim-home>`
+    * :ref:`F5 |csi| for Kubernetes <csik-home>`
 
 
 .. toctree::
