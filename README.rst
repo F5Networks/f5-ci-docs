@@ -1,9 +1,9 @@
 f5-ci-docs
 ==========
 
-.. image:: https://readthedocs.com/projects/f5-networks-f5-ci-docs/badge/?version=gitlab-ci
-:target: https://f5-networks-f5-ci-docs.readthedocs-hosted.com/en/gitlab-ci/?badge=gitlab-ci
-:alt: Documentation Status
+.. image:: https://readthedocs.com/projects/f5-networks-f5-ci-docs/badge/?version=master
+    :target: https://f5-networks-f5-ci-docs.readthedocs-hosted.com/en/master/?badge=master
+    :alt: Documentation Status
 
 Documentation for F5's Container Integrations
 ---------------------------------------------
