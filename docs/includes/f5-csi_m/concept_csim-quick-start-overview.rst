@@ -1,8 +1,15 @@
 .. rubric:: Overview
 
-This guide describes how to set up a reference F5® |csi| in a Mesos environment with Marathon. This guide is intended to help users understand the components and services F5 provides for use in containerized environments.
+Use this guide to deploy a dev stack in `AWS CloudFormation <https://aws.amazon.com/cloudformation/>`_ consisting of the following:
 
-You do not need a pre-existing Mesos / Marathon environment to follow this guide. We will help you set one up in Amazon Web Services (AWS) using a cloud formation template (CFT).
+    - the F5 |csi_m|,
+    - the F5 |lwp| and |lwpc|,
+    - BIG-IP® Virtual Edition (VE),
+    - `Mesosphere Enterprise DC/OS <https://mesosphere.com/>`_,
+    - `Marathon`_ (container service orchestration platform), and
+    - `Splunk`_ (data analysis).
+
+This guide is intended to provide a demonstration of the F5 solution for managing North-South and East-West traffic with Mesos+Marathon.
 
 .. note::
 
@@ -10,7 +17,7 @@ You do not need a pre-existing Mesos / Marathon environment to follow this guide
 
 .. seealso::
 
-    If you would like to use the F5 |csi_m| in an existing Mesos environment, please see the :ref:`User Guide <csim-user-guide>`.
+    If you would like to use the F5 |csi_m| in an existing Mesos+Marathon environment, please see the :ref:`User Guide <csim-user-guide>`.
 
 
 

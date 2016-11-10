@@ -39,12 +39,14 @@ Prerequisites
 
 - Licensed, operational `BIG-IP`_ :term:`device`.
 - Knowledge of BIG-IP `system configuration`_ and `local traffic management`_.
-- Administrative access to both the BIG-IP and Marathon. [#]_
 - An existing, functional `Mesos`_ `Marathon`_ deployment.
-- BIG-IP partitions that correspond to the Marathon apps.
+- Administrative access to both the BIG-IP and Marathon. [#]_
+- A BIG-IP :term:`partition` that will only be used by the |csi_m|.
 - The official F5 ``f5-marathon-lb`` image; contact your F5 Sales rep or go to `F5 DevCentral <https://devcentral.f5.com/welcome-to-the-f5-beta-program>`_ to join the Early Access program.
 
-.. [#] Admin access to the BIG-IP is only required to create the partitions the CSI will manage. Users with permission to configure objects in the partition can do so via the CSI.
+
+.. [#] Admin access to the BIG-IP is required to create the :term:`partition` the CSI will manage. CSI users only need permission to configure objects in their partition.
+
 
 Caveats
 ```````

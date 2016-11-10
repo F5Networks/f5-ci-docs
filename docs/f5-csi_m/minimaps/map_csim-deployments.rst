@@ -1,7 +1,7 @@
 .. _csi-mesos-deployments:
 
-Deployment Guide
-================
+Deployment Examples
+===================
 
 .. _REST API Deployment Examples:
 

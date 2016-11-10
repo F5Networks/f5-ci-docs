@@ -13,17 +13,13 @@ Prerequisites
         .. _Mesos: https://mesos.apache.org/
         .. _Marathon: https://mesosphere.github.io/marathon/
 
-- Administrator access to both the BIG-IP device(s) and the Mesos/Marathon environment.
+- Administrator access to both the BIG-IP :term:`device` and the Mesos/Marathon environment.
 
 - Basic understanding of BIG-IP® `system configuration`_.
 
 - Basic understanding of BIG-IP® `local traffic management`_.
 
 - Knowledge of BIG-IP® `system configuration`_ & `local traffic management`_.
-
-- Mesos tbd
-
-- Marathon tbd
 
 - Internet access
 
