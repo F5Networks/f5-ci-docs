@@ -1,83 +1,12 @@
-Orchestration section
-~~~~~~~~~~~~~~~~~~~~~
+Orchestration
+~~~~~~~~~~~~~
 
-.. list-table:: Orchestration Configuration Parameters
-    :header-rows: 1
+.. csv-table:: Orchestration Parameters (scroll for more)
+    :header: Property, Sub-Property, Type, Required, Default, Description, Allowed Values
 
-    * - Field
-      - Type
-      - Required
-      - Default
-      - Description
-      - Allowed Values
-    * - kubernetes
-      - JSON object
-      - No
-      - N/A
-      - Kubernetes specific configs
-      - see :ref:`Kubernetes configs <lwp-orchestration-configs-kubernetes>`
-    * - marathon
-      - JSON object
-      - No
-      - N/A
-      - Marathon specific configs
-      - see :ref:`Marathon configs <lwp-orchestration-configs-marathon>`
-
-
-
-.. _lwp-orchestration-configs-kubernetes:
-
-Kubernetes
-^^^^^^^^^^
-
-.. list-table:: Orchestration Configuration Parameters - Kubernetes
-    :header-rows: 1
-
-    * - Field
-      - Type
-      - Required
-      - Default
-      - Description
-      - Allowed Values
-    * - config-file
-      - string
-      - Yes
-      - N/A
-      - Service config file to watch
-      - N/A
-    * - poll-interval
-      - number
-      - No
-      - 1000
-      - Polling time in milliseconds
-      - N/A
-
-
-
-.. _lwp-orchestration-configs-marathon:
-
-Marathon
-^^^^^^^^
-
-.. list-table:: Orchestration Configuration Parameters - Marathon
-    :header-rows: 1
-
-    * - Field
-      - Type
-      - Required
-      - Default
-      - Description
-      - Allowed Values
-    * - uri
-      - string
-      - Yes
-      - N/A
-      - URL of the Marathon service
-      - N/A
-    * - poll-interval
-      - number
-      - No
-      - 1000
-      - Polling time in milliseconds
-      - N/A
-
+    "``kubernetes``", " ", "JSON object", "Optional", "N/A", "JSON blob defining the kubernetes-specific configurations", "see below"
+    " ", "``config-file``", "string", "Required", "N/A", "the configuration file for the `Kubernetes Service`_ the |lwp| should watch", "N/A"
+    " ", "``poll-interval``", "integer", "Optional", 1000, "Polling time, in milliseconds", "N/A"
+    "``marathon``", " ", "JSON object", "Optional", "N/A", "JSON blob defining the marathon-specific configurations", "see below"
+    " ", "``uri``", "string", "Required", "N/A", "Marathon Service URL", "N/A"
+    " ", "``poll-interval``", "integer", "Optional", 1000, "Polling time, in milliseconds", "N/A"

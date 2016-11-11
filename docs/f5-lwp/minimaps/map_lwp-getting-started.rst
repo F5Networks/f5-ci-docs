@@ -1,4 +1,4 @@
-.. _lwpc-getting-started:
+.. _lwp-getting-started:
 
 
 Overview

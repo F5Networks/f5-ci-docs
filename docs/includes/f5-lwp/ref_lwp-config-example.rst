@@ -1,44 +1,12 @@
-|lwp| Configuration Example
-```````````````````````````
+Configuration Examples
+``````````````````````
 
-An example Marathon configuration containing two virtual server sections:
+.. rubric:: Example Marathon |lwp| configuration, expressed as environment variables in a JSON blob:
 
-.. code-block:: javascript
+.. literalinclude:: /static/f5-lwpc/f5-lwp-controller.json
 
-    {
-      "global": {
-        "console-log-level": "debug"
-      },
-      "orchestration": {
-        "marathon": {
-          "uri": "http://api.mesos.example.com",
-          "poll-interval": 5000
-        }
-      },
-      "stats": {
-        "url": "http://localhost:8088",
-        "token": "this-is-the-token",
-        "flushInterval": 10000,
-        "backend": "splunk"
-      },
-      "virtual-servers": [
-        {
-          "destination": 8080,
-          "service-name": "web-server",
-          "ip-protocol": "http",
-          "load-balancing-mode": "round-robin",
-          "flags" : {
-            "x-forwarded-for": false,
-            "x-served-by": true
-          }
-        },
-        {
-          "destination": 9090,
-          "service-name": "identity",
-          "ip-protocol": "http",
-          "load-balancing-mode": "round-robin",
-          "keep-alive-msecs": 2000
-        }
-      ]
-    }
+
+.. rubric:: Example Kubernetes |lwp| configuration, expressed as a JSON blob in a YAML file:
+
+.. literalinclude:: /static/f5-csi_k/example-lwp-configmap.yaml
 

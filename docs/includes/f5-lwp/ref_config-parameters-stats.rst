@@ -1,10 +1,10 @@
-Stats Section
-~~~~~~~~~~~~~
+Statistics
+~~~~~~~~~~
 
-.. list-table:: Stats Configuration Parameters
-    header-rows: 1
+.. list-table:: Statistics Parameters (scroll for more)
+    :header-rows: 1
 
-    * - Field
+    * - Property
       - Type
       - Required
       - Default
@@ -26,12 +26,12 @@ Stats Section
       - number
       - No
       - 10000
-      - Frequency in milliseconds of flushing stats to server
+      - Frequency, in milliseconds, of flushing stats to server
       - N/A
     * - ``backend``
       - string
       - Yes
       - N/A
       - Type of backend stats service
-      - 'leo', 'splunk'
+      - 'splunk'
 
