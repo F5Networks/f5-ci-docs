@@ -162,7 +162,7 @@ For HTTP and TCP connections, the forwarder provides proxy functionality between
 Telemetry
 `````````
 
-The telemetry module allows LWP and its middleware to capture and aggregate various metrics and send them to a backend system for reporting and analysis.
+The telemetry module allows LWP and its middleware to capture and aggregate various metrics and send them to a backend system for reporting and analysis or locally to an internal log.
 
 .. versionadded:: v0.1.0
     Supported systems in this version are `Splunk <https://www.splunk.com/>`_ (default).

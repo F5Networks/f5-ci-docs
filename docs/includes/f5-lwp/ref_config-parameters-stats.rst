@@ -12,26 +12,25 @@ Statistics
       - Allowed Values
     * - ``url``
       - string
-      - Yes
+      - No
       - N/A
-      - URL of the stats service
+      - URL of the backend stats server; if no URL is provided, stats are logged internally
       - N/A
     * - ``token``
       - string
-      - Yes
+      - No
       - N/A
-      - Authentication token for the stats server
+      - Authentication token for the stats server; required only if using a backend stats server
       - N/A
     * - ``flushInterval``
       - number
       - No
       - 10000
-      - Frequency, in milliseconds, of flushing stats to server
+      - Frequency, in milliseconds, at which to flush the stats; applies to both local and backend stats collection
       - N/A
     * - ``backend``
       - string
-      - Yes
+      - No
       - N/A
-      - Type of backend stats service
+      - Type of backend stats service; required only if using a backend stats server
       - 'splunk'
-
