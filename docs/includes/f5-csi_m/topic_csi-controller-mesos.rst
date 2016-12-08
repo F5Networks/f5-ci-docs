@@ -75,7 +75,7 @@ Launch the |csi_m| App via the Marathon REST API
 
 #. Create a JSON configuration file with the correct ``env`` parameters for your BIG-IP :term:`device` and Marathon.
 
-    .. rubric:: Example:
+    .. rubric:: Example
 
     .. code-block:: json
         :caption: f5-marathon-lb.json
@@ -126,6 +126,79 @@ Launch the |csi_m| App via the Marathon UI
 #. Complete the :guilabel:`Environment variables` section as appropriate for your environment.
 #. Click :guilabel:`Create Application`.
 
+
+Launch the |csi_m| App using enhanced DC/OS Security Features
+`````````````````````````````````````````````````````````````
+
+DC/OS v1.8 provides enhanced security features and the |csi_m| App provides the necessary configuration options to use these features.
+
+DC/OS Open
+^^^^^^^^^^
+
+When you configure a cluster with the OAuthEnabled option, all users (including the |csi_m| App) have to authenticate to access the Marathon API.
+
+#. Follow these `instructions provided in the DC/OS Administration guide <https://dcos.io/docs/1.7/administration/id-and-access-mgt/managing-authentication>`_ for creating a user account and obtaining a token.
+
+#. Use the ``F5_CSI_DCOS_AUTH_TOKEN`` :ref:`configuration parameter <csim_configuration-parameters>` to include the token in the app definition when you :ref:`launch the CSI App <csim-installation-section>`.
+
+DC/OS Enterprise
+^^^^^^^^^^^^^^^^
+
+In addition to Auth0-based authentication, DC/OS Enterprise provides Service Accounts that offer fine-grained access control. You must provision the |csi_m| with a Service Account if the `Security Mode <https://docs.mesosphere.com/1.8/administration/installing/custom/configuration-parameters/#security>`_ is `permissive` or `strict`. If the Security Mode is set to `disabled`, a Service Account is optional.
+
+#. Follow the instructions provided in the `Mesosphere Administration guide <https://docs.mesosphere.com/1.8/administration/id-and-access-mgt/service-auth/custom-service-auth>`_ to create a Service Account.
+
+#. Configure the permissions for the Service Account as follow:
+
+    ============================================   =======
+    Resource                                       Action
+    ============================================   =======
+    dcos:adminrouter:service:marathon              full
+    dcos:service:marathon:marathon:admin:events    read
+    dcos:service:marathon:marathon:services:/      read
+    ============================================   =======
+
+#. Run the command shown below to get the certificate for your cluster:
+
+    .. code-block:: bash
+
+       $ curl -k -v https://<cluster-url>/ca/dcos-ca.crt -o dcos-ca.crt
+
+    If you don't provide a server certificate, then server-certificate validation will not be performed.
+
+#. Use the ``F5_CSI_DCOS_AUTH_CREDENTIALS`` and ``F5_CSI_MARATHON_CA_CERT`` :ref:`configuration parameters <csim_configuration-parameters>` to identify the Service Account and certificate the |csi_m| App should use to authenticate to the Marathon API.
+
+The following shows an example JSON configuration that will allow the |csi_m| App to authenticate to the Marathon API and verify the received server certificate. 
+
+.. rubric:: Example
+
+.. code-block:: json
+
+        {
+          "id": "f5-marathon-lb",
+          "cpus": 0.5,
+          "mem": 64.0,
+          "instances": 1,
+          "container": {
+            "type": "DOCKER",
+            "docker": {
+              "image": "<f5-marathon-lb-container>",
+              "network": "BRIDGE"
+            }
+          },
+          "env": {
+            "MARATHON_URL": "<marathon_url>",
+            "F5_CSI_PARTITIONS": "<bigip_partition_for_mesos_apps>",
+            "F5_CSI_BIGIP_HOSTNAME": "<bigip_admin_console>",
+            "F5_CSI_BIGIP_USERNAME": "<bigip_username>",
+            "F5_CSI_BIGIP_PASSWORD": "<bigip_password>",
+            "F5_CSI_DCOS_AUTH_CREDENTIALS": "{ \"scheme\": \"RS256\", \"uid\": \"<service_account_name>\", \"login_endpoint\": \"https://<mesos_master>/acs/api/v1/auth/login\", \"private_key\": \"<private_key>\" }",
+            "F5_CSI_MARATHON_CA_CERT": "<marathon_ca_cert>"
+          }
+
+.. note::
+
+    The ``F5_CSI_DCOS_AUTH_CREDENTIALS`` is also a JSON object and take note of the escaped quotes required.
 
 Verify Installation
 ```````````````````

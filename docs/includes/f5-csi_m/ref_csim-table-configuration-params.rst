@@ -37,19 +37,6 @@
       - None
       - The partition(s) on the BIG-IP that the CSI will manage
       - N/A
-    * - ``F5_CSI_LISTENING_ADDR``
-      - string
-      - Optional
-      - None
-      - The IP address on which the CSI listens for Marathon events
-      - N/A
-    * - ``F5_CSI_CALLBACK_URL``
-      - string
-      - Optional
-      - None
-      - The HTTP address at which Marathon can call the CSI back
-      - N/A
-
     * - ``F5_CSI_USE_HEALTHCHECK``
       - boolean
       - Optional
@@ -62,10 +49,28 @@
       - 30
       - Marathon event stream timeout
       - N/A
+    * - ``F5_CSI_MARATHON_CA_CERT``
+      - integer
+      - Optional
+      - None
+      - CA certificate for Marathon HTTPS connections
+      - N/A
+    * - ``F5_CSI_VERIFY_INTERVAL``
+      - integer
+      - Optional
+      - 30
+      - Interval at which to verify the BIG-IP configuration
+      - N/A
     * - ``F5_CSI_LOG_FORMAT``
       - string
       - Optional
       - ``%(asctime)s %(name)s: %(levelname) -8s: %(message)s``
+      - The log message format
+      - N/A
+    * - ``F5_CSI_LOG_LEVEL``
+      - string
+      - Optional
+      - INFO
       - The log message format
       - N/A
     * - ``F5_CSI_MARATHON_AUTH``
@@ -74,4 +79,15 @@
       - None
       - Path to file containing a user/pass for the Marathon HTTP API in the format of 'user:pass'.
       - N/A
-
+    * - ``F5_CSI_DCOS_AUTH_CREDENTIALS``
+      - string
+      - Optional
+      - None
+      - ``DC/OS service account credentials``
+      - N/A
+    * - ``F5_CSI_DCOS_AUTH_TOKEN``
+      - string
+      - Optional
+      - None
+      - ``DC/OS ACS Token``
+      - N/A
