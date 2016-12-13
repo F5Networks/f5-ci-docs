@@ -79,16 +79,16 @@ author = u'F5 Networks'
 # The short X.Y version.
 #version = 'v0.1'
 # The full version, including alpha/beta/rc tags.
-#release = 'v0.1.1'
+release = 'csim_0.2.0'
 
 # All substitutions
 
 rst_epilog = """
-.. |lwp_v| replace:: v0.2.0
+.. |lwp-v| replace:: v0.2.0
 .. |lwpc-v| replace:: v0.2.0
 .. |csi_k-v| replace:: v0.1.0
 .. |csi_k_v| replace:: |csi_k-v|
-.. |csi_m-v| replace:: v0.1.4
+.. |csi_m-v| replace:: v0.2.0
 .. |lwp| replace:: Lightweight Proxy
 .. |lwpc| replace:: Lightweight Proxy Controller
 .. |csi| replace:: Container Service Integrator
@@ -140,7 +140,7 @@ language = 'en'
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'venv', '.github',
-                    'Dockerfile']
+                    'Dockerfile', 'docs/includes/f5-csi_k' ]
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.

@@ -1,10 +1,10 @@
-Launch the Cloud Formation in AWS
----------------------------------
+Launch the Cloud Formation Stack in AWS
+---------------------------------------
 
 #. Log in to your AWS account.
-#. Go to CloudFormation (https://console.aws.amazon.com/cloudformation)
+#. Go to `AWS CloudFormation <https://console.aws.amazon.com/cloudformation>`_.
 #. Click :guilabel:`Create New Stack`.
-#. Upload the CloudFormation template.
+#. Upload the :download:`CloudFormation template </static/f5-csi_m/f5-csim-cloudformation.json>`.
 #. Click :guilabel:`Next`.
 #. Enter the required :guilabel:`Parameters`.
 
@@ -14,18 +14,20 @@ Launch the Cloud Formation in AWS
         * - Field
           - Description
         * - ``AdminLocation``
-          - This is a CIDR subnet that will limit access to your stack.
-            | Only IPs in this subnet can get to the BIG-IP, Mesos, and Marathon administrative interface.
+          - | This is a CIDR subnet that will limit access to your stack.
+            | Only IPs in this subnet can get to the BIG-IP, Mesos, and
+            | Marathon administrative interface.
             | The default setting, "0.0.0.0/0",  allows access from any host.
-            | You can restrict access to just your external ip (e.g., 63.149.112.92/32). [#]_
+            | You can restrict access to just your external ip
+            | (e.g., 63.149.112.92/32). [#]_
         * - ``BIGIPRegKey``
-          - Enter the registration key for your BIG-IP.
+          - | Enter the registration key for your BIG-IP.
         * - ``KeyName``
-          - Select the AWS SSH keypair you wish to use.
+          - | Select the AWS SSH keypair you wish to use.
         * - ``OAuthEnabled``
-          - Use the default setting.
+          - | Use the default setting.
         * - ``SlaveInstanceCount``
-          - Use the default setting.
+          - | Use the default setting.
 
 #. Click :guilabel:`Next`.
 #. :guilabel:`Options`: Enter tags and/or edit Advanced configurations; or, just click :guilabel:`Next`.
@@ -48,15 +50,18 @@ View your stack
         * - Output
           - Description
         * - ``BIGIPAdminUI``
-          - The IP address for the BIG-IP configuration utility (aka, the UI).
+          - | The IP address for the BIG-IP configuration utility
+            | (aka, the UI).
         * - ``BIGIPAdminPassword``
-          - The password for the 'admin' user on the BIG-IP.
+          - | The password for the 'admin' user on the BIG-IP.
         * - ``MarathonUI``
-          - The URL for the Marathon UI.
+          - | The URL for the Marathon UI.
         * - ``SplunkReadySSH``
-          - The ssh command to log into the Splunk-ready instance.
+          - | The ssh command to log into the Splunk-ready instance.
         * - ``SplunkReadyPrivateIP``
-          - If you install Splunk on the Splunk-ready instance, substitute this value for ``[SPLUNK_IP]``.
+          - | If you install Splunk on the 'Splunk-ready instance' deployed
+            | as part of the CloudFormation stack,
+            | substitute this value for ``[SPLUNK_IP]``.
 
 .. note::
 

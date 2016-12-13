@@ -1,10 +1,10 @@
-Global section
-~~~~~~~~~~~~~~
+Global
+~~~~~~
 
-.. list-table:: Global Configuration Parameters
+.. list-table:: Global Parameters (scroll for more)
     :header-rows: 1
 
-    * - Field
+    * - Property
       - Type
       - Required
       - Default

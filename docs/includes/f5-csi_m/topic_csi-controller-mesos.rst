@@ -39,12 +39,14 @@ Prerequisites
 
 - Licensed, operational `BIG-IP`_ :term:`device`.
 - Knowledge of BIG-IP `system configuration`_ and `local traffic management`_.
-- Administrative access to both the BIG-IP and Marathon. [#]_
 - An existing, functional `Mesos`_ `Marathon`_ deployment.
-- BIG-IP partitions that correspond to the Marathon apps.
+- Administrative access to both the BIG-IP and Marathon. [#]_
+- A BIG-IP :term:`partition` that will only be used by the |csi_m|.
 - The official F5 ``f5-marathon-lb`` image; contact your F5 Sales rep or go to `F5 DevCentral <https://devcentral.f5.com/welcome-to-the-f5-beta-program>`_ to join the Early Access program.
 
-.. [#] Admin access to the BIG-IP is only required to create the partitions the CSI will manage. Users with permission to configure objects in the partition can do so via the CSI.
+
+.. [#] Admin access to the BIG-IP is required to create the :term:`partition` the CSI will manage. CSI users only need permission to configure objects in their partition.
+
 
 Caveats
 ```````
@@ -73,7 +75,7 @@ Launch the |csi_m| App via the Marathon REST API
 
 #. Create a JSON configuration file with the correct ``env`` parameters for your BIG-IP :term:`device` and Marathon.
 
-    .. rubric:: Example:
+    .. rubric:: Example
 
     .. code-block:: json
         :caption: f5-marathon-lb.json
@@ -125,15 +127,94 @@ Launch the |csi_m| App via the Marathon UI
 #. Click :guilabel:`Create Application`.
 
 
+Launch the |csi_m| App with Enhanced DC/OS Security Features
+````````````````````````````````````````````````````````````
+
+.. versionadded:: 0.2.0
+    Support for the enhanced `cluster security features <https://docs.mesosphere.com/1.8/overview/features/#identity-access-mgmt>`_ in `Mesos DC/OS v1.8 <https://docs.mesosphere.com/1.8/overview/>`_.
+
+DC/OS Open
+^^^^^^^^^^
+
+`DC/OS Open <https://dcos.io/>`_ uses `DC/OS oauth <https://dcos.io/docs/1.8/administration/id-and-access-mgt/#user-management>`_ to secure access. To use the |csi_m| App, assign it a user account with permission to access the desired cluster(s).
+
+#. `Create a user account for the App <https://dcos.io/docs/1.8/administration/id-and-access-mgt/managing-authentication>`_
+
+#. `Generate the HTTP API token <https://dcos.io/docs/1.8/administration/id-and-access-mgt/auth-api/>`_ and record it in a safe place.
+
+#. Add the token to your |csi_m| App definition using the ``F5_CSI_DCOS_AUTH_TOKEN`` :ref:`configuration parameter <csim_configuration-parameters>`.
+
+#. :ref:`Launch the CSI App <csim-installation-section>`.
+
+
+DC/OS Enterprise
+^^^^^^^^^^^^^^^^
+
+`DC/OS Enterprise <https://docs.mesosphere.com/>`_ provides fine-grained access control via `Service Accounts <https://docs.mesosphere.com/1.8/administration/id-and-access-mgt/service-auth/>`_.
+
+If you want to use the ``permissive`` or ``strict`` `Security Mode <https://docs.mesosphere.com/1.8/administration/installing/custom/configuration-parameters/#security>`_, you'll need to create a Service Account for the |csi_m|.
+If you set Security Mode to `disabled`, creating a Service Account for the |csi_m| is optional.
+
+#. `Create a Service Account <https://docs.mesosphere.com/1.8/administration/id-and-access-mgt/service-auth/custom-service-auth>`_ with the permissions shown below.
+
+    ================================================   =======
+    Resource                                           Action
+    ================================================   =======
+    ``dcos:adminrouter:service:marathon``              full
+    ``dcos:service:marathon:marathon:admin:events``    read
+    ``dcos:service:marathon:marathon:services:/``      read
+    ================================================   =======
+
+#. Obtain the certificate for your cluster:
+
+    .. code-block:: bash
+
+       $ curl -k -v https://<cluster-url>/ca/dcos-ca.crt -o dcos-ca.crt
+
+    .. important::
+
+        If you don't provide a server certificate, server-certificate validation will not be performed.
+
+#. Add the service account and certificate to your App definition using the ``F5_CSI_DCOS_AUTH_CREDENTIALS`` and ``F5_CSI_MARATHON_CA_CERT`` :ref:`configuration parameters <csim_configuration-parameters>`, respectively.
+
+    .. important::
+
+        ``F5_CSI_DCOS_AUTH_CREDENTIALS`` is a JSON object; use of escaped quotes is required.
+
+    .. code-block:: json
+        :caption: Example JSON configuration with ``F5_CSI_DCOS_AUTH_CREDENTIALS`` and ``F5_CSI_MARATHON_CA_CERT``
+        :linenos:
+        :emphasize-lines: 19, 20
+
+        {
+          "id": "f5-marathon-lb",
+          "cpus": 0.5,
+          "mem": 64.0,
+          "instances": 1,
+          "container": {
+            "type": "DOCKER",
+            "docker": {
+              "image": "<f5-marathon-lb-container>",
+              "network": "BRIDGE"
+            }
+          },
+          "env": {
+            "MARATHON_URL": "<marathon_url>",
+            "F5_CSI_PARTITIONS": "<bigip_partition_for_mesos_apps>",
+            "F5_CSI_BIGIP_HOSTNAME": "<bigip_admin_console>",
+            "F5_CSI_BIGIP_USERNAME": "<bigip_username>",
+            "F5_CSI_BIGIP_PASSWORD": "<bigip_password>",
+            "F5_CSI_DCOS_AUTH_CREDENTIALS": "{ \"scheme\": \"RS256\", \"uid\": \"<service_account_name>\", \"login_endpoint\": \"https://<mesos_master>/acs/api/v1/auth/login\", \"private_key\": \"<private_key>\" }",
+            "F5_CSI_MARATHON_CA_CERT": "<marathon_ca_cert>"
+          }
+
+#. :ref:`Launch the CSI App <csim-installation-section>`.
+
+
 Verify Installation
 ```````````````````
 
-Once you have completed the installation, you can view the new app in the Marathon UI, under :menuselection:`Applications --> Running`.
-
-You can also query the Marathon REST interface for a list of all running apps. [#]_
-
-
-.. [#] http://mesosphere.github.io/marathon/docs/rest-api.html#get-v2-apps
+You can view the App in the Marathon UI, under :menuselection:`Applications --> Running`, or you can `query the Marathon REST interface <http://mesosphere.github.io/marathon/docs/rest-api.html#get-v2-apps>`_, to confirm that the |csi_m| is installed and running.
 
 
 .. csim-install-body-end

@@ -1,7 +1,7 @@
 .. _lwpc-user-guide:
 
-Deploy the F5 Lightweight Proxy in Mesos+Marathon
-=================================================
+|lwpc| User Guide
+=================
 
 .. include:: /includes/f5-lwpc/concept_lwpc-overview.rst
 

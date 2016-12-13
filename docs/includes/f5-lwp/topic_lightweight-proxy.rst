@@ -23,30 +23,26 @@ Architecture
 
 .. lwp-architecture-body-start
 
-|lwp| comprises four (4) basic components: config, proxy, routing, and telemetry.
+The |lwp| comprises four (4) basic components: config, proxy, routing, and telemetry.
 
-Config
-``````
+* Config
 
-The config component manages the configuration for the LWP.
-It merges the configuration inputs from static and dynamic sources and normalizes the configuration for the other components.
+    The config component manages the configuration for the LWP.
+    It merges the configuration inputs from static and dynamic sources and normalizes the configuration for the other components.
 
-Proxy
-~~~~~
+* Proxy
 
-The proxy module manages the virtual server configuration; it creates a proxy in the routing infrastructure for each virtual server.
+    The proxy module manages the virtual server configuration; it creates a proxy in the routing infrastructure for each virtual server.
 
-Routing
-```````
+* Routing
 
-The routing infrastructure is the core of the |lwp|, providing the framework for creating traffic services.
-It invokes the middleware functions and uses the feedback to determine how to handle data events and the transaction lifecycle.
-The routing infrastructure provides a consistent interface for statistics and logging, which are handled by the telemetry module.
+    The routing infrastructure is the core of the |lwp|, providing the framework for creating traffic services.
+    It invokes the middleware functions and uses the feedback to determine how to handle data events and the transaction lifecycle.
+    The routing infrastructure provides a consistent interface for statistics and logging, which are handled by the telemetry module.
 
-Telemetry
-`````````
+* Telemetry
 
-The telemetry module sends transaction events and statistics -- for both HTTP and TCP transactions -- to an analytics provider (such as `Splunk`_).
+    The telemetry module sends transaction events and statistics -- for both HTTP and TCP transactions -- to an analytics provider (such as `Splunk`_).
 
 
 .. lwp-architecture-body-end
@@ -54,7 +50,7 @@ The telemetry module sends transaction events and statistics -- for both HTTP an
 Use Case
 --------
 
-|lwp| provides load balancing services for East-West data center traffic (in other words, traffic flowing between data passing between microservices). It deploys quickly and scales easily to keep pace with a microservices architecture.
+The |lwp| provides load balancing services for East-West data center traffic (in other words, traffic flowing between data passing between microservices). It deploys quickly and scales easily to keep pace with a microservices architecture.
 
 Prerequisites
 -------------
@@ -77,56 +73,17 @@ Installation
 
 .. lwp-install-body-start
 
-F5's |lwp| can be installed in Mesos+Marathon or in Kubernetes. Please see the guides below for environment-specific installation instructions.
+The |lwp| is dynamically deployed based on a set of pre-defined :ref:`configurations <lwp-configuration>`.
+In Marathon, deployment is handled by the |lwpc| for Mesos+Marathon, while in Kubernetes it's done by the ``f5-kube-proxy``.
+In either environment, when a service calls for the creation of a |lwp| instance, the instance is automatically configured according to the preset definitions.
 
-* F5 |lwpc| for Mesos+Marathon :ref:`Getting Started Guide <lwpc-getting-started-guide>`
-* F5 |csi_k| :ref:`LWP Deployment Guide <csik-lwp-deployment>`
+Please see the Deployment guide for your environment to learn more about configuring and running the |lwp|.
+
+* F5 |csi_m| :ref:`Lightweight Proxy Deployment Guide <lwpc-deploy-guide>`
+* F5 |csi_k| :ref:`Lightweight Proxy Deployment Guide <csik-lwp-deployment>`
 
 .. lwp-install-body-end
 
-Configuration
--------------
-
-.. lwp-configuration-body-start
-
-You can configure the F5 |lwp| with a valid JSON config file. |lwp| can run in different orchestration environments, each of which has its own specific set of configuration options.
-
-The |lwp| is designed to implement virtual servers dynamically for services in a container environment, providing the flexibility to handle apps/services in the manner the orchestration environment defines. [#]_ You can also simply provide a static config file if you want to run the |lwp| for static services.
-
-The |lwp| config file contains the following sections:
-
--  :ref:`Global <lwp-global-config>`: global configurations that are not specific to an orchestration environment.
--  :ref:`Orchestration <lwp-orchestration-config>`: contains parameters that allow you to specify your orchestration environment.
--  :ref:`Virtual servers <lwp-virtual-server-config>`: contains parameters that specify list(s) of virtual server objects representing service endpoints. Part or all of this section is provided by the orchestration environment.
--  :ref:`Telemetry <lwp-stats-config>`: contains parameters for statistics gathering and reporting.
-
-.. [#] See the :ref:`Deployment Guides <lwp-deployment-guides>` for details regarding specific orchestration environments.
-
-.. _lwp-config-params:
-
-Configuration Parameters
-````````````````````````
-.. _lwp-global-config:
-
-.. include:: /includes/f5-lwp/ref_config-parameters-global.rst
-
-.. _lwp-orchestration-config:
-
-.. include:: /includes/f5-lwp/ref_config-parameters-orchestration.rst
-
-.. _lwp-virtual-server-config:
-
-.. include:: /includes/f5-lwp/ref_config-parameters-virtual-server.rst
-
-.. _lwp-stats-config:
-
-.. include:: /includes/f5-lwp/ref_config-parameters-stats.rst
-
-.. rubric:: See :ref:`Telemetry <lwp-telemetry>`.
-
-.. include:: /includes/f5-lwp/ref_lwp-config-example.rst
-
-.. lwp-configuration-body-end
 
 .. _lwp-features:
 
@@ -135,11 +92,10 @@ Features
 
 .. features-body
 
-F5 |lwp| is a Node.js application that provides a :term:`middleware` framework for handling proxied traffic.
+The F5® |lwp| |tm| is a Node.js application that provides a :term:`middleware` framework for handling proxied traffic.
 
-The included :ref:`connection manager <lwp-connection-manager>`, :ref:`load balancer <lwp-load-balancer>`, and :ref:`forwarder <lwp-forwarder>` features are all :term:`built-in middleware` functions.
+The included features -- :ref:`connection manager <lwp-connection-manager>`, :ref:`load balancer <lwp-load-balancer>`, and :ref:`forwarder <lwp-forwarder>` -- are all :term:`built-in middleware` functions.
 
-|lwp| provides helper functions that make it easy to run other `Express middleware <https://expressjs.com/en/guide/using-middleware.html>`_ within our middleware framework. You can also use  `third-party middleware <https://expressjs.com/en/guide/using-middleware.html#middleware.third-party>`_ to add functionality. See the Express documentation for more information.
 
 .. _built-in-middleware:
 
@@ -155,7 +111,7 @@ The header manipulation module allows you to add, remove, or modify HTTP headers
     * If header already exists, its value will be replaced.
     * Use an array of values if you need to send header with multiple values.
 
-The following flags config parameters affect this built-in middleware. See `Flags <lwp-configs-virtual-server-flags>`.
+The following ``flags`` configuration parameters affect this built-in middleware. See `Flags <lwp-configs-virtual-server-flags>` for more information.
 
     * ``x-forwarded-for``
     * ``x-serverd-by``
@@ -168,8 +124,7 @@ The following flags config parameters affect this built-in middleware. See `Flag
 Load Balancer
 ~~~~~~~~~~~~~
 
-The load balancer module queries the orchestration environment for the current list of
-servers and implements a load balancing algorithm to choose a back-end server. This modules provides round-robin load balancing and collection of load balancing-related statistics.
+The load balancer module queries the orchestration environment for the current list of servers and implements a load balancing algorithm to choose a back-end server. This modules provides round-robin load balancing and collection of load balancing-related statistics.
 
 .. todo:: list the applicable config parameters for load balancer module
 
@@ -207,7 +162,7 @@ For HTTP and TCP connections, the forwarder provides proxy functionality between
 Telemetry
 `````````
 
-The telemetry module allows LWP and its middleware to capture and aggregate various metrics and send them to a backend system for reporting and analysis.
+The telemetry module allows LWP and its middleware to capture and aggregate various metrics and send them to a backend system for reporting and analysis or locally to an internal log.
 
 .. versionadded:: v0.1.0
     Supported systems in this version are `Splunk <https://www.splunk.com/>`_ (default).
@@ -216,7 +171,7 @@ The telemetry module allows LWP and its middleware to capture and aggregate vari
 Global Stats
 ~~~~~~~~~~~~
 
-The global stats config parameters serve as the default for all other metrics that don't require configuration.
+The global stats configuration parameters serve as the default for all other metrics that don't require configuration.
 
 -  splunk source: lwp.transaction
 -  splunk sourcetype: f5:lwp.stats:json
@@ -244,85 +199,94 @@ HTTP Transaction Stats
 
 .. include:: /includes/f5-lwp/ref_table-lwp-http-stats.rst
 
-.. features-body-end
-
-Usage
------
-
-.. usage-body
-
-The F5® |lwp| can run in Mesos+Marathon or Kubernetes. Environment-specific deployment instructions are provided in the F5 |csi_k| and |csi_m| user guides.
-
-Create a Virtual Server via the |lwp| in Kubernetes
-```````````````````````````````````````````````````
-
-The |lwp| deploys in Kubernetes via a custom implementation of ``kube-proxy``. See the |csi_k| :ref:`LWP Deployment Guide <csik-lwp-deployment>` for instructions.
-
-Create a Virtual Server via the |lwpc| for Mesos+Marathon
-`````````````````````````````````````````````````````````
-
-The F5® |lwpc| for Mesos+Marathon deploys the |lwp| dynamically. See the |lwpc| :ref:`User Guide <lwpc-user-guide>` for deployment instructions.
-
-
-.. _run-lwp-manually:
-
-Run |lwp| Manually
-``````````````````
-
-Use either of the options below to start an |lwp| instance locally from the command line of the client for which you wish to proxy.
-
-
-* Start |lwp| from the command line using a config file:
-
-    .. code-block:: bash
-
-        lwp_proxy --config-file=/<path_to_config_file>/config.json
-
--- OR --
-
-* Start |lwp| from the command line using an environment variable:
-
-    .. code-block:: bash
-
-        LWP_CONFIG='{ "virtual-servers": { ... } }' lwp_proxy
-
-
-.. tip::
-
-    Using the environment variable makes it easier to start |lwp| in a containerized environment.
-
-    For example, the following command can be used to start |lwp| with Docker.
-
-    .. code-block:: bash
-
-        $ docker run -e LWP_CONFIG='{ "virtual-servers": { ... } }' -p 8080:8080 -d f5/lwp-proxy
 
 .. _customize-lwp-express-middleware:
 
 Customize |lwp| with Express Middleware
 ```````````````````````````````````````
 
-You can add to the built-in functionality provided by F5's |lwp| with `Express middleware`_. We've built in helpers that make running Express or third-party middleware at the Router level of the |lwp| framework easy.
+We've built in helpers that make running `Express middleware <https://expressjs.com/en/guide/using-middleware.html>`_ at the Router level of the |lwp| framework easy. See the Express documentation for more information and configuration instructions.
+Using `third-party middleware <https://expressjs.com/en/guide/using-middleware.html#middleware.third-party>`_ to supplement the |lwp|'s built-in functionality  will be supported in a future release.
 
-.. todo:: Adding user provided middleware is not yet supported, and interfaces may change. 
+.. features-body-end
 
-.. [#] Described in the :ref:`Architecture <lwp_architecture>` overview.
+.. _lwp-configuration-section:
+
+Configuration
+-------------
+
+.. lwp-configuration-body-start
+
+The F5® |lwp| |tm| implements virtual servers dynamically for services in a container environment, providing the flexibility to handle apps/services in the manner the orchestration environment defines. [#]_ You can also simply provide a static config file if you want to run the |lwp| for static services.
+
+Configure the |lwp| using valid JSON. The available configuration options fall into four (4) categories:
+
+-  :ref:`Global <lwp-global-config>`: configurations that are not specific to an orchestration environment.
+-  :ref:`Orchestration <lwp-orchestration-config>`: environment-specific configuration parameters.
+-  :ref:`Virtual servers <lwp-virtual-server-config>`: these parameters specify list(s) of virtual server objects representing service endpoints. Part or all of this section is provided by the orchestration environment.
+-  :ref:`Telemetry <lwp-stats-config>`: these parameters pertain to statistics gathering and reporting.
+
+.. [#] See the :ref:`Deployment Guides <lwp-deployment-guides>` for details regarding specific orchestration environments.
+
+.. _lwp-config-params:
+
+Configuration Parameters
+````````````````````````
+.. _lwp-global-config:
+
+.. include:: /includes/f5-lwp/ref_config-parameters-global.rst
+
+.. _lwp-orchestration-config:
+
+.. include:: /includes/f5-lwp/ref_config-parameters-orchestration.rst
+
+.. _lwp-virtual-server-config:
+
+.. include:: /includes/f5-lwp/ref_config-parameters-virtual-server.rst
+
+.. _lwp-stats-config:
+
+.. include:: /includes/f5-lwp/ref_config-parameters-stats.rst
+
+.. seealso:: See :ref:`Telemetry <lwp-telemetry>` for more information regarding stats collection and analysis.
+
+.. include:: /includes/f5-lwp/ref_lwp-config-example.rst
+
+.. lwp-configuration-body-end
 
 
-.. usage-body-end
+Usage
+-----
+
+.. usage-body
+
+The F5® |lwp| |tm| can run in Mesos+Marathon or Kubernetes. Environment-specific deployment instructions are provided in the F5 |csi_k| and |csi_m| user guides.
+
+Kubernetes
+``````````
+
+The |lwp| deploys in Kubernetes via a custom implementation of ``kube-proxy``. See the |csi_k| :ref:`LWP Deployment Guide <csik-lwp-deployment>` for instructions.
+
+Mesos+Marathon
+``````````````
+
+The |lwp| deploys in Mesos+Marathon via an application called the |lwpc|. Once you deploy the |lwpc|, it launches instances of the |lwp| automatically for Marathon Apps with the appropriate labels configured. See the |lwpc| :ref:`Deployment Guide <lwpc-deploy-guide>` for instructions.
+
 
 Further Reading
 ---------------
 
 .. seealso::
 
-    * :ref:`|lwp| Deployment Guides <lwp-deployment-guides>`
-    * :ref:`|lwpc| for Marathon <lwpc-home>`
-    * :ref:`F5 |csi| for Apache Mesos_Marathon <csim-home>`
-    * :ref:`F5 |csi| for Kubernetes <csik-home>`
+    * |lwp|  :ref:`Deployment Guides <lwp-deployment-guides>`
+    * :ref:`F5 CSI for Mesos+Marathon <csim-home>`
+    * :ref:`F5 CSI for Kubernetes <csik-home>`
 
 
 .. toctree::
     :hidden:
 
-    self
+
+
+
+.. usage-body-end

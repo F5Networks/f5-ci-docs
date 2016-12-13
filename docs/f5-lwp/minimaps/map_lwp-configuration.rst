@@ -1,5 +1,7 @@
-|lwp| Configuration
--------------------
+.. _lwp-configuration:
+
+Configuration
+-------------
 
 .. toctree::
     :hidden:

@@ -9,7 +9,7 @@ User Guide
     :caption: Contents
     :maxdepth: 4
 
-    minimaps/map_lwp-configuration
     minimaps/map_lwp-features
+    minimaps/map_lwp-configuration
     minimaps/map_lwp-usage
-    minimaps/map_lwp-deployments
+

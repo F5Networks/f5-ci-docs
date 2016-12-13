@@ -5,6 +5,24 @@ F5 |csi|
 
 This documentation set supports the F5® |csi|. This product suite enables the use of BIG-IP® to manage North-South traffic from containerized environments and a |lwp| to manage East-West traffic between microservices.
 
+.. list-table:: Releases and versioning
+    :header-rows: 1
+
+    * - Documentation version
+      - Component
+      - Component version
+    * - |release|
+      - ``f5-k8s-controller``
+      - |csi_k-v|
+    * - |release|
+      - ``f5-marathon-lb``
+      - |csi_m-v|
+    * - |release|
+      - ``lightweight-proxy``
+      - |lwp-v|
+    * - |release|
+      - ``lwp-controller``
+      - |lwpc-v|
 
 
 .. toctree::
