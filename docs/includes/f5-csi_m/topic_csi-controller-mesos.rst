@@ -127,52 +127,64 @@ Launch the |csi_m| App via the Marathon UI
 #. Click :guilabel:`Create Application`.
 
 
-Launch the |csi_m| App using enhanced DC/OS Security Features
-`````````````````````````````````````````````````````````````
+Launch the |csi_m| App with Enhanced DC/OS Security Features
+````````````````````````````````````````````````````````````
 
-DC/OS v1.8 provides enhanced security features and the |csi_m| App provides the necessary configuration options to use these features.
+.. versionadded:: 0.2.0
+    Support for the enhanced `cluster security features <https://docs.mesosphere.com/1.8/overview/features/#identity-access-mgmt>`_ in `Mesos DC/OS v1.8 <https://docs.mesosphere.com/1.8/overview/>`_.
 
 DC/OS Open
 ^^^^^^^^^^
 
-When you configure a cluster with the OAuthEnabled option, all users (including the |csi_m| App) have to authenticate to access the Marathon API.
+`DC/OS Open <https://dcos.io/>`_ uses `DC/OS oauth <https://dcos.io/docs/1.8/administration/id-and-access-mgt/#user-management>`_ to secure access. To use the |csi_m| App, assign it a user account with permission to access the desired cluster(s).
 
-#. Follow these `instructions provided in the DC/OS Administration guide <https://dcos.io/docs/1.7/administration/id-and-access-mgt/managing-authentication>`_ for creating a user account and obtaining a token.
+#. `Create a user account for the App <https://dcos.io/docs/1.8/administration/id-and-access-mgt/managing-authentication>`_
 
-#. Use the ``F5_CSI_DCOS_AUTH_TOKEN`` :ref:`configuration parameter <csim_configuration-parameters>` to include the token in the app definition when you :ref:`launch the CSI App <csim-installation-section>`.
+#. `Generate the HTTP API token <https://dcos.io/docs/1.8/administration/id-and-access-mgt/auth-api/>`_ and record it in a safe place.
+
+#. Add the token to your |csi_m| App definition using the ``F5_CSI_DCOS_AUTH_TOKEN`` :ref:`configuration parameter <csim_configuration-parameters>`.
+
+#. :ref:`Launch the CSI App <csim-installation-section>`.
+
 
 DC/OS Enterprise
 ^^^^^^^^^^^^^^^^
 
-In addition to Auth0-based authentication, DC/OS Enterprise provides Service Accounts that offer fine-grained access control. You must provision the |csi_m| with a Service Account if the `Security Mode <https://docs.mesosphere.com/1.8/administration/installing/custom/configuration-parameters/#security>`_ is `permissive` or `strict`. If the Security Mode is set to `disabled`, a Service Account is optional.
+`DC/OS Enterprise <https://docs.mesosphere.com/>`_ provides fine-grained access control via `Service Accounts <https://docs.mesosphere.com/1.8/administration/id-and-access-mgt/service-auth/>`_.
 
-#. Follow the instructions provided in the `Mesosphere Administration guide <https://docs.mesosphere.com/1.8/administration/id-and-access-mgt/service-auth/custom-service-auth>`_ to create a Service Account.
+If you want to use the ``permissive`` or ``strict`` `Security Mode <https://docs.mesosphere.com/1.8/administration/installing/custom/configuration-parameters/#security>`_, you'll need to create a Service Account for the |csi_m|.
+If you set Security Mode to `disabled`, creating a Service Account for the |csi_m| is optional.
 
-#. Configure the permissions for the Service Account as follow:
+#. `Create a Service Account <https://docs.mesosphere.com/1.8/administration/id-and-access-mgt/service-auth/custom-service-auth>`_ with the permissions shown below.
 
-    ============================================   =======
-    Resource                                       Action
-    ============================================   =======
-    dcos:adminrouter:service:marathon              full
-    dcos:service:marathon:marathon:admin:events    read
-    dcos:service:marathon:marathon:services:/      read
-    ============================================   =======
+    ================================================   =======
+    Resource                                           Action
+    ================================================   =======
+    ``dcos:adminrouter:service:marathon``              full
+    ``dcos:service:marathon:marathon:admin:events``    read
+    ``dcos:service:marathon:marathon:services:/``      read
+    ================================================   =======
 
-#. Run the command shown below to get the certificate for your cluster:
+#. Obtain the certificate for your cluster:
 
     .. code-block:: bash
 
        $ curl -k -v https://<cluster-url>/ca/dcos-ca.crt -o dcos-ca.crt
 
-    If you don't provide a server certificate, then server-certificate validation will not be performed.
+    .. important::
 
-#. Use the ``F5_CSI_DCOS_AUTH_CREDENTIALS`` and ``F5_CSI_MARATHON_CA_CERT`` :ref:`configuration parameters <csim_configuration-parameters>` to identify the Service Account and certificate the |csi_m| App should use to authenticate to the Marathon API.
+        If you don't provide a server certificate, server-certificate validation will not be performed.
 
-The following shows an example JSON configuration that will allow the |csi_m| App to authenticate to the Marathon API and verify the received server certificate. 
+#. Add the service account and certificate to your App definition using the ``F5_CSI_DCOS_AUTH_CREDENTIALS`` and ``F5_CSI_MARATHON_CA_CERT`` :ref:`configuration parameters <csim_configuration-parameters>`, respectively.
 
-.. rubric:: Example
+    .. important::
 
-.. code-block:: json
+        ``F5_CSI_DCOS_AUTH_CREDENTIALS`` is a JSON object; use of escaped quotes is required.
+
+    .. code-block:: json
+        :caption: Example JSON configuration with ``F5_CSI_DCOS_AUTH_CREDENTIALS`` and ``F5_CSI_MARATHON_CA_CERT``
+        :linenos:
+        :emphasize-lines: 19, 20
 
         {
           "id": "f5-marathon-lb",
@@ -196,19 +208,13 @@ The following shows an example JSON configuration that will allow the |csi_m| Ap
             "F5_CSI_MARATHON_CA_CERT": "<marathon_ca_cert>"
           }
 
-.. note::
+#. :ref:`Launch the CSI App <csim-installation-section>`.
 
-    The ``F5_CSI_DCOS_AUTH_CREDENTIALS`` is also a JSON object and take note of the escaped quotes required.
 
 Verify Installation
 ```````````````````
 
-Once you have completed the installation, you can view the new app in the Marathon UI, under :menuselection:`Applications --> Running`.
-
-You can also query the Marathon REST interface for a list of all running apps. [#]_
-
-
-.. [#] http://mesosphere.github.io/marathon/docs/rest-api.html#get-v2-apps
+You can view the App in the Marathon UI, under :menuselection:`Applications --> Running`, or you can `query the Marathon REST interface <http://mesosphere.github.io/marathon/docs/rest-api.html#get-v2-apps>`_, to confirm that the |csi_m| is installed and running.
 
 
 .. csim-install-body-end
