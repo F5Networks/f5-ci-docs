@@ -286,7 +286,7 @@ Further Reading
 .. toctree::
     :hidden:
 
-    self
+
 
 
 .. usage-body-end
