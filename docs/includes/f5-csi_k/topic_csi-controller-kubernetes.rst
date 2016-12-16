@@ -267,4 +267,4 @@ Further Reading
 .. toctree::
     :hidden:
 
-
+    self
