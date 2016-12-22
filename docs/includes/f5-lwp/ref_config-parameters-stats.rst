@@ -22,7 +22,7 @@ Statistics
       - N/A
       - Authentication token for the stats server; required only if using a backend stats server
       - N/A
-    * - ``flushInterval``
+    * - ``flush-interval``
       - number
       - No
       - 10000
