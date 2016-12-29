@@ -3,7 +3,7 @@
 F5 |csi|
 ========
 
-This documentation set supports the F5® |csi|. This product suite enables the use of BIG-IP® to manage North-South traffic from containerized environments and a |lwp| to manage East-West traffic between microservices.
+This documentation set supports the F5® |csi| (CC) and |lwp| (ASP). This product suite introduces the F5 BIG-IP into containerized environments (CCs for Kubernetes and Mesos+Marathon) and implements a lightweight proxy for East-West traffic between microservices (ASP).
 
 .. list-table:: Releases and versioning
     :header-rows: 1
@@ -31,10 +31,12 @@ This documentation set supports the F5® |csi|. This product suite enables the u
     :includehidden:
     :maxdepth: 2
 
+    f5-lwp/README
+    f5-csi_k/README
     f5-csi_m/README
     f5-lwpc/README
-    f5-csi_k/README
-    f5-lwp/README
+
+
 
 
 

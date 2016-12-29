@@ -68,7 +68,7 @@ source_encoding = 'utf-8-sig'
 master_doc = 'index'
 
 # General information about the project.
-project = u'F5 Container Service Integrator'
+project = u'F5 Container Connector & Application Services Proxy'
 copyright = u'2015-2016 F5 Networks Inc'
 author = u'F5 Networks'
 
@@ -77,9 +77,9 @@ author = u'F5 Networks'
 # built documents.
 #
 # The short X.Y version.
-#version = 'v0.1'
+#version = 'v0.2'
 # The full version, including alpha/beta/rc tags.
-#release = 'v0.1.1'
+release = 'v0.2.1'
 
 # All substitutions
 
@@ -89,12 +89,13 @@ rst_epilog = """
 .. |csi_k-v| replace:: v0.1.0
 .. |csi_k_v| replace:: |csi_k-v|
 .. |csi_m-v| replace:: v0.2.0
-.. |lwp| replace:: Lightweight Proxy
-.. |lwpc| replace:: Lightweight Proxy Controller
-.. |csi| replace:: Container Service Integrator
-.. |csi_m| replace:: CSI - Mesos+Marathon
+.. |lwp-v| replace:: |lwp_v|
+.. |lwp| replace:: Application Services Proxy
+.. |lwpc| replace:: Application Services Proxy Controller
+.. |csi| replace:: Container Connector
+.. |csi_m| replace:: CC - Mesos+Marathon
 .. |csi_m-long| replace:: |csi| for Mesos+Marathon
-.. |csi_k| replace:: CSI - Kubernetes
+.. |csi_k| replace:: CC - Kubernetes
 .. |csi_k-long| replace:: |csi| for Kubernetes
 .. |tm| unicode:: U+2122
     :ltrim:
