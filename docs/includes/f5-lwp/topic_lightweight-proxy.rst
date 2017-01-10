@@ -173,7 +173,7 @@ Global Stats
 
 The global stats configuration parameters serve as the default for all other metrics that don't require configuration.
 
--  splunk source: lwp.transaction
+-  splunk source: lwp.global
 -  splunk sourcetype: f5:lwp.stats:json
 -  Frequency: periodic (controlled by ``LWP_CONFIG`` environment variable)
 
@@ -183,7 +183,7 @@ The global stats configuration parameters serve as the default for all other met
 TCP Transaction Stats
 ~~~~~~~~~~~~~~~~~~~~~
 
--  splunk source: lwp.transaction
+-  splunk source: lwp.tcp.transaction
 -  splunk sourcetype: f5:lwp.stats:json
 -  Frequency: per connection
 
@@ -193,7 +193,7 @@ TCP Transaction Stats
 HTTP Transaction Stats
 ~~~~~~~~~~~~~~~~~~~~~~
 
--  splunk source: lwp.transaction
+-  splunk source: lwp.http.transaction
 -  splunk sourcetype: f5:lwp.stats:json
 -  Frequency: per request
 
