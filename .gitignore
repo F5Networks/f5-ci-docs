@@ -4,3 +4,7 @@ venv/*
 docs/_build/*
 _build/*
 docs/errors.txt
+/docs/test/
+/test/
+/node_modules/
+/test/sphinx-build.output
