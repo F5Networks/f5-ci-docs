@@ -6,6 +6,8 @@ echo "Checking grammar and style"
 write-good `find ./docs -name '*.rst'` --no-passive --so --illusion --thereIs || true
 
 echo "Building docs and checking links with Sphinx"
+mkdir ./docs/test
+touch ./docs/test/sphinx-build.output
 sphinx-build -aE -b html -b linkcheck -w ./docs/test/sphinx-build.output ./docs ./docs/test
 
 echo "The errors listed below must be fixed."
