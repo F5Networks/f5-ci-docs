@@ -260,7 +260,8 @@ When the App deploys, the |csi_m|  does the following:
 
    - creates the virtual server on the BIG-IP in the specified partition,
    - assigns the virtual server to the specified `port-mapping <https://mesosphere.github.io/marathon/docs/ports.html>`_ for the App,
-   - creates pool members for each of the App's tasks.
+   - creates pool members for each of the App's tasks,
+   - creates health monitors for the pool members if a Marathon health check has been configured.
 
 .. _f5-application-labels:
 
@@ -298,7 +299,7 @@ Create a Virtual Server with the F5 |csi_m| via the REST API
         curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' \
         http://<marathon_url>:8080/v2/apps -d @sample-marathon-application.json
 
-In this sample application configuration, we have three (3) port indices. We created HTTP virtual servers on the BIG-IP for port 0 and port 1, and specified the IP address and port for each. Corresponding pools and pool members will be added automatically for each of the Application's tasks.
+In this sample application configuration, we have three (3) port indices. We created HTTP virtual servers on the BIG-IP for port 0 and port 1, and specified the IP address and port for each. Corresponding pools, pool members, and HTTP health monitors will be added automatically for each of the Application's tasks.
 
 For a detailed breakdown of the objects created on the BIG-IP, see the :ref:`REST API Deployment Examples <REST API Deployment Examples>`.
 
