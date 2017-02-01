@@ -45,8 +45,6 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.ifconfig',
     'sphinx.ext.doctest',
-    #'sphinx.ext.autosectionlabel',
-    #'sphinxjp.themes.basicstrap',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -71,7 +69,7 @@ source_encoding = 'utf-8-sig'
 master_doc = 'index'
 
 # General information about the project.
-project = u'F5 Container Solutions'
+project = u'F5 Container Integrations'
 copyright = u'2017 F5 Networks Inc'
 author = u'F5 Networks'
 
@@ -80,39 +78,50 @@ author = u'F5 Networks'
 # built documents.
 #
 # The short X.Y version.
-version = 'v0.1'
+version = 'v1'
 # The full version, including alpha/beta/rc tags.
-release = 'v0.1.0'
+release = 'v1.0'
 
 # All substitutions
 
 rst_epilog = """
-.. |lwp| replace:: |asp|
-.. |asp| replace:: Application Services Proxy
-.. |lwpc| replace:: Marathon ASP Controller
-.. |csi| replace:: BIG-IP Controller
-.. |csi_m| replace:: |csi| for Mesos+Marathon
-.. |csi_m-long| replace:: |csi_m|
-.. |csi_k| replace:: |csi| for Kubernetes
-.. |csi_k-long| replace:: |csi_k|
-.. |csc| replace:: |csi|
-.. |csc_m| replace:: |csi_m|
-.. |csc_m-long| replace:: |csi_m-long|
+.. |asp| replace:: F5 Application Service Proxy
+.. |asp-img| replace:: asp:latest
+.. |aspk-long| replace:: F5 Kubernetes Proxy
+.. |aspk| replace:: ``f5-kube-proxy``
+.. |aspk-img| replace:: f5networks/f5-kube-proxy:v1.0
+.. |kctlr-long| replace:: F5 Kubernetes BIG-IP Controller
+.. |kctlr| replace:: ``k8s-bigip-ctlr``
+.. |kctlr-img| replace:: f5networks/k8s-bigip-ctlr:v1.0
+.. |mctlr-long| replace:: F5 Marathon BIG-IP Controller
+.. |mctlr| replace:: ``marathon-bigip-ctlr``
+.. |mctlr-img| replace:: f5networks/marathon-bigip-ctlr:v1.0
+.. |aspm-long| replace:: F5 Marathon ASP Controller
+.. |aspm| replace:: ``marathon-asp-ctlr``
+.. |aspm-img| replace:: f5networks/marathon-asp-ctlr:v1.0
 .. _BIG-IP: https://f5.com/products/big-ip
 .. _BIG-IP System User Account Administration -> Administrative Partitions: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-12-0-0/3.html
 .. _system configuration: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-initial-configuration-12-0-0/2.html#conceptid
 .. _local traffic management: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-basics-12-0-0.html
 .. _F5 Docker registry: #
 .. _Kubernetes: https://kubernetes.io/
+.. _kubectl: https://kubernetes.io/docs/user-guide/kubectl-overview/
+.. _kube-proxy: https://kubernetes.io/docs/admin/kube-proxy/
+.. _namespace: https://kubernetes.io/docs/user-guide/namespaces/
 .. _ConfigMap: https://kubernetes.io/docs/user-guide/configmap/
 .. _Kubernetes Deployment: https://kubernetes.io/docs/user-guide/deployments/
+.. _Deployment: https://kubernetes.io/docs/user-guide/deployments/
 .. _Kubernetes Service: https://kubernetes.io/docs/user-guide/services/
+.. _Service: https://kubernetes.io/docs/user-guide/services/
 .. _Kubernetes Cluster: https://kubernetes.io/docs/admin/
 .. _Kubernetes DaemonSet: https://kubernetes.io/docs/admin/daemons/
+.. _Daemonset: https://kubernetes.io/docs/admin/daemons/
+.. _Kubernetes Dashboard: https://kubernetes.io/docs/user-guide/ui/
 .. _Static Pod: https://kubernetes.io/docs/admin/static-pods/
-.. _kubernetes pod: https://kubernetes.io/docs/user-guide/pods/
+.. _Kubernetes pod: https://kubernetes.io/docs/user-guide/pods/
 .. _Kubernetes node: https://kubernetes.io/docs/admin/node/
 .. _Kubernetes Secret: https://kubernetes.io/docs/user-guide/secrets/
+.. _Secret: https://kubernetes.io/docs/user-guide/secrets/
 .. _Marathon: https://mesosphere.github.io/marathon/
 .. _Express middleware: https://expressjs.com/en/guide/using-middleware.html
 .. _Node.js: https://nodejs.org/en/
@@ -143,7 +152,8 @@ language = 'en'
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'venv', '.github' ]
+exclude_patterns = ['_build', 'drafts', 'Thumbs.db', '.DS_Store', 'venv',
+                    '.github' ]
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -193,13 +203,14 @@ html_theme_path = f5_sphinx_theme.get_html_theme_path()
 html_theme_options = {}
 
 html_sidebars = {
-    '**': ['searchbox.html', 'globaltoc.html', 'localtoc.html']
+    '**': ['searchbox.html', 'localtoc.html', 'globaltoc.html' ]
 }
+
 
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-html_title = u'F5 Cloud Docs'
+html_title = 'F5 Container Integrations |release|'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -211,8 +222,8 @@ html_short_title = 'Home'
 html_logo = '_static/f5-logo-solid-rgb_small.png'
 
 # The name of an image file (relative to this directory) to use as a favicon of
-# the docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
-# pixels large.
+# the docs.  This file should be a Windows icon file (.ico) being 16x16 or
+# 32x32 pixels large.
 #
 # html_favicon = None
 
@@ -231,16 +242,12 @@ html_static_path = ['_static/']
 # bottom, using the given strftime format.
 # The empty string is equivalent to '%b %d, %Y'.
 #
-# html_last_updated_fmt = None
+html_last_updated_fmt = ''
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
 #
 # html_use_smartypants = True
-
-# Custom sidebar templates, maps document names to template names.
-#
-# html_sidebars = {}
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
@@ -249,19 +256,19 @@ html_static_path = ['_static/']
 
 # If false, no module index is generated.
 #
-# html_domain_indices = True
+html_domain_indices = True
 
 # If false, no index is generated.
 #
-# html_use_index = True
+html_use_index = True
 
 # If true, the index is split into individual pages for each letter.
 #
-# html_split_index = False
+html_split_index = False
 
 # If true, links to the reST sources are added to the pages.
 #
-html_show_sourcelink = False
+html_show_sourcelink = True
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 #
@@ -275,7 +282,7 @@ html_show_copyright = True
 # contain a <link> tag referring to it.  The value of this option must be the
 # base URL from which the finished HTML is served.
 #
-# html_use_opensearch = ''
+# html_use_opensearch = 'http://clouddocs.f5.com'
 
 # This is the file name suffix for HTML files (e.g. ".xhtml").
 # html_file_suffix = None
@@ -299,7 +306,7 @@ html_show_copyright = True
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'F5_??_doc'
+htmlhelp_basename = 'F5_Container Integrations_doc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -325,8 +332,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'F5_??_doc.tex',
-     u'F5 ?? Documentation',
+    (master_doc, 'F5_Container Integrations_doc.tex',
+     u'F5 Container Integrations Documentation',
      'F5 Networks', 'manual'),
 ]
 
@@ -376,8 +383,8 @@ latex_toplevel_sectioning = 'section'
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'F5_??_doc',
-     'F5 ?? Documentation',
+    (master_doc, 'F5_Container Integrations_doc',
+     'F5 Container Integrations Documentation',
      [author], 1)
 ]
 
@@ -392,9 +399,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'F5_??_doc',
-     'F5 ?? Documentation',
-     author, 'F5 ??'),
+    (master_doc, 'F5_Container-Integrations_doc',
+     'F5 Container Integrations Documentation',
+     author, 'F5 Container Integrations'),
 ]
 
 # Documents to append as an appendix to all manuals.

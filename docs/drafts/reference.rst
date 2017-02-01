@@ -13,7 +13,5 @@ Glossary
 --------
 
 
-Design Docs
------------
 
 

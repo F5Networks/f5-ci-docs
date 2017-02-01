@@ -1,0 +1,42 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: k8s.http
+  namespace: default
+  labels:
+    f5type: virtual-server
+data:
+  schema: "f5schemadb://bigip-virtual-server_v0.1.2.json"
+  data: |
+    {
+      "virtualServer": {
+        "backend": {
+          "servicePort": 3000,
+          "serviceName": "myService",
+          "healthMonitors": [{
+            "interval": 30,
+            "protocol": "http",
+            "send": "GET",
+            "timeout": 86400
+          }]
+        },
+        "frontend": {
+          "partition": "kubernetes",
+          "iapp": "/Common/f5.http",
+          "iappTableName": "pool__members",
+          "iappOptions": {
+            "description": "f5.http iApp"
+          },
+          "iappVariables": {
+            "monitor__monitor": "/#create_new#",
+            "monitor__response": "none",
+            "monitor__uri": "/",
+            "net__client_mode": "wan",
+            "net__server_mode": "lan",
+            "pool__addr": "173.16.2.5",
+            "pool__pool_to_use": "/#create_new#",
+            "pool__port": "80"
+          }
+        }
+      }
+    }

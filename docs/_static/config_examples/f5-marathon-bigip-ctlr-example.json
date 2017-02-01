@@ -1,0 +1,26 @@
+// REMOVE ALL COMMENTS FROM THIS FILE BEFORE USING
+{
+  "id": "marathon-bigip-ctlr",
+  "cpus": 0.5,
+  "mem": 64.0,
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "f5networks/marathon-bigip-ctlr:1.0.0",
+      "network": "BRIDGE"
+    }
+  },
+  "env": {
+    "MARATHON_URL": "http://10.190.25.75:8080",
+    "F5_CC_PARTITIONS": "mesos",
+    "F5_CC_BIGIP_HOSTNAME": "10.190.25.80",
+    "F5_CC_BIGIP_USERNAME": "admin",
+    "F5_CC_BIGIP_PASSWORD": "admin",
+    // Mesos DC/OS Enterprise Authentication
+    "F5_CC_DCOS_AUTH_CREDENTIALS": "{ \"scheme\": \"RS256\", \"uid\": \"my-dcos-account\", \"login_endpoint\": \"https://10.190.25.75:8080/acs/api/v1/auth/login\", \"private_key\": \"<my-private_key-string>\" }",
+    "F5_CC_MARATHON_CA_CERT": "<marathon_ca_cert>"
+    // Mesos DC/OS Open oath authentication
+    "F5_CC_DCOS_AUTH_TOKEN": "<authentication-token>"
+  }
+}
