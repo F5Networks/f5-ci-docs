@@ -11,7 +11,6 @@ This repository houses the end-user documentation for F5 Networks' Container Con
 
 We write documentation in `reStructuredText <http://docutils.sourceforge.net/rst.html>`_ (rST); build with `Sphinx <http://www.sphinx-doc.org/>`_ ; test with `Travis-CI <https://travis-ci.com/>`_ ; and host the docs website from `Amazon s3 <https://aws.amazon.com/s3/>`_.
 
-
 Contributing
 ------------
 
@@ -48,8 +47,7 @@ To run the script without using Docker:
 
 Contributor License Agreement
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Individuals or business entities who contribute to this project must
-have completed and submitted the `F5 Contributor License Agreement <#>`_ prior to their code submission being included in this project.
+Individuals or business entities who contribute to this project must have completed and submitted the `F5 Contributor License Agreement <#>`_ prior to their code submission being included in this project.
 
 Issues
 ------

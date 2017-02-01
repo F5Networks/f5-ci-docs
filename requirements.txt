@@ -5,3 +5,4 @@ sphinx_bootstrap_theme
 sphinx-better-theme
 sphinxjp.themes.basicstrap
 awscli
+

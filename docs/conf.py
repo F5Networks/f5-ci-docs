@@ -79,35 +79,40 @@ author = u'F5 Networks'
 # built documents.
 #
 # The short X.Y version.
-version = 'v0.1'
+version = 'v1.0'
 # The full version, including alpha/beta/rc tags.
-release = 'v0.1.0'
+release = 'v1.0.0'
 
 # All substitutions
 
 rst_epilog = """
-.. |lwp| replace:: |asp|
-.. |asp| replace:: Application Services Proxy
-.. |lwpc| replace:: Marathon ASP Controller
-.. |csi| replace:: BIG-IP Controller
-.. |csi_m| replace:: |csi| for Mesos+Marathon
-.. |csi_m-long| replace:: |csi_m|
-.. |csi_k| replace:: |csi| for Kubernetes
-.. |csi_k-long| replace:: |csi_k|
-.. |csc| replace:: |csi|
-.. |csc_m| replace:: |csi_m|
-.. |csc_m-long| replace:: |csi_m-long|
+.. |asp| replace:: F5 Application Service Proxy
+.. |asp-img| replace:: asp:latest
+.. |aspk| replace:: ``f5-kube-proxy``
+.. |aspk-img| replace:: f5networks/asp:latest
+.. |kctlr-long| replace:: F5 Kubernetes BIG-IP Controller
+.. |kctlr| replace:: ``k8s-bigip-ctlr``
+.. |kctlr-img| replace:: f5networks/k8s-bigip-ctlr:latest
+.. |mctlr-long| replace:: F5 Marathon BIG-IP Controller
+.. |mctlr| replace:: ``marathon-bigip-ctlr``
+.. |mctlr-img| replace:: f5networks/marathon-bigip-ctlr:latest
+.. |asp-ctlr-long| replace:: F5 Marathon ASP Controller
+.. |asp-ctlr| replace:: ``marathon-asp-ctlr``
+.. |asp-ctlr-img| replace:: f5networks/marathon-asp-ctlr:latest
 .. _BIG-IP: https://f5.com/products/big-ip
 .. _BIG-IP System User Account Administration -> Administrative Partitions: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-12-0-0/3.html
 .. _system configuration: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-initial-configuration-12-0-0/2.html#conceptid
 .. _local traffic management: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-basics-12-0-0.html
 .. _F5 Docker registry: #
 .. _Kubernetes: https://kubernetes.io/
+.. _kubectl: https://kubernetes.io/docs/user-guide/kubectl-overview/
 .. _ConfigMap: https://kubernetes.io/docs/user-guide/configmap/
 .. _Kubernetes Deployment: https://kubernetes.io/docs/user-guide/deployments/
 .. _Kubernetes Service: https://kubernetes.io/docs/user-guide/services/
 .. _Kubernetes Cluster: https://kubernetes.io/docs/admin/
 .. _Kubernetes DaemonSet: https://kubernetes.io/docs/admin/daemons/
+.. _Daemonset: https://kubernetes.io/docs/admin/daemons/
+.. _Kubernetes Dashboard: https://kubernetes.io/docs/user-guide/ui/
 .. _Static Pod: https://kubernetes.io/docs/admin/static-pods/
 .. _kubernetes pod: https://kubernetes.io/docs/user-guide/pods/
 .. _Kubernetes node: https://kubernetes.io/docs/admin/node/
@@ -184,8 +189,6 @@ todo_include_todos = False
 html_theme = 'bootstrap'
 
 # Add any paths that contain custom themes here, relative to this directory.
-#html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
-
 html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
 
 # Theme options are theme-specific and customize the look and feel of a theme
@@ -196,7 +199,7 @@ html_theme_options = {
 
     #sphinx-bootstrap theme options
     # Navigation bar title. (Default: ``project`` value)
-    'navbar_title': "F5 Cloud Docs",
+    'navbar_title': "F5 Container Integrations",
 
     # Tab name for entire site. (Default: "Site")
     'navbar_site_name': "Site",
@@ -209,9 +212,10 @@ html_theme_options = {
     # Note the "1" or "True" value above as the third argument to indicate
     # an arbitrary url.
     'navbar_links': [
-        ("Cloud Knowledge Centers", "https://support.f5.com/csp/knowledge-center/cloud", True),
-        ("Cloud on DevCentral", "https://devcentral.f5.com/cloud", True),
-        ("Releases and Versioning", "releases_and_versioning")
+        ("Releases and Versioning", "releases_and_versioning"),
+        ("Cloud on AskF5", "https://support.f5.com/csp/knowledge-center/cloud", True),
+        ("Cloud on DevCentral", "https://devcentral.f5.com/cloud", True)
+
     ],
 
     # Render the next and previous page links in navbar. (Default: true)
@@ -246,7 +250,7 @@ html_theme_options = {
 
     # Location of link to source.
     # Options are "nav" (default), "footer" or anything else to exclude.
-    'source_link_position': "footer",
+    'source_link_position': "sidebar",
 
     # Bootswatch (http://bootswatch.com/) theme.
     #
@@ -305,18 +309,17 @@ html_theme_options = {
     }
 
 html_sidebars = {
-    '**': ['localtoc.html','sourcelink.html',]
+    '**': ['globaltoc.html', 'localtoc.html','sourcelink.html',]
 }
 
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-html_title = u'F5 Cloud Docs'
+html_title = u'Containers'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
 html_short_title = 'Home'
-
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.

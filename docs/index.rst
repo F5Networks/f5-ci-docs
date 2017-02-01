@@ -4,36 +4,31 @@ F5 Cloud Docs
 =============
 
 .. toctree::
-    :hidden:
-    :caption: Container Basics
-    :glob:
+    :caption: Basics
     :titlesonly:
 
-    intro-to-container-solutions
+    intro-to-container-connectors
     releases_and_versioning
     reference
     glossary
 
 .. toctree::
-    :hidden:
-    :caption: Kubernetes
-    :glob:
+    :caption: Kubernetes Container Integration
     :titlesonly:
+    :glob:
 
     kubernetes/*
 
+
 .. toctree::
-    :hidden:
-    :caption: Mesos+Marathon
+    :caption: Marathon Container Integration
     :glob:
     :titlesonly:
 
-
-    mesos+marathon/*
+    marathon/*
 
 .. toctree::
-    :hidden:
-    :caption: Tutorials and Demos
+    :caption: Tutorials
     :glob:
     :titlesonly:
 
@@ -48,11 +43,6 @@ F5 Cloud Docs
 
     troubleshooting/*
 
-.. toctree::
-    :caption: User Guides
-    :maxdepth: 2
-    :glob:
-
 
 .. _tbd:
 
@@ -63,8 +53,9 @@ F5 Cloud Docs
     - front-end
     - back-end
     - properties
+    - product documentation
+
 
     asp:
     - global config parameters
-
 
