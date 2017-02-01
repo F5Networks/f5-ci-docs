@@ -1,0 +1,34 @@
+{
+  "container": {
+    "docker": {
+      "portMappings": [
+        {
+          "servicePort": 11099,
+          "protocol": "tcp",
+          "containerPort": 80,
+          "hostPort": 0
+        }
+      ],
+      "privileged": false,
+      "image": "<dockeruser>/<docker_repo>:microservice-demo",
+      "network": "BRIDGE",
+      "forcePullImage": true
+    },
+    "type": "DOCKER",
+    "volumes": []
+  },
+  "mem": 128,
+  "labels": {
+    "lwp": "enable"
+  },
+  "cpus": 0.25,
+  "uris": [
+    "file:///etc/dockercfg.tgz"
+  ],
+  "instances": 1,
+  "upgradeStrategy": {
+    "maximumOverCapacity": 1,
+    "minimumHealthCapacity": 1
+  },
+  "id": "demo_app"
+}
