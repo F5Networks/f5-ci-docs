@@ -8,7 +8,7 @@ before_install:
   - docker pull thejodesterf5/containthedocs
 
 script:
-  - ./scripts/docs-test.sh
+  - ./scripts/docker-docs.sh ./scripts/test-docs.sh
 
 deploy:
   provider: s3
