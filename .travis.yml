@@ -1,0 +1,20 @@
+language: python
+
+sudo: required
+services:
+  - docker
+
+#before_install:
+#  - docker pull thejodesterf5/containthedocs
+
+script:
+  - ./scripts/docker-docs.sh ./scripts/test-docs.sh
+
+deploy:
+  provider: s3
+  access_key_id: "$S3_ACCESS_ID"
+  secret_access_key: "$S3_ACCESS_KEY"
+  bucket: "$S3_BUCKET_NAME"
+  skip_cleanup: true
+  #on:
+    #tags: true
