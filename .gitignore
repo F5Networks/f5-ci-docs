@@ -1,11 +1,4 @@
-.idea/*
-.idea/vcs.xml
-venv/*
-docs/_build/*
-_build/*
-docs/errors.txt
-/docs/test/
-/test/
+.idea/
+docs/_build/
 /node_modules/
-/test/sphinx-build.output
 
