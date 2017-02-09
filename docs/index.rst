@@ -1,43 +1,63 @@
-.. _home:
+.. _clouddocs-home:
 
-F5 |csi|
-========
+F5 Cloud Docs
+=============
 
-This documentation set supports the F5® |csi| (CC) and |lwp| (ASP). This product suite introduces the F5 BIG-IP into containerized environments (CCs for Kubernetes and Mesos+Marathon) and implements a lightweight proxy for East-West traffic between microservices (ASP).
+.. toctree::
+    :hidden:
+    :caption: Container Basics
+    :glob:
+    :titlesonly:
 
-.. list-table:: Releases and versioning
-    :header-rows: 1
+    intro-to-container-solutions
+    releases_and_versioning
+    reference
+    glossary
 
-    * - Documentation version
-      - Component
-      - Component version
-    * - |release|
-      - ``f5-k8s-controller``
-      - |csi_k-v|
-    * - |release|
-      - ``f5-marathon-lb``
-      - |csi_m-v|
-    * - |release|
-      - ``lightweight-proxy``
-      - |lwp-v|
-    * - |release|
-      - ``lwp-controller``
-      - |lwpc-v|
+.. toctree::
+    :hidden:
+    :caption: Kubernetes
+    :glob:
+    :titlesonly:
+
+    kubernetes/*
+
+.. toctree::
+    :hidden:
+    :caption: Mesos+Marathon
+    :glob:
+    :titlesonly:
+
+    mesos+marathon/*
+
+.. toctree::
+    :hidden:
+    :caption: Tutorials and Demos
+    :glob:
+    :titlesonly:
+
+    tutorials/*
 
 
 .. toctree::
-    :caption: Table of Contents
-    :name: mastertoc
-    :includehidden:
-    :maxdepth: 2
+    :hidden:
+    :caption: Troubleshooting
+    :glob:
+    :titlesonly:
 
-    f5-lwp/README
-    f5-csi_k/README
-    f5-csi_m/README
-    f5-lwpc/README
+    troubleshooting/*
 
 
+.. _tbd:
 
+.. todo:: Refs to populate
+    k8s:
+    - configuration parameters
+    - F5 resource
+    - front-end
+    - back-end
+    - properties
 
-
+    asp:
+    - global config parameters
 

@@ -1,6 +1,8 @@
-.idea/*
-.idea/vcs.xml
-venv/*
-docs/_build/*
-_build/*
+.idea/
+venv/
+docs/_build/
+_build/
 docs/errors.txt
+node_modules/
+
+

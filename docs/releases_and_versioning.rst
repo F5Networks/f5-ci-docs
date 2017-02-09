@@ -1,7 +1,7 @@
 .. _f5-csi_support-matrix:
 
-F5 |CSI| Releases and Support Matrix
-====================================
+Releases and Versioning
+=======================
 
 .. list-table:: F5 |csi_k-long|
     :header-rows: 1

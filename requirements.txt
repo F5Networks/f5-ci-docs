@@ -1,0 +1,7 @@
+sphinx>=1.5.1
+sphinx-rtd-theme
+recommonmark
+sphinx_bootstrap_theme
+sphinx-better-theme
+sphinxjp.themes.basicstrap
+awscli
