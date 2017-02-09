@@ -7,28 +7,31 @@ before_install:
 script:
 - ./scripts/docker-docs.sh ./scripts/test-docs.sh
 deploy:
-- provider: s3
-  access_key_id:
-    secure: "$S3_ACCESS_ID_SECURE"
+  matrix:
+  - provider: s3
+    access_key_id:
+      secure: "$S3_ACCESS_ID_SECURE"
+    secret_access_key:
+      secure: "$S3_ACCESS_KEY_SECURE"
+    bucket: "$S3_BUCKET_NAME"
+    local-dir: docs/_build/html
+    upload-dir: f5-container-docs/$TRAVIS_TAG
+    skip-cleanup: true
+    region: us-west-2
+    on:
+      tags: true
+  - provider: s3
+    access_key_id:
+      secure: "$S3_ACCESS_ID_SECURE"
+    secret_access_key:
+      secure: "$S3_ACCESS_KEY_SECURE"
+    bucket: "$S3_BUCKET_NAME"
+    local-dir: docs/_build/html
+    upload-dir: f5-container-docs/$TRAVIS_BRANCH
+    skip-cleanup: true
+    region: us-west-2
+    on:
+      all_branches: true
+      condition: '"$TRAVIS_PULL_REQUEST" == "false"'
   secret_access_key:
-    secure: "$S3_ACCESS_KEY_SECURE"
-  bucket: "$S3_BUCKET_NAME"
-  local-dir: docs/_build/html
-  upload-dir: f5-container-docs/$TRAVIS_TAG
-  skip-cleanup: true
-  region: us-west-2
-  on:
-    tags: true
-- provider: s3
-  access_key_id:
-    secure: "$S3_ACCESS_ID_SECURE"
-  secret_access_key:
-    secure: "$S3_ACCESS_KEY_SECURE"
-  bucket: "$S3_BUCKET_NAME"
-  local-dir: docs/_build/html
-  upload-dir: f5-container-docs/$TRAVIS_BRANCH
-  skip-cleanup: true
-  region: us-west-2
-  on:
-    all_branches: true
-    condition: '"$TRAVIS_PULL_REQUEST" == "false"'
+    secure: MexDFJFJCiE9L4ZhLvMxq0cI4XCz7WvIrth5Mn8M8VOXEI5kkEHP5siQGw4bJFlDpDPMo6BKiJ1tATeRSf+5VjuYq35AKWEOWyU64HLoX5moQm9S46g+QmY451M/481RcYKLsnUCHCreL+5tZd92nTgletTc7vy1M1+TNibp1AvwOQJa68MQb4rYd8KFtnJQqpE0vOqVYP6cOpMmdOxrLDDRY+evrW1e/vdaWwhSX/PX/Ap1KEni8gZESmQkX4sNo90FOiqaSTGe3gpGmKug797kxsUO0+0NAh5xKubZ+lMAgYJF7tOiyXda4e1Fd4nahFEv9UJkzUfXrPPq1ruN37/qggtUn3tC1bjYTK6fd29m656pHrDG+jpKYm0mKk0nc7hODgSMsLHHvrVruDwUxtjou6WAqtZAb9OOCkCqXpp4iXUC9/On2p5b0MDlnXCk/zqi2n5COD6DqiJhv7NSZD0hJ6xI1GMzSziJ7eWimzs7zk7xIHsMU7qVYGW13VRo3e6Sw1/u+POvRr1I7mwn2eQks4ApnWb1egvlMcaU37WNhMA6bu+TSLxh4vUEtiNi+W2FJfoQqKpx7EKH+4q5iXszFyai9sQOROfB8q1JpsLpQnztl/D59WBlt2jk64uVrJATyg1DUcASHowx+yjDphsefcro7U5DeJ4EN3NE2bA=
