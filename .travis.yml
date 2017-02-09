@@ -8,25 +8,28 @@ script:
 - ./scripts/docker-docs.sh ./scripts/test-docs.sh
 deploy:
   - provider: s3
-    access_key_id: $S3_ACCESS_ID
-    secret_access_key: $S3_ACCESS_KEY
-    bucket: $S3_BUCKET_NAME
+    access_key_id:
+      secure: "$S3_ACCESS_ID_SECURE"
+    secret_access_key:
+      secure: "$S3_ACCESS_KEY_SECURE"
+    bucket: "$S3_BUCKET_NAME"
     local-dir: docs/_build/html
     upload-dir: f5-container-docs/$TRAVIS_TAG
-    #acl: ''
     skip-cleanup: true
     region: "us-west-2"
     on:
       tags: true
   - provider: s3
-    access_key_id: $S3_ACCESS_ID
-    secret_access_key: $S3_ACCESS_KEY
-    bucket: $S3_BUCKET_NAME
+    access_key_id:
+      secure: "$S3_ACCESS_ID_SECURE"
+    secret_access_key:
+      secure: "$S3_ACCESS_KEY_SECURE"
+    bucket: "$S3_BUCKET_NAME"
     local-dir: docs/_build/html
     upload-dir: f5-container-docs/$TRAVIS_BRANCH
-    #acl: ''
     skip-cleanup: true
     region: "us-west-2"
     on:
       all_branches: true
       condition: '"$TRAVIS_PULL_REQUEST" == "false"'
+
