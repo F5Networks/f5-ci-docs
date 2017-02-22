@@ -3,12 +3,12 @@
 Releases and Versioning
 =======================
 
-.. list-table:: F5 |kctlr-long|
+.. list-table:: |kctlr-long|
     :header-rows: 1
 
     * - Platform
       - Platform version
-      - |kctlr| version
+      - |kctlr-long| version
       - BIG-IP
     * - Kubernetes
       - 1.3.7
@@ -16,12 +16,12 @@ Releases and Versioning
       - 12.1.x
 
 
-.. list-table:: F5 |mctlr-long|
+.. list-table:: |mctlr-long|
     :header-rows: 1
 
     * - Platform
       - Platform version
-      - |mctlr| version
+      - |mctlr-long| version
       - BIG-IP
     * - Apache Mesos
       - 0.27+
@@ -37,12 +37,12 @@ Releases and Versioning
       - 12.1.x
 
 
-.. list-table:: F5® Lightweight Proxy
+.. list-table:: |asp|
     :header-rows: 1
 
     * - Platform
       - Platform version
-      - F5 |asp| version
+      - |asp| version
       - BIG-IP
     * - Kubernetes
       - 1.3.7
@@ -61,12 +61,12 @@ Releases and Versioning
       - 0.1.x, 0.2.x
       - 12.1.x
 
-.. list-table:: |asp-ctlr-long|
+.. list-table:: |aspm-long|
     :header-rows: 1
 
     * - Platform
       - Platform version
-      - F5 |asp-ctlr| version
+      - |aspm-long| version
       - BIG-IP
     * - Apache Mesos
       - 0.27+

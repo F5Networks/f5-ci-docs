@@ -34,27 +34,10 @@ Each CC is uniquely suited to its specific container orchestration environment a
 The Container Connectors also generally share a set of common properties:
 
 - Stateless
-- Eventually consistent
+- Event consistency
 - Declarative
 - Highly available
 - Horizontally scalable
 - COE-native infrastructure
 
-Stateless
-`````````
 
-Eventually consistent
-`````````````````````
-
-
-Declarative
-```````````
-
-Highly available
-````````````````
-
-Horizontally scalable
-`````````````````````
-
-COE-native infrastructure
-`````````````````````````

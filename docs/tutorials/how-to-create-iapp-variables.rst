@@ -11,7 +11,7 @@ At a high level, the way it works is:
 2) f5-marathon-lb notices the new labels.  Instead of configuring a plain ol' virtual server, pool, pool members, it configures a new iApp.  The iApp must be configured from an iApp Template that already exists on the BIG-IP (several are built-in).
 3) The iApp template is invoked to handle the new iApp that was just defined.  The iApp template can create a virtual server, pool members and so on.  It can do anything an iApp can do, which gives it access to essentially all the advanced features on BIG-IP.
  
-Here's the JSON for an example application I configured in Marathon (via "curl -v -H "Accept: application/json" http://10.190.25.245:8080/v2/apps//test-svc | json_pp").  It's long; I bold-faced the interesting parts:
+Here's the JSON for an example application I configured in Marathon (via ``curl -v -H "Accept: application/json" http://10.190.25.245:8080/v2/apps/test-svc | json_pp``).  It's long; I bold-faced the interesting parts:
  
 {
    "app" : {

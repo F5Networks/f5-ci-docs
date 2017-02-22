@@ -10,14 +10,14 @@ Before you begin
 
 * :ref:`Add a Kubernetes Secret <k8s-add-secret>` containing your BIG-IP user credentials to your Kubernetes master.
 * `Create a new partition`_ for Kubernetes on your BIG-IP. The |kctlr| can not manage objects in the ``/Common`` partition.
-* *OPTIONAL*: Create a Kubernetes :ref:`docker-registry secret <secret-docker-config>` if you intend to pull the container image from a private Docker registry.
+* *OPTIONAL*: Create a Kubernetes :ref:`docker-registry secret <k8s-secret-docker-config>` if you intend to pull the container image from a private Docker registry.
 
 .. _create-k8s-deployment:
 
 
 .. important::
 
-    You should create all |kctlr| objects in the ``kube-system`` `namespace <https://kubernetes.io/docs/user-guide/namespaces/>`_, unless otherwise specified in the deployment instructions.
+    You should create all |kctlr| objects in the ``kube-system`` `namespace`_, unless otherwise specified in the deployment instructions.
 
 Create a Kubernetes Deployment
 ------------------------------
@@ -80,6 +80,7 @@ Use ``kubectl`` to verify all of the objects launched successfully.
 
 
 
-.. _ReplicaSet: http://kubernetes.io/docs/user-guide/replicasets/
-.. _Pod: http://kubernetes.io/docs/user-guide/pods/
+.. _ReplicaSet: https://kubernetes.io/docs/user-guide/replicasets/
+.. _Pod: https://kubernetes.io/docs/user-guide/pods/
 .. _Create a new partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-implementations-12-1-0/29.html
+.. _namespace: https://kubernetes.io/docs/user-guide/namespaces

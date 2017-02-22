@@ -103,3 +103,9 @@ Examples
     :emphasize-lines: 10, 28-29, 40-42
 
 :download:`f5-kube-proxy-manifest-worker.yaml </_static/config_examples/f5-kube-proxy-manifest-worker.yaml>`
+
+
+.. _Pod: https://kubernetes.io/docs/user-guide/pods/
+.. _Cluster: https://kubernetes.io/docs/admin/cluster-management/
+.. _kube-proxy: https://kubernetes.io/docs/user-guide/services/#virtual-ips-and-service-proxies
+.. _Node: https://kubernetes.io/docs/admin/node/

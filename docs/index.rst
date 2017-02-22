@@ -17,7 +17,9 @@ F5 Cloud Docs
     :titlesonly:
     :glob:
 
-    kubernetes/*
+    kubernetes/kubernetes-integration
+    kubernetes/kctlr*
+    kubernetes/asp*
 
 
 .. toctree::
@@ -25,7 +27,9 @@ F5 Cloud Docs
     :glob:
     :titlesonly:
 
-    marathon/*
+    marathon/marathon-integration
+    marathon/mctlr*
+    marathon/asp*
 
 .. toctree::
     :caption: Tutorials
@@ -54,8 +58,10 @@ F5 Cloud Docs
     - back-end
     - properties
     - product documentation
-
-
     asp:
     - global config parameters
+    - How to gather and report stats
+    marathon:
+    - configuration parameters
+    - product documentation
 

@@ -96,9 +96,9 @@ rst_epilog = """
 .. |mctlr-long| replace:: F5 Marathon BIG-IP Controller
 .. |mctlr| replace:: ``marathon-bigip-ctlr``
 .. |mctlr-img| replace:: f5networks/marathon-bigip-ctlr:latest
-.. |asp-ctlr-long| replace:: F5 Marathon ASP Controller
-.. |asp-ctlr| replace:: ``marathon-asp-ctlr``
-.. |asp-ctlr-img| replace:: f5networks/marathon-asp-ctlr:latest
+.. |aspm-long| replace:: F5 Marathon ASP Controller
+.. |aspm| replace:: ``marathon-asp-ctlr``
+.. |aspm-img| replace:: f5networks/marathon-asp-ctlr:latest
 .. _BIG-IP: https://f5.com/products/big-ip
 .. _BIG-IP System User Account Administration -> Administrative Partitions: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-12-0-0/3.html
 .. _system configuration: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-initial-configuration-12-0-0/2.html#conceptid
@@ -186,7 +186,7 @@ todo_include_todos = False
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'bootstrap'
+html_theme = 'nature'
 
 # Add any paths that contain custom themes here, relative to this directory.
 html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
@@ -195,14 +195,14 @@ html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {
+#html_theme_options = {
 
     #sphinx-bootstrap theme options
     # Navigation bar title. (Default: ``project`` value)
-    'navbar_title': "F5 Container Integrations",
+    #'navbar_title': "F5 Container Integrations",
 
     # Tab name for entire site. (Default: "Site")
-    'navbar_site_name': "Site",
+    #'navbar_site_name': "Site",
 
     # A list of tuples containing pages or urls to link to.
     # Valid tuples should be in the following forms:
@@ -211,25 +211,25 @@ html_theme_options = {
     #    (name, "http://example.com", True) # arbitrary absolute url
     # Note the "1" or "True" value above as the third argument to indicate
     # an arbitrary url.
-    'navbar_links': [
-        ("Releases and Versioning", "releases_and_versioning"),
-        ("Cloud on AskF5", "https://support.f5.com/csp/knowledge-center/cloud", True),
-        ("Cloud on DevCentral", "https://devcentral.f5.com/cloud", True)
-
-    ],
+    #'navbar_links': [
+    #    ("Releases and Versioning", "releases_and_versioning"),
+    #    ("Cloud on AskF5", "https://support.f5.com/csp/knowledge-center/cloud", True),
+    #    ("Cloud on DevCentral", "https://devcentral.f5.com/cloud", True)
+    #
+    #]
 
     # Render the next and previous page links in navbar. (Default: true)
-    'navbar_sidebarrel': False,
+    #'navbar_sidebarrel': False,
 
     # Render the current pages TOC in the navbar. (Default: true)
-    'navbar_pagenav': False,
+    #'navbar_pagenav': False,
 
     # Tab name for the current pages TOC. (Default: "Page")
     #'navbar_pagenav_name': "Page",
 
     # Global TOC depth for "site" navbar tab. (Default: 1)
     # Switching to -1 shows all levels.
-    'globaltoc_depth': 2,
+    #'globaltoc_depth': 2,
 
     # Include hidden TOCs in Site navbar?
     #
@@ -238,29 +238,29 @@ html_theme_options = {
     # will break.
     #
     # Values: "true" (default) or "false"
-    'globaltoc_includehidden': "true",
+    #'globaltoc_includehidden': "true",
 
     # HTML navbar class (Default: "navbar") to attach to <div> element.
     # For black navbar, do "navbar navbar-inverse"
-    'navbar_class': "navbar",
+    #'navbar_class': "navbar",
 
     # Fix navigation bar to top of page?
     # Values: "true" (default) or "false"
-    'navbar_fixed_top': "true",
+    #'navbar_fixed_top': "true",
 
     # Location of link to source.
     # Options are "nav" (default), "footer" or anything else to exclude.
-    'source_link_position': "sidebar",
+    #'source_link_position': "sidebar",
 
     # Bootswatch (http://bootswatch.com/) theme.
     #
     # Options are nothing (default) or the name of a valid theme
     # such as "amelia" or "cosmo".
-    'bootswatch_theme': "sandstone",
+    #'bootswatch_theme': "sandstone",
 
     # Choose Bootstrap version.
     # Values: "3" (default) or "2" (in quotes)
-    'bootstrap_version': "3",
+    #'bootstrap_version': "3",
 
     #better theme options
     # show sidebar on the right instead of on the left
@@ -306,7 +306,7 @@ html_theme_options = {
     # Google Analytics info
     #'ga_ua': '',
     #'ga_domain': '',
-    }
+    #}
 
 html_sidebars = {
     '**': ['globaltoc.html', 'localtoc.html','sourcelink.html',]
@@ -315,7 +315,7 @@ html_sidebars = {
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-html_title = u'Containers'
+html_title = u'Container Connectors'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #

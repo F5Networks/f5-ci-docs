@@ -83,10 +83,14 @@ The backend property identifies the `Kubernetes Service`_ that makes up the serv
 Related
 ```````
 
-- |kctlr| `Product documentation </products/containers/k8s-bigip-ctlr/latest/>`_
-- :ref:`Configure <kctlr-configuration>` the |kctlr-long|
-- :ref:`Manage BIG-IP objects <kctlr-manage-bigip-objects>` with the |kctlr-long|
-- :ref:`Deploy an iApp <kctlr-deploy-iapps>` with the |kctlr-long|
+.. toctree::
+    :glob:
+
+    kctlr*
+    asp*
+
+- `|kctlr| </products/connectors/k8s-bigip-ctlr/latest/>`_
+- `asp </products/asp/latest>`_
 
 
 

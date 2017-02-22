@@ -19,7 +19,7 @@ Install the |asp| in Kubernetes
 Summary
 -------
 
-The |asp|, or ASP, runs on each node in a Kubernetes `Cluster`_. Create a `ConfigMap`_ to configure the ASP; then, create a `Daemonset`_ to run the ASP in a pod on each node in your cluster.
+The |asp|, or ASP, runs on each node in a Kubernetes `Cluster`_. Create a `ConfigMap`_ to configure the ASP; then, create a `DaemonSet`_ to run the ASP in a pod on each node in your cluster.
 
 Configure the ASP
 -----------------
@@ -106,3 +106,6 @@ Deploy the ASP
         kube-scheduler-172.16.1.19            1/1       Running   0          11d       172.16.1.19   172.16.1.19
         kubernetes-dashboard-172.16.1.19      1/1       Running   2          11d       172.16.1.19   172.16.1.19
 
+
+.. _DaemonSet: https://kubernetes.io/docs/admin/daemons/
+.. _Cluster: https://kubernetes.io/docs/admin/cluster-management/

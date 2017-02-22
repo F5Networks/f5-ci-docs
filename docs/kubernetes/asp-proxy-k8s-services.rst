@@ -19,7 +19,7 @@ Proxy Kubernetes Services with the |asp|
 Summary
 -------
 
-The |asp| watches Kubernetes `Service`_ definitions for a set of annotations defining virtual server objects. The annotation consists of the ``asp: enable`` label and a set of ASP `configuration parameters`_. When you annotate an existing Kubernetes `Service`_, the ASP creates a virtual server for that Service.
+The |asp| watches Kubernetes `Service`_ definitions for a set of annotations defining virtual server objects. The annotation consists of the ``asp: enable`` label and a set of ASP `configuration parameters </products/asp/latest/index.html#configuration-parameters>`_. When you annotate an existing Kubernetes `Service`_, the ASP creates a virtual server for that Service.
 
 Annotate a Kubernetes Service
 -----------------------------
@@ -41,7 +41,7 @@ Annotate a Kubernetes Service
         /var/run/kubernetes/proxy-plugin/service-ports.json (END)
 
 
-#. Send a request to the `Service`_ to verify the ASP handles traffic.
+#. Send a request to the `Service`_ to verify the ASP handles the traffic.
 
     .. code-block:: bash
 
@@ -67,3 +67,4 @@ Annotate a Kubernetes Service
 
 
 .. _kubernetes hello-world: https://kubernetes.io/docs/tutorials/stateless-application/expose-external-ip-address-service/
+.. _Service: https://kubernetes.io/docs/user-guide/services/
