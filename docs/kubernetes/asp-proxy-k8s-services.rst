@@ -31,6 +31,7 @@ Annotate a Kubernetes Service
         user@k8s-master:~$ kubectl annotate service example-service asp.f5.com/config="{\"ip-protocol\":\"http\",\"load-balancing-mode\":\"round-robin\"}"
         service "example-service" annotated
 
+    :download:`Download an example Service definition with the ASP annotation </_static/config_examples/f5-asp-k8s-example-service.yaml>`
 
 #. View the "proxy-plugin" :file:`service-ports.json` file to verify the ASP picked up the annotation.
 

@@ -3,7 +3,23 @@
 How to Create iApp Variables
 ============================
 
-To determine which fields you need to define as ``iappVariables``, we recommend that you `deploy the iApp <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-iapps-developer-11-4-0/2.html#unique_1831084015>`_ using the BIG-IP configuration utility; then, do a REST call to the BIG-IP to determine what configurations were applied.
+The |kctlr-long| and |mctlr-long| both support deployment of iApps, which gives them access to essentially all the advanced l4-l7 features on BIG-IP. To deploy an iApp, you need to create custom ``iappVariables`` key-value pairs; these provide the information the iApp needs to configure the BIG-IP.
+
+.. important::
+
+    The instructions provided here apply to all supported orchestration environments. In the examples, we reference Marathon and the |mctlr-long|.
+
+At a high level, the way it works is:
+
+1) You define a new Application in Marathon, with F5 :ref:`Application labels <app-labels>` defined.
+2) The |mctlr| notices the new labels and configures a new iApp on the BIG-IP. Referencing an iApp Template that already exists on the BIG-IP (several are built-in).
+3) The iApp template is invoked to handle the new iApp that was just defined. The iApp template can create a virtual server, pool members, and so on. 
+
+First, you need to determine what fields in the iApp template need correspondin ``iappVariables``.
+
+#. We recommend that you `deploy the iApp <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-iapps-developer-11-4-0/2.html#unique_1831084015>`_ using the BIG-IP configuration utility.
+
+#. Make a REST call to the BIG-IP to determine what configurations were applied.
 
 
 At a high level, the way it works is:

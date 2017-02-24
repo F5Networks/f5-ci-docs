@@ -76,6 +76,8 @@ Deploy the ASP
 
 #. Create a DaemonSet.
 
+    .. literalinclude:: /_static/config_examples/f5-asp-k8s-example-daemonset.yaml
+
     .. tip::
 
         You can download the example DaemonSet file below and modify it to suit your environment.
