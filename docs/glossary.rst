@@ -19,22 +19,3 @@ Glossary
     partitions
         A BIG-IP partition, or *administrative partition*, is a user-acess-controlled container where a defined set of system objects can reside. Partitions allow admin users to control other users’ access to BIG-IP objects. See `BIG-IP System User Account Administration -> Administrative Partitions`_ for more information.
 
-
-    middleware
-        In the context of the lightweight proxy, 'middleware' refers to functions that run in the Express routing layer, thus sitting between the request and response. [#]_ See :term:`Express middleware`.
-
-    Express
-        A web framework for Node.js; see https://expressjs.com/.
-
-    Express middleware
-        Functions that access the request object (req), the response object (res), and the next middleware function in the application’s request-response cycle. [#]_
-
-
-
-
-.. rubric:: Footnotes
-.. [#] http://expressjs.com/en/resources/glossary.html
-.. [#] https://expressjs.com/en/guide/using-middleware.html
-
-
-
