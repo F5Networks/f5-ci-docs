@@ -10,6 +10,11 @@ The |kctlr-long| configures a BIG-IP to expose applications in a `Kubernetes clu
 
 The |asp| provides load balancing and telemetry for containerized applications, serving East-West traffic.
 
+.. image:: /_static/media/kubernetes_solution.png
+    :scale: 50 %
+    :alt: F5 Container Solution for Kubernetes
+
+
 General Prerequisites
 ---------------------
 

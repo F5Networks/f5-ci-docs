@@ -1,11 +1,11 @@
 .. _clouddocs-home:
 
-F5 Cloud Docs
-=============
+F5 Container Integrations
+=========================
 
 .. toctree::
     :caption: Basics
-    :titlesonly:
+    :maxdepth: 1
 
     intro-to-container-connectors
     releases_and_versioning
@@ -14,7 +14,7 @@ F5 Cloud Docs
 
 .. toctree::
     :caption: Kubernetes Container Integration
-    :titlesonly:
+    :maxdepth: 1
     :glob:
 
     kubernetes/kubernetes-integration
@@ -25,7 +25,7 @@ F5 Cloud Docs
 .. toctree::
     :caption: Marathon Container Integration
     :glob:
-    :titlesonly:
+    :maxdepth: 1
 
     marathon/marathon-integration
     marathon/mctlr*
@@ -34,7 +34,7 @@ F5 Cloud Docs
 .. toctree::
     :caption: Tutorials
     :glob:
-    :titlesonly:
+    :maxdepth: 1
 
     tutorials/*
 
@@ -43,7 +43,7 @@ F5 Cloud Docs
     :hidden:
     :caption: Troubleshooting
     :glob:
-    :titlesonly:
+    :maxdepth: 1
 
     troubleshooting/*
 

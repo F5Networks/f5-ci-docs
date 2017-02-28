@@ -10,6 +10,11 @@ The |mctlr-long| configures a BIG-IP to expose applications in a `Mesos cluster`
 
 The |asp| provides load balancing and telemetry for containerized applications, serving East-West traffic. The |aspm-long| deploys ASP instances 'on-demand' for Marathon Applications.
 
+.. image:: /_static/media/mesos_solution.png
+    :scale: 50 %
+    :alt: F5 Container Solution for Marathon
+
+
 General Prerequisites
 ---------------------
 

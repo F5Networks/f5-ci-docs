@@ -70,7 +70,7 @@ source_encoding = 'utf-8-sig'
 master_doc = 'index'
 
 # General information about the project.
-project = u'F5 Container Solutions'
+project = u'F5 Container Integrations'
 copyright = u'2017 F5 Networks Inc'
 author = u'F5 Networks'
 
@@ -192,12 +192,12 @@ html_theme = 'f5_sphinx_theme'
 html_theme_path = f5_sphinx_theme.get_html_theme_path()
 
 # Custom sidebar templates, maps document names to template names.
-html_sidebars = {'**': ['searchbox.html', 'globaltoc.html', 'localtoc.html',
+html_sidebars = {'**': ['searchbox.html', 'localtoc.html', 'globaltoc.html',
                         'sourcelink.html']}
 
 # Sphinx will add “permalinks” for each heading and description environment as
 # paragraph signs that become visible when the mouse hovers over them.
-html_add_permalinks = True
+#html_add_permalinks = ''
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -208,7 +208,7 @@ html_add_permalinks = True
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-html_title = u'Container Connectors'
+html_title = 'F5 Container Integrations |release|'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -304,7 +304,7 @@ html_show_copyright = True
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'F5_Container Solutions_doc'
+htmlhelp_basename = 'F5_Container Integrations_doc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -330,8 +330,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'F5_Container Solutions_doc.tex',
-     u'F5 Container Solutions Documentation',
+    (master_doc, 'F5_Container Integrations_doc.tex',
+     u'F5 Container Integrations Documentation',
      'F5 Networks', 'manual'),
 ]
 
@@ -381,8 +381,8 @@ latex_toplevel_sectioning = 'section'
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'F5_Container Solutions_doc',
-     'F5 Container Solutions Documentation',
+    (master_doc, 'F5_Container Integrations_doc',
+     'F5 Container Integrations Documentation',
      [author], 1)
 ]
 
@@ -397,9 +397,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'F5_Container-Solutions_doc',
-     'F5 Container Solutions Documentation',
-     author, 'F5 Container Solutions'),
+    (master_doc, 'F5_Container-Integrations_doc',
+     'F5 Container Integrations Documentation',
+     author, 'F5 Container Integrations'),
 ]
 
 # Documents to append as an appendix to all manuals.
