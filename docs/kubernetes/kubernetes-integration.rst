@@ -52,8 +52,13 @@ Once the |kctlr| pod is running, it watches the `Kubernetes API <https://kuberne
 
 When the |kctlr| discovers new or updated F5 Resource ConfigMaps, it dynamically applies the configurations to the BIG-IP.
 
+Key Kubernetes Concepts
+-----------------------
+
 F5 Resource Properties
 ``````````````````````
+
+The |kctlr-long| uses special 'F5 Resources' to identify what objects it should create on the BIG-IP. This is defined as a JSON blob in a Kubernetes `ConfigMap`_.
 
 The :ref:`F5 Resource JSON blob <f5-resource-blob>` must contain the following properties.
 
@@ -82,8 +87,26 @@ You can use either the Standard or iApp `configuration parameters <tbd>`_ in thi
 
 The frontend iApp configuration parameters include the customizable ``iappVariables`` parameter. This parameter corresponds to the user-populated fields in the iApp template you want to launch.
 
-
 The backend property identifies the `Kubernetes Service`_ that makes up the server pool. You can also define health monitors for the virtual server and pool(s) in this section.
+
+Monitors and Node Health
+````````````````````````
+
+
+
+
+Using BIG-IP as an Edge Load Balancer in OpenShift Origin
+---------------------------------------------------------
+
+Red Hat's `OpenShift Origin`_ is a containerized application platform with a native Kubernetes integration. The |kctlr-long| enables use of a BIG-IP as an edge load balancer, proxying traffic from outside networks to pods inside an OpenShift cluster. OpenShift Origin uses a pod network defined by the `OpenShift SDN`_ .
+
+There are a few additional prerequisites for working with OpenShift Origin clusters that do not apply to basic Kubernetes:
+
+#. The |kctlr| needs an `OpenShift user account`_ with permission to access nodes, endpoints, services, and configmaps.
+#. You'll need to use the `OpenShift Origin CLI`_, in addition to ``kubectl``, to execute OpenShift-specific commands.
+#. To :ref:`integrate your BIG-IP into an OpenShift cluster <tbd>`, you'll need to :ref:`assign an OpenShift overlay address to the BIG-IP`.
+
+Once you've added the BIG-IP to the OpenShift overlay network, it will have access to all pods in the cluster. You can then use the |kctlr| the same as you would in Kubernetes.
 
 Related
 ```````
@@ -94,11 +117,15 @@ Related
     kctlr*
     asp*
 
-- `|kctlr| </products/connectors/k8s-bigip-ctlr/latest/>`_
+- `k8s-bigip-ctlr </products/connectors/k8s-bigip-ctlr/latest/>`_
 - `asp </products/asp/latest>`_
 
 
 
+.. _OpenShift Origin: https://www.openshift.org/
+.. _OpenShift user account: https://docs.openshift.org/1.2/admin_guide/manage_users.html
+.. _OpenShift Origin CLI: https://docs.openshift.org/1.2/cli_reference/index.html
+.. _OpenShift SDN: https://docs.openshift.org/latest/architecture/additional_concepts/sdn.html
 
 
 
