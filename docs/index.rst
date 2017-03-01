@@ -1,40 +1,40 @@
 .. _clouddocs-home:
 
-F5 Cloud Docs
-=============
+F5 Container Integrations
+=========================
 
 .. toctree::
-    :hidden:
-    :caption: Container Basics
-    :glob:
-    :titlesonly:
+    :caption: Basics
+    :maxdepth: 1
 
-    intro-to-container-solutions
+    intro-to-container-connectors
     releases_and_versioning
     reference
     glossary
 
 .. toctree::
-    :hidden:
-    :caption: Kubernetes
+    :caption: Kubernetes Container Integration
+    :maxdepth: 1
     :glob:
-    :titlesonly:
 
-    kubernetes/*
+    kubernetes/kubernetes-integration
+    kubernetes/kctlr*
+    kubernetes/asp*
+
 
 .. toctree::
-    :hidden:
-    :caption: Mesos+Marathon
+    :caption: Marathon Container Integration
     :glob:
-    :titlesonly:
+    :maxdepth: 1
 
-    mesos+marathon/*
+    marathon/marathon-integration
+    marathon/mctlr*
+    marathon/asp*
 
 .. toctree::
-    :hidden:
-    :caption: Tutorials and Demos
+    :caption: Tutorials
     :glob:
-    :titlesonly:
+    :maxdepth: 1
 
     tutorials/*
 
@@ -43,7 +43,7 @@ F5 Cloud Docs
     :hidden:
     :caption: Troubleshooting
     :glob:
-    :titlesonly:
+    :maxdepth: 1
 
     troubleshooting/*
 
@@ -57,7 +57,11 @@ F5 Cloud Docs
     - front-end
     - back-end
     - properties
-
+    - product documentation
     asp:
     - global config parameters
+    - How to gather and report stats
+    marathon:
+    - configuration parameters
+    - product documentation
 

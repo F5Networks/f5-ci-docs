@@ -3,26 +3,26 @@
 Releases and Versioning
 =======================
 
-.. list-table:: F5 |csi_k-long|
+.. list-table:: |kctlr-long|
     :header-rows: 1
 
     * - Platform
       - Platform version
-      - F5® |csi_k| version
-      - BIG-IP®
+      - |kctlr-long| version
+      - BIG-IP
     * - Kubernetes
       - 1.3.7
       - 0.2.x
       - 12.1.x
 
 
-.. list-table:: F5 |csi_m-long|
+.. list-table:: |mctlr-long|
     :header-rows: 1
 
     * - Platform
       - Platform version
-      - F5® |csi_m| version
-      - BIG-IP®
+      - |mctlr-long| version
+      - BIG-IP
     * - Apache Mesos
       - 0.27+
       - 0.1.x, 0.2.x
@@ -37,13 +37,13 @@ Releases and Versioning
       - 12.1.x
 
 
-.. list-table:: F5® Lightweight Proxy
+.. list-table:: |asp|
     :header-rows: 1
 
     * - Platform
       - Platform version
-      - F5 |lwp| version
-      - BIG-IP®
+      - |asp| version
+      - BIG-IP
     * - Kubernetes
       - 1.3.7
       - 0.1.x
@@ -61,13 +61,13 @@ Releases and Versioning
       - 0.1.x, 0.2.x
       - 12.1.x
 
-.. list-table:: F5 Lightweight Proxy Controller for Mesos+Marathon
+.. list-table:: |aspm-long|
     :header-rows: 1
 
     * - Platform
       - Platform version
-      - F5® |lwpc| version
-      - BIG-IP®
+      - |aspm-long| version
+      - BIG-IP
     * - Apache Mesos
       - 0.27+
       - 0.1.x, 0.2.x

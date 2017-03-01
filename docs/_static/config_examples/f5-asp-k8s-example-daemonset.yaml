@@ -1,34 +1,35 @@
+# REMOVE ALL COMMENTS BEFORE ADDING TO KUBERNETES
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
-  name: lightweight-proxy
+  name: f5-asp
   namespace: kube-system
 spec:
   template:
     metadata:
       labels:
-        name: lightweight-proxy
+        name: f5-asp
     spec:
       hostNetwork: true
-      containers:
-        - name: proxy-plugin
-          image: "f5-light-weight-proxy:latest"
-          args:
-            - --config-file
-            - /etc/configmap/lightweight-proxy.config.json
-          securityContext:
-            privileged: false
-          volumeMounts:
-          - mountPath: /var/run/kubernetes/proxy-plugin
-            name: plugin-config
-            readOnly: true
-          - mountPath: /etc/configmap
-            name: lwp-config
-      volumes:
-        - name: plugin-config
-          hostPath:
-            path: /var/run/kubernetes/proxy-plugin
-        - name: lwp-config
-          configMap:
-            name: lwp-config
-
+      template:
+        containers:
+          - name: proxy-plugin
+            image: "f5networks/asp:v1.0.0"
+            args:
+              - --config-file
+              - /etc/configmap/asp.config.json # this config file is created from the Service annotation
+            securityContext:
+              privileged: false
+            volumeMounts:
+            - name: plugin-config # mount a new directory
+              mountPath: /var/run/kubernetes/proxy-plugin # path to add the directory to
+              readOnly: true
+            - name: asp-config # mount a new directory
+              mountPath: /etc/configmap # path to add the directory to
+        volumes:
+          - name: plugin-config
+            hostPath:
+              path: /var/run/kubernetes/proxy-plugin
+          - name: asp-config
+            configMap:
+              name: f5-asp-config # replace with name of your ASP ConfigMap

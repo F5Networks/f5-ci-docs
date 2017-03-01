@@ -1,30 +1,39 @@
+# Note: Remove all comments before uploading to kubernetes
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: f5-resource-vs-example
-  namespace: default
+  # name of the resource to create on the BIG-IP
+  name: k8s.vs
+  # the namespace of the service you want to proxy
+  namespace: k8petstore
   labels: 
+    # the type of resource you want to create on the BIG-IP
     f5type: virtual-server
 data:
-  schema: "f5schemadb://bigip-virtual-server_v0.1.0.json"
-  data: |-
+  schema: "f5schemadb://bigip-virtual-server_v0.1.2.json"
+  data: |
     {
       "virtualServer": {
-        "frontend": {
-          "balance": "round-robin",
-          "mode": "http",
-          "partition": "my-bigip-partition",
-          "virtualAddress": {
-            "bindAddr": "1.2.3.4",
-            "port": 443
-          },
-          "sslProfile": {
-            "f5ProfileName": "Common/my-ssl-cert"
-          }
-        },
         "backend": {
-          "serviceName": "my-kubernetes-service",
-          "servicePort": 443
+          "servicePort": 3000,
+          "serviceName": "frontend",
+          "healthMonitors": [{
+            "interval": 30,
+            "protocol": "http",
+            "send": "GET",
+            "timeout": 86400
+          }]
+        },
+        "frontend": {
+          "virtualAddress": {
+            "port": 80,
+            "bindAddr": "173.16.2.2"
+          },
+          "partition": "kubernetes",
+          "balance": "round-robin",
+          "mode": "http"
         }
       }
     }
+
+

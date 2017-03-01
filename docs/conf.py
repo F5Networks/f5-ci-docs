@@ -22,8 +22,8 @@ import sys
 sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath('../'))
 
-import sphinx_rtd_theme
-import sphinx_bootstrap_theme
+
+import f5_sphinx_theme
 import recommonmark
 import CommonMark
 from recommonmark.parser import CommonMarkParser
@@ -70,7 +70,7 @@ source_encoding = 'utf-8-sig'
 master_doc = 'index'
 
 # General information about the project.
-project = u'F5 Container Solutions'
+project = u'F5 Container Integrations'
 copyright = u'2017 F5 Networks Inc'
 author = u'F5 Networks'
 
@@ -79,35 +79,40 @@ author = u'F5 Networks'
 # built documents.
 #
 # The short X.Y version.
-version = 'v0.1'
+version = 'v1.0'
 # The full version, including alpha/beta/rc tags.
-release = 'v0.1.0'
+release = 'v1.0.0'
 
 # All substitutions
 
 rst_epilog = """
-.. |lwp| replace:: |asp|
-.. |asp| replace:: Application Services Proxy
-.. |lwpc| replace:: Marathon ASP Controller
-.. |csi| replace:: BIG-IP Controller
-.. |csi_m| replace:: |csi| for Mesos+Marathon
-.. |csi_m-long| replace:: |csi_m|
-.. |csi_k| replace:: |csi| for Kubernetes
-.. |csi_k-long| replace:: |csi_k|
-.. |csc| replace:: |csi|
-.. |csc_m| replace:: |csi_m|
-.. |csc_m-long| replace:: |csi_m-long|
+.. |asp| replace:: F5 Application Service Proxy
+.. |asp-img| replace:: asp:latest
+.. |aspk| replace:: ``f5-kube-proxy``
+.. |aspk-img| replace:: f5networks/asp:latest
+.. |kctlr-long| replace:: F5 Kubernetes BIG-IP Controller
+.. |kctlr| replace:: ``k8s-bigip-ctlr``
+.. |kctlr-img| replace:: f5networks/k8s-bigip-ctlr:latest
+.. |mctlr-long| replace:: F5 Marathon BIG-IP Controller
+.. |mctlr| replace:: ``marathon-bigip-ctlr``
+.. |mctlr-img| replace:: f5networks/marathon-bigip-ctlr:latest
+.. |aspm-long| replace:: F5 Marathon ASP Controller
+.. |aspm| replace:: ``marathon-asp-ctlr``
+.. |aspm-img| replace:: f5networks/marathon-asp-ctlr:latest
 .. _BIG-IP: https://f5.com/products/big-ip
 .. _BIG-IP System User Account Administration -> Administrative Partitions: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-12-0-0/3.html
 .. _system configuration: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-initial-configuration-12-0-0/2.html#conceptid
 .. _local traffic management: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-basics-12-0-0.html
 .. _F5 Docker registry: #
 .. _Kubernetes: https://kubernetes.io/
+.. _kubectl: https://kubernetes.io/docs/user-guide/kubectl-overview/
 .. _ConfigMap: https://kubernetes.io/docs/user-guide/configmap/
 .. _Kubernetes Deployment: https://kubernetes.io/docs/user-guide/deployments/
 .. _Kubernetes Service: https://kubernetes.io/docs/user-guide/services/
 .. _Kubernetes Cluster: https://kubernetes.io/docs/admin/
 .. _Kubernetes DaemonSet: https://kubernetes.io/docs/admin/daemons/
+.. _Daemonset: https://kubernetes.io/docs/admin/daemons/
+.. _Kubernetes Dashboard: https://kubernetes.io/docs/user-guide/ui/
 .. _Static Pod: https://kubernetes.io/docs/admin/static-pods/
 .. _kubernetes pod: https://kubernetes.io/docs/user-guide/pods/
 .. _Kubernetes node: https://kubernetes.io/docs/admin/node/
@@ -181,137 +186,29 @@ todo_include_todos = False
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'bootstrap'
+html_theme = 'f5_sphinx_theme'
 
 # Add any paths that contain custom themes here, relative to this directory.
-#html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
+html_theme_path = f5_sphinx_theme.get_html_theme_path()
 
-html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
+# Custom sidebar templates, maps document names to template names.
+html_sidebars = {'**': ['searchbox.html', 'localtoc.html', 'globaltoc.html',
+                        'sourcelink.html']}
+
+# Sphinx will add “permalinks” for each heading and description environment as
+# paragraph signs that become visible when the mouse hovers over them.
+#html_add_permalinks = ''
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {
-
-    #sphinx-bootstrap theme options
-    # Navigation bar title. (Default: ``project`` value)
-    'navbar_title': "F5 Cloud Docs",
-
-    # Tab name for entire site. (Default: "Site")
-    'navbar_site_name': "Site",
-
-    # A list of tuples containing pages or urls to link to.
-    # Valid tuples should be in the following forms:
-    #    (name, page)                 # a link to a page
-    #    (name, "/aa/bb", 1)          # a link to an arbitrary relative url
-    #    (name, "http://example.com", True) # arbitrary absolute url
-    # Note the "1" or "True" value above as the third argument to indicate
-    # an arbitrary url.
-    'navbar_links': [
-        ("Cloud Knowledge Centers", "https://support.f5.com/csp/knowledge-center/cloud", True),
-        ("Cloud on DevCentral", "https://devcentral.f5.com/cloud", True),
-        ("Releases and Versioning", "releases_and_versioning")
-    ],
-
-    # Render the next and previous page links in navbar. (Default: true)
-    'navbar_sidebarrel': False,
-
-    # Render the current pages TOC in the navbar. (Default: true)
-    'navbar_pagenav': False,
-
-    # Tab name for the current pages TOC. (Default: "Page")
-    #'navbar_pagenav_name': "Page",
-
-    # Global TOC depth for "site" navbar tab. (Default: 1)
-    # Switching to -1 shows all levels.
-    'globaltoc_depth': 2,
-
-    # Include hidden TOCs in Site navbar?
-    #
-    # Note: If this is "false", you cannot have mixed ``:hidden:`` and
-    # non-hidden ``toctree`` directives in the same page, or else the build
-    # will break.
-    #
-    # Values: "true" (default) or "false"
-    'globaltoc_includehidden': "true",
-
-    # HTML navbar class (Default: "navbar") to attach to <div> element.
-    # For black navbar, do "navbar navbar-inverse"
-    'navbar_class': "navbar",
-
-    # Fix navigation bar to top of page?
-    # Values: "true" (default) or "false"
-    'navbar_fixed_top': "true",
-
-    # Location of link to source.
-    # Options are "nav" (default), "footer" or anything else to exclude.
-    'source_link_position': "footer",
-
-    # Bootswatch (http://bootswatch.com/) theme.
-    #
-    # Options are nothing (default) or the name of a valid theme
-    # such as "amelia" or "cosmo".
-    'bootswatch_theme': "sandstone",
-
-    # Choose Bootstrap version.
-    # Values: "3" (default) or "2" (in quotes)
-    'bootstrap_version': "3",
-
-    #better theme options
-    # show sidebar on the right instead of on the left
-    #'rightsidebar': False,
-
-    # inline CSS to insert into the page if you're too lazy to make a
-    # separate file
-    #'inlinecss': '',
-
-    # CSS files to include after all other CSS files
-    # (refer to by relative path from conf.py directory, or link to a
-    # remote file)
-    #'cssfiles': ['_static/portal-f5.css'],  # default is empty list
-
-    # show a big text header with the value of html_title
-    #'showheader': True,
-
-    # show the breadcrumbs and index|next|previous links at the top of
-    # the page
-    #'showrelbartop': True,
-    # same for bottom of the page
-    #'showrelbarbottom': True,
-
-    # show the self-serving link in the footer
-    #'linktotheme': False,
-
-    # width of the sidebar. page width is determined by a CSS rule.
-    # I prefer to define things in rem because it scales with the
-    # global font size rather than pixels or the local font size.
-    #'sidebarwidth': '15rem',
-
-    # color of all body text
-    #'textcolor': '#000000',
-
-    # color of all headings (<h1> tags); defaults to the value of
-    # textcolor, which is why it's defined here at all.
-    #'headtextcolor': '',
-
-    # color of text in the footer, including links; defaults to the
-    # value of textcolor
-    #'footertextcolor': '',
-
-    # Google Analytics info
-    #'ga_ua': '',
-    #'ga_domain': '',
-    }
-
-html_sidebars = {
-    '**': ['localtoc.html','sourcelink.html',]
-}
+# html_theme_options = {}
 
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-html_title = u'F5 Cloud Docs'
+html_title = 'F5 Container Integrations |release|'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -323,8 +220,8 @@ html_short_title = 'Home'
 html_logo = '_static/f5-logo-solid-rgb_small.png'
 
 # The name of an image file (relative to this directory) to use as a favicon of
-# the docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
-# pixels large.
+# the docs.  This file should be a Windows icon file (.ico) being 16x16 or
+# 32x32 pixels large.
 #
 # html_favicon = None
 
@@ -343,16 +240,12 @@ html_static_path = ['_static/']
 # bottom, using the given strftime format.
 # The empty string is equivalent to '%b %d, %Y'.
 #
-# html_last_updated_fmt = None
+html_last_updated_fmt = ''
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
 #
 # html_use_smartypants = True
-
-# Custom sidebar templates, maps document names to template names.
-#
-# html_sidebars = {}
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
@@ -361,19 +254,19 @@ html_static_path = ['_static/']
 
 # If false, no module index is generated.
 #
-# html_domain_indices = True
+html_domain_indices = True
 
 # If false, no index is generated.
 #
-# html_use_index = True
+html_use_index = True
 
 # If true, the index is split into individual pages for each letter.
 #
-# html_split_index = False
+html_split_index = False
 
 # If true, links to the reST sources are added to the pages.
 #
-html_show_sourcelink = False
+html_show_sourcelink = True
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 #
@@ -411,7 +304,7 @@ html_show_copyright = True
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'F5_??_doc'
+htmlhelp_basename = 'F5_Container Integrations_doc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -437,8 +330,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'F5_??_doc.tex',
-     u'F5 ?? Documentation',
+    (master_doc, 'F5_Container Integrations_doc.tex',
+     u'F5 Container Integrations Documentation',
      'F5 Networks', 'manual'),
 ]
 
@@ -488,8 +381,8 @@ latex_toplevel_sectioning = 'section'
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'F5_??_doc',
-     'F5 ?? Documentation',
+    (master_doc, 'F5_Container Integrations_doc',
+     'F5 Container Integrations Documentation',
      [author], 1)
 ]
 
@@ -504,9 +397,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'F5_??_doc',
-     'F5 ?? Documentation',
-     author, 'F5 ??'),
+    (master_doc, 'F5_Container-Integrations_doc',
+     'F5 Container Integrations Documentation',
+     author, 'F5 Container Integrations'),
 ]
 
 # Documents to append as an appendix to all manuals.
