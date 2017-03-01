@@ -11,9 +11,9 @@ Before you begin
 * :ref:`Add a Kubernetes Secret <k8s-add-secret>` containing your BIG-IP user credentials to your Kubernetes master.
 * `Create a new partition`_ for Kubernetes on your BIG-IP. The |kctlr| can not manage objects in the ``/Common`` partition.
 * *OPTIONAL*: Create a Kubernetes :ref:`docker-registry secret <k8s-secret-docker-config>` if you intend to pull the container image from a private Docker registry.
+* **If you're using OpenShift**, complete the steps in :ref:`Use BIG-IP in an OpenShift Cluster <bigip-openshift-setup>` before proceeding.
 
 .. _create-k8s-deployment:
-
 
 .. important::
 

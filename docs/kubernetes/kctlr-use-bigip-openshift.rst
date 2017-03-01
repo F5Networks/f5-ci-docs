@@ -1,3 +1,5 @@
+.. _bigip-openshift-setup:
+
 Use BIG-IP in an OpenShift Cluster
 ==================================
 
@@ -26,13 +28,18 @@ Steps required to set up BIG-IP and |kctlr| for use in an `OpenShift`_ cluster:
 
 .. note::
 
-    We assigned the existing <foo>/<bar> user and group permissions to the |kctlr|.
+    We assigned the existing `??` user and group permissions to the |kctlr|.
 
 
 Create a new OpenShift HostSubnet
 ----------------------------------
 
 Define a HostSubnet using valid JSON or YAML.
+
+.. code-block:: bash
+
+    user@openshift:~$ oc create -f f5-kctlr-openshift-hostsubnet.yaml
+
 
 .. important::
 
@@ -43,6 +50,8 @@ Define a HostSubnet using valid JSON or YAML.
 .. literalinclude:: /_static/config_examples/f5-kctlr-openshift-hostsubnet.yaml
     :linenos:
     :emphasize-lines: 5-15
+
+:download:`Download the example </_static/config_examples/f5-kctlr-openshift-hostsubnet.yaml>`
 
 
 Create a VXLAN on the BIG-IP

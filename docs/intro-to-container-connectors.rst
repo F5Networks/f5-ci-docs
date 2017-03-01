@@ -27,9 +27,13 @@ f5-kube-proxy               Configures ASPs in a `Kubernetes`_ cluster,
                             serving East-West traffic.
 =======================     ===================================================
 
+---------------------------------
+
 .. image:: /_static/media/container_connectors_north-south.png
     :scale: 50 %
     :alt: North-South architecture
+
+---------------------------------
 
 .. image:: /_static/media/container_connectors_east-west.png
     :scale: 50 %
@@ -42,17 +46,23 @@ Design
 
 Each CC is uniquely suited to its specific container orchestration environment and purpose, utilizing the architecture and language appropriate for the environment. Application Developers interact with the platform's API; the container connectors watch the API for certain events, then act accordingly.
 
+---------------------------------
+
 .. image:: /_static/media/container_connector-framework.png
     :scale: 50 %
     :alt: F5 Container Connector framework
 
+---------------------------------
+
 For example, when you create an App in Marathon with the :ref:`F5 application labels <app-labels>` applied, the |mctlr-long| uses the information defined in the labels to create objects on the BIG-IP for that App. If you create an App in Marathon with the "asp: enable" label applied, the |aspm-long| launches an |asp| instance for the App.
+
+---------------------------------
 
 .. image:: /_static/media/mesos_flow.png
     :scale: 50 %
     :alt: Marathon Container Connector flow
 
-
+---------------------------------
 
 Further Reading
 ---------------
