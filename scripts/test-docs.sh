@@ -4,6 +4,8 @@ set -x
 
 set -e
 
+pip install git+https://github.com/f5devcentral/f5-sphinx-theme.git@master
+
 echo "Building docs and checking links with Sphinx"
 rm -rf docs/_build
 make -C docs html
