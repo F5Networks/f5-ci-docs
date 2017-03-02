@@ -1,7 +1,5 @@
-sphinx>=1.5.1
-sphinx-rtd-theme
-recommonmark
-sphinx_bootstrap_theme
-sphinx-better-theme
-sphinxjp.themes.basicstrap
 awscli
+-e git://github.com/f5devcentral/f5-sphinx-theme#egg=f5-sphinx-theme
+sphinx>=1.5.1
+recommonmark
+

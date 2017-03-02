@@ -4,8 +4,11 @@ set -x
 
 set -e
 
+# Pip install the requirements file
+pip install -r requirements.txt
+
 echo "Building docs and checking links with Sphinx"
-rm -rf docs/_build
+make -C docs clean
 make -C docs html
 make -C docs linkcheck
 
