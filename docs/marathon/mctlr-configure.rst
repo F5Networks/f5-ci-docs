@@ -30,6 +30,18 @@ F5_CC_PARTITIONS	    The BIG-IP partition |mctlr| manages
     :emphasize-lines: 13-18
     :linenos:
 
+Required Application Labels
+---------------------------
+
+The parameter(s) listed in the table below are required :ref:`F5 application labels <app-labels>`.
+
+=====================   ===================================================
+Parameter               Description
+=====================   ===================================================
+F5_PARTITION            The BIG-IP partition in which you want to create
+                        a virtual server; cannot be "/Common"
+=====================   ===================================================
+
 
 See Also
 --------

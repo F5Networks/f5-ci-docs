@@ -12,7 +12,14 @@ Define the F5 Resource
 
 .. _f5-resource-iapp-blob:
 
-The example F5 resource JSON blob shown below defines the ``f5.http`` iApp. The ``iappVariables`` configuration parameters correspond to fields in the `iApp template <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip_iapps_developer_11_0_0/2.html#unique_1762445433>`_ 's presentation section. You can :ref:`create iApp variables <tbd>` for any built-in or custom iApp.
+The example F5 resource JSON blob shown below defines the ``f5.http`` iApp. The ``iappVariables`` configuration parameters correspond to fields in the `iApp template <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip_iapps_developer_11_0_0/2.html#unique_1762445433>`_ 's presentation section. You can create iApp variables for any built-in or custom iApp.
+
+.. todo:: add link to iApp variable 'How-to'
+
+.. seealso::
+
+    The  `k8s-bigip-ctlr product documentation </products/connectors/k8s-bigip-ctlr/index.html>`_ for detailed information about iApp resources.
+
 
 .. literalinclude:: /_static/config_examples/f5-resource-vs-iApp-example.json
     :caption: Example F5 iApp Resource definition

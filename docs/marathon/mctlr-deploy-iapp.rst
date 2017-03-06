@@ -28,7 +28,7 @@ The example JSON blob shown below defines the ``f5.http`` iApp for a Marathon Ap
 
 .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json
     :caption: Example F5 iApp Application Labels
-    :lines: 20-33
+    :lines: 21-34
 
 
 .. tip::

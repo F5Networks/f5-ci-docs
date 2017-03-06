@@ -41,7 +41,11 @@ The |asp| (ASP) provides container-to-container load balancing, traffic visibili
 
 The |aspk-long| -- |aspk| -- deploys the |asp|. It replaces the standard Kubernetes network proxy, or `kube-proxy`_. Like the |kctlr-long|, |aspk-long| watches the Kubernetes API; when it discovers Services containing the :ref:`ASP annotation <k8s-service-annotate>`, it launches a pod running the |aspk|, with the configurations specified in the annotation.
 
-The ASP's ``bind_port`` and ``shared-listen`` `configuration options <tbd>`_ allow you to configure a single, shared ingress socket on ASP instances. The standard definition for this option in Kubernetes, which is read by |aspk|, is ``bindport: 10000`` and ``shared-listen: true``.
+The ASP's ``bind_port`` and ``shared-listen`` `configuration options <tbd>`_ allow you to configure a single, shared ingress socket on ASP instances. The standard definitions for these options in Kubernetes, which are read by |aspk|, are ``bindport: 10000`` and ``shared-listen: true``.
+
+The |asp| collects traffic statistics for the Services it load balances; these stats are either logged locally or sent to an external analytics application. You can set the location and type of the analytics application in the `stats </products/asp/latest/index.html#stats>`_ section of the :ref:`Service annotation <k8s-service-annotate>`.
+
+.. todo:: add "Export ASP Stats to an analytics provider"
 
 
 |kctlr-long|
@@ -49,7 +53,7 @@ The ASP's ``bind_port`` and ``shared-listen`` `configuration options <tbd>`_ all
 
 The |kctlr-long| is a docker container that runs on a `Kubernetes Pod`_. To launch the |kctlr| application in Kubernetes, just :ref:`create a Deployment <install-kctlr>`.
 
-Once the |kctlr| pod is running, it watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for special Kubernetes "F5 Resource `ConfigMap`_ "s. These ConfigMaps contain an F5 Resource JSON blob that tells |kctlr|:
+Once the |kctlr| pod is running, it watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for special Kubernetes "F5 Resource" `ConfigMap`_ s. These ConfigMaps contain an F5 Resource JSON blob that tells |kctlr|:
 
 - what `Kubernetes Service`_ we want it to manage, and
 - how we want to configure the BIG-IP for that specific Service.
@@ -72,7 +76,7 @@ Key Kubernetes Concepts
 F5 Resource Properties
 ``````````````````````
 
-The |kctlr-long| uses special 'F5 Resources' to identify what objects it should create on the BIG-IP. This is defined as a JSON blob in a Kubernetes `ConfigMap`_.
+The |kctlr-long| uses special 'F5 Resources' to identify what objects it should create on the BIG-IP. An F5 resource is defined as a JSON blob in a Kubernetes `ConfigMap`_.
 
 The :ref:`F5 Resource JSON blob <f5-resource-blob>` must contain the following properties.
 
@@ -95,11 +99,10 @@ The :ref:`F5 Resource JSON blob <f5-resource-blob>` must contain the following p
 |                     |   `Kubernetes Service`_ to proxy                      |
 +---------------------+-------------------------------------------------------+
 
-
 The frontend property defines how to expose a Service on the BIG-IP.
-You can use either the Standard or iApp `configuration parameters <tbd>`_ in this section.
+You can define the frontend using the standard `k8s-bigip-ctlr virtualServer parameters </products/connectors/k8s-bigip-ctlr/index.html#virtualserver>`_ or the `k8s-bigip-ctlr iApp parameters </products/connectors/k8s-bigip-ctlr/index.html#iapps>`_.
 
-The frontend iApp configuration parameters include the customizable ``iappVariables`` parameter. This parameter corresponds to the user-populated fields in the iApp template you want to launch.
+The frontend iApp configuration parameters include a set of customizable ``iappVariables`` parameters. These parameters must be custom-defined to correspond to fields in the iApp template you want to launch. In addition, you'll need to define the `iApp Pool Member Table </products/connectors/k8s-bigip-ctlr/index.html#iapp-pool-member-table>`_ that the iApp creates on the BIG-IP.
 
 The backend property identifies the `Kubernetes Service`_ that makes up the server pool. You can also define health monitors for the virtual server and pool(s) in this section.
 
