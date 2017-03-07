@@ -23,6 +23,12 @@ The example F5 resource JSON blob shown below defines the ``f5.http`` iApp. The 
 
 .. literalinclude:: /_static/config_examples/f5-resource-vs-iApp-example.json
     :caption: Example F5 iApp Resource definition
+    :linenos:
+    :emphasize-lines: 8-29
+
+
+:download:`Download f5-resource-vs-iApp-example.json </_static/config_examples/f5-resource-vs-iApp-example.json>`
+
 
 Deploy the iApp
 ---------------
