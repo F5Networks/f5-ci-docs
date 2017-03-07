@@ -12,6 +12,7 @@ make -C docs clean
 make -C docs html
 make -C docs linkcheck
 
-echo "Checking grammar and style"
-write-good docs/*.rst --weasel --so --passive --illusion --thereIs --toowordy --adverb --cliches
+
+#echo "Checking grammar and style"
+#write-good docs/*.rst --weasel --so --passive --illusion --thereIs --toowordy --adverb --cliches
 

@@ -1,20 +1,23 @@
 {
   "virtualServer": {
-    "frontend": {
-      "balance": "round-robin",
-      "mode": "http",
-      "partition": "my-bigip-partition",
-      "virtualAddress": {
-        "bindAddr": "1.2.3.4",
-        "port": 443
-      },
-      "sslProfile": {
-        "f5ProfileName": "Common/my-ssl-cert"
-      }
-    },
     "backend": {
-      "serviceName": "my-kubernetes-service",
-      "servicePort": 443
+      "servicePort": 3000,
+      "serviceName": "myService",
+      "healthMonitors": [{
+        "interval": 30,
+        "protocol": "http",
+        "send": "GET",
+        "timeout": 86400
+      }]
+    },
+    "frontend": {
+      "virtualAddress": {
+        "port": 80,
+        "bindAddr": "173.16.2.2"
+      },
+      "partition": "kubernetes",
+      "balance": "round-robin",
+      "mode": "http"
     }
   }
 }

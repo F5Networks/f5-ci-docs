@@ -4,5 +4,9 @@ docs/_build/
 _build/
 docs/errors.txt
 node_modules/
+src/
+
+
+
 
 

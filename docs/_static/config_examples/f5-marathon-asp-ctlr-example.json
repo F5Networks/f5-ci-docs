@@ -1,0 +1,33 @@
+{
+  "id": "/marathon-asp-ctlr",
+  "cpus": 1,
+  "mem": 128,
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "f5networks/marathon-asp-ctlr:v1.0.0",
+      "network": "BRIDGE",
+      "forcePullImage": true,
+      "privileged": false,
+      "portMappings": []
+    },
+    "volumes": []
+  },
+  // defines the global ASP configurations
+  "env": {
+    "MARATHON_URL": "http://10.190.25.75:8080",
+    // ASP image
+    "ASP_DEFAULT_CONTAINER": "f5networks/asp:v1.0.0",
+    // defines the label you will use in App definitions to activate the ASP
+    "ASP_ENABLE_LABEL": "ASP",
+    "ASP_DEFAULT_CPU": "1",
+    "ASP_DEFAULT_MEM": "256",
+    "ASP_DEFAULT_LOG_LEVEL": "debug",
+    "ASP_DEFAULT_STATS_FLUSH_INTERVAL": "10000",
+    // include if sending stats to an external service
+    "ASP_DEFAULT_STATS_URL": "http://<splunk_url>:8088",
+    "ASP_DEFAULT_STATS_TOKEN": "<provide_stats_auth_token>",
+    "ASP_DEFAULT_STATS_BACKEND": "splunk"
+  }
+}
