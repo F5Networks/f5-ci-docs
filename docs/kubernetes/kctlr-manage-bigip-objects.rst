@@ -25,6 +25,10 @@ The example F5 resource JSON blob shown below tells  |kctlr| to create one (1) v
 Create a virtual server for a Kubernetes Service
 ````````````````````````````````````````````````
 
+.. note::
+
+    All BIG-IP objects created by |kctlr| will be prefaced with ``[namespace]_[configmap-name]``. For example, ``default_k8s.vs``.
+
 #. Create a `ConfigMap`_ and include the F5 resource JSON blob in the "data" section.
 
     .. literalinclude:: /_static/config_examples/f5-resource-vs-example.configmap.yaml

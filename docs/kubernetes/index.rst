@@ -125,7 +125,9 @@ Monitors and Node Health
 
 When the |kctlr-long| runs with ``pool-member-type`` set to ``nodeport`` -- the default setting -- the |kctlr| will not be aware if a node is taken down. This means that all pool members on that node would remain active even if the node itself is unavailable. When using ``nodeport`` mode, it's important to configure a health monitor so the node is marked as unhealthy if it is rebooting or otherwise unavailable.
 
-When the |kctlr-long| runs with ``pool-member-type`` set to ``cluster`` -- which integrates the BIG-IP into the cluster network -- the |kctlr| watches the NodeList in the Kubernetes API server; FDB entries are created/updated according to that list.
+When the |kctlr-long| runs with ``pool-member-type`` set to ``cluster`` -- which integrates the BIG-IP into the cluster network -- the |kctlr-long| watches the NodeList in the Kubernetes API server; FDB (Forwarding DataBase) entries are created/updated according to that list. This ensures the |kctlr| will only make VXLAN requests to reported nodes.
+
+As a function of the BIG-IP VXLAN, the BIG-IP only communicates with healthy nodes. It will not attempt to route traffic to an unresponsive node, even if the node remains in the reported list.
 
 
 Related

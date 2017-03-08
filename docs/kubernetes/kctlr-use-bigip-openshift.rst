@@ -28,7 +28,8 @@ Steps required to set up BIG-IP and |kctlr| for use in an `OpenShift`_ cluster:
 
 .. note::
 
-    We assigned the existing `??` user and group permissions to the |kctlr|.
+    In our lab, we used the namespace 'management-infra' and the ``serviceAccountName`` 'management-admin'.
+
 
 .. _k8s-openshift-hostsubnet:
 
@@ -44,7 +45,7 @@ Define a HostSubnet using valid JSON or YAML.
 
 .. important::
 
-    - You must define "subnet" as a range within OpenShift Origin's overlay network. [#ossdn]_
+    - You must define 'subnet' as a range within OpenShift Origin's overlay network. The default network is 10.128.0.0/14. [#ossdn]_
     - You must include the "annotation" section shown in the example below.
 
 
@@ -92,7 +93,7 @@ Create a VXLAN on the BIG-IP
     .. code-block:: bash
 
         admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create net \\
-        tunnels tunnel vxlan5000 key 0 profile vxlan-mp local-address 172.16.1.28
+        tunnels tunnel openshift_vxlan key 0 profile vxlan-mp local-address 172.16.1.28
 
     - The ``hostIP`` address defined in the OpenShift HostSubnet is the ``local-address`` (the VTEP).
     - The ``key`` must be set to ``0`` to give the BIG-IP access to all OpenShift subnets.
@@ -106,11 +107,11 @@ Create a VXLAN on the BIG-IP
         { ...
           {
             "kind": "tm:net:tunnels:tunnel:tunnelstate",
-            "name": "vxlan5000",
+            "name": "openshift_vxlan",
             "partition": "Common",
-            "fullPath": "/Common/vxlan5000",
+            "fullPath": "/Common/openshift_vxlan",
             "generation": 480042,
-            "selfLink": "https://localhost/mgmt/tm/net/tunnels/tunnel/~Common~vxlan5000?ver=12.1.0",
+            "selfLink": "https://localhost/mgmt/tm/net/tunnels/tunnel/~Common~openshift_vxlan?ver=12.1.0",
             "autoLasthop": "default",
             "idleTimeout": 300,
             "ifIndex": 160,
@@ -135,7 +136,7 @@ Assign an OpenShift overlay address to the BIG-IP
     .. code-block:: bash
 
         admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create net self \\
-        10.131.0.10/16 allow-service all vlan vxlan5000
+        10.131.0.10/14 allow-service all vlan vxlan5000
 
 #. Verify creation of the selfIP.
 
@@ -145,12 +146,12 @@ Assign an OpenShift overlay address to the BIG-IP
         { ...
           {
             "kind": "tm:net:self:selfstate",
-            "name": "10.131.0.10/16",
+            "name": "10.131.0.10/14",
             "partition": "Common",
-            "fullPath": "/Common/10.131.0.10/16",
+            "fullPath": "/Common/10.131.0.10/14",
             "generation": 480055,
             "selfLink": "https://localhost/mgmt/tm/net/self/~Common~10.131.0.10~16?ver=12.1.0",
-            "address": "10.131.0.10/16",
+            "address": "10.131.0.10/14",
             "addressSource": "from-user",
             "floating": "disabled",
             "inheritedTrafficGroup": "false",
