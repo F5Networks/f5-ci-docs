@@ -9,8 +9,11 @@
     # provide a name for the node that will serve as BIG-IP's entry into the cluster
     "host": "f5-server",
     # specify a range within the OpenShift SDN pod network; set an address
-    # in this range as a selfIP on the BIG-IP
+    # in this range as a selfIP on the BIG-IP; this subnet can be as small as
+    # /31 if IP space is limited
     "subnet": "10.131.0.0/24"
-    # this address will be the BIG-IP endpoint in the routed network (the VTEP)
+    # The hostIP address will be the BIG-IP interface address routable to the
+    # OpenShift Origin nodes.
+    # This address is the BIG-IP VTEP in the SDN's VXLAN.
     "hostIP": "172.16.1.28",
 }

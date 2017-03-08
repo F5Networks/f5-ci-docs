@@ -45,10 +45,15 @@ Parameter               Description
 =====================   ===================================================
 pool-member-type        Must be set to ``cluster``
 ---------------------   ---------------------------------------------------
-openshift-sdn-name      Name of the VxLAN configured on the BIG-IP for
-                        access into the Openshift SDN and Pod network
+openshift-sdn-name      TMOS path to the BIG-IP VXLAN tunnel providing
+                        access to the Openshift SDN and Pod network;
+                        include the partition and vxlan name.
+
+                        Example: ``/Common/openshift_vxlan`` [#tunnel]_
 =====================   ===================================================
 
+
+.. [#tunnel] The VXLAN tunnel does not need to reside in the same partition managed by the |kctlr-long|.
 
 .. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml
     :caption: Example Deployment definition

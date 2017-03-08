@@ -30,11 +30,10 @@ spec:
             "--bigip-username=$(BIGIP_USERNAME)",
             "--bigip-password=$(BIGIP_PASSWORD)",
             "--bigip-url=10.190.24.171",
-            "--bigip-partition=kubernetes"
-            "--kubeconfig=/home/ubuntu/.kube/config",
+            "--bigip-partition=kubernetes",
             "--namespace=default",
             "--pool-member-type=cluster",
-            "--openshift-sdn-name=openshift_vxlan",
+            "--openshift-sdn-name=/Common/openshift_vxlan"
           ]
       imagePullSecrets:
         - name: f5-docker-images
