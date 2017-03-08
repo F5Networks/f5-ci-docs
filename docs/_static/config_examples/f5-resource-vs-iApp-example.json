@@ -1,21 +1,22 @@
 {
   "virtualServer": {
     "backend": {
-      "servicePort": 3000,
       "serviceName": "myService",
-      "healthMonitors": [{
-        "interval": 30,
-        "protocol": "http",
-        "send": "GET",
-        "timeout": 86400
-      }]
+      "servicePort": 3000
     },
     "frontend": {
       "partition": "kubernetes",
       "iapp": "/Common/f5.http",
-      "iappTableName": "pool__members",
+      "iappPoolMemberTable": {
+        "name": "pool__members",
+        "columns": [
+            {"name": "addr", "kind": "IPAddress"},
+            {"name": "port", "kind": "Port"},
+            {"name": "connection_limit", "value": "0"}
+        ]
+      },
       "iappOptions": {
-        "description": "f5.http iApp"
+        "description": "myService_f5.http iApp"
       },
       "iappVariables": {
         "monitor__monitor": "/#create_new#",
@@ -23,7 +24,7 @@
         "monitor__uri": "/",
         "net__client_mode": "wan",
         "net__server_mode": "lan",
-        "pool__addr": "173.16.2.5",
+        "pool__addr": "127.0.0.2",
         "pool__pool_to_use": "/#create_new#",
         "pool__port": "4430"
       }

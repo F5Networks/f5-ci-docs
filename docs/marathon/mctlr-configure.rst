@@ -30,6 +30,56 @@ F5_CC_PARTITIONS	    The BIG-IP partition |mctlr| manages
     :emphasize-lines: 13-18
     :linenos:
 
+Required Application Labels
+---------------------------
+
+The parameter(s) listed in the table below are required :ref:`F5 application labels <app-labels>` when :ref:`directly managing BIG-IP objects <mctlr-manage-bigip-objects>`.
+
+=====================   =======================================================
+Parameter               Description
+=====================   =======================================================
+F5_PARTITION            The BIG-IP partition in which you want to create
+                        a virtual server; cannot be "/Common".
+---------------------   -------------------------------------------------------
+F5\_{n}_BIND_ADDR       IP address of the App service
+
+                        Example:
+                        ``"F5_0_BIND_ADDR": "10.0.0.42"``
+---------------------   -------------------------------------------------------
+F5\_{n}_PORT            Service port to use for communications with the BIG-IP
+                        Overrides the servicePort configuration parameter.
+
+                        Example: ``"F5_0_PORT": "80"``
+=====================   =======================================================
+
+
+Required iApp Application Labels
+--------------------------------
+
+The parameter(s) listed in the table below are required :ref:`F5 application labels <app-labels>` when :ref:`deploying an iApp <mctlr-deploy-iapps>`.
+
+=================================   ===========================================
+Parameter                           Description
+=================================   ===========================================
+F5_PARTITION                        The BIG-IP partition in which you want to
+                                    create a virtual server; cannot be
+                                    "/Common".
+---------------------------------   -------------------------------------------
+F5\_{n}_IAPP_TEMPLATE               The iApp template you want to use to create
+                                    the Application Service; must already
+                                    exist on the BIG-IP.
+---------------------------------   -------------------------------------------
+F5\_{n}_IAPP_TABLE_*                Template-specific [#iapplabels]_
+---------------------------------   -------------------------------------------
+F5\_{n}_IAPP_POOL_MEMBER_TABLE      Template-specific [#iapplabels]_
+---------------------------------   -------------------------------------------
+F5\_{n}_IAPP_VARIABLE_*             Template-specific [#iapplabels]_
+---------------------------------   -------------------------------------------
+F5_{n}_IAPP_OPTION_*                Template-specific [#iapplabels]_
+=================================   ===========================================
+
+.. [#iapplabels] See `Application Labels for iApp Mode </products/connectors/marathon-bigip-ctlr/latest/index.html#application-labels-for-iapp-mode>`_ for more information.
+
 
 See Also
 --------

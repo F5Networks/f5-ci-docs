@@ -55,9 +55,59 @@ openshift-sdn-name      Name of the VxLAN configured on the BIG-IP for
     :emphasize-lines: 29-38
 
 
+Required configuration parameters for F5 resources
+--------------------------------------------------
+
+The ``frontend`` section of an F5 resource must contain the parameters listed in the tables below.
+
+virtualServer
+`````````````
+
+=====================   ===================================================
+Parameter               Description
+=====================   ===================================================
+partition               The BIG-IP partition in which you want to create
+                        a virtualServer
+---------------------   ---------------------------------------------------
+mode                    Proxy mode (http or tcp)
+---------------------   ---------------------------------------------------
+balance                 Load balancing mode
+---------------------   ---------------------------------------------------
+virtualAddress          JSON object; allocates a virtual address for the
+                        virtualServer
+---------------------   ---------------------------------------------------
+- bindAddr              part of the virtualAddress JSON object; defines the
+                        virtual IP address to assign to the virtualServer
+---------------------   ---------------------------------------------------
+- port                  part of the virtualAddress JSON object; defines the
+                        port to assign to the virtualServer
+=====================   ===================================================
+
+iApps
+`````
+
+=====================   ===================================================
+Parameter               Description
+=====================   ===================================================
+partition               The BIG-IP partition in which you want to create
+                        a virtualServer
+---------------------   ---------------------------------------------------
+iapp                    BIG-IP iApp template you want to deploy;
+                        *must already exist on the BIG-IP*
+---------------------   ---------------------------------------------------
+iappPoolMemberTable     Defines the name and layout of the pool-member
+                        table in the iApp. [#pmtable]_
+---------------------   ---------------------------------------------------
+iappOptions             key-value object; used to provide information
+                        about the iApp
+                        (see :ref:`iApp example <f5-resource-iapp-blob>`)
+=====================   ===================================================
+
+.. [#pmtable] See `iApps Pool Member Table </products/connectors/k8s-bigip-ctlr/latest/index.html#iapps-pool-member-table>`_ for more information.
+
 See Also
 --------
 
-Additional |kctlr| :ref:`configuration parameters <tbd>` define the BIG-IP objects that |kctlr| manages. See the |kctlr| :ref:`product documentation <tbd>` for more information.
+See the `k8s-bigip-ctlr product documentation </products/connectors/k8s-bigip-ctlr/latest/index.html>`_ for the full list of available configuration parameters.
 
 .. _kubeconfig: https://kubernetes.io/docs/user-guide/kubeconfig-file/

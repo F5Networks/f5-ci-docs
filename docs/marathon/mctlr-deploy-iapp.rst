@@ -24,18 +24,20 @@ Define the F5 iApp Application Labels
 
 .. _f5-app-labels-iapp-blob:
 
-The example JSON blob shown below defines the ``f5.http`` iApp for a Marathon Application using :ref:`F5 Application Labels <app-labels>`. The ``F5_IAPP_VARIABLE`` labels correspond to fields in the `iApp template <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip_iapps_developer_11_0_0/2.html#unique_1762445433>`_ 's presentation section. You can :ref:`create iApp variables <tbd>` for any built-in or custom iApp.
+The example JSON blob shown below defines the ``f5.http`` iApp for a Marathon Application using :ref:`F5 Application Labels <app-labels>`. The ``F5_IAPP_VARIABLE`` labels correspond to fields in the `iApp template <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip_iapps_developer_11_0_0/2.html#unique_1762445433>`_ 's presentation section. You can create iApp variables for any built-in or custom iApp.
+
+.. todo:: add link to iApp variable 'How-to'
+
+.. seealso::
+
+    The  `marathon-bigip-ctlr product documentation </products/connectors/marathon-bigip-ctlr/index.html>`_ for detailed information about iApp labels.
 
 .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json
     :caption: Example F5 iApp Application Labels
-    :lines: 20-33
+    :linenos:
+    :emphasize-lines: 21-34
 
-
-.. tip::
-
-    You can download the example iApp JSON blob below and modify it to suit your needs.
-
-    :download:`f5-marathon-bigip-ctlr-vs-iApp-example.json </_static/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json>`
+:download:`Download f5-marathon-bigip-ctlr-vs-iApp-example.json </_static/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json>`
 
 
 Deploy the iApp

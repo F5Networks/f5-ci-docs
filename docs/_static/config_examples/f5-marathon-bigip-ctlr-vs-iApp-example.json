@@ -11,7 +11,8 @@
       "portMappings": [
         {
           "containerPort": 8080,
-          "hostPort": 0
+          "hostPort": 0,
+          "protocol": "tcp"
         }
       ]
     }
@@ -20,7 +21,7 @@
   "labels": {
     "F5_PARTITION": "mesos",
     "F5_0_IAPP_TEMPLATE": "/Common/f5.http",
-    "F5_0_IAPP_POOL_MEMBER_TABLE_NAME": "pool__members",
+    "F5_0_IAPP_POOL_MEMBER_TABLE": "{ \"name\": \"pool__members\", \"columns\": [ { \"name\":\"addr\", \"kind\":\"IPAddress\"}, { \"name\":\"port\", \"kind\":\"Port\" }, { \"name\":\"connection_limit\", \"value\": \"0\" }]}",
     "F5_0_IAPP_VARIABLE_net__server_mode": "lan",
     "F5_0_IAPP_VARIABLE_pool__addr": "10.190.25.240",
     "F5_0_IAPP_VARIABLE_pool__pool_to_use": "/#create_new#",
@@ -42,4 +43,3 @@
     }
   ]
 }
-
