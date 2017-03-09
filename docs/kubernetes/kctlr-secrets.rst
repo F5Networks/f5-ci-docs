@@ -54,7 +54,9 @@ Pull an image from a private docker registry
             base64 < ~/.docker/config.json
 
 
-    - Copy the long string of characters ending in "==" into the Secret definition as the ``.dockerconfigjson`` value. (The value has been abridged in the example, indicated by ``[...]``.)
+    - Copy the long string of characters ending in "==" into the Secret definition as the ``.dockerconfigjson`` value.
+
+        .. note:: An abridged ``.dockerconfigjson`` value (indicated by ``[...]``) appears in the example below.
 
         .. literalinclude:: /_static/config_examples/f5-k8s-image-secret.yaml
             :emphasize-lines: 7

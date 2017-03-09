@@ -3,9 +3,7 @@
 Manage BIG-IP objects with |kctlr-long|
 =======================================
 
-The |kctlr-long| watches the Kubernetes API for :ref:`F5 resources <k8s-f5-resources>` and creates/modifies BIG-IP objects accordingly.
-
-F5 resources contain the `configuration parameters <tbd>`_ |kctlr| should apply to the BIG-IP objects.
+The |kctlr-long| watches the Kubernetes API for :ref:`F5 resources <k8s-f5-resources>` and creates/modifies BIG-IP objects accordingly. F5 resources contain the configurations |kctlr| should apply to the BIG-IP objects.
 
 .. _f5-resource-blob:
 
@@ -23,11 +21,11 @@ The example F5 resource JSON blob shown below tells  |kctlr| to create one (1) v
 .. _kctlr-create-vs:
 
 Create a virtual server for a Kubernetes Service
-````````````````````````````````````````````````
+------------------------------------------------
 
 .. note::
 
-    All BIG-IP objects created by |kctlr| will be prefaced with ``[namespace]_[configmap-name]``. For example, ``default_k8s.vs``.
+    All BIG-IP objects created by |kctlr| use the preface ``[namespace]_[configmap-name]``. For example, ``default_k8s.vs_173.16.2.2:80``.
 
 #. Create a `ConfigMap`_ and include the F5 resource JSON blob in the "data" section.
 
@@ -51,7 +49,7 @@ Create a virtual server for a Kubernetes Service
 
     .. code-block:: shell
 
-        root@(host-172)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)# show ltm virtual
+        root@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)# show ltm virtual
         ------------------------------------------------------------------
         Ltm::Virtual Server: frontend_173.16.2.2_80
         ------------------------------------------------------------------
@@ -66,17 +64,20 @@ Create a virtual server for a Kubernetes Service
 
 
 Update a virtual server
-```````````````````````
+-----------------------
 
-Use ``kubectl edit`` to open the ConfigMap in your default text editor.
+Use ``kubectl edit`` to open the ConfigMap in your default text editor and make your desired changes.
+
+.. note:: Kubernetes disregards any breaking or syntactically-incorrect changes.
+
 
     .. code-block:: bash
+        :linenos:
 
         ubuntu@k8s-master:~$ kubectl edit configmap k8s.vs
 
-        # Please edit the object below. Lines beginning with a '#' will be ignored,
-        # and an empty file will abort the edit. If an error occurs while saving this file will be
-        # reopened with the relevant failures.
+        # Please edit the object below.
+        # ...
         #
         apiVersion: v1
         data:
@@ -114,11 +115,21 @@ Use ``kubectl edit`` to open the ConfigMap in your default text editor.
           namespace: default
 
 
-.. note:: Kubernetes disregards any breaking or syntactically-incorrect changes.
+After you save your changes and exit, you can verify the changes using ``kubectl get``.
+
+.. code-block:: bash
+
+    ubuntu@k8s-master:~$ kubectl get configmap k8s.vs -o yaml
+
+You can also verify the changes on the BIG-IP using ``tmsh`` or the configuration utility.
+
+.. code-block:: shell
+
+    root@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)# show ltm virtual
 
 
 Delete a virtual server
-```````````````````````
+-----------------------
 
 #. Remove the ConfigMap from the Kubernetes API server to delete the corresponding virtual server from the BIG-IP.
 
@@ -131,16 +142,42 @@ Delete a virtual server
 
     .. code-block:: bash
 
-        root@(host-172)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)# show ltm virtual
-        root@(host-172)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)#
+        root@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)# show ltm virtual
+        root@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)#
 
 
 
-Taking down or replacing Services
-`````````````````````````````````
+Connectivity for down or replaced Services
+------------------------------------------
 
 If you need to take down a `Kubernetes Service`_  temporarily, leave the F5 Resource ConfigMap in place. This ensures continued connectivity to the BIG-IP when the Service comes back up (or when a new Service with the same name deploys).
 
 If you take down a Service and want to remove the corresponding BIG-IP objects, delete its F5 Resource ConfigMap.
+
+
+.. _k8s-config-bigip-health-monitor:
+
+Configure a BIG-IP health monitor
+`````````````````````````````````
+
+The |kctlr-long| is not aware of node health when running in the default ``nodeport`` mode. We strongly recommend configuring BIG-IP health monitors for Kubernetes Services to help ensure that |ktlcr| doesn't send traffic to unhealthy nodes.
+
+#. Edit the Service definition.
+
+    .. code-block:: bash
+
+        ubuntu@k8s-master:~$ kubectl edit configmap k8s.vs
+
+        # Please edit the object below.
+        # ...
+
+
+#. Define the desired health monitor in the ``backend`` section of the F5 resource.
+
+    .. literalinclude:: /_static/config_examples/f5-resource-vs-example.configmap.yaml
+        :linenos:
+        :emphasize-lines: 22-26
+
+#. Verify that the health monitor exists on the BIG-IP via the configuration utility.
 
 
