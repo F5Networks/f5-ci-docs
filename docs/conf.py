@@ -113,6 +113,7 @@ rst_epilog = """
 .. _Deployment: https://kubernetes.io/docs/user-guide/deployments/
 .. _Kubernetes Service: https://kubernetes.io/docs/user-guide/services/
 .. _Service: https://kubernetes.io/docs/user-guide/services/
+.. _Services: https://kubernetes.io/docs/user-guide/services/
 .. _Kubernetes Cluster: https://kubernetes.io/docs/admin/
 .. _Kubernetes DaemonSet: https://kubernetes.io/docs/admin/daemons/
 .. _Daemonset: https://kubernetes.io/docs/admin/daemons/
