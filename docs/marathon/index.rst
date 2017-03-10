@@ -67,8 +67,8 @@ The |mctlr| watches the Marathon API for special "F5 Application Labels" that te
 
 You can :ref:`manage BIG-IP objects <mctlr-manage-bigip-objects>` directly, or :ref:`deploy iApps <mctlr-deploy-iapps>`, with the |mctlr-long|.
 
-Key Mesos/Marathon Concepts
----------------------------
+Key Apache Mesos/Marathon Concepts
+----------------------------------
 
 .. _app-labels:
 
@@ -98,10 +98,10 @@ A few of the key iApp Application Labels must be customized based on the iApp yo
 - ``F5_{n}_IAPP_VARIABLE_*`` -- Custom-defined parameters that correspond to fields in the iApp template you want to launch.
 - ``F5_{n}_IAPP_POOL_MEMBER_TABLE`` -- Custom definition for the name and layout of the `Pool Member Table </products/connectors/marathon-bigip-ctlr/index.html#F5_{n}_IAPP_POOL_MEMBER_TABLE>`_ in the iApp.
 
-Mesos DNS and ASP Discovery
-```````````````````````````
+Apache Mesos DNS and ASP Discovery
+``````````````````````````````````
 
-Each |asp| instance is discoverable via a Mesos DNS SRV query, which returns its IP address, port, and protocol.
+Each |asp| instance is discoverable via an Apache Mesos DNS SRV query, which returns its IP address, port, and protocol.
 By convention, the DNS name of an |asp| instance for an Application is “<ASP_ENABLE_LABLE>-<application name>.<domain name>”.
 
 For example:
@@ -117,11 +117,11 @@ Port Mapping
 ````````````
 
 In Marathon, container-based applications using Docker BRIDGE mode must have `port mappings`_ configured. [#dockerbridge]_
-For Applications proxied by the |mctlr-long|, these port mappings make it possible for the BIG-IP to route external traffic to `service ports`_ inside the Mesos cluster. You can define multiple port mappings for a Marathon Application.
+For Applications proxied by the |mctlr-long|, these port mappings make it possible for the BIG-IP to route external traffic to `service ports`_ inside the Apache Mesos cluster. You can define multiple port mappings for a Marathon Application.
 
 .. important::
 
-    Mesos commonly restricts binding to ports in a specific range. Consult the Mesos `ports resource`_ to see what ports are available in your cluster before defining service ports and/or port mappings for your applications.
+    Apache Mesos commonly restricts binding to ports in a specific range. Consult the Apache Mesos `ports resource`_ to see what ports are available in your cluster before defining service ports and/or port mappings for your applications.
 
     Incorrect port mappings may result in deployment failures. See :ref:`Troubleshooting your Marathon deployments <troubleshoot-marathon>` for more information.
 
