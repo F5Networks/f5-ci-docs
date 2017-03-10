@@ -96,7 +96,7 @@ Create a VXLAN on the BIG-IP
         tunnels tunnel openshift_vxlan key 0 profile vxlan-mp local-address 172.16.1.28
 
     - The ``hostIP`` address defined in the OpenShift HostSubnet is the ``local-address`` (the VTEP).
-    - The ``key`` must be set to ``0`` to give the BIG-IP access to all OpenShift subnets.
+    - The ``key`` must be ``0`` if you want to give the BIG-IP access to all OpenShift subnets.
 
 #. Verify creation of the VXLAN tunnel.
 
@@ -165,7 +165,7 @@ Assign an OpenShift overlay address to the BIG-IP
 
     .. note::
 
-        The default traffic group is used if you don't specify a traffic group when creating the selfIP.
+        If you don't specify a traffic group when creating the selfIP, it will use the default traffic group.
 
 .. [#ossdn] https://docs.openshift.org/latest/architecture/additional_concepts/sdn.html#sdn-design-on-masters
 

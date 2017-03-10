@@ -33,7 +33,7 @@ F5_CC_PARTITIONS	    The BIG-IP partition |mctlr| manages
 Required Application Labels
 ---------------------------
 
-The parameter(s) listed in the table below are required :ref:`F5 application labels <app-labels>` when :ref:`directly managing BIG-IP objects <mctlr-manage-bigip-objects>`.
+Use the :ref:`F5 application labels <app-labels>` listed in the table below when you're :ref:`managing BIG-IP objects directly <mctlr-manage-bigip-objects>`.
 
 =====================   =======================================================
 Parameter               Description
@@ -52,11 +52,12 @@ F5\_{n}_PORT            Service port to use for communications with the BIG-IP
                         Example: ``"F5_0_PORT": "80"``
 =====================   =======================================================
 
+.. _marathon-required-iapp-labels:
 
 Required iApp Application Labels
 --------------------------------
 
-The parameter(s) listed in the table below are required :ref:`F5 application labels <app-labels>` when :ref:`deploying an iApp <mctlr-deploy-iapps>`.
+Use the :ref:`F5 application labels <app-labels>` when :ref:`deploying an iApp <mctlr-deploy-iapps>`.
 
 =================================   ===========================================
 Parameter                           Description

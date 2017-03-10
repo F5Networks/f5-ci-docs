@@ -9,7 +9,7 @@ Troubleshoot Your Marathon Deployment
 "InsufficientPorts" Error
 `````````````````````````
 
-If the Service Port associated with an ASP instance cannot be allocated, the ASP doesn't deploy. Common reasons for port allocation failure include the specified port already being in use or out of range. Affected tasks in the Marathon queue will display an "InsufficientPorts" error.
+If Apache Mesos can't allocate the Service Port associated with an ASP instance, the ASP won't deploy. Port allocation commonly fails because the specified port is either already in use or it's out of range. Affected tasks in the Marathon queue will display an "InsufficientPorts" error.
 
 .. rubric:: Solution:
 

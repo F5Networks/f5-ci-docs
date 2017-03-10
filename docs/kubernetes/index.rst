@@ -82,7 +82,7 @@ Key Kubernetes Concepts
 F5 Resource Properties
 ``````````````````````
 
-The |kctlr-long| uses special 'F5 Resources' to identify what objects it should create on the BIG-IP. An F5 resource is defined as a JSON blob in a Kubernetes `ConfigMap`_.
+The |kctlr-long| uses special 'F5 Resources' to identify what objects it should create on the BIG-IP. An F5 resource is a JSON blob included in a Kubernetes `ConfigMap`_.
 
 The :ref:`F5 Resource JSON blob <f5-resource-blob>` must contain the following properties.
 
@@ -129,11 +129,11 @@ Once you've added the BIG-IP to the OpenShift overlay network, it will have acce
 Monitors and Node Health
 ------------------------
 
-When the |kctlr-long| runs with ``pool-member-type`` set to ``nodeport`` -- the default setting -- the |kctlr| will not be aware if a node is taken down. This means that all pool members on that node would remain active even if the node itself is unavailable. When using ``nodeport`` mode, it's important to configure a health monitor so the node is marked as unhealthy if it is rebooting or otherwise unavailable.
+When the |kctlr-long| runs with ``pool-member-type`` set to ``nodeport`` -- the default setting -- the |kctlr| is not aware that Kubernetes nodes are down. This means that all pool members on a down Kubernetes node remain active even if the node itself is unavailable. When using ``nodeport`` mode, it's important to :ref:`configure a BIG-IP health monitor <k8s-config-bigip-health-monitor>` for the virtual server to mark the Kubernetes node as unhealthy if it's rebooting or otherwise unavailable.
 
-When the |kctlr-long| runs with ``pool-member-type`` set to ``cluster`` -- which integrates the BIG-IP into the cluster network -- the |kctlr-long| watches the NodeList in the Kubernetes API server; FDB (Forwarding DataBase) entries are created/updated according to that list. This ensures the |kctlr| will only make VXLAN requests to reported nodes.
+When the |kctlr-long| runs with ``pool-member-type`` set to ``cluster`` -- which integrates the BIG-IP into the cluster network -- the |kctlr-long| watches the NodeList in the Kubernetes API server. It creates/updates FDB (Forwarding DataBase) entries according to the Kubernetes NodeList. This ensures the |kctlr| only makes VXLAN requests to reported nodes.
 
-As a function of the BIG-IP VXLAN, the BIG-IP only communicates with healthy nodes. It will not attempt to route traffic to an unresponsive node, even if the node remains in the reported list.
+As a function of the BIG-IP VXLAN, the BIG-IP only communicates with healthy Kubernetes nodes. BIG-IP does not attempt to route traffic to an unresponsive node, even if the node remains in the Kubernetes NodeList.
 
 
 Related

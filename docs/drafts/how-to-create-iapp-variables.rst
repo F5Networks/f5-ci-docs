@@ -12,22 +12,18 @@ The |kctlr-long| and |mctlr-long| both support deployment of iApps, which gives 
 At a high level, the way it works is:
 
 1) You define a new Application in Marathon, with F5 :ref:`Application labels <app-labels>` defined.
-2) The |mctlr| notices the new labels and configures a new iApp on the BIG-IP. Referencing an iApp Template that already exists on the BIG-IP (several are built-in).
-3) The iApp template is invoked to handle the new iApp that was just defined. The iApp template can create a virtual server, pool members, and so on. 
+2) The |mctlr| notices the new labels and configures a new iApp on the BIG-IP. Referencing an iApp Template that already exists on the BIG-IP.
+3) The BIG-IP invokes the iApp template to handle the newly-defined iApp. The iApp template can create a virtual server, pool members, and so on. 
 
 First, you need to determine what fields in the iApp template need correspondin ``iappVariables``.
 
 #. We recommend that you `deploy the iApp <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-iapps-developer-11-4-0/2.html#unique_1831084015>`_ using the BIG-IP configuration utility.
 
-#. Make a REST call to the BIG-IP to determine what configurations were applied.
+#. Make a REST call to the BIG-IP to determine the configurations applied.
 
-
-At a high level, the way it works is:
-1) You define a new application in Marathon, with a bunch of labels.
-2) f5-marathon-lb notices the new labels.  Instead of configuring a plain ol' virtual server, pool, pool members, it configures a new iApp.  The iApp must be configured from an iApp Template that already exists on the BIG-IP (several are built-in).
-3) The iApp template is invoked to handle the new iApp that was just defined.  The iApp template can create a virtual server, pool members and so on.  It can do anything an iApp can do, which gives it access to essentially all the advanced features on BIG-IP.
+It can do anything an iApp can do, which gives it access to essentially all the advanced features on BIG-IP.
  
-Here's the JSON for an example application I configured in Marathon (via ``curl -v -H "Accept: application/json" http://10.190.25.245:8080/v2/apps/test-svc | json_pp``).  It's long; I bold-faced the interesting parts:
+Here's the JSON for an example application configured in Marathon (via ``curl -v -H "Accept: application/json" http://10.190.25.245:8080/v2/apps/test-svc | json_pp``).  It's long; I bold-faced the interesting parts:
  
 {
    "app" : {
@@ -178,7 +174,7 @@ Here's the JSON for an example application I configured in Marathon (via ``curl 
    }
 }
  
-The labels are instructions to f5-marathon-lb about what to do to BIG-IP in response to this application being configured.  You can also configure an app using the Marathon GUI and specify these labels there.
+The labels are instructions to f5-marathon-lb about what to do to BIG-IP for this application.  You can also configure an app using the Marathon GUI and specify these labels there.
                                          
 "F5_PARTITION" : "test":  This is the partition on BIG-IP to create/update/delete the iApp in.  This should be the same partition that you passed to f5-marathon-lb (if it is different, the f5-marathon-lb will assume you actually want some other f5-marathon-lb to handle it, and skip).
  
@@ -191,9 +187,11 @@ The labels are instructions to f5-marathon-lb about what to do to BIG-IP in resp
 "F5_0_IAPP_OPTION_*": These are iApp options - configuration input to the iApp.  These are opaque to f5-marathon-lb.
   One example - F5_0_IAPP_OPTION_description: "This is a test iApp"
  
-The best way to understand _VARIABLE_ and _OPTION_ is to look at what this configuration produces on the BIG-IP.  Notice how the F5_0_IAPP_VARIABLE_pool__addr is filled in in the "variables" section, and how the F5_0_IAPP_OPTION_description is filled in at the top-level option "description".
+The best way to understand _VARIABLE_ and _OPTION_ is to look at what this configuration produces on the BIG-IP. 
+
+Notice how it populates F5_0_IAPP_VARIABLE_pool__addr in the "variables" section, and the F5_0_IAPP_OPTION_description in the top-level option "description".
  
-root@(host-172)(cfg-sync Standalone)(Active)(/Common)(tmos)# list sys app service /test/test-svc_iapp_10001.app/test-svc_iapp_10001
+root@(bigip)(cfg-sync Standalone)(Active)(/Common)(tmos)# list sys app service /test/test-svc_iapp_10001.app/test-svc_iapp_10001
 sys application service /test/test-svc_iapp_10001.app/test-svc_iapp_10001 {
     description "This is a test iApp"
     device-group none
@@ -290,10 +288,11 @@ Now on the BIG-IP GUI, I can go to iApps -> Application Services, then make sure
  
 In my opinion, the easiest way to identify the \OPTIONS_ and \VARIABLES_ information for an existing iApp is to configure one on the BIG-IP "by hand", then do "list sys app service <foo>" to see what the resulting \OPTIONS_ and \VARIABLES_ are.  You can also actually read the iApp template on the BIG-IP (or write a new one yourself), too.
  
-The iApp is reconfigured whenever the labels or the Marathon tasks change (containers die or are spawned).
+Changes to labels or Marathon tasks (containers die or spawn) will reconfigure the iApp.
  
-The way the pool members table is filled out looks like (copy-paste from the "tmsh list" output above):
-    tables {
+The pool members table the iApp creates resembles the "tmsh list" output for the iApp:
+   
+    tables {
         pool__members {
             column-names { addr port connection_limit }
             rows {
@@ -307,6 +306,6 @@ The way the pool members table is filled out looks like (copy-paste from the "tm
         }
     }
  
-This does not work for the app services iApp (https://github.com/0xHiteshPatel/appsvcs_integration_iapp), which expects a slightly different table, so IBM cannot currently use f5-marathon-lb with that particular iApp.  We are fixing that for the GA release of f5-marathon-lb (early March).
+
  
-Last note, the _{0}_ part is for the port index in Marathon that this iApp should be used for.  So, if you have an application with only one exposed port (like this example nginx app), you just use F5_0_IAPP_TEMPLATE.  If you have an application that exposes multiple ports, you can use F5_0_IAPP_TEMPLATE (and all the other F5_0_* labels) to configure one iApp for that port, and F5_1_IAPP_TEMPLATE (and F5_1_*) for the next port, and so on.
+Last note, the ``_{0}_`` part is for the port index in Marathon that this iApp should apply to.  If you have an application with only one exposed port (like the nginx app we use in the example), you just use ``F5_0_IAPP_TEMPLATE``.  If you have an application that exposes multiple ports, you can use ``F5_0_IAPP_TEMPLATE`` (and all the other ``F5_0_*`` labels) to configure one iApp for that port, and ``F5_1_IAPP_TEMPLATE`` (and ``F5_1_*``) for the next port, and so on.

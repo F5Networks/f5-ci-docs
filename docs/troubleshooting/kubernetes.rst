@@ -14,7 +14,7 @@ Verify the ASP handles traffic for a Service
     .. literalinclude:: /_static/config_examples/f5-asp-k8s-example-service.yaml
         :emphasize-lines: 10
 
-#. Send a ``curl -v`` request to the Service and view the headers to verify it was handled by the ASP. The ``X-Served-By`` line should match the IP address of an ASP pod.
+#. Send a ``curl -v`` request to the Service and view the headers to verify the ASP handled the request. The ``X-Served-By`` line should match the IP address of an ASP pod.
 
     .. code-block:: bash
         :emphasize-lines: 15
