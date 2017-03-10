@@ -11,8 +11,8 @@ F5's Container Connectors ('CCs') understand the container orchestration environ
 =======================     ===================================================
 Container Connector         Description
 =======================     ===================================================
-marathon-bigip-ctlr         Configures a BIG-IP to expose applications in a
-                            `Mesos`_ cluster as virtual servers on
+marathon-bigip-ctlr         Configures a BIG-IP to expose applications in an
+                            `Apache Mesos`_ cluster as virtual servers on
                             BIG-IP, serving North-South traffic.
 -----------------------     ---------------------------------------------------
 marathon-asp-ctlr           Provisions and configures ASPs in a

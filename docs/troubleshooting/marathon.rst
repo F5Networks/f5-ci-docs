@@ -13,7 +13,7 @@ If the Service Port associated with an ASP instance cannot be allocated, the ASP
 
 .. rubric:: Solution:
 
-Edit the Application definition and replace the service port with an available port in the correct range. See the Mesos `ports resource <http://mesos.apache.org/documentation/latest/attributes-resources/>`_ to see what ports are available in your cluster.
+Edit the Application definition and replace the service port with an available port in the correct range. See the Apache Mesos `ports resource <http://mesos.apache.org/documentation/latest/attributes-resources/>`_ to see what ports are available in your cluster.
 
 
 |aspm-long|
