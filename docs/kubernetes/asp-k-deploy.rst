@@ -1,5 +1,7 @@
-Set up the F5 Kubernetes Proxy
-==============================
+.. _k8s-asp-deploy:
+
+Deploy the |asp| with the |aspk-long|
+=====================================
 
 .. table:: Docs test matrix
 

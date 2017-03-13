@@ -1,7 +1,8 @@
+.. _install-aspm-marathon:
 .. _install-asp-marathon:
 
-Install the |asp| in Marathon
-=============================
+Install the |aspm-long|
+=======================
 
 .. table:: Docs test matrix
 

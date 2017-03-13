@@ -1,8 +1,9 @@
+.. _marathon-asp-deploy:
+
 Launch an |asp| instance for a Marathon Application
 ===================================================
 
-The |aspm-long| launches |asp| instances automatically for Apps that have the ``ASP_ENABLE_LABEL`` set to "enabled".
-The :ref:`default value <asp-defaults-marathon>` for ``ASP_ENABLE_LABEL`` is "asp".
+The |aspm-long| launches |asp| instances automatically for Apps that have the ``ASP_ENABLE_LABEL`` value set to "enabled" (for example, ``f5-asp:enable``).
 
 
 Launch an ASP instance with the default configurations

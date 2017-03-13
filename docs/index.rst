@@ -1,3 +1,8 @@
+.. _containers-home:
+
+.. index::
+    :pair: introduction, design
+
 Introduction to F5 Container Integrations
 =========================================
 
