@@ -160,7 +160,7 @@ If you take down a Service and want to remove the corresponding BIG-IP objects, 
 Configure a BIG-IP health monitor
 `````````````````````````````````
 
-The |kctlr-long| is not aware of node health when running in the default ``nodeport`` mode. We strongly recommend configuring BIG-IP health monitors for Kubernetes Services to help ensure that |ktlcr| doesn't send traffic to unhealthy nodes.
+The |kctlr-long| is not aware of node health when running in the default ``nodeport`` mode. We strongly recommend configuring BIG-IP health monitors for Kubernetes Services to help ensure that |kctlr| doesn't send traffic to unhealthy nodes.
 
 #. Edit the Service definition.
 

@@ -128,7 +128,7 @@ rst_epilog = """
 .. _Node.js: https://nodejs.org/en/
 .. _Express: https://expressjs.com/
 .. _Splunk: https://www.splunk.com/
-.. _Mesos: https://mesosphere.com/
+.. _Apache Mesos: https://mesosphere.com/
 .. _Marathon: https://mesosphere.github.io/marathon/
 .. _Marathon Apps: https://mesosphere.github.io/marathon/docs/application-basics.html
 .. _Docker: https://www.docker.com/
