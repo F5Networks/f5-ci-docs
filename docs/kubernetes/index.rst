@@ -18,7 +18,7 @@ The |asp| provides load balancing and telemetry for containerized applications, 
 General Prerequisites
 ---------------------
 
-This documentation set assumes that you:
+The F5 Kubernetes Integration's documentation set assumes that you:
 
 - already have a `Kubernetes cluster`_ running;
 - are familiar with the `Kubernetes dashboard`_ and `kubectl`_ ;
@@ -31,21 +31,27 @@ This documentation set assumes that you:
 |asp|
 -----
 
-The |asp| (ASP) provides container-to-container load balancing, traffic visibility, and inline programmability for applications. Its light form factor allows for rapid deployment in datacenters and across cloud services. The ASP integrates with container environment management and orchestration systems and enables application delivery service automation. The ASP's `Kubernetes`_ integration, |aspk|, builds on Kubernetes' existing `network proxy <https://kubernetes.io/docs/admin/kube-proxy/>`_ functionality.
+The |asp| (ASP) provides container-to-container load balancing, traffic visibility, and inline programmability for applications. Its light form factor allows for rapid deployment in datacenters and across cloud services. The ASP integrates with container environment management and orchestration systems and enables application delivery service automation.
 
-.. seealso:: `ASP product documentation </products/asp/latest/index.html>`_
+The |asp| collects traffic statistics for the Services it load balances; these stats are either logged locally or sent to an external analytics application. You can set the location and type of the analytics application in the `stats </products/asp/latest/index.html#stats>`_ section of the :ref:`Service annotation <k8s-service-annotate>`.
+
+.. todo:: add "Export ASP Stats to an analytics provider"
+
+.. seealso::
+
+    `ASP product documentation`_
 
 
 |aspk-long|
 -----------
 
-The |aspk-long| -- |aspk| -- deploys the |asp|. It replaces the standard Kubernetes network proxy, or `kube-proxy`_. Like the |kctlr-long|, |aspk-long| watches the Kubernetes API; when it discovers Services containing the :ref:`ASP annotation <k8s-service-annotate>`, it launches a pod running the |aspk|, with the configurations specified in the annotation.
+The |aspk-long| -- |aspk| -- replaces the standard Kubernetes network proxy, or `kube-proxy`_. The ``asp`` and |aspk| work together to proxy traffic for Kubernetes `Services`_ as follows:
 
-The ASP's ``bind_port`` and ``shared-listen`` `configuration options <tbd>`_ allow you to configure a single, shared ingress socket on ASP instances. The standard definitions for these options in Kubernetes, which are read by |aspk|, are ``bindport: 10000`` and ``shared-listen: true``.
+- The |aspk| provides the same L4 services as `kube-proxy`_, include iptables and basic load balancing.
+- For Services that have the :ref:`ASP Service annotation <k8s-service-annotate>`, the |aspk| hands off traffic to the ASP running on the same node as the client.
+- The ASP then provides `L7 traffic services </products/asp/latest/index.html#built-in-middleware>`_ and `L7 telemetry </products/asp/latest/index.html#telemetry>`_ to your Kubernetes `Service`_.
 
-The |asp| collects traffic statistics for the Services it load balances; these stats are either logged locally or sent to an external analytics application. You can set the location and type of the analytics application in the `stats </products/asp/latest/index.html#stats>`_ section of the :ref:`Service annotation <k8s-service-annotate>`.
-
-.. todo:: add "Export ASP Stats to an analytics provider"
+By default, the |aspk| forwards traffic to ASP on port 10000. You can change this, if needed, to avoid port conflicts. See the `f5-kube-proxy product documentation`_ for more information.
 
 
 |kctlr-long|
@@ -76,7 +82,7 @@ Key Kubernetes Concepts
 F5 Resource Properties
 ``````````````````````
 
-The |kctlr-long| uses special 'F5 Resources' to identify what objects it should create on the BIG-IP. An F5 resource is defined as a JSON blob in a Kubernetes `ConfigMap`_.
+The |kctlr-long| uses special 'F5 Resources' to identify what objects it should create on the BIG-IP. An F5 resource is a JSON blob included in a Kubernetes `ConfigMap`_.
 
 The :ref:`F5 Resource JSON blob <f5-resource-blob>` must contain the following properties.
 
@@ -107,8 +113,8 @@ The frontend iApp configuration parameters include a set of customizable ``iappV
 The backend property identifies the `Kubernetes Service`_ that makes up the server pool. You can also define health monitors for the virtual server and pool(s) in this section.
 
 
-Using BIG-IP as an Edge Load Balancer in OpenShift Origin
----------------------------------------------------------
+Kubernetes and OpenShift Origin
+-------------------------------
 
 Red Hat's `OpenShift Origin`_ is a containerized application platform with a native Kubernetes integration. The |kctlr-long| enables use of a BIG-IP as an edge load balancer, proxying traffic from outside networks to pods inside an OpenShift cluster. OpenShift Origin uses a pod network defined by the `OpenShift SDN`_ .
 
@@ -123,21 +129,23 @@ Once you've added the BIG-IP to the OpenShift overlay network, it will have acce
 Monitors and Node Health
 ------------------------
 
-When the |kctlr-long| runs with ``pool-member-type`` set to ``nodeport`` -- the default setting -- the |kctlr| will not be aware if a node is taken down. This means that all pool members on that node would remain active even if the node itself is unavailable. When using ``nodeport`` mode, it's important to configure a health monitor so the node is marked as unhealthy if it is rebooting or otherwise unavailable.
+When the |kctlr-long| runs with ``pool-member-type`` set to ``nodeport`` -- the default setting -- the |kctlr| is not aware that Kubernetes nodes are down. This means that all pool members on a down Kubernetes node remain active even if the node itself is unavailable. When using ``nodeport`` mode, it's important to :ref:`configure a BIG-IP health monitor <k8s-config-bigip-health-monitor>` for the virtual server to mark the Kubernetes node as unhealthy if it's rebooting or otherwise unavailable.
 
-When the |kctlr-long| runs with ``pool-member-type`` set to ``cluster`` -- which integrates the BIG-IP into the cluster network -- the |kctlr-long| watches the NodeList in the Kubernetes API server; FDB (Forwarding DataBase) entries are created/updated according to that list. This ensures the |kctlr| will only make VXLAN requests to reported nodes.
+When the |kctlr-long| runs with ``pool-member-type`` set to ``cluster`` -- which integrates the BIG-IP into the cluster network -- the |kctlr-long| watches the NodeList in the Kubernetes API server. It creates/updates FDB (Forwarding DataBase) entries according to the Kubernetes NodeList. This ensures the |kctlr| only makes VXLAN requests to reported nodes.
 
-As a function of the BIG-IP VXLAN, the BIG-IP only communicates with healthy nodes. It will not attempt to route traffic to an unresponsive node, even if the node remains in the reported list.
+As a function of the BIG-IP VXLAN, the BIG-IP only communicates with healthy Kubernetes nodes. BIG-IP does not attempt to route traffic to an unresponsive node, even if the node remains in the Kubernetes NodeList.
 
 
 Related
 -------
 
-- `k8s-bigip-ctlr </products/connectors/k8s-bigip-ctlr/latest/>`_
-- `asp </products/asp/latest>`_
+- `ASP product documentation`_
+- `f5-kube-proxy product documentation`_
+- `k8s-bigip-ctlr product documentation </products/connectors/k8s-bigip-ctlr/latest/>`_
 
 
-
+.. _f5-kube-proxy product documentation: </products/connectors/f5-kube-proxy/latest/>
+.. _ASP product documentation: /products/asp/latest/
 .. _OpenShift Origin: https://www.openshift.org/
 .. _OpenShift user account: https://docs.openshift.org/1.2/admin_guide/manage_users.html
 .. _OpenShift Origin CLI: https://docs.openshift.org/1.2/cli_reference/index.html

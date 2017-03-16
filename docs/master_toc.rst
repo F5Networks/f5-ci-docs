@@ -21,6 +21,14 @@ Container Integrations Documentation
     marathon/asp*
 
 .. toctree::
+    :caption: Support
+    :glob:
+    :maxdepth: 1
+
+    releases_and_versioning
+    acknowledgements
+
+.. toctree::
     :hidden:
     :caption: Troubleshooting
     :glob:
@@ -29,12 +37,12 @@ Container Integrations Documentation
     troubleshooting/*
 
 .. toctree::
-    :caption: Support
+    :caption: Tutorials
     :glob:
     :maxdepth: 1
 
-    releases_and_versioning
-    acknowledgements
+    tutorials/*
+
 
 
 .. _tbd:

@@ -29,13 +29,13 @@ The |asp| watches Kubernetes `Service`_ definitions for a set of annotations def
 Annotate a Kubernetes Service
 -----------------------------
 
-There are a few different ways to annotate a Kubernetes `Service`_.
+Use one of the options below to annotate your Kubernetes `Service`_ and deploy the |asp|.
 
-#. Annotate the Service definition with the key-value pair ``asp.f5.com/config="<JSON-config-blob>"``.
+#. Annotate the `Service`_ definition with the key-value pair ``asp.f5.com/config="<JSON-config-blob>"``.
 
     .. important::
 
-        When you annotate the Service this way, the JSON config blob must be encoded as shown in the example below. All quotes must be escaped (``\"``).
+        When you annotate the Service this way, you must encode the JSON config blob as shown in the example below (escape all quotes -- ``\"``).
 
 
     .. code-block:: bash

@@ -34,7 +34,7 @@ Create a virtual server for a Marathon Application
 
 #. Create a JSON file containing the App service definitions and F5 labels.
 
-    .. note:: This sample App definition uses the default :ref:`port index <port-mappings>`, which is represented by ``0`` in the labels.
+    .. note:: This sample App definition shows labels that use the default :ref:`port index <port-mappings>` (``0``).
 
     .. literalinclude:: /_static/config_examples/hello-marathon-example.json
 
@@ -50,11 +50,11 @@ Create a virtual server for a Marathon Application
 
 
 
-#. Verify creation of the virtual server, pool, and member on the BIG-IP via tmsh or the configuration utility.
+#. Verify creation of the virtual server, pool, and member on the BIG-IP via ``tmsh`` or the configuration utility.
 
     .. code-block:: text
 
-        root@(host-172)(cfg-sync Standalone)(Active)(/mesos)(tmos)# show ltm virtual
+        root@(bigip)(cfg-sync Standalone)(Active)(/mesos)(tmos)# show ltm virtual
         ------------------------------------------------------------------
         Ltm::Virtual Server: basic-0_10.190.25.70_8080
         ------------------------------------------------------------------
@@ -69,7 +69,7 @@ Create a virtual server for a Marathon Application
 
 .. tip::
 
-    In the above example, the "Availability" is "unknown" because no health monitors are associated with the virtual server. You can add :ref:`health checks <health-checks>` to the App in Marathon; the |mctlr| will create corresponding health monitors on the BIG-IP.
+    In the above example, the "Availability" is "unknown" because there are no health monitors associated with the virtual server. You can add :ref:`health checks <health-checks>` to the App in Marathon; the |mctlr| will create corresponding health monitors on the BIG-IP.
 
 Update a virtual server
 -----------------------
@@ -84,11 +84,11 @@ Update a virtual server
         {"version":"2017-02-21T21:48:12.755Z","deploymentId":"02529d16-258b-41d4-ba06-9765c4d1f8d3"}
 
 
-#. Verify your changes are reflected on the BIG-IP via tmsh or the configuration utility.
+#. Verify your changes on the BIG-IP via ``tmsh`` or the configuration utility.
 
     .. code-block:: bash
 
-        root@(host-172)(cfg-sync Standalone)(Active)(/mesos)(tmos)# show ltm virtual
+        root@(bigip)(cfg-sync Standalone)(Active)(/mesos)(tmos)# show ltm virtual
 
 
 Delete a virtual server
@@ -104,12 +104,12 @@ Delete a virtual server
         {"version":"2017-02-21T21:58:11.111Z","deploymentId":"8bdf03d2-8568-46b3-a5a3-61cc397185a1"}
 
 
-#. Verify the virtual server no longer exists on the BIG-IP via tmsh or the configuration utility.
+#. Verify the virtual server no longer exists on the BIG-IP via the configuration utility.
 
     .. code-block:: bash
 
-        root@(host-172)(cfg-sync Standalone)(Active)(/mesos)(tmos)# show ltm virtual
-        root@(host-172)(cfg-sync Standalone)(Active)(/mesos)(tmos)#
+        root@(bigip)(cfg-sync Standalone)(Active)(/mesos)(tmos)# show ltm virtual
+        root@(bigip)(cfg-sync Standalone)(Active)(/mesos)(tmos)#
 
 
 

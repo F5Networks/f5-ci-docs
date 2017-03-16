@@ -43,7 +43,8 @@ In addition to the required parameters noted above, you'll need to define the fo
 =====================   ===================================================
 Parameter               Description
 =====================   ===================================================
-pool-member-type        Must be set to ``cluster``
+pool-member-type        Defines the BIG-IP pool member type.
+                        This must be ``cluster`` if you're using OpenShift.
 ---------------------   ---------------------------------------------------
 openshift-sdn-name      TMOS path to the BIG-IP VXLAN tunnel providing
                         access to the Openshift SDN and Pod network;

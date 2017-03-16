@@ -26,7 +26,7 @@ This documentation set assumes that you:
 - already have a BIG-IP :term:`device` licensed and provisioned for your requirements; [#bigipcaveat]_ and
 - are familiar with BIG-IP Local Traffic Manager (LTM) concepts and ``tmsh`` commands. [#bigipcaveat]_
 
-.. [#bigipcaveat] Not required for the |asp| .
+.. [#bigipcaveat] Not required for the |asp|.
 
 |asp|
 -----
@@ -61,14 +61,14 @@ The |mctlr-long| is a container-based `Marathon Application`_ -- |mctlr|. You ca
 
 The |mctlr| watches the Marathon API for special "F5 Application Labels" that tell it:
 
-    a) what Application we want it to manage, and
-    b) how we want to configure the BIG-IP for that specific Application.
+    * what Application we want it to manage, and
+    * how we want to configure the BIG-IP for that specific Application.
 
 
 You can :ref:`manage BIG-IP objects <mctlr-manage-bigip-objects>` directly, or :ref:`deploy iApps <mctlr-deploy-iapps>`, with the |mctlr-long|.
 
-Key Mesos/Marathon Concepts
----------------------------
+Key Apache Mesos/Marathon Concepts
+----------------------------------
 
 .. _app-labels:
 
@@ -89,19 +89,17 @@ See the |mctlr| `product documentation </products/connectors/marathon-bigip-ctlr
 
 
 iApps Application Labels
-````````````````````````
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-The `iApps Application Labels </products/connectors/marathon-bigip-ctlr/index.html#iapps-application-labels>`_ allow you to deploy iApps using the |mctlr-long|. The iApp you want to deploy must already exist on the BIG-IP.
+You can use the |mctlr-long| to deploy iApps on the BIG-IP using a special set of customizable iApps Application Labels. The iApp you want to deploy must already exist on the BIG-IP.
 
-A few of the key iApp Application Labels must be customized based on the iApp you want to deploy, as well as your environment and needs.
+A few of the key iApp Application Labels depend on the iApp you want to deploy, as well as your environment and needs. See :ref:`Required iApp Application Labels <marathon-required-iapp-labels>` and the `marathon-bigip-ctlr product documentation </products/connectors/marathon-bigip-ctlr/latest/>`_ for more information.
 
-- ``F5_{n}_IAPP_VARIABLE_*`` -- Custom-defined parameters that correspond to fields in the iApp template you want to launch.
-- ``F5_{n}_IAPP_POOL_MEMBER_TABLE`` -- Custom definition for the name and layout of the `Pool Member Table </products/connectors/marathon-bigip-ctlr/index.html#F5_{n}_IAPP_POOL_MEMBER_TABLE>`_ in the iApp.
 
-Mesos DNS and ASP Discovery
-```````````````````````````
+Apache Mesos DNS and ASP Discovery
+``````````````````````````````````
 
-Each |asp| instance is discoverable via a Mesos DNS SRV query, which returns its IP address, port, and protocol.
+Each |asp| instance is discoverable via an Apache Mesos DNS SRV query, which returns its IP address, port, and protocol.
 By convention, the DNS name of an |asp| instance for an Application is “<ASP_ENABLE_LABLE>-<application name>.<domain name>”.
 
 For example:
@@ -117,11 +115,11 @@ Port Mapping
 ````````````
 
 In Marathon, container-based applications using Docker BRIDGE mode must have `port mappings`_ configured. [#dockerbridge]_
-For Applications proxied by the |mctlr-long|, these port mappings make it possible for the BIG-IP to route external traffic to `service ports`_ inside the Mesos cluster. You can define multiple port mappings for a Marathon Application.
+For Applications proxied by the |mctlr-long|, these port mappings make it possible for the BIG-IP to route external traffic to `service ports`_ inside the Apache Mesos cluster. You can define multiple port mappings for a Marathon Application.
 
 .. important::
 
-    Mesos commonly restricts binding to ports in a specific range. Consult the Mesos `ports resource`_ to see what ports are available in your cluster before defining service ports and/or port mappings for your applications.
+    Apache Mesos commonly restricts binding to ports in a specific range. Consult the Apache Mesos `ports resource`_ to see what ports are available in your cluster before defining service ports and/or port mappings for your applications.
 
     Incorrect port mappings may result in deployment failures. See :ref:`Troubleshooting your Marathon deployments <troubleshoot-marathon>` for more information.
 
@@ -168,7 +166,7 @@ Here, we create health checks for each of the port indices defined for our Appli
     :lineno-start: 33
 
 
-.. [#setuphealthchecks] When the ``F5_CC_USE_HEALTHCHECK`` configuration parameter is set to "True".
+.. [#setuphealthchecks] Occurs when ``F5_CC_USE_HEALTHCHECK``'s value is "True".
 
 
 
@@ -181,8 +179,8 @@ Related
     mctlr*
     asp*
 
-- `|mctlr| </products/connectors/marathon-bigip-ctlr/latest/>`_
-- `|aspm| </products/connectors/marathon-asp-ctlr/latest/>`_
+- `marathon-bigip-ctlr product documentation </products/connectors/marathon-bigip-ctlr/latest/>`_
+- `marathon-asp-ctlr product documentation </products/connectors/marathon-asp-ctlr/latest/>`_
 - `asp </products/asp/latest>`_
 
 .. _Marathon Application: https://docs.mesosphere.com/1.8/overview/concepts/#marathon-application

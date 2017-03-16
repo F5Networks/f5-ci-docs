@@ -4,12 +4,12 @@ Set up authentication to your secure DC/OS cluster
 ==================================================
 
 
-If you're using the Mesos DC/OS `cluster security features <https://docs.mesosphere.com/1.8/overview/features/#identity-access-mgmt>`_, you'll need to give |mctlr-long| access to your cluster.
+If you're using the Apache Mesos DC/OS `cluster security features <https://docs.mesosphere.com/1.8/overview/features/#identity-access-mgmt>`_, you'll need to give |mctlr-long| access to your cluster.
 
 DC/OS Open
 ----------
 
-`DC/OS Open <https://dcos.io/>`_ uses `DC/OS oauth <https://dcos.io/docs/1.8/administration/id-and-access-mgt/>`_ to secure access. To use the |mctlr| App with a secure cluster, assign it a user account with permission to access the desired cluster.
+Apache Mesos `DC/OS Open <https://dcos.io/>`_ uses `DC/OS oauth <https://dcos.io/docs/1.8/administration/id-and-access-mgt/>`_ to secure access. To use the |mctlr| App with a secure cluster, assign it a user account with permission to access the desired cluster.
 
 #. `Create a user account for the App <https://dcos.io/docs/1.8/administration/id-and-access-mgt/managing-authentication>`_
 
@@ -62,9 +62,12 @@ DC/OS Enterprise
 
         "{
             \"scheme\": \"RS256\",
-            \"uid\": \"<service_account_name>\", ## the Mesos DC/OS account name
-            \"login_endpoint\": \"https://<mesos_master>/acs/api/v1/auth/login\", ## cluster login endpoint
-            \"private_key\": \"<private_key>\" ## contents of the private key you created for the DC/OS account
+            ## the DC/OS account name
+            \"uid\": \"<service_account_name>\",
+            ## the cluster login endpoint
+            \"login_endpoint\": \"https://<mesos_master>/acs/api/v1/auth/login\",
+            ## the contents of the private key you created for the DC/OS account
+            \"private_key\": \"<private_key>\"
         }"
 
 
