@@ -26,7 +26,7 @@ This documentation set assumes that you:
 - already have a BIG-IP :term:`device` licensed and provisioned for your requirements; [#bigipcaveat]_ and
 - are familiar with BIG-IP Local Traffic Manager (LTM) concepts and ``tmsh`` commands. [#bigipcaveat]_
 
-.. [#bigipcaveat] Not required for the |asp| .
+.. [#bigipcaveat] Not required for the |asp|.
 
 |asp|
 -----
