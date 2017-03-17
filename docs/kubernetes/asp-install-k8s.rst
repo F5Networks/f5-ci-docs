@@ -24,7 +24,7 @@ The |asp|, or ASP, runs on each node in a Kubernetes `Cluster`_. Create a `Confi
 Configure the ASP
 -----------------
 
-#. Define the ASP's global and orchestration `configurations <tbd>`_ in a ConfigMap.
+#. Define the ASP's `global and orchestration configurations </products/asp/latest/#global>`_ in a ConfigMap.
 
     .. literalinclude:: /_static/config_examples/f5-asp-k8s-example-configmap.yaml
 

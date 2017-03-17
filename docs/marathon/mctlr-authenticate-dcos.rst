@@ -71,7 +71,7 @@ DC/OS Enterprise
         }"
 
 
-#. Add the ``F5_CC_DCOS_AUTH_CREDENTIALS`` and ``F5_CC_MARATHON_CA_CERT`` `configuration parameters <tbd>`_ to the |mctlr| App definition.
+#. Add the ``F5_CC_DCOS_AUTH_CREDENTIALS`` and ``F5_CC_MARATHON_CA_CERT`` `Marathon BIG-IP Controller configuration labels </products/connectors/marathon-bigip-ctlr/latest/#configuration-parameters>`_ to the |mctlr| App definition.
 
     .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example.json
         :lines: 1-21, 24-26

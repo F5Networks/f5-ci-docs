@@ -73,15 +73,21 @@ For example, when you create an App in Marathon with the :ref:`F5 application la
 The Container Connector is stateless: the inputs are the container orchestration environment's config, the BIG-IP or ASP config, and its own config (provided by the container orchestration environment). This means an instance of a Container Connector can be readily discarded. Migrating a CC is as easy as destroying it in one place and spinning up a new one somewhere else. Wherever a Container Connector runs, it always watches the API and attempts to bring the BIG-IP, or ASP, up to date with the most recent applicable configurations.
 
 
-Further Reading
----------------
+Product Documentation
+---------------------
 
 See the product documentation for more information about each component.
 
-- :ref:`asp <tbd>`
-- :ref:`k8s-bigip-ctlr <tbd>`
-- :ref:`marathon-bigip-ctlr <tbd>`
-- :ref:`marathon-asp-ctlr <tbd>`
+.. toctree::
+    :caption: Product Documentation
+
+    F5 Application Service Proxy (ASP) <http://clouddocs.f5.com/products/asp/latest>
+    f5-kube-proxy <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
+    k8s-bigip-ctlr <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
+    marathon-asp-ctlr <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest/>
+    marathon-bigip-ctlr <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
+
+
 
 
 .. include:: master_toc.rst

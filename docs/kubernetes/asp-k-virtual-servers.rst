@@ -44,7 +44,7 @@ Use one of the options below to annotate your Kubernetes `Service`_ and deploy t
         service "example-service" annotated
 
 
-#. Edit the Service definition and add the annotation section with the `ASP configurations <tbd>`_.
+#. Edit the Service definition and add the annotation section with the `ASP configurations </products/asp/latest/#configuration-parameters>`_.
 
     .. code-block:: bash
 

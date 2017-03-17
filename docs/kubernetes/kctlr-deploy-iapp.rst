@@ -35,6 +35,10 @@ Deploy the iApp
 
 #. Create a ConfigMap with the encoded data.
 
+    .. literalinclude:: /_static/config_examples/f5-resource-vs-iApp-example.configmap.yaml
+        :caption: Example ConfigMap with F5 virtual server resource
+        :linenos:
+
     .. tip::
 
         You can download the example ConfigMap file below and modify it to suit your environment.
