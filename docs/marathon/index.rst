@@ -178,10 +178,9 @@ Related
 
     mctlr*
     asp*
-
-- `marathon-bigip-ctlr product documentation </products/connectors/marathon-bigip-ctlr/latest/>`_
-- `marathon-asp-ctlr product documentation </products/connectors/marathon-asp-ctlr/latest/>`_
-- `asp </products/asp/latest>`_
+    marathon-bigip-ctlr docs <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
+    marathon-asp-ctlr docs <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest/>
+    F5 Application Service Proxy docs <http://clouddocs.f5.com/products/asp/latest>
 
 .. _Marathon Application: https://docs.mesosphere.com/1.8/overview/concepts/#marathon-application
 .. _Marathon REST API: https://mesosphere.github.io/marathon/api-console/index.html
