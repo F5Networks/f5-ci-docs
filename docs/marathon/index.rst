@@ -41,7 +41,7 @@ The |asp| (ASP) provides container-to-container load balancing, traffic visibili
 
 The |aspm-long| -- |aspm| -- deploys the |asp|. Like the |mctlr-long|, the |aspm-long| watches the Marathon API for Apps defined with a specific set of labels. When it finds an Application configured with the ``asp: enable`` label, it launches an instance of the |asp| to front the App and creates a virtual server on the |asp| instance. The |aspm-long| maintains an address in the |asp| pool configuration for each of an Application's tasks.
 
-The |aspm-long| App definition contains a set of default `configuration parameters <tbd>`_. These configurations -- set in the "env" (or, "Environment", in the Web UI) section of the |aspm| :ref:`App definition <install-asp-marathon>` -- apply to each ASP instance the |aspm| launches.
+The |aspm-long| App definition contains a set of default `Marathon ASP configuration labels </products/connectors/marathon-asp-ctlr/index.html#configuration-parameters>`_. These configurations -- set in the "env" (or, "Environment", in the Web UI) section of the |aspm| :ref:`App definition <install-asp-marathon>` -- apply to each ASP instance the |aspm| launches.
 The |aspm-long| also has a set of "override" labels. [#overridelabel]_ When you add these labels to the definition for an Application you want the ASP to proxy, they take precedence over the default |aspm| settings.
 
 By default, the |aspm| starts one (1) |asp| instance per application. You can override this setting using the ``ASP_COUNT_PER_APP`` :ref:`F5 application label <app-labels>`.
@@ -51,7 +51,7 @@ The |asp| collects traffic statistics for the Applications it load balances; the
 .. todo:: add "Export ASP Stats to an analytics provider"
 
 
-.. [#overridelabel] See the |aspm| `configuration parameters <tbd>`_ table.
+.. [#overridelabel] See the `Marathon ASP configuration labels </products/connectors/marathon-asp-ctlr/index.html#configuration-parameters>`_ table.
 
 
 |mctlr-long|

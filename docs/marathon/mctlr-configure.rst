@@ -85,5 +85,5 @@ F5_{n}_IAPP_OPTION_*                Template-specific [#iapplabels]_
 See Also
 --------
 
-Additional |mctlr| :ref:`configuration parameters <tbd>` define the BIG-IP objects that |mctlr| manages. See the |mctlr| :ref:`product documentation <tbd>` for more information.
+See the `marathon-bigip-ctlr product documentation </products/connectors/marathon-bigip-ctlr/latest/index.html>`_ for the full list of available configuration parameters.
 

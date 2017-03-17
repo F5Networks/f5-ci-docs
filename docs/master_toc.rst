@@ -50,9 +50,3 @@ Container Integrations Documentation
 
     tutorials/*
 
-
-
-.. _tbd:
-
-.. todo:: populate refs and links that have tbd in them
-
