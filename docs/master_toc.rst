@@ -21,6 +21,13 @@ Container Integrations Documentation
     marathon/asp*
 
 .. toctree::
+    :caption: OpenShift Origin Container Integration
+    :maxdepth: 1
+    :glob:
+
+    openshift/*
+
+.. toctree::
     :caption: Support
     :glob:
     :maxdepth: 1

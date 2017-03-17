@@ -34,6 +34,7 @@ namespace               Kubernetes namespace to watch
     :caption: Example Deployment definition
     :emphasize-lines: 29-35
 
+.. _kctlr-configure-openshift:
 
 Required configuration parameters for OpenShift clusters
 --------------------------------------------------------

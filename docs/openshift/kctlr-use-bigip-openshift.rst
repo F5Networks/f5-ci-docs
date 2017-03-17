@@ -1,7 +1,7 @@
 .. _bigip-openshift-setup:
 
-Use BIG-IP in an OpenShift Cluster
-==================================
+Set up BIG-IP and |kctlr| for use in an OpenShift Cluster
+=========================================================
 
 .. table:: Docs test matrix
 
@@ -18,7 +18,7 @@ Steps required to set up BIG-IP and |kctlr| for use in an `OpenShift`_ cluster:
 
 #. :ref:`Create a host subnet <k8s-openshift-hostsubnet>` in your OpenShift cluster.
 #. :ref:`Create a VXLAN tunnel <k8s-openshift-vxlan-setup>` on the BIG-IP.
-#. :ref:`Assign an overlay address <k8s-openshift-assign-ip>` from the subnet to a `selfIP address`_ on the BIG-IP.
+#. :ref:`Assign an overlay address <k8s-openshift-assign-ip>` from the subnet to a `Self IP address`_ on the BIG-IP.
 #. `Create an OpenShift user account`_ for the |kctlr| with permission to manage the following:
 
     - nodes
@@ -131,7 +131,7 @@ Create a VXLAN on the BIG-IP
 Assign an OpenShift overlay address to the BIG-IP
 -------------------------------------------------
 
-#. Create a `selfIP address`_ on the BIG-IP. Use an address in the range you defined in the :ref:`HostSubnet <k8s-openshift-hostsubnet>` ``subnet`` field.
+#. Create a `Self IP address`_ on the BIG-IP. Use an address in the range you defined in the :ref:`HostSubnet <k8s-openshift-hostsubnet>` ``subnet`` field.
 
     .. code-block:: bash
 
@@ -170,17 +170,13 @@ Assign an OpenShift overlay address to the BIG-IP
 .. [#ossdn] https://docs.openshift.org/latest/architecture/additional_concepts/sdn.html#sdn-design-on-masters
 
 
+Next Steps
+----------
 
-
-
-
-
-
-
-
-
+- :ref:`Install the F5 Kubernetes BIG-IP Controller <install-kctlr>`
+- :ref:`Configure the F5 Kubernetes BIG-IP Controller for OpenShift <kctlr-configure-openshift>`
 
 .. _OpenShift: https://www.openshift.org/
 .. _Create an OpenShift user account: https://docs.openshift.org/1.2/admin_guide/manage_users.html
 .. _VXLAN profile:
-.. _selfIP address: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-12-1-1/5.html
+.. _Self IP address: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-12-1-1/5.html
