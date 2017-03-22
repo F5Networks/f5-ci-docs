@@ -28,7 +28,7 @@ Before you begin
 Deploy the |aspm-long| using the Marathon REST API
 --------------------------------------------------
 
-#. Create a JSON config file defining the default configurations for the :ref:`ASP <tbd>`.
+#. Create a JSON config file defining the default `Marathon ASP configuration labels <products/connectors/marathon-asp-ctlr/latest/index.html#configuration-parameters>`_.
 
     .. literalinclude:: /_static/config_examples/f5-marathon-asp-ctlr-example.json
         :linenos:

@@ -1,3 +1,5 @@
+.. _k8s-home:
+
 F5 Kubernetes Container Integration
 ===================================
 
@@ -14,6 +16,7 @@ The |asp| provides load balancing and telemetry for containerized applications, 
     :scale: 50 %
     :alt: F5 Container Solution for Kubernetes
 
+.. _k8s-prereqs:
 
 General Prerequisites
 ---------------------
@@ -24,6 +27,10 @@ The F5 Kubernetes Integration's documentation set assumes that you:
 - are familiar with the `Kubernetes dashboard`_ and `kubectl`_ ;
 - already have a BIG-IP :term:`device` licensed and provisioned for your requirements; [#bigipcaveat]_ and
 - are familiar with BIG-IP Local Traffic Manager (LTM) concepts and ``tmsh`` commands. [#bigipcaveat]_
+
+.. seealso::
+
+    :ref:`OpenShift Origin Prerequisites <openshift-origin-prereqs>`
 
 .. [#bigipcaveat] Not required for the |asp| and ASP controllers (|aspk|, |aspm|).
 
@@ -116,40 +123,34 @@ The backend property identifies the `Kubernetes Service`_ that makes up the serv
 Kubernetes and OpenShift Origin
 -------------------------------
 
-Red Hat's `OpenShift Origin`_ is a containerized application platform with a native Kubernetes integration. The |kctlr-long| enables use of a BIG-IP as an edge load balancer, proxying traffic from outside networks to pods inside an OpenShift cluster. OpenShift Origin uses a pod network defined by the `OpenShift SDN`_ .
-
-There are a few additional prerequisites for working with OpenShift Origin clusters that do not apply to basic Kubernetes:
-
-#. The |kctlr-long| needs an `OpenShift user account`_ with permission to access nodes, endpoints, services, and configmaps.
-#. You'll need to use the `OpenShift Origin CLI`_, in addition to ``kubectl``, to execute OpenShift-specific commands.
-#. To :ref:`integrate your BIG-IP into an OpenShift cluster <bigip-openshift-setup>`, you'll need to :ref:`assign an OpenShift overlay address to the BIG-IP <k8s-openshift-assign-ip>`.
-
-Once you've added the BIG-IP to the OpenShift overlay network, it will have access to all pods in the cluster. You can then use the |kctlr| the same as you would in Kubernetes.
+See :ref:`F5 OpenShift Origin Integration <openshift-home>`.
 
 Monitors and Node Health
 ------------------------
 
 When the |kctlr-long| runs with ``pool-member-type`` set to ``nodeport`` -- the default setting -- the |kctlr| is not aware that Kubernetes nodes are down. This means that all pool members on a down Kubernetes node remain active even if the node itself is unavailable. When using ``nodeport`` mode, it's important to :ref:`configure a BIG-IP health monitor <k8s-config-bigip-health-monitor>` for the virtual server to mark the Kubernetes node as unhealthy if it's rebooting or otherwise unavailable.
 
-When the |kctlr-long| runs with ``pool-member-type`` set to ``cluster`` -- which integrates the BIG-IP into the cluster network -- the |kctlr-long| watches the NodeList in the Kubernetes API server. It creates/updates FDB (Forwarding DataBase) entries according to the Kubernetes NodeList. This ensures the |kctlr| only makes VXLAN requests to reported nodes.
+.. seealso::
 
-As a function of the BIG-IP VXLAN, the BIG-IP only communicates with healthy Kubernetes nodes. BIG-IP does not attempt to route traffic to an unresponsive node, even if the node remains in the Kubernetes NodeList.
+    :ref:`OpenShift Origin node health <openshift-origin-node-health>`
 
 
 Related
 -------
 
-- `ASP product documentation`_
-- `f5-kube-proxy product documentation`_
-- `k8s-bigip-ctlr product documentation </products/connectors/k8s-bigip-ctlr/latest/>`_
+.. toctree::
+    :glob:
+
+    kctlr*
+    asp*
+    k8s-bigip-ctlr docs <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
+    f5-kube-proxy docs <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
+    F5 Application Service Proxy docs <http://clouddocs.f5.com/products/asp/latest>
 
 
 .. _f5-kube-proxy product documentation: </products/connectors/f5-kube-proxy/latest/>
 .. _ASP product documentation: /products/asp/latest/
-.. _OpenShift Origin: https://www.openshift.org/
-.. _OpenShift user account: https://docs.openshift.org/1.2/admin_guide/manage_users.html
-.. _OpenShift Origin CLI: https://docs.openshift.org/1.2/cli_reference/index.html
-.. _OpenShift SDN: https://docs.openshift.org/latest/architecture/additional_concepts/sdn.html
+
 
 
 
