@@ -45,7 +45,7 @@ Secure your BIG-IP credentials
 Pull an image from a private docker registry
 ````````````````````````````````````````````
 
-1. Create a `docker-registry secret <https://kubernetes.io/docs/user-guide/images/#creating-a-secret-with-a-docker-config>`_ for your :file:`.docker/config.json` file.
+1. Create a `docker-registry secret`_ for your :file:`.docker/config.json` file.
 
     - Use base64 to encode the contents of your /.docker/config.json:
 
@@ -92,3 +92,4 @@ Pull an image from a private docker registry
 
 
 
+.. _docker-registry secret: https://kubernetes.io/docs/concepts/containers/images/#creating-a-secret-with-a-docker-config
