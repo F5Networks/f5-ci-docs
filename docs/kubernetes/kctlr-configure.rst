@@ -90,6 +90,10 @@ virtualAddress          JSON object; allocates a virtual address for the
                         port to assign to the virtualServer
 =====================   ===================================================
 
+.. note::
+ 
+   You can set ``virtualAddress.bindAddr`` :ref:`via an IPAM system <kubernetes-ipam-bind-addr>`.
+
 iApps
 `````
 
