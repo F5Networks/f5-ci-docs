@@ -25,7 +25,7 @@ Build and Test
 
 The `scripts </scripts>`_ directory contains documentation testing resources. We recommend running the test script **before** opening a pull request; if the build associated with your PR doesn't pass, the request won't be accepted.
 
-The test script can be run locally or in a Docker container, which uses an image developed by F5 (https://hub.docker.com/r/thejodesterf5/containthedocs/ ). The Ubuntu-based Docker image has all of the dependencies required to build the project documentation pre-installed. If you want to run the test script locally, you'll need to install the `requirements <requirements.txt>`_ first.
+The test script can be run locally or in a Docker container, which uses an image developed by F5 (https://hub.docker.com/r/f5devcentral/containthedocs/ ). The Ubuntu-based Docker image has all of the dependencies required to build the project documentation pre-installed. If you want to run the test script locally, you'll need to install the `requirements <requirements.txt>`_ first.
 
 - scripts/docker-docs.sh -- runs a Docker container with the 'containthedocs' image.
 - scripts/test-docs.sh -- builds the documentation (``make -C docs/ html``); runs ``make linkcheck`` to check internal and external links; and checks grammar with ``write-good``. These tests run in travis-ci and must pass before we can accept a pull request.
