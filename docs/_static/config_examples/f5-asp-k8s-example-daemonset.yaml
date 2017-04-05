@@ -13,7 +13,7 @@ spec:
       template:
         containers:
           - name: f5-asp
-            image: "f5networks/asp:v1.0.0"
+            image: "f5networks/asp:1.0.0"
             args:
               # the config file is loaded from the ConfigMap; it contains the
               # ASP global config
