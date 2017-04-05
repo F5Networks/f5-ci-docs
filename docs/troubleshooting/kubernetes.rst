@@ -2,7 +2,7 @@ Troubleshoot Your Kubernetes Deployment
 =======================================
 
 Application Services Proxy
--------------------------
+--------------------------
 
 .. _k8s-asp-verify:
 
