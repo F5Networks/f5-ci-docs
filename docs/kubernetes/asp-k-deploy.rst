@@ -62,7 +62,7 @@ Set up |aspk-long| on every node in the cluster
 
         spec:
           containers:
-            image: f5networks/f5-kube-proxy:v1.0.0
+            image: f5networks/f5-kube-proxy:1.0.0
 
     .. code-block:: bash
         :caption: Add a new ``mountPath`` to the ``volumeMounts`` section in both master and worker manifests.
