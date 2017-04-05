@@ -81,7 +81,7 @@ See the product documentation for more information about each component.
 .. toctree::
     :caption: Product Documentation
 
-    F5 Application Service Proxy (ASP) <http://clouddocs.f5.com/products/asp/latest>
+    F5 Application Services Proxy (ASP) <http://clouddocs.f5.com/products/asp/latest>
     f5-kube-proxy <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
     k8s-bigip-ctlr <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
     marathon-asp-ctlr <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest/>

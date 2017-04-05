@@ -6,7 +6,7 @@ F5 Kubernetes Container Integration
 Overview
 --------
 
-The F5 `Kubernetes`_ Container Integration consists of the `F5 Kubernetes BIG-IP Controller </products/connectors/k8s-bigip-ctlr/latest>`_ and the `F5 Application Service Proxy </products/asp/latest>`_ (ASP).
+The F5 `Kubernetes`_ Container Integration consists of the `F5 Kubernetes BIG-IP Controller </products/connectors/k8s-bigip-ctlr/latest>`_ and the `F5 Application Services Proxy </products/asp/latest>`_ (ASP).
 
 The |kctlr-long| configures a BIG-IP to expose applications in a `Kubernetes cluster`_ as BIG-IP virtual servers, serving North-South traffic.
 
@@ -145,7 +145,7 @@ Related
     asp*
     k8s-bigip-ctlr docs <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
     f5-kube-proxy docs <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
-    F5 Application Service Proxy docs <http://clouddocs.f5.com/products/asp/latest>
+    F5 Application Services Proxy docs <http://clouddocs.f5.com/products/asp/latest>
 
 
 .. _f5-kube-proxy product documentation: </products/connectors/f5-kube-proxy/latest/>

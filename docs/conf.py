@@ -85,7 +85,7 @@ release = 'v1.0'
 # All substitutions
 
 rst_epilog = """
-.. |asp| replace:: F5 Application Service Proxy
+.. |asp| replace:: F5 Application Services Proxy
 .. |asp-img| replace:: asp:latest
 .. |aspk-long| replace:: F5 Kubernetes Proxy
 .. |aspk| replace:: ``f5-kube-proxy``
