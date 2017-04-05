@@ -7,7 +7,7 @@ spec:
   hostNetwork: true
   containers:
   - name: kube-proxy
-    image: f5networks/f5-kube-proxy:v1.0.0
+    image: f5networks/f5-kube-proxy:1.0.0
     # do not change the args below if your master kube-proxy settings differ
     # from those shown here
     command:

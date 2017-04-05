@@ -6,7 +6,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "f5networks/marathon-asp-ctlr:v1.0.0",
+      "image": "f5networks/marathon-asp-ctlr:1.0.0",
       "network": "BRIDGE",
       "forcePullImage": true,
       "privileged": false,
@@ -18,7 +18,7 @@
   "env": {
     "MARATHON_URL": "http://10.190.25.75:8080",
     // ASP image
-    "ASP_DEFAULT_CONTAINER": "f5networks/asp:v1.0.0",
+    "ASP_DEFAULT_CONTAINER": "f5networks/asp:1.0.0",
     // defines the label you will use in App definitions to activate the ASP
     "ASP_ENABLE_LABEL": "ASP",
     "ASP_DEFAULT_CPU": "1",
