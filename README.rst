@@ -7,7 +7,7 @@ f5-ci-docs
 Overview
 --------
 
-This repository houses the end-user documentation for F5 Networks' Container Connectors (CC) and Application Service Proxy (ASP).
+This repository houses the end-user documentation for F5 Networks' Container Connectors (CC) and Application Services Proxy (ASP).
 
 We write documentation in `reStructuredText <http://docutils.sourceforge.net/rst.html>`_ (rST); build with `Sphinx <http://www.sphinx-doc.org/>`_ ; test with `Travis-CI <https://travis-ci.com/>`_ ; and host the docs website in `Amazon s3 <https://aws.amazon.com/s3/>`_.
 
