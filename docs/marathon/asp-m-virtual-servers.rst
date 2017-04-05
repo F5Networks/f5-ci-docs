@@ -9,7 +9,7 @@ The |aspm-long| launches |asp| instances automatically for Apps that have the ``
 Launch an ASP instance with the default configurations
 ------------------------------------------------------
 
-Add the label ``"asp": "enable"`` to the App's service definition.
+Add the label ``"f5-asp": "enable"`` to the App's service definition.
 
 #. Via the Marathon web interface:
 
@@ -40,7 +40,7 @@ Add the label ``"asp": "enable"`` to the App's service definition.
 Launch an ASP instance with custom configurations
 -------------------------------------------------
 
-Add the label ``"asp": "enable"`` to the App's service definition.
+Add the label ``"f5-asp": "enable"`` to the App's service definition.
 
 #. Via the Marathon web interface:
 

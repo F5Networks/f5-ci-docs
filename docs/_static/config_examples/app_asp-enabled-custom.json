@@ -23,7 +23,7 @@
   "mem": 128,
   // The labels below activate and configure the ASP
   "labels": {
-    "asp": "enable",
+    "f5-asp": "enable",
     "ASP_LOG_LEVEL": "debug",
     "ASP_VS_KEEP_ALIVE": 50,
     "ASP_VS_FLAGS": {
