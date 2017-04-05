@@ -79,7 +79,7 @@ In Marathon, you can `associate labels with Application tasks`_ for tracking/rep
 
 When the |mctlr-long| discovers Applications with new or updated F5 Application Labels, it dynamically creates virtual servers, pools, pool members, and HTTP :ref:`health monitors <health-checks>` for each of the Application's tasks.
 
-When the |aspm-long| discovers Applications configured with the ``"asp": "enable"`` label, it launches an ASP instance for that app. The ASP configurations are also defined with F5 Application Labels.
+When the |aspm-long| discovers Applications configured with the ``"f5-asp": "enable"`` label, it launches an ASP instance for that app. The ASP configurations are also defined with F5 Application Labels.
 
 See the |mctlr| `product documentation </products/connectors/marathon-bigip-ctlr/latest/>`_ for the full list of F5 Application Labels.
 

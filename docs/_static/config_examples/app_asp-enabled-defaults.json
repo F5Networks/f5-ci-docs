@@ -21,7 +21,7 @@
   "mem": 128,
   // The label below activates the ASP with the default configurations
   "labels": {
-    "asp": "enable"
+    "f5-asp": "enable"
   },
   "cpus": 0.25,
   "instances": 1,
