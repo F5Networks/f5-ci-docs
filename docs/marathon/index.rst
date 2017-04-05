@@ -4,7 +4,7 @@ F5 Marathon Container Integration
 Overview
 --------
 
-The F5 `Marathon`_ Container Integration consists of the `F5 Marathon BIG-IP Controller </products/connectors/marathon-bigip-ctlr/latest>`_, the `F5 Application Service Proxy </products/asp/latest>`_ (ASP), and the `F5 Marathon ASP Controller </products/connectors/marathon-asp-ctlr/latest>`_.
+The F5 `Marathon`_ Container Integration consists of the `F5 Marathon BIG-IP Controller </products/connectors/marathon-bigip-ctlr/latest>`_, the `F5 Application Services Proxy </products/asp/latest>`_ (ASP), and the `F5 Marathon ASP Controller </products/connectors/marathon-asp-ctlr/latest>`_.
 
 The |mctlr-long| configures a BIG-IP to expose applications in a `Mesos cluster`_ as BIG-IP virtual servers, serving North-South traffic.
 
@@ -180,7 +180,7 @@ Related
     asp*
     marathon-bigip-ctlr docs <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
     marathon-asp-ctlr docs <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest/>
-    F5 Application Service Proxy docs <http://clouddocs.f5.com/products/asp/latest>
+    F5 Application Services Proxy docs <http://clouddocs.f5.com/products/asp/latest>
 
 .. _Marathon Application: https://docs.mesosphere.com/1.8/overview/concepts/#marathon-application
 .. _Marathon REST API: https://mesosphere.github.io/marathon/api-console/index.html
