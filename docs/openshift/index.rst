@@ -18,7 +18,11 @@ OpenShift Prerequisites
 
 The prerequisites below are in addition to the :ref:`F5 Kubernetes Integration's general prerequisites <k8s-prereqs>`.
 
-#. The |kctlr-long| needs an `OpenShift user account`_ with permission to access nodes, endpoints, services, and configmaps.
+#. The |kctlr-long| needs an `OpenShift user account`_ with permission to access nodes, endpoints, services, and configmaps. Specifically, the `Verbs and Resources`_ needed are:
+
+   #. ``[get list] [nodes endpoints services]``
+   #. ``[get list update] [configmaps]``
+
 #. You'll need to use the `OpenShift Origin CLI`_, in addition to ``kubectl``, to execute OpenShift-specific commands.
 #. To :ref:`integrate your BIG-IP into an OpenShift cluster <bigip-openshift-setup>`, you'll need to :ref:`assign an OpenShift overlay address to the BIG-IP <k8s-openshift-assign-ip>`.
 
@@ -47,6 +51,7 @@ Related
 
 .. _OpenShift Origin: https://www.openshift.org/
 .. _OpenShift user account: https://docs.openshift.org/1.2/admin_guide/manage_users.html
+.. _Verbs and Resources: https://docs.openshift.com/enterprise/3.0/admin_guide/manage_authorization_policy.html#viewing-cluster-policy
 .. _OpenShift Origin CLI: https://docs.openshift.org/1.2/cli_reference/index.html
 .. _OpenShift SDN: https://docs.openshift.org/latest/architecture/additional_concepts/sdn.html
 
