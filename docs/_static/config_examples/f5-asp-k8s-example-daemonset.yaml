@@ -10,32 +10,31 @@ spec:
         name: f5-asp
     spec:
       hostNetwork: true
-      template:
-        containers:
-          - name: f5-asp
-            image: "f5networks/asp:1.0.0"
-            args:
-              # the config file is loaded from the ConfigMap; it contains the
-              # ASP global config
-              - --config-file
-              - /etc/configmap/asp.config.json
-            securityContext:
-              privileged: false
-            volumeMounts:
-            # mount a new directory
-            - name: plugin-config
-              # the path the directory will be added to; do not change
-              mountPath: /var/run/kubernetes/proxy-plugin
-              readOnly: true
-            # mount a new directory
-            - name: asp-config
-              # the path the directory will be added to; do not change
-              mountPath: /etc/configmap
-        volumes:
+      containers:
+        - name: f5-asp
+          image: "f5networks/asp:1.0.0"
+          args:
+            # the config file is loaded from the ConfigMap; it contains the
+            # ASP global config
+            - --config-file
+            - /etc/configmap/asp.config.json
+          securityContext:
+            privileged: false
+          volumeMounts:
+          # mount a new directory
           - name: plugin-config
-            hostPath:
-              path: /var/run/kubernetes/proxy-plugin
+            # the path the directory will be added to; do not change
+            mountPath: /var/run/kubernetes/proxy-plugin
+            readOnly: true
+          # mount a new directory
           - name: asp-config
-            # replace with name of your ASP ConfigMap
-            configMap:
-              name: f5-asp-config
+            # the path the directory will be added to; do not change
+            mountPath: /etc/configmap
+      volumes:
+        - name: plugin-config
+          hostPath:
+            path: /var/run/kubernetes/proxy-plugin
+        - name: asp-config
+          # replace with name of your ASP ConfigMap
+          configMap:
+            name: f5-asp-config
