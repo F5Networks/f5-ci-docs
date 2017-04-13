@@ -146,6 +146,20 @@ Delete a virtual server
         root@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)#
 
 
+.. _kubernetes-ipam-bind-addr:
+
+Assign BIG-IP virtual server IP addresses using IPAM
+----------------------------------------------------
+
+You can use IPAM to assign an IP address to a BIG-IP virtual server. You can configure an IPAM system to set the ``virtual-server.f5.com/ip`` `annotation`_ for the ConfigMap 
+with a chosen IP address. The controller will see this ``virtual-server.f5.com/ip`` annotation and configure the BIG-IP with the specified IP address.
+
+For example: 
+
+    .. code-block:: bash
+
+        ubuntu@k8s-master:~$ kubectl annotate configmap foo virtual-server.f5.com/ip=1.2.3.4
+
 
 Connectivity for down or replaced Services
 ------------------------------------------
@@ -180,4 +194,5 @@ The |kctlr-long| is not aware of node health when running in the default ``nodep
 
 #. Verify that the health monitor exists on the BIG-IP via the configuration utility.
 
+.. _annotation: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 

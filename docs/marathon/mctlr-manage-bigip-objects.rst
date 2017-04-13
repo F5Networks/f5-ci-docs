@@ -111,6 +111,13 @@ Delete a virtual server
         root@(bigip)(cfg-sync Standalone)(Active)(/mesos)(tmos)# show ltm virtual
         root@(bigip)(cfg-sync Standalone)(Active)(/mesos)(tmos)#
 
+.. _marathon-ipam-bind-addr:
 
+Assign BIG-IP virtual server IP addresses using IPAM
+----------------------------------------------------
+
+You can use IPAM to assign an IP address to a BIG-IP virtual server. You can configure an IPAM system to set the ``F5_{0}_BIND_ADDR`` label with a
+chosen IP address. The controller will configure a virtual server once it sees a valid IP address.
 
 .. _basic Hello Marathon App: https://mesosphere.github.io/marathon/docs/application-basics.html#hello-marathon-an-inline-shell-script
+
