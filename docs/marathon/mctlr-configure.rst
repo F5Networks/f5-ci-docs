@@ -52,6 +52,10 @@ F5\_{n}_PORT            Service port to use for communications with the BIG-IP
                         Example: ``"F5_0_PORT": "80"``
 =====================   =======================================================
 
+.. note::
+
+   You can set ``F5_{n}_BIND_ADDR`` :ref:`via an IPAM system <marathon-ipam-bind-addr>`.
+
 .. _marathon-required-iapp-labels:
 
 Required iApp Application Labels
