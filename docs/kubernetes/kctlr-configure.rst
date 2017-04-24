@@ -26,7 +26,9 @@ bigip-partition         The BIG-IP partition |kctlr| manages
 ---------------------   ---------------------------------------------------
 kubeconfig              Path to the `kubeconfig`_ file
 ---------------------   ---------------------------------------------------
-namespace               Kubernetes namespace to watch
+namespace               Kubernetes namespace to watch, as of v1.1.0 this is
+                        no longer required and if left blank the
+                        controller will watch all namespaces
 =====================   ===================================================
 
 
@@ -91,7 +93,7 @@ virtualAddress          JSON object; allocates a virtual address for the
 =====================   ===================================================
 
 .. note::
- 
+
    You can set ``virtualAddress.bindAddr`` :ref:`via an IPAM system <kubernetes-ipam-bind-addr>`.
 
 iApps
