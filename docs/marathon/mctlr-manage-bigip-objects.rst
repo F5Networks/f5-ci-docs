@@ -50,7 +50,6 @@ Create a virtual server for a Marathon Application
 
       curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' http://10.190.25.75:8080/v2/apps -d @hello-marathon-example.json
 
-
 #. Verify creation of the virtual server, pool, and member on the BIG-IP via ``tmsh`` or the configuration utility.
 
    .. code-block:: text
@@ -86,7 +85,6 @@ Update a BIG-IP virtual server
 
       user@mesos-master:~$ curl -X PUT http://10.190.25.75:8080/v2/apps/basic-0 -d @hello-marathon-example.json -H "Content-type: application/json"
       {"version":"2017-02-21T21:48:12.755Z","deploymentId":"02529d16-258b-41d4-ba06-9765c4d1f8d3"}
-
 
 #. Verify your changes on the BIG-IP via ``tmsh`` or the configuration utility.
 
