@@ -29,8 +29,8 @@ The example virtual server F5 resource JSON blob shown below tells |kctlr| to cr
 
 .. _kctlr-create-vs:
 
-Create a BIG-IP virtual server for a Kubernetes Service
--------------------------------------------------------
+Create a BIG-IP front-end virtual server for a Kubernetes Service
+-----------------------------------------------------------------
 
 .. note::
 
@@ -193,7 +193,11 @@ Configure BIG-IP LTM health monitors for Kubernetes Services to help ensure that
 Use IPAM to assign IP addresses to BIG-IP LTM virtual servers
 -------------------------------------------------------------
 
-.. versionadded:: k8s-bigip-ctlr_v1.1.0
+.. note::
+
+   .. versionadded:: k8s-bigip-ctlr v1.1.0-beta
+
+   See the `k8s-bigip-ctlr beta documentation`_ for more information.
 
 You can use IPAM to assign IP addresses to BIG-IP LTM virtual server objects managed by the |kctlr-long|.
 
@@ -220,4 +224,196 @@ If you deploy a new Service with the same name as the one you took down, the |kc
 
 If you take down a Service and want to remove the corresponding BIG-IP LTM objects, :ref:`delete the F5 Resource ConfigMap <kctlr-delete-objects>`.
 
+.. _kctlr-pool-only:
+
+Manage pools without virtual servers
+------------------------------------
+
+.. note::
+
+   .. versionadded:: k8s-bigip-ctlr v1.1.0-beta
+
+   See the `k8s-bigip-ctlr beta documentation`_ for more information.
+
+The |kctlr-long| can create and manage BIG-IP Local Traffic Manager (LTM) pools that aren't attached to a front-end BIG-IP virtual server (also referred to as "unattached pools").
+When you create a pool without a virtual server, the |kctlr-long| applies the following naming convention to the pool members: ``<namespace>_<configmap-name>``.
+For example, ``default_k8s.pool_only``.
+
+.. important::
+
+   Your BIG-IP device must have a virtual server with an `iRule`_, or a `local traffic policy`_, that can direct traffic to the unattached pool.
+   After creating an unattached pool, add its member(s) to the iRule or traffic policy to ensure proper handling of client connections to your back-end applications.
+
+.. _kctlr-create-unattached-pool:
+
+Create a pool without a virtual server
+``````````````````````````````````````
+
+#. Create an :ref:`F5 resource <k8s-f5-resources>` `ConfigMap`_, omitting the ``bindAddr`` field from the ``virtualAddress`` section.
+
+   .. literalinclude:: /_static/config_examples/f5-resource-pool-only-example.configmap.yaml
+        :linenos:
+
+   .. tip::
+
+      You can download the example ConfigMap file below and modify it to suit your environment.
+
+      :download:`f5-resource-pool-only-example.configmap.yaml </_static/config_examples/f5-resource-pool-only-example.configmap.yaml>`
+
+#. Upload the ConfigMap to Kubernetes.
+
+   .. code-block:: bash
+
+      ubuntu@k8s-master:~$ kubectl create -f f5-resource-pool-only-example.configmap.yaml --namespace=<service-namespace>
+      configmap "k8s.pool_only" created
+
+
+.. _kctlr-attach-pool-vs:
+
+Attach a pool to a virtual server
+`````````````````````````````````
+
+#. Add the desired ``bindAddr`` (in other words, the virtual server IP address) to the F5 Resource ConfigMap using ``kubectl edit``.
+
+   .. code-block:: bash
+      :linenos:
+      :emphasize-lines: 24
+
+      ubuntu@k8s-master:~$ kubectl edit configmap k8s.pool_only
+
+      # Please edit the object below.
+      # ...
+      #
+      apiVersion: v1
+      data:
+        data: |
+          {
+            "virtualServer": {
+              "backend": {
+                "servicePort": 3000,
+                "serviceName": "myService",
+                "healthMonitors": [{
+                  "interval": 30,
+                  "protocol": "http",
+                  "send": "GET",
+                  "timeout": 86400
+                }]
+              },
+              "frontend": {
+                "virtualAddress": {
+                  "port": 80,
+                  "bindAddr": "1.2.3.4" \\ add this line, using a valid IP address
+                },
+                "partition": "kubernetes",
+                "balance": "round-robin",
+                "mode": "http"
+              }
+            }
+          }
+        schema: f5schemadb://bigip-virtual-server_v0.1.2.json
+      kind: ConfigMap
+      metadata:
+        creationTimestamp: 2017-02-14T17:24:34Z
+        labels:
+          f5type: virtual-server
+        name: k8s.pool_only
+        namespace: default
+
+#. Verify the changes using ``kubectl get``.
+
+   .. code-block:: bash
+
+      ubuntu@k8s-master:~$ kubectl get configmap k8s.pool_only -o yaml
+
+#. Use the BIG-IP configuration utility to verify the pool attached to the virtual server.
+
+   :menuselection:`Local Traffic --> Virtual Servers`
+
+.. tip::
+
+   You can :ref:`use an IPAM system <kctlr-ipam>` to populate the ``bindAddr`` field automatically.
+
+
+.. _kctlr-delete-unattached-pool:
+
+Delete an "unattached" pool
+```````````````````````````
+
+#. Remove the ConfigMap from the Kubernetes API server.
+
+   .. code-block:: bash
+
+      ubuntu@k8s-master:~$ kubectl delete configmap k8.pool_only
+      configmap "k8s.pool_only" deleted
+
+#. Use the BIG-IP configuration utility to verify deletion of the pool.
+
+   :menuselection:`Local Traffic --> Pools`
+
+.. _kctlr-detach-pool:
+
+Detach a pool from a virtual server
+```````````````````````````````````
+
+If you want to delete a front-end BIG-IP virtual server, but keep its associated pool(s)/pool member(s):
+
+#. Remove the ``bindAddr`` field from the virtual server F5 resource ConfigMap.
+
+   .. code-block:: bash
+      :linenos:
+      :emphasize-lines: 24
+
+      ubuntu@k8s-master:~$ kubectl edit configmap k8s.vs
+
+      # Please edit the object below.
+      # ...
+      #
+      apiVersion: v1
+      data:
+        data: |
+          {
+            "virtualServer": {
+              "backend": {
+                "servicePort": 3000,
+                "serviceName": "myService",
+                "healthMonitors": [{
+                  "interval": 30,
+                  "protocol": "http",
+                  "send": "GET",
+                  "timeout": 86400
+                }]
+              },
+              "frontend": {
+                "virtualAddress": {
+                  "port": 80,
+                  "bindAddr": "1.2.3.4" \\ remove this line
+                },
+                "partition": "kubernetes",
+                "balance": "round-robin",
+                "mode": "http"
+              }
+            }
+          }
+        schema: f5schemadb://bigip-virtual-server_v0.1.2.json
+      kind: ConfigMap
+      metadata:
+        creationTimestamp: 2017-02-14T17:24:34Z
+        labels:
+          f5type: virtual-server
+        name: k8s.vs
+        namespace: default
+
+#. Verify the changes using ``kubectl get``.
+
+   .. code-block:: bash
+
+      ubuntu@k8s-master:~$ kubectl get configmap k8s.vs -o yaml
+
+#. Use the BIG-IP configuration utility to verify the virtual server no longer exists.
+
+   :menuselection:`Local Traffic --> Virtual Servers`
+
+.. _local traffic policy: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-local-traffic-policies-getting-started-13-0-0/1.html
+.. _iRule: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-irules-concepts-11-6-0/1.html
 .. _annotation: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+.. _k8s-bigip-ctlr beta documentation: /products/connectors/k8s-bigip-ctlr/v1.1-beta/

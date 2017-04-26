@@ -31,6 +31,12 @@ spec:
             "--bigip-password=$(BIGIP_PASSWORD)",
             "--bigip-url=10.190.24.171",
             "--bigip-partition=kubernetes",
+            # To manage a single namespace, enter it below
+            # (required in v1.0)
+            # To manage all namespaces, omit the `namespace` entry
+            # (default as of v1.1-beta)
+            # To manage multiple namespaces, enter a comma-separated list below
+            # (as of v1.1-beta)
             "--namespace=default",
             "--pool-member-type=cluster",
             "--openshift-sdn-name=/Common/openshift_vxlan"

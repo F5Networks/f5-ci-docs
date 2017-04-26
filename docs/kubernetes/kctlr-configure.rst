@@ -29,7 +29,7 @@ kubeconfig              Path to the `kubeconfig`_ file
 namespace               Kubernetes namespace to watch [#deprecated]_
 =====================   ===================================================
 
-.. [#deprecated] The ``namespace`` parameter is no longer required as of |kctlr| v1.1.0. See the multiple namespaces doc for more information.
+.. [#deprecated] Beginning with |kctlr| `v1.1-beta </products/connectors/k8s-bigip-ctlr/v1.1-beta>`_, the ``namespace`` parameter is no longer required.
 
 .. todo:: add link to multiple namespaces doc when it's added
 
