@@ -3,8 +3,16 @@
 Launch an |asp| instance for a Marathon Application
 ===================================================
 
-The |aspm-long| launches |asp| instances automatically for Apps that have the ``ASP_ENABLE_LABEL`` value set to "enabled" (for example, ``f5-asp:enable``).
+.. sidebar:: Docs test matrix
 
+   We tested this documentation with:
+
+   - ``marathon-1.3.9``
+   - ``mesos-1.0.3``
+   - ``|mctlr| v1.0.0``
+   - ``asp v1.0.0``
+
+The |aspm-long| launches |asp| instances automatically for Apps that have the ``ASP_ENABLE_LABEL`` value set to "enabled" (for example, ``f5-asp:enable``).
 
 Launch an ASP instance with the default configurations
 ------------------------------------------------------
@@ -13,28 +21,27 @@ Add the label ``"f5-asp": "enable"`` to the App's service definition.
 
 #. Via the Marathon web interface:
 
-    - Click on the App name in the :guilabel:`Applications` list.
-    - Click :guilabel:`Configuration`.
-    - Click :guilabel:`Edit`.
-    - Click :guilabel:`Labels`.
-    - Click the :guilabel:`plus sign icon` and add the new label "asp: enable".
-    - Click :guilabel:`Change and deploy configuration`.
+   - Click on the App name in the :guilabel:`Applications` list.
+   - Click :guilabel:`Configuration`.
+   - Click :guilabel:`Edit`.
+   - Click :guilabel:`Labels`.
+   - Click the :guilabel:`plus sign icon` and add the new label "asp: enable".
+   - Click :guilabel:`Change and deploy configuration`.
 
- #. Via the REST API:
+#. Via the REST API:
 
-    - Edit the App definition
+   - Edit the App definition
 
-    .. literalinclude:: /_static/config_examples/app_asp-enabled-defaults.json
-        :linenos:
-        :emphasize-lines: 21-24
+   .. literalinclude:: /_static/config_examples/app_asp-enabled-defaults.json
+      :linenos:
+      :emphasize-lines: 21-24
 
 
-    - Send a PUT request to the Marathon API server to update the App.
+   - Send a PUT request to the Marathon API server to update the App.
 
-    .. code-block:: bash
+   .. code-block:: bash
 
-        $ curl -X PUT -H "Content-Type: application/json" http://10.190.25.75:8080/v2/apps/basic-0 -d @app_asp-enabled-defaults.json
-
+      $ curl -X PUT -H "Content-Type: application/json" http://10.190.25.75:8080/v2/apps/basic-0 -d @app_asp-enabled-defaults.json
 
 
 Launch an ASP instance with custom configurations
@@ -44,24 +51,24 @@ Add the label ``"f5-asp": "enable"`` to the App's service definition.
 
 #. Via the Marathon web interface:
 
-    - Click on the App name in the :guilabel:`Applications` list.
-    - Click :guilabel:`Configuration`.
-    - Click :guilabel:`Edit`.
-    - Click :guilabel:`Labels`.
-    - Click the :guilabel:`plus sign icon` and add your override labels.
-    - Click :guilabel:`Change and deploy configuration`.
+   - Click on the App name in the :guilabel:`Applications` list.
+   - Click :guilabel:`Configuration`.
+   - Click :guilabel:`Edit`.
+   - Click :guilabel:`Labels`.
+   - Click the :guilabel:`plus sign icon` and add your override labels.
+   - Click :guilabel:`Change and deploy configuration`.
 
 #. Via the REST API:
 
-    - Add your desired `override labels </products/connectors/marathon-asp-ctlr/latest/index.html#configuration-parameters>`_ to the App's service definition.
+   - Add your desired `override labels </products/connectors/marathon-asp-ctlr/latest/index.html#configuration-parameters>`_ to the App's service definition.
 
-    .. literalinclude:: /_static/config_examples/app_asp-enabled-custom.json
+     .. literalinclude:: /_static/config_examples/app_asp-enabled-custom.json
         :emphasize-lines: 6-8, 23-31
         :linenos:
 
-    - Send a PUT request to the Marathon API server to update the App definition.
+   - Send a PUT request to the Marathon API server to update the App definition.
 
-    .. code-block:: bash
+     .. code-block:: bash
 
         $ curl -X PUT -H "Content-Type: application/json" http://<marathon-url>:8080/v2/apps -d @app_asp-enabled-custom.json
 
