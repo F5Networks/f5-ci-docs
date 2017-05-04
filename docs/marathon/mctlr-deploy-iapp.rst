@@ -33,21 +33,17 @@ You can create iApp variables for any built-in or custom iApp.
 
    The  `marathon-bigip-ctlr product documentation </products/connectors/marathon-bigip-ctlr/index.html>`_ for detailed information about iApp labels.
 
-.. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json
-   :caption: Example F5 iApp Application Labels
-   :linenos:
-   :emphasize-lines: 21-34
-
-:download:`Download f5-marathon-bigip-ctlr-vs-iApp-example.json </_static/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json>`
-
-
 Deploy the iApp
 ---------------
 
 #. Add the iApp labels section to the service definition of your Marathon Application.
 
    .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json
+      :caption: Example F5 iApp Application Labels
+      :linenos:
+      :emphasize-lines: 21-34
 
+   :download:`Download f5-marathon-bigip-ctlr-vs-iApp-example.json </_static/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json>`
 
 #. Send a PUT request to the Marathon API server to update the Application definition.
 
