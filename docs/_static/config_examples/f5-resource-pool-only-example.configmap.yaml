@@ -4,7 +4,7 @@ metadata:
   # name of the resource to create on the BIG-IP
   name: k8s.pool_only
   # the namespace to create the object in
-  # As of v1.1-beta, the k8s-bigip-ctlr watches all namespaces by default
+  # As of v1.1.0-beta.1 , the k8s-bigip-ctlr watches all namespaces by default
   # If the k8s-bigip-ctlr is watching a specific namespace(s),
   # this setting must match the namespace of the Service you want to proxy
   # -AND- the namespace(s) the k8s-bigip-ctlr watches

@@ -9,7 +9,7 @@ Deploy iApps with |mctlr-long|
 
    - ``marathon-1.3.9``
    - ``mesos-1.0.3``
-   - ``|mctlr| v1.0.0``
+   - |mctlr| ``v1.0.0``
    - Marathon `basic-3 example app`_
 
 The |mctlr| can deploy any iApp on a BIG-IP device via a set of `iApp configuration parameters </products/connectors/marathon-bigip-ctlr/latest/index.html#iApp>`_.

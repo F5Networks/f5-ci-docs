@@ -8,7 +8,7 @@ Manage BIG-IP LTM objects in Kubernetes
    We tested this documentation with:
 
    - ``kubernetes-v1.4.8_coreos.0``
-   - |kctlr| v1.0.0
+   - |kctlr| ``v1.0.0``
 
 
 The |kctlr-long| watches the Kubernetes API for `Services`_ with associated :ref:`F5 resources <k8s-f5-resources>` and creates/modifies BIG-IP Local Traffic Manager (LTM) objects accordingly.
@@ -195,23 +195,20 @@ Use IPAM to assign IP addresses to BIG-IP LTM virtual servers
 
 .. note::
 
-   .. versionadded:: k8s-bigip-ctlr v1.1.0-beta
+   .. versionadded:: k8s-bigip-ctlr v1.1.0-beta.1
 
    See the `k8s-bigip-ctlr beta documentation`_ for more information.
 
-You can use IPAM to assign IP addresses to BIG-IP LTM virtual server objects managed by the |kctlr-long|.
+The |kctlr-long| has a built-in hook that allows you to integrate an IPAM system using a custom plugin.
+The basic elements required are:
 
 #. Add an F5 resource ConfigMap set up for :ref:`unattached pools <kctlr-pool-only>` to the Service definition.
+   The |kctlr-long| creates a BIG-IP pool that isn't attached to a virtual server.
 
-#. Set up your IPAM system to add the ``virtual-server.f5.com/ip`` `annotation`_ for the ConfigMap with a chosen IP address.
+#. Use your IPAM system to `annotate the ConfigMap`_.
+   The annotation should follow the format ``virtual-server.f5.com/ip=<ipaddress>``.
 
-   You'd use the command below to annotate a `Kubernetes Service`_ with a virtual server IP address:
-
-   .. code-block:: bash
-
-      ubuntu@k8s-master:~$ kubectl annotate configmap <configmap-name> virtual-server.f5.com/ip=1.2.3.4
-
-The |kctlr-long| discovers the newly-annotated Service, creates a BIG-IP virtual server object for the Service, and attaches the pool to it.
+   The annotation tells the |kctlr-long| to create a BIG-IP virtual server with the designated IP address and attach the pool to it.
 
 .. _kctlr-downed-services:
 
@@ -231,7 +228,7 @@ Manage pools without virtual servers
 
 .. note::
 
-   .. versionadded:: k8s-bigip-ctlr v1.1.0-beta
+   .. versionadded:: k8s-bigip-ctlr v1.1.0-beta.1
 
    See the `k8s-bigip-ctlr beta documentation`_ for more information.
 
@@ -415,5 +412,5 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
 
 .. _local traffic policy: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-local-traffic-policies-getting-started-13-0-0/1.html
 .. _iRule: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-irules-concepts-11-6-0/1.html
-.. _annotation: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+.. _annotate the ConfigMap: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 .. _k8s-bigip-ctlr beta documentation: /products/connectors/k8s-bigip-ctlr/v1.1-beta/

@@ -9,17 +9,16 @@ Manage BIG-IP LTM objects in Marathon
 
    - ``marathon-1.3.9``
    - ``mesos-1.0.3``
-   - ``|mctlr| v1.0.0``
-
+   - |mctlr| ``v1.0.0``
 
 The |mctlr-long| watches the Mesos/Marathon API for Applications with associated :ref:`F5 Application Labels <app-labels>`.
- These Application Labels define the BIG-IP LTM objects |mctlr| creates/manages.
+These Application Labels define the BIG-IP LTM objects |mctlr| creates/manages.
 
 The example JSON blob shown below tells |mctlr| to create one (1) virtual server - with one (1) health monitor and one (1) pool - in the ``/mesos`` partition on the BIG-IP device.
 
 .. literalinclude:: /_static/config_examples/hello-marathon-example.json
    :caption: Example F5 Application Labels defining a BIG-IP virtual server
-   :lines: 7-12
+   :lines: 8,10,14-17
 
 .. tip::
 
@@ -120,19 +119,18 @@ Use IPAM to assign IP addresses to BIG-IP virtual servers
 
 .. note::
 
-   .. versionadded:: marathon-bigip-ctlr v1.1.0-beta
+   .. versionadded:: marathon-bigip-ctlr v1.1.0-beta.1
 
    See the `marathon-bigip-ctlr beta documentation`_ for more information.
 
-You can use IPAM to assign IP addresses to BIG-IP virtual server objects managed by the |mctlr-long|.
-To do so, configure your IPAM system to set the ``F5_{0}_BIND_ADDR`` F5 Application Label with a chosen IP address.
-The |mctlr| will assign the IP address specific in the application label to the BIG-IP virtual server object associated with the Application.
+The |mctlr-long| has a built-in hook that allows you to integrate an IPAM system using a custom plugin.
+The basic elements required are:
 
 #. Add the F5 application labels for :ref:`unattached pools <mctlr-pool-only>` to the App definition.
+   The |mctlr-long| creates a BIG-IP pool that isn't attached to a virtual server.
 
-#. Set up your IPAM system to add the ``F5_{0}_BIND_ADDR`` and IP address key-value pair to the Application definition as a Label.
-
-The |mctlr-long| discovers the updated App definition, creates a BIG-IP virtual server object for the App, and attaches the pool to the virtual server.
+#. Set your IPAM system to add the ``F5_{n}_BIND_ADDR`` label and IP address to the Application definition.
+   This tells the |mctlr-long| to create a BIG-IP virtual server with the designated IP address and attach the pool to it.
 
 .. _mctlr-downed-apps:
 
@@ -152,7 +150,7 @@ Manage pools without virtual servers
 
 .. note::
 
-   .. versionadded:: marathon-bigip-ctlr 1.1.0-beta
+   .. versionadded:: marathon-bigip-ctlr v1.1.0-beta.1
 
    See the `marathon-bigip-ctlr beta documentation`_ for more information.
 
@@ -170,7 +168,7 @@ For example, ``pool-only-0_8080``.
 Create a pool without a virtual server
 ``````````````````````````````````````
 
-#. Create a JSON file containing the App service definitions and F5 application labels, **without the ``F5_{n}_BIND_ADDR`` application label**.
+#. Create a JSON file containing the App service definitions and F5 application labels, **without the** ``F5_{n}_BIND_ADDR`` **application label**.
 
    .. note::
 

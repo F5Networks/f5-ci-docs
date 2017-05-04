@@ -7,7 +7,7 @@ Launch an |asp| instance for a Kubernetes Service
 
    We tested this documentation with:
    - ``kubernetes-v1.4.8_coreos.0``
-   - |kctlr| v1.0.0
+   - |kctlr| ``v1.0.0``
    - `kubernetes hello-world`_ service, with :ref:`ASP annotation <k8s-service-annotate>`
 
 Summary

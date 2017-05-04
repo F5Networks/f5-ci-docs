@@ -8,7 +8,7 @@ Install the |asp| in Kubernetes
    We tested this documentation with:
 
    - ``kubernetes-v1.4.8_coreos.0``
-   - |kctlr| v1.0.0
+   - |kctlr| ``v1.0.0``
 
 Summary
 -------
