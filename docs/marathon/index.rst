@@ -31,7 +31,9 @@ The F5 Mesos/Marathon Integration's documentation set assumes that you:
 |asp|
 -----
 
-The |asp| (ASP) provides container-to-container load balancing, traffic visibility, and inline programmability for applications. Its light form factor allows for rapid deployment in datacenters and across cloud services. The ASP integrates with container environment management and orchestration systems and enables application delivery service automation.
+The |asp| (ASP) provides container-to-container load balancing, traffic visibility, and inline programmability for applications.
+Its light form factor allows for rapid deployment in datacenters and across cloud services.
+The ASP integrates with container environment management and orchestration systems and enables application delivery service automation.
 
 .. seealso:: `ASP product documentation </products/asp/latest/index.html>`_
 
@@ -39,17 +41,23 @@ The |asp| (ASP) provides container-to-container load balancing, traffic visibili
 |aspm-long|
 -----------
 
-The |aspm-long| -- |aspm| -- deploys the |asp|. Like the |mctlr-long|, the |aspm-long| watches the Marathon API for Apps defined with a specific set of labels. When it finds an Application configured with the ``asp: enable`` label, it launches an instance of the |asp| to front the App and creates a virtual server on the |asp| instance. The |aspm-long| maintains an address in the |asp| pool configuration for each of an Application's tasks.
+The |aspm-long| -- |aspm| -- deploys the |asp|.
+Like the |mctlr-long|, the |aspm-long| watches the Marathon API for Apps defined with a specific set of labels.
+When it finds an Application configured with the ``f5-asp: enable`` label, it launches an instance of the |asp| to front the App and creates a virtual server on the |asp| instance.
+The |aspm-long| maintains an address in the |asp| pool configuration for each of an Application's tasks.
 
-The |aspm-long| App definition contains a set of default `Marathon ASP configuration labels </products/connectors/marathon-asp-ctlr/index.html#configuration-parameters>`_. These configurations -- set in the "env" (or, "Environment", in the Web UI) section of the |aspm| :ref:`App definition <install-asp-marathon>` -- apply to each ASP instance the |aspm| launches.
-The |aspm-long| also has a set of "override" labels. [#overridelabel]_ When you add these labels to the definition for an Application you want the ASP to proxy, they take precedence over the default |aspm| settings.
+The |aspm-long| App definition contains a set of default `Marathon ASP configuration labels </products/connectors/marathon-asp-ctlr/index.html#configuration-parameters>`_.
+These configurations -- set in the "env" (or, "Environment", in the Web UI) section of the |aspm| :ref:`App definition <install-asp-marathon>` -- apply to each ASP instance the |aspm| launches.
+The |aspm-long| also has a set of "override" labels. [#overridelabel]_
+When you add these labels to the definition for an Application you want the ASP to proxy, they take precedence over the default |aspm| settings.
 
-By default, the |aspm| starts one (1) |asp| instance per application. You can override this setting using the ``ASP_COUNT_PER_APP`` :ref:`F5 application label <app-labels>`.
+By default, the |aspm| starts one (1) |asp| instance per application.
+You can override this setting using the ``ASP_COUNT_PER_APP`` :ref:`F5 application label <app-labels>`.
 
-The |asp| collects traffic statistics for the Applications it load balances; these stats are either logged locally or sent to an external analytics application. You can set the location and type of the analytics application using the ``ASP_DEFAULT_STATS_URL`` label.
+The |asp| collects traffic statistics for the Applications it load balances; these stats are either logged locally or sent to an external analytics application.
+You can set the location and type of the analytics application using the ``ASP_DEFAULT_STATS_URL`` label.
 
 .. todo:: add "Export ASP Stats to an analytics provider"
-
 
 .. [#overridelabel] See the `Marathon ASP configuration labels </products/connectors/marathon-asp-ctlr/index.html#configuration-parameters>`_ table.
 
@@ -57,7 +65,8 @@ The |asp| collects traffic statistics for the Applications it load balances; the
 |mctlr-long|
 ------------
 
-The |mctlr-long| is a container-based `Marathon Application`_ -- |mctlr|. You can :ref:`launch <install-mctlr>` the |mctlr-long| in Marathon via the `Marathon REST API`_ or the `Marathon Web Interface`_.
+The |mctlr-long| is a container-based `Marathon Application`_ -- |mctlr|.
+You can :ref:`launch <install-mctlr>` the |mctlr-long| in Marathon via the `Marathon REST API`_ or the `Marathon Web Interface`_.
 
 The |mctlr| watches the Marathon API for special "F5 Application Labels" that tell it:
 

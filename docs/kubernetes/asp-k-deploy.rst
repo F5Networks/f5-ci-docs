@@ -3,28 +3,22 @@
 Deploy the |asp| with the |aspk-long|
 =====================================
 
-.. table:: Docs test matrix
+.. sidebar:: Docs test matrix
 
-    +-----------------------------------------------------------+
-    | kubernetes v1.4.8                                         |
-    +-----------------------------------------------------------+
-    | coreos-stable-1185.3.0                                    |
-    +-----------------------------------------------------------+
-    | asp v1.0.0                                                |
-    +-----------------------------------------------------------+
-    | f5-kube-proxy v1.0.0                                      |
-    +-----------------------------------------------------------+
-
+   We tested this documentation with:
+   - ``kubernetes-v1.4.8_coreos.0``
+   - |kctlr| ``v1.0.0``
 
 Summary
 -------
 
-The |aspk-long| -- |aspk| -- is a container-based application that runs in a `Pod`_ on each `Node`_ in a Kubernetes `Cluster`_. It takes the place of the standard ``kube-proxy`` component.
+The |aspk-long| -- |aspk| -- is a container-based application that runs in a `Pod`_ on each `Node`_ in a Kubernetes `Cluster`_.
+It takes the place of the standard ``kube-proxy`` component.
 
 .. important::
 
-    Master and Worker nodes have distinct pod manifests. See the CoreOS documentation regarding `setting up kube-proxy on the master <https://coreos.com/kubernetes/docs/latest/deploy-master.html#set-up-the-kube-proxy-pod>`_ and `setting up kube-proxy on the workers <https://coreos.com/kubernetes/docs/latest/deploy-workers.html#set-up-the-kube-proxy-pod>`_ for more information.
-
+   Master and Worker nodes have distinct pod manifests.
+   See the CoreOS documentation regarding `setting up kube-proxy on the master <https://coreos.com/kubernetes/docs/latest/deploy-master.html#set-up-the-kube-proxy-pod>`_ and `setting up kube-proxy on the workers <https://coreos.com/kubernetes/docs/latest/deploy-workers.html#set-up-the-kube-proxy-pod>`_ for more information.
 
 .. _k8s-pod-manifest:
 
@@ -33,58 +27,56 @@ Set up |aspk-long| on every node in the cluster
 
 .. tip::
 
-    In CoreOS, the `kube-proxy`_ manifest lives in the path ``/etc/kubernetes/manifests/kube-proxy.yaml``.
+   In CoreOS, the `kube-proxy`_ manifest lives in the path ``/etc/kubernetes/manifests/kube-proxy.yaml``.
 
-        .. code-block:: bash
-            :caption: SSH to a node and edit the kube-proxy manifest
+   .. code-block:: bash
+      :caption: SSH to a node and edit the kube-proxy manifest
 
-            user@k8s-master:~$ ssh core@172.16.1.21
-            Last login: Fri Feb 17 18:33:35 UTC 2017 from 172.16.1.20 on pts/0
-            CoreOS alpha (1185.3.0)
-            Update Strategy: No Reboots
-            core@k8s-worker-0 ~ $ sudo su
-            k8s-worker-0 core \# vim /etc/kubernetes/manifests/kube-proxy.yaml
-
+      user@k8s-master:~$ ssh core@172.16.1.21
+      Last login: Fri Feb 17 18:33:35 UTC 2017 from 172.16.1.20 on pts/0
+      CoreOS alpha (1185.3.0)
+      Update Strategy: No Reboots
+      core@k8s-worker-0 ~ $ sudo su
+      k8s-worker-0 core \# vim /etc/kubernetes/manifests/kube-proxy.yaml
 
 #. Edit the `kube-proxy`_ manifest on each node to match the :ref:`manifest examples <k8s-pod-manifest-examples>`.
 
-    The key additions/changes are:
+   The key additions/changes are:
 
-    .. code-block:: bash
-        :caption: Change the command to ``/proxy`` in the worker pod manifest(s).
+   .. code-block:: bash
+      :caption: Change the command to ``/proxy`` in the worker pod manifest(s).
 
-        spec:
-          containers:
-            command: /proxy
+      spec:
+        containers:
+          command: /proxy
 
-    .. code-block:: bash
-        :caption: Replace the image with the ``f5-kube-proxy`` image in both master and worker manifests.
+   .. code-block:: bash
+      :caption: Replace the image with the ``f5-kube-proxy`` image in both master and worker manifests.
 
-        spec:
-          containers:
-            image: f5networks/f5-kube-proxy:1.0.0
+      spec:
+        containers:
+          image: f5networks/f5-kube-proxy:1.0.0
 
-    .. code-block:: bash
-        :caption: Add a new ``mountPath`` to the ``volumeMounts`` section in both master and worker manifests.
+   .. code-block:: bash
+      :caption: Add a new ``mountPath`` to the ``volumeMounts`` section in both master and worker manifests.
 
-        spec:
-          containers:
-            volumeMounts:
-              ...
-              - mountPath: /var/run/kubernetes/proxy-plugin
-                name: plugin-config
-                readOnly: false
-
-    .. code-block:: bash
-        :caption: Add ``plugin-config`` to the ``volumes`` section in both master and worker manifests.
-
-        spec:
-          volumes:
+      spec:
+        containers:
+          volumeMounts:
             ...
-            - name: plugin-config
-              hostPath:
-                path: /var/run/kubernetes/proxy-plugin
+            - mountPath: /var/run/kubernetes/proxy-plugin
+              name: plugin-config
+              readOnly: false
 
+   .. code-block:: bash
+      :caption: Add ``plugin-config`` to the ``volumes`` section in both master and worker manifests.
+
+      spec:
+        volumes:
+          ...
+          - name: plugin-config
+            hostPath:
+              path: /var/run/kubernetes/proxy-plugin
 
 
 .. _k8s-pod-manifest-examples:
@@ -93,16 +85,16 @@ Examples
 --------
 
 .. literalinclude:: /_static/config_examples/f5-kube-proxy-manifest-master.yaml
-    :caption: kube-proxy manifest on MASTER node
-    :linenos:
-    :emphasize-lines: 10, 21-22, 27-29
+   :caption: kube-proxy manifest on MASTER node
+   :linenos:
+   :emphasize-lines: 10, 21-22, 27-29
 
 :download:`f5-kube-proxy-manifest-master.yaml </_static/config_examples/f5-kube-proxy-manifest-master.yaml>`
 
 .. literalinclude:: /_static/config_examples/f5-kube-proxy-manifest-worker.yaml
-    :caption: kube-proxy manifest on WORKER node
-    :linenos:
-    :emphasize-lines: 10, 28-29, 40-42
+   :caption: kube-proxy manifest on WORKER node
+   :linenos:
+   :emphasize-lines: 10, 28-29, 40-42
 
 :download:`f5-kube-proxy-manifest-worker.yaml </_static/config_examples/f5-kube-proxy-manifest-worker.yaml>`
 
