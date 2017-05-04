@@ -20,7 +20,7 @@ The prerequisites below are in addition to the :ref:`F5 Kubernetes Integration's
 
 #. The |kctlr-long| needs an `OpenShift user account`_ with permission to access nodes, endpoints, services, and configmaps. Specifically, the `Verbs and Resources`_ needed are:
 
-   #. ``[get list watch] [nodes endpoints services]``
+   #. ``[get list watch] [nodes endpoints services namespaces]``
    #. ``[get list update watch] [configmaps]``
 
 #. You'll need to use the `OpenShift Origin CLI`_, in addition to ``kubectl``, to execute OpenShift-specific commands.
