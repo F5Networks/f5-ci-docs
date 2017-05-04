@@ -43,6 +43,7 @@ help:
 	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
 	@echo "  coverage   to run coverage check of the documentation (if enabled)"
 	@echo "  dummy      to check syntax errors of document sources"
+	@echo "  preview    to build local preview of docs using sphinx-autobuild"
 
 .PHONY: clean
 clean:
@@ -223,3 +224,11 @@ dummy:
 	$(SPHINXBUILD) -b dummy $(ALLSPHINXOPTS) $(BUILDDIR)/dummy
 	@echo
 	@echo "Build finished. Dummy builder generates no files."
+
+# build live preview of docs locally
+.PHONY: preview
+preview:
+	@echo "Running autobuild. View live edits at:"
+	@echo "  http://0.0.0.0:8000"
+	@echo ""
+	sphinx-autobuild --host 0.0.0.0 -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html

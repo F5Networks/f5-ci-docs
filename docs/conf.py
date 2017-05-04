@@ -203,7 +203,9 @@ html_theme_path = f5_sphinx_theme.get_html_theme_path()
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {}
+html_theme_options = {
+    'next_prev_link': False
+}
 
 html_sidebars = {
     '**': ['searchbox.html', 'localtoc.html', 'globaltoc.html' ]
@@ -343,7 +345,7 @@ latex_documents = [
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
 #
-latex_logo = '_static/f5_logo.jpg'
+latex_logo = '_static/f5-logo-solid-rgb_small.png'
 
 # For "manual" documents, if this is true, then toplevel headings are parts,
 # not chapters.

@@ -26,10 +26,10 @@ bigip-partition         The BIG-IP partition |kctlr| manages
 ---------------------   ---------------------------------------------------
 kubeconfig              Path to the `kubeconfig`_ file
 ---------------------   ---------------------------------------------------
-namespace               Kubernetes namespace to watch [#deprecated]_
+namespace               Kubernetes namespace to watch [#fnnamespace]_
 =====================   ===================================================
 
-.. [#deprecated] The ``namespace`` parameter is no longer required as of |kctlr| v1.1.0. See the multiple namespaces doc for more information.
+.. [#fnnamespace] The ``namespace`` parameter is not a required parameter beginning in `k8s-bigip-ctlr v1.1.0-beta.1 </products/connectors/k8s-bigip-ctlr/v1.1-beta>`_.
 
 .. todo:: add link to multiple namespaces doc when it's added
 

@@ -22,7 +22,8 @@ MARATHON_URL            Marathon service URL (e.g., \http://10.190.25.75:8080)
 Default configurations
 ``````````````````````
 
-The |aspm-long| applies the following configurations to the |asp| by default. You can override any default settings using the `marathon-asp-ctlr override labels </products/connectors/marathon-asp-ctlr/latest/index.html#configuration-parameters>`_.
+The |aspm-long| applies the following configurations to the |asp| by default.
+You can override any default settings using the `marathon-asp-ctlr override labels </products/connectors/marathon-asp-ctlr/latest/index.html#configuration-parameters>`_.
 
 ===========================     ===============================================
 Parameter                       Value
@@ -42,8 +43,8 @@ ASP_DEFAULT_CONTAINER_PORT      8000
 
 
 .. literalinclude:: /_static/config_examples/f5-marathon-asp-ctlr-example.json
-    :caption: Example Application definition
-    :emphasize-lines: 17-31
+   :caption: Example Application definition
+   :emphasize-lines: 17-31
 
 
 See Also

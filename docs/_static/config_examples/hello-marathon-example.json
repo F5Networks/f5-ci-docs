@@ -8,7 +8,9 @@
     "labels": {
       // BIG-IP partition
       "F5_PARTITION": "mesos",
-      // desired IP address
+      // Assigns an IP address to the BIG-IP front-end virtual server
+      // Omit this label if creating pools without virtual servers
+      // (Available as of v1.1.0-beta.1 )
       "F5_0_BIND_ADDR": "10.190.25.70",
       "F5_0_MODE": "http",
       "F5_0_PORT": "8080"

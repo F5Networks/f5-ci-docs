@@ -94,6 +94,26 @@ You can use the |kctlr-long| to:
 Key Kubernetes Concepts
 -----------------------
 
+.. _k8s-namespaces:
+
+Namespaces
+``````````
+
+.. note::
+
+   .. versionadded:: k8s-bigip-ctlr v1.1.0-beta.1
+
+   See the `k8s-bigip-ctlr beta documentation </products/connectors/k8s-bigip-ctlr/v1.1-beta/>`_ for more information.
+
+The `Kubernetes namespace`_ allows you to create/manage multiple environments within a cluster.
+The |kctlr-long| can manage all namespaces; a single namespace; or pretty much anything in between.
+
+When :ref:`creating a BIG-IP front-end virtual server <kctlr-create-vs>` for a `Kubernetes Service`_, you can:
+
+- specify a single namespace to watch;
+- specify multiple namespaces (pass in each as a separate flag); or
+- don't specify any namespace (meaning you want to watch all namespaces); **this is the default setting as of** `k8s-bigip-ctlr v1.1.0-beta.1 </products/connectors/k8s-bigip-ctlr/v1.1-beta/>`_).
+
 .. _k8s-f5-resources:
 
 F5 Resource Properties
@@ -101,8 +121,9 @@ F5 Resource Properties
 
 The |kctlr-long| uses special 'F5 Resources' to identify what BIG-IP LTM objects it should create.
 An F5 resource is a JSON blob included in a Kubernetes `ConfigMap`_.
+As of v1.0
 
-An :ref:`F5 Resource JSON blob <f5-resource-blob>` must contain the following properties.
+The virtual server :ref:`F5 Resource JSON blob <f5-resource-blob>` must contain the following properties.
 
 +---------------------+-------------------------------------------------------+
 | Property            | Description                                           |
@@ -123,12 +144,14 @@ An :ref:`F5 Resource JSON blob <f5-resource-blob>` must contain the following pr
 |                     |   `Kubernetes Service`_ to proxy                      |
 +---------------------+-------------------------------------------------------+
 
-The frontend property defines how to expose a Service on a BIG-IP device.
-You can define the frontend using the standard `k8s-bigip-ctlr virtualServer parameters </products/connectors/k8s-bigip-ctlr/index.html#virtualserver>`_ or the `k8s-bigip-ctlr iApp parameters </products/connectors/k8s-bigip-ctlr/index.html#iapps>`_.
+The ``frontend`` property defines how to expose a Service on a BIG-IP device.
+You can define ``frontend`` using the standard `k8s-bigip-ctlr virtualServer parameters </products/connectors/k8s-bigip-ctlr/index.html#virtualserver>`_ or the `k8s-bigip-ctlr iApp parameters </products/connectors/k8s-bigip-ctlr/index.html#iapps>`_.
 
-The frontend iApp configuration parameters include a set of customizable ``iappVariables`` parameters. These parameters must be custom-defined to correspond to fields in the iApp template you want to launch. In addition, you'll need to define the `iApp Pool Member Table </products/connectors/k8s-bigip-ctlr/index.html#iapp-pool-member-table>`_ that the iApp creates on the BIG-IP.
+The ``frontend`` iApp configuration parameters include a set of customizable ``iappVariables`` parameters.
+These custom user-defined parameters must correspond to fields in the iApp template you want to launch.
+In addition, you'll need to define the `iApp Pool Member Table </products/connectors/k8s-bigip-ctlr/index.html#iapp-pool-member-table>`_ that the iApp creates on the BIG-IP device.
 
-The backend property identifies the `Kubernetes Service`_ that makes up the server pool.
+The ``backend`` property identifies the `Kubernetes Service`_ that makes up the server pool.
 You can also define health monitors for your BIG-IP LTM virtual server(s) and pool(s) in this section.
 
 
@@ -153,14 +176,15 @@ Related
 -------
 
 .. toctree::
-    :glob:
+   :glob:
 
-    kctlr*
-    asp*
-    k8s-bigip-ctlr docs <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
-    f5-kube-proxy docs <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
-    F5 Application Services Proxy docs <http://clouddocs.f5.com/products/asp/latest>
+   kctlr*
+   asp*
+   k8s-bigip-ctlr docs <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
+   f5-kube-proxy docs <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
+   F5 Application Services Proxy docs <http://clouddocs.f5.com/products/asp/latest>
 
 
 .. _f5-kube-proxy product documentation: </products/connectors/f5-kube-proxy/latest/>
 .. _ASP product documentation: /products/asp/latest/
+.. _Kubernetes namespace: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/

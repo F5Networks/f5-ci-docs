@@ -9,17 +9,16 @@ Manage BIG-IP LTM objects in Marathon
 
    - ``marathon-1.3.9``
    - ``mesos-1.0.3``
-   - ``|mctlr| v1.0.0``
-
+   - |mctlr| ``v1.0.0``
 
 The |mctlr-long| watches the Mesos/Marathon API for Applications with associated :ref:`F5 Application Labels <app-labels>`.
- These Application Labels define the BIG-IP LTM objects |mctlr| creates/manages.
+These Application Labels define the BIG-IP LTM objects |mctlr| creates/manages.
 
 The example JSON blob shown below tells |mctlr| to create one (1) virtual server - with one (1) health monitor and one (1) pool - in the ``/mesos`` partition on the BIG-IP device.
 
 .. literalinclude:: /_static/config_examples/hello-marathon-example.json
    :caption: Example F5 Application Labels defining a BIG-IP virtual server
-   :lines: 7-12
+   :lines: 8,10,14-17
 
 .. tip::
 
@@ -27,8 +26,8 @@ The example JSON blob shown below tells |mctlr| to create one (1) virtual server
 
 .. _mctlr-create-vs:
 
-Create a virtual server for a Marathon Application
---------------------------------------------------
+Create a BIG-IP virtual server for a Marathon Application
+---------------------------------------------------------
 
 .. note::
 
@@ -49,7 +48,6 @@ Create a virtual server for a Marathon Application
    .. code-block:: shell
 
       curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' http://10.190.25.75:8080/v2/apps -d @hello-marathon-example.json
-
 
 #. Verify creation of the virtual server, pool, and member on the BIG-IP via ``tmsh`` or the configuration utility.
 
@@ -75,8 +73,8 @@ Create a virtual server for a Marathon Application
 
 .. _mctlr-update-vs:
 
-Update a BIG-IP virtual server
-------------------------------
+Update a BIG-IP front-end virtual server
+----------------------------------------
 
 #. Edit the Application's JSON service definition.
 
@@ -86,7 +84,6 @@ Update a BIG-IP virtual server
 
       user@mesos-master:~$ curl -X PUT http://10.190.25.75:8080/v2/apps/basic-0 -d @hello-marathon-example.json -H "Content-type: application/json"
       {"version":"2017-02-21T21:48:12.755Z","deploymentId":"02529d16-258b-41d4-ba06-9765c4d1f8d3"}
-
 
 #. Verify your changes on the BIG-IP via ``tmsh`` or the configuration utility.
 
@@ -120,27 +117,131 @@ Delete BIG-IP LTM objects
 Use IPAM to assign IP addresses to BIG-IP virtual servers
 ---------------------------------------------------------
 
-.. versionadded:: marathon-bigip-ctlr_v1.1.0
+.. note::
 
-You can use IPAM to assign IP addresses to BIG-IP virtual server objects managed by the |mctlr-long|.
-To do so, configure your IPAM system to set the ``F5_{0}_BIND_ADDR`` F5 Application Label with a chosen IP address.
-The |mctlr| will assign the IP address specific in the application label to the BIG-IP virtual server object associated with the Application.
+   .. versionadded:: marathon-bigip-ctlr v1.1.0-beta.1
+
+   See the `marathon-bigip-ctlr beta documentation`_ for more information.
+
+The |mctlr-long| has a built-in hook that allows you to integrate an IPAM system using a custom plugin.
+The basic elements required are:
 
 #. Add the F5 application labels for :ref:`unattached pools <mctlr-pool-only>` to the App definition.
+   The |mctlr-long| creates a BIG-IP pool that isn't attached to a virtual server.
 
-#. Set up your IPAM system to add the ``F5_{0}_BIND_ADDR`` and IP address key-value pair to the Application definition as a Label.
-
-The |mctlr-long| discovers the updated App definition, creates a BIG-IP virtual server object for the App, and attaches the pool to the virtual server.
+#. Set your IPAM system to add the ``F5_{n}_BIND_ADDR`` label and IP address to the Application definition.
+   This tells the |mctlr-long| to create a BIG-IP virtual server with the designated IP address and attach the pool to it.
 
 .. _mctlr-downed-apps:
 
 Connectivity for down or replaced Applications
 ----------------------------------------------
 
-If you need to take down a`Marathon Application  temporarily and want to keep the associated BIG-IP LTM objects, keep the F5 Application Labels in the application's service definition.
+If you need to take down a `Marathon Application`_ temporarily and want to keep the associated BIG-IP LTM objects, keep the F5 Application Labels in the application's service definition.
 The |mctlr| will continue to manage the associated BIG-IP LTM objects when the App comes back up.
 If you deploy a new App with the same name as the one you took down, the |kctlr| associates the existing BIG-IP LTM objects with the new Service.
 
 If you take down an Application and want to remove its corresponding BIG-IP LTM objects, :ref:`delete the F5 Application Labels <mctlr-delete-objects>` from its service definition.
 
+.. _mctlr-pool-only:
+
+Manage pools without virtual servers
+------------------------------------
+
+.. note::
+
+   .. versionadded:: marathon-bigip-ctlr v1.1.0-beta.1
+
+   See the `marathon-bigip-ctlr beta documentation`_ for more information.
+
+The |mctlr-long| can create and manage BIG-IP Local Traffic Manager (LTM) pools that aren't attached to a front-end BIG-IP virtual server (also referred to as "unattached pools").
+When you create unattached pools, the |mctlr-long| applies the following naming convention to BIG-IP pool members: ``<application-name>_<F5_{n}_PORT>``.
+For example, ``pool-only-0_8080``.
+
+.. important::
+
+   Your BIG-IP device must have a virtual server with an `iRule`_, or a `local traffic policy`_, that can direct traffic to the unattached pool.
+   After creating an unattached pool, add its member(s) to the iRule or traffic policy to ensure proper handling of client connections to your back-end applications.
+
+.. _mctlr-create-unattached-pool:
+
+Create a pool without a virtual server
+``````````````````````````````````````
+
+#. Create a JSON file containing the App service definitions and F5 application labels, **without the** ``F5_{n}_BIND_ADDR`` **application label**.
+
+   .. note::
+
+      This sample App definition uses the default :ref:`port index <port-mappings>` (``0``).
+
+   .. literalinclude:: /_static/config_examples/hello-marathon-pool-only-example.json
+
+   :download:`hello-marathon-pool-only-example.json </_static/config_examples/hello-marathon-pool-only-example.json>`
+
+#. Deploy the application in Marathon via the REST API.
+
+   .. code-block:: shell
+
+      curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' http://10.190.25.75:8080/v2/apps -d @hello-marathon-pool-only-example.json
+
+
+.. _mctlr-attach-pool-vs:
+
+Attach a pool to a virtual server
+`````````````````````````````````
+
+#. Add the the ``F5_{n}_BIND_ADDR`` label to the Application's JSON service definition using the `Marathon Web Interface`_.
+
+   - :menuselection:`Applications --> <App name> --> Configuration --> Edit --> Labels`
+   - Click the :guilabel:`plus sign` (+).
+   - Add ``F5_{n}_BIND_ADDR`` and the desired IP address.
+   - Click :guilabel:`Change and deploy configuration`.
+
+#. Use the BIG-IP configuration utility to verify the pool attached to the virtual server.
+
+   :menuselection:`Local Traffic --> Virtual Servers`
+
+.. tip::
+
+   You can :ref:`use an IPAM system <mctlr-ipam>` to populate the ``F5_{n}_BIND_ADDR`` label automatically.
+
+
+.. _mctlr-delete-unattached-pool:
+
+Delete an unattached pool
+`````````````````````````
+
+#. Remove the F5 Application Labels from the Application's service definition using the `Marathon Web Interface`_.
+
+   - :menuselection:`Applications --> <App name> --> Configuration --> Edit --> Labels`
+   - Click the :guilabel:`minus sign` (-) next to each F5 App Label.
+   - Click :guilabel:`Change and deploy configuration`.
+
+#. Use the BIG-IP configuration utility to verify deletion of the pool.
+
+   :menuselection:`Local Traffic --> Pools`
+
+
+.. _mctlr-detach-pool:
+
+Detach a pool from a virtual server
+```````````````````````````````````
+
+If you want to delete a front-end BIG-IP virtual server, but keep its associated pool(s)/pool member(s):
+
+#. Remove the ``F5_{n}_BIND_ADDR`` label from the App's service definition using the `Marathon Web Interface`_.
+
+   - :menuselection:`Applications --> <App name> --> Configuration --> Edit --> Labels`
+   - Click the :guilabel:`minus sign` (-) next to ``F5_{n}_BIND_ADDR``.
+   - Click :guilabel:`Change and deploy configuration`.
+
+
+#. Use the BIG-IP configuration utility to verify the virtual server no longer exists.
+
+   :menuselection:`Local Traffic --> Virtual Servers`
+
+.. _Marathon Application: https://mesosphere.github.io/marathon/docs/application-basics.html
+.. _local traffic policy: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-local-traffic-policies-getting-started-13-0-0/1.html
+.. _iRule: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-irules-concepts-11-6-0/1.html
 .. _basic Hello Marathon App: https://mesosphere.github.io/marathon/docs/application-basics.html#hello-marathon-an-inline-shell-script
+.. _marathon-bigip-ctlr beta documentation: /products/connectors/marathon-bigip-ctlr/v1.1-beta/
