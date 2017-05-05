@@ -49,7 +49,7 @@ Create a BIG-IP virtual server for a Marathon Application
 
       curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' http://10.190.25.75:8080/v2/apps -d @hello-marathon-example.json
 
-#. Verify creation of the virtual server, pool, and member on the BIG-IP via ``tmsh`` or the configuration utility.
+#. Verify creation of the virtual server, pool, and member in the App's BIG-IP partition via ``tmsh`` or the configuration utility.
 
    .. code-block:: text
 
