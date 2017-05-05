@@ -139,7 +139,7 @@ Port Mapping
 ````````````
 
 In Marathon, container-based applications using Docker BRIDGE mode must have `port mappings`_ configured. [#dockerbridge]_
-For Applications proxied by the |mctlr-long|, these port mappings make it possible for the BIG-IP to route external traffic to `service ports`_ inside the Apache Mesos cluster.
+For Applications proxied by the |mctlr-long|, these port mappings make it possible for the BIG-IP device to route external traffic to `service ports`_ inside the Apache Mesos cluster.
 You can define multiple port mappings for a Marathon Application.
 
 .. important::
@@ -164,7 +164,7 @@ The code sample below defines an Application with three (3) port indices.
    :emphasize-lines: 13-15, 16-18, 19-21
 
 
-In the ``labels`` section, we specify that we want to create HTTP virtual servers on the BIG-IP for port indices ``0`` and ``1``.
+In the ``labels`` section, we specify that we want to create HTTP virtual servers on the BIG-IP device for port indices ``0`` and ``1``.
 In this example, ``0`` refers to the first mapping defined above (``"containerPort": "8088"``) and ``1`` refers to the second (``"containerPort": "8188"``).
 
 .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json

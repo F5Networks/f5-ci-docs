@@ -121,7 +121,6 @@ F5 Resource Properties
 
 The |kctlr-long| uses special 'F5 Resources' to identify what BIG-IP LTM objects it should create.
 An F5 resource is a JSON blob included in a Kubernetes `ConfigMap`_.
-As of v1.0
 
 The virtual server :ref:`F5 Resource JSON blob <f5-resource-blob>` must contain the following properties.
 
