@@ -3,8 +3,8 @@
 How to send statistics to Splunk
 ================================
 
-The |asp| (ASP) and BIG-IP can both send data to `Splunk`_ for analysis.
-This tutorial leads you through the steps required to send data from BIG-IP and the ASP to a Splunk instance.
+The |asp| (ASP) and BIG-IP device(s) can send data to `Splunk`_ for analysis.
+This tutorial leads you through the steps required to send data from a BIG-IP device and an ASP instance to a Splunk instance.
 
 Before you begin
 ----------------

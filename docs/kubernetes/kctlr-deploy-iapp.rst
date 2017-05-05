@@ -10,7 +10,7 @@ Deploy iApps with |kctlr-long|
    - ``kubernetes-v1.4.8_coreos.0``
    - |kctlr| ``v1.0.0``
 
-The |kctlr| can deploy any iApp on the BIG-IP via a set of `iApp configuration parameters </products/connectors/k8s-bigip-ctlr/latest/index.html#iApp>`_. The iApp must exist on your BIG-IP before |kctlr| attempts to deploy it. The steps presented here apply to any built-in or custom iApp.
+The |kctlr| can deploy any iApp on a BIG-IP device via a set of `iApp configuration parameters </products/connectors/k8s-bigip-ctlr/latest/index.html#iApp>`_. The iApp must exist on your BIG-IP before |kctlr| attempts to deploy it. The steps presented here apply to any built-in or custom iApp.
 
 If you prefer not to use iApps, you can also :ref:`manage BIG-IP objects directly <kctlr-manage-bigip-objects>` with |kctlr|.
 

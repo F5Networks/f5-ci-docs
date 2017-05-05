@@ -61,7 +61,7 @@ Application Developers interact with the platform's API; the container connector
 
 ---------------------------------
 
-For example, when you create an App in Marathon with the :ref:`F5 application labels <app-labels>` applied, the |mctlr-long| uses the information defined in the labels to create objects on the BIG-IP for that App.
+For example, when you create an App in Marathon with the :ref:`F5 application labels <app-labels>` applied, the |mctlr-long| uses the information defined in the labels to create objects on the BIG-IP device for that App.
  If you create an App in Marathon with the "asp: enable" label applied, the |aspm-long| launches an |asp| instance for the App.
 
 ---------------------------------
@@ -72,7 +72,7 @@ For example, when you create an App in Marathon with the :ref:`F5 application la
 
 ---------------------------------
 
-The Container Connector is stateless: the inputs are the container orchestration environment's config, the BIG-IP or ASP config, and its own config (provided by the container orchestration environment).
+The Container Connector is stateless: the inputs are the container orchestration environment's config, the BIG-IP device or ASP instance config, and its own config (provided by the container orchestration environment).
 This means an instance of a Container Connector can be readily discarded.
 Migrating a CC is as easy as destroying it in one place and spinning up a new one somewhere else.
 Wherever a Container Connector runs, it always watches the API and attempts to bring the BIG-IP, or ASP, up to date with the most recent applicable configurations.
