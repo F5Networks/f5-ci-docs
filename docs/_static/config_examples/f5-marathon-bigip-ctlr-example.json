@@ -7,6 +7,8 @@
   "container": {
     "type": "DOCKER",
     "docker": {
+      // replace the version as appropriate
+      // (e.g., f5networks/marathon-bigip-ctlr:1.1.0-beta.1)
       "image": "f5networks/marathon-bigip-ctlr:1.0.0",
       "network": "BRIDGE"
     }

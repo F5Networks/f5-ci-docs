@@ -21,36 +21,39 @@ F5_CC_BIGIP_PASSWORD    Password for BIG-IP account
 ---------------------   -------------------------------------------------------
 F5_CC_BIGIP_HOSTNAME    BIG-IP Hostname/IP address
 ---------------------   -------------------------------------------------------
-F5_CC_PARTITIONS	    The BIG-IP partition |mctlr| manages
+F5_CC_PARTITIONS	    The `BIG-IP partition`_ |mctlr| should manage
 =====================   =======================================================
 
 
 .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example.json
-    :caption: Example Application definition
-    :emphasize-lines: 13-18
-    :linenos:
+   :caption: Example Application definition
+   :emphasize-lines: 13-18
+   :linenos:
 
 Required Application Labels
 ---------------------------
 
-Use the :ref:`F5 application labels <app-labels>` listed in the table below when you're :ref:`managing BIG-IP objects directly <mctlr-manage-bigip-objects>`.
+Use the :ref:`F5 application labels <app-labels>` listed in the table below when you're :ref:`managing BIG-IP Local Traffic Manager (LTM) objects directly <mctlr-manage-bigip-objects>`.
 
 =====================   =======================================================
 Parameter               Description
 =====================   =======================================================
-F5_PARTITION            The BIG-IP partition in which you want to create
+F5_PARTITION            The `BIG-IP partition`_ in which you want to create
                         a virtual server; cannot be "/Common".
 ---------------------   -------------------------------------------------------
-F5\_{n}_BIND_ADDR       IP address of the App service
+F5\_{n}_BIND_ADDR       IP address to use for the BIG-IP LTM virtual server
+                        created for the Marathon App service [#fn1]_
 
                         Example:
                         ``"F5_0_BIND_ADDR": "10.0.0.42"``
 ---------------------   -------------------------------------------------------
-F5\_{n}_PORT            Service port to use for communications with the BIG-IP
-                        Overrides the servicePort configuration parameter.
+F5\_{n}_PORT            Service port to use on the BIG-IP LTM virtual server.
+                        Overrides the ``servicePort`` configuration parameter.
 
                         Example: ``"F5_0_PORT": "80"``
 =====================   =======================================================
+
+.. [#fn1] Not required when creating :ref:`unattached pools <mctlr-pool-only>`.
 
 .. _marathon-required-iapp-labels:
 
@@ -76,7 +79,7 @@ F5\_{n}_IAPP_POOL_MEMBER_TABLE      Template-specific [#iapplabels]_
 ---------------------------------   -------------------------------------------
 F5\_{n}_IAPP_VARIABLE_*             Template-specific [#iapplabels]_
 ---------------------------------   -------------------------------------------
-F5_{n}_IAPP_OPTION_*                Template-specific [#iapplabels]_
+F5\_{n}_IAPP_OPTION_*               Template-specific [#iapplabels]_
 =================================   ===========================================
 
 .. [#iapplabels] See `Application Labels for iApp Mode </products/connectors/marathon-bigip-ctlr/latest/index.html#application-labels-for-iapp-mode>`_ for more information.
@@ -87,3 +90,4 @@ See Also
 
 See the `marathon-bigip-ctlr product documentation </products/connectors/marathon-bigip-ctlr/latest/index.html>`_ for the full list of available configuration parameters.
 
+.. _BIG-IP partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-13-0-0/2.html

@@ -13,7 +13,7 @@ Required configuration parameters
 Parameter               Description
 =====================   ===================================================
 bigip-username          Username for BIG-IP account with permission to
-                        manage objects in the specified partition;
+                        manage objects in the ``bigip-partition``;
                         can be an env variable
                         (e.g., "``$(BIGIP_USERNAME)"``)
 ---------------------   ---------------------------------------------------
@@ -26,20 +26,23 @@ bigip-partition         The BIG-IP partition |kctlr| manages
 ---------------------   ---------------------------------------------------
 kubeconfig              Path to the `kubeconfig`_ file
 ---------------------   ---------------------------------------------------
-namespace               Kubernetes namespace to watch
+namespace               Kubernetes namespace to watch [#fnnamespace]_
 =====================   ===================================================
 
+.. [#fnnamespace] The ``namespace`` parameter is not a required parameter beginning in `k8s-bigip-ctlr v1.1.0-beta.1 </products/connectors/k8s-bigip-ctlr/v1.1-beta>`_.
+
+.. todo:: add link to multiple namespaces doc when it's added
 
 .. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
-    :caption: Example Deployment definition
-    :emphasize-lines: 29-35
+   :caption: Example Deployment definition
+   :emphasize-lines: 29-35
 
 .. _kctlr-configure-openshift:
 
 Required configuration parameters for OpenShift clusters
 --------------------------------------------------------
 
-In addition to the required parameters noted above, you'll need to define the following parameters when using |kctlr-long| in an OpenShift cluster.
+In addition to the required parameters noted above, define the following parameters when using |kctlr-long| in an OpenShift cluster.
 
 =====================   ===================================================
 Parameter               Description
@@ -58,14 +61,19 @@ openshift-sdn-name      TMOS path to the BIG-IP VXLAN tunnel providing
 .. [#tunnel] The VXLAN tunnel does not need to reside in the same partition managed by the |kctlr-long|.
 
 .. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml
-    :caption: Example Deployment definition
-    :emphasize-lines: 29-38
+   :caption: Example Deployment definition
+   :emphasize-lines: 29-38
 
 
 Required configuration parameters for F5 resources
 --------------------------------------------------
 
-The ``frontend`` section of an F5 resource must contain the parameters listed in the tables below.
+The ``frontend`` section of an F5 resource should contain the parameters listed in the tables below.
+
+.. tip::
+
+   - You can set the ``virtualAddress.bindAddr`` parameter :ref:`using an IPAM system <kctlr-ipam>`.
+   - If you want to :ref:`create pools without virtual servers <kctlr-pool-only>`, you can leave out the ``virtualServer`` section altogether.
 
 virtualServer
 `````````````
@@ -73,22 +81,27 @@ virtualServer
 =====================   ===================================================
 Parameter               Description
 =====================   ===================================================
-partition               The BIG-IP partition in which you want to create
-                        a virtualServer
+partition               The `BIG-IP partition`_ in which you want to create
+                        a virtual server
 ---------------------   ---------------------------------------------------
 mode                    Proxy mode (http or tcp)
 ---------------------   ---------------------------------------------------
 balance                 Load balancing mode
 ---------------------   ---------------------------------------------------
 virtualAddress          JSON object; allocates a virtual address for the
-                        virtualServer
+                        virtualServer. [#fn1]_
 ---------------------   ---------------------------------------------------
-- bindAddr              part of the virtualAddress JSON object; defines the
-                        virtual IP address to assign to the virtualServer
+- bindAddr              Part of the virtualAddress JSON object; defines the
+                        virtual IP address to assign to the virtualServer.
+                        [#fn1]_
 ---------------------   ---------------------------------------------------
-- port                  part of the virtualAddress JSON object; defines the
-                        port to assign to the virtualServer
+- port                  Part of the virtualAddress JSON object; defines the
+                        port to assign to the virtualServer. [#fn2]_
 =====================   ===================================================
+
+
+.. [#fn1] Not required when creating :ref:`unattached pools <kctlr-pool-only>`.
+.. [#fn2] Required when the virtualAddress object is present; not required if you're creating :ref:`unattached pools <kctlr-pool-only>` and you omit the virtualAddress object.
 
 iApps
 `````
@@ -96,16 +109,16 @@ iApps
 =====================   ===================================================
 Parameter               Description
 =====================   ===================================================
-partition               The BIG-IP partition in which you want to create
-                        a virtualServer
+partition               The `BIG-IP partition`_ in which you want to create
+                        a virtual server
 ---------------------   ---------------------------------------------------
-iapp                    BIG-IP iApp template you want to deploy;
-                        *must already exist on the BIG-IP*
+iapp                    The BIG-IP iApp template you want to deploy;
+                        *must already exist on the BIG-IP device*
 ---------------------   ---------------------------------------------------
-iappPoolMemberTable     Defines the name and layout of the pool-member
+iappPoolMemberTable     The name and layout of the pool-member
                         table in the iApp. [#pmtable]_
 ---------------------   ---------------------------------------------------
-iappOptions             key-value object; used to provide information
+iappOptions             key-value object that provides information
                         about the iApp
                         (see :ref:`iApp example <f5-resource-iapp-blob>`)
 =====================   ===================================================
