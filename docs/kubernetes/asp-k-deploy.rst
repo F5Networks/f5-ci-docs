@@ -85,16 +85,14 @@ Examples
 --------
 
 .. literalinclude:: /_static/config_examples/f5-kube-proxy-manifest-master.yaml
-   :caption: kube-proxy manifest on MASTER node
-   :linenos:
-   :emphasize-lines: 10, 21-22, 27-29
+    :caption: kube-proxy manifest on MASTER node
+    :linenos:
 
 :download:`f5-kube-proxy-manifest-master.yaml </_static/config_examples/f5-kube-proxy-manifest-master.yaml>`
 
 .. literalinclude:: /_static/config_examples/f5-kube-proxy-manifest-worker.yaml
-   :caption: kube-proxy manifest on WORKER node
-   :linenos:
-   :emphasize-lines: 10, 28-29, 40-42
+    :caption: kube-proxy manifest on WORKER node
+    :linenos:
 
 :download:`f5-kube-proxy-manifest-worker.yaml </_static/config_examples/f5-kube-proxy-manifest-worker.yaml>`
 

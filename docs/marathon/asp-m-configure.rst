@@ -50,5 +50,5 @@ ASP_DEFAULT_CONTAINER_PORT      8000
 See Also
 --------
 
-See the `F5 Marathon ASP Controller documentation </products/connectors/marathon-asp-ctlr/index.html#configuration-parameters>`_ for the full list of available configuration parameters.
+See the `F5 Marathon ASP Controller documentation </products/connectors/marathon-asp-ctlr/latest/index.html#configuration-parameters>`_ for the full list of available configuration parameters.
 

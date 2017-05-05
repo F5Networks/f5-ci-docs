@@ -145,11 +145,11 @@ The virtual server :ref:`F5 Resource JSON blob <f5-resource-blob>` must contain 
 +---------------------+-------------------------------------------------------+
 
 The ``frontend`` property defines how to expose a Service on a BIG-IP device.
-You can define ``frontend`` using the standard `k8s-bigip-ctlr virtualServer parameters </products/connectors/k8s-bigip-ctlr/index.html#virtualserver>`_ or the `k8s-bigip-ctlr iApp parameters </products/connectors/k8s-bigip-ctlr/index.html#iapps>`_.
+You can define ``frontend`` using the standard `k8s-bigip-ctlr virtualServer parameters </products/connectors/k8s-bigip-ctlr/latest/index.html#virtualserver>`_ or the `k8s-bigip-ctlr iApp parameters </products/connectors/k8s-bigip-ctlr/latest/index.html#iapps>`_.
 
 The ``frontend`` iApp configuration parameters include a set of customizable ``iappVariables`` parameters.
 These custom user-defined parameters must correspond to fields in the iApp template you want to launch.
-In addition, you'll need to define the `iApp Pool Member Table </products/connectors/k8s-bigip-ctlr/index.html#iapp-pool-member-table>`_ that the iApp creates on the BIG-IP device.
+In addition, you'll need to define the `iApp Pool Member Table </products/connectors/k8s-bigip-ctlr/latest/index.html#iapp-pool-member-table>`_ that the iApp creates on the BIG-IP device.
 
 The ``backend`` property identifies the `Kubernetes Service`_ that makes up the server pool.
 You can also define health monitors for your BIG-IP LTM virtual server(s) and pool(s) in this section.
@@ -185,6 +185,6 @@ Related
    F5 Application Services Proxy docs <http://clouddocs.f5.com/products/asp/latest>
 
 
-.. _f5-kube-proxy product documentation: </products/connectors/f5-kube-proxy/latest/>
+.. _f5-kube-proxy product documentation: /products/connectors/f5-kube-proxy/latest/
 .. _ASP product documentation: /products/asp/latest/
 .. _Kubernetes namespace: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
