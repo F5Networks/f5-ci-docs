@@ -22,7 +22,8 @@ OpenShift Prerequisites
 
 The prerequisites below are in addition to the :ref:`F5 Kubernetes Integration's general prerequisites <k8s-prereqs>`.
 
-#. The |kctlr-long| needs an `OpenShift user account`_ with permission to access nodes, endpoints, services, and configmaps. Specifically, the `Verbs and Resources`_ needed are:
+#. The |kctlr-long| needs an `OpenShift user account`_ with permission to access nodes, endpoints, services, and configmaps.
+   Add the verbs and resources shown below to your `Authorization Policy`_:
 
    #. ``[get list watch] [nodes endpoints services namespaces]``
    #. ``[get list update watch] [configmaps]``
@@ -59,7 +60,7 @@ Related
 
 .. _OpenShift Origin: https://www.openshift.org/
 .. _OpenShift user account: https://docs.openshift.org/1.2/admin_guide/manage_users.html
-.. _Verbs and Resources: https://docs.openshift.com/enterprise/3.0/admin_guide/manage_authorization_policy.html#viewing-cluster-policy
+.. _Authorization Policy: https://docs.openshift.org/latest/admin_guide/manage_authorization_policy.html
 .. _OpenShift Origin CLI: https://docs.openshift.org/1.2/cli_reference/index.html
 .. _OpenShift SDN: https://docs.openshift.org/latest/architecture/additional_concepts/sdn.html
 
