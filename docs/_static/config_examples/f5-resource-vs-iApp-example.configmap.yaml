@@ -6,6 +6,7 @@ metadata:
   labels:
     f5type: virtual-server
 data:
+  # As of v1.1.0-beta.1, schema should be set to "f5schemadb://bigip-virtual-server_v0.1.3.json"
   schema: "f5schemadb://bigip-virtual-server_v0.1.2.json"
   data: |
     {
