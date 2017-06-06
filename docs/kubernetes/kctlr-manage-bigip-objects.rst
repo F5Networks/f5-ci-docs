@@ -182,7 +182,7 @@ Configure BIG-IP LTM health monitors for Kubernetes Services to help ensure that
 
    .. literalinclude:: /_static/config_examples/f5-resource-vs-example.configmap.yaml
       :linenos:
-      :emphasize-lines: 22-26
+      :emphasize-lines: 27-32
 
 #. Use the BIG-IP configuration utility to verify that the health monitor exists.
 

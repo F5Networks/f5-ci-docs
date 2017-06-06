@@ -28,7 +28,7 @@ Deploy the |aspm-long| using the Marathon REST API
 
    .. literalinclude:: /_static/config_examples/f5-marathon-asp-ctlr-example.json
       :linenos:
-      :emphasize-lines: 9, 17-31
+      :emphasize-lines: 9, 17-32
 
    .. tip::
 

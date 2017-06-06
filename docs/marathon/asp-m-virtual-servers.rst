@@ -34,7 +34,7 @@ Add the label ``"f5-asp": "enable"`` to the App's service definition.
 
    .. literalinclude:: /_static/config_examples/app_asp-enabled-defaults.json
       :linenos:
-      :emphasize-lines: 21-24
+      :emphasize-lines: 22-25
 
 
    - Send a PUT request to the Marathon API server to update the App.
@@ -63,7 +63,7 @@ Add the label ``"f5-asp": "enable"`` to the App's service definition.
    - Add your desired `override labels </products/connectors/marathon-asp-ctlr/latest/index.html#configuration-parameters>`_ to the App's service definition.
 
      .. literalinclude:: /_static/config_examples/app_asp-enabled-custom.json
-        :emphasize-lines: 6-8, 23-31
+        :emphasize-lines: 6-8, 24-34
         :linenos:
 
    - Send a PUT request to the Marathon API server to update the App definition.
