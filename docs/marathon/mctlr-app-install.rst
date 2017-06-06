@@ -28,7 +28,7 @@ Launch the |mctlr| App using the Marathon REST API
 
    .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example.json
       :linenos:
-      :emphasize-lines: 9, 13-24
+      :emphasize-lines: 12, 16-27
 
    .. tip::
 

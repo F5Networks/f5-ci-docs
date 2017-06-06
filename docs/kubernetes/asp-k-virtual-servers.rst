@@ -44,6 +44,7 @@ Use one of the options below to annotate your Kubernetes `Service`_ and deploy t
       user@k8s-master:~$ kubectl edit service example-service
 
    .. literalinclude:: /_static/config_examples/f5-asp-k8s-example-service.yaml
+      :linenos:
       :emphasize-lines: 4-13
 
    :download:`Download an example Service definition with the ASP annotation </_static/config_examples/f5-asp-k8s-example-service.yaml>`

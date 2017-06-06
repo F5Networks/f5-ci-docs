@@ -50,7 +50,7 @@ Define a HostSubnet using valid JSON or YAML.
 
 .. literalinclude:: /_static/config_examples/f5-kctlr-openshift-hostsubnet.yaml
    :linenos:
-   :emphasize-lines: 5-15
+   :emphasize-lines: 5-7, 9-18
 
 :download:`Download the example </_static/config_examples/f5-kctlr-openshift-hostsubnet.yaml>`
 
