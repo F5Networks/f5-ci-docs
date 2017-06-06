@@ -118,7 +118,7 @@ Use ``kubectl edit`` to open the ConfigMap in your default text editor and make 
            }
          }
        }
-     # As of v1.1.0-beta.1, schema should be set "f5schemadb://bigip-virtual-server_v0.1.3.json"
+     # As of v1.1.0-beta.1, set the schema to "f5schemadb://bigip-virtual-server_v0.1.3.json"
      schema: f5schemadb://bigip-virtual-server_v0.1.3.json
    kind: ConfigMap
    metadata:
@@ -198,7 +198,7 @@ Use IPAM to assign IP addresses to BIG-IP LTM virtual servers
 
    .. versionadded:: k8s-bigip-ctlr v1.1.0-beta.1
 
-   **As of v1.1.0-beta.1**, :code:`schema` should be set to :code:`f5schemadb://bigip-virtual-server_v0.1.3.json`.
+   **Beginning with v1.1.0-beta.1**, use the updated :code:`schema` -- :code:`f5schemadb://bigip-virtual-server_v0.1.3.json`.
 
    See the `k8s-bigip-ctlr beta documentation`_ for more information.
 
@@ -233,7 +233,7 @@ Manage pools without virtual servers
 
    .. versionadded:: k8s-bigip-ctlr v1.1.0-beta.1
 
-   **As of v1.1.0-beta.1**, :code:`schema` should be set to :code:`f5schemadb://bigip-virtual-server_v0.1.3.json`.
+   **Beginning with v1.1.0-beta.1**, use the updated :code:`schema` -- :code:`f5schemadb://bigip-virtual-server_v0.1.3.json`.
 
    See the `k8s-bigip-ctlr beta documentation`_ for more information.
 
@@ -312,7 +312,7 @@ Attach a pool to a virtual server
               }
             }
           }
-        # As of v1.1.0-beta.1, schema should be set as shown below
+        # As of v1.1.0-beta.1, set the schema as shown below
         schema: f5schemadb://bigip-virtual-server_v0.1.3.json
       kind: ConfigMap
       metadata:
@@ -397,7 +397,7 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
               }
             }
           }
-        # As of v1.1.0-beta.1, schema should be set as shown below
+        # As of v1.1.0-beta.1, set the schema as shown below
         schema: f5schemadb://bigip-virtual-server_v0.1.3.json
       kind: ConfigMap
       metadata:
