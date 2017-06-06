@@ -118,7 +118,8 @@ Use ``kubectl edit`` to open the ConfigMap in your default text editor and make 
            }
          }
        }
-     schema: f5schemadb://bigip-virtual-server_v0.1.2.json
+     # As of v1.1.0-beta.1, set the schema to "f5schemadb://bigip-virtual-server_v0.1.3.json"
+     schema: f5schemadb://bigip-virtual-server_v0.1.3.json
    kind: ConfigMap
    metadata:
      creationTimestamp: 2017-02-14T17:24:34Z
@@ -182,7 +183,7 @@ Configure BIG-IP LTM health monitors for Kubernetes Services to help ensure that
 
    .. literalinclude:: /_static/config_examples/f5-resource-vs-example.configmap.yaml
       :linenos:
-      :emphasize-lines: 27-32
+      :emphasize-lines: 28-32
 
 #. Use the BIG-IP configuration utility to verify that the health monitor exists.
 
@@ -196,6 +197,8 @@ Use IPAM to assign IP addresses to BIG-IP LTM virtual servers
 .. note::
 
    .. versionadded:: k8s-bigip-ctlr v1.1.0-beta.1
+
+   **Beginning with v1.1.0-beta.1**, use the updated :code:`schema` -- :code:`f5schemadb://bigip-virtual-server_v0.1.3.json`.
 
    See the `k8s-bigip-ctlr beta documentation`_ for more information.
 
@@ -229,6 +232,8 @@ Manage pools without virtual servers
 .. note::
 
    .. versionadded:: k8s-bigip-ctlr v1.1.0-beta.1
+
+   **Beginning with v1.1.0-beta.1**, use the updated :code:`schema` -- :code:`f5schemadb://bigip-virtual-server_v0.1.3.json`.
 
    See the `k8s-bigip-ctlr beta documentation`_ for more information.
 
@@ -274,7 +279,7 @@ Attach a pool to a virtual server
 
    .. code-block:: bash
       :linenos:
-      :emphasize-lines: 24
+      :emphasize-lines: 24, 32-33
 
       ubuntu@k8s-master:~$ kubectl edit configmap k8s.pool_only
 
@@ -307,7 +312,8 @@ Attach a pool to a virtual server
               }
             }
           }
-        schema: f5schemadb://bigip-virtual-server_v0.1.2.json
+        # As of v1.1.0-beta.1, set the schema as shown below
+        schema: f5schemadb://bigip-virtual-server_v0.1.3.json
       kind: ConfigMap
       metadata:
         creationTimestamp: 2017-02-14T17:24:34Z
@@ -358,7 +364,7 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
 
    .. code-block:: bash
       :linenos:
-      :emphasize-lines: 24
+      :emphasize-lines: 24, 32-33
 
       ubuntu@k8s-master:~$ kubectl edit configmap k8s.vs
 
@@ -391,7 +397,8 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
               }
             }
           }
-        schema: f5schemadb://bigip-virtual-server_v0.1.2.json
+        # As of v1.1.0-beta.1, set the schema as shown below
+        schema: f5schemadb://bigip-virtual-server_v0.1.3.json
       kind: ConfigMap
       metadata:
         creationTimestamp: 2017-02-14T17:24:34Z

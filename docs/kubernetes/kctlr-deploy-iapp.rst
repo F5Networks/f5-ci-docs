@@ -25,13 +25,13 @@ The example F5 resource JSON blob shown below defines the ``f5.http`` iApp. The 
 
 .. seealso::
 
-    The  `k8s-bigip-ctlr product documentation </products/connectors/k8s-bigip-ctlr/latest/index.html>`_ for detailed information about iApp resources.
+   The  `k8s-bigip-ctlr product documentation </products/connectors/k8s-bigip-ctlr/latest/index.html>`_ for detailed information about iApp resources.
 
 
 .. literalinclude:: /_static/config_examples/f5-resource-vs-iApp-example.json
-    :caption: Example F5 iApp Resource definition
-    :linenos:
-    :emphasize-lines: 8-30
+   :caption: Example F5 iApp Resource definition
+   :linenos:
+   :emphasize-lines: 8-30
 
 
 :download:`Download f5-resource-vs-iApp-example.json </_static/config_examples/f5-resource-vs-iApp-example.json>`
@@ -42,28 +42,28 @@ Deploy the iApp
 
 #. Create a ConfigMap with the encoded data.
 
-    .. literalinclude:: /_static/config_examples/f5-resource-vs-iApp-example.configmap.yaml
-        :caption: Example ConfigMap with F5 virtual server resource
-        :linenos:
+   .. literalinclude:: /_static/config_examples/f5-resource-vs-iApp-example.configmap.yaml
+      :caption: Example ConfigMap with F5 virtual server resource
+      :linenos:
 
-    .. tip::
+   .. tip::
 
-        You can download the example ConfigMap file below and modify it to suit your environment.
+      You can download the example ConfigMap file below and modify it to suit your environment.
 
-        :download:`f5-resource-vs-iApp-example.configmap.yaml </_static/config_examples/f5-resource-vs-iApp-example.configmap.yaml>`
+      :download:`f5-resource-vs-iApp-example.configmap.yaml </_static/config_examples/f5-resource-vs-iApp-example.configmap.yaml>`
 
 #. Upload the ConfigMap to Kubernetes.
 
-    .. code-block:: bash
+   .. code-block:: bash
 
-        user@k8s-master:~$ kubectl create -f f5-resource-vs-example.configmap.yaml --namespace=<service-namespace>
-        configmap "" created
+      user@k8s-master:~$ kubectl create -f f5-resource-vs-example.configmap.yaml --namespace=<service-namespace>
+      configmap "" created
 
 #. Verify creation of the iApp, and its related objects, on the BIG-IP. This is most easily done via the configuration utility:
 
-    - Log in to the BIG-IP configuration utility.
-    - Go to :menuselection:`iApps --> Application Services`.
-    - Verify that a new item prefixed with the name of your Kubernetes Service appears in the list, in the correct partition.
+   - Log in to the BIG-IP configuration utility.
+   - Go to :menuselection:`iApps --> Application Services`.
+   - Verify that a new item prefixed with the name of your Kubernetes Service appears in the list, in the correct partition.
 
 
 Delete iApp objects
@@ -71,16 +71,16 @@ Delete iApp objects
 
 #. Remove the ConfigMap from the Kubernetes API server to delete the corresponding objects from the BIG-IP.
 
-    .. code-block:: bash
+   .. code-block:: bash
 
-        user@k8s-master:~$ kubectl delete configmap k8s.f5http
-        configmap "k8s.f5http" deleted
+      user@k8s-master:~$ kubectl delete configmap k8s.f5http
+      configmap "k8s.f5http" deleted
 
 #. Verify the iApp and its related objects no longer exist on the BIG-IP.
 
-    - Log in to the BIG-IP configuration utility.
-    - Go to :menuselection:`iApps --> Application Services`.
-    - Verify that the item prefixed with the name of your Kubernetes Service no longer appears in the list for your partition.
+   - Log in to the BIG-IP configuration utility.
+   - Go to :menuselection:`iApps --> Application Services`.
+   - Verify that the item prefixed with the name of your Kubernetes Service no longer appears in the list for your partition.
 
 
 
