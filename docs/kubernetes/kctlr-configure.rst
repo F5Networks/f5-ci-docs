@@ -35,7 +35,8 @@ namespace               Kubernetes namespace to watch [#fnnamespace]_
 
 .. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
    :caption: Example Deployment definition
-   :emphasize-lines: 29-35
+   :linenos:
+   :emphasize-lines: 32-35, 43
 
 .. _kctlr-configure-openshift:
 
@@ -62,7 +63,8 @@ openshift-sdn-name      TMOS path to the BIG-IP VXLAN tunnel providing
 
 .. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml
    :caption: Example Deployment definition
-   :emphasize-lines: 29-38
+   :linenos:
+   :emphasize-lines: 30-33, 41-43
 
 
 Required configuration parameters for F5 resources

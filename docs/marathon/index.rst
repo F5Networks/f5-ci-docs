@@ -159,9 +159,9 @@ The code sample below defines an Application with three (3) port indices.
 
 .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
    :caption: Service definition with multiple ports
-   :lines: 1-24
+   :lines: 1-25
    :linenos:
-   :emphasize-lines: 13-15, 16-18, 19-21
+   :emphasize-lines: 13-23
 
 
 In the ``labels`` section, we specify that we want to create HTTP virtual servers on the BIG-IP device for port indices ``0`` and ``1``.
@@ -169,8 +169,8 @@ In this example, ``0`` refers to the first mapping defined above (``"containerPo
 
 .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
    :caption: |mctlr| labels defining BIG-IP objects for two (2) port indices
-   :lines: 25-33
-   :lineno-start: 25
+   :lines: 26-40
+   :lineno-start: 26
 
 .. [#dockerbridge] See the `Docker Networking <https://docs.docker.com/engine/userguide/networking/>`_ documentation for more information.
 
@@ -191,8 +191,8 @@ Here, we create health checks for each of the port indices defined for our Appli
 
 .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
    :caption: Defining health checks for multiple ports
-   :lines: 33-61
-   :lineno-start: 33
+   :lines: 41-66
+   :lineno-start: 41
 
 
 .. [#setuphealthchecks] Occurs when ``F5_CC_USE_HEALTHCHECK``'s value is "True".

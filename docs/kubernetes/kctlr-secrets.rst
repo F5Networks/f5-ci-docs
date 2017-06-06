@@ -56,7 +56,7 @@ Pull an image from a private docker registry
      .. note:: An abridged ``.dockerconfigjson`` value (indicated by ``[...]``) appears in the example below.
 
      .. literalinclude:: /_static/config_examples/f5-k8s-image-secret.yaml
-        :emphasize-lines: 7
+        :emphasize-lines: 8
 
 2. Verify the Secret exists.
 
@@ -85,7 +85,7 @@ Pull an image from a private docker registry
 
    .. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
       :caption: ``k8s-bigip-ctlr`` Deployment
-      :emphasize-lines: 36-37
+      :emphasize-lines: 45-46
 
 
 

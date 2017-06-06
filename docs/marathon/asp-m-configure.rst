@@ -44,7 +44,8 @@ ASP_DEFAULT_CONTAINER_PORT      8000
 
 .. literalinclude:: /_static/config_examples/f5-marathon-asp-ctlr-example.json
    :caption: Example Application definition
-   :emphasize-lines: 17-31
+   :linenos:
+   :emphasize-lines: 18-32
 
 
 See Also

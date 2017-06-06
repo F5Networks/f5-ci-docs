@@ -27,7 +27,7 @@ F5_CC_PARTITIONS	    The `BIG-IP partition`_ |mctlr| should manage
 
 .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example.json
    :caption: Example Application definition
-   :emphasize-lines: 13-18
+   :emphasize-lines: 17-21
    :linenos:
 
 Required Application Labels
