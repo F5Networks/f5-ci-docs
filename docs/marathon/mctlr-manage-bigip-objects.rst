@@ -40,7 +40,7 @@ Create a BIG-IP virtual server for a Marathon Application
 
    .. literalinclude:: /_static/config_examples/hello-marathon-example.json
 
-   :download:`hello-marathon-example.json </_static/config_examples/hello-marathon-example.json>`
+   :fonticon:`fa fa-download` :download:`hello-marathon-example.json </_static/config_examples/hello-marathon-example.json>`
 
 
 #. Deploy the application in Marathon via the REST API using the JSON file.
@@ -114,14 +114,10 @@ Delete BIG-IP LTM objects
 
 .. _mctlr-ipam:
 
-Use IPAM to assign IP addresses to BIG-IP virtual servers
----------------------------------------------------------
+Use IPAM to assign IP addresses to BIG-IP virtual servers :fonticon:`fa fa-wrench`
+----------------------------------------------------------------------------------
 
-.. note::
-
-   .. versionadded:: marathon-bigip-ctlr v1.1.0-beta.1
-
-   See the `marathon-bigip-ctlr beta documentation`_ for more information.
+.. include:: /_static/reuse/beta-announcement-marathon.rst
 
 The |mctlr-long| has a built-in hook that allows you to integrate an IPAM system using a custom plugin.
 The basic elements required are:
@@ -145,14 +141,10 @@ If you take down an Application and want to remove its corresponding BIG-IP LTM 
 
 .. _mctlr-pool-only:
 
-Manage pools without virtual servers
-------------------------------------
+Manage pools without virtual servers :fonticon:`fa fa-wrench`
+-------------------------------------------------------------
 
-.. note::
-
-   .. versionadded:: marathon-bigip-ctlr v1.1.0-beta.1
-
-   See the `marathon-bigip-ctlr beta documentation`_ for more information.
+.. include:: /_static/reuse/beta-announcement-marathon.rst
 
 The |mctlr-long| can create and manage BIG-IP Local Traffic Manager (LTM) pools that aren't attached to a front-end BIG-IP virtual server (also referred to as "unattached pools").
 When you create unattached pools, the |mctlr-long| applies the following naming convention to BIG-IP pool members: ``<application-name>_<F5_{n}_PORT>``.
@@ -176,7 +168,7 @@ Create a pool without a virtual server
 
    .. literalinclude:: /_static/config_examples/hello-marathon-pool-only-example.json
 
-   :download:`hello-marathon-pool-only-example.json </_static/config_examples/hello-marathon-pool-only-example.json>`
+   :fonticon:`fa fa-download` :download:`hello-marathon-pool-only-example.json </_static/config_examples/hello-marathon-pool-only-example.json>`
 
 #. Deploy the application in Marathon via the REST API.
 

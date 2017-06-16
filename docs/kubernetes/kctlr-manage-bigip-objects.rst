@@ -42,11 +42,7 @@ Create a BIG-IP front-end virtual server for a Kubernetes Service
    .. literalinclude:: /_static/config_examples/f5-resource-vs-example.configmap.yaml
       :linenos:
 
-   .. tip::
-
-      You can download the example ConfigMap file below and modify it to suit your environment.
-
-      :download:`f5-resource-vs-example.configmap.yaml </_static/config_examples/f5-resource-vs-example.configmap.yaml>`
+   :fonticon:`fa fa-download` :download:`f5-resource-vs-example.configmap.yaml </_static/config_examples/f5-resource-vs-example.configmap.yaml>`
 
 #. Upload the ConfigMap to Kubernetes.
 
@@ -191,16 +187,11 @@ Configure BIG-IP LTM health monitors for Kubernetes Services to help ensure that
 
 .. _kctlr-ipam:
 
-Use IPAM to assign IP addresses to BIG-IP LTM virtual servers
--------------------------------------------------------------
+Use IPAM to assign IP addresses to BIG-IP LTM virtual servers :fonticon:`fa fa-wrench`
+--------------------------------------------------------------------------------------
 
-.. note::
+.. include:: /_static/reuse/beta-announcement-k8s.rst
 
-   .. versionadded:: k8s-bigip-ctlr v1.1.0-beta.1
-
-   **Beginning with v1.1.0-beta.1**, use the updated :code:`schema` -- :code:`f5schemadb://bigip-virtual-server_v0.1.3.json`.
-
-   See the `k8s-bigip-ctlr beta documentation`_ for more information.
 
 The |kctlr-long| has a built-in hook that allows you to integrate an IPAM system using a custom plugin.
 The basic elements required are:
@@ -226,16 +217,10 @@ If you take down a Service and want to remove the corresponding BIG-IP LTM objec
 
 .. _kctlr-pool-only:
 
-Manage pools without virtual servers
-------------------------------------
+Manage pools without virtual servers :fonticon:`fa fa-wrench`
+-------------------------------------------------------------
 
-.. note::
-
-   .. versionadded:: k8s-bigip-ctlr v1.1.0-beta.1
-
-   **Beginning with v1.1.0-beta.1**, use the updated :code:`schema` -- :code:`f5schemadb://bigip-virtual-server_v0.1.3.json`.
-
-   See the `k8s-bigip-ctlr beta documentation`_ for more information.
+.. include:: /_static/reuse/beta-announcement-k8s.rst
 
 The |kctlr-long| can create and manage BIG-IP Local Traffic Manager (LTM) pools that aren't attached to a front-end BIG-IP virtual server (also referred to as "unattached pools").
 When you create a pool without a virtual server, the |kctlr-long| applies the following naming convention to the pool members: ``<namespace>_<configmap-name>``.
@@ -253,14 +238,12 @@ Create a pool without a virtual server
 
 #. Create an :ref:`F5 resource <k8s-f5-resources>` `ConfigMap`_, omitting the ``bindAddr`` field from the ``virtualAddress`` section.
 
+   .. include:: /_static/reuse/k8s-schema-note.rst
+
    .. literalinclude:: /_static/config_examples/f5-resource-pool-only-example.configmap.yaml
         :linenos:
 
-   .. tip::
-
-      You can download the example ConfigMap file below and modify it to suit your environment.
-
-      :download:`f5-resource-pool-only-example.configmap.yaml </_static/config_examples/f5-resource-pool-only-example.configmap.yaml>`
+   :fonticon:`fa fa-download` :download:`f5-resource-pool-only-example.configmap.yaml </_static/config_examples/f5-resource-pool-only-example.configmap.yaml>`
 
 #. Upload the ConfigMap to Kubernetes.
 
