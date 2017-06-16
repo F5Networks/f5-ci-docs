@@ -7,7 +7,13 @@ data:
   asp.config.json: |
     {
       "global": {
-        "console-log-level": "info"
+        "console-log-level": "info",
+        #Required as of ASP v1.1.0
+        "ephemeral-store": {
+          # Cluster IP address of the ephemeral store Service
+          "host": "<ephemeral-store-service_cluster-IP>",
+          "port": 8087
+        }
       },
       "orchestration": {
         "kubernetes": {
