@@ -344,6 +344,17 @@ html_show_copyright = True
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'F5_Container Integrations_doc'
 
+# -- Options for linkcheck ------------------------------------------------
+# A list of regular expressions that match URIs that should not be checked when doing a linkcheck build. Example:
+#linkcheck_ignore = [r'http://localhost:\d+/']
+
+# The number of times the linkcheck builder will attempt to check a URL before declaring it broken. Defaults to 1 attempt.
+linkcheck_retries=2
+
+# A timeout value, in seconds, for the linkcheck builder. The default is to use Python’s global socket timeout.
+linkcheck_timeout=5
+
+
 # -- Options for LaTeX output ---------------------------------------------
 
 latex_elements = {

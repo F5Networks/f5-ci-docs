@@ -10,11 +10,9 @@ Install the ASP in Kubernetes
    We tested this documentation with:
 
    - ``kubernetes-v1.4.8_coreos.0``
-   - ``k8s-bigip-ctlr v1.0.0``
    - ``asp v1.0.0``
+   - ``asp v1.1.0``
 
-Summary
--------
 
 The |asp|, or ASP, runs on each node in a Kubernetes `Cluster`_.
 Create a `ConfigMap`_ to configure the ASP; then, create a `DaemonSet`_ to run the ASP in a pod on each node in your cluster.
@@ -33,6 +31,8 @@ Initial Setup
    .. important::
 
       You must create the Secret in the same namespace the ASP runs in: ``kube-system``.
+
+#. :ref:`Set up the ASP ephemeral store <install-ephemeral-store-k8s>`. [#aspreq]_
 
 .. _asp-configure-k8s:
 
@@ -128,6 +128,9 @@ Next Steps
 ----------
 
 - :ref:`Replace kube-proxy with f5-kube-proxy <k8s-asp-deploy>`.
+
+.. rubric:: Footnotes
+.. [#aspreq] *Required as of* ``asp v1.1.0``.
 
 .. _DaemonSet: https://kubernetes.io/docs/admin/daemons/
 .. _Cluster: https://kubernetes.io/docs/admin/cluster-management/
