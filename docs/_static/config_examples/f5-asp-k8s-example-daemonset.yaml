@@ -12,9 +12,9 @@ spec:
       hostNetwork: true
       containers:
         - name: f5-asp
-          image: "store/f5networks/asp:1.0.0"
+          image: "f5networks/asp:1.1.0"
           args:
-            # the config file is loaded from the ConfigMap; it contains the
+            # the config file is loaded from the ConfigMap containing the
             # ASP global config
             - --config-file
             - /etc/configmap/asp.config.json
@@ -23,17 +23,24 @@ spec:
           volumeMounts:
           # mount a new directory
           - name: plugin-config
-            # the path the directory will be added to; do not change
+            # the path the directory will be added to; DO NOT CHANGE
             mountPath: /var/run/kubernetes/proxy-plugin
             readOnly: true
           # mount a new directory
           - name: asp-config
-            # the path the directory will be added to; do not change
+            # the path the directory will be added to; DO NOT CHANGE
             mountPath: /etc/configmap
-      # provide the name of the Secret containing the Docker login credentials
-      # REQUIRED TO PULL THE ASP IMAGE FROM DOCKER STORE
-      imagePullSecrets:
-        - name: <my-secret>
+          # mount a directory for the ephemeral store user
+          - name: user-asp
+            # the path the directory will be added to; DO NOT CHANGE
+            # the user certificate and key are mounted at this location
+            mountPath: /ephemeral-store-certs/myuser
+            readOnly: true
+          # mount a directory for the ephemeral store Root
+          - name: rootca-cert
+            # the path the directory will be added to; DO NOT CHANGE
+            mountPath: /ephemeral-store-certs/rootca-cert
+            readOnly: true
       volumes:
         - name: plugin-config
           hostPath:
@@ -42,3 +49,16 @@ spec:
           # replace with name of your ASP ConfigMap
           configMap:
             name: f5-asp-config
+        - name: user-asp
+          secret:
+            # The Kubernetes Secret containing the ephemeral store user's
+            # certificate and key
+            secretName: ephemeral-store-user-myuser
+        - name: rootca-cert
+          # The Kubernetes Secret containing the Root certificate and key
+          secret:
+            secretName: ephemeral-store-rootca-cert
+      # provide the name of the Secret containing the Docker login credentials
+      # REQUIRED TO PULL THE ASP IMAGE FROM DOCKER STORE
+      imagePullSecrets:
+        - name: <my-secret>
