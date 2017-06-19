@@ -35,7 +35,7 @@ The |asp| (ASP) provides container-to-container load balancing, traffic visibili
 Its light form factor allows for rapid deployment in datacenters and across cloud services.
 The ASP integrates with container environment management and orchestration systems and enables application delivery service automation.
 
-.. seealso:: `ASP product documentation </products/asp/latest/index.html>`_
+.. seealso:: `ASP product documentation`_
 
 
 |aspm-long|

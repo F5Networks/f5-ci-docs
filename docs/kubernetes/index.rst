@@ -64,8 +64,8 @@ By default, the |aspk| forwards traffic to ASP on port 10000. You can change thi
 |kctlr-long|
 ------------
 
-The |kctlr-long| is a docker container that runs on a `Kubernetes Pod`_.
-To launch the |kctlr| application in Kubernetes, just :ref:`create a Deployment <install-kctlr>`.
+The |kctlr-long| is a Docker container that runs on a `Kubernetes Pod`_.
+To launch the |kctlr| application in Kubernetes, :ref:`create a Deployment <install-kctlr>`.
 
 Once the |kctlr| pod is running, it watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for special Kubernetes "F5 Resource" `ConfigMap`_ s.
 These ConfigMaps contain an F5 Resource JSON blob that tells |kctlr|:
@@ -79,17 +79,19 @@ When the |kctlr| discovers new or updated :ref:`virtual server F5 Resource Confi
 
    * The |kctlr-long| cannot manage objects in the ``/Common`` :term:`partition` on a BIG-IP device.
    * Each |kctlr-long| deployment monitors one (1) Kubernetes `namespace`_ and manages objects in its assigned `BIG-IP partition`_.
-     *If you create more than one (1)* :ref:`k8s-bigip-ctlr deployment <k8s-bigip-ctlr-deployment>`, *each must manage a different* `BIG-IP partition`_.
+   * The BIG-IP partition must exist before you launch a |kctlr-long| to manage it.
+   * The |kctlr-long| can't create or destroy BIG-IP partitions.
+   * *Each* |kctlr| *instance must manage a different BIG-IP partition*.
    * Each :ref:`virtual server F5 Resource <kctlr-create-vs>` defines a BIG-IP LTM virtual server object for one (1) port associated with one (1) `Service`_.
      *Create a separate* :ref:`virtual server F5 Resource ConfigMap <kctlr-create-vs>` *for each Service port you wish to expose.*
 
+The |kctlr-long| can:
 
-You can use the |kctlr-long| to:
-
-- :ref:`create BIG-IP LTM virtual servers <kctlr-create-vs>`
-- :ref:`assign IP addresses to BIG-IP LTM virtual servers using IPAM <kctlr-ipam>`
-- :ref:`create unattached BIG-IP LTM pools <kctlr-pool-only>` (pools without virtual servers)
+- :ref:`create a BIG-IP LTM virtual servers <kctlr-create-vs>` for a `Kubernetes Service`_
+- :ref:`use an IPAM system to assign IP addresses to virtual servers <kctlr-ipam>`
+- :ref:`create unattached pools <kctlr-pool-only>` (pools without virtual servers)
 - :ref:`deploy iApps <kctlr-deploy-iapps>`
+- act as a `Kubernetes Ingress controller`_ to :ref:`expose Kubernetes Services to external traffic <kctlr-ingress-config>`
 
 
 Key Kubernetes Concepts
@@ -183,6 +185,3 @@ Related
    F5 Application Services Proxy docs <http://clouddocs.f5.com/products/asp/latest>
 
 
-.. _f5-kube-proxy product documentation: /products/connectors/f5-kube-proxy/latest/
-.. _ASP product documentation: /products/asp/latest/
-.. _Kubernetes namespace: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
