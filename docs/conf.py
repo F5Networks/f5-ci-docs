@@ -45,6 +45,7 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.ifconfig',
     'sphinx.ext.doctest',
+    'sphinxjp.themes.basicstrap',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -155,8 +156,14 @@ language = 'en'
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ['_build', 'drafts', 'Thumbs.db', '.DS_Store', 'venv',
-                    '.github' ]
+exclude_patterns = ['_build',
+                    '_static/reuse',
+                    'drafts',
+                    'Thumbs.db',
+                    '.DS_Store',
+                    'venv',
+                    '.github'
+                    ]
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -215,7 +222,7 @@ html_sidebars = {
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-html_title = 'F5 Container Integrations |release|'
+#html_title = 'F5 Container Integrations'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #

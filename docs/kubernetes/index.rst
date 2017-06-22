@@ -75,13 +75,14 @@ These ConfigMaps contain an F5 Resource JSON blob that tells |kctlr|:
 
 When the |kctlr| discovers new or updated :ref:`virtual server F5 Resource ConfigMaps <kctlr-create-vs>`, it dynamically applies the desired settings to the BIG-IP device.
 
-.. sidebar:: Important Caveats
+.. caution::
 
    * The |kctlr-long| cannot manage objects in the ``/Common`` :term:`partition` on a BIG-IP device.
    * Each |kctlr-long| deployment monitors one (1) Kubernetes `namespace`_ and manages objects in its assigned `BIG-IP partition`_.
      *If you create more than one (1)* :ref:`k8s-bigip-ctlr deployment <k8s-bigip-ctlr-deployment>`, *each must manage a different* `BIG-IP partition`_.
    * Each :ref:`virtual server F5 Resource <kctlr-create-vs>` defines a BIG-IP LTM virtual server object for one (1) port associated with one (1) `Service`_.
      *Create a separate* :ref:`virtual server F5 Resource ConfigMap <kctlr-create-vs>` *for each Service port you wish to expose.*
+
 
 You can use the |kctlr-long| to:
 
@@ -96,23 +97,19 @@ Key Kubernetes Concepts
 
 .. _k8s-namespaces:
 
-Namespaces
-``````````
+Namespaces :fonticon:`fa fa-wrench`
+```````````````````````````````````
 
-.. note::
-
-   .. versionadded:: k8s-bigip-ctlr v1.1.0-beta.1
-
-   See the `k8s-bigip-ctlr beta documentation </products/connectors/k8s-bigip-ctlr/v1.1-beta/>`_ for more information.
+.. include:: /_static/reuse/beta-announcement-k8s.rst
 
 The `Kubernetes namespace`_ allows you to create/manage multiple environments within a cluster.
 The |kctlr-long| can manage all namespaces; a single namespace; or pretty much anything in between.
 
 When :ref:`creating a BIG-IP front-end virtual server <kctlr-create-vs>` for a `Kubernetes Service`_, you can:
 
-- specify a single namespace to watch;
+- specify a single namespace to watch (this is the only supported mode prior to |kctlr| v1.1.0-beta.1);
 - specify multiple namespaces (pass in each as a separate flag); or
-- don't specify any namespace (meaning you want to watch all namespaces); **this is the default setting as of** `k8s-bigip-ctlr v1.1.0-beta.1 </products/connectors/k8s-bigip-ctlr/v1.1-beta/>`_).
+- don't specify any namespace (meaning you want to watch all namespaces; **this is the default setting** as of |kctlr| v1.1.0-beta.1).
 
 .. _k8s-f5-resources:
 
@@ -142,6 +139,8 @@ The virtual server :ref:`F5 Resource JSON blob <f5-resource-blob>` must contain 
 | - backend           | - a subset of ``data``; identifies the                |
 |                     |   `Kubernetes Service`_ to proxy                      |
 +---------------------+-------------------------------------------------------+
+
+.. include:: /_static/reuse/k8s-schema-note.rst
 
 The ``frontend`` property defines how to expose a Service on a BIG-IP device.
 You can define ``frontend`` using the standard `k8s-bigip-ctlr virtualServer parameters </products/connectors/k8s-bigip-ctlr/latest/index.html#virtualserver>`_ or the `k8s-bigip-ctlr iApp parameters </products/connectors/k8s-bigip-ctlr/latest/index.html#iapps>`_.

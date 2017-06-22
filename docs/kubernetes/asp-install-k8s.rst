@@ -23,11 +23,7 @@ Configure the ASP
 
    .. literalinclude:: /_static/config_examples/f5-asp-k8s-example-configmap.yaml
 
-   .. tip::
-
-      You can download the example ConfigMap file below and modify it to suit your environment.
-
-      :download:`f5-asp-k8s-example-configmap.yaml </_static/config_examples/f5-asp-k8s-example-configmap.yaml>`
+   :fonticon:`fa fa-download` :download:`f5-asp-k8s-example-configmap.yaml </_static/config_examples/f5-asp-k8s-example-configmap.yaml>`
 
 #. Upload the ConfigMap to Kubernetes.
 
@@ -71,11 +67,7 @@ Deploy the ASP
 
    .. literalinclude:: /_static/config_examples/f5-asp-k8s-example-daemonset.yaml
 
-   .. tip::
-
-      You can download the example DaemonSet file below and modify it to suit your environment.
-
-      :download:`f5-asp-k8s-example-daemonset.yaml </_static/config_examples/f5-asp-k8s-example-daemonset.yaml>`
+   :fonticon:`fa fa-download` :download:`f5-asp-k8s-example-daemonset.yaml </_static/config_examples/f5-asp-k8s-example-daemonset.yaml>`
 
 #. Upload the DaemonSet to Kubernetes.
 
