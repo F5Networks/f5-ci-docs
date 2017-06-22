@@ -34,7 +34,7 @@ The example F5 resource JSON blob shown below defines the ``f5.http`` iApp. The 
    :emphasize-lines: 8-30
 
 
-:download:`Download f5-resource-vs-iApp-example.json </_static/config_examples/f5-resource-vs-iApp-example.json>`
+:fonticon:`fa fa-download` :download:`Download f5-resource-vs-iApp-example.json </_static/config_examples/f5-resource-vs-iApp-example.json>`
 
 
 Deploy the iApp
@@ -46,11 +46,7 @@ Deploy the iApp
       :caption: Example ConfigMap with F5 virtual server resource
       :linenos:
 
-   .. tip::
-
-      You can download the example ConfigMap file below and modify it to suit your environment.
-
-      :download:`f5-resource-vs-iApp-example.configmap.yaml </_static/config_examples/f5-resource-vs-iApp-example.configmap.yaml>`
+   :fonticon:`fa fa-download` :download:`f5-resource-vs-iApp-example.configmap.yaml </_static/config_examples/f5-resource-vs-iApp-example.configmap.yaml>`
 
 #. Upload the ConfigMap to Kubernetes.
 

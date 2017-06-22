@@ -52,7 +52,7 @@ Define a HostSubnet using valid JSON or YAML.
    :linenos:
    :emphasize-lines: 5-7, 9-18
 
-:download:`Download the example </_static/config_examples/f5-kctlr-openshift-hostsubnet.yaml>`
+:fonticon:`fa fa-download` :download:`Download the example </_static/config_examples/f5-kctlr-openshift-hostsubnet.yaml>`
 
 .. _k8s-openshift-vxlan-setup:
 

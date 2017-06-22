@@ -47,7 +47,7 @@ Use one of the options below to annotate your Kubernetes `Service`_ and deploy t
       :linenos:
       :emphasize-lines: 4-13
 
-   :download:`Download an example Service definition with the ASP annotation </_static/config_examples/f5-asp-k8s-example-service.yaml>`
+   :fonticon:`fa fa-download` :download:`Download an example Service definition with the ASP annotation </_static/config_examples/f5-asp-k8s-example-service.yaml>`
 
 #. (Optional) :ref:`Verify that the ASP handles traffic for the Service <k8s-asp-verify>`
 

@@ -43,7 +43,7 @@ Deploy the iApp
       :linenos:
       :emphasize-lines: 21-34
 
-   :download:`Download f5-marathon-bigip-ctlr-vs-iApp-example.json </_static/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json>`
+   :fonticon:`fa fa-download` :download:`Download f5-marathon-bigip-ctlr-vs-iApp-example.json </_static/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json>`
 
 #. Send a PUT request to the Marathon API server to update the Application definition.
 

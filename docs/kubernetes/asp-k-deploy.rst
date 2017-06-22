@@ -88,13 +88,13 @@ Examples
     :caption: kube-proxy manifest on MASTER node
     :linenos:
 
-:download:`f5-kube-proxy-manifest-master.yaml </_static/config_examples/f5-kube-proxy-manifest-master.yaml>`
+:fonticon:`fa fa-download` :download:`f5-kube-proxy-manifest-master.yaml </_static/config_examples/f5-kube-proxy-manifest-master.yaml>`
 
 .. literalinclude:: /_static/config_examples/f5-kube-proxy-manifest-worker.yaml
     :caption: kube-proxy manifest on WORKER node
     :linenos:
 
-:download:`f5-kube-proxy-manifest-worker.yaml </_static/config_examples/f5-kube-proxy-manifest-worker.yaml>`
+:fonticon:`fa fa-download` :download:`f5-kube-proxy-manifest-worker.yaml </_static/config_examples/f5-kube-proxy-manifest-worker.yaml>`
 
 
 .. _Pod: https://kubernetes.io/docs/user-guide/pods/

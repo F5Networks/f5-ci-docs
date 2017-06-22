@@ -30,11 +30,7 @@ Launch the |mctlr| App using the Marathon REST API
       :linenos:
       :emphasize-lines: 12, 16-27
 
-   .. tip::
-
-      You can download the example config file below and modify it to suit your environment.
-
-   :download:`f5-marathon-bigip-ctlr-example.json </_static/config_examples/f5-marathon-bigip-ctlr-example.json>`
+   :fonticon:`fa fa-download` :download:`f5-marathon-bigip-ctlr-example.json </_static/config_examples/f5-marathon-bigip-ctlr-example.json>`
 
 
 #. Upload the config file to the Marathon API server.

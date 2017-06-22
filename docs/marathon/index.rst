@@ -108,7 +108,10 @@ See the |mctlr| `product documentation </products/connectors/marathon-bigip-ctlr
 
 .. tip::
 
-   You can :download:`download the code example </_static/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json>` used in the next few sections and modify it to suit your needs.
+   You can download the code example used in the following sections and modify it to suit your environment.
+
+   :fonticon:`fa fa-download` :download:`f5-marathon-bigip-ctlr-example_pm_hc.json </_static/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json>`
+
 
 
 iApps Application Labels

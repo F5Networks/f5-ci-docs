@@ -41,11 +41,8 @@ Define a `Kubernetes Deployment`_ using valid JSON or YAML.
 .. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
    :linenos:
 
-.. tip::
 
-   You can download the example Deployment file below and modify it to suit your environment.
-
-   :download:`f5-k8s-bigip-ctlr_image-secret.yaml </_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml>`
+:fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_image-secret.yaml </_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml>`
 
 
 OpenShift Origin
@@ -63,11 +60,7 @@ Define an OpenShift Deployment using valid JSON or YAML.
 .. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml
     :linenos:
 
-.. tip::
-
-    You can download the example Deployment file below and modify it to suit your environment.
-
-    :download:`f5-k8s-bigip-ctlr_openshift-sdn.yaml </_static/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml>`
+:fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_openshift-sdn.yaml </_static/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml>`
 
 
 Upload the Deployment
