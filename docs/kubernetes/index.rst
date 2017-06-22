@@ -107,9 +107,9 @@ The |kctlr-long| can manage all namespaces; a single namespace; or pretty much a
 
 When :ref:`creating a BIG-IP front-end virtual server <kctlr-create-vs>` for a `Kubernetes Service`_, you can:
 
-- specify a single namespace to watch;
+- specify a single namespace to watch (this is the only supported mode prior to |kctlr| v1.1.0-beta.1);
 - specify multiple namespaces (pass in each as a separate flag); or
-- don't specify any namespace (meaning you want to watch all namespaces); **this is the default setting** as of the `v1.1.0-beta.1 </products/connectors/k8s-bigip-ctlr/v1.1-beta/>`_ release).
+- don't specify any namespace (meaning you want to watch all namespaces; **this is the default setting** as of |kctlr| v1.1.0-beta.1).
 
 .. _k8s-f5-resources:
 
