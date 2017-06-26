@@ -88,5 +88,4 @@ Pull an image from a private docker registry
       :emphasize-lines: 45-46
 
 
-
 .. _docker-registry secret: https://kubernetes.io/docs/concepts/containers/images/#creating-a-secret-with-a-docker-config

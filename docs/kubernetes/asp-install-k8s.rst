@@ -8,13 +8,16 @@ Install the |asp| in Kubernetes
    We tested this documentation with:
 
    - ``kubernetes-v1.4.8_coreos.0``
-   - |kctlr| ``v1.0.0``
+   - ``asp v1.1.0``
 
-Summary
--------
 
 The |asp|, or ASP, runs on each node in a Kubernetes `Cluster`_.
 Create a `ConfigMap`_ to configure the ASP; then, create a `DaemonSet`_ to run the ASP in a pod on each node in your cluster.
+
+Prerequisites
+-------------
+
+- :ref:`Set up the ASP ephemeral store <install-ephemeral-store-k8s>`. [#aspreq]_
 
 Configure the ASP
 -----------------
@@ -31,34 +34,6 @@ Configure the ASP
 
       user@k8s-master:~$ kubectl create -f f5-asp-configmap.yaml
       configmap "f5-asp-config" created
-
-#. Verify creation of the ConfigMap.
-
-   .. code-block:: bash
-
-      user@k8s-master:~$ kubectl get configmap f5-asp-config -o yaml --namespace kube-system
-      apiVersion: v1
-      data:
-        asp.config.json: |
-          {
-            "global": {
-              "console-log-level": "debug"
-            },
-            "orchestration": {
-              "kubernetes": {
-                "config-file": "/var/run/kubernetes/proxy-plugin/service-ports.json",
-                "poll-interval": 500
-              }
-            }
-          }
-      kind: ConfigMap
-      metadata:
-        creationTimestamp: 2017-02-16T17:55:04Z
-        name: f5-asp-config
-        namespace: kube-system
-        resourceVersion: "1589344"
-        selfLink: /api/v1/namespaces/kube-system/configmaps/f5-asp-config
-        uid: 0bdc4be2-f471-11e6-92a8-fa163e4f44e9
 
 Deploy the ASP
 --------------
@@ -96,6 +71,10 @@ Deploy the ASP
       kube-proxy-172.16.1.21                1/1       Running   11         4m        172.16.1.21   172.16.1.21
       kube-scheduler-172.16.1.19            1/1       Running   0          11d       172.16.1.19   172.16.1.19
       kubernetes-dashboard-172.16.1.19      1/1       Running   2          11d       172.16.1.19   172.16.1.19
+
+
+.. rubric:: Footnotes
+.. [#aspreq] *Required as of* ``asp v1.1.0``.
 
 
 .. _DaemonSet: https://kubernetes.io/docs/admin/daemons/
