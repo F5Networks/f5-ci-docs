@@ -25,8 +25,8 @@ The prerequisites below are in addition to the :ref:`F5 Kubernetes Integration's
 #. The |kctlr-long| needs an `OpenShift user account`_ with permission to access nodes, endpoints, services, and configmaps.
    Add the verbs and resources shown below to your `Authorization Policy`_:
 
-   #. ``[get list watch] [nodes endpoints services namespaces]``
-   #. ``[get list update watch] [configmaps]``
+   #. ``[get list watch] [nodes endpoints services namespaces ingresses]``
+   #. ``[get list watch update create patch] [configmaps ingresses/status events]``
 
 #. You'll need to use the `OpenShift Origin CLI`_, in addition to ``kubectl``, to execute OpenShift-specific commands.
 #. To :ref:`integrate your BIG-IP device into an OpenShift cluster <bigip-openshift-setup>`, you'll need to :ref:`assign an OpenShift overlay address to the BIG-IP device <k8s-openshift-assign-ip>`.
