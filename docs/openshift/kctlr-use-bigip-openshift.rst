@@ -20,11 +20,12 @@ Steps required to set up a BIG-IP device and |kctlr| for use in an `OpenShift`_ 
 #. :ref:`Assign an overlay address <k8s-openshift-assign-ip>` from the subnet to a BIG-IP `Self IP address`_.
 #. `Create an OpenShift user account`_ for the |kctlr| with permission to manage the following:
 
-    - nodes
-    - endpoints
-    - services
-    - configmaps
-    - namespaces
+   - nodes
+   - endpoints
+   - services
+   - configmaps
+   - namespaces
+   - ingresses
 
 .. note::
 
