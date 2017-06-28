@@ -65,3 +65,4 @@ Secure your BIG-IP credentials
         selfLink: /api/v1/namespaces/kube-system/secrets/bigip-login
         uid: 0d950bbc-eca1-11e6-92a8-fa163e4f44e9
       type: Opaque
+

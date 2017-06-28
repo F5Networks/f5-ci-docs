@@ -38,15 +38,26 @@ Generate root and user certificates
 
 .. _secret-asp-ephemeral-store:
 
-Create Secrets for the root and user certificates
-`````````````````````````````````````````````````
+Create Secrets for the certificates
+```````````````````````````````````
 
-Encrypt the :file:`rootCA.key` and :file:`rootCA.crt` as a Kubernetes `Secret`_.
+Encrypt the certificates as Kubernetes Secrets.
+
+The example below creates three (3) Secrets.
+The first Secret is for the ephemeral store Pods created by the PetSet.
+The second and third Secrets allow the :ref:`ASP Daemonset <deploy-asp>` to access data in the ephemeral store.
+
+.. note::
+
+   In the third Secret, use just the root certificate, without the key.
+   Be sure to specify the namespace the ASP runs in.
+
 
 .. code-block:: console
 
    kubectl create secret tls ephemeral-store-secret --cert=rootCA.crt --key=rootCA.key
    kubectl create secret tls ephemeral-store-secret --cert=myuserCA.crt --key=myuserCA.key
+   kubectl create secret generic ephemeral-store-user-rootca-cert --from-file=rootCA.crt -n kube-system
 
 
 Deploy the ephemeral store
@@ -103,7 +114,7 @@ Specify the ASP ephemeral store configurations in a ConfigMap
 
    .. literalinclude:: /_static/config_examples/f5-ephemeral-store-k8s-example.yaml
       :linenos:
-      :lines: 40-106
+      :lines: 40-108
 
 
 #. Upload the YAML file containing the ConfigMap, Services, and PetSet to the Kubernetes API server.
