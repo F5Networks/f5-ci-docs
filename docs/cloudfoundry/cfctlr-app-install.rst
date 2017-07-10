@@ -28,13 +28,13 @@ Create a new Application Manifest file defining the |cf-long| `configuration par
 
 The :code:`bigip` section of the example |cfctlr| manifest below does the following:
 
-- provides the IP address and user account credentials for the BIG-IP device
-- creates a new BIG-IP partition, called "cf"
-- sets the load balancing method for the virtual server to round-robin
-- sets the interval at which the |cfctlr| attempts to verify BIG-IP settings
-- assigns an external IP address to the virtual server
-- assigns an existing BIG-IP traffic policy (:code:`/Common/bigip-traffic`) to the virtual server
-- assigns an existing BIG-IP health monitor (:code:`/Common/tcp_half_open`) to the virtual server
+- provides the IP address and user account credentials for the BIG-IP device;
+- defines the existing BIG-IP partition in which |cfctlr| should create objects;
+- sets the load balancing method for the virtual server to round-robin;
+- sets the interval at which the |cfctlr| attempts to verify BIG-IP settings;
+- assigns an external IP address to the virtual server;
+- assigns an existing BIG-IP traffic policy (:code:`/Common/bigip-traffic`) to the virtual server; and
+- assigns an existing BIG-IP health monitor (:code:`/Common/tcp_half_open`) to the virtual server.
 
 .. literalinclude:: /_static/config_examples/manifest.yaml
    :linenos:
@@ -49,8 +49,8 @@ The :code:`bigip` section of the example |cfctlr| manifest below does the follow
    Add the :code:`policies` configuration parameter to the Application Manifest to assign the policies to the virtual server(s).
 
 
-Push the manifest file to Cloud Foundry
----------------------------------------
+Push the |cfctlr| App to Cloud Foundry
+--------------------------------------
 
 Use the `Cloud Foundry CLI`_ :command:`cf push` command to deploy the |cfctlr| App.
 
@@ -65,7 +65,7 @@ Policies
 ````````
 
 The |cf-long| turns Cloud Foundry route tables into BIG-IP Local Traffic policies.
-You should see a new policy on your BIG-IP device for each route in your Cloud Foundry deployment.
+You should see a new policy on your BIG-IP device (there will be two if you're using https), with a rule for each route in your Cloud Foundry deployment.
 
 #. Log in to the BIG-IP configuration utility at the management IP address (for example, :code:`https://10.190.25.228/xui`).
 #. Choose the "cf" partition from the :guilabel:`Partition` dropdown menu.
@@ -74,7 +74,7 @@ You should see a new policy on your BIG-IP device for each route in your Cloud F
 Pools
 `````
 
-The |cf-long| creates pools and pool members for every App and App instance, respectively, in your Cloud Foundry deployment.
+The |cf-long| also creates a pool and pool members for every route in your Cloud Foundry deployment.
 
 You can use the BIG-IP configuration utility to verify that the pools and pool members exist.
 

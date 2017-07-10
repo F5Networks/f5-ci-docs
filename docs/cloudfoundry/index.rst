@@ -40,9 +40,9 @@ The Application Manifest tells the |cf-long|
 Once the |cf-long| is running, it
 
 - creates a BIG-IP virtual server, which serves as the entry point for traffic into the cloud;
-- creates a `BIG-IP Local Traffic policy`_ for each route table it finds in Cloud Foundry;
-- creates a pool for each application, with a pool member for each app instance;
-- associates each application's traffic policy with its pool.
+- creates a `BIG-IP Local Traffic policy`_ (maximum of two - one each for http and https) with rules for each route it finds in Cloud Foundry;
+- creates a pool for each route, with members for each application instance;
+- associates each application's traffic policy rule with its pool.
 
 .. attention::
 
@@ -65,13 +65,11 @@ Key Cloud Foundry Concepts
 Gorouter and NATS
 `````````````````
 
-In Cloud Foundry, the `Gorouter`_ component routes all incoming traffic and maintains routing tables for all Diego cells and droplets.
-To provide BIG-IP LTM services for traffic coming in to Cloud Foundry, the |cf-long| (and, therefore, the BIG-IP device) must be able to reach the Gorouter IP addresses.
-
-The |cf-long| relies on Cloud Foundry's routing tables to direct application traffic to the correct Diego cell virtual machine(s) for a requested application.
-
+In Cloud Foundry, the `Gorouter`_ component routes all incoming traffic.
+Similarly, the |cf-long| uses Cloud Foundry's routing tables to direct traffic to the correct Diego cell virtual machine(s) for a requested application.
 The |cf-long| watches the `NATS bus`_ for route updates; when it discovers changes, it configures the BIG-IP device(s) accordingly.
-This means that when you deploy a new application in Cloud Foundry, the |cf-long| creates a BIG-IP pool and pool members for the app automatically.
+
+When you deploy a new application in Cloud Foundry, the |cf-long| automatically creates a BIG-IP pool, pool members, and traffic policy rule for the new route.
 
 .. seealso::
 
@@ -84,7 +82,7 @@ This means that when you deploy a new application in Cloud Foundry, the |cf-long
 BIG-IP Local Traffic Manager Services
 -------------------------------------
 
-You can apply existing BIG-IP health monitors, policies, and SSL profiles to the virtual server(s) the |cf-long| creates.
+You can apply existing BIG-IP health monitors, policies, and SSL profiles to the virtual server(s) and pools the |cf-long| creates.
 Likewise, you can select any load balancing mode that exists on the BIG-IP device.
 Define the |cfctlr| `configuration parameters </products/connectors/cf-bigip-ctlr/latest/index.html#configuration-parameters>`_ in your :ref:`Application Manifest <create-application-manifest>`.
 
