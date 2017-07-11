@@ -26,6 +26,8 @@ Steps required to set up a BIG-IP device and |kctlr| for use in an `OpenShift`_ 
    - configmaps
    - namespaces
    - ingresses
+   - ingresses/status
+   - events
 
 .. note::
 
