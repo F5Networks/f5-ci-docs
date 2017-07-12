@@ -12,6 +12,7 @@ This documentation release, |release|, applies to the following versions of each
 Component                   Version
 ===================         ==============
 ``asp``                     v1.0.0
+|cfctlr|                    v1.0.0
 |kctlr|                     v1.0.0,
                             v1.1.0-beta.1
 |aspk|                      v1.0.0
@@ -42,26 +43,29 @@ Container Connectors
 
 .. table::
 
-    =================== =============== ======================= =============== ======================================= =======================
-    Connector           Version         BIG-IP version(s)       ASP version(s)  Platform                                Version(s)
-    =================== =============== ======================= =============== ======================================= =======================
-    |kctlr|             v1.0.0,         v11.6.x, v12.x, v13.x   N/A             Kubernetes                              v1.3.7, v1.4.x, v1.5.x
-                        v1.1.0-beta.1
-    ------------------- --------------- ----------------------- --------------- --------------------------------------- -----------------------
-    |aspk|              v1.0.0                                                  Kubernetes                              v1.3.7, v1.4.x, v1.5.x
-    ------------------- --------------- ----------------------- --------------- --------------------------------------- -----------------------
-    |mctlr|             v1.0.0,         v11.6.x, v12.x, v13.x   N/A             Apache Mesos                            v1.0.3
-                        v1.1.0-beta.1
-                                                                                Apache Marathon                         v1.3.9
+   =============== =============== ======================= ===============   ======================================= =======================
+   Connector       Version         BIG-IP version(s)       ASP version(s)    Platform                                Version(s)
+   =============== =============== ======================= ===============   ======================================= =======================
+   |cfctlr|         v1.0.0         v11.6.x, v12.x, v13.x   N/A               Cloud Foundry
+                                                                             Pivotal Cloud Foundry (PCF)
+   --------------- --------------- ----------------------- ---------------   --------------------------------------- -----------------------
+   |kctlr|         v1.0.0,         v11.6.x, v12.x, v13.x   N/A               Kubernetes                              v1.3.7, v1.4.x, v1.5.x
+                   v1.1.0-beta.1
+   --------------- --------------- ----------------------- ---------------   --------------------------------------- -----------------------
+   |aspk|          v1.0.0                                                    Kubernetes                              v1.3.7, v1.4.x, v1.5.x
+   --------------- --------------- ----------------------- ---------------   --------------------------------------- -----------------------
+   |mctlr|         v1.0.0,         v11.6.x, v12.x, v13.x   N/A               Apache Mesos                            v1.0.3
+                   v1.1.0-beta.1
+                                                                             Apache Marathon                         v1.3.9
 
-                                                                                Apache Mesos DC/OS, DC/OS Enterprise    v1.7.x, v1.8.x
-    ------------------- --------------- ----------------------- --------------- --------------------------------------- -----------------------
-    |aspm|                  v1.0.0      N/A                     v1.0.0          Apache Mesos                            v1.0.3
+                                                                             Apache Mesos DC/OS, DC/OS Enterprise    v1.7.x, v1.8.x
+   --------------- --------------- ----------------------- ---------------   --------------------------------------- -----------------------
+   |aspm|          v1.0.0          N/A                     v1.0.0            Apache Mesos                            v1.0.3
 
-                                                                                Apache Marathon                         v1.3.9
+                                                                             Apache Marathon                         v1.3.9
 
-                                                                                Apache Mesos DC/OS, DC/OS Enterprise    v1.7.x, v1.8.x
-    =================== =============== ======================= =============== ======================================= =======================
+                                                                             Apache Mesos DC/OS, DC/OS Enterprise    v1.7.x, v1.8.x
+   =============== =============== ======================= ===============   ======================================= =======================
 
 
 Notice to Beta Customers
@@ -69,7 +73,7 @@ Notice to Beta Customers
 
 Thank you for participating in the F5 Beta/Early Release program!
 
-Feature enhancements introduced as part of a beta release have a **"New in version"** tag like that below:
+Feature enhancements introduced as part of a beta release have a **"New in version"** tag like the example below:
 
 .. note::
 
