@@ -2,6 +2,14 @@ Container Integrations Documentation
 ------------------------------------
 
 .. toctree::
+    :caption: Cloud Foundry Container Integration
+    :maxdepth: 1
+    :glob:
+
+    cloudfoundry/index
+    cloudfoundry/cfctlr*
+
+.. toctree::
     :caption: Kubernetes Container Integration
     :maxdepth: 1
     :glob:
@@ -9,7 +17,6 @@ Container Integrations Documentation
     kubernetes/index
     kubernetes/kctlr*
     kubernetes/asp*
-
 
 .. toctree::
     :caption: Marathon Container Integration

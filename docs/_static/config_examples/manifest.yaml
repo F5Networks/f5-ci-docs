@@ -1,0 +1,61 @@
+applications:
+  - name: cf-bigip-ctlr
+    health-check-type: http
+    health-check-http-endpoint: /health
+    env:
+      BIGIP_CTLR_CFG: |
+                      bigip:
+                        url: https://1.2.3.4
+                        user: myUsername
+                        pass: myPassword
+                        partition:
+                          - cf
+                        balance: round-robin
+                        verify_interval: 1000000
+                        external_addr: 10.100.100.101
+                        policies:
+                          prerouting:
+                            - /Common/bigip-traffic
+                        health_monitors:
+                          - /Common/tcp_half_open
+
+
+                      status:
+                        user: admin
+                        pass: admin
+                      nats:
+                        - host: 10.100.100.25
+                          port: 4222
+                          user: nats
+                          pass: "myNatsPassword"
+
+                      logging:
+                        file: /tmp/cf-bigip.ctlr.log
+                        syslog: vcap.cf-bigip-ctlr
+                        level: debug
+                        loggregator_enabled: false
+                        metron_address: "localhost:3457"
+
+                      go_max_procs: -1
+                      prune_stale_droplets_interval: 30s
+                      droplet_stale_threshold: 120s
+                      suspend_pruning_if_nats_unavailable: false
+
+                      oauth:
+                        token_endpoint: uaa.service.cf.internal
+                        client_name: "gorouter"
+                        client_secret: <myGoRouterSecret>
+                        port: 8443
+                        skip_ssl_validation: true
+                        ca_certs:
+
+                          #routing_api:
+                          #uri: http://routing-api.service.cf.internal
+                          #port: 3000
+                          #auth_disabled: false
+
+                      start_response_delay_interval: 20s
+
+                      token_fetcher_max_retries: 3
+                      token_fetcher_retry_interval: 5s
+                      token_fetcher_expiration_buffer_time: 30

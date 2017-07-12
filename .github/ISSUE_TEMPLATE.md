@@ -1,21 +1,31 @@
-* Title: A short but descriptive summary of the issue, whether it be a bug or enhancement.
-* Details: For bugs, use the below template.
-* **Do not include requests for development or report issues with code or products here. This repository contains documentation only.**>
+// Title: Provide a short but descriptive summary of the issue.
 
-## Version
-<Fill in the version you have installed, such as 1.0>
-
-## Description
-<Describe the bug in detail, steps taken to produce the issue, provide URL(s) to the page(s) in question>
+// **Do not include requests for development or report issues with code or products here.** 
+This repository contains documentation only.
 
 
-* Details: For enhancements, use the below template.
+## Bugs
+Describe the bug in detail: 
 
-## Description
-<Describe the enhancement request in detail>
+- What doc are you reporting an issue with (provide URL)?
 
-## Environment
-<Describe the environment for which you would like new documentation. 
+- What information is inaccurate? 
+
+- Is information missing?
+
+- Is a code sample incorrect?
 
 
+## Requests
+Provide details regarding what you would like to see added to our documentation:
+
+### Environment
+
+- [ ] Cloud Foundry
+- [ ] Kubernetes
+- [ ] OpenShift
+- [ ] Mesos/Marathon)
+
+### Use Case 
+(i.e., what are you trying to do that you can't find documentation for?)
 
