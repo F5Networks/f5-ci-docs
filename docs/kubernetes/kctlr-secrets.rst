@@ -85,8 +85,7 @@ Pull an image from a private docker registry
 
    .. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
       :caption: ``k8s-bigip-ctlr`` Deployment
-      :emphasize-lines: 42-43
-
+      :emphasize-lines: 43-44
 
 
 .. _docker-registry secret: https://kubernetes.io/docs/concepts/containers/images/#creating-a-secret-with-a-docker-config

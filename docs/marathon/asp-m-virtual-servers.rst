@@ -1,7 +1,7 @@
 .. _marathon-asp-deploy:
 
-Launch an |asp| instance for a Marathon Application
-===================================================
+Create an ASP for a Marathon Application
+========================================
 
 .. sidebar:: Docs test matrix
 

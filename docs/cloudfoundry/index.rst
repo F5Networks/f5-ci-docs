@@ -1,11 +1,13 @@
 .. _cf-home:
 
-F5 Cloud Foundry Container Integration
-======================================
+F5 Cloud Foundry Container Integration :fonticon:`fa fa-wrench`
+===============================================================
 .. _cf-overview:
 
 Overview
 --------
+
+.. include:: /_static/reuse/beta-announcement-cf.rst
 
 The F5 `Cloud Foundry`_ Container Integration consists of the `F5 Cloud Foundry BIG-IP Controller </products/connectors/cf-bigip-ctlr/latest>`_.
 
@@ -55,10 +57,8 @@ Once the |cf-long| is running, it
 Key Cloud Foundry Concepts
 --------------------------
 
-.. important::
-
-   **All** |cf-long| **configurations are global.**
-   This means that the same settings apply to all pools/pools members.
+|cf-long| configurations are "global", meaning a single set of configurations apply to all of the pools/pools members created for Cloud Foundry Apps.
+The Cloud Foundry :ref:`Application Manifest <create-application-manifest>` file is the means via which you can identify the BIG-IP policies, profiles, etc., you want to apply.
 
 .. _cf-gorouter-nats:
 

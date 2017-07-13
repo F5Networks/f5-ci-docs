@@ -42,6 +42,10 @@ The |asp| (ASP) provides container-to-container load balancing, traffic visibili
 
 The |asp| collects traffic statistics for the Services it load balances; these stats are either logged locally or sent to an external analytics application. You can set the location and type of the analytics application in the `stats </products/asp/latest/index.html#stats>`_ section of the :ref:`Service annotation <k8s-service-annotate>`.
 
+.. important::
+
+   In Kubernetes, the ASP runs as a forward, or client-side, proxy.
+
 .. todo:: add "Export ASP Stats to an analytics provider"
 
 .. seealso::
@@ -99,10 +103,10 @@ Key Kubernetes Concepts
 
 .. _k8s-namespaces:
 
-Namespaces :fonticon:`fa fa-wrench`
-```````````````````````````````````
+Namespaces
+``````````
 
-.. include:: /_static/reuse/beta-announcement-k8s.rst
+.. include:: /_static/reuse/k8s-version-added-1_1.rst
 
 The `Kubernetes namespace`_ allows you to create/manage multiple environments within a cluster.
 The |kctlr-long| can manage all namespaces; a single namespace; or pretty much anything in between.

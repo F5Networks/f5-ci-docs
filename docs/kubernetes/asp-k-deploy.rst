@@ -1,7 +1,7 @@
 .. _k8s-asp-deploy:
 
-Deploy the |asp| with the |aspk-long|
-=====================================
+Deploy the ASP in Kubernetes
+============================
 
 .. sidebar:: Docs test matrix
 

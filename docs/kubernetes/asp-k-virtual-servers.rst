@@ -1,7 +1,7 @@
 .. _k8s-launch-asp:
 
-Launch an |asp| instance for a Kubernetes Service
-=================================================
+Attach an ASP to a Kubernetes Service
+=====================================
 
 .. sidebar:: Docs test matrix
 
@@ -13,16 +13,16 @@ Launch an |asp| instance for a Kubernetes Service
 Summary
 -------
 
-The |asp| watches Kubernetes `Service`_ definitions for a set of annotations defining virtual server objects.
+The |asp| (ASP) watches Kubernetes `Service`_ definitions for a set of annotations defining virtual server objects.
  The annotation should include a JSON blob defining of a set of `ASP configuration parameters </products/asp/latest/index.html#configuration-parameters>`_.
- When you annotate an existing Kubernetes `Service`_, the ASP creates a virtual server for that Service.
+ When you add the ASP annotation to a Kubernetes `Service`_, the ASP creates a virtual server for that Service.
 
 .. _k8s-service-annotate:
 
 Annotate a Kubernetes Service
 -----------------------------
 
-Use one of the options below to annotate your Kubernetes `Service`_ and deploy the |asp|.
+Use one of the options below to attach an ASP to a Kubernetes `Service`_.
 
 #. Annotate the `Service`_ definition with the key-value pair ``asp.f5.com/config="<JSON-config-blob>"``.
 

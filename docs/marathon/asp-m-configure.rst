@@ -1,7 +1,7 @@
 .. _aspm-configuration:
 
-Deploy the |asp| with the |aspm-long|
-=====================================
+Deploy the ASP in Mesos Marathon
+================================
 
 The |aspm-long| dynamically deploys the |asp| (ASP) in Marathon when it discovers an Application with the ``f5-asp:enable`` label.
 

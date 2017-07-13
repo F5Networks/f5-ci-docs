@@ -35,6 +35,10 @@ The |asp| (ASP) provides container-to-container load balancing, traffic visibili
 Its light form factor allows for rapid deployment in datacenters and across cloud services.
 The ASP integrates with container environment management and orchestration systems and enables application delivery service automation.
 
+.. important::
+
+   In Mesos Marathon, the ASP runs as a reverse proxy.
+
 .. seealso:: `ASP product documentation`_
 
 
@@ -172,7 +176,7 @@ In this example, ``0`` refers to the first mapping defined above (``"containerPo
 
 .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
    :caption: |mctlr| labels defining BIG-IP objects for two (2) port indices
-   :lines: 26-40
+   :lines: 26-38
    :lineno-start: 26
 
 .. [#dockerbridge] See the `Docker Networking <https://docs.docker.com/engine/userguide/networking/>`_ documentation for more information.
@@ -194,8 +198,8 @@ Here, we create health checks for each of the port indices defined for our Appli
 
 .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
    :caption: Defining health checks for multiple ports
-   :lines: 41-66
-   :lineno-start: 41
+   :lines: 39-65
+   :lineno-start: 39
 
 
 .. [#setuphealthchecks] Occurs when ``F5_CC_USE_HEALTHCHECK``'s value is "True".

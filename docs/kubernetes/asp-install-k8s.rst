@@ -1,7 +1,7 @@
 .. _install-asp-k8s:
 
-Install the |asp| in Kubernetes
-===============================
+Install the ASP in Kubernetes
+=============================
 
 .. sidebar:: Docs test matrix
 
