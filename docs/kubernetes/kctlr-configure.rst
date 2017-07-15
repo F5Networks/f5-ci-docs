@@ -29,7 +29,7 @@ kubeconfig              Path to the `kubeconfig`_ file
 namespace               Kubernetes namespace to watch [#fnnamespace]_
 =====================   ===================================================
 
-.. [#fnnamespace] As of |kctlr| `v1.1.0-beta.1 </products/connectors/k8s-bigip-ctlr/v1.1-beta>`_ ``namespace`` is not required.
+.. [#fnnamespace] As of |kctlr| `v1.1.0 </products/connectors/k8s-bigip-ctlr/v1.1.0`_ ``namespace`` is not required.
 
 .. todo:: add link to multiple namespaces doc when it's added
 
