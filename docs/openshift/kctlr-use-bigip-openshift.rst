@@ -31,7 +31,7 @@ Steps required to set up a BIG-IP device and |kctlr| for use in an `OpenShift`_ 
 
 .. note::
 
-   The |kctlr| is deployed to the namespace 'default' and the uses the  ``serviceAccountName`` 'bigip-ctlr'.
+   The examples deploy the |kctlr| to the namespace 'default' and the create the ``serviceAccountName`` named 'bigip-ctlr'.
 
 
 .. _k8s-openshift-hostsubnet:
@@ -119,7 +119,7 @@ Assign an OpenShift overlay address to the BIG-IP device
 
    .. note::
 
-      - Specify a subnet mask of ``/14`` when creating the Self IP which is the subnet range of the default OpenShift cluster network. This will ensure all VXLAN traffic is routed via the ``openshift_vxlan`` tunnel.
+      - Specify a subnet mask of ``/14`` when creating the Self IP which is the subnet range of the default OpenShift cluster network. [#ossdn]_ This will ensure all VXLAN traffic is correctly routed via the ``openshift_vxlan`` tunnel.
       - If you don't specify a traffic group when creating the Self IP, it will use the default traffic group.
 
 #. Verify creation of the Self IP.
