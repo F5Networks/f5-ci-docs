@@ -11,7 +11,7 @@ metadata:
   # Load balancing algorithm
   virtual-server.f5.com/balance: "round-robin"
   # Specify the port you want to handle requests
-  virtual-server.f5.com/http-port: 80
+  virtual-server.f5.com/http-port: "80"
 spec:
  rules:
  # omit host name (URL) to match all hosts
