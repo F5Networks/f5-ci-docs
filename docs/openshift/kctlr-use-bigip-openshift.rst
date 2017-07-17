@@ -47,7 +47,7 @@ Create a new OpenShift HostSubnet
 
    .. important::
 
-      - You must include the "annotation" section shown in the example below.
+      You must include the "annotation" section shown in the example below.
 
    .. literalinclude:: /_static/config_examples/f5-kctlr-openshift-hostsubnet.yaml
       :linenos:
@@ -75,21 +75,21 @@ Create a BIG-IP VXLAN
 
 #. Create a new VXLAN profile on the BIG-IP device using multi-point flooding.
 
-   .. admonition:: TMSH
+   .. code-block:: console
 
       admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create net \\
       tunnels vxlan vxlan-mp flooding-type multipoint
 
 #. Verify creation of the profile.
 
-   .. admonition:: TMSH
+   .. code-block:: console
 
       admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ list net \\
       tunnels vxlan vxlan-mp
 
 #. Create a BIG-IP VXLAN using the new ``vxlan-mp`` profile.
 
-   .. admonition:: TMSH
+   .. code-block:: console
 
       admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create net \\
       tunnels tunnel openshift_vxlan key 0 profile vxlan-mp local-address 172.16.1.28
@@ -99,7 +99,7 @@ Create a BIG-IP VXLAN
 
 #. Verify creation of the VXLAN tunnel.
 
-   .. admonition:: TMSH
+   .. code-block:: console
 
       admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ list net \\
       tunnels tunnel openshift_vxlan
@@ -112,7 +112,7 @@ Assign an OpenShift overlay address to the BIG-IP device
 #. Create a `Self IP address`_ on the BIG-IP device.
    Use an address in the range you defined in the :ref:`HostSubnet <k8s-openshift-hostsubnet>` ``subnet`` field.
 
-   .. admonition:: TMSH
+   .. code-block:: console
 
       admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create net self \\
       10.129.2.10/14 allow-service all vlan openshift_vxlan
@@ -125,7 +125,7 @@ Assign an OpenShift overlay address to the BIG-IP device
 
 #. Verify creation of the Self IP.
 
-   .. admonition:: TMSH
+   .. code-block:: console
 
        admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ list net self 10.129.2.10/14
 
@@ -134,7 +134,7 @@ Assign an OpenShift overlay address to the BIG-IP device
 .. _k8s-openshift-serviceaccount:
 
 Create an OpenShift service account and policy
------------------------------------------------
+----------------------------------------------
 
 #. Create a serviceaccount for the |kctlr|.
 
