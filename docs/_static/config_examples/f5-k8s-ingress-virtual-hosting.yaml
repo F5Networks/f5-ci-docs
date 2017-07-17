@@ -11,22 +11,24 @@ metadata:
   # Load balancing algorithm
   virtual-server.f5.com/balance: "round-robin"
   # Specify the port you want to handle requests
-  virtual-server.f5.com/http-port: 80
+  virtual-server.f5.com/http-port: "80"
 spec:
  rules:
  # URL
  - host: mysite.example.com
    http:
      # path to Service from URL
-     paths: /myApp1
-     - backend:
-         serviceName: myService1
-         servicePort: 80
+     paths:
+       - path: /myApp1
+         backend:
+           serviceName: myService1
+           servicePort: 80
  # URL
  - host: yoursite.example.com
    http:
      # path to Service from URL
-     paths: /myApp2
-     - backend:
-         serviceName: myService2
-         servicePort: 80
+     paths:
+       - path: /myApp2
+         backend:
+           serviceName: myService2
+           servicePort: 80
