@@ -22,10 +22,17 @@ OpenShift Prerequisites
 
 The prerequisites below are in addition to the :ref:`F5 Kubernetes Integration's general prerequisites <k8s-prereqs>`.
 
-1. You'll need to use the `OpenShift Origin CLI`_, ``oc``.
-2. To :ref:`integrate your BIG-IP device into an OpenShift cluster <bigip-openshift-setup>`, you'll need to :ref:`assign an OpenShift overlay address to the BIG-IP device <k8s-openshift-assign-ip>`.
-3. The |kctlr-long| needs an `OpenShift service account`_ with permission to access nodes, endpoints, services, configmaps, ingresses, ingresses/status,
-and events.
+#. You'll need to use the `OpenShift Origin CLI`_, ``oc``.
+#. To :ref:`integrate your BIG-IP device into an OpenShift cluster <bigip-openshift-setup>`, you'll need to :ref:`assign an OpenShift overlay address to the BIG-IP device <k8s-openshift-assign-ip>`.
+#. The |kctlr-long| needs an `OpenShift service account`_ with permission to access the following:
+
+   - nodes,
+   - endpoints,
+   - services,
+   - configmaps,
+   - ingresses,
+   - ingresses/status, and
+   - events.
 
 Once you've added the BIG-IP device to the OpenShift overlay network, it will have access to all pods in the cluster.
 You can then use the |kctlr| the same as you would in Kubernetes.
