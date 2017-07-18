@@ -6,7 +6,7 @@ F5 Kubernetes Container Integration
 Overview
 --------
 
-The F5 `Kubernetes`_ Container Integration consists of the `F5 Kubernetes BIG-IP Controller </products/connectors/k8s-bigip-ctlr/latest>`_ and the `F5 Application Services Proxy </products/asp/latest>`_ (ASP).
+The F5 Container Integration for `Kubernetes`_ consists of the `F5 BIG-IP Controller for Kubernetes </products/connectors/k8s-bigip-ctlr/latest>`_ and the `F5 Application Services Proxy </products/asp/latest>`_ (ASP).
 
 The |kctlr-long| configures BIG-IP Local Traffic Manager (LTM) objects for applications in a `Kubernetes cluster`_, serving North-South traffic.
 
@@ -21,7 +21,7 @@ The |asp| provides load balancing and telemetry for containerized applications, 
 General Prerequisites
 ---------------------
 
-The F5 Kubernetes Integration's documentation set assumes that you:
+The F5 Integration for Kubernetes documentation set assumes that you:
 
 - already have a `Kubernetes cluster`_ running;
 - are familiar with the `Kubernetes dashboard`_ and `kubectl`_ ;

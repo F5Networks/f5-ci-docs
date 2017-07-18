@@ -9,7 +9,7 @@ Manage BIG-IP LTM objects in Marathon
 
    - ``marathon-1.3.9``
    - ``mesos-1.0.3``
-   - |mctlr| ``v1.0.0``
+   - ``marathon-bigip-ctlr v1.0.0``
 
 The |mctlr-long| watches the Mesos/Marathon API for Applications with associated :ref:`F5 Application Labels <app-labels>`.
 These Application Labels define the BIG-IP LTM objects |mctlr| creates/manages.

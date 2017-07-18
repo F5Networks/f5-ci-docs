@@ -1,14 +1,14 @@
-F5 Marathon Container Integration
-=================================
+F5 Container Integration for Marathon
+=====================================
 
 Overview
 --------
 
-The F5 `Marathon`_ Container Integration consists of the `F5 Marathon BIG-IP Controller </products/connectors/marathon-bigip-ctlr/latest>`_, the `F5 Application Services Proxy </products/asp/latest>`_ (ASP), and the `F5 Marathon ASP Controller </products/connectors/marathon-asp-ctlr/latest>`_.
+The F5 Container Integration  for `Apache Mesos Marathon`_ consists of the `F5 BIG-IP Controller for Marathon </products/connectors/marathon-bigip-ctlr/latest>`_, the `F5 Application Services Proxy </products/asp/latest>`_ (ASP), and the `F5 Marathon ASP Controller </products/connectors/marathon-asp-ctlr/latest>`_.
 
 The |mctlr-long| configures BIG-IP Local Traffic Manager (LTM) objects for Applications in a `Mesos cluster`_, serving North-South traffic.
 
-The |asp| provides load balancing and telemetry for containerized applications, serving East-West traffic. The |aspm-long| deploys ASP instances 'on-demand' for Marathon Applications.
+The |asp| provides load balancing and telemetry for containerized applications, serving East-West traffic. The |aspm-long| deploys ASP instances 'on-demand' for `Marathon Applications`_.
 
 .. image:: /_static/media/mesos_solution.png
    :scale: 50 %
@@ -18,7 +18,7 @@ The |asp| provides load balancing and telemetry for containerized applications, 
 General Prerequisites
 ---------------------
 
-The F5 Mesos/Marathon Integration's documentation set assumes that you:
+The F5 Container Integration for Mesos Marathon documentation set assumes that you:
 
 - already have a `Mesos cluster`_ running;
 - are familiar with the `Marathon Web Interface`_ ;

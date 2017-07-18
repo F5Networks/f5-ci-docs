@@ -9,7 +9,7 @@ Install the |mctlr-long|
 
    - ``marathon-1.3.9``
    - ``mesos-1.0.3``
-   - |mctlr| ``v1.0.0``
+   - ``marathon-bigip-ctlr v1.0.0``
 
 The |mctlr-long| installs as a Marathon `Application`_.
 You can do this via the Marathon REST API, or via the `Marathon Web Interface`_.

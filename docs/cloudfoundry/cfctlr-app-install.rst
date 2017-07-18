@@ -1,16 +1,11 @@
 .. _deploy-cf-ctlr:
 
-Deploy the Cloud Foundry BIG-IP Controller :fonticon:`fa fa-wrench`
-===================================================================
+.. include:: /_static/reuse/beta-announcement-cf.rst
 
-.. sidebar: Docs test matrix
-   We tested this documentation with:
-   -
-   - :code:`cf-bigip-ctlr` v1.0.0
+Deploy the BIG-IP Controller for Cloud Foundry :fonticon:`fa fa-wrench`
+=======================================================================
 
 This document describes the steps required to deploy the |cf-long| in `Cloud Foundry`_ or `Pivotal Cloud Foundry`_ using an `Application Manifest`_.
-
-.. include:: /_static/reuse/beta-announcement-cf.rst
 
 .. _cf-deployment-prereqs:
 

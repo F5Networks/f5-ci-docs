@@ -8,7 +8,7 @@ Install the ASP in Kubernetes
    We tested this documentation with:
 
    - ``kubernetes-v1.4.8_coreos.0``
-   - |kctlr| ``v1.0.0``
+   - ``k8s-bigip-ctlr v1.0.0``
 
 Summary
 -------

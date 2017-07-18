@@ -8,7 +8,8 @@ Install the |kctlr-long|
    We tested this documentation with:
 
    - ``kubernetes-v1.4.8_coreos.0``
-   - |kctlr| ``v1.1.0``
+   - ``k8s-bigip-ctlr v1.1.0``
+
 
 The |kctlr-long| installs via a `Kubernetes Deployment`_.
 The Deployment creates a `ReplicaSet`_ that, in turn, launches a `Pod`_ running the |kctlr| app.

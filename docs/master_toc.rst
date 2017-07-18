@@ -12,7 +12,7 @@
    :maxdepth: 2
    :glob:
 
-   Cloud Foundry BIG-IP Controller <http://clouddocs.f5.com/products/connectors/cf-bigip-ctlr/v1.0-beta>
+   BIG-IP Controller - Cloud Foundry <http://clouddocs.f5.com/products/connectors/cf-bigip-ctlr/v1.0-beta>
    Integration Overview <cloudfoundry/index>
    cloudfoundry/cfctlr*
 
@@ -21,8 +21,8 @@
    :maxdepth: 2
    :glob:
 
-   K8s BIG-IP Controller <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
-   F5 Kube Proxy <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest/>
+   BIG-IP Controller - K8s <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
+   F5-proxy - K8s <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest/>
    Integration Overview <kubernetes/index>
    kubernetes/kctlr*
    kubernetes/asp*
@@ -32,8 +32,8 @@
    :glob:
    :maxdepth: 2
 
-   Marathon BIG-IP Controller <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
-   Marathon ASP Controller <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest/>
+   BIG-IP Controller - Marathon <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
+   ASP Controller - Marathon <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest/>
    Integration Overview <marathon/index>
    marathon/mctlr*
    marathon/asp*

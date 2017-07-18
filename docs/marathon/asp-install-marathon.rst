@@ -10,7 +10,7 @@ Install the |aspm-long|
 
    - ``marathon-1.3.9``
    - ``mesos-1.0.3``
-   - |mctlr| ``v1.0.0``
+   - ``marathon-bigip-ctlr v1.0.0``
    - ``asp v1.0.0``
 
 The |aspm-long| installs as a Marathon `Application`_. You can do so via the Marathon REST API, or via the `Marathon Web Interface`_.

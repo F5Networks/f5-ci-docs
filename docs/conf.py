@@ -88,26 +88,21 @@ release = 'v1.1'
 
 rst_epilog = """
 .. |asp| replace:: Application Services Proxy
-.. |asp-img| replace:: asp:latest
-.. |aspk-long| replace:: F5 Kubernetes Proxy
-.. |aspk| replace:: ``f5-kube-proxy``
-.. |aspk-img| replace:: f5networks/f5-kube-proxy:v1.0
-.. |cfctlr| replace:: ``cf-bigip-ctlr``
-.. |cf-long| replace:: Cloud Foundry BIG-IP Controller
-.. |kctlr-long| replace:: Kubernetes BIG-IP Controller
-.. |kctlr| replace:: ``k8s-bigip-ctlr``
-.. |kctlr-img| replace:: f5networks/k8s-bigip-ctlr:v1.0
-.. |mctlr-long| replace:: Marathon BIG-IP Controller
-.. |mctlr| replace:: ``marathon-bigip-ctlr``
-.. |mctlr-img| replace:: f5networks/marathon-bigip-ctlr:v1.0
-.. |aspm-long| replace:: Marathon ASP Controller
-.. |aspm| replace:: ``marathon-asp-ctlr``
-.. |aspm-img| replace:: f5networks/marathon-asp-ctlr:v1.0
+.. |aspk-long| replace:: F5-proxy for Kubernetes
+.. |aspk| replace:: F5-proxy
+.. |cfctlr| replace:: BIG-IP Controller
+.. |cf-long| replace:: BIG-IP Controller for Cloud Foundry
+.. |kctlr-long| replace:: BIG-IP Controller for Kubernetes
+.. |kctlr| replace:: BIG-IP Controller
+.. |mctlr-long| replace:: BIG-IP Controller for Marathon
+.. |mctlr| replace:: BIG-IP Controller
+.. |aspm-long| replace:: F5 ASP Controller for Marathon
+.. |aspm| replace:: ASP Controller
 .. _BIG-IP: https://f5.com/products/big-ip
 .. _BIG-IP System User Account Administration -> Administrative Partitions: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-12-0-0/3.html
 .. _system configuration: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-initial-configuration-12-0-0/2.html#conceptid
 .. _local traffic management: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-basics-12-0-0.html
-.. _F5 Docker registry: #
+.. _F5 Docker registry: https://hub.docker.com/r/f5networks/
 .. _Kubernetes: https://kubernetes.io/
 .. _kubectl: https://kubernetes.io/docs/user-guide/kubectl-overview/
 .. _kube-proxy: https://kubernetes.io/docs/admin/kube-proxy/
@@ -141,7 +136,9 @@ rst_epilog = """
 .. _Splunk: https://www.splunk.com/
 .. _Apache Mesos: https://mesosphere.com/
 .. _Marathon: https://mesosphere.github.io/marathon/
+.. _Apache Mesos Marathon: https://mesosphere.github.io/marathon/
 .. _Marathon Apps: https://mesosphere.github.io/marathon/docs/application-basics.html
+.. _Marathon Applications: https://mesosphere.github.io/marathon/docs/application-basics.html
 .. _Docker: https://www.docker.com/
 .. _Marathon Web Interface: https://mesosphere.github.io/marathon/docs/marathon-ui.html
 .. _BIG-IP partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-13-0-0/2.html
