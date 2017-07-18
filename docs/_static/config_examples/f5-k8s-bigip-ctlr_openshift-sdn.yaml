@@ -34,13 +34,12 @@ spec:
             # To manage a single namespace, enter it below
             # (required in v1.0)
             # To manage all namespaces, omit the `namespace` entry
-            # (default as of v1.1.0 )
+            # (default as of v1.1.0)
             # To manage multiple namespaces, enter a separate flag for each
-            # below
-            # (as of v1.1.0 )
+            # namespace below (as of v1.1.0)
             "--namespace=default",
             "--pool-member-type=cluster",
             "--openshift-sdn-name=/Common/openshift_vxlan"
-           ]
+            ]
       imagePullSecrets:
         - name: f5-docker-images

@@ -1,19 +1,13 @@
-{
-    "kind": "HostSubnet",
-    "apiVersion": "v1",
-    "metadata": {
-        "annotations": {
-            "pod.network.openshift.io/assign-subnet": "true"
-        }
-    },
-    # provide a name for the node that will serve as BIG-IP's entry into the cluster
-    "host": "f5-server",
-    # specify a range within the OpenShift SDN pod network; set an address
-    # in this range as a selfIP on the BIG-IP; this subnet can be as small as
-    # /31 if IP space is limited
-    "subnet": "10.131.0.0/24",
-    # The hostIP address will be the BIG-IP interface address routable to the
-    # OpenShift Origin nodes.
-    # This address is the BIG-IP VTEP in the SDN's VXLAN.
-    "hostIP": "172.16.1.28"
-}
+apiVersion: v1
+kind: HostSubnet
+metadata:
+  name: f5-server
+  annotations:
+    pod.network.openshift.io/fixed-vnid-host: "0"
+    pod.network.openshift.io/assign-subnet: "true"
+# provide a name for the node that will serve as BIG-IP's entry into the cluster
+host: f5-server
+# The hostIP address will be the BIG-IP interface address routable to the
+# OpenShift Origin nodes.
+# This address is the BIG-IP VTEP in the SDN's VXLAN.
+hostIP: 172.16.1.28
