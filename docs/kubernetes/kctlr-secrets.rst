@@ -85,7 +85,7 @@ Pull an image from a private docker registry
 
    .. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
       :caption: ``k8s-bigip-ctlr`` Deployment
-      :emphasize-lines: 45-46
+      :emphasize-lines: 42-43
 
 
 

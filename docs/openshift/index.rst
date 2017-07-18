@@ -22,14 +22,17 @@ OpenShift Prerequisites
 
 The prerequisites below are in addition to the :ref:`F5 Kubernetes Integration's general prerequisites <k8s-prereqs>`.
 
-#. The |kctlr-long| needs an `OpenShift user account`_ with permission to access nodes, endpoints, services, configmaps, ingresses, ingresses/status,
-and events. Add the verbs and resources shown below to your `Authorization Policy`_:
-
-   #. ``[get list watch] [nodes endpoints services namespaces ingresses]``
-   #. ``[get list watch update create patch] [configmaps ingresses/status events]``
-
-#. You'll need to use the `OpenShift Origin CLI`_, in addition to ``kubectl``, to execute OpenShift-specific commands.
+#. You'll need to use the `OpenShift Origin CLI`_, ``oc``.
 #. To :ref:`integrate your BIG-IP device into an OpenShift cluster <bigip-openshift-setup>`, you'll need to :ref:`assign an OpenShift overlay address to the BIG-IP device <k8s-openshift-assign-ip>`.
+#. The |kctlr-long| needs an `OpenShift service account`_ with permission to access the following:
+
+   - nodes,
+   - endpoints,
+   - services,
+   - configmaps,
+   - ingresses,
+   - ingresses/status, and
+   - events.
 
 Once you've added the BIG-IP device to the OpenShift overlay network, it will have access to all pods in the cluster.
 You can then use the |kctlr| the same as you would in Kubernetes.
@@ -42,7 +45,7 @@ OpenShift Origin Node Health
 In OpenShift clusters, the Kubernetes NodeList records status for all nodes registered with the master.
 
 When the |kctlr-long| runs with ``pool-member-type`` set to ``cluster`` -- which integrates the BIG-IP device into the OpenShift cluster network -- it watches the NodeList in OpenShift's underlying Kubernetes API server.
-The |kctlr-long| creates/updates FDB (Forwarding DataBase) entries according to the NodeList.
+The |kctlr-long| creates/updates FDB (Forwarding DataBase) entries for the configured VXLAN tunnel according to the NodeList.
 This ensures the |kctlr| only makes VXLAN requests to reported nodes.
 
 As a function of the BIG-IP VXLAN, the BIG-IP device only communicates with healthy cluster nodes.
@@ -59,8 +62,7 @@ Related
    k8s-bigip-ctlr docs <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
 
 .. _OpenShift Origin: https://www.openshift.org/
-.. _OpenShift user account: https://docs.openshift.org/1.2/admin_guide/manage_users.html
+.. _OpenShift service account: https://docs.openshift.org/latest/admin_guide/service_accounts.html
 .. _Authorization Policy: https://docs.openshift.org/latest/admin_guide/manage_authorization_policy.html
-.. _OpenShift Origin CLI: https://docs.openshift.org/1.2/cli_reference/index.html
+.. _OpenShift Origin CLI: https://docs.openshift.org/latest/cli_reference/index.html
 .. _OpenShift SDN: https://docs.openshift.org/latest/architecture/additional_concepts/sdn.html
-
