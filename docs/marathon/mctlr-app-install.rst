@@ -14,12 +14,13 @@ Install the |mctlr-long|
 The |mctlr-long| installs as a Marathon `Application`_.
 You can do this via the Marathon REST API, or via the `Marathon Web Interface`_.
 
-Before you begin
-----------------
+Initial Setup
+-------------
 
-* :ref:`Set up authentication to your secure DC/OS cluster <mesos-authentication>`.
-* `Create a new partition`_ for Marathon on your BIG-IP device.
-  The |mctlr-long| cannot manage objects in the ``/Common`` partition.
+#. :ref:`Set up authentication to your secure DC/OS cluster <mesos-authentication>`.
+
+#. `Create a new partition`_ for Marathon on your BIG-IP device.
+   The |mctlr-long| cannot manage objects in the ``/Common`` partition.
 
 Launch the |mctlr| App using the Marathon REST API
 --------------------------------------------------

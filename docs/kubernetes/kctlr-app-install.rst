@@ -14,14 +14,17 @@ Install the |kctlr-long|
 The |kctlr-long| installs via a `Kubernetes Deployment`_.
 The Deployment creates a `ReplicaSet`_ that, in turn, launches a `Pod`_ running the |kctlr| app.
 
-Before you begin
-----------------
+Initial Setup
+-------------
 
-* :ref:`Add a Kubernetes Secret <k8s-add-secret>` containing your BIG-IP user credentials to your Kubernetes master.
-* `Create a new partition`_ for Kubernetes on your BIG-IP.
-  The |kctlr| can not manage objects in the ``/Common`` partition.
-* *OPTIONAL*: Create a Kubernetes :ref:`docker-registry secret <k8s-secret-docker-config>` if you intend to pull the container image from a private Docker registry.
-* **If you're using OpenShift**, complete the steps in :ref:`Use BIG-IP in an OpenShift Cluster <bigip-openshift-setup>` before proceeding.
+#. :ref:`Add a Kubernetes Secret <k8s-add-secret>` containing your BIG-IP login credentials to your Kubernetes master node.
+
+#. `Create a new partition`_ for Kubernetes on your BIG-IP.
+   The |kctlr| can not manage objects in the ``/Common`` partition.
+
+#. `Create a Kubernetes Secret containing your Docker login credentials`_ (required if you need to pull the container image from a private Docker registry).
+
+#. **If you're using OpenShift**: Complete the steps in :ref:`Add BIG-IP device to an OpenShift Cluster <bigip-openshift-setup>`.
 
 .. _create-k8s-deployment:
 
@@ -107,3 +110,4 @@ Use ``kubectl`` to verify all of the objects launched successfully.
 .. _ReplicaSet: https://kubernetes.io/docs/user-guide/replicasets/
 .. _Pod: https://kubernetes.io/docs/user-guide/pods/
 .. _Create a new partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-implementations-12-1-0/29.html
+.. _Create a Kubernetes Secret containing your Docker login credentials: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/

@@ -135,10 +135,10 @@ By convention, the DNS name of an |asp| instance for an Application is “<ASP_E
 
 For example:
 
-- ``ASP_ENABLE_LABEL``: ASP +
-- Application name: “app1” +
-- Domain name: “marathon.mesos” =
-- ASP DNS name: “ASP-app1.marathon.mesos”
+- ``ASP_ENABLE_LABEL``: "f5-asp" +
+- Application name: "app1" +
+- Domain name: "marathon.mesos" =
+- ASP DNS name: "f5-asp-app1.marathon.mesos"
 
 .. _port-mappings:
 
