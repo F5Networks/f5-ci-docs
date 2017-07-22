@@ -20,7 +20,7 @@ The F5 Cloud Docs team acknowledges the following projects used to build, test, 
 - `AWS CLI <https://aws.amazon.com/cli/>`_: written by Amazon Web Services and licensed under the `Apache 2.0 license <https://www.apache.org/licenses/LICENSE-2.0>`_.
 
 - `cloud_sptheme <https://bitbucket.org/ecollins/cloud_sptheme>`_ : released under the BSD license. The "cloud_sptheme" python package and artwork is
-    Copyright (c) 2010-2017 by `Assurance Technologies, LLC <http://www.assurancetechnologies.com>`_.
+    Copyright (c) 2010-2017 by `Assurance Technologies, LLC <https://www.assurancetechnologies.com>`_.
 
 - `Recommonmark <https://github.com/rtfd/recommonmark>`_ : mainly derived from `remarkdown <https://github.com/sgenoud/remarkdown>`_ by Steve Genoud and leverages the python `CommonMark <https://pypi.python.org/pypi/CommonMark>`_ implementation. Originally created by Luca Barbato, it is now maintained in the Read the Docs (`rtfd <https://github.com/rtfd>`_) GitHub organization.
 

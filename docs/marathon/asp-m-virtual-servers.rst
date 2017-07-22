@@ -25,7 +25,7 @@ Add the label ``"f5-asp": "enable"`` to the App's service definition.
    - Click :guilabel:`Configuration`.
    - Click :guilabel:`Edit`.
    - Click :guilabel:`Labels`.
-   - Click the :guilabel:`plus sign icon` and add the new label "asp: enable".
+   - Click the :guilabel:`+` icon and add the label "f5-asp: enable".
    - Click :guilabel:`Change and deploy configuration`.
 
 #. Via the REST API:
