@@ -1,28 +1,28 @@
 .. _k8s-launch-asp:
 
-Launch an |asp| instance for a Kubernetes Service
-=================================================
+Attach an ASP to a Kubernetes Service
+=====================================
 
 .. sidebar:: Docs test matrix
 
    We tested this documentation with:
    - ``kubernetes-v1.4.8_coreos.0``
-   - |kctlr| ``v1.0.0``
+   - ``k8s-bigip-ctlr v1.0.0``
    - `kubernetes hello-world`_ service, with :ref:`ASP annotation <k8s-service-annotate>`
 
 Summary
 -------
 
-The |asp| watches Kubernetes `Service`_ definitions for a set of annotations defining virtual server objects.
+The |asp| (ASP) watches Kubernetes `Service`_ definitions for a set of annotations defining virtual server objects.
  The annotation should include a JSON blob defining of a set of `ASP configuration parameters </products/asp/latest/index.html#configuration-parameters>`_.
- When you annotate an existing Kubernetes `Service`_, the ASP creates a virtual server for that Service.
+ When you add the ASP annotation to a Kubernetes `Service`_, the ASP creates a virtual server for that Service.
 
 .. _k8s-service-annotate:
 
 Annotate a Kubernetes Service
 -----------------------------
 
-Use one of the options below to annotate your Kubernetes `Service`_ and deploy the |asp|.
+Use one of the options below to attach an ASP to a Kubernetes `Service`_.
 
 #. Annotate the `Service`_ definition with the key-value pair ``asp.f5.com/config="<JSON-config-blob>"``.
 
@@ -47,7 +47,7 @@ Use one of the options below to annotate your Kubernetes `Service`_ and deploy t
       :linenos:
       :emphasize-lines: 4-13
 
-   :download:`Download an example Service definition with the ASP annotation </_static/config_examples/f5-asp-k8s-example-service.yaml>`
+   :fonticon:`fa fa-download` :download:`Download an example Service definition with the ASP annotation </_static/config_examples/f5-asp-k8s-example-service.yaml>`
 
 #. (Optional) :ref:`Verify that the ASP handles traffic for the Service <k8s-asp-verify>`
 

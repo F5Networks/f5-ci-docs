@@ -1,35 +1,44 @@
 .. _k8s-asp-deploy:
 
-Deploy the |asp| with the |aspk-long|
+Replace kube-proxy with f5-kube-proxy
 =====================================
 
 .. sidebar:: Docs test matrix
 
    We tested this documentation with:
+
    - ``kubernetes-v1.4.8_coreos.0``
-   - |kctlr| ``v1.0.0``
+   - ``k8s-bigip-ctlr v1.0.0``
+   - ``asp v1.0.0``
 
 Summary
 -------
 
-The |aspk-long| -- |aspk| -- is a container-based application that runs in a `Pod`_ on each `Node`_ in a Kubernetes `Cluster`_.
-It takes the place of the standard ``kube-proxy`` component.
+The |aspk| is a container-based application that runs in a `Pod`_ on each `Node`_ in a Kubernetes `Cluster`_.
+It takes the place of the standard Kubernetes ``kube-proxy`` component.
 
-.. important::
+.. seealso::
 
-   Master and Worker nodes have distinct pod manifests.
-   See the CoreOS documentation regarding `setting up kube-proxy on the master <https://coreos.com/kubernetes/docs/latest/deploy-master.html#set-up-the-kube-proxy-pod>`_ and `setting up kube-proxy on the workers <https://coreos.com/kubernetes/docs/latest/deploy-workers.html#set-up-the-kube-proxy-pod>`_ for more information.
+   `Kubernetes Proxies <https://kubernetes.io/docs/concepts/cluster-administration/proxies/>`_
+
 
 .. _k8s-pod-manifest:
 
-Set up |aspk-long| on every node in the cluster
------------------------------------------------
+Replace kube-proxy with |aspk| in the Pod Manifests
+---------------------------------------------------
 
-.. tip::
+.. important::
+
+   Kubernetes "master" and "worker" nodes have distinct Pod Manifests.
+   You need to update both to use |aspk|.
+
+   See the CoreOS documentation regarding `setting up kube-proxy on the master <https://coreos.com/kubernetes/docs/latest/deploy-master.html#set-up-the-kube-proxy-pod>`_ and `setting up kube-proxy on the workers <https://coreos.com/kubernetes/docs/latest/deploy-workers.html#set-up-the-kube-proxy-pod>`_ for more information.
+
+.. hint::
 
    In CoreOS, the `kube-proxy`_ manifest lives in the path ``/etc/kubernetes/manifests/kube-proxy.yaml``.
 
-   .. code-block:: bash
+   .. code-block:: console
       :caption: SSH to a node and edit the kube-proxy manifest
 
       user@k8s-master:~$ ssh core@172.16.1.21
@@ -88,13 +97,13 @@ Examples
     :caption: kube-proxy manifest on MASTER node
     :linenos:
 
-:download:`f5-kube-proxy-manifest-master.yaml </_static/config_examples/f5-kube-proxy-manifest-master.yaml>`
+:fonticon:`fa fa-download` :download:`f5-kube-proxy-manifest-master.yaml </_static/config_examples/f5-kube-proxy-manifest-master.yaml>`
 
 .. literalinclude:: /_static/config_examples/f5-kube-proxy-manifest-worker.yaml
     :caption: kube-proxy manifest on WORKER node
     :linenos:
 
-:download:`f5-kube-proxy-manifest-worker.yaml </_static/config_examples/f5-kube-proxy-manifest-worker.yaml>`
+:fonticon:`fa fa-download` :download:`f5-kube-proxy-manifest-worker.yaml </_static/config_examples/f5-kube-proxy-manifest-worker.yaml>`
 
 
 .. _Pod: https://kubernetes.io/docs/user-guide/pods/

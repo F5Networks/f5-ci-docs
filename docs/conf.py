@@ -45,6 +45,8 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.ifconfig',
     'sphinx.ext.doctest',
+    'sphinxjp.themes.basicstrap',
+    'cloud_sptheme.ext.table_styling',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -80,30 +82,27 @@ author = u'F5 Networks'
 # The short X.Y version.
 version = 'v1'
 # The full version, including alpha/beta/rc tags.
-release = 'v1.0'
+release = 'v1.1'
 
 # All substitutions
 
 rst_epilog = """
-.. |asp| replace:: F5 Application Services Proxy
-.. |asp-img| replace:: asp:latest
-.. |aspk-long| replace:: F5 Kubernetes Proxy
-.. |aspk| replace:: ``f5-kube-proxy``
-.. |aspk-img| replace:: f5networks/f5-kube-proxy:v1.0
-.. |kctlr-long| replace:: F5 Kubernetes BIG-IP Controller
-.. |kctlr| replace:: ``k8s-bigip-ctlr``
-.. |kctlr-img| replace:: f5networks/k8s-bigip-ctlr:v1.0
-.. |mctlr-long| replace:: F5 Marathon BIG-IP Controller
-.. |mctlr| replace:: ``marathon-bigip-ctlr``
-.. |mctlr-img| replace:: f5networks/marathon-bigip-ctlr:v1.0
-.. |aspm-long| replace:: F5 Marathon ASP Controller
-.. |aspm| replace:: ``marathon-asp-ctlr``
-.. |aspm-img| replace:: f5networks/marathon-asp-ctlr:v1.0
+.. |asp| replace:: Application Services Proxy
+.. |aspk-long| replace:: F5-proxy for Kubernetes
+.. |aspk| replace:: F5-proxy
+.. |cfctlr| replace:: BIG-IP Controller
+.. |cf-long| replace:: BIG-IP Controller for Cloud Foundry
+.. |kctlr-long| replace:: BIG-IP Controller for Kubernetes
+.. |kctlr| replace:: BIG-IP Controller
+.. |mctlr-long| replace:: BIG-IP Controller for Marathon
+.. |mctlr| replace:: BIG-IP Controller
+.. |aspm-long| replace:: F5 ASP Controller for Marathon
+.. |aspm| replace:: ASP Controller
 .. _BIG-IP: https://f5.com/products/big-ip
 .. _BIG-IP System User Account Administration -> Administrative Partitions: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-12-0-0/3.html
 .. _system configuration: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-initial-configuration-12-0-0/2.html#conceptid
 .. _local traffic management: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-basics-12-0-0.html
-.. _F5 Docker registry: #
+.. _F5 Docker registry: https://hub.docker.com/r/f5networks/
 .. _Kubernetes: https://kubernetes.io/
 .. _kubectl: https://kubernetes.io/docs/user-guide/kubectl-overview/
 .. _kube-proxy: https://kubernetes.io/docs/admin/kube-proxy/
@@ -123,6 +122,13 @@ rst_epilog = """
 .. _Kubernetes node: https://kubernetes.io/docs/admin/node/
 .. _Kubernetes Secret: https://kubernetes.io/docs/user-guide/secrets/
 .. _Secret: https://kubernetes.io/docs/user-guide/secrets/
+.. _Ingress Resource: https://kubernetes.io/docs/concepts/services-networking/ingress/
+.. _Kubernetes Ingress controller: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-controllers
+.. _Local Traffic Policies: https://support.f5.com/csp/article/K04597703
+.. _f5-kube-proxy product documentation: /products/connectors/f5-kube-proxy/latest/
+.. _ASP product documentation: /products/asp/latest/
+.. _Kubernetes namespace: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+.. _F5 virtual server annotations: /products/connectors/k8s-bigip-ctlr/index.html#virtual-server-annotations
 .. _Marathon: https://mesosphere.github.io/marathon/
 .. _Express middleware: https://expressjs.com/en/guide/using-middleware.html
 .. _Node.js: https://nodejs.org/en/
@@ -130,10 +136,25 @@ rst_epilog = """
 .. _Splunk: https://www.splunk.com/
 .. _Apache Mesos: https://mesosphere.com/
 .. _Marathon: https://mesosphere.github.io/marathon/
+.. _Apache Mesos Marathon: https://mesosphere.github.io/marathon/
 .. _Marathon Apps: https://mesosphere.github.io/marathon/docs/application-basics.html
+.. _Marathon Applications: https://mesosphere.github.io/marathon/docs/application-basics.html
 .. _Docker: https://www.docker.com/
 .. _Marathon Web Interface: https://mesosphere.github.io/marathon/docs/marathon-ui.html
 .. _BIG-IP partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-13-0-0/2.html
+.. _BIG-IP SSL profile: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-profiles-reference-12-1-0/6.html
+.. _Pivotal Cloud Foundry: https://pivotal.io/platform
+.. _Cloud Foundry: https://www.cloudfoundry.org/platform/
+.. _Diego cell: https://docs.cloudfoundry.org/concepts/architecture/#diego-cell
+.. _NATS bus: https://docs.cloudfoundry.org/concepts/architecture/router.html#use
+.. _Cloud Foundry CLI: https://docs.cloudfoundry.org/cf-cli/getting-started.html
+.. _Application Manifest: https://docs.pivotal.io/pivotalcf/1-7/devguide/deploy-apps/manifest.html
+.. _f5-kube-proxy: /products/connectors/f5-kube-proxy/latest/
+.. _marathon-asp-ctlr: /products/connectors/marathon-asp-ctlr/latest/
+.. _marathon-bigip-ctlr: /products/connectors/marathon-bigip-ctlr/latest/
+.. _k8s-bigip-ctlr: /products/connectors/k8s-bigip-ctlr/latest/
+.. _cf-bigip-ctlr: /products/connectors/cf-bigip-ctlr/latest/
+.. _Application Services Proxy: /products/asp/latest/
 """
 
 # The language for content autogenerated by Sphinx. Refer to documentation
@@ -155,8 +176,14 @@ language = 'en'
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ['_build', 'drafts', 'Thumbs.db', '.DS_Store', 'venv',
-                    '.github' ]
+exclude_patterns = ['_build',
+                    '_static/reuse',
+                    'drafts',
+                    'Thumbs.db',
+                    '.DS_Store',
+                    'venv',
+                    '.github'
+                    ]
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -215,7 +242,7 @@ html_sidebars = {
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-html_title = 'F5 Container Integrations |release|'
+#html_title = 'F5 Container Integrations'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #

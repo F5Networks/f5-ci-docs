@@ -9,7 +9,7 @@ Deploy iApps with |mctlr-long|
 
    - ``marathon-1.3.9``
    - ``mesos-1.0.3``
-   - |mctlr| ``v1.0.0``
+   - ``marathon-bigip-ctlr v1.0.0``
    - Marathon `basic-3 example app`_
 
 The |mctlr| can deploy any iApp on a BIG-IP device via a set of `iApp configuration parameters </products/connectors/marathon-bigip-ctlr/latest/index.html#iApp>`_.
@@ -43,7 +43,7 @@ Deploy the iApp
       :linenos:
       :emphasize-lines: 21-34
 
-   :download:`Download f5-marathon-bigip-ctlr-vs-iApp-example.json </_static/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json>`
+   :fonticon:`fa fa-download` :download:`Download f5-marathon-bigip-ctlr-vs-iApp-example.json </_static/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json>`
 
 #. Send a PUT request to the Marathon API server to update the Application definition.
 

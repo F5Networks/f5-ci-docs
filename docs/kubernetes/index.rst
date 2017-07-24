@@ -6,7 +6,7 @@ F5 Kubernetes Container Integration
 Overview
 --------
 
-The F5 `Kubernetes`_ Container Integration consists of the `F5 Kubernetes BIG-IP Controller </products/connectors/k8s-bigip-ctlr/latest>`_ and the `F5 Application Services Proxy </products/asp/latest>`_ (ASP).
+The F5 Container Integration for `Kubernetes`_ consists of the `F5 BIG-IP Controller for Kubernetes </products/connectors/k8s-bigip-ctlr/latest>`_ and the `F5 Application Services Proxy </products/asp/latest>`_ (ASP).
 
 The |kctlr-long| configures BIG-IP Local Traffic Manager (LTM) objects for applications in a `Kubernetes cluster`_, serving North-South traffic.
 
@@ -21,7 +21,7 @@ The |asp| provides load balancing and telemetry for containerized applications, 
 General Prerequisites
 ---------------------
 
-The F5 Kubernetes Integration's documentation set assumes that you:
+The F5 Integration for Kubernetes documentation set assumes that you:
 
 - already have a `Kubernetes cluster`_ running;
 - are familiar with the `Kubernetes dashboard`_ and `kubectl`_ ;
@@ -41,6 +41,10 @@ The F5 Kubernetes Integration's documentation set assumes that you:
 The |asp| (ASP) provides container-to-container load balancing, traffic visibility, and inline programmability for applications. Its light form factor allows for rapid deployment in datacenters and across cloud services. The ASP integrates with container environment management and orchestration systems and enables application delivery service automation.
 
 The |asp| collects traffic statistics for the Services it load balances; these stats are either logged locally or sent to an external analytics application. You can set the location and type of the analytics application in the `stats </products/asp/latest/index.html#stats>`_ section of the :ref:`Service annotation <k8s-service-annotate>`.
+
+.. important::
+
+   In Kubernetes, the ASP runs as a forward, or client-side, proxy.
 
 .. todo:: add "Export ASP Stats to an analytics provider"
 
@@ -64,8 +68,8 @@ By default, the |aspk| forwards traffic to ASP on port 10000. You can change thi
 |kctlr-long|
 ------------
 
-The |kctlr-long| is a docker container that runs on a `Kubernetes Pod`_.
-To launch the |kctlr| application in Kubernetes, just :ref:`create a Deployment <install-kctlr>`.
+The |kctlr-long| is a Docker container that runs on a `Kubernetes Pod`_.
+To launch the |kctlr| application in Kubernetes, :ref:`create a Deployment <install-kctlr>`.
 
 Once the |kctlr| pod is running, it watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for special Kubernetes "F5 Resource" `ConfigMap`_ s.
 These ConfigMaps contain an F5 Resource JSON blob that tells |kctlr|:
@@ -75,20 +79,23 @@ These ConfigMaps contain an F5 Resource JSON blob that tells |kctlr|:
 
 When the |kctlr| discovers new or updated :ref:`virtual server F5 Resource ConfigMaps <kctlr-create-vs>`, it dynamically applies the desired settings to the BIG-IP device.
 
-.. sidebar:: Important Caveats
+.. caution::
 
    * The |kctlr-long| cannot manage objects in the ``/Common`` :term:`partition` on a BIG-IP device.
    * Each |kctlr-long| deployment monitors one (1) Kubernetes `namespace`_ and manages objects in its assigned `BIG-IP partition`_.
-     *If you create more than one (1)* :ref:`k8s-bigip-ctlr deployment <k8s-bigip-ctlr-deployment>`, *each must manage a different* `BIG-IP partition`_.
+   * The BIG-IP partition must exist before you launch a |kctlr-long| to manage it.
+   * The |kctlr-long| can't create or destroy BIG-IP partitions.
+   * *Each* |kctlr| *instance must manage a different BIG-IP partition*.
    * Each :ref:`virtual server F5 Resource <kctlr-create-vs>` defines a BIG-IP LTM virtual server object for one (1) port associated with one (1) `Service`_.
      *Create a separate* :ref:`virtual server F5 Resource ConfigMap <kctlr-create-vs>` *for each Service port you wish to expose.*
 
-You can use the |kctlr-long| to:
+The |kctlr-long| can:
 
-- :ref:`create BIG-IP LTM virtual servers <kctlr-create-vs>`
-- :ref:`assign IP addresses to BIG-IP LTM virtual servers using IPAM <kctlr-ipam>`
-- :ref:`create unattached BIG-IP LTM pools <kctlr-pool-only>` (pools without virtual servers)
+- :ref:`create a BIG-IP LTM virtual servers <kctlr-create-vs>` for a `Kubernetes Service`_
+- :ref:`use an IPAM system to assign IP addresses to virtual servers <kctlr-ipam>`
+- :ref:`create unattached pools <kctlr-pool-only>` (pools without virtual servers)
 - :ref:`deploy iApps <kctlr-deploy-iapps>`
+- act as a `Kubernetes Ingress controller`_ to :ref:`expose Kubernetes Services to external traffic <kctlr-ingress-config>`
 
 
 Key Kubernetes Concepts
@@ -99,20 +106,16 @@ Key Kubernetes Concepts
 Namespaces
 ``````````
 
-.. note::
-
-   .. versionadded:: k8s-bigip-ctlr v1.1.0-beta.1
-
-   See the `k8s-bigip-ctlr beta documentation </products/connectors/k8s-bigip-ctlr/v1.1-beta/>`_ for more information.
+.. include:: /_static/reuse/k8s-version-added-1_1.rst
 
 The `Kubernetes namespace`_ allows you to create/manage multiple environments within a cluster.
 The |kctlr-long| can manage all namespaces; a single namespace; or pretty much anything in between.
 
 When :ref:`creating a BIG-IP front-end virtual server <kctlr-create-vs>` for a `Kubernetes Service`_, you can:
 
-- specify a single namespace to watch;
+- specify a single namespace to watch (this is the only supported mode prior to |kctlr| v1.1.0-beta.1);
 - specify multiple namespaces (pass in each as a separate flag); or
-- don't specify any namespace (meaning you want to watch all namespaces); **this is the default setting as of** `k8s-bigip-ctlr v1.1.0-beta.1 </products/connectors/k8s-bigip-ctlr/v1.1-beta/>`_).
+- don't specify any namespace (meaning you want to watch all namespaces; **this is the default setting** as of |kctlr| v1.1.0-beta.1).
 
 .. _k8s-f5-resources:
 
@@ -142,6 +145,8 @@ The virtual server :ref:`F5 Resource JSON blob <f5-resource-blob>` must contain 
 | - backend           | - a subset of ``data``; identifies the                |
 |                     |   `Kubernetes Service`_ to proxy                      |
 +---------------------+-------------------------------------------------------+
+
+.. include:: /_static/reuse/k8s-schema-note.rst
 
 The ``frontend`` property defines how to expose a Service on a BIG-IP device.
 You can define ``frontend`` using the standard `k8s-bigip-ctlr virtualServer parameters </products/connectors/k8s-bigip-ctlr/latest/index.html#virtualserver>`_ or the `k8s-bigip-ctlr iApp parameters </products/connectors/k8s-bigip-ctlr/latest/index.html#iapps>`_.
@@ -184,6 +189,3 @@ Related
    F5 Application Services Proxy docs <http://clouddocs.f5.com/products/asp/latest>
 
 
-.. _f5-kube-proxy product documentation: /products/connectors/f5-kube-proxy/latest/
-.. _ASP product documentation: /products/asp/latest/
-.. _Kubernetes namespace: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/

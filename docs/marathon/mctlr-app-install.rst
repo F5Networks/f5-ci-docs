@@ -9,17 +9,18 @@ Install the |mctlr-long|
 
    - ``marathon-1.3.9``
    - ``mesos-1.0.3``
-   - |mctlr| ``v1.0.0``
+   - ``marathon-bigip-ctlr v1.0.0``
 
 The |mctlr-long| installs as a Marathon `Application`_.
 You can do this via the Marathon REST API, or via the `Marathon Web Interface`_.
 
-Before you begin
-----------------
+Initial Setup
+-------------
 
-* :ref:`Set up authentication to your secure DC/OS cluster <mesos-authentication>`.
-* `Create a new partition`_ for Marathon on your BIG-IP device.
-  The |mctlr-long| cannot manage objects in the ``/Common`` partition.
+#. :ref:`Set up authentication to your secure DC/OS cluster <mesos-authentication>`.
+
+#. `Create a new partition`_ for Marathon on your BIG-IP device.
+   The |mctlr-long| cannot manage objects in the ``/Common`` partition.
 
 Launch the |mctlr| App using the Marathon REST API
 --------------------------------------------------
@@ -30,11 +31,7 @@ Launch the |mctlr| App using the Marathon REST API
       :linenos:
       :emphasize-lines: 12, 16-27
 
-   .. tip::
-
-      You can download the example config file below and modify it to suit your environment.
-
-   :download:`f5-marathon-bigip-ctlr-example.json </_static/config_examples/f5-marathon-bigip-ctlr-example.json>`
+   :fonticon:`fa fa-download` :download:`f5-marathon-bigip-ctlr-example.json </_static/config_examples/f5-marathon-bigip-ctlr-example.json>`
 
 
 #. Upload the config file to the Marathon API server.

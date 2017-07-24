@@ -1,14 +1,14 @@
-F5 Marathon Container Integration
-=================================
+F5 Container Integration for Marathon
+=====================================
 
 Overview
 --------
 
-The F5 `Marathon`_ Container Integration consists of the `F5 Marathon BIG-IP Controller </products/connectors/marathon-bigip-ctlr/latest>`_, the `F5 Application Services Proxy </products/asp/latest>`_ (ASP), and the `F5 Marathon ASP Controller </products/connectors/marathon-asp-ctlr/latest>`_.
+The F5 Container Integration  for `Apache Mesos Marathon`_ consists of the `F5 BIG-IP Controller for Marathon </products/connectors/marathon-bigip-ctlr/latest>`_, the `F5 Application Services Proxy </products/asp/latest>`_ (ASP), and the `F5 Marathon ASP Controller </products/connectors/marathon-asp-ctlr/latest>`_.
 
 The |mctlr-long| configures BIG-IP Local Traffic Manager (LTM) objects for Applications in a `Mesos cluster`_, serving North-South traffic.
 
-The |asp| provides load balancing and telemetry for containerized applications, serving East-West traffic. The |aspm-long| deploys ASP instances 'on-demand' for Marathon Applications.
+The |asp| provides load balancing and telemetry for containerized applications, serving East-West traffic. The |aspm-long| deploys ASP instances 'on-demand' for `Marathon Applications`_.
 
 .. image:: /_static/media/mesos_solution.png
    :scale: 50 %
@@ -18,7 +18,7 @@ The |asp| provides load balancing and telemetry for containerized applications, 
 General Prerequisites
 ---------------------
 
-The F5 Mesos/Marathon Integration's documentation set assumes that you:
+The F5 Container Integration for Mesos Marathon documentation set assumes that you:
 
 - already have a `Mesos cluster`_ running;
 - are familiar with the `Marathon Web Interface`_ ;
@@ -35,7 +35,11 @@ The |asp| (ASP) provides container-to-container load balancing, traffic visibili
 Its light form factor allows for rapid deployment in datacenters and across cloud services.
 The ASP integrates with container environment management and orchestration systems and enables application delivery service automation.
 
-.. seealso:: `ASP product documentation </products/asp/latest/index.html>`_
+.. important::
+
+   In Mesos Marathon, the ASP runs as a reverse proxy.
+
+.. seealso:: `ASP product documentation`_
 
 
 |aspm-long|
@@ -108,7 +112,10 @@ See the |mctlr| `product documentation </products/connectors/marathon-bigip-ctlr
 
 .. tip::
 
-   You can :download:`download the code example </_static/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json>` used in the next few sections and modify it to suit your needs.
+   You can download the code example used in the following sections and modify it to suit your environment.
+
+   :fonticon:`fa fa-download` :download:`f5-marathon-bigip-ctlr-example_pm_hc.json </_static/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json>`
+
 
 
 iApps Application Labels
@@ -128,10 +135,10 @@ By convention, the DNS name of an |asp| instance for an Application is “<ASP_E
 
 For example:
 
-- ``ASP_ENABLE_LABEL``: ASP +
-- Application name: “app1” +
-- Domain name: “marathon.mesos” =
-- ASP DNS name: “ASP-app1.marathon.mesos”
+- ``ASP_ENABLE_LABEL``: "f5-asp" +
+- Application name: "app1" +
+- Domain name: "marathon.mesos" =
+- ASP DNS name: "f5-asp-app1.marathon.mesos"
 
 .. _port-mappings:
 
@@ -169,7 +176,7 @@ In this example, ``0`` refers to the first mapping defined above (``"containerPo
 
 .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
    :caption: |mctlr| labels defining BIG-IP objects for two (2) port indices
-   :lines: 26-40
+   :lines: 26-38
    :lineno-start: 26
 
 .. [#dockerbridge] See the `Docker Networking <https://docs.docker.com/engine/userguide/networking/>`_ documentation for more information.
@@ -191,8 +198,8 @@ Here, we create health checks for each of the port indices defined for our Appli
 
 .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
    :caption: Defining health checks for multiple ports
-   :lines: 41-66
-   :lineno-start: 41
+   :lines: 39-65
+   :lineno-start: 39
 
 
 .. [#setuphealthchecks] Occurs when ``F5_CC_USE_HEALTHCHECK``'s value is "True".
