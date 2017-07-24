@@ -15,15 +15,19 @@ All other product and company names herein may be trademarks of their respective
 Acknowledgements
 ----------------
 
-We acknowledge the following projects, which we use to build, test, and publish the F5 Container Integrations documentation:
+The F5 Cloud Docs team acknowledges the following projects used to build, test, and publish clouddocs.f5.com.
 
+- `AWS CLI <https://aws.amazon.com/cli/>`_: written by Amazon Web Services and licensed under the `Apache 2.0 license <https://www.apache.org/licenses/LICENSE-2.0>`_.
 
-`AWS CLI <https://aws.amazon.com/cli/>`_: written by Amazon Web Services and licensed under the `Apache 2.0 license <https://www.apache.org/licenses/LICENSE-2.0>`_.
+- `cloud_sptheme <https://bitbucket.org/ecollins/cloud_sptheme>`_ : released under the BSD license. The "cloud_sptheme" python package and artwork is
+    Copyright (c) 2010-2017 by `Assurance Technologies, LLC <https://www.assurancetechnologies.com>`_.
 
-`Recommonmark <https://github.com/rtfd/recommonmark>`_ : mainly derived from `remarkdown <https://github.com/sgenoud/remarkdown>`_ by Steve Genoud and leverages the python `CommonMark <https://pypi.python.org/pypi/CommonMark>`_ implementation. Originally created by Luca Barbato, it is now maintained in the Read the Docs (`rtfd <https://github.com/rtfd>`_) GitHub organization.
+- `Recommonmark <https://github.com/rtfd/recommonmark>`_ : mainly derived from `remarkdown <https://github.com/sgenoud/remarkdown>`_ by Steve Genoud and leverages the python `CommonMark <https://pypi.python.org/pypi/CommonMark>`_ implementation. Originally created by Luca Barbato, it is now maintained in the Read the Docs (`rtfd <https://github.com/rtfd>`_) GitHub organization.
 
-`Sphinx <http://www.sphinx-doc.org/>`_ : written by Georg Brandl and licensed under the BSD license.
+- `Sphinx <http://www.sphinx-doc.org/>`_ : written by Georg Brandl and licensed under the BSD license.
 
-`Travis-CI <https://github.com/travis-ci>`_ : developed and maintained by Travis CI GmbH and licensed under the MIT license.
+- `sphinxjp.themes.basicstrap <https://github.com/tell-k/sphinxjp.themes.basicstrap>`_ : Licensed under the MIT license.
+
+- `Travis-CI <https://github.com/travis-ci>`_ : developed and maintained by Travis CI GmbH and licensed under the MIT license.
 
 

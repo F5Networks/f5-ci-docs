@@ -1,12 +1,12 @@
 .. _aspm-configuration:
 
-Deploy the |asp| with the |aspm-long|
-=====================================
+Configure the ASP with the ASP Controller for Marathon
+======================================================
 
-The |aspm-long| dynamically deploys the |asp| (ASP) in Marathon when it discovers an Application with the ``f5-asp:enable`` label.
+The |aspm-long| dynamically deploys the |asp| (ASP) in `Apache Mesos Marathon`_ when it discovers a Marathon Application that has the ``f5-asp:enable`` label.
 
-When you launch the |aspm-long|, provide the required configuration parameter(s) and any additional default configurations you want the |aspm| to apply to the ASP instances it launches.
-Define these configuration parameters in the ``"env"`` section of the |aspm| :ref:`Application definition file <install-asp-marathon>`.
+When you launch the |aspm-long|, provide the configuration parameter(s) you want the |aspm| to apply to the ASP.
+Define these configuration parameters in the ``"env"`` section of the |aspm| :ref:`Application definition <install-asp-marathon>`.
 
 Required configuration parameters
 ---------------------------------
@@ -15,7 +15,13 @@ Required configuration parameters
 Parameter               Description
 =====================   =======================================================
 MARATHON_URL            Marathon service URL (e.g., \http://10.190.25.75:8080)
+---------------------   -------------------------------------------------------
+ASP_DEFAULT_URIS        Marathon Docker Store credentials URI
+                        (required to pull ASP image) [#dockerstore]_
 =====================   =======================================================
+
+.. [#dockerstore] See `Set up Marathon to use a private Docker registry <https://mesosphere.github.io/marathon/docs/native-docker-private-registry.html>`_.
+
 
 .. _asp-defaults-marathon:
 
@@ -28,7 +34,7 @@ You can override any default settings using the `marathon-asp-ctlr override labe
 ===========================     ===============================================
 Parameter                       Value
 ===========================     ===============================================
-ASP_ENABLE_LABEL                "asp"
+ASP_ENABLE_LABEL                "f5-asp"
 ---------------------------     -----------------------------------------------
 ASP_DEFAULT_CPU                 1.0
 ---------------------------     -----------------------------------------------
@@ -36,7 +42,7 @@ ASP_DEFAULT_MEM                 256.0
 ---------------------------     -----------------------------------------------
 ASP_DEFAULT_COUNT_PER_APP       1
 ---------------------------     -----------------------------------------------
-ASP_DEFAULT_CONTAINER           f5networks/asp:1.0.0
+ASP_DEFAULT_CONTAINER           store/f5networks/asp:1.0.0
 ---------------------------     -----------------------------------------------
 ASP_DEFAULT_CONTAINER_PORT      8000
 ===========================     ===============================================

@@ -1,7 +1,7 @@
 .. _marathon-asp-deploy:
 
-Launch an |asp| instance for a Marathon Application
-===================================================
+Create an ASP for a Marathon Application
+========================================
 
 .. sidebar:: Docs test matrix
 
@@ -9,7 +9,7 @@ Launch an |asp| instance for a Marathon Application
 
    - ``marathon-1.3.9``
    - ``mesos-1.0.3``
-   - |mctlr| ``v1.0.0``
+   - ``marathon-bigip-ctlr v1.0.0``
    - ``asp v1.0.0``
 
 The |aspm-long| launches |asp| instances automatically for Apps that have the ``ASP_ENABLE_LABEL`` value set to "enabled" (for example, ``f5-asp:enable``).
@@ -25,7 +25,7 @@ Add the label ``"f5-asp": "enable"`` to the App's service definition.
    - Click :guilabel:`Configuration`.
    - Click :guilabel:`Edit`.
    - Click :guilabel:`Labels`.
-   - Click the :guilabel:`plus sign icon` and add the new label "asp: enable".
+   - Click the :guilabel:`+` icon and add the label "f5-asp: enable".
    - Click :guilabel:`Change and deploy configuration`.
 
 #. Via the REST API:

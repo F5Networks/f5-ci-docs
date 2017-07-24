@@ -1,12 +1,9 @@
 .. _deploy-cf-ctlr:
 
-Deploy the |cf-long|
-====================
+.. include:: /_static/reuse/beta-announcement-cf.rst
 
-.. sidebar: Docs test matrix
-   We tested this documentation with:
-   -
-   - :code:`cf-bigip-ctlr` v1.0.0
+Deploy the BIG-IP Controller for Cloud Foundry :fonticon:`fa fa-wrench`
+=======================================================================
 
 This document describes the steps required to deploy the |cf-long| in `Cloud Foundry`_ or `Pivotal Cloud Foundry`_ using an `Application Manifest`_.
 
@@ -16,7 +13,7 @@ Before you begin
 ----------------
 
 - `Enable Docker in Cloud Foundry`_ :fonticon:`fa fa-external-link`.
-- `Create a User in Cloud Foundry`_ :fonticon:`fa fa-external-link` with `"routing.routes.read" permission`_ :fonticon:`fa fa-external-link`.
+- `Create a User in Cloud Foundry`_ :fonticon:`fa fa-external-link` with `"routing.routes.read" permission`_.
 - `Add the BIG-IP device to Cloud Foundry`_ :fonticon:`fa fa-external-link` as a custom load balancer.
 
 .. _create-application-manifest:

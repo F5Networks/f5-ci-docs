@@ -6,7 +6,7 @@ F5 Kubernetes Container Integration
 Overview
 --------
 
-The F5 `Kubernetes`_ Container Integration consists of the `F5 Kubernetes BIG-IP Controller </products/connectors/k8s-bigip-ctlr/latest>`_ and the `F5 Application Services Proxy </products/asp/latest>`_ (ASP).
+The F5 Container Integration for `Kubernetes`_ consists of the `F5 BIG-IP Controller for Kubernetes </products/connectors/k8s-bigip-ctlr/latest>`_ and the `F5 Application Services Proxy </products/asp/latest>`_ (ASP).
 
 The |kctlr-long| configures BIG-IP Local Traffic Manager (LTM) objects for applications in a `Kubernetes cluster`_, serving North-South traffic.
 
@@ -21,7 +21,7 @@ The |asp| provides load balancing and telemetry for containerized applications, 
 General Prerequisites
 ---------------------
 
-The F5 Kubernetes Integration's documentation set assumes that you:
+The F5 Integration for Kubernetes documentation set assumes that you:
 
 - already have a `Kubernetes cluster`_ running;
 - are familiar with the `Kubernetes dashboard`_ and `kubectl`_ ;
@@ -41,6 +41,10 @@ The F5 Kubernetes Integration's documentation set assumes that you:
 The |asp| (ASP) provides container-to-container load balancing, traffic visibility, and inline programmability for applications. Its light form factor allows for rapid deployment in datacenters and across cloud services. The ASP integrates with container environment management and orchestration systems and enables application delivery service automation.
 
 The |asp| collects traffic statistics for the Services it load balances; these stats are either logged locally or sent to an external analytics application. You can set the location and type of the analytics application in the `stats </products/asp/latest/index.html#stats>`_ section of the :ref:`Service annotation <k8s-service-annotate>`.
+
+.. important::
+
+   In Kubernetes, the ASP runs as a forward, or client-side, proxy.
 
 .. todo:: add "Export ASP Stats to an analytics provider"
 
@@ -99,10 +103,10 @@ Key Kubernetes Concepts
 
 .. _k8s-namespaces:
 
-Namespaces :fonticon:`fa fa-wrench`
-```````````````````````````````````
+Namespaces
+``````````
 
-.. include:: /_static/reuse/beta-announcement-k8s.rst
+.. include:: /_static/reuse/k8s-version-added-1_1.rst
 
 The `Kubernetes namespace`_ allows you to create/manage multiple environments within a cluster.
 The |kctlr-long| can manage all namespaces; a single namespace; or pretty much anything in between.

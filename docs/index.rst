@@ -13,26 +13,32 @@ Container Connectors
 --------------------
 
 F5's Container Connectors ('CCs') understand the container orchestration environment ('COE').
-The CCs provide PaaS-native integrations for F5 BIG-IP devices and the |asp| ('ASP').
+The CCs provide PaaS-native integrations for F5 BIG-IP devices and the `Application Services Proxy`_ ('ASP').
 
 =======================     ===================================================
 Container Connector         Description
 =======================     ===================================================
-marathon-bigip-ctlr         Configures a BIG-IP to expose applications in an
-                            `Apache Mesos`_ cluster as virtual servers on
-                            BIG-IP, serving North-South traffic.
+`f5-kube-proxy`_            Configures ASPs in a `Kubernetes`_ cluster,
+                            serving East-West traffic.
+
+                            Replaces the standard ``kube-proxy``.
 -----------------------     ---------------------------------------------------
-marathon-asp-ctlr           Provisions and configures ASPs in a
-                            `Marathon`_ cluster to serve East-West
+`marathon-asp-ctlr`_        Provisions and configures ASPs in a
+                            an `Apache Mesos`_ `Marathon`_ cluster, serving
+                            East-West traffic.
+-----------------------     ---------------------------------------------------
+`cf-bigip-ctlr`_            Integrates BIG-IP as an
+                            Application Delivery Controller (ADC) in
+                            `Pivotal Cloud Foundry`_, serving North-South
                             traffic.
 -----------------------     ---------------------------------------------------
-k8s-bigip-ctlr              Configures a BIG-IP to expose applications in a
-                            `Kubernetes`_ cluster as virtual servers on BIG-IP
-                            to serve North-South traffic.
+`k8s-bigip-ctlr`_           Configures a BIG-IP device to expose applications
+                            in a `Kubernetes`_ cluster as virtual servers,
+                            serving North-South traffic.
 -----------------------     ---------------------------------------------------
-f5-kube-proxy               Configures ASPs in a `Kubernetes`_ cluster,
-                            serving East-West traffic; replaces the
-                            standard ``kube-proxy``
+`marathon-bigip-ctlr`_      Configures a BIG-IP device to expose applications
+                            in an `Apache Mesos`_ `Marathon`_ cluster as
+                            virtual servers, serving North-South traffic.
 =======================     ===================================================
 
 ---------------------------------
@@ -78,19 +84,7 @@ Migrating a CC is as easy as destroying it in one place and spinning up a new on
 Wherever a Container Connector runs, it always watches the API and attempts to bring the BIG-IP, or ASP, up to date with the most recent applicable configurations.
 
 
-Product Documentation
----------------------
-
-See the product documentation for more information about each component.
-
-.. toctree::
-   :caption: Product Documentation
-
-   F5 Application Services Proxy (ASP) <http://clouddocs.f5.com/products/asp/latest>
-   f5-kube-proxy <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
-   k8s-bigip-ctlr <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
-   marathon-asp-ctlr <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest/>
-   marathon-bigip-ctlr <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
-
+Site Contents
+-------------
 
 .. include:: master_toc.rst

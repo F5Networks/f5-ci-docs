@@ -29,5 +29,5 @@
     "maximumOverCapacity": 1,
     "minimumHealthCapacity": 1
   },
-  "id": "demo_app"
+  "id": "demo-app"
 }
