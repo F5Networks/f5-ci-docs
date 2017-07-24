@@ -8,7 +8,7 @@ Manage BIG-IP LTM objects in Kubernetes
    We tested this documentation with:
 
    - ``kubernetes-v1.4.8_coreos.0``
-   - |kctlr| ``v1.0.0``
+   - ``k8s-bigip-ctlr v1.0.0``
 
 
 The |kctlr-long| watches the Kubernetes API for `Services`_ with associated :ref:`F5 resources <k8s-f5-resources>` and creates/modifies BIG-IP Local Traffic Manager (LTM) objects accordingly.
@@ -53,20 +53,22 @@ Create a BIG-IP front-end virtual server for a Kubernetes Service
 
 #. Verify creation of the BIG-IP virtual server.
 
-   .. code-block:: shell
+   .. admonition:: TMSH
 
-      admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)$ show ltm virtual
-      ------------------------------------------------------------------
-      Ltm::Virtual Server: frontend_173.16.2.2_80
-      ------------------------------------------------------------------
-      Status
-        Availability     : available
-        State            : enabled
-        Reason           : The virtual server is available
-        CMP              : enabled
-        CMP Mode         : all-cpus
-        Destination      : 173.16.2.2:80
-      ...
+      ::
+
+         admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)$ tmsh show ltm virtual
+         ------------------------------------------------------------------
+         Ltm::Virtual Server: frontend_173.16.2.2_80
+         ------------------------------------------------------------------
+         Status
+           Availability     : available
+           State            : enabled
+           Reason           : The virtual server is available
+           CMP              : enabled
+           CMP Mode         : all-cpus
+           Destination      : 173.16.2.2:80
+         ...
 
 .. _kctlr-update-vs:
 
@@ -75,7 +77,7 @@ Update a BIG-IP virtual server
 
 Use ``kubectl edit`` to open the ConfigMap in your default text editor and make your desired changes.
 
-.. note::
+.. hint::
 
    Kubernetes disregards any breaking or syntactically-incorrect changes.
 
@@ -114,7 +116,7 @@ Use ``kubectl edit`` to open the ConfigMap in your default text editor and make 
            }
          }
        }
-     # As of v1.1.0-beta.1, set the schema to "f5schemadb://bigip-virtual-server_v0.1.3.json"
+     # If you're running v1.0, use schema v0.1.2
      schema: f5schemadb://bigip-virtual-server_v0.1.3.json
    kind: ConfigMap
    metadata:
@@ -133,9 +135,9 @@ After you save your changes and exit, you can verify the changes using ``kubectl
 
 You can also verify the changes on your BIG-IP device using ``tmsh`` or the configuration utility.
 
-.. code-block:: shell
+.. admonition:: TMSH
 
-   admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)$ show ltm virtual
+   tmsh show ltm virtual
 
 .. _kctlr-delete-objects:
 
@@ -151,10 +153,10 @@ Delete BIG-IP LTM objects
 
 #. Verify the BIG-IP LTM objects no longer exist.
 
-   .. code-block:: bash
+   .. admonition:: TMSH
 
-      admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)$ show ltm virtual
-      admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)$
+      admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)$ tmsh show ltm virtual
+      admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)$
 
 
 .. _k8s-config-bigip-health-monitor:
@@ -179,7 +181,6 @@ Configure BIG-IP LTM health monitors for Kubernetes Services to help ensure that
 
    .. literalinclude:: /_static/config_examples/f5-resource-vs-example.configmap.yaml
       :linenos:
-      :emphasize-lines: 28-32
 
 #. Use the BIG-IP configuration utility to verify that the health monitor exists.
 
@@ -187,10 +188,10 @@ Configure BIG-IP LTM health monitors for Kubernetes Services to help ensure that
 
 .. _kctlr-ipam:
 
-Use IPAM to assign IP addresses to BIG-IP LTM virtual servers :fonticon:`fa fa-wrench`
---------------------------------------------------------------------------------------
+Use IPAM to assign IP addresses to BIG-IP LTM virtual servers
+-------------------------------------------------------------
 
-.. include:: /_static/reuse/beta-announcement-k8s.rst
+.. include:: /_static/reuse/k8s-version-added-1_1.rst
 
 
 The |kctlr-long| has a built-in hook that allows you to integrate an IPAM system using a custom plugin.
@@ -217,10 +218,10 @@ If you take down a Service and want to remove the corresponding BIG-IP LTM objec
 
 .. _kctlr-pool-only:
 
-Manage pools without virtual servers :fonticon:`fa fa-wrench`
--------------------------------------------------------------
+Manage pools without virtual servers
+------------------------------------
 
-.. include:: /_static/reuse/beta-announcement-k8s.rst
+.. include:: /_static/reuse/k8s-version-added-1_1.rst
 
 The |kctlr-long| can create and manage BIG-IP Local Traffic Manager (LTM) pools that aren't attached to a front-end BIG-IP virtual server (also referred to as "unattached pools").
 When you create a pool without a virtual server, the |kctlr-long| applies the following naming convention to the pool members: ``<namespace>_<configmap-name>``.
@@ -262,7 +263,6 @@ Attach a pool to a virtual server
 
    .. code-block:: bash
       :linenos:
-      :emphasize-lines: 24, 32-33
 
       ubuntu@k8s-master:~$ kubectl edit configmap k8s.pool_only
 
@@ -295,7 +295,6 @@ Attach a pool to a virtual server
               }
             }
           }
-        # As of v1.1.0-beta.1, set the schema as shown below
         schema: f5schemadb://bigip-virtual-server_v0.1.3.json
       kind: ConfigMap
       metadata:
@@ -347,7 +346,6 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
 
    .. code-block:: bash
       :linenos:
-      :emphasize-lines: 24, 32-33
 
       ubuntu@k8s-master:~$ kubectl edit configmap k8s.vs
 
@@ -380,7 +378,6 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
               }
             }
           }
-        # As of v1.1.0-beta.1, set the schema as shown below
         schema: f5schemadb://bigip-virtual-server_v0.1.3.json
       kind: ConfigMap
       metadata:
@@ -403,4 +400,4 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
 .. _local traffic policy: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-local-traffic-policies-getting-started-13-0-0/1.html
 .. _iRule: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-irules-concepts-11-6-0/1.html
 .. _annotate the ConfigMap: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-.. _k8s-bigip-ctlr beta documentation: /products/connectors/k8s-bigip-ctlr/v1.1-beta/
+

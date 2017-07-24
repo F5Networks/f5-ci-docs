@@ -18,9 +18,12 @@
   "env": {
     "MARATHON_URL": "http://10.190.25.75:8080",
     // ASP image
-    "ASP_DEFAULT_CONTAINER": "f5networks/asp:1.0.0",
+    "ASP_DEFAULT_CONTAINER": "store/f5networks/asp:1.0.0",
     // defines the label you will use in App definitions to activate the ASP
-    "ASP_ENABLE_LABEL": "ASP",
+    "ASP_ENABLE_LABEL": "f5-asp",
+    // provide the location where credentials for Docker Store can be found
+    // REQUIRED TO PULL THE ASP IMAGE
+    "ASP_DEFAULT_URIS": "file:///etc/docker.tar.gz",
     "ASP_DEFAULT_CPU": "1",
     "ASP_DEFAULT_MEM": "256",
     "ASP_DEFAULT_LOG_LEVEL": "debug",

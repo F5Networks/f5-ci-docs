@@ -1,13 +1,15 @@
 .. _cf-home:
 
-F5 Cloud Foundry Container Integration
-======================================
+F5 Cloud Foundry Container Integration :fonticon:`fa fa-wrench`
+===============================================================
 .. _cf-overview:
 
 Overview
 --------
 
-The F5 `Cloud Foundry`_ Container Integration consists of the `F5 Cloud Foundry BIG-IP Controller </products/connectors/cf-bigip-ctlr/latest>`_.
+.. include:: /_static/reuse/beta-announcement-cf.rst
+
+The F5 Container Integration for `Cloud Foundry`_  consists of the `F5 BIG-IP Controller for Cloud Foundry </products/connectors/cf-bigip-ctlr/latest>`_.
 
 The |cf-long| configures BIG-IP Local Traffic Manager (LTM) objects for Cloud Foundry applications, serving North-South traffic.
 
@@ -18,7 +20,7 @@ You can use the |cf-long| with `Cloud Foundry`_ or `Pivotal Cloud Foundry`_ (PCF
 General Prerequisites
 ---------------------
 
-The F5 Cloud Foundry Integration's documentation set assumes that you:
+The F5 Integration for Cloud Foundry's documentation set assumes that you:
 
 - already have a functional Cloud Foundry or Pivotal Cloud Foundry deployment;
 - are familiar with the `Cloud Foundry CLI`_ and API;
@@ -31,7 +33,7 @@ The F5 Cloud Foundry Integration's documentation set assumes that you:
 
 The |cf-long| is a Docker container-based application that runs on a Cloud Foundry `Diego cell`_.
 
-You can :ref:`deploy the F5 Cloud Foundry BIG-IP Controller <deploy-cf-ctlr>` using an `Application Manifest`_.
+You can :ref:`deploy the F5 BIG-IP Controller for Cloud Foundry <deploy-cf-ctlr>` using an `Application Manifest`_.
 The Application Manifest tells the |cf-long|
 
 - how to log in to the BIG-IP device, and
@@ -55,10 +57,8 @@ Once the |cf-long| is running, it
 Key Cloud Foundry Concepts
 --------------------------
 
-.. important::
-
-   **All** |cf-long| **configurations are global.**
-   This means that the same settings apply to all pools/pools members.
+|cf-long| configurations are "global", meaning a single set of configurations apply to all of the pools/pools members created for Cloud Foundry Apps.
+The Cloud Foundry :ref:`Application Manifest <create-application-manifest>` file is the means via which you can identify the BIG-IP policies, profiles, etc., you want to apply.
 
 .. _cf-gorouter-nats:
 

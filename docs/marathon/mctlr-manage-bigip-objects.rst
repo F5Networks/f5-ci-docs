@@ -9,7 +9,7 @@ Manage BIG-IP LTM objects in Marathon
 
    - ``marathon-1.3.9``
    - ``mesos-1.0.3``
-   - |mctlr| ``v1.0.0``
+   - ``marathon-bigip-ctlr v1.0.0``
 
 The |mctlr-long| watches the Mesos/Marathon API for Applications with associated :ref:`F5 Application Labels <app-labels>`.
 These Application Labels define the BIG-IP LTM objects |mctlr| creates/manages.
@@ -51,20 +51,22 @@ Create a BIG-IP virtual server for a Marathon Application
 
 #. Verify creation of the virtual server, pool, and member in the App's BIG-IP partition via ``tmsh`` or the configuration utility.
 
-   .. code-block:: text
+   .. admonition:: TMSH
 
-      admin@(bigip)(cfg-sync Standalone)(Active)(/mesos)(tmos)# show ltm virtual
-      ------------------------------------------------------------------
-      Ltm::Virtual Server: basic-0_8080
-      ------------------------------------------------------------------
-      Status
-        Availability     : unknown
-        State            : enabled
-        Reason           : The children pool member(s) either don't have service checking enabled, or service check results are not available yet
-        CMP              : enabled
-        CMP Mode         : all-cpus
-        Destination      : 10.190.25.70:8080
-      ...
+      ::
+
+         admin@(bigip)(cfg-sync Standalone)(Active)(/mesos)# tmsh show ltm virtual
+         ------------------------------------------------------------------
+         Ltm::Virtual Server: basic-0_8080
+         ------------------------------------------------------------------
+         Status
+           Availability     : unknown
+           State            : enabled
+           Reason           : The children pool member(s) either don't have service checking enabled, or service check results are not available yet
+           CMP              : enabled
+           CMP Mode         : all-cpus
+           Destination      : 10.190.25.70:8080
+         ...
 
 .. tip::
 
@@ -87,9 +89,9 @@ Update a BIG-IP front-end virtual server
 
 #. Verify your changes on the BIG-IP via ``tmsh`` or the configuration utility.
 
-   .. code-block:: bash
+   .. admonition:: TMSH
 
-      admin@(bigip)(cfg-sync Standalone)(Active)(/mesos)(tmos)$ show ltm virtual
+      tmsh show ltm virtual
 
 .. _mctlr-delete-objects:
 
@@ -114,10 +116,10 @@ Delete BIG-IP LTM objects
 
 .. _mctlr-ipam:
 
-Use IPAM to assign IP addresses to BIG-IP virtual servers :fonticon:`fa fa-wrench`
-----------------------------------------------------------------------------------
+Use IPAM to assign IP addresses to BIG-IP virtual servers
+---------------------------------------------------------
 
-.. include:: /_static/reuse/beta-announcement-marathon.rst
+.. include:: /_static/reuse/marathon-version-added-1_1.rst
 
 The |mctlr-long| has a built-in hook that allows you to integrate an IPAM system using a custom plugin.
 The basic elements required are:
@@ -141,10 +143,10 @@ If you take down an Application and want to remove its corresponding BIG-IP LTM 
 
 .. _mctlr-pool-only:
 
-Manage pools without virtual servers :fonticon:`fa fa-wrench`
--------------------------------------------------------------
+Manage pools without virtual servers
+------------------------------------
 
-.. include:: /_static/reuse/beta-announcement-marathon.rst
+.. include:: /_static/reuse/marathon-version-added-1_1.rst
 
 The |mctlr-long| can create and manage BIG-IP Local Traffic Manager (LTM) pools that aren't attached to a front-end BIG-IP virtual server (also referred to as "unattached pools").
 When you create unattached pools, the |mctlr-long| applies the following naming convention to BIG-IP pool members: ``<application-name>_<F5_{n}_PORT>``.

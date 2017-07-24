@@ -221,7 +221,7 @@ The |kctlr-long| supports each type of Kubernetes `Ingress Resource`_.
    -- to new Ingress use-case
    -- solution docs here
 
-.. _TMSH Reference Guide: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-tmsh-reference-12-0-0.pdf
+.. _TMSH Reference Guide: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-tmsh-reference-12-0-0.html
 .. _BIG-IP server pool: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-basics-12-1-0/4.html
 .. _Host header: https://tools.ietf.org/html/rfc7230#section-5.4
 .. _Kubernetes documentation: https://kubernetes.io/docs/concepts/services-networking/ingress/#name-based-virtual-hosting

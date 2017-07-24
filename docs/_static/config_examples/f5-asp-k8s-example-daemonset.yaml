@@ -12,7 +12,7 @@ spec:
       hostNetwork: true
       containers:
         - name: f5-asp
-          image: "f5networks/asp:1.0.0"
+          image: "store/f5networks/asp:1.0.0"
           args:
             # the config file is loaded from the ConfigMap; it contains the
             # ASP global config
@@ -30,6 +30,10 @@ spec:
           - name: asp-config
             # the path the directory will be added to; do not change
             mountPath: /etc/configmap
+      # provide the name of the Secret containing the Docker login credentials
+      # REQUIRED TO PULL THE ASP IMAGE FROM DOCKER STORE
+      imagePullSecrets:
+        - name: <my-secret>
       volumes:
         - name: plugin-config
           hostPath:
