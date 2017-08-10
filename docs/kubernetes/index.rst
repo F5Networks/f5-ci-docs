@@ -82,7 +82,6 @@ When the |kctlr| discovers new or updated :ref:`virtual server F5 Resource Confi
 .. caution::
 
    * The |kctlr-long| cannot manage objects in the ``/Common`` :term:`partition` on a BIG-IP device.
-   * Each |kctlr-long| deployment monitors one (1) Kubernetes `namespace`_ and manages objects in its assigned `BIG-IP partition`_.
    * The BIG-IP partition must exist before you launch a |kctlr-long| to manage it.
    * The |kctlr-long| can't create or destroy BIG-IP partitions.
    * *Each* |kctlr| *instance must manage a different BIG-IP partition*.
@@ -187,5 +186,3 @@ Related
    k8s-bigip-ctlr docs <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
    f5-kube-proxy docs <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
    F5 Application Services Proxy docs <http://clouddocs.f5.com/products/asp/latest>
-
-
