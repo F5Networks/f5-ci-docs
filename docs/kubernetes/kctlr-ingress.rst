@@ -25,7 +25,7 @@ You can use the |kctlr-long| as a `Kubernetes Ingress controller`_ to:
 Quick Start
 -----------
 
-You can add the `F5 virtual server annotations`_ to any existing Ingress resource.
+You can add the `F5 virtual server properties`_ to any existing Ingress resource.
 
 .. code-block:: console
 
@@ -39,20 +39,20 @@ You can add the `F5 virtual server annotations`_ to any existing Ingress resourc
                                       virtual-server.f5.com/health='[{"path": "svc1.bar.com/foo", "send": "HTTP GET /health/foo", "interval": 5, "timeout": 10}]'
 
 
-At minimum, you should provide the following annotations:
+At minimum, you should define the following properties:
 
 - :code:`virtual-server.f5.com/ip`
 - :code:`virtual-server.f5.com/partition`
 
 .. hint::
 
-   The :code:`kubernetes.io/ingress.class` annotation defaults to "f5", so you don't need to include it in your Ingress resource definitions.
+   The :code:`kubernetes.io/ingress.class` property defaults to "f5", so you don't need to include it in your Ingress resource annotation.
    The |kctlr-long| ignores Ingress resources with any other :code:`ingress.class`.
 
 Create a Kubernetes Ingress Resource
 ------------------------------------
 
-Create a new `Ingress Resource`_ and specify the desired `F5 virtual server annotations`_.
+Create a new `Ingress Resource`_ and annotate it with the desired `F5 virtual server properties`_.
 
 .. _single service:
 
@@ -133,7 +133,7 @@ To use an existing `BIG-IP SSL profile`_ to secure traffic for an Ingress:
 
 .. attention::
 
-   If you specify a :code:`spec.tls` section without providing the TLS Ingress annotations,the BIG-IP device uses Local traffic policies to redirect HTTP requests to HTTPS.
+   If you specify a :code:`spec.tls` section without providing the TLS Ingress properties,the BIG-IP device uses Local traffic policies to redirect HTTP requests to HTTPS.
 
 .. _add health monitor to ingress:
 
