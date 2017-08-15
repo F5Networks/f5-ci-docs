@@ -13,7 +13,7 @@ Before you begin
 ----------------
 
 - `Enable Docker in Cloud Foundry`_ :fonticon:`fa fa-external-link`.
-- `Create a User in Cloud Foundry`_ :fonticon:`fa fa-external-link` with `"routing.routes.read" permission`_.
+- `Create a read-only Admin user in Cloud Foundry`_ :fonticon:`fa fa-external-link` (needs "routing.routes.read" permission).
 - `Add the BIG-IP device to Cloud Foundry`_ :fonticon:`fa fa-external-link` as a custom load balancer.
 
 .. _create-application-manifest:
@@ -81,6 +81,5 @@ You can use the BIG-IP configuration utility to verify that the pools and pool m
 
 
 .. _Enable Docker in Cloud Foundry: https://docs.cloudfoundry.org/adminguide/docker.html#run-monitor
-.. _Create a User in Cloud Foundry: https://docs.cloudfoundry.org/adminguide/uaa-user-management.html
-.. _"routing.routes.read" permission: https://docs.cloudfoundry.org/concepts/architecture/uaa.html#routing-scopes
+.. _Create a read-only Admin user in Cloud Foundry: https://docs.cloudfoundry.org/concepts/roles.html
 .. _Add the BIG-IP device to Cloud Foundry: https://docs.pivotal.io/pivotalcf/1-7/opsguide/custom-load-balancer.html
