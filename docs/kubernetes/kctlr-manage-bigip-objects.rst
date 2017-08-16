@@ -48,29 +48,27 @@ Create a BIG-IP front-end virtual server for a Kubernetes Service
 
 #. Upload the ConfigMap to Kubernetes.
 
-   .. code-block:: bash
+   .. code-block:: console
 
       ubuntu@k8s-master:~$ kubectl create -f f5-resource-vs-example.configmap.yaml --namespace=<service-namespace>
       configmap "k8s.vs" created
 
 #. Verify creation of the BIG-IP virtual server.
 
-   .. admonition:: TMSH
+   .. code-block:: console
 
-      ::
-
-         admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)$ tmsh show ltm virtual
-         ------------------------------------------------------------------
-         Ltm::Virtual Server: frontend_173.16.2.2_80
-         ------------------------------------------------------------------
-         Status
-           Availability     : available
-           State            : enabled
-           Reason           : The virtual server is available
-           CMP              : enabled
-           CMP Mode         : all-cpus
-           Destination      : 173.16.2.2:80
-         ...
+      admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)$ show ltm virtual
+      ------------------------------------------------------------------
+      Ltm::Virtual Server: frontend_173.16.2.2_80
+      ------------------------------------------------------------------
+      Status
+        Availability     : available
+        State            : enabled
+        Reason           : The virtual server is available
+        CMP              : enabled
+        CMP Mode         : all-cpus
+        Destination      : 173.16.2.2:80
+      ...
 
 .. _kctlr-update-vs:
 
@@ -83,11 +81,13 @@ Use ``kubectl edit`` to open the ConfigMap in your default text editor and make 
 
    Kubernetes disregards any breaking or syntactically-incorrect changes.
 
+\
 
-.. code-block:: bash
-   :linenos:
+.. code-block:: console
 
    ubuntu@k8s-master:~$ kubectl edit configmap k8s.vs
+
+.. code-block:: text
 
    # Please edit the object below.
    # ...
@@ -128,18 +128,19 @@ Use ``kubectl edit`` to open the ConfigMap in your default text editor and make 
      name: k8s.vs
      namespace: default
 
+\
 
 After you save your changes and exit, you can verify the changes using ``kubectl get``.
 
-.. code-block:: bash
+.. code-block:: console
 
    ubuntu@k8s-master:~$ kubectl get configmap k8s.vs -o yaml
 
 You can also verify the changes on your BIG-IP device using ``tmsh`` or the configuration utility.
 
-.. admonition:: TMSH
+.. code-block:: console
 
-   tmsh show ltm virtual
+   admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)$ show ltm virtual
 
 .. _kctlr-delete-objects:
 
@@ -148,16 +149,16 @@ Delete BIG-IP LTM objects
 
 #. Remove the ConfigMap from the Kubernetes API server to delete the corresponding BIG-IP LTM objects.
 
-   .. code-block:: bash
+   .. code-block:: console
 
       ubuntu@k8s-master:~$ kubectl delete configmap k8s.vs
       configmap "k8s.vs" deleted
 
 #. Verify the BIG-IP LTM objects no longer exist.
 
-   .. admonition:: TMSH
+   .. code-block:: console
 
-      admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)$ tmsh show ltm virtual
+      admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)$ show ltm virtual
       admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)$
 
 
@@ -171,7 +172,7 @@ Configure BIG-IP LTM health monitors for Kubernetes Services to help ensure that
 
 #. Edit the Service definition.
 
-   .. code-block:: bash
+   .. code-block:: console
 
       ubuntu@k8s-master:~$ kubectl edit configmap k8s.vs
 
@@ -250,7 +251,7 @@ Create a pool without a virtual server
 
 #. Upload the ConfigMap to Kubernetes.
 
-   .. code-block:: bash
+   .. code-block:: console
 
       ubuntu@k8s-master:~$ kubectl create -f f5-resource-pool-only-example.configmap.yaml --namespace=<service-namespace>
       configmap "k8s.pool_only" created
@@ -263,7 +264,7 @@ Attach a pool to a virtual server
 
 #. Add the desired ``bindAddr`` (in other words, the virtual server IP address) to the F5 Resource ConfigMap using ``kubectl edit``.
 
-   .. code-block:: bash
+   .. code-block:: console
       :linenos:
 
       ubuntu@k8s-master:~$ kubectl edit configmap k8s.pool_only
@@ -308,7 +309,7 @@ Attach a pool to a virtual server
 
 #. Verify the changes using ``kubectl get``.
 
-   .. code-block:: bash
+   .. code-block:: console
 
       ubuntu@k8s-master:~$ kubectl get configmap k8s.pool_only -o yaml
 
@@ -328,7 +329,7 @@ Delete an "unattached" pool
 
 #. Remove the ConfigMap from the Kubernetes API server.
 
-   .. code-block:: bash
+   .. code-block:: console
 
       ubuntu@k8s-master:~$ kubectl delete configmap k8.pool_only
       configmap "k8s.pool_only" deleted
@@ -346,7 +347,7 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
 
 #. Remove the ``bindAddr`` field from the virtual server F5 resource ConfigMap.
 
-   .. code-block:: bash
+   .. code-block:: console
       :linenos:
 
       ubuntu@k8s-master:~$ kubectl edit configmap k8s.vs
@@ -391,7 +392,7 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
 
 #. Verify the changes using ``kubectl get``.
 
-   .. code-block:: bash
+   .. code-block:: console
 
       ubuntu@k8s-master:~$ kubectl get configmap k8s.vs -o yaml
 

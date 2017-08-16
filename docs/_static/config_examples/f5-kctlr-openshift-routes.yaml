@@ -11,10 +11,12 @@ spec:
       labels:
         app: k8s-bigip-ctlr
     spec:
-      containers:
+      # Name of the Service Account bound to a Cluster Role with the required
+      # permissions
       serviceAccountName: bigip-ctlr
+      containers:
         - name: k8s-bigip-ctlr
-          image: "f5networks/k8s-bigip-ctlr:1.1.0"
+          image: "f5networks/k8s-bigip-ctlr:1.2.0"
           env:
             - name: BIGIP_USERNAME
               valueFrom:
@@ -32,16 +34,15 @@ spec:
             "--bigip-password=$(BIGIP_PASSWORD)",
             "--bigip-url=10.190.24.171",
             "--bigip-partition=openshift",
-            # To manage a single namespace, enter it below
-            # (required in v1.0.0)
-            # To manage all namespaces, omit the `namespace` entry
-            # (default as of v1.1.0)
-            # To manage multiple namespaces, enter a separate flag for each
-            # namespace below (as of v1.1.0)
-            "--namespace=default",
             "--pool-member-type=cluster",
             # Path to the BIG-IP VXLAN connected to the OpenShift HostSubnet
-            "--openshift-sdn-name=/Common/openshift_vxlan"
+            "--openshift-sdn-name=/Common/openshift_vxlan",
+            "--manage-routes=true",
+            # Assign an IP address from the HostSubnet to the BIG-IP virtual server
+            "--route-vserver-addr=1.2.3.4"
+            # Provide the "f5type" label you want the BIG-IP Controller to watch for
+            # This information would be defined in a Route as, for example, "f5type: App1"
+            "--route-label=App1"
             ]
       imagePullSecrets:
         - name: f5-docker-images
