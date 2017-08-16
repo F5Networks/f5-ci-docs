@@ -96,6 +96,20 @@ The |kctlr-long| can:
 - :ref:`deploy iApps <kctlr-deploy-iapps>`
 - act as a `Kubernetes Ingress controller`_ to :ref:`expose Kubernetes Services to external traffic <kctlr-ingress-config>`
 
+Networking
+----------
+
+The |kctlr-long| configures services on the BIG-IP device to expose applications inside your Kubernetes cluster to external users.
+In certain deployments, the |kctlr| also handles some networking configurations on BIG-IP devices.
+
+There are a number of options when it comes to connecting a BIG-IP device (physical or Virtual Edition) to a Kubernetes `Cluster Network`_, as noted below.
+You can choose the one that best applies to your Kubernetes environment.
+
+- :ref:`OpenShift clusters using the default VXLAN overlay network`.
+- :ref:`Kubernetes clusters where pods are directly addressable` (like Calico BGP).
+- :ref:`Kubernetes clusters using an overlay with manual config` (like VXLAN).
+- :ref:`All other Kubernetes clusters using NodePort`.
+.. Kubernetes clusters using Flannel VXLAN overlay network (since 1.2.0). Not available yet.
 
 Key Kubernetes Concepts
 -----------------------

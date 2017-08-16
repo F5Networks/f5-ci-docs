@@ -49,6 +49,8 @@ At minimum, you should define the following properties:
    The :code:`kubernetes.io/ingress.class` property defaults to "f5", so you don't need to include it in your Ingress resource annotation.
    The |kctlr-long| ignores Ingress resources with any other :code:`ingress.class`.
 
+.. _create k8s ingress:
+
 Create a Kubernetes Ingress Resource
 ------------------------------------
 
