@@ -7,8 +7,9 @@ Deploy iApps with |kctlr-long|
 
    We tested this documentation with:
 
-   - ``kubernetes-v1.6.4_ubuntu-16.4.2``
-   - ``kubernetes-v1.4.8_coreos.0``
+   - ``kubernetes-v1.6.4 on Ubuntu-16.4.2``
+   - ``kubernetes-v1.4.8 on CoreOS 1409.6.0``
+   - ``k8s-bigip-ctlr v1.1.0``
    - ``k8s-bigip-ctlr v1.0.0``
 
 The |kctlr| can deploy any iApp on a BIG-IP device via a set of `iApp configuration parameters </products/connectors/k8s-bigip-ctlr/latest/index.html#iApp>`_. The iApp must exist on your BIG-IP before |kctlr| attempts to deploy it. The steps presented here apply to any built-in or custom iApp.
@@ -22,20 +23,18 @@ Define the F5 Resource
 
 The example F5 resource JSON blob shown below defines the ``f5.http`` iApp. The ``iappVariables`` configuration parameters correspond to fields in the `iApp template <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip_iapps_developer_11_0_0/2.html#unique_1762445433>`_ 's presentation section. You can create iApp variables for any built-in or custom iApp.
 
-.. todo:: add link to iApp variable 'How-to'
-
-.. seealso::
-
-   The  `k8s-bigip-ctlr product documentation </products/connectors/k8s-bigip-ctlr/latest/index.html>`_ for detailed information about iApp resources.
-
-
 .. literalinclude:: /_static/config_examples/f5-resource-vs-iApp-example.json
    :caption: Example F5 iApp Resource definition
    :linenos:
    :emphasize-lines: 8-30
 
-
 :fonticon:`fa fa-download` :download:`Download f5-resource-vs-iApp-example.json </_static/config_examples/f5-resource-vs-iApp-example.json>`
+
+.. todo:: add link to iApp variable 'How-to'
+
+.. seealso::
+
+   The  `k8s-bigip-ctlr product documentation </products/connectors/k8s-bigip-ctlr/latest/index.html>`_ for detailed information about iApp resources.
 
 
 Deploy the iApp
@@ -61,6 +60,23 @@ Deploy the iApp
    - Log in to the BIG-IP configuration utility.
    - Go to :menuselection:`iApps --> Application Services`.
    - Verify that a new item prefixed with the name of your Kubernetes Service appears in the list, in the correct partition.
+
+.. attention::
+
+  You may see an error message if the virtual IP that the iApp creates - the ``pool_addr`` in this example - is not in the right traffic group.
+
+  .. code-block:: console
+
+   Configuration error: Unable to to create virtual address (/kubernetes/127.0.0.2) as part of application (/k8s/default_k8s.http.app/default_k8s.http) because it matches the self ip (/Common/selfip.external) which uses a conflicting traffic group (/Common/traffic-group-local-only)
+
+  You can ensure the traffic groups align in two ways:
+
+  - You can set the default traffic group for the partition correctly.  This is the preferred option because then the kubernetes ConfigMap does not need knowledge of the traffic groups on BIG-IP.  
+  - You can provide an iAppOptions traffic-group override and set the specific traffic group you need by adding to the ``iappOptions`` section of the resource definition.
+
+  .. code-block:: javascript
+
+   "trafficGroup": "/Common/traffic-group-local-only"
 
 
 Delete iApp objects
