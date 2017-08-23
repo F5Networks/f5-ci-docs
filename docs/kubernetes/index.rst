@@ -16,6 +16,7 @@ The |asp| provides load balancing and telemetry for containerized applications, 
    :scale: 50 %
    :alt: F5 Container Solution for Kubernetes
 
+
 .. _k8s-prereqs:
 
 General Prerequisites
@@ -96,20 +97,18 @@ The |kctlr-long| can:
 - :ref:`deploy iApps <kctlr-deploy-iapps>`
 - act as a `Kubernetes Ingress controller`_ to :ref:`expose Kubernetes Services to external traffic <kctlr-ingress-config>`
 
-Networking
-----------
+Key Kubernetes Concepts
+-----------------------
 
-The |kctlr-long| configures services on the BIG-IP device to expose applications inside your Kubernetes cluster to external users.
-In certain deployments, the |kctlr| also handles some networking configurations on BIG-IP devices.
+Cluster Network
+```````````````
 
-There are a number of options when it comes to connecting a BIG-IP device (physical or Virtual Edition) to a Kubernetes `Cluster Network`_, as noted below.
-You can choose the one that best applies to your Kubernetes environment.
+The basic assumption of the Kubernetes `Cluster Network`_ is that pods can communicate with other pods, regardless of what host they're on.
+There are a number of options when it comes to connecting your BIG-IP device (platform or Virtual Edition) to a Kubernetes Cluster Network, as noted below.
 
-- :ref:`OpenShift clusters using the default VXLAN overlay network`.
-- :ref:`Kubernetes clusters where pods are directly addressable` (like Calico BGP).
-- :ref:`Kubernetes clusters using an overlay with manual config` (like VXLAN).
-- :ref:`All other Kubernetes clusters using NodePort`.
-.. Kubernetes clusters using Flannel VXLAN overlay network (since 1.2.0). Not available yet.
+- :ref:`Cluster overlay networks`
+- :ref:`Cluster routed networks`
+- :ref:`Kubernetes NodePort`.
 
 Key Kubernetes Concepts
 -----------------------
@@ -175,7 +174,7 @@ You can also define health monitors for your BIG-IP LTM virtual server(s) and po
 Kubernetes and OpenShift Origin
 -------------------------------
 
-See :ref:`F5 OpenShift Origin Integration <openshift-home>`.
+Find out more about the :ref:`F5 OpenShift Origin Integration <openshift-home>` and how to you can `replace the OpenShift F5 Router`_ with the |kctlr-long|.
 
 Monitors and Node Health
 ------------------------
@@ -200,3 +199,6 @@ Related
    k8s-bigip-ctlr docs <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
    f5-kube-proxy docs <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
    F5 Application Services Proxy docs <http://clouddocs.f5.com/products/asp/latest>
+
+
+.. _Cluster Network: https://kubernetes.io/docs/concepts/cluster-administration/networking/

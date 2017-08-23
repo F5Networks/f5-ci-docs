@@ -17,24 +17,34 @@ It does have a few :ref:`OpenShift-specific prerequisites <openshift-origin-prer
 .. _openshift-origin-prereqs:
 
 OpenShift Prerequisites
------------------------
+```````````````````````
 
 The prerequisites below are in addition to the F5 Integration for Kubernetes' :ref:`general prerequisites <k8s-prereqs>`.
 
-#. You'll need to use the `OpenShift Origin CLI`_, ``oc``.
-#. To :ref:`integrate your BIG-IP device into an OpenShift cluster <bigip-openshift-setup>`, you'll need to :ref:`assign an OpenShift overlay address to the BIG-IP device <k8s-openshift-assign-ip>`.
-#. The |kctlr-long| needs an `OpenShift service account`_ with permission to access the following:
+- Integration with `OpenShift SDN`_ requires a BIG-IP `Better or Best license`_ with SDN services.
+-
 
-   - nodes,
-   - endpoints,
-   - services,
-   - configmaps,
-   - ingresses,
-   - ingresses/status, and
-   - events.
+Initial Setup
+`````````````
 
-Once you've added the BIG-IP device to the OpenShift overlay network, it will have access to all pods in the cluster.
-You can then use the |kctlr| the same as you would in Kubernetes.
+#. :ref:`Add your BIG-IP device to the OpenShift cluster network <bigip-openshift-setup>`.
+#. :ref:`Create an OpenShift service account <k8s-openshift-serviceaccount>` with the following role permissions and assign it to the |kctlr|.
+
+   ========================== =================================================
+   Resources                  Actions
+   ========================== =================================================
+   - endpoints                get, list, watch
+   - ingresses
+   - namespaces
+   - nodes
+   - services
+   -------------------------- -------------------------------------------------
+   - configmaps               get, list, watch, update, create, patch
+   - ingresses/status
+   - events
+   ========================== =================================================
+
+See :ref:`How to add your BIG-IP device to an OpenShift Cluster` for complete setup instructions.
 
 .. _openshift-origin-node-health:
 
@@ -65,3 +75,4 @@ Related
 .. _Authorization Policy: https://docs.openshift.org/latest/admin_guide/manage_authorization_policy.html
 .. _OpenShift Origin CLI: https://docs.openshift.org/latest/cli_reference/index.html
 .. _OpenShift SDN: https://docs.openshift.org/latest/architecture/networking/sdn.html
+.. _Better or Best license: https://f5.com/products/how-to-buy/simplified-licensing
