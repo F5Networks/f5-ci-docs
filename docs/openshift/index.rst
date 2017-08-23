@@ -44,7 +44,7 @@ Initial Setup
    - events
    ========================== =================================================
 
-See :ref:`How to add your BIG-IP device to an OpenShift Cluster` for complete setup instructions.
+See :ref:`How to add your BIG-IP device to an OpenShift Cluster <bigip-openshift-setup>` for complete setup instructions.
 
 .. _openshift-origin-node-health:
 

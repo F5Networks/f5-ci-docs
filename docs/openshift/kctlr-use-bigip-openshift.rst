@@ -119,6 +119,12 @@ Assign a self IP address from the cluster overlay to the BIG-IP device
 
       admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create net self 10.129.2.10/14 allow-service all vlan openshift_vxlan
 
+#. Verify creation of the self IP.
+
+   .. code-block:: console
+
+      admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ list net self 10.129.2.10/14
+
 Next Steps
 ----------
 

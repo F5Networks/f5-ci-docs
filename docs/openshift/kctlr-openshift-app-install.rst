@@ -1,7 +1,7 @@
 .. _install-kctlr-openshift:
 
-Install the |kctlr-long| in OpenShift Origin
-============================================
+Install the BIG-IP Controller in OpenShift
+==========================================
 
 .. sidebar:: Docs test matrix
 

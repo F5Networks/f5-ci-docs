@@ -24,6 +24,7 @@
    BIG-IP Controller - K8s <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
    F5-proxy - K8s <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest/>
    Integration Overview <kubernetes/index>
+   kubernetes/k8s-bigip-networks
    kubernetes/kctlr*
    kubernetes/asp*
 

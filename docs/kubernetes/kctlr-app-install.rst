@@ -3,8 +3,8 @@
 
 .. _install-kctlr:
 
-Install the |kctlr-long|
-========================
+Install the BIG-IP Controller in Kubernetes
+===========================================
 
 .. sidebar:: Docs test matrix
 

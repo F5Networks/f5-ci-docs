@@ -30,6 +30,8 @@ Questions
 ---------
 - what are the image CPU and memory requirements??
 
+.. _replace-f5-router:
+
 How do I migrate from the OpenShift F5 Router?
 ----------------------------------------------
 TBD
@@ -49,6 +51,7 @@ The |kctlr| can create/delete/expire BIG-IP objects for OpenShift routes, in add
 This solution uses the "F5 Native Integration" with OpenShift, as described in :ref:`Add your BIG-IP device to an OpenShift Cluster <bigip-openshift-setup>`.
 
 -------------------------------------------------------------------------------
+
 FROM OPENSHIFT DOCS:
 
 Features

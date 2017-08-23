@@ -5,177 +5,123 @@
 
 .. _k8s-bigip-networks:
 
-OVERALL QUESTIONS:
-------------------
-- WHAT DO WE MANAGE AUTOMATICALLY?
-- WHAT DOES THE USER HAVE TO MANAGE?
-- WHAT IS THE DIFFERENCE BETWEEN L2 & L3 AUTOMATION IN THESE USE CASES? (THE ROUTING TABLE UPDATES)
-
-How the F5 Integration fits in to Kubernetes Cluster Networks
-=============================================================
-
-The |kctlr-long| controller configures services on the BIG-IP device to expose applications inside your Kubernetes cluster to external users.
-In some deployments, the |kctlr| also makes network configurations on the BIG-IP system.
+The F5 Integration and Kubernetes cluster networks
+==================================================
 
 There are a number of options when it comes to connecting a BIG-IP device (platform or Virtual Edition) to a Kubernetes cluster network.
-In some configurations, the |kctlr| may automate more tasks than in other configurations.
-While generally more automation is better, some of these tasks may be better left to other automation systems, or may be rarely done.
+When choosing how to integrate a BIG-IP device into your cluster network, bear in mind that it impacts:
 
-For instance, in some configurations the |kctlr| will not automatically configure networking on BIG-IP for a new node that you add to your Kubernetes cluster.
-But you may already be using another automation system like Ansible to provision and configure that node, so it makes sense to also have Ansible configure BIG-IP.
-Also consider that some operations may occur less frequently than others.
-For instance, creating new pods may happen every few seconds, creating new services several times a day, and adding nodes to the cluster only once or twice a month or less.
-Even if the |kctlr| does not help automate cluster node addition, its handling of changes to pods and deployments is still helpful.
-Finally, we are continuing to add cluster network automation to the |kctlr| so if we do not handle an important case for you, let us know with an issue.
+- how you'll expose Services to internal traffic;
+- what BIG-IP system features you can use;
+- how the |kctlr| handles network configurations on the BIG-IP system.
 
-These are the categories of operations that you should consider, listed from most-frequent to least-frequent (for a typical Kubernetes cluster):
+The |kctlr| supports the :ref:`clusterIP` and :ref:`nodeport` Service types.
+It handles network setup differently depending on the selected type.
 
-- New Pod: Adding or removing Pods from an existing Service, or exposing a service with pods.
-- New Node: Adding capacity to your Kubernetes cluster by adding new Nodes (or removing).
-- New Cluster: Creating a new Kubernetes cluster from scratch.
+.. important::
+
+   F5 recommends using the default ``clusterIP`` Service type, as it enables the greater set of BIG-IP ADC services.
+
+.. _clusterIP:
+
+ClusterIP
+---------
+
+The ``clusterIP`` type exposes Services to internal traffic via IP addresses allocated from the underlying L2/L3 cluster network.
+The BIG-IP device can find any pod in the cluster via its assigned ``InternalIP`` address.
+The |kctlr| and BIG-IP can monitor node health and log statistics for individual pods.
+
+.. figure:: /_static/media/k8s_cluster_l2-l3.png
+   :scale: 60%
+
+\
+
+For Services with type ``clusterIP``, the |kctlr| manages some networking tasks on the BIG-IP device automatically.
+You'll have to manage other tasks either manually or with another automated system.
+For example, if you provision and configure new nodes using Ansible, it makes sense to automate the BIG-IP system configurations with Ansible as well. [#ansible]_
+
+In general, the manual operations required occur far less frequently than those the |kctlr| manages automatically.
+The list below shows common operations for a typical Kubernetes cluster, from most-frequent to least-frequent.
+
+- Add or remove Pods from an existing Service, or exposing a Service with Pods.
+- Add capacity to your Kubernetes cluster by adding new Nodes, or remove a Node.
+- Create a new Kubernetes cluster from scratch.
+
+The |kctlr| **manages BIG-IP system configurations for Pods automatically.**
+The manual system configurations shown in the table below may be required when creating/removing nodes and clusters, depending on your cluster network type.
+Take these requirements into consideration if you're deciding how to set up your cluster network, or deciding how to integrate the |kctlr| and BIG-IP device into an existing cluster.
+
+.. tip::
+
+   BIG-IP platforms support several overlay networks, like VXLAN and NVGRE.
+   The manual steps noted in the table apply when integrating the BIG-IP device into any overlay network.
 
 
+.. table::
 
-For context, here are the configuration changes that are needed for various popular kubernetes cluster network types.
-|kctlr| will manage configuration changes for new pods, so that operation is omitted.
+   +-----------------------+--------------------------------------------------------------------+--------------------------------------------------------------------------+
+   | Network Type          | Add Cluster                                                        | Add Node(s)                                                              |
+   +=======================+====================================================================+==========================================================================+
+   | Layer 2 networks                                                                                                                                                      |
+   +-----------------------+--------------------------------------------------------------------+--------------------------------------------------------------------------+
+   | Openshift SDN         | Add a new subnet to OpenShift for the BIG-IP device.               | None. The |kctlr| automatically detects OpenShift routes and makes the   |
+   |                       |                                                                    | necessary BIG-IP system configurations.                                  |
+   |                       | Add a new VXLAN network to the BIG-IP system that corresponds to   |                                                                          |
+   |                       | the subnet. [#encap]_                                              |                                                                          |
+   +-----------------------+--------------------------------------------------------------------+--------------------------------------------------------------------------+
+   | Flannel VXLAN         | Allocate an IP address from Flannel for the BIG-IP device.         | Add an FDB entry and ARP record for each node.                           |
+   |                       |                                                                    |                                                                          |
+   |                       | Add a VXLAN network to the BIG-IP system;                          |                                                                          |
+   |                       | use the IP address allocated from Flannel as the VTEP.             |                                                                          |
+   +-----------------------+--------------------------------------------------------------------+--------------------------------------------------------------------------+
+   | Layer 3 networks                                                                                                                                                      |
+   +-----------------------+--------------------------------------------------------------------+--------------------------------------------------------------------------+
+   | Calico                | Set up BGP peering between the BIG-IP device and Calico.           | None. Managed by BGP.                                                    |
+   |                       |                                                                    |                                                                          |
+   |                       |                                                                    | **NOTE:** Depending on the BGP configuration, you may need to update the |
+   |                       |                                                                    | BGP neighbor table.                                                      |
+   +-----------------------+--------------------------------------------------------------------+--------------------------------------------------------------------------+
+   | Flannel host-gw       | Configure routes in Flannel and on the BIG-IP device for per-node  | Add/update per-node subnet routes on the BIG-IP device.                  |
+   |                       | subnet(s).                                                         |                                                                          |
+   +-----------------------+--------------------------------------------------------------------+--------------------------------------------------------------------------+
 
-+------------------+-----------------------------------------------------------------------+----------------------------------------------------------------------------------------+
-| Network Type     | Add Cluster                                                           | Add Node                                                                               |
-+==================+=======================================================================+========================================================================================+
-| Layer 2 network types                                                                                                                                                             |
-+------------------+-----------------------------------------------------------------------+----------------------------------------------------------------------------------------+
-| Openshift SDN    | Add Openshift subnet for BIG-IP, and add vxlan network on BIG-IP      | Managed by  |kctlr|                                                                    |
-+------------------+-----------------------------------------------------------------------+----------------------------------------------------------------------------------------+
-| Flannel VXLan    | Allocate an IP for BIG-IP in Flannel, and add vxlan network on BIG-IP | Add entry in FDB table for the new node's VTEP                                         |
-+------------------+-----------------------------------------------------------------------+----------------------------------------------------------------------------------------+
-| Layer 3 network types                                                                                                                                                             |
-+------------------+-----------------------------------------------------------------------+----------------------------------------------------------------------------------------+
-| Calico           | Setup BGP peering between BIG-IP and calico                           | Managed by BGP. Depending on BGP configuration, may need to update BGP neighbor table. |
-+------------------+-----------------------------------------------------------------------+----------------------------------------------------------------------------------------+
-| Flannel host-gw  | Configure routes in flannel and BIG-IP for per-node subnet(s)         | Update per-node subnet routes on BIG-IP                                                |
-+------------------+-----------------------------------------------------------------------+----------------------------------------------------------------------------------------+
-
-
-- :ref:`Cluster overlay networks`
-- :ref:`Cluster routed networks`
-- :ref:`Kubernetes NodePort`
+\
 
 .. seealso::
 
-   See the Kubernetes `Cluster Networking`_ Administration Guide for more information about setting up a Kubernetes cluster network.
+   - The Kubernetes `Cluster Networking`_ Administration Guide provides information about Kubernetes Cluster Network types.
+   - The `BIG-IP TMOS: ​Tunneling and IPsec <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-tmos-tunnels-ipsec-13-0-0/2.html>`_ guide provides instructions for setting up tunnels on your BIG-IP device.
 
-.. _cluster overlay networks:
+.. _nodeport:
 
-Cluster Overlay Networks
-------------------------
+NodePort
+--------
 
-In a Cluster Overlay Network, the BIG-IP system connects to an L2 overlay (a VLAN).
-The nodes in a Kubernetes cluster connect to the overlay by means of VXLANs.
+The NodePort type exposes Services via the ``kube-proxy`` process that runs on each node.
+Each node's ``kube-proxy`` can communicate with all pods in the cluster.
 
-.. figure:: /_static/media/k8s-sdn-vxlan_copy.png
+.. figure:: /_static/media/k8s_nodeport.png
    :scale: 60%
 
-In this deployment, you'll need to make some initial configurations on the BIG-IP system.
+\
 
-#. Create a new VLAN and self IP address.
+While this mode is maximally compatible with the Kubernetes cluster, it limits the BIG-IP system's applicable functionality.
+Using NodePort equates to two-tier load balancing: all requests go to any node in the cluster; the ``kube-proxy`` on the node that handles the request chooses which Pod to send the request to.
+This means the |kctlr| and BIG-IP system can't provide some L7 services, like persistence, and that the |kctlr| doesn't have any insight into the health of nodes and/or pods.
 
-   - The VLAN corresponds to the L2 overlay providing connectivity to the nodes in your cluster.
-   - The VLAN connects to an untaffed interface on the BIG-IP platform (in this example, ``1.1``).
-   - The self IP address will serve as the VXLAN tunnel endpoint; set it to an IP address available in the overlay VLAN.
+What's Next
+-----------
 
-   .. code-block:: console
-
-      tmsh create net vlan k8s_vlan interfaces add { 1.1 }
-      tmsh create net self 1.2.3.4 vlan k8s_vlan
-
-#. Create a new ``vxlan`` tunnel profile and a VXLAN tunnel.
-
-   - Set the ``flooding-type`` to ``multi-point``.
-   - Use the self IP address as the tunnel's ``local-address``.
-
-   .. code-block:: console
-
-      tmsh create net tunnels vxlan vxlan-mp flooding-type multipoint
-      tmsh create net tunnels tunnel k8s_vxlan profile vxlan-mp local-address 1.2.3.4
-
-   .. important::
-
-      Be sure to use the correct encapsulation format for your network.
-
-#. Create **FDB entries** and **ARP records** for the cluster endpoints.
-   For instructions, see **Examples for manually populating L2 location records** in the `BIG-IP TMOS: ​Tunneling and IPsec <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-tmos-tunnels-ipsec-13-0-0/2.html>`_ guide.
-
-OpenShift SDN
-`````````````
-
-The OpenShift SDN cluster overlay setup is similar to the standard Kubernetes setup, but it has a few key differences.
-
-- Instead of setting up a VLAN and self IP on the BIG-IP system, you'll :ref:`create a host subnet <k8s-openshift-hostsubnet>` in your OpenShift cluster.
-- The ``hostIP`` address assigned to the BIG-IP device from the host subnet provides the means of connecting the BIG-IP to the L2 overlay.
-- If using the ``ovs-multitenant`` plugin, assign the BIG-IP device the OpenShift ``VNID 0`` to grant it access to all projects. [#originsdn]_
-- In OpenShift, the |kctlr-long| is route-aware; it automatically discovers FDB entries and updates the BIG-IP system accordingly.
-
-See :ref:`How to add your BIG-IP device to an OpenShift Cluster <bigip-openshift-setup>` for complete setup instructions.
-
-.. seealso::
-
-   <Link to OpenShift feature parity page>
-
-.. _cluster routed networks:
-
-Cluster Routed Networks
------------------------
-
-In a cluster routed network, the BIG-IP device connects to a flat IP network.
-
-.. figure:: /_static/media/k8s-direct_2_copy.png
-   :scale: 60%
-
-In this model, the Kubernetes master assigns IP addresses to all Pods.
-You'll need to manually configure routes on the BIG-IP system so it can discover all Pod IP addresses on the cluster network.
-
-See the `BIG-IP TMOS Routing Administration`_ guide for more information about managing routes on your BIG-IP device.
-
-ClusterIP/iptables
-
-Project Calico
-``````````````
-
-You can use `Calico for Kubernetes`_ as part of a cluster routed network.
-
-
-Calico BGP https://docs.projectcalico.org/v2.4/usage/configuration/bgp
-
-Questions:
-
-- How does this work?
-- What BIG-IP pre-configs are required?
-- Do we have to set up VLANs on BIG-IP
-
-We understand the control plane and there's no encapsulation required.
-
-
-.. _Kubernetes NodePort:
-
-Kubernetes NodePort
--------------------
-
-.. figure:: /_static/media/k8s_nodeport_copy.png
-   :scale: 60%
-
-type:NodePort
-
-
-https://kubernetes.io/docs/concepts/architecture/nodes/
-
-DON'T USE IT UNLESS YOU NEED TO
-
-
+- :ref:`Install the BIG-IP Controller in standard Kubernetes <install-kctlr>`
+- :ref:`Add your BIG-IP device to an OpenShift Cluster <bigip-openshift-setup>`
+- :ref:`Install the BIG-IP Controller in OpenShift <install-kctlr-openshift>`
+- :ref:`Configure the BIG-IP Controller for Kubernetes <kctlr-configuration>`
 
 .. rubric:: Footnotes
+.. [#servicetype] See `Publishing Services - Service Types <https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services---service-types>`_ in the Kubernetes documentation.
 .. [#originsdn] See the `OpenShift Origin SDN`_ documentation for more information.
-
-
+.. [#ansible] See the `f5-ansible repo on GitHub <https://github.com/F5Networks/f5-ansible>`_ for Ansible modules that can manipulate F5 products.
+.. [#encap] Be sure to use the correct encapsulation format for your network.
 
 .. _Cluster Networking: https://kubernetes.io/docs/concepts/cluster-administration/networking/
 .. _OpenShift Origin SDN: https://docs.openshift.org/latest/architecture/additional_concepts/sdn.html
