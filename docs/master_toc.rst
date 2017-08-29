@@ -53,6 +53,7 @@
 
    releases_and_versioning
    acknowledgements
+   cla_landing
 
 .. toctree::
    :hidden:
