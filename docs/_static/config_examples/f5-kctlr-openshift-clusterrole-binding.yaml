@@ -6,7 +6,7 @@ userNames:
 - system:serviceaccount:default:bigip-ctlr
 subjects:
 - kind: ServiceAccount
-  namespace: default
+  namespace: kube-system
   name: bigip-ctlr
 roleRef:
   name: system:bigip-ctlr
