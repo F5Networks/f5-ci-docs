@@ -20,6 +20,25 @@ The |kctlr-long| controller configures services on the BIG-IP device to expose a
 In some deployments, the |kctlr| also makes network configurations on the BIG-IP system.
 
 There are a number of options when it comes to connecting a BIG-IP device (platform or Virtual Edition) to a Kubernetes cluster network.
+In some configurations, the |kctlr| may automate more tasks than in other configurations.
+While generally more automation is better, some of these tasks may be better left to other automation systems, or may be rarely done.
+
+For instance, in some configurations the |kctlr| will not automatically configure networking on BIG-IP for a new node that you add to your Kubernetes cluster.
+But you may already be using another automation system like Ansible to provision and configure that node, so it makes sense to also have Ansible configure BIG-IP.
+Also consider that some operations may occur less frequently than others.
+For instance, creating new pods may happen every few seconds, creating new services several times a day, and adding nodes to the cluster only once or twice a month or less.
+Even if the |kctlr| does not help automate cluster node addition, its handling of changes to pods and deployments is still helpful.
+Finally, we are continuing to add cluster network automation to the |kctlr| so if we do not handle an important case for you, let us know with an issue.
+
+These are the categories of operations that you should consider, listed from most-frequent to least-frequent (for a typical Kubernetes cluster):
+
+- New Pod: Adding or removing Pods from an existing Service.
+- New Service: Exposing applications via Services, Ingresses or similar.
+- New Node: Adding capacity to your Kubernetes cluster by adding new Nodes (or removing).
+- New Cluster: Creating a new Kubernetes cluster from scratch.
+
+.. todo:: Brian's table here?  With the headings of the columns matching the bullets ("New Pod", "New Service", ...)
+
 
 - :ref:`Cluster overlay networks`
 - :ref:`Cluster routed networks`
