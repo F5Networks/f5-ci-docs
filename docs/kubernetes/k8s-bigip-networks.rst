@@ -11,8 +11,6 @@ OVERALL QUESTIONS:
 - WHAT DOES THE USER HAVE TO MANAGE?
 - WHAT IS THE DIFFERENCE BETWEEN L2 & L3 AUTOMATION IN THESE USE CASES? (THE ROUTING TABLE UPDATES)
 
-.. todo:: Ask Brian M for his table on what the user has to manage manually vs what's automatic / what's just done for initial setup vs what requires ongoing management
-
 How the F5 Integration fits in to Kubernetes Cluster Networks
 =============================================================
 
@@ -32,12 +30,30 @@ Finally, we are continuing to add cluster network automation to the |kctlr| so i
 
 These are the categories of operations that you should consider, listed from most-frequent to least-frequent (for a typical Kubernetes cluster):
 
-- New Pod: Adding or removing Pods from an existing Service.
-- New Service: Exposing applications via Services, Ingresses or similar.
+- New Pod: Adding or removing Pods from an existing Service, or exposing a service with pods.
 - New Node: Adding capacity to your Kubernetes cluster by adding new Nodes (or removing).
 - New Cluster: Creating a new Kubernetes cluster from scratch.
 
-.. todo:: Brian's table here?  With the headings of the columns matching the bullets ("New Pod", "New Service", ...)
+
+
+For context, here are the configuration changes that are needed for various popular kubernetes cluster network types.
+|kctlr| will manage configuration changes for new pods, so that operation is omitted.
+
++------------------+-----------------------------------------------------------------------+----------------------------------------------------------------------------------------+
+| Network Type     | Add Cluster                                                           | Add Node                                                                               |
++==================+=======================================================================+========================================================================================+
+| Layer 2 network types                                                                                                                                                             |
++------------------+-----------------------------------------------------------------------+----------------------------------------------------------------------------------------+
+| Openshift SDN    | Add Openshift subnet for BIG-IP, and add vxlan network on BIG-IP      | Managed by  |kctlr|                                                                    |
++------------------+-----------------------------------------------------------------------+----------------------------------------------------------------------------------------+
+| Flannel VXLan    | Allocate an IP for BIG-IP in Flannel, and add vxlan network on BIG-IP | Add entry in FDB table for the new node's VTEP                                         |
++------------------+-----------------------------------------------------------------------+----------------------------------------------------------------------------------------+
+| Layer 3 network types                                                                                                                                                             |
++------------------+-----------------------------------------------------------------------+----------------------------------------------------------------------------------------+
+| Calico           | Setup BGP peering between BIG-IP and calico                           | Managed by BGP. Depending on BGP configuration, may need to update BGP neighbor table. |
++------------------+-----------------------------------------------------------------------+----------------------------------------------------------------------------------------+
+| Flannel host-gw  | Configure routes in flannel and BIG-IP for per-node subnet(s)         | Update per-node subnet routes on BIG-IP                                                |
++------------------+-----------------------------------------------------------------------+----------------------------------------------------------------------------------------+
 
 
 - :ref:`Cluster overlay networks`
