@@ -18,7 +18,8 @@ The Deployment creates a `ReplicaSet`_ that, in turn, launches a `Pod`_ running 
 
 .. attention::
 
-   These instructions are for a standard Kubernetes environment. **If you are using OpenShift**: Complete the steps in :ref:`Install the BIG-IP Controller for Kubernetes in OpenShift Origin <install-kctlr-openshift>`.
+   These instructions are for a standard Kubernetes environment.
+   **If you are using OpenShift**, see :ref:`Install the BIG-IP Controller for Kubernetes in OpenShift Origin <install-kctlr-openshift>`.
 
 Initial Setup
 -------------
@@ -45,40 +46,39 @@ Create a Deployment
 
 The deployment example below also creates a `ServiceAccount`_ for the controller to use.
 
+   .. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
+      :linenos:
+      :caption: Example Kubernetes Manifest
+      :emphasize-lines: 2,50
 
-:fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_image-secret.yaml </_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml>`
+   :fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_image-secret.yaml </_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml>`
 
+#. Create a `cluster role <https://kubernetes.io/docs/admin/authorization/rbac/#role-and-clusterrole>`_ and `cluster role binding <https://kubernetes.io/docs/admin/authorization/rbac/#rolebinding-and-clusterrolebinding>`_.
+   The required by the |kctlr| to monitor and update the resources it manages.
 
-.. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
-   :linenos:
-   :caption: Example Kubernetes Manifest
-   :emphasize-lines: 2,50
+   .. note::
 
-2. Add the `cluster role <https://kubernetes.io/docs/admin/authorization/rbac/#role-and-clusterrole>`_ and `cluster role binding <https://kubernetes.io/docs/admin/authorization/rbac/#rolebinding-and-clusterrolebinding>`_ required by the |kctlr| to monitor and update the resources it manages. 
-
-
-.. note::
-
-   - If your cluster is not using `Role Based Access Control <https://kubernetes.io/docs/admin/authorization/rbac/>`_ the cluster role and cluster role binding are not needed.
-   - You can restrict the permissions granted in the cluster role as needed for your deployment; those shown below are the supported set.
+      - If your cluster is not using `Role Based Access Control <https://kubernetes.io/docs/admin/authorization/rbac/>`_ the cluster role and cluster role binding are not needed.
+      - You can restrict the permissions granted in the cluster role as needed for your deployment; those shown below are the supported set.
 
 
-.. literalinclude:: /_static/config_examples/f5-k8s-sample-rbac.yaml
-   :linenos:
-   :caption: Example ``ClusterRole`` and ``ClusterRoleBinding``
+   .. literalinclude:: /_static/config_examples/f5-k8s-sample-rbac.yaml
+      :linenos:
+      :caption: Example ``ClusterRole`` and ``ClusterRoleBinding``
 
-:fonticon:`fa fa-download` :download:`f5-k8s-sample-rbac.yaml </_static/config_examples/f5-k8s-sample-rbac.yaml>`
+   :fonticon:`fa fa-download` :download:`f5-k8s-sample-rbac.yaml </_static/config_examples/f5-k8s-sample-rbac.yaml>`
 
 
-Upload the Deployment
----------------------
+Update the Kubernetes API Server
+--------------------------------
 
-Upload the Deployment to the Kubernetes or OpenShift API server with the ``kubectl apply`` command.
+Upload the Deployment, Cluster Role, and Cluster Role Binding to the Kubernetes API server using ``kubectl apply``.
+Be sure to create all resources in the ``kube-system`` namespace.
 
-.. code-block:: bash
+.. code-block:: console
 
-   user@k8s-master:~$ kubectl apply -f k8s-bigip-ctlr_image-secret.yaml --namespace=kube-system
-   deployment "k8s-bigip-ctlr" created
+   user@k8s-master:~$ kubectl apply -f f5-k8s-bigip-ctlr_image-secret.yaml --namespace=kube-system
+   user@k8s-master:~$ kubectl apply -f f5-k8s-sample-rbac.yaml --namespace=kube-system
 
 
 Verify creation
@@ -87,7 +87,7 @@ Verify creation
 When you create a Deployment, a `ReplicaSet`_ and `Pod`_ (s) launch automatically.
 Use ``kubectl`` to verify all of the objects launched successfully.
 
-.. code-block:: bash
+.. code-block:: console
    :emphasize-lines: 3, 7, 11
 
    user@k8s-master:~$ kubectl get deployments --namespace=kube-system

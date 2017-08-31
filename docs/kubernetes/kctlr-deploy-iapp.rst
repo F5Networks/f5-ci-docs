@@ -34,7 +34,7 @@ The example F5 resource JSON blob shown below defines the ``f5.http`` iApp. The 
 
 .. seealso::
 
-   The  `k8s-bigip-ctlr product documentation </products/connectors/k8s-bigip-ctlr/latest/index.html>`_ for detailed information about iApp resources.
+   The `k8s-bigip-ctlr product documentation </products/connectors/k8s-bigip-ctlr/latest/index.html>`_ for detailed information about iApp resources.
 
 
 Deploy the iApp
@@ -50,31 +50,36 @@ Deploy the iApp
 
 #. Upload the ConfigMap to Kubernetes.
 
-   .. code-block:: bash
+   .. code-block:: console
 
       user@k8s-master:~$ kubectl create -f f5-resource-vs-example.configmap.yaml --namespace=<service-namespace>
       configmap "" created
 
-#. Verify creation of the iApp, and its related objects, on the BIG-IP. This is most easily done via the configuration utility:
+#. Verify creation of the iApp and its related objects on the BIG-IP system.
+   This is most easily done via the configuration utility:
 
    - Log in to the BIG-IP configuration utility.
    - Go to :menuselection:`iApps --> Application Services`.
    - Verify that a new item prefixed with the name of your Kubernetes Service appears in the list, in the correct partition.
 
-.. attention::
+Traffic group configuration error
+`````````````````````````````````
 
-  You may see an error message if the virtual IP that the iApp creates - the ``pool_addr`` in this example - is not in the right traffic group.
+If the iApp creates the virtual IP -- the ``pool_addr`` in the above example -- in the wrong traffic group, you may see an error message like that below.
 
-  .. code-block:: console
+.. code-block:: console
 
-   Configuration error: Unable to to create virtual address (/kubernetes/127.0.0.2) as part of application (/k8s/default_k8s.http.app/default_k8s.http) because it matches the self ip (/Common/selfip.external) which uses a conflicting traffic group (/Common/traffic-group-local-only)
+   Configuration error: Unable to to create virtual address (/kubernetes/127.0.0.2) as part of application
+   (/k8s/default_k8s.http.app/default_k8s.http) because it matches the self ip (/Common/selfip.external)
+   which uses a conflicting traffic group (/Common/traffic-group-local-only)
 
-  You can ensure the traffic groups align in two ways:
+There are two options for designating traffic groups:
 
-  - You can set the default traffic group for the partition correctly.  This is the preferred option because then the kubernetes ConfigMap does not need knowledge of the traffic groups on BIG-IP.  
-  - You can provide an iAppOptions traffic-group override and set the specific traffic group you need by adding to the ``iappOptions`` section of the resource definition.
+- Set the desired traffic group as the default when creating the partition you want the |kctlr| to manage.
+  **This is the preferred option** because Kubernetes doesn't need to know about BIG-IP traffic groups.
+- You can provide an iAppOptions traffic-group override and set the specific traffic group you need by adding to the ``iappOptions`` section of the resource definition.
 
-  .. code-block:: javascript
+.. code-block:: javascript
 
    "trafficGroup": "/Common/traffic-group-local-only"
 
@@ -84,7 +89,7 @@ Delete iApp objects
 
 #. Remove the ConfigMap from the Kubernetes API server to delete the corresponding objects from the BIG-IP.
 
-   .. code-block:: bash
+   .. code-block:: console
 
       user@k8s-master:~$ kubectl delete configmap k8s.f5http
       configmap "k8s.f5http" deleted

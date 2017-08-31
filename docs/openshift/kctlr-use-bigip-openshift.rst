@@ -135,8 +135,8 @@ Assign an OpenShift overlay address to the BIG-IP device
 Next Steps
 ----------
 
-- :ref:`Install the F5 BIG-IP Controller for Openshift <install-kctlr-openshift>`
-- :ref:`Configure the F5 BIG-IP Controller for Kubernetes for OpenShift <kctlr-configure-openshift>`
+- :ref:`Install the F5 BIG-IP Controller in Openshift <install-kctlr-openshift>`
+- :ref:`Configure the F5 BIG-IP Controller for use in OpenShift <kctlr-configure-openshift>`
 
 .. _OpenShift: https://www.openshift.org/
 .. _Create an OpenShift service account: https://docs.openshift.org/latest/admin_guide/service_accounts.html

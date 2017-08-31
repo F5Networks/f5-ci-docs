@@ -1,7 +1,7 @@
 .. _install-kctlr-openshift:
 
-Install the |kctlr-long| in `OpenShift`_ Origin 
-===============================================
+Install the |kctlr-long| in OpenShift Origin
+============================================
 
 .. sidebar:: Docs test matrix
 
@@ -13,29 +13,42 @@ Install the |kctlr-long| in `OpenShift`_ Origin
    - ``k8s-bigip-ctlr v1.0.0``
 
 
-The |kctlr-long| installs via a `Kubernetes Deployment`_.
+You can install the |kctlr-long| in `OpenShift`_ via a Deployment.
 The Deployment creates a `ReplicaSet`_ that, in turn, launches a `Pod`_ running the |kctlr| app.
 
 .. attention::
 
-   These instructions are for the `Openshift`_ Origin Kubernetes distribution. **If you are using standard Kubernetes**: Complete the steps in :ref:`Install the BIG-IP Controller for Kubernetes <install-kctlr>`.
+   These instructions are for the `Openshift`_ Origin Kubernetes distribution.
+   **If you are using standard Kubernetes**, see :ref:`Install the BIG-IP Controller for Kubernetes <install-kctlr>`.
 
+.. _openshift initial setup:
+.. _openshift bigip setup:
 
 Initial Setup
 -------------
 
-#. Complete the steps to :ref:`Add BIG-IP device to an OpenShift Cluster <bigip-openshift-setup>`
+#. :ref:`Add your BIG-IP device to the OpenShift Cluster <bigip-openshift-setup>`.
+
+#. `Create a new partition`_ for Kubernetes on your BIG-IP.
+   The |kctlr| can not manage objects in the ``/Common`` partition.
+
+#. :ref:`Add a Kubernetes Secret <k8s-add-secret>` containing your BIG-IP login credentials to your Kubernetes master node.
+
+#. `Create a Kubernetes Secret containing your Docker login credentials`_ (required if you need to pull the container image from a private Docker registry).
 
 .. _k8s-openshift-serviceaccount:
 
-2. Create a serviceaccount for the |kctlr|.
+Set up RBAC Authentication for the |kctlr|
+------------------------------------------
+
+#. Create a Service Account.
 
    .. code-block:: console
 
       user@openshift:~$ oc create serviceaccount bigip-ctlr -n kube-system
       serviceaccount "bigip-ctlr" created
 
-#. Create a valid clusterrole.
+#. Create a Cluster Role.
 
    .. code-block:: console
 
@@ -47,7 +60,7 @@ Initial Setup
 
    :fonticon:`fa fa-download` :download:`f5-kctlr-openshift-clusterrole.yaml </_static/config_examples/f5-kctlr-openshift-clusterrole.yaml>`
 
-#. Create a valid clusterrole binding.
+#. Create a Cluster Role Binding.
 
    .. code-block:: console
 
@@ -59,30 +72,22 @@ Initial Setup
 
    :fonticon:`fa fa-download` :download:`f5-kctlr-openshift-clusterrole-binding.yaml </_static/config_examples/f5-kctlr-openshift-clusterrole-binding.yaml>`
 
-
-#. :ref:`Add a Kubernetes Secret <k8s-add-secret>` containing your BIG-IP login credentials to your Kubernetes master node.
-
-#. `Create a new partition`_ for Kubernetes on your BIG-IP.
-   The |kctlr| can not manage objects in the ``/Common`` partition.
-
-#. `Create a Kubernetes Secret containing your Docker login credentials`_ (required if you need to pull the container image from a private Docker registry).
-
 .. _create-openshift-deployment:
-
-.. important::
-
-   You should create all |kctlr| objects in the ``kube-system`` `namespace`_, unless otherwise specified in the deployment instructions.
 
 .. _openshift-bigip-ctlr-deployment:
 
 Create a Deployment
 -------------------
 
+.. important::
+
+   You should create all |kctlr| objects in the ``kube-system`` `namespace`_, unless otherwise specified in the deployment instructions.
+
 Define an OpenShift Deployment using valid JSON or YAML.
 
 .. important::
 
-    OpenShift deployments must use the following required configuration parameters:
+    OpenShift Deployments must use the following required configuration parameters:
 
     - ``pool-member-type=cluster``
     - ``openshift-sdn-name=</BIG-IP-partition/BIG-IP-vxlan-tunnel>``
@@ -107,7 +112,7 @@ Verify creation
 ---------------
 
 When you create a Deployment, a `ReplicaSet`_ and `Pod`_ (s) launch automatically.
-Use ``oc`` to verify all of the objects launched successfully.
+You can use ``oc get`` to verify all of the objects launched successfully.
 
 .. code-block:: bash
    :emphasize-lines: 3, 7, 11
