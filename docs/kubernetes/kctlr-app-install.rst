@@ -7,24 +7,29 @@ Install the |kctlr-long|
 
    We tested this documentation with:
 
-   - ``kubernetes-v1.4.8_coreos.0``
+   - ``kubernetes-v1.6.4 on Ubuntu-16.4.2``
+   - ``kubernetes-v1.4.8 on CoreOS 1409.6.0``
    - ``k8s-bigip-ctlr v1.1.0``
+   - ``k8s-bigip-ctlr v1.0.0``
 
 
 The |kctlr-long| installs via a `Kubernetes Deployment`_.
 The Deployment creates a `ReplicaSet`_ that, in turn, launches a `Pod`_ running the |kctlr| app.
 
+.. attention::
+
+   These instructions are for a standard Kubernetes environment.
+   **If you are using OpenShift**, see :ref:`Install the BIG-IP Controller for Kubernetes in OpenShift Origin <install-kctlr-openshift>`.
+
 Initial Setup
 -------------
 
-#. :ref:`Add a Kubernetes Secret <k8s-add-secret>` containing your BIG-IP login credentials to your Kubernetes master node.
-
-#. `Create a new partition`_ for Kubernetes on your BIG-IP.
+#. `Create a new partition`_ for Kubernetes on your BIG-IP system.
    The |kctlr| can not manage objects in the ``/Common`` partition.
 
-#. `Create a Kubernetes Secret containing your Docker login credentials`_ (required if you need to pull the container image from a private Docker registry).
+#. :ref:`Add a Kubernetes Secret <k8s-add-secret>` containing your BIG-IP login credentials to your Kubernetes master node.
 
-#. **If you're using OpenShift**: Complete the steps in :ref:`Add BIG-IP device to an OpenShift Cluster <bigip-openshift-setup>`.
+#. `Create a Kubernetes Secret containing your Docker login credentials`_ (required if you need to pull the container image from a private Docker registry).
 
 .. _create-k8s-deployment:
 
@@ -37,46 +42,47 @@ Initial Setup
 Create a Deployment
 -------------------
 
-Kubernetes
-``````````
+#. Define a `Kubernetes Deployment`_ using valid JSON or YAML.
 
-Define a `Kubernetes Deployment`_ using valid JSON or YAML.
+The deployment example below also creates a `ServiceAccount`_ for the controller to use.
 
-.. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
+   .. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
+      :linenos:
+      :caption: Example Kubernetes Manifest
+      :emphasize-lines: 2,50
+
+   :fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_image-secret.yaml </_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml>`
+
+Set up RBAC Authentication
+``````````````````````````
+
+.. note::
+
+   - If your cluster is not using `Role Based Access Control <https://kubernetes.io/docs/admin/authorization/rbac/>`_ , you can skip this step.
+
+Create a `cluster role <https://kubernetes.io/docs/admin/authorization/rbac/#role-and-clusterrole>`_ and `cluster role binding <https://kubernetes.io/docs/admin/authorization/rbac/#rolebinding-and-clusterrolebinding>`_.
+These resources allow the |kctlr| to monitor and update the resources it manages.
+
+You can restrict the permissions granted in the cluster role as needed for your deployment.
+Those shown below are the supported permission set.
+
+
+.. literalinclude:: /_static/config_examples/f5-k8s-sample-rbac.yaml
    :linenos:
+   :caption: Example ``ClusterRole`` and ``ClusterRoleBinding``
 
-
-:fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_image-secret.yaml </_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml>`
-
-.. _install-kctlr-openshift:
-
-OpenShift Origin
-````````````````
-
-Define an OpenShift Deployment using valid JSON or YAML.
-
-.. important::
-
-    OpenShift deployments must use the following required configuration parameters:
-
-    - ``pool-member-type=cluster``
-    - ``openshift-sdn-name=</BIG-IP-partition/BIG-IP-vxlan-tunnel>``
-
-.. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml
-    :linenos:
-
-:fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_openshift-sdn.yaml </_static/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml>`
-
+:fonticon:`fa fa-download` :download:`f5-k8s-sample-rbac.yaml </_static/config_examples/f5-k8s-sample-rbac.yaml>`
 
 Upload the Deployment
 ---------------------
 
-Upload the Deployment to the Kubernetes or OpenShift API server with the ``kubectl create`` command.
+Upload the Deployment, Cluster Role, and Cluster Role Binding to the Kubernetes API server using ``kubectl apply``.
+Be sure to create all resources in the ``kube-system`` namespace.
 
-.. code-block:: bash
+.. code-block:: console
 
-   user@k8s-master:~$ kubectl create -f k8s-bigip-ctlr_image-secret.yaml --namespace=kube-system
-   deployment "k8s-bigip-ctlr" created
+   user@k8s-master:~$ kubectl apply -f f5-k8s-bigip-ctlr_image-secret.yaml --namespace=kube-system
+   user@k8s-master:~$ kubectl apply -f f5-k8s-sample-rbac.yaml --namespace=kube-system
 
 
 Verify creation
@@ -85,7 +91,7 @@ Verify creation
 When you create a Deployment, a `ReplicaSet`_ and `Pod`_ (s) launch automatically.
 Use ``kubectl`` to verify all of the objects launched successfully.
 
-.. code-block:: bash
+.. code-block:: console
    :emphasize-lines: 3, 7, 11
 
    user@k8s-master:~$ kubectl get deployments --namespace=kube-system
@@ -109,5 +115,6 @@ Use ``kubectl`` to verify all of the objects launched successfully.
 
 .. _ReplicaSet: https://kubernetes.io/docs/user-guide/replicasets/
 .. _Pod: https://kubernetes.io/docs/user-guide/pods/
+.. _ServiceAccount: https://kubernetes.io/docs/admin/service-accounts-admin/
 .. _Create a new partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-implementations-12-1-0/29.html
 .. _Create a Kubernetes Secret containing your Docker login credentials: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
