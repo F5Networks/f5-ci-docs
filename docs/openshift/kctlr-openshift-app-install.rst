@@ -7,8 +7,7 @@ Install the |kctlr-long| in OpenShift Origin
 
    We tested this documentation with:
 
-   - ``kubernetes-v1.4.0 on CentOS 7.2.1511``
-   - ``OpenShift v1.4.1``
+   - ``OpenShift v1.4.1 on CentOS 7.2.1511``
    - ``k8s-bigip-ctlr v1.1.0``
    - ``k8s-bigip-ctlr v1.0.0``
 
@@ -35,6 +34,10 @@ Initial Setup
 #. :ref:`Add a Kubernetes Secret <k8s-add-secret>` containing your BIG-IP login credentials to your Kubernetes master node.
 
 #. `Create a Kubernetes Secret containing your Docker login credentials`_ (required if you need to pull the container image from a private Docker registry).
+
+.. important::
+
+   You should create all |kctlr| objects in the ``kube-system`` `namespace`_, unless otherwise specified in the deployment instructions.
 
 .. _k8s-openshift-serviceaccount:
 
@@ -78,10 +81,6 @@ Set up RBAC Authentication for the |kctlr|
 
 Create a Deployment
 -------------------
-
-.. important::
-
-   You should create all |kctlr| objects in the ``kube-system`` `namespace`_, unless otherwise specified in the deployment instructions.
 
 Define an OpenShift Deployment using valid JSON or YAML.
 

@@ -69,8 +69,8 @@ The deployment example below also creates a `ServiceAccount`_ for the controller
    :fonticon:`fa fa-download` :download:`f5-k8s-sample-rbac.yaml </_static/config_examples/f5-k8s-sample-rbac.yaml>`
 
 
-Update the Kubernetes API Server
---------------------------------
+Upload the Deployment
+---------------------
 
 Upload the Deployment, Cluster Role, and Cluster Role Binding to the Kubernetes API server using ``kubectl apply``.
 Be sure to create all resources in the ``kube-system`` namespace.
