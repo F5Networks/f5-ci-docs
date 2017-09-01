@@ -131,47 +131,12 @@ Assign an OpenShift overlay address to the BIG-IP device
 
 .. [#ossdn] https://docs.openshift.org/latest/architecture/additional_concepts/sdn.html#sdn-design-on-masters
 
-.. _k8s-openshift-serviceaccount:
-
-Create an OpenShift service account and policy
-----------------------------------------------
-
-#. Create a serviceaccount for the |kctlr|.
-
-   .. code-block:: console
-
-      user@openshift:~$ oc create serviceaccount bigip-ctlr -n default
-      serviceaccount "bigip-ctlr" created
-
-#. Create a valid clusterrole.
-
-   .. code-block:: console
-
-      user@openshift:~$ oc create -f f5-kctlr-openshift-clusterrole.yaml
-      clusterrole "system:bigip-ctlr" created
-
-   .. literalinclude:: /_static/config_examples/f5-kctlr-openshift-clusterrole.yaml
-      :linenos:
-
-   :fonticon:`fa fa-download` :download:`f5-kctlr-openshift-clusterrole.yaml </_static/config_examples/f5-kctlr-openshift-clusterrole.yaml>`
-
-#. Create a valid clusterrole.
-
-   .. code-block:: console
-
-      user@openshift:~$ oc create -f f5-kctlr-openshift-clusterrole-binding.yaml
-      clusterrolebinding "bigip-ctlr-role" created
-
-   .. literalinclude:: /_static/config_examples/f5-kctlr-openshift-clusterrole-binding.yaml
-       :linenos:
-
-   :fonticon:`fa fa-download` :download:`f5-kctlr-openshift-clusterrole-binding.yaml </_static/config_examples/f5-kctlr-openshift-clusterrole-binding.yaml>`
 
 Next Steps
 ----------
 
-- :ref:`Install the F5 BIG-IP Controller for Kubernetes <install-kctlr>`
-- :ref:`Configure the F5 BIG-IP Controller for Kubernetes for OpenShift <kctlr-configure-openshift>`
+- :ref:`Install the F5 BIG-IP Controller in Openshift <install-kctlr-openshift>`
+- :ref:`Configure the F5 BIG-IP Controller for use in OpenShift <kctlr-configure-openshift>`
 
 .. _OpenShift: https://www.openshift.org/
 .. _Create an OpenShift service account: https://docs.openshift.org/latest/admin_guide/service_accounts.html

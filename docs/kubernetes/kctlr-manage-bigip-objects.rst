@@ -7,7 +7,9 @@ Manage BIG-IP LTM objects in Kubernetes
 
    We tested this documentation with:
 
+   - ``kubernetes-v1.6.4_ubuntu-16.4.2``
    - ``kubernetes-v1.4.8_coreos.0``
+   - ``k8s-bigip-ctlr v1.1.0``
    - ``k8s-bigip-ctlr v1.0.0``
 
 
