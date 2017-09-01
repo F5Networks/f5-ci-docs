@@ -21,14 +21,13 @@ The Deployment creates a `ReplicaSet`_ that, in turn, launches a `Pod`_ running 
    **If you are using standard Kubernetes**, see :ref:`Install the BIG-IP Controller for Kubernetes <install-kctlr>`.
 
 .. _openshift initial setup:
-.. _openshift bigip setup:
 
 Initial Setup
 -------------
 
 #. :ref:`Add your BIG-IP device to the OpenShift Cluster <bigip-openshift-setup>`.
 
-#. `Create a new partition`_ for Kubernetes on your BIG-IP.
+#. `Create a new partition`_ for Kubernetes on your BIG-IP system.
    The |kctlr| can not manage objects in the ``/Common`` partition.
 
 #. :ref:`Add a Kubernetes Secret <k8s-add-secret>` containing your BIG-IP login credentials to your Kubernetes master node.
@@ -99,9 +98,10 @@ Define an OpenShift Deployment using valid JSON or YAML.
 Upload the Deployment
 ---------------------
 
-Upload the Deployment to the OpenShift API server with the ``oc apply`` command.
+Upload the Deployment to the OpenShift API server using ``oc apply``.
+Be sure to create all resources in the ``kube-system`` namespace.
 
-.. code-block:: bash
+.. code-block:: console
 
    user@openshift-master:~$ oc apply -f f5-k8s-bigip-ctlr_openshift-sdn.yaml --namespace=kube-system
    deployment "k8s-bigip-ctlr" created
@@ -113,7 +113,7 @@ Verify creation
 When you create a Deployment, a `ReplicaSet`_ and `Pod`_ (s) launch automatically.
 You can use ``oc get`` to verify all of the objects launched successfully.
 
-.. code-block:: bash
+.. code-block:: console
    :emphasize-lines: 3, 7, 11
 
    user@k8s-master:~$ oc get deployments --namespace=kube-system

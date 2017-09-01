@@ -24,10 +24,10 @@ The Deployment creates a `ReplicaSet`_ that, in turn, launches a `Pod`_ running 
 Initial Setup
 -------------
 
-#. :ref:`Add a Kubernetes Secret <k8s-add-secret>` containing your BIG-IP login credentials to your Kubernetes master node.
-
-#. `Create a new partition`_ for Kubernetes on your BIG-IP.
+#. `Create a new partition`_ for Kubernetes on your BIG-IP system.
    The |kctlr| can not manage objects in the ``/Common`` partition.
+
+#. :ref:`Add a Kubernetes Secret <k8s-add-secret>` containing your BIG-IP login credentials to your Kubernetes master node.
 
 #. `Create a Kubernetes Secret containing your Docker login credentials`_ (required if you need to pull the container image from a private Docker registry).
 
@@ -53,21 +53,25 @@ The deployment example below also creates a `ServiceAccount`_ for the controller
 
    :fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_image-secret.yaml </_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml>`
 
-#. Create a `cluster role <https://kubernetes.io/docs/admin/authorization/rbac/#role-and-clusterrole>`_ and `cluster role binding <https://kubernetes.io/docs/admin/authorization/rbac/#rolebinding-and-clusterrolebinding>`_.
-   The required by the |kctlr| to monitor and update the resources it manages.
+Set up RBAC Authentication
+``````````````````````````
 
-   .. note::
+.. note::
 
-      - If your cluster is not using `Role Based Access Control <https://kubernetes.io/docs/admin/authorization/rbac/>`_ the cluster role and cluster role binding are not needed.
-      - You can restrict the permissions granted in the cluster role as needed for your deployment; those shown below are the supported set.
+   - If your cluster is not using `Role Based Access Control <https://kubernetes.io/docs/admin/authorization/rbac/>`_ , you can skip this step.
+
+Create a `cluster role <https://kubernetes.io/docs/admin/authorization/rbac/#role-and-clusterrole>`_ and `cluster role binding <https://kubernetes.io/docs/admin/authorization/rbac/#rolebinding-and-clusterrolebinding>`_.
+These resources allow the |kctlr| to monitor and update the resources it manages.
+
+You can restrict the permissions granted in the cluster role as needed for your deployment.
+Those shown below are the supported permission set.
 
 
-   .. literalinclude:: /_static/config_examples/f5-k8s-sample-rbac.yaml
-      :linenos:
-      :caption: Example ``ClusterRole`` and ``ClusterRoleBinding``
+.. literalinclude:: /_static/config_examples/f5-k8s-sample-rbac.yaml
+   :linenos:
+   :caption: Example ``ClusterRole`` and ``ClusterRoleBinding``
 
-   :fonticon:`fa fa-download` :download:`f5-k8s-sample-rbac.yaml </_static/config_examples/f5-k8s-sample-rbac.yaml>`
-
+:fonticon:`fa fa-download` :download:`f5-k8s-sample-rbac.yaml </_static/config_examples/f5-k8s-sample-rbac.yaml>`
 
 Upload the Deployment
 ---------------------
