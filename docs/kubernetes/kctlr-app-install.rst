@@ -44,7 +44,7 @@ Create a Deployment
 
 #. Define a `Kubernetes Deployment`_ using valid JSON or YAML.
 
-The deployment example below also creates a `ServiceAccount`_ for the controller to use.
+   The deployment example below also creates a `ServiceAccount`_ for the controller to use.
 
    .. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
       :linenos:

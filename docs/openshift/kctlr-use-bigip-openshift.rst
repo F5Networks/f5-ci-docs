@@ -129,7 +129,7 @@ Assign an OpenShift overlay address to the BIG-IP device
 
        admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ list net self 10.129.2.10/14
 
-.. [#ossdn] https://docs.openshift.org/latest/architecture/additional_concepts/sdn.html#sdn-design-on-masters
+.. [#ossdn] https://docs.openshift.org/latest/architecture/networking/sdn.html#sdn-design-on-masters
 
 
 Next Steps

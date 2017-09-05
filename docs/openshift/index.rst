@@ -64,4 +64,4 @@ Related
 .. _OpenShift service account: https://docs.openshift.org/latest/admin_guide/service_accounts.html
 .. _Authorization Policy: https://docs.openshift.org/latest/admin_guide/manage_authorization_policy.html
 .. _OpenShift Origin CLI: https://docs.openshift.org/latest/cli_reference/index.html
-.. _OpenShift SDN: https://docs.openshift.org/latest/architecture/additional_concepts/sdn.html
+.. _OpenShift SDN: https://docs.openshift.org/latest/architecture/networking/sdn.html
