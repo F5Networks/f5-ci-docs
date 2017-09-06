@@ -13,14 +13,19 @@ Set up ephemeral data storage for the Application Services Proxy
 The |asp| (ASP) shares non-persistent, or ephemeral, data across instances.
 It does so by way of a distributed, secure, key-value store called the Ephemeral Store.
 
-You can set up the ASP ephemeral store *before* you `deploy the ASP in Kubernetes <install-asp-k8s>`_,  or add the ephemeral store configurations to an existing ASP.
-
 .. attention::
 
    The ASP ephemeral store relies on a Kubernetes alpha resource (`PetSet`_).
    You must have Alpha resources enabled on the Kubernetes API server in order to use the ASP.
 
    See the `Kubernetes API overview <https://kubernetes.io/docs/concepts/overview/kubernetes-api/>`_ for more information.
+
+.. important::
+
+   The ASP does not watch the Kubernetes API for changes to ConfigMaps.
+   You must set up the ASP ephemeral store *before* you `deploy the ASP in Kubernetes <install-asp-k8s>`_.
+   If you have a previous version of the ASP running, you will need to kill all of its Pods and launch new ones using v1.1.0.
+
 
 Set up authentication to the ephemeral store
 --------------------------------------------
@@ -42,14 +47,14 @@ Create Secrets for the certificates
 ```````````````````````````````````
 
 Encrypt the certificates as Kubernetes Secrets.
-
 The example below creates three (3) Secrets.
-The first Secret is for the ephemeral store Pods created by the PetSet.
-The second and third Secrets allow the :ref:`ASP Daemonset <deploy-asp>` to access data in the ephemeral store.
+
+- The first Secret is for the ephemeral store Pods created by the PetSet.
+- The second and third Secrets allow the :ref:`ASP Daemonset <deploy-asp>` to access data in the ephemeral store.
 
 .. note::
 
-   In the third Secret, use just the root certificate, without the key.
+   In the third Secret, use just the root certificate, **without the key**.
    Be sure to specify the namespace the ASP runs in.
 
 
@@ -68,8 +73,8 @@ To deploy the ephemeral store, you'll need to:
 - Specify configurations in a `ConfigMap`_.
 - Create two (2) `Service`_ definitions:
 
-  - one (1) for the ephemeral store,
-  - one (1) to manage the `PetSet`_.
+  - one (1) headless ephemeral store used for DNS resolution,
+  - one (1) that exposes the ephemeral store Pods.
 
 - Create a `PetSet`_ to manage the ephemeral store Pods.
 
@@ -105,7 +110,7 @@ Specify the ASP ephemeral store configurations in a ConfigMap
 
    .. note::
 
-      The first Service - "ephemeral-store-info" - is the PetSet's “governing service”.
+      The first Service - "ephemeral-store-info" - is the headless service used for DNS resolution.
 
 #. Create a `PetSet`_.
 
@@ -144,18 +149,19 @@ Specify the ASP ephemeral store configurations in a ConfigMap
 Learn More
 ----------
 
-The ephemeral store is a distributed, secure, key-value store used by ASP instances to store and quickly share non-persistent data.
+The ephemeral store is a distributed, in-memory, secure, key-value store used by ASP instances.
 For example, if an :code:`asp` instance learns that a pool member it monitors is unhealthy, it needs to share that information with other instances monitoring the same pool.
 The :code:`asp` instance adds the information to the ephemeral store, so all other :code:`asp` instances immediately have access to the pool's updated health status.
-When new data added to the ephemeral store marks the pool member as healthy, the stale information gets deleted.
 
-The ASP also reports session data to the ephemeral store.
-Sharing client session information across servers means, for example, that if multiple servers try to establish a session with a client, one will succeed and the others will fail.
+.. important::
+
+   Data in the ephemeral store is **intentionally not persisted**.
+   It may be lost if enough ephemeral store pods fail simultaneously.
 
 Next Steps
 ----------
 
-Once you've set up the ephemeral store, you can :ref:`install and deploy the ASP <install-asp-k8s>`.
+Once you've set up the ephemeral store, :ref:`install and deploy the ASP <install-asp-k8s>`.
 
 .. rubric:: Footnotes
 .. [#k8smemory] See `Set Pod CPU & Memory Limit <https://kubernetes.io/docs/tasks/administer-cluster/cpu-memory-limit/>`_ :fonticon:`fa fa-external-link`.

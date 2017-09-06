@@ -12,7 +12,7 @@
 
    .. attention::
 
-      - The common name (``/CN``) should match a username defined in the ``ephemeral store.user`` configuration parameter. [#ephemstoreconfig]_
+      - The common name (``/CN``) provided should match a username defined in the "ephemeral store user" parameter.
       - Use the Root Certificate to sign the user certificates (line 3 in the example below).
 
    \
@@ -22,6 +22,3 @@
       openssl genrsa -out myuser.key 2048
       openssl req -new -key myuser.key -out myuser.csr -subj "/CN=myuser"
       openssl x509 -req -days 365 -in myuser.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out myuser.crt
-
-
-.. [#ephemstoreconfig] See the `ASP product documentation`_ for a full list of ASP ephemeral store configuration parameters.
