@@ -50,7 +50,7 @@ Encrypt the certificates as Kubernetes Secrets.
 The example below creates three (3) Secrets.
 
 - The first Secret is for the ephemeral store Pods created by the PetSet.
-- The second and third Secrets allow the :ref:`ASP Daemonset <deploy-asp>` to access data in the ephemeral store.
+- The second and third Secrets allow the :ref:`ASP Daemonset <asp-deploy-k8s>` to access data in the ephemeral store.
 
 .. note::
 
@@ -156,7 +156,7 @@ The :code:`asp` instance adds the information to the ephemeral store, so all oth
 .. important::
 
    Data in the ephemeral store is **intentionally not persisted**.
-   It may be lost if enough ephemeral store pods fail simultaneously.
+   Enough ephemeral store pods failing simultaneously can result in data loss.
 
 Next Steps
 ----------
