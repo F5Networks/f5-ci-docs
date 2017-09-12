@@ -5,6 +5,8 @@
    :pair: BIG-IP Controller, mode
    :single: concept
 
+.. _kctlr modes:
+
 Nodeport mode vs Cluster mode
 =============================
 
@@ -19,20 +21,24 @@ Nodeport mode
 -------------
 
 :code:`Nodeport` mode is the default mode of operation for the |kctlr|.
-From a configuration standpoint, it's easier to set up and more compatible with the `Kubernetes Cluster`_, as it doesn't require you to add your BIG-IP system to the Kubernetes `Cluster Network`_.
+From a configuration standpoint, it's easier to set up since it doesn't matter what Kubernetes `Cluster Network`_ you use.
 
-As shown in the diagram below, :code:`nodeport` mode uses 2-tier load balancing: the |kctlr| load balances requests to Nodes, which in turn load balance requests to Pods.
+As shown in the diagram below, :code:`nodeport` mode uses 2-tier load balancing:
+
+#. The |kctlr| load balances requests to Nodes.
+#. Nodes load balance requests to Pods.
 
 .. figure:: /_static/media/k8s_nodeport.png
 
 
 **Important limitations to consider:**
 
-- The `Kubernetes Services`_ you want to manage must use :code:`type: NodePort`.
-- You can't use the full BIG-IP feature set (L7 services like persistence are not available).
-- Introduces extra latency.
-- BIG-IP system can't load balance directly to Pods.
-- |kctlr| has limited visibility into Pod health.
+- The Kubernetes Services you want to manage must use :code:`type: NodePort`. [#servicetype]_
+- The BIG-IP system can't load balance directly to Pods, which means:
+
+  - some BIG-IP services, like L7 persistence, won't behave as expected;
+  - there's extra latency; and
+  - |kctlr| has limited visibility into Pod health.
 
 If you want to use NodePort mode, continue on to :ref:`Install the BIG-IP Controller in Kubernetes <install-kctlr>`.
 
@@ -45,20 +51,23 @@ You should use :code:`Cluster` mode if you intend to integrate your BIG-IP devic
 While there are additional networking configurations to make, there are distinct benefits:
 
 - You can use any type you like for your Kubernetes Services.
-- You get the full BIG-IP ADC functionality, including L7 persistence.
-- BIG-IP system can load balance directly to any Pod in the Cluster.
-- |kctlr| has full visibility into Pod health, via the Kubernetes API.
+- BIG-IP system can load balance directly to any Pod in the Cluster, which means:
 
+  - BIG-IP services - including L7 persistence - function as expected, and
+  - the |kctlr| has full visibility into Pod health via the Kubernetes API.
 
 .. figure:: /_static/media/k8s_cluster.png
 
 .. _k8s-cluster-networks:
 
 If you want to run |kctlr| in cluster mode, continue on to :ref:`Network considerations`.
-The following guides provide relevant information and instructions:
 
-- The Kubernetes `Cluster Networking`_ Administration Guide -- provides information about Kubernetes Cluster Network types.
-- The `BIG-IP TMOS: ​Tunneling and IPsec <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-tmos-tunnels-ipsec-13-0-0/2.html>`_ Guide -- provides instructions for setting up tunnels on your BIG-IP device.
+.. seealso::
+
+   The following guides provide relevant information and instructions:
+
+   - The Kubernetes `Cluster Networking`_ Administration Guide -- provides information about Kubernetes Cluster Network types.
+   - The `BIG-IP TMOS: ​Tunneling and IPsec <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-tmos-tunnels-ipsec-13-0-0/2.html>`_ Guide -- provides instructions for setting up tunnels on your BIG-IP device.
 
 .. _network considerations:
 
@@ -121,8 +130,8 @@ What's Next
 - `Configuration options for the BIG-IP Controller </products/connectors/k8s-bigip-ctlr/latest/#controller-configuration-parameters>`_
 
 .. rubric:: Footnotes
-.. [#servicetype] See `Publishing Services - Service Types <https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services---service-types>`_ in the Kubernetes documentation.
-.. [#originsdn] See the `OpenShift Origin SDN`_ documentation for more information.
+.. [#clusternet] OpenShift users must run the |kctlr| in cluster mode.
+.. [#servicetype] See `Publishing Services - Service Types <https://kubernetes.io/docs/concepts/services-networking/service>`_ in the Kubernetes documentation.
 .. [#ansible] See the `f5-ansible repo on GitHub <https://github.com/F5Networks/f5-ansible>`_ for Ansible modules that can manipulate F5 products.
 .. [#encap] Be sure to use the correct encapsulation format for your network.
 
@@ -136,5 +145,3 @@ What's Next
 .. _BIG-IP TMOS Routing Administration: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-13-0-0.html
 .. _support several overlay networks: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-tmos-tunnels-ipsec-13-0-0/1.html
 .. _Add an FDB entry and ARP record: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-13-0-0/11.html
-
-.. [#clusternet] OpenShift users must run the |kctlr| in cluster mode.

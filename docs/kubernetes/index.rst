@@ -100,14 +100,14 @@ The |kctlr| can:
 Key Kubernetes Concepts
 -----------------------
 
-Cluster Networks
-````````````````
+Cluster Network
+```````````````
 
 The basic assumption of the Kubernetes `Cluster Network`_ is that pods can communicate with other pods, regardless of what host they're on.
 You have a few different options when connecting your BIG-IP device (platform or Virtual Edition) to a Kubernetes cluster network and the |kctlr|.
 How (or whether) you choose to integrate your BIG-IP device into the cluster network -- and the framework you use -- impacts how the BIG-IP system forwards traffic to your Kubernetes Services.
 
-See :ref:`BIG-IP system integrations for Kubernetes cluster networks <k8s-cluster-networks>` for more information.
+See :ref:`Nodeport mode vs Cluster mode <kctlr modes>` for more information.
 
 .. _k8s-namespaces:
 
@@ -121,9 +121,9 @@ The |kctlr-long| can manage all namespaces; a single namespace; or pretty much a
 
 When :ref:`creating a BIG-IP front-end virtual server <kctlr-create-vs>` for a `Kubernetes Service`_, you can:
 
-- specify a single namespace to watch (this is the only supported mode prior to |kctlr| v1.1.0-beta.1);
+- specify a single namespace to watch (this is the only supported mode prior to k8s-bigip-ctlr v1.1.0);
 - specify multiple namespaces (pass in each as a separate flag); or
-- don't specify any namespace (meaning you want to watch all namespaces; **this is the default setting** as of |kctlr| v1.1.0-beta.1).
+- omit the namespace flag (meaning you want to watch all namespaces); **this is the default setting** as of k8s-bigip-ctlr v1.1.0.
 
 .. _k8s-f5-resources:
 
@@ -170,21 +170,20 @@ You can also define health monitors for your BIG-IP LTM virtual server(s) and po
 Kubernetes and OpenShift
 ------------------------
 
-Find out more about using the :ref:`BIG-IP Controller for Kubernetes in OpenShift <openshift-home>`.
+Find out more about :ref:`using the BIG-IP Controller for Kubernetes in OpenShift <openshift-home>`.
 
 Node Health
 -----------
 
-When the |kctlr-long| runs in :ref:`nodeport mode` -- the default setting -- the |kctlr| doesn't know when Kubernetes nodes are down.
-This means that all pool members on a down Kubernetes Node remain active even if the Node itself is unavailable.
+When the |kctlr-long| runs in :ref:`nodeport mode` -- the default setting -- the |kctlr| doesn't have visibility into the health of Kubernetes Pods.
+It knows when Nodes are down and when all Pods are down.
+Because of this limited visibility, a pool member may remain active on the BIG-IP system even if the corresponding Pod isn't available.
 
-.. hint::
+When running in :ref:`cluster mode`, the |kctlr| has visibility into the health of individual Pods.
 
-   If you're using ``nodeport`` mode, :ref:`add a BIG-IP health monitor <k8s-config-bigip-health-monitor>` to the virtual server to ensure the Node is correctly marked as unhealthy if it's rebooting or otherwise unavailable.
+.. tip::
 
-When using :ref:`cluster mode` with a VXLAN integration, the |kctlr| uses information from the Kubernetes NodeList to create/update FDB (Forwarding DataBase) entries on the BIG-IP system.
-This ensures the BIG-IP system only forwards requests to Nodes reported as healthy.
-The BIG-IP device won't attempt to route traffic to an unresponsive Node, even if the Node remains in the NodeList.
+   In either mode of operation, it's good practice to :ref:`add a BIG-IP health monitor <k8s-config-bigip-health-monitor>` to the virtual server to ensure the BIG-IP system knows when resources go down.
 
 
 Related
@@ -194,7 +193,7 @@ Related
    :glob:
 
    kctlr*
-   ../openshift/*
+   ../openshift/index
    asp*
    k8s-bigip-ctlr docs <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
    f5-kube-proxy docs <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
