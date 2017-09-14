@@ -22,6 +22,7 @@ Nodeport mode
 
 Nodeport mode is the default mode of operation for the |kctlr|.
 From a configuration standpoint, it's easier to set up since it doesn't matter what Kubernetes `Cluster Network`_ you use.
+In addition, NodePort mode doesn't have any specific BIG-IP licensing requirements.
 
 As shown in the diagram below, :code:`nodeport` mode uses 2-tier load balancing:
 
@@ -47,8 +48,9 @@ If you want to use NodePort mode, continue on to :ref:`Install the BIG-IP Contro
 Cluster mode
 ------------
 
-You should use :code:`Cluster` mode if you intend to integrate your BIG-IP device into the Kubernetes cluster network. [#clusternet]_
-While there are additional networking configurations to make, there are distinct benefits:
+You should use :code:`cluster` mode if you intend to integrate your BIG-IP device into the Kubernetes cluster network. [#clusternet]_
+Cluster mode requires a `Better or Best license`_ that includes SDN services and advanced routing.
+While there are additional networking configurations to make, cluster mode has distinct benefits over nodeport mode:
 
 - You can use any type you like for your Kubernetes Services.
 - BIG-IP system can load balance directly to any Pod in the Cluster, which means:

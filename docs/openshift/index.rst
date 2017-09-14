@@ -21,8 +21,8 @@ OpenShift Prerequisites
 
 The prerequisites below are in addition to the F5 Integration for Kubernetes' :ref:`general prerequisites <k8s-prereqs>`.
 
-- Integration with `OpenShift SDN`_ requires a BIG-IP `Better or Best license`_ with SDN services.
--
+- Integration with `OpenShift SDN`_ requires a BIG-IP `Better or Best license`_, or a Good license with the optional SDN services added.
+
 
 Initial Setup
 `````````````
@@ -70,4 +70,3 @@ Related
 .. _Authorization Policy: https://docs.openshift.org/latest/admin_guide/manage_authorization_policy.html
 .. _OpenShift Origin CLI: https://docs.openshift.org/latest/cli_reference/index.html
 .. _OpenShift SDN: https://docs.openshift.org/latest/architecture/networking/sdn.html
-.. _Better or Best license: https://f5.com/products/how-to-buy/simplified-licensing
