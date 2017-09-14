@@ -14,16 +14,22 @@ Attach an ASP to a Kubernetes Service
    - `kubernetes hello-world`_ service, with :ref:`ASP annotation <k8s-service-annotate>`
 
 
-The |asp| (ASP) watches Kubernetes `Service`_ definitions for a set of annotations defining virtual server objects.
- The annotation should include a JSON blob defining of a set of `ASP configuration parameters </products/asp/latest/index.html#configuration-parameters>`_.
- When you add the ASP annotation to a Kubernetes `Service`_, the ASP creates a virtual server for that Service.
+The |asp| (ASP) watches the Kubernetes API for `Services`_ that contain an ASP virtual server `Annotation`_.
+The `Annotation`_ consists of a specially-formatted JSON blob defining the `ASP virtual server configuration parameters`_.
+When you add the ASP annotation to a Kubernetes `Service`_, the ASP creates a virtual server for the Service with the desired configurations.
 
 .. _k8s-service-annotate:
 
 Add the ASP annotation to the Service
 -------------------------------------
 
-To attach an ASP to a Kubernetes `Service`_, add an Annotation containing the ASP configurations.
+To attach an ASP to a Kubernetes `Service`_, add an `Annotation`_ containing the ASP configurations. You can use either the :code:`annotate` CLI command or edit the Service definition.
+
+.. tip::
+
+   The :code:`annotate` command is better suited to adding shorter annotations, like that shown in the example below.
+   If you intend to add event handlers, health checks, and/or flags, you may want to edit the Service definition directly.
+
 
 Use ``kubectl annotate``
 ````````````````````````
@@ -51,7 +57,6 @@ Edit the Service definition file, then upload the file to the Kubernetes API ser
 .. literalinclude:: /_static/config_examples/f5-asp-k8s-example-service.yaml
    :caption: Service definition with ASP annotation
    :linenos:
-   :lines: 1-13, 31-48
 
 :fonticon:`fa fa-download` :download:`f5-asp-k8s-example-service.yaml </_static/config_examples/f5-asp-k8s-example-service.yaml>`
 
@@ -61,12 +66,6 @@ Edit the Service definition file, then upload the file to the Kubernetes API ser
    $ kubectl replace -f f5-asp-k8s-example-service.yaml
    service "myService" replaced
 
-\
-
-.. note::
-
-   - Remove any comments from the annotation section of the example configuration file *before* uploading it to Kubernetes.
-   - The downloadable example includes a health check section. If you want to attach an ASP instance to a Service *without* using health checks, **remove lines 14-30** from the example annotation.
 
 .. _k8s-health-checks:
 
@@ -83,9 +82,10 @@ To activate the ASP's health monitor:
       :caption: Service definition with ASP health checks
       :linenos:
 
+
    :fonticon:`fa fa-download` :download:`f5-asp-k8s-example-service.yaml </_static/config_examples/f5-asp-k8s-example-service.yaml>`
 
-#. Upload the edited definition to the Kubernetes API server.
+#. Upload the updated Service definition to the Kubernetes API server.
 
    .. code-block:: bash
 
@@ -102,12 +102,47 @@ To activate the ASP's health monitor:
 
    You can set up ASP health sharding when you :ref:`deploy the ASP <asp-deploy-k8s>`.
 
+.. _event-handlers-k8s:
+
+Add event handlers
+``````````````````
+
+You can set up `ASP event handlers`_ as part of the virtual server annotation.
+
+.. seealso::
+
+   - Learn about the `ASP event handlers`_.
+   - Learn about the `ASP Middleware API`_.
+
+Take the steps below to add event handlers to an ASP.
+
+#. Add the ``event-handlers`` JSON string to the Service definition.
+
+   .. important::
+
+      Be sure to format the JSON list as a string as shown in the example below.
+
+   \
+
+   .. literalinclude:: /_static/config_examples/f5-asp-k8s-example-service.yaml
+      :linenos:
+      :lines: 10-23
+      :emphasize-lines: 4, 8
+
+#. Upload the updated Service definition to the Kubernetes API server.
+
+   .. code-block:: bash
+
+     $ kubectl replace -f f5-asp-k8s-example-service.yaml
+     service "myService" replaced
+
 
 Next Steps
 ----------
 
-:ref:`Verify that the ASP handles traffic for the Service <k8s-asp-verify>`.
-
+- :ref:`Verify that the ASP handles traffic for the Service <k8s-asp-verify>`.
+- :ref:`Verify execution of event handlers <k8s-asp-event-handlers-verify>`.
 
 .. _kubernetes hello-world: https://kubernetes.io/docs/tutorials/stateless-application/expose-external-ip-address-service/
 .. _Service: https://kubernetes.io/docs/user-guide/services/
+.. _Annotation: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/

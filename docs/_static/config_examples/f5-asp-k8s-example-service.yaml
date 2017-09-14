@@ -3,15 +3,24 @@ kind: Service
 metadata:
   annotations:
     # provide the desired ASP config parameters as a JSON blob
+    # The JSON below provides examples for the ASP virtual server configuration
+    # parameters available in v1.1.0
     asp.f5.com/config: |
       {
         "ip-protocol": "http",
         "load-balancing-mode": "round-robin",
+        "event-handlers" : [
+          {
+            "http-request": "module.exports = (req, res, next) => {\n if (req.method === 'POST') {\n res.statusCode = 503;\n res.end('POST Method not supported');\n } else { \n next(); \n } \n}\n"
+          },
+          {
+            "http-response": "module.exports = (res, next) => { res.headers['x-my-bar'] = 'foo'; next(); }"
+          }
+        ],
         "flags" : {
           "x-forwarded-for": true,
           "x-served-by": true
         },
-        // Health checks are available as of ASP v1.1.0
         "health-monitor": {
           "health-checks": {
             "srv1-check": {
