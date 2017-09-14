@@ -96,7 +96,7 @@ rst_epilog = """
 .. |kctlr| replace:: BIG-IP Controller
 .. |mctlr-long| replace:: BIG-IP Controller for Marathon
 .. |mctlr| replace:: BIG-IP Controller
-.. |aspm-long| replace:: F5 ASP Controller for Marathon
+.. |aspm-long| replace:: ASP Controller for Marathon
 .. |aspm| replace:: ASP Controller
 .. _BIG-IP: https://f5.com/products/big-ip
 .. _BIG-IP System User Account Administration -> Administrative Partitions: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-12-0-0/3.html
@@ -163,6 +163,8 @@ rst_epilog = """
 .. _ASP health monitor: %(base_url)s/products/asp/latest/#health-monitors
 .. _ASP health check parameters: %(base_url)s/products/asp/latest/#health-check-types
 .. _ASP virtual server configuration parameters: %(base_url)s/products/asp/latest/#virtual-server
+.. _ASP event handlers: %(base_url)s/products/asp/latest/event-handlers.html
+.. _ASP Middleware API: %(base_url)s/products/asp/latest/middleware-api.html
 """% {
     'base_url': 'http://clouddocs.f5.com'
 }

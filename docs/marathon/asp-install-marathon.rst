@@ -11,8 +11,11 @@
 Install the |aspm-long|
 =======================
 
-The |aspm-long| is a Docker container that runs as a Marathon `Application`_.
-You can install it via the Marathon REST API or the `Marathon Web Interface`_.
+The |aspm-long| is a Docker container that runs as a Marathon `Application`_. You can install it via the Marathon REST API or the `Marathon Web Interface`_.
+
+The |aspm-long| dynamically deploys the |asp| (ASP) in `Apache Mesos Marathon`_ when it discovers a Marathon Application that has the ``f5-asp:enable`` label.
+
+When you launch the |aspm-long|, provide the global configuration parameter(s) you want the |aspm| to use when creating new ASP instances. You can :ref:`override the global configurations <marathon-asp-custom-config>` on a per-Application basis.
 
 Initial Setup
 -------------
@@ -31,10 +34,10 @@ Initial Setup
 
 .. _deploy-asp-marathon:
 
-Deploy the |aspm-long| using the Marathon REST API
---------------------------------------------------
+Deploy the |aspm-long|
+----------------------
 
-#. Create a JSON config file defining the default `Marathon ASP configuration labels </products/connectors/marathon-asp-ctlr/latest/index.html#configuration-parameters>`_.
+#. Define the default `Marathon ASP configuration labels </products/connectors/marathon-asp-ctlr/latest/index.html#configuration-parameters>`_ in a JSON file.
 
    .. tip::
 
@@ -55,10 +58,7 @@ Deploy the |aspm-long| using the Marathon REST API
 
       $ curl -X POST -H "Content-Type: application/json" http://<marathon-uri>:8080/v2/apps -d @f5-marathon-asp-ctlr.json
 
-Verify creation
----------------
-
-Send a GET request to the Marathon API server to verify successful creation of the |aspm| App.
+#. Send a GET request to the Marathon API server to verify successful creation of the |aspm| App.
 
 .. tip::
 
@@ -150,6 +150,11 @@ Send a GET request to the Marathon API server to verify successful creation of t
           "tasks": [...],
         }
       }
+
+What's Next
+-----------
+
+- Learn how to :ref:`launch an ASP instance <marathon-asp-deploy>` and :ref:`override the global configurations <marathon-asp-custom-config>`.
 
 .. rubric:: Footnotes
 .. [#aspreq] *Required as of* ``asp v1.1.0``.

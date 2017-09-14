@@ -131,7 +131,7 @@ You can define all of the required resources in a single YAML file.
 
       Run :code:`kubectl describe pods <pod_name>` to debug.
 
-\
+   \
 
    .. code-block:: bash
 

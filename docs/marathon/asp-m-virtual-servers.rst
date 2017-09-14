@@ -7,8 +7,8 @@
 
 .. _marathon-asp-deploy:
 
-Create an ASP for a Marathon Application
-========================================
+Launch an ASP instance for a Marathon Application
+=================================================
 
 The |aspm-long| launches |asp| instances automatically for Apps that have the ``ASP_ENABLE_LABEL`` value set to "enabled" (for example, ``f5-asp:enable``).
 
@@ -31,6 +31,7 @@ Add the label ``"f5-asp": "enable"`` to the App's service definition.
    - Edit the App definition
 
    .. literalinclude:: /_static/config_examples/app_asp-enabled-defaults.json
+      :language: javascript
       :linenos:
       :emphasize-lines: 22-25
 
@@ -41,6 +42,7 @@ Add the label ``"f5-asp": "enable"`` to the App's service definition.
 
       $ curl -X PUT -H "Content-Type: application/json" http://10.190.25.75:8080/v2/apps/basic-0 -d @app_asp-enabled-defaults.json
 
+.. _marathon-asp-custom-config:
 
 Launch an ASP instance with custom configurations
 -------------------------------------------------
@@ -61,8 +63,10 @@ Add the label ``"f5-asp": "enable"`` to the App's service definition.
    - Add your desired `override labels </products/connectors/marathon-asp-ctlr/latest/index.html#configuration-parameters>`_ to the App's service definition.
 
      .. literalinclude:: /_static/config_examples/app_asp-enabled-custom.json
-        :emphasize-lines: 6-8, 24-34
+        :language: javascript
         :linenos:
+        :emphasize-lines: 27-31
+
 
    - Send a PUT request to the Marathon API server to update the App definition.
 
@@ -70,6 +74,39 @@ Add the label ``"f5-asp": "enable"`` to the App's service definition.
 
         $ curl -X PUT -H "Content-Type: application/json" http://<marathon-url>:8080/v2/apps -d @app_asp-enabled-custom.json
 
+.. _event-handlers-marathon:
+
+Add Event Handlers
+``````````````````
+
+You can set up `ASP event handlers`_ as part of the virtual server configuration.
+
+.. seealso::
+
+   - Learn about the `ASP event handlers`_.
+   - Learn about the `ASP Middleware API`_.
+
+Take the steps below to add event handlers to an ASP.
+
+#. Define the ``ASP_VS_EVENT_HANDLERS`` label with a JSON string.
+
+   .. important::
+
+      Convert the JSON list to a string, like that shown in the example.
+
+   \
+
+   .. literalinclude:: /_static/config_examples/app_asp-enabled-custom.json
+      :language: javascript
+      :lines: 25-36
+      :linenos:
+      :emphasize-lines: 6
+
+#. Deploy the updated service definition to the Marathon API server.
+
+   .. code-block:: bash
+
+      $ curl -X PUT -H "Content-Type: application/json" http://<marathon-url>:8080/v2/apps -d @app_asp-enabled-custom.json
 
 
 
