@@ -1,9 +1,9 @@
 .. index::
-   :pair: BIG-IP Controller, Kubernetes
-   :pair: BIG-IP Controller, OpenShift
-   :pair: BIG-IP Controller, setup
-   :pair: BIG-IP Controller, mode
-   :single: concept
+   single: BIG-IP Controller; Kubernetes
+   single: BIG-IP Controller; OpenShift
+   single: BIG-IP Controller; setup
+   single: BIG-IP Controller; mode
+   single: concept
 
 .. _kctlr modes:
 
@@ -20,7 +20,7 @@ In brief: The :code:`pool-member-type` setting determines what mode the Controll
 Nodeport mode
 -------------
 
-:code:`Nodeport` mode is the default mode of operation for the |kctlr|.
+Nodeport mode is the default mode of operation for the |kctlr|.
 From a configuration standpoint, it's easier to set up since it doesn't matter what Kubernetes `Cluster Network`_ you use.
 
 As shown in the diagram below, :code:`nodeport` mode uses 2-tier load balancing:
@@ -86,10 +86,12 @@ The |kctlr| **always manages BIG-IP system configurations for Pods automatically
 For Nodes and Clusters, you may have to perform some actions manually (or automate them using a different system, like Ansible). [#ansible]_
 Take these into consideration if you're deciding how to set up your cluster network, or deciding how to integrate the |kctlr| and a BIG-IP device into an existing cluster.
 
-.. tip::
+.. important::
 
    BIG-IP platforms `support several overlay networks`_, like VXLAN, NVGRE, and IPIP.
    The manual steps noted in the table apply when integrating a BIG-IP device into any overlay network, not just the examples shown here.
+
+   **The examples below are for instructional purposes only.**
 
 
 .. table::
@@ -99,15 +101,16 @@ Take these into consideration if you're deciding how to set up your cluster netw
    +=======================+====================================================================+====================+=====================================================+
    | **Layer 2 networks**                                                                                                                                                  |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
-   | Openshift SDN         | :ref:`Add a new subnet to OpenShift <k8s-openshift-hostsubnet>` for the BIG-IP device.  | None. The |kctlr| automatically detects OpenShift   |
-   |                       |                                                                                         | routes and makes the necessary BIG-IP system        |
+   | Openshift SDN         | :ref:`Create a new OpenShift HostSubnet <k8s-openshift-hostsubnet>` for the BIG-IP      | None. The |kctlr| automatically detects OpenShift   |
+   |                       | self IP.                                                                                | routes and makes the necessary BIG-IP system        |
+   |                       |                                                                                         |                                                     |
    |                       | :ref:`Add a new VXLAN network to the BIG-IP system <k8s-openshift-vxlan-setup>`         | configurations.                                     |
    |                       | that corresponds to the subnet. [#encap]_                                               |                                                     |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
-   | Flannel VXLAN         | Allocate an IP address from Flannel for the BIG-IP device.                              | `Add an FDB entry and ARP record`_ for each node.   |
+   | Flannel VXLAN         | Allocate an overlay IP address from Flannel for the BIG-IP self IP.                     | `Add an FDB entry and ARP record`_ for each node.   |
    |                       |                                                                                         |                                                     |
-   |                       | Add a VXLAN network to the BIG-IP system;                                               |                                                     |
-   |                       | use the IP address allocated from Flannel as the VTEP.                                  |                                                     |
+   |                       | Create a network and VXLAN tunnel on the BIG-IP system with a VTEP in the Flannel       |                                                     |
+   |                       | VXLAN network.                                                                          |                                                     |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
    | **Layer 3 networks**                                                                                                                                                  |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
