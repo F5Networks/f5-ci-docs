@@ -1,7 +1,10 @@
+.. STAGED IN K8S_BIGIP_CTLR REPO
+.. todo:: remove from this repo and add redirect in AWS
+
 .. _install-kctlr:
 
-Install the |kctlr-long|
-========================
+Install the BIG-IP Controller in Kubernetes
+===========================================
 
 .. sidebar:: Docs test matrix
 

@@ -24,7 +24,13 @@
    BIG-IP Controller - K8s <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
    F5-proxy - K8s <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest/>
    Integration Overview <kubernetes/index>
-   kubernetes/kctlr*
+   kubernetes/kctlr-modes
+   kubernetes/kctlr-configure
+   kubernetes/kctlr-app-install
+   kubernetes/kctlr-ingress
+   kubernetes/kctlr-secrets
+   kubernetes/kctlr-manage-bigip-objects
+   kubernetes/kctlr-deploy-iapp
    kubernetes/asp*
 
 .. toctree::
@@ -35,7 +41,11 @@
    BIG-IP Controller - Marathon <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
    ASP Controller - Marathon <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest/>
    Integration Overview <marathon/index>
-   marathon/mctlr*
+   marathon/mctlr-app-install
+   marathon/mctlr-configure
+   marathon/mctlr-authenticate-dcos
+   marathon/mctlr-manage-bigip-objects
+   marathon/mctlr-deploy-iapp
    marathon/asp*
 
 .. toctree::
@@ -43,8 +53,10 @@
    :maxdepth: 2
    :glob:
 
+   BIG-IP Controller - K8s <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
    Integration Overview <openshift/index>
-   openshift/*
+   openshift/kctlr-use-bigip-openshift
+   openshift/kctlr-openshift-app-install
 
 .. toctree::
    :caption: Support

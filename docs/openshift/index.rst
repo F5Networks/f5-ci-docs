@@ -17,38 +17,43 @@ It does have a few :ref:`OpenShift-specific prerequisites <openshift-origin-prer
 .. _openshift-origin-prereqs:
 
 OpenShift Prerequisites
------------------------
+```````````````````````
 
 The prerequisites below are in addition to the F5 Integration for Kubernetes' :ref:`general prerequisites <k8s-prereqs>`.
 
-#. You'll need to use the `OpenShift Origin CLI`_, ``oc``.
-#. To :ref:`integrate your BIG-IP device into an OpenShift cluster <bigip-openshift-setup>`, you'll need to :ref:`assign an OpenShift overlay address to the BIG-IP device <k8s-openshift-assign-ip>`.
-#. The |kctlr-long| needs an `OpenShift service account`_ with permission to access the following:
+- Integration with `OpenShift SDN`_ requires a BIG-IP `Better or Best license`_, or a Good license with the optional SDN services added.
 
-   - nodes,
-   - endpoints,
-   - services,
-   - configmaps,
-   - ingresses,
-   - ingresses/status, and
-   - events.
 
-Once you've added the BIG-IP device to the OpenShift overlay network, it will have access to all pods in the cluster.
-You can then use the |kctlr| the same as you would in Kubernetes.
+Initial Setup
+`````````````
+
+#. :ref:`Add your BIG-IP device to the OpenShift cluster network <bigip-openshift-setup>`.
+#. :ref:`Create an OpenShift service account <k8s-openshift-serviceaccount>` with the following role permissions and assign it to the |kctlr|.
+
+   ========================== =================================================
+   Resources                  Actions
+   ========================== =================================================
+   - endpoints                get, list, watch
+   - ingresses
+   - namespaces
+   - nodes
+   - services
+   -------------------------- -------------------------------------------------
+   - configmaps               get, list, watch, update, create, patch
+   - ingresses/status
+   - events
+   ========================== =================================================
+
+See :ref:`How to add your BIG-IP device to an OpenShift Cluster <bigip-openshift-setup>` for complete setup instructions.
 
 .. _openshift-origin-node-health:
 
-OpenShift Origin Node Health
-----------------------------
+Node Health
+-----------
 
-In OpenShift clusters, the Kubernetes NodeList records status for all nodes registered with the master.
-
-When the |kctlr-long| runs with ``pool-member-type`` set to ``cluster`` -- which integrates the BIG-IP device into the OpenShift cluster network -- it watches the NodeList in OpenShift's underlying Kubernetes API server.
-The |kctlr| creates/updates FDB (Forwarding DataBase) entries for the configured VXLAN tunnel according to the NodeList.
-This ensures the |kctlr| only makes VXLAN requests to reported nodes.
-
-As a function of the BIG-IP VXLAN, the BIG-IP device only communicates with healthy cluster nodes.
-The BIG-IP device does not attempt to route traffic to an unresponsive node, even if the node remains in the NodeList.
+The |kctlr| runs in :ref:`cluster mode` in OpenShift.
+Because the BIG-IP device is part of the OpenShift cluster network, it has visibility into the health of individual Pods, as well as Nodes.
+This means that the BIG-IP device knows when Nodes/Pods are down and routes traffic to others that it knows are available.
 
 Related
 -------
