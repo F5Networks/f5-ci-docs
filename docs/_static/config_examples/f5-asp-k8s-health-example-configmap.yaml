@@ -1,0 +1,34 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: f5-asp-config
+  namespace: kube-system
+data:
+  asp.config.json: |
+    {
+      "global": {
+        "console-log-level": "info",
+        "ephemeral-store": {
+          # Cluster IP address of the ephemeral store Service
+          "host": "<ephemeral-store-service_cluster-IP>",
+          "port": 8087
+          "components": {
+            "health": {
+              "nodes": [
+                "<asp-node1-id>",
+                "<asp-node2-id>",
+                "<asp-node3-id>",
+                "<...>"
+              ]
+              "replication-count": 1
+            }
+          }
+        }
+      },
+      "orchestration": {
+        "kubernetes": {
+          "config-file": "/var/run/kubernetes/proxy-plugin/service-ports.json",
+          "poll-interval": 500
+        }
+      }
+    }
