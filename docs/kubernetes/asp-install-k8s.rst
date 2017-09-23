@@ -34,16 +34,31 @@ Initial Setup
 
 #. :ref:`Set up the ASP ephemeral store <install-ephemeral-store-k8s>`. [#aspreq]_
 
+#. Decide if you will want to use :ref:`ASP health sharding <configuring-asp-health-k8s>`.
+
 .. _asp-configure-k8s:
 
 Set up the ASP using a ConfigMap
 --------------------------------
 
+.. @jputrino We should use collapsible content here for the health options
+
 #. Define the ASP's `global and orchestration configurations </products/asp/latest/#global>`_ in a ConfigMap.
 
-   .. literalinclude:: /_static/config_examples/f5-asp-k8s-example-configmap.yaml
+   * Without ASP health sharding
 
-   :fonticon:`fa fa-download` :download:`f5-asp-k8s-example-configmap.yaml </_static/config_examples/f5-asp-k8s-example-configmap.yaml>`
+     .. literalinclude:: /_static/config_examples/f5-asp-k8s-example-configmap.yaml
+
+     :fonticon:`fa fa-download` :download:`f5-asp-k8s-example-configmap.yaml </_static/config_examples/f5-asp-k8s-example-configmap.yaml>`
+
+   * With ASP health sharding
+
+     .. literalinclude:: /_static/config_examples/f5-asp-k8s-health-example-configmap.yaml
+        :linenos:
+        :emphasize-lines: 15-25
+
+
+     :fonticon:`fa fa-download` :download:`f5-asp-k8s-health-example-configmap.yaml </_static/config_examples/f5-asp-k8s-health-example-configmap.yaml>`
 
 #. Upload the ConfigMap to Kubernetes.
 
@@ -91,9 +106,19 @@ Create a DaemonSet and launch ASP Pods
 
       Be sure to include the Secret containing your Docker login credentials.
 
-   .. literalinclude:: /_static/config_examples/f5-asp-k8s-example-daemonset.yaml
+   * Without ASP health sharding
 
-   :fonticon:`fa fa-download` :download:`f5-asp-k8s-example-daemonset.yaml </_static/config_examples/f5-asp-k8s-example-daemonset.yaml>`
+     .. literalinclude:: /_static/config_examples/f5-asp-k8s-example-daemonset.yaml
+
+     :fonticon:`fa fa-download` :download:`f5-asp-k8s-example-daemonset.yaml </_static/config_examples/f5-asp-k8s-example-daemonset.yaml>`
+
+   * With ASP health sharding
+
+     .. literalinclude:: /_static/config_examples/f5-asp-k8s-health-example-daemonset.yaml
+        :linenos:
+        :emphasize-lines: 23-28
+
+     :fonticon:`fa fa-download` :download:`f5-asp-k8s-health-example-daemonset.yaml </_static/config_examples/f5-asp-k8s-health-example-daemonset.yaml>`
 
 #. Upload the DaemonSet to Kubernetes.
 

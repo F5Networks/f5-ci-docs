@@ -44,12 +44,23 @@ Use one of the options below to attach an ASP to a Kubernetes `Service`_.
    .. code-block:: bash
 
       user@k8s-master:~$ kubectl edit service example-service
+   
+   * Without ASP health sharding
 
-   .. literalinclude:: /_static/config_examples/f5-asp-k8s-example-service.yaml
-      :linenos:
-      :emphasize-lines: 4-13
+     .. literalinclude:: /_static/config_examples/f5-asp-k8s-example-service.yaml
+        :linenos:
+        :emphasize-lines: 4-14
 
-   :fonticon:`fa fa-download` :download:`Download an example Service definition with the ASP annotation </_static/config_examples/f5-asp-k8s-example-service.yaml>`
+     :fonticon:`fa fa-download` :download:`Download an example Service definition with the ASP annotation </_static/config_examples/f5-asp-k8s-example-service.yaml>`
+
+   * With :ref:`ASP health sharding <configuring-asp-health-k8s>`
+
+     .. literalinclude:: /_static/config_examples/f5-asp-k8s-health-example-service.yaml
+        :linenos:
+        :emphasize-lines: 4-30
+
+     :fonticon:`fa fa-download` :download:`f5-asp-k8s-health-example-service.yaml </_static/config_examples/f5-asp-k8s-health-example-service.yaml>`
+
 
 #. (Optional) :ref:`Verify that the ASP handles traffic for the Service <k8s-asp-verify>`
 
