@@ -10,7 +10,24 @@ metadata:
         "flags" : {
           "x-forwarded-for": true,
           "x-served-by": true
-        }
+        },
+        // Health checks are available as of ASP v1.1.0
+        "health-monitor": {
+          "health-checks": {
+            "srv1-check": {
+              "default-state": "unknown",
+              "active": {
+                "timeout": 10,
+                "interval": 10,
+                "up-count": 2,
+                "down-count": 3,
+                "http": {
+                  "path": "/healthz"
+                }
+              }
+            }
+          }
+        },
       }
   labels:
     # the name of the Service

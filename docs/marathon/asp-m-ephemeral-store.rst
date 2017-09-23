@@ -1,21 +1,27 @@
+.. include:: /_static/reuse/asp-version-added-1_1.rst
+
+.. sidebar:: Docs test matrix
+
+   We tested this documentation with:
+
+   - Mesos 1.0.3, Marathon 1.3.9, Ubuntu 16.04, ASP 1.1.0, ASP Controller 1.0.0
+
 .. _install-ephemeral-store-marathon:
 
-Set up ephemeral data storage for the Application Services Proxy
-================================================================
-
-.. sidebar: Docs test matrix
-   We tested this documentation with:
-   - ``marathon-1.3.9``
-   - ``mesos-1.0.3``
-   - |asp| ``v1.1.0``
-
-.. include:: /_static/reuse/asp-version-added.rst
+Set up the ASP ephemeral store - Marathon
+=========================================
 
 The |asp| (ASP) shares non-persistent, or ephemeral, data across instances.
 It does so by way of a distributed, secure, key-value store called the Ephemeral Store.
 The ephemeral store is a Docker-based Marathon `Application`_ .
 
-You can set up the ASP ephemeral store *before* you `deploy the ASP in Marathon <install-asp-marathon>`_, or add the ephemeral store configurations to an existing ASP.
+You can set up the ASP ephemeral store *before* you `deploy the ASP in Marathon <install-asp-marathon>`_ -- OR --
+add the ephemeral store configurations to an existing ASP running v1.1.0.
+
+.. warning::
+
+   The ephemeral store is not compatible with ASP v1.0.0.
+   If you have a previous version of the ASP running, remove it and :ref:`deploy a new Application <deploy-asp-marathon>` running v1.1.0.
 
 Set up authentication to the ephemeral store
 --------------------------------------------
@@ -31,15 +37,17 @@ Generate root and user certificates
 .. include:: /_static/reuse/generate-ephemeral-store-certs.rst
 
 
-Deploy the ephemeral store using the Marathon REST API
-------------------------------------------------------
+Deploy the ephemeral store
+--------------------------
 
-#. Define ephemeral store configurations in a JSON file.
+.. important::
 
-   .. important::
+   - Each ephemeral store instance requires a dedicated node with 1 CPU and at least 1GB memory.
+   - By default, the ephemeral store app deploys a cluster of five (5) instances.
+     **Do not deploy the ephemeral store with fewer than five instances or you may experience data loss.**
+   - The instances use ``HOST`` networking mode and connect to ports 8087, 4369, and 8099.
 
-      - The ephemeral store app deploys a cluster of 5 tasks; each task requires 1 CPU and 1GB memory.
-      - The tasks use ``HOST`` networking mode and connect to ports 8087, 4369, and 8099.
+#. Define the ephemeral store configurations in a JSON file.
 
    .. literalinclude:: /_static/config_examples/f5-ephemeral-store-marathon-example.json
       :linenos:
@@ -50,16 +58,23 @@ Deploy the ephemeral store using the Marathon REST API
 
    .. code-block:: bash
 
-      user@mesos-master:~$ curl -X POST -H "Content-Type: application/json" //
-      http://10.190.25.75:8080/v2/apps -d @f5-ephemeral-store-marathon-example.json
+      $ curl -X POST -H "Content-Type: application/json" http://<marathon-uri>:8080/v2/apps -d @f5-ephemeral-store-marathon-example.json
+
 
 #. To verify creation, send a GET request to the Marathon API server.
+
+   .. tip::
+
+      You can pass the response through a pretty-print tool like `jq <https://github.com/stedolan/jq>`_ for better readability.
 
    .. code-block:: bash
       :linenos:
       :emphasize-lines: 1
 
-      user@mesos-master:~$ curl -X GET http://10.190.25.75:8080/v2/apps/ephemeral-store | jq.
+      $ curl -X GET http://<marathon-uri>:8080/v2/apps/ephemeral-store | jq .
+        % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                       Dload  Upload   Total   Spent    Left  Speed
+      100  4079    0  4079    0     0   332k      0 --:--:-- --:--:-- --:--:--  362k
       {
         "app": {
           "id": "/ephemeral-store",
@@ -68,11 +83,11 @@ Deploy the ephemeral store using the Marathon REST API
           "user": null,
           "env": {
             "ORCHESTRATION": "marathon",
-            "EPHEMERAL_STORE_USER": "{ \"name\" : \"myUser\", \"auth_mode\" : \"certificate\" }",
-            "EPHEMERAL_STORE_ROOT_CA_CERT": "<root-ca-cert-in-PEM-format>",
-            "EPHEMERAL_STORE_ROOT_CA_KEY": "<root-ca-key-in-PEM-format>"
+            "EPHEMERAL_STORE_USER": "{ \"name\" : \"myuser\", \"auth_mode\" : \"certificate\" }",
+            "EPHEMERAL_STORE_ROOT_CA_CERT": "-----BEGIN CERTIFICATE-----<redacted>-----END CERTIFICATE-----",
+            "EPHEMERAL_STORE_ROOT_CA_KEY": "-----BEGIN RSA PRIVATE KEY-----<redacted>-----END RSA PRIVATE KEY-----"
           },
-          "instances": 5,
+          "instances": 1,
           "cpus": 1,
           "mem": 1024,
           "disk": 0,
@@ -89,7 +104,7 @@ Deploy the ephemeral store using the Marathon REST API
             "type": "DOCKER",
             "volumes": [],
             "docker": {
-              "image": "docker-registry.pdbld.f5net.com/systest-common/ephemeral-store:latest",
+              "image": "f5networks/ephemeral-store:latest",
               "network": "HOST",
               "portMappings": null,
               "privileged": false,
@@ -107,7 +122,7 @@ Deploy the ephemeral store using the Marathon REST API
           "labels": {},
           "acceptedResourceRoles": null,
           "ipAddress": null,
-          "version": "2017-06-20T20:14:48.473Z",
+          "version": "2017-10-02T18:56:43.319Z",
           "residency": null,
           "secrets": {},
           "taskKillGracePeriodSeconds": null,
@@ -140,37 +155,33 @@ Deploy the ephemeral store using the Marathon REST API
           ],
           "requirePorts": true,
           "versionInfo": {
-            "lastScalingAt": "2017-06-20T20:14:48.473Z",
-            "lastConfigChangeAt": "2017-06-20T20:14:48.473Z"
+            "lastScalingAt": "2017-10-02T18:56:43.319Z",
+            "lastConfigChangeAt": "2017-10-02T18:36:25.016Z"
           },
           "tasksStaged": 0,
-          "tasksRunning": 5,
+          "tasksRunning": 0,
           "tasksHealthy": 0,
           "tasksUnhealthy": 0,
           "deployments": [
             {
-              "id": "d8baf459-4ae3-4b91-ab93-55014336b789"
+              "id": "cceb4265-b60f-4b7a-bb76-96227a35ebb0"
             }
           ],
-          "tasks": [...]
+          "tasks": []
         }
       }
 
-Learn More
-----------
-
-The ephemeral store is a distributed, secure, key-value store used by ASP instances to store and quickly share non-persistent data.
-For example, if an :code:`asp` instance learns that a pool member it monitors is unhealthy, it needs to share that information with other instances monitoring the same pool.
-The :code:`asp` instance adds the information to the ephemeral store so all other :code:`asp` instances immediately have access to the pool's updated health status.
-When new data added to the ephmeral store marks the pool member as healthy, the stale information gets deleted.
-
-The ASP also reports session data to the ephemeral store.
-Sharing client session information across servers means, for example, that if multiple servers try to establish a session with a client, one will succeed and the others will fail.
 
 Next Steps
 ----------
 
 Once you've set up the ephemeral store, you can :ref:`install and deploy the ASP <install-asp-marathon>`.
+
+
+Learn More
+----------
+
+See the `ASP ephemeral store`_ and `ASP health monitor`_ documentation.
 
 
 .. _Application: https://mesosphere.github.io/marathon/docs/application-basics.html

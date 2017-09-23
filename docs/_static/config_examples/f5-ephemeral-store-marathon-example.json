@@ -9,14 +9,15 @@
     "docker": {
       "forcePullImage": true,
       "network": "HOST",
-      "image": "docker-registry.pdbld.f5net.com/systest-common/ephemeral-store:latest"
+      "image": "f5networks/ephemeral-store:latest"
     }
   },
   "env": {
     "ORCHESTRATION": "marathon",
-    // Replace <user-name> with the name of your ephemeral-store user
+    // Replace "myUser" with the name of your ephemeral-store user
     // that matches the Common Name of the certificate generated for that user
-    "EPHEMERAL_STORE_USER": "{ \"name\" : \"<user-name>\", \"auth_mode\" : \"certificate\" }",
+    // Paste in the complete cert and key for the rootCA user
+    "EPHEMERAL_STORE_USER": "{ \"name\" : \"myUser\", \"auth_mode\" : \"certificate\" }",
     "EPHEMERAL_STORE_ROOT_CA_CERT": "<root-ca-cert-in-PEM-format>",
     "EPHEMERAL_STORE_ROOT_CA_KEY": "<root-ca-key-in-PEM-format>"
   },

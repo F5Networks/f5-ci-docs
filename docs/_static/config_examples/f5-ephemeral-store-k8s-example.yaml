@@ -1,3 +1,6 @@
+# The configurations for the ephemeral store
+# Each "name" value must match the ``/CN``, or Common Name, defined for a
+# user certificate
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -6,6 +9,7 @@ data:
   # Define the ephemeral store users
   user: '{ "name" : "myuser", "auth_mode" : "certificate" }'
 ---
+# A headless service used for DNS resolution
 apiVersion: v1
 kind: Service
 metadata:
@@ -22,6 +26,7 @@ spec:
     name: ephemeral-store
   clusterIP: None
 ---
+# The ephemeral store service that exposes the ephemeral store Pods
 apiVersion: v1
 kind: Service
 metadata:
@@ -37,6 +42,7 @@ spec:
   selector:
     name: ephemeral-store
 ---
+# The PetSet creates a cluster of five (5) pods running the ephemeral store Service.
 apiVersion: apps/v1alpha1
 kind: PetSet
 metadata:
@@ -54,8 +60,8 @@ spec:
       terminationGracePeriodSeconds: 0
       containers:
       - name: ephemeral-store
-        # Replace "<tag>" with the version you'd like to use
-        image: hub.docker.com/r/f5networks/ephemeral-store:<tag>
+        # The ephemeral store image
+        image: f5networks/ephemeral-store:1.0.0
         env:
           - name: NAMESPACE
             valueFrom:
@@ -104,5 +110,5 @@ spec:
           emptyDir: {}
         - name: ca-certs
           secret:
-            # name of the Secret containing the Root certificate and key
-            secretName: ephemeral-store-secret
+            # name of the Secret containing both the root certificate and key
+            secretName: ephemeral-store-root

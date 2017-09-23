@@ -19,12 +19,3 @@ Edit the Application definition and replace the service port with an available p
 See the Apache Mesos `ports resource documentation <http://mesos.apache.org/documentation/latest/attributes-resources/>`_ to see what ports are available in your cluster.
 
 
-|aspm-long|
------------
-
-Coming soon!
-
-|mctlr-long|
-------------
-
-Coming soon!
