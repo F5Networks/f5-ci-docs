@@ -8,11 +8,21 @@ data:
     {
       "global": {
         "console-log-level": "info",
-        #Required as of ASP v1.1.0
         "ephemeral-store": {
           # Cluster IP address of the ephemeral store Service
           "host": "<ephemeral-store-service_cluster-IP>",
           "port": 8087
+          "components": {
+            "health": {
+              "nodes": [
+                "<asp-node1-id>",
+                "<asp-node2-id>",
+                "<asp-node3-id>",
+                "<...>"
+              ]
+              "replication-count": 1
+            }
+          }
         }
       },
       "orchestration": {

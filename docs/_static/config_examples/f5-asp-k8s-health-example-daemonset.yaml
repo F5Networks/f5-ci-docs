@@ -20,6 +20,11 @@ spec:
             - /etc/configmap/asp.config.json
           securityContext:
             privileged: false
+          env:
+          - name: ASP_HEALTH_NODE_ID
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
           volumeMounts:
           # mount a new directory
           - name: plugin-config
