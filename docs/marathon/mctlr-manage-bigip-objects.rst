@@ -51,22 +51,20 @@ Create a BIG-IP virtual server for a Marathon Application
 
 #. Verify creation of the virtual server, pool, and member in the App's BIG-IP partition via ``tmsh`` or the configuration utility.
 
-   .. admonition:: TMSH
+   .. code-block:: console
 
-      ::
-
-         admin@(bigip)(cfg-sync Standalone)(Active)(/mesos)# tmsh show ltm virtual
-         ------------------------------------------------------------------
-         Ltm::Virtual Server: basic-0_8080
-         ------------------------------------------------------------------
-         Status
-           Availability     : unknown
-           State            : enabled
-           Reason           : The children pool member(s) either don't have service checking enabled, or service check results are not available yet
-           CMP              : enabled
-           CMP Mode         : all-cpus
-           Destination      : 10.190.25.70:8080
-         ...
+      admin@(bigip)(cfg-sync Standalone)(Active)(/mesos)(tmos)$ show ltm virtual
+      ------------------------------------------------------------------
+      Ltm::Virtual Server: basic-0_8080
+      ------------------------------------------------------------------
+      Status
+        Availability     : unknown
+        State            : enabled
+        Reason           : The children pool member(s) either don't have service checking enabled, or service check results are not available yet
+        CMP              : enabled
+        CMP Mode         : all-cpus
+        Destination      : 10.190.25.70:8080
+      ...
 
 .. tip::
 
@@ -82,14 +80,14 @@ Update a BIG-IP front-end virtual server
 
 #. Send the updated file to the Marathon API server.
 
-   .. code-block:: bash
+   .. code-block:: console
 
       user@mesos-master:~$ curl -X PUT http://10.190.25.75:8080/v2/apps/basic-0 -d @hello-marathon-example.json -H "Content-type: application/json"
       {"version":"2017-02-21T21:48:12.755Z","deploymentId":"02529d16-258b-41d4-ba06-9765c4d1f8d3"}
 
 #. Verify your changes on the BIG-IP via ``tmsh`` or the configuration utility.
 
-   .. admonition:: TMSH
+   .. code-block:: console
 
       tmsh show ltm virtual
 
@@ -102,14 +100,14 @@ Delete BIG-IP LTM objects
 
 #. Send the updated Application to the Marathon API server.
 
-   .. code-block:: bash
+   .. code-block:: console
 
       user@mesos-master:~$ curl -X PUT http://10.190.25.75:8080/v2/apps/basic-0 -d @hello-marathon-example.json -H "Content-type: application/json"
       {"version":"2017-02-21T21:58:11.111Z","deploymentId":"8bdf03d2-8568-46b3-a5a3-61cc397185a1"}
 
 #. Verify the BIG-IP LTM object(s) no longer exist.
 
-   .. code-block:: bash
+   .. code-block:: console
 
       admin@(bigip)(cfg-sync Standalone)(Active)(/mesos)(tmos)$ show ltm virtual
       admin@(bigip)(cfg-sync Standalone)(Active)(/mesos)(tmos)$
