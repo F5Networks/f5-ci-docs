@@ -84,8 +84,4 @@ This means an instance of a Container Connector can be readily discarded.
 Migrating a CC is as easy as destroying it in one place and spinning up a new one somewhere else.
 Wherever a Container Connector runs, it always watches the API and attempts to bring the BIG-IP, or ASP, up to date with the most recent applicable configurations.
 
-
-Site Contents
--------------
-
 .. include:: master_toc.rst

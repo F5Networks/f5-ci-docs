@@ -1,3 +1,28 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: f5-asp-config
+  namespace: kube-system
+data:
+  asp.config.json: |
+    {
+      "global": {
+        "console-log-level": "info",
+        #Required as of ASP v1.1.0
+        "ephemeral-store": {
+          # Cluster IP address of the ephemeral store Service
+          "host": "<ephemeral-store-service_cluster-IP>",
+          "port": 8087
+        }
+      },
+      "orchestration": {
+        "kubernetes": {
+          "config-file": "/var/run/kubernetes/proxy-plugin/service-ports.json",
+          "poll-interval": 500
+        }
+      }
+    }
+---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
@@ -12,10 +37,11 @@ spec:
       hostNetwork: true
       containers:
         - name: f5-asp
-          image: "f5networks/asp:1.1.0"
+          image: "store/f5networks/asp:1.1.0"
           args:
-            # the config file is loaded from the ConfigMap containing the
-            # ASP global config
+            # config-file corresponds to the "asp.config.json" section
+            # of the ConfigMap containing the global ASP configurations
+            # DO NOT CHANGE
             - --config-file
             - /etc/configmap/asp.config.json
           securityContext:
@@ -36,7 +62,7 @@ spec:
             # the user certificate and key are mounted at this location
             mountPath: /ephemeral-store-certs/myuser
             readOnly: true
-          # mount a directory for the ephemeral store Root
+          # mount a directory for the ephemeral store root
           - name: rootca-cert
             # the path the directory will be added to; DO NOT CHANGE
             mountPath: /ephemeral-store-certs/rootca-cert
@@ -53,12 +79,12 @@ spec:
           secret:
             # The Kubernetes Secret containing the ephemeral store user's
             # certificate and key
-            secretName: ephemeral-store-user-myuser
+            secretName: ephemeral-store-myuser
         - name: rootca-cert
-          # The Kubernetes Secret containing the Root certificate and key
+          # The Kubernetes Secret containing the Root certificate (rootCA.crt)
           secret:
-            secretName: ephemeral-store-rootca-cert
+            secretName: ephemeral-store-user-rootca-cert
       # provide the name of the Secret containing the Docker login credentials
       # REQUIRED TO PULL THE ASP IMAGE FROM DOCKER STORE
       imagePullSecrets:
-        - name: <my-secret>
+        - name: <my-docker-secret>

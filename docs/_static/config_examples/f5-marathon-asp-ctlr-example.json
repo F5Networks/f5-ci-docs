@@ -7,7 +7,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "f5networks/marathon-asp-ctlr:1.0.0",
+      "image": "f5networks/marathon-asp-ctlr:1.1.0",
       "network": "BRIDGE",
       "forcePullImage": true,
       "privileged": false,
@@ -29,20 +29,19 @@
     "ASP_DEFAULT_MEM": "256",
     "ASP_DEFAULT_LOG_LEVEL": "debug",
     // Required as of ASP v1.1
+    // Replace "myUser" with the name of an ephemeral-store user;
+    // must match the "/CN" setting provided for a user certificate
+    // Provide the complete contents of the user .key and .crt files
+    // Provide the complete contents of the rootCA.crt file
     "ASP_EPHEMERAL_STORE": "{
       \"host\": \"ephemeral-store.marathon.l4lb.thisdcos.directory\",
       \"port\": 8087,
       \"users\": {
-         // Replace with the name of an ephemeral-store user
-         // User name must match the "/CN" setting for a user certificate
          \"myUser\" : {
-             // Replace with user's private key
              \"key\": \"<user-private-key-in-PEM-format>\",
-             // Replace with user's certificate
              \"cert\": \"<user-cert-in-PEM-format>\"
          }
       },
-      // Replace with ephemeral store's rootCA.crt
       \"root-ca\": \"<rootCA-cert-in-PEM-format>\"
     }",
     "ASP_DEFAULT_STATS_FLUSH_INTERVAL": "10000",

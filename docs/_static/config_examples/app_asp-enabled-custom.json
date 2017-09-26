@@ -26,10 +26,7 @@
     "f5-asp": "enable",
     "ASP_LOG_LEVEL": "debug",
     "ASP_VS_KEEP_ALIVE": 50,
-    "ASP_VS_FLAGS": {
-      "x-forwarded-for": true,
-      "x-forwarded-by": true
-    },
+    "ASP_VS_FLAGS" : "{ \"x-forwarded-for\": true, \"x-forwarded-by\": true}",
     "ASP_COUNT_PER_APP": 2
   },
   "cpus": 0.25,

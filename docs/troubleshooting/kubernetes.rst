@@ -42,15 +42,7 @@ Verify the ASP handles traffic for a Service
       Hello Kubernetes!
 
 
-|aspk-long|
------------
 
-Coming soon!
-
-|kctlr-long|
-------------
-
-Coming soon!
 
 
 

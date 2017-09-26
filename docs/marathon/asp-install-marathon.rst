@@ -1,19 +1,17 @@
 .. _install-aspm-marathon:
 .. _install-asp-marathon:
 
-Install the |aspm-long|
-=======================
-
 .. sidebar:: Docs test matrix
 
    We tested this documentation with:
 
-   - ``marathon-1.3.9``
-   - ``mesos-1.0.3``
-   - ``asp v1.0.0``
-   - ``asp v1.1.0``
+   - Mesos 1.0.3, Marathon 1.3.9, Ubuntu 16.04, ASP 1.1.0, ASP Controller 1.0.0
+   - Mesos 1.0.3, Marathon 1.3.9, Ubuntu 16.04, ASP 1.0.0, ASP Controller 1.0.0
 
-The |aspm-long| is a docker container that runs as a Marathon `Application`_.
+Install the |aspm-long|
+=======================
+
+The |aspm-long| is a Docker container that runs as a Marathon `Application`_.
 You can install it via the Marathon REST API or the `Marathon Web Interface`_.
 
 Initial Setup
@@ -21,7 +19,7 @@ Initial Setup
 
 .. include:: /_static/reuse/asp-initial-setup.rst
 
-#. `Set up Marathon to use a private Docker registry <https://mesosphere.github.io/marathon/docs/native-docker-private-registry.html>`_.
+#. `Set up Marathon to use a private Docker registry <https://mesosphere.github.io/marathon/docs/native-docker-private-registry.html>`_ so you can pull the ASP image from Docker Store.
 
    .. seealso::
 
@@ -40,8 +38,10 @@ Deploy the |aspm-long| using the Marathon REST API
 
    .. tip::
 
-      Be sure to include ``"ASP_DEFAULT_URIS": "<docker-config-file-URI>"`` in the App definition.
+      Provide the URI for your Docker config file in the App definition using the ``ASP_DEFAULT_URIS`` in the App definition.
       Otherwise, Marathon won't be able to pull the ASP image from Docker Store.
+
+   \
 
    .. literalinclude:: /_static/config_examples/f5-marathon-asp-ctlr-example.json
       :linenos:
@@ -54,18 +54,22 @@ Deploy the |aspm-long| using the Marathon REST API
    .. code-block:: console
       :linenos:
 
-      user@mesos-master:~$ curl -X POST -H "Content-Type: application/json" http://10.190.25.75:8080/v2/apps -d @f5-marathon-asp-ctlr.json
+      $ curl -X POST -H "Content-Type: application/json" http://<marathon-uri>:8080/v2/apps -d @f5-marathon-asp-ctlr.json
 
 Verify creation
 ---------------
 
 Send a GET request to the Marathon API server to verify successful creation of the |aspm| App.
 
+.. tip::
+
+   You can pass the response through a pretty-print tool like `jq <https://github.com/stedolan/jq>`_ for better readability.
+
 .. code-block:: console
    :linenos:
    :emphasize-lines: 1
 
-   user@mesos-master:~$ curl -X GET http://10.190.25.75:8080/v2/apps/marathon-asp-ctlr | jq .
+   $ curl -X GET http://10.190.25.75:8080/v2/apps/marathon-asp-ctlr | jq .
       {
         "app": {
           "id": "/marathon-asp-ctlr",
@@ -78,7 +82,7 @@ Send a GET request to the Marathon API server to verify successful creation of t
             "MARATHON_URL": "http://10.190.25.75:8080",
             "ASP_DEFAULT_STATS_TOKEN": "<provide_stats_auth_token>",
             "ASP_DEFAULT_CONTAINER": "f5networks/asp:1.1",
-            "ASP_EPHEMERAL_STORE": "{\"host\": \"ephemeral-store.marathon.l4lb.thisdcos.directory\", \"port\": 8087, \"users\": {\"myUser\" : {\"key\": \"<user-private-key-in-PEM-format>\", \"cert\": \"<user-cert-in-PEM-format>\"}}, \"root-ca\": \"<rootCA-cert-in-PEM-format>\"}",
+            "ASP_EPHEMERAL_STORE": "{\"host\": \"ephemeral-store.marathon.l4lb.thisdcos.directory\", \"port\": 8087, \"users\": {\"myUser\" : {\"key\": \"----REDACTED----\", \"cert\": \"----REDACTED----\"}}, \"root-ca\": \"----REDACTED----\"}",
             "ASP_DEFAULT_STATS_FLUSH_INTERVAL": "10000",
             "ASP_DEFAULT_CPU": "1",
             "ASP_DEFAULT_STATS_BACKEND": "splunk",
@@ -102,7 +106,7 @@ Send a GET request to the Marathon API server to verify successful creation of t
             "type": "DOCKER",
             "volumes": [],
             "docker": {
-              "image": "f5networks/marathon-asp-ctlr:1.0.0",
+              "image": "f5networks/marathon-asp-ctlr:1.1.0",
               "network": "BRIDGE",
               "portMappings": null,
               "privileged": false,
