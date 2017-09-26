@@ -38,34 +38,6 @@ namespace               Kubernetes namespace to watch [#fnnamespace]_
    :linenos:
    :emphasize-lines: 32-35, 43
 
-.. _kctlr-configure-openshift:
-
-Required configuration parameters for OpenShift clusters
---------------------------------------------------------
-
-In addition to the required parameters noted above, define the following parameters when using |kctlr-long| in an OpenShift cluster.
-
-=====================   ===================================================
-Parameter               Description
-=====================   ===================================================
-pool-member-type        Defines the BIG-IP pool member type.
-                        This must be ``cluster`` if you're using OpenShift.
----------------------   ---------------------------------------------------
-openshift-sdn-name      TMOS path to the BIG-IP VXLAN tunnel providing
-                        access to the Openshift SDN and Pod network;
-                        include the partition and vxlan name.
-
-                        Example: ``/Common/openshift_vxlan`` [#tunnel]_
-=====================   ===================================================
-
-
-.. [#tunnel] The VXLAN tunnel does not need to reside in the same partition managed by the |kctlr-long|.
-
-.. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml
-   :caption: Example Deployment definition
-   :linenos:
-   :emphasize-lines: 30-33, 41-43
-
 
 Required configuration parameters for F5 resources
 --------------------------------------------------
@@ -92,13 +64,11 @@ balance                 Load balancing mode
 ---------------------   ---------------------------------------------------
 virtualAddress          JSON object; allocates a virtual address for the
                         virtualServer. [#fn1]_
----------------------   ---------------------------------------------------
-- bindAddr              Part of the virtualAddress JSON object; defines the
-                        virtual IP address to assign to the virtualServer.
-                        [#fn1]_
----------------------   ---------------------------------------------------
-- port                  Part of the virtualAddress JSON object; defines the
-                        port to assign to the virtualServer. [#fn2]_
+
+- bindAddr              The IP address you want to assign to the virtual
+                        server. [#fn1]_
+- port                  The port you want to assign to the virtual server.
+                        [#fn2]_
 =====================   ===================================================
 
 
