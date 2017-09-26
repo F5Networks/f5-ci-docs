@@ -39,6 +39,7 @@ Initial Setup
    You should create all |kctlr| objects in the ``kube-system`` `namespace`_, unless otherwise specified in the deployment instructions.
 
 .. _k8s-openshift-serviceaccount:
+.. _openshift-rbac:
 
 Set up RBAC Authentication for the |kctlr|
 ------------------------------------------
@@ -50,7 +51,33 @@ Set up RBAC Authentication for the |kctlr|
       user@openshift:~$ oc create serviceaccount bigip-ctlr -n kube-system
       serviceaccount "bigip-ctlr" created
 
-#. Create a Cluster Role.
+#. Create a Cluster Role with the permissions shown in the table below.
+
+   +-------------------+---------------------------------------------+
+   | Resources         | Actions                                     |
+   +===================+=============================================+
+   | endpoints         | get, list, watch                            |
+   +-------------------+                                             |
+   | ingresses         |                                             |
+   +-------------------+                                             |
+   | namespaces        |                                             |
+   +-------------------+                                             |
+   | nodes             |                                             |
+   +-------------------+                                             |
+   | services          |                                             |
+   +-------------------+                                             |
+   | routes            |                                             |
+   +-------------------+                                             |
+   | secrets           |                                             |
+   +-------------------+---------------------------------------------+
+   | configmaps        | get, list, watch, update, create, patch     |
+   +-------------------+                                             |
+   | ingresses/status| |                                             |
+   +-------------------+                                             |
+   | events            |                                             |
+   +-------------------+---------------------------------------------+
+
+   \
 
    .. code-block:: console
 
@@ -95,6 +122,8 @@ Define an OpenShift Deployment using valid JSON or YAML.
 
 :fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_openshift-sdn.yaml </_static/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml>`
 
+.. _upload openshift deployment:
+
 Upload the Deployment
 ---------------------
 
@@ -105,7 +134,6 @@ Be sure to create all resources in the ``kube-system`` namespace.
 
    user@openshift-master:~$ oc apply -f f5-k8s-bigip-ctlr_openshift-sdn.yaml --namespace=kube-system
    deployment "k8s-bigip-ctlr" created
-
 
 Verify creation
 ---------------

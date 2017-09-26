@@ -133,39 +133,61 @@ F5 Resource Properties
 The |kctlr-long| uses special 'F5 Resources' to identify what BIG-IP LTM objects it should create.
 An F5 resource is a JSON blob included in a Kubernetes `ConfigMap`_.
 
-The virtual server :ref:`F5 Resource JSON blob <f5-resource-blob>` must contain the following properties.
+An :ref:`F5 Resource JSON blob <f5-resource-blob>` may contain the properties shown below.
 
-+---------------------+-------------------------------------------------------+
-| Property            | Description                                           |
-+=====================+=======================================================+
-| f5type              | a ``label`` property defining the type of resource    |
-|                     | to create on the BIG-IP;                              |
-|                     |                                                       |
-|                     | e.g., ``f5type: virtual-server``                      |
-+---------------------+-------------------------------------------------------+
-| schema              | identifies the schema |kctlr| uses to interpret the   |
-|                     | encoded data                                          |
-+---------------------+-------------------------------------------------------+
-| data                | a JSON blob                                           |
-|                     |                                                       |
-| - frontend          | - a subset of ``data``; defines BIG-IP LTM objects    |
-|                     |                                                       |
-| - backend           | - a subset of ``data``; identifies the                |
-|                     |   `Kubernetes Service`_ to proxy                      |
-+---------------------+-------------------------------------------------------+
+.. table:: F5 Resource properties
+
+   ======================= ======================================================== ===========
+   Property                Description                                              Required
+   ======================= ======================================================== ===========
+   f5type                  A ``label`` property watched by the |kctlr|.             Optional
+   ----------------------- -------------------------------------------------------- -----------
+   schema                  The schema |kctlr| uses to interpret the                 Required
+                           encoded data.
+
+                           **BE SURE TO USE THE CORRECT SCHEMA VERSION FOR YOUR**
+                           **VERSION OF THE CONTROLLER** (see below)
+   ----------------------- -------------------------------------------------------- -----------
+   data                    A JSON object                                            Required
+   ----------------------- -------------------------------------------------------- -----------
+     frontend              Defines the BIG-IP LTM objects you want to create.
+   ----------------------- -------------------------------------------------------- -----------
+     backend               Identifies the Service you want to proxy.
+   ======================= ======================================================== ===========
 
 \
 
-The ``frontend`` property defines how to expose a Service on a BIG-IP device.
-You can define ``frontend`` using the standard `k8s-bigip-ctlr virtualServer parameters </products/connectors/k8s-bigip-ctlr/latest/index.html#virtualserver>`_ or the `k8s-bigip-ctlr iApp parameters </products/connectors/k8s-bigip-ctlr/latest/index.html#iapps>`_.
+.. table:: F5 schema and k8s-bigip-ctlr version compatibility
 
-The ``frontend`` iApp configuration parameters include a set of customizable ``iappVariables`` parameters.
-These custom user-defined parameters must correspond to fields in the iApp template you want to launch.
-In addition, you'll need to define the `iApp Pool Member Table </products/connectors/k8s-bigip-ctlr/latest/index.html#iapp-pool-member-table>`_ that the iApp creates on the BIG-IP device.
+   =============================================== ============================
+   Schema version                                  k8s-bigip-ctlr version
+   =============================================== ============================
+   f5schemadb://bigip-virtual-server_v0.1.3.json   1.1.0
+   ----------------------------------------------- ----------------------------
+   f5schemadb://bigip-virtual-server_v0.1.2.json   1.0.0
+   =============================================== ============================
+
+
+The |kctlr| uses the ``f5type`` property differently depending on the use case.
+
+- **When used in a virtual server F5 Resource** ConfigMap, set :code:`f5type: virtual-server`.
+  This tells the |kctlr| what type of resource you want to create.
+- **When used in Route definitions**, you can define it any way you like.
+  You can set the |kctlr| to only watch for Routes configured with a specific ``f5type`` label.
+  For example: :code:`f5type: App1` [#routes]_
+
+The ``frontend`` property defines how to expose a Service on a BIG-IP device.
+
+- You can define ``frontend`` using the standard `k8s-bigip-ctlr virtualServer parameters </products/connectors/k8s-bigip-ctlr/latest/index.html#virtualserver>`_ or the `k8s-bigip-ctlr iApp parameters </products/connectors/k8s-bigip-ctlr/latest/index.html#iapps>`_.
+
+- The ``frontend`` iApp configuration parameters include a set of customizable ``iappVariables`` parameters.
+  These custom user-defined parameters must correspond to fields in the iApp template you want to launch.
+  In addition, you can define the `iApp Pool Member Table </products/connectors/k8s-bigip-ctlr/latest/index.html#iapp-pool-member-table>`_ that the iApp creates on the BIG-IP system.
 
 The ``backend`` property identifies the `Kubernetes Service`_ that makes up the server pool.
-You can also define health monitors for your BIG-IP LTM virtual server(s) and pool(s) in this section.
+You can define health monitors for your BIG-IP LTM virtual server(s) and pool(s) in this section.
 
+.. [#routes] The |kctlr| only supports routes in OpenShift deployments. See :ref:`OpenShift Routes` for more information.
 
 Kubernetes and OpenShift
 ------------------------

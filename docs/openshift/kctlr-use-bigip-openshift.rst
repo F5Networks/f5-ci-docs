@@ -8,7 +8,7 @@ How to add your BIG-IP device to an OpenShift Cluster
    We tested this documentation with:
 
    - BIG-IP v12.1.1
-   - OpenShift Origin v1.5
+   - OpenShift Origin v1.4
 
 Tasks
 -----
@@ -24,9 +24,6 @@ Step  Task
 ----- ----------------------------------------------------------------------------------
 3.    :ref:`Assign an overlay address <k8s-openshift-assign-ip>` from the subnet to a
       BIG-IP `Self IP address`_.
------ ----------------------------------------------------------------------------------
-4.    :ref:`Create an OpenShift service account <k8s-openshift-serviceaccount>` for the
-      |kctlr-long|.
 ===== ==================================================================================
 
 \
@@ -34,7 +31,6 @@ Step  Task
 .. tip::
 
    The examples provided here deploy the |kctlr| to the 'default' namespace and assign it a Service Account named 'bigip-ctlr'.
-
 
 .. _k8s-openshift-hostsubnet:
 
@@ -47,6 +43,8 @@ Create a new OpenShift HostSubnet
 
       You must include the "annotation" section shown in the example below.
       The VNID ``0`` grants the BIG-IP device access to all OpenShift projects.
+
+
 
    .. literalinclude:: /_static/config_examples/f5-kctlr-openshift-hostsubnet.yaml
       :linenos:
@@ -81,17 +79,19 @@ Create a BIG-IP VXLAN tunnel
 
       admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create net tunnels vxlan vxlan-mp flooding-type multipoint
 
+#. Verify creation of the VXLAN profile.
 
-   .. tip::
+   .. code-block:: console
 
-      You can use the command below to verify creation of the profile before moving on to the next task.
+      admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ list net tunnels vxlan vxlan-mp
 
-      :command:`admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ list net tunnels vxlan vxlan-mp`
 
 #. Create a new BIG-IP VXLAN tunnel.
 
    - Use the OpenShift HostSubnet's ``hostIP`` address as the VXLAN ``local-address`` (the BIG-IP VTEP).
    - Set the ``key`` to ``0`` to grant the BIG-IP device access to all OpenShift projects and subnets.
+   - Use the OpenShift HostSubnet's ``hostIP`` address as the VXLAN ``local-address`` (the VTEP).
+   - The ``key`` must be ``0`` if you want to give the BIG-IP access to all OpenShift subnets.
 
    .. code-block:: console
 
@@ -106,24 +106,20 @@ Create a BIG-IP VXLAN tunnel
 
 .. _k8s-openshift-assign-ip:
 
-Assign a self IP address from the cluster overlay to the BIG-IP device
-----------------------------------------------------------------------
+Add the BIG-IP device to the OpenShift overlay network
+------------------------------------------------------
 
-#. Create a new self IP address on the BIG-IP system.
+#. Create a BIG-IP self IP address.
 
-   - Use an address in the range defined in the :ref:`HostSubnet <k8s-openshift-hostsubnet>` with a subnet mask of ``/14``.
-     **This ensures that all VXLAN traffic is correctly routed via the ``openshift_vxlan`` tunnel.** [#ossdn]_
-   - The self IP uses the BIG-IP ``default`` traffic group unless you specify a different one.
+   - Use an address in the range defined in the :ref:`HostSubnet <k8s-openshift-hostsubnet>` allocated earlier.
+     **This ensures that all VXLAN traffic is correctly routed via the** :code:`openshift_vxlan` **tunnel.** [#ossdn]_
+   - Assign asubnet mask that matches that of the OpenShift SDN cluster network. In OpenShift Origin 1.4, for example, the default is ``/14``.
+   - If you don't specify a traffic group, the self IP uses the BIG-IP system's default.
 
    .. code-block:: console
 
       admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create net self 10.129.2.10/14 allow-service all vlan openshift_vxlan
 
-#. Verify creation of the self IP.
-
-   .. code-block:: console
-
-      admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ list net self 10.129.2.10/14
 
 Next Steps
 ----------
@@ -140,4 +136,3 @@ Next Steps
 .. _Self IP address: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-12-1-1/5.html
 .. _cluster role binding:
 .. _cluster role: https://docs.openshift.org/latest/architecture/additional_concepts/authorization.html
-.. _service account:

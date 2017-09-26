@@ -21,6 +21,7 @@ Add a TLS certificate and key
 
 .. seealso::
 
+
    See the Kubernetes documentation: `Distribute Credentials Securely Using Secrets <https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/>`_.
 
 .. _k8s-secret-docker-config:
@@ -38,30 +39,19 @@ The Kubernetes documentation covers this topic well:
 Secure your BIG-IP credentials
 ------------------------------
 
-#. Create a generic Kubernetes `Secret`_ to secure your BIG-IP login information.
+Create a generic Kubernetes Secret to secure your BIG-IP login information.
 
-   .. code-block:: bash
-      :caption: Create a secret for your BIG-IP login credentials
+.. code-block:: bash
+   :caption: Create a secret for your BIG-IP login credentials
 
-      user@k8s-master:~$ kubectl create secret generic bigip-login --namespace kube-system --from-literal=username=admin --from-literal=password=admin
-      secret "bigip-login" created
+   user@k8s-master:~$ kubectl create secret generic bigip-login --namespace kube-system --from-literal=username=admin --from-literal=password=admin
+   secret "bigip-login" created
 
-#. Verify the Secret exists
+.. _secret verify:
 
-   .. code-block:: bash
-      :caption: BIG-IP credentials
+Verify that a Secret exists
+---------------------------
 
-      user@k8s-master:~$ kubectl get secret bigip-login --namespace kube-system -o yaml
-      apiVersion: v1
-      data:
-        password: YWRtaW4=
-        username: YWRtaW4=
-      kind: Secret
-      metadata:
-        creationTimestamp: 2017-02-06T19:18:34Z
-        name: bigip-login
-        namespace: kube-system
-        resourceVersion: "8586"
-        selfLink: /api/v1/namespaces/kube-system/secrets/bigip-login
-        uid: 0d950bbc-eca1-11e6-92a8-fa163e4f44e9
-      type: Opaque
+If using standard Kubernetes, see the `Kubernetes Secrets documentation <https://kubernetes.io/docs/concepts/configuration/secret/#creating-your-own-secrets>`_.
+
+If using OpenShift, see the `OpenShift Secrets documentation <https://docs.openshift.org/1.4/dev_guide/secrets.html>`_.
