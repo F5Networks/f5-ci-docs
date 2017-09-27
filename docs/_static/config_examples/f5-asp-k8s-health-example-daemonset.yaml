@@ -24,6 +24,7 @@ spec:
           - name: ASP_HEALTH_NODE_ID
             valueFrom:
               fieldRef:
+                # must match one of the nodes listed in the configMap of the ASP
                 fieldPath: spec.nodeName
           volumeMounts:
           # mount a new directory

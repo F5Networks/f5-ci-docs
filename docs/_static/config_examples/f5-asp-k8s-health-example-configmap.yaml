@@ -15,12 +15,13 @@ data:
           "components": {
             "health": {
               "nodes": [
-                "<asp-node1-id>",
-                "<asp-node2-id>",
-                "<asp-node3-id>",
+                # values should match the node name/IP on which the ASP daemonset will be running.
+                "<kub-node1-id>",
+                "<kub-node2-id>",
+                "<kub-node3-id>",
                 "<...>"
               ]
-              "replication-count": 1
+              "replication-count": 2
             }
           }
         }

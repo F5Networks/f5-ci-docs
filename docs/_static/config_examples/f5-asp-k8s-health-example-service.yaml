@@ -21,7 +21,7 @@ metadata:
                 "up-count": 2,
                 "down-count": 3,
                 "http": {
-                  "path": "/health"
+                  "path": "/healthz"
                 }
               }
             }
