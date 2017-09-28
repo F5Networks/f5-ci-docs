@@ -75,12 +75,12 @@ The |kctlr| supports all four types.
 You can download sample Route definitions for each type below.
 See `Supported Route Configurations </products/connectors/k8s-bigip-ctlr/#Supported-route-configurations>`_ for more information.
 
-:fonticon:`fa fa-download` `sample-unsecured-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/config_examples/sample-unsecured-route.yaml>`_
+:fonticon:`fa fa-download` `sample-unsecured-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/_downloads/sample-unsecured-route.yaml>`_
 
-:fonticon:`fa fa-download` `sample-edge-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/config_examples/sample-edge-route.yaml>`_
+:fonticon:`fa fa-download` `sample-edge-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/_downloads/sample-edge-route.yaml>`_
 
-:fonticon:`fa fa-download` `sample-passthrough-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/config_examples/sample-passthrough-route.yaml>`_
+:fonticon:`fa fa-download` `sample-passthrough-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/_downloads/sample-passthrough-route.yaml>`_
 
-:fonticon:`fa fa-download` `sample-reencrypt-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/config_examples/sample-reencrypt-route.yaml>`_
+:fonticon:`fa fa-download` `sample-reencrypt-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/_downloads/sample-reencrypt-route.yaml>`_
 
 .. _OpenShift F5 Router: https://docs.openshift.org/1.4/install_config/router/f5_router.html
