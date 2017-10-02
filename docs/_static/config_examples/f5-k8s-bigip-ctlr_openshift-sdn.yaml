@@ -11,8 +11,8 @@ spec:
       labels:
         app: k8s-bigip-ctlr
     spec:
-      containers:
       serviceAccountName: bigip-ctlr
+      containers:
         - name: k8s-bigip-ctlr
           image: "f5networks/k8s-bigip-ctlr:1.1.0"
           env:
