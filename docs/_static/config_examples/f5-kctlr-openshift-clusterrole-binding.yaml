@@ -3,7 +3,7 @@ kind: ClusterRoleBinding
 metadata:
     name: bigip-ctlr-role
 userNames:
-- system:serviceaccount:default:bigip-ctlr
+- system:serviceaccount:kube-system:bigip-ctlr
 subjects:
 - kind: ServiceAccount
   namespace: kube-system
