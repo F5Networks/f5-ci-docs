@@ -7,6 +7,17 @@ metadata:
       {
         "ip-protocol": "http",
         "load-balancing-mode": "round-robin",
+        "event-handlers" : [
+          {
+            # A HTTP Request event handler that filters the incoming request on method type.
+            # It sends back a `503` if requested method is POST else lets the request go through
+            "http-request": "module.exports = (req, res, next) => {\n if (req.method === 'POST') {\n res.statusCode = 503;\n res.end('POST Method not supported');\n } else { \n next(); \n } \n}\n"
+          },
+          {
+            # A HTTP Response event handler that appends a header to the server response
+            "http-response": "module.exports = (res, next) => { res.headers['x-my-bar'] = 'foo'; next(); }"
+          }
+        ],
         "flags" : {
           "x-forwarded-for": true,
           "x-served-by": true
