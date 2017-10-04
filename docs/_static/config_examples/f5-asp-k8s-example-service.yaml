@@ -28,12 +28,6 @@ metadata:
             }
           }
         },
-        "stats": {
-          "url": "<splunk_url>",
-          "token": "<splunk_auth_token>",
-          "flush-interval": 10000,
-          "backend": "splunk"
-        }
       }
   labels:
     # the name of the Service

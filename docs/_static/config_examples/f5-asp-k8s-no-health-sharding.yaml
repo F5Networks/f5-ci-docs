@@ -20,7 +20,13 @@ data:
           "config-file": "/var/run/kubernetes/proxy-plugin/service-ports.json",
           "poll-interval": 500
         }
-      }
+      },
+      "stats": {
+          "url": "<splunk_url>",
+          "token": "<splunk_auth_token>",
+          "flush-interval": 10000,
+          "backend": "splunk"
+        }
     }
 ---
 apiVersion: extensions/v1beta1

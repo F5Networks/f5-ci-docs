@@ -81,7 +81,7 @@ Statistics
 The |asp| collects traffic statistics for the Services it load balances.
 These stats are either logged locally or sent to an external analytics application, like :ref:`Splunk <send-stats-splunk>`.
 
-You can set the location and type of the analytics application in the `stats </products/asp/latest/index.html#stats>`_ section of the :ref:`Service annotation <k8s-service-annotate>`.
+You can set the location and type of the analytics application in the `stats </products/asp/latest/index.html#stats>`_ section of the :ref:`ASP ConfigMap <asp-configure-k8s>`.
 
 .. seealso::
 

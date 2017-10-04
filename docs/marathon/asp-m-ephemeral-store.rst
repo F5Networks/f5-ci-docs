@@ -5,7 +5,6 @@
    We tested this documentation with:
 
    - Mesos 1.0.3, Marathon 1.3.9, Ubuntu 16.04, ASP 1.1.0, ASP Controller 1.0.0
-   - Mesos 1.0.3, Marathon 1.3.9, Ubuntu 16.04, ASP 1.0.0, ASP Controller 1.0.0
 
 .. _install-ephemeral-store-marathon:
 
@@ -17,7 +16,12 @@ It does so by way of a distributed, secure, key-value store called the Ephemeral
 The ephemeral store is a Docker-based Marathon `Application`_ .
 
 You can set up the ASP ephemeral store *before* you `deploy the ASP in Marathon <install-asp-marathon>`_ -- OR --
-add the ephemeral store configurations to an existing ASP.
+add the ephemeral store configurations to an existing ASP running v1.1.0.
+
+.. warning::
+
+   The ephemeral store is not compatible with ASP v1.0.0.
+   If you have a previous version of the ASP running, remove it and :ref:`deploy a new Application <deploy-asp-marathon>` running v1.1.0.
 
 Set up authentication to the ephemeral store
 --------------------------------------------
@@ -38,11 +42,10 @@ Deploy the ephemeral store
 
 .. important::
 
-   In the example configuration file provided here, the ephemeral store app deploys a cluster of 5 tasks.
-   Each task requires a dedicated node with 1 CPU and at least 1GB memory; the ephemeral store will not deploy on the master node.
-   Provide the number of nodes on which you'd like to run the ephemeral store app using the :code:`instances` parameter.
-   The tasks use ``HOST`` networking mode and connect to ports 8087, 4369, and 8099.
-
+   - Each ephemeral store instance requires a dedicated node with 1 CPU and at least 1GB memory.
+   - By default, the ephemeral store app deploys a cluster of five (5) instances.
+     **Do not deploy the ephemeral store with fewer than five instances or you may experience data loss.**
+   - The instances use ``HOST`` networking mode and connect to ports 8087, 4369, and 8099.
 
 #. Define the ephemeral store configurations in a JSON file.
 
@@ -173,31 +176,6 @@ Next Steps
 ----------
 
 Once you've set up the ephemeral store, you can :ref:`install and deploy the ASP <install-asp-marathon>`.
-
-If you already have the ASP running, complete the update tasks provided in the next section.
-
-
-.. _marathon-ephemeral-store-update:
-
-Update an existing ASP to use the ephemeral store
--------------------------------------------------
-
-#. Update the |aspm| configuration file:
-
-   - Update the ASP version:
-
-     ``"ASP_DEFAULT_CONTAINER": "store/f5networks/asp:1.1.0"``
-
-   - Add the ephemeral store section to the |aspm| configuration file:
-
-     .. literalinclude:: /_static/config_examples/f5-marathon-asp-ctlr-example.json
-        :lines: 32-47
-
-#. Update the Marathon API server.
-
-   .. code-block:: bash
-
-      $ curl -X POST -H "Content-Type: application/json" http://<marathon-uri>:8080/v2/apps -d @f5-marathon-asp-ctlr-example.json
 
 
 Learn More

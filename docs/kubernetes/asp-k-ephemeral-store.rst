@@ -10,7 +10,6 @@
    We tested this documentation with:
 
    - Kubernetes 1.4.8, coreos-beta-1465.3.0, ASP 1.1.0, f5-kube-proxy 1.0.0
-   - Kubernetes 1.4.8, coreos-7.2.1511, ASP 1.0.0, f5-kube-proxy 1.0.0
 
 .. _ephemeral store:
 
@@ -31,7 +30,20 @@ It allows multiple ASP instances to share non-persistent, or :dfn:`ephemeral`, d
 
    The ASP does not watch the Kubernetes API for changes to ConfigMaps.
    This means that you must set up the ASP ephemeral store *before* you `deploy the ASP <install-asp-k8s>`_.
-   If you have a previous version of the ASP running, set up the ephemeral store, then :ref:`update the ASP <k8s-ephemeral-store-update>`.
+
+.. warning::
+
+   The ephemeral store is not compatible with ASP v1.0.0.
+   If you have a previous version of the ASP running, remove it and :ref:`create new resources <asp-deploy-k8s>` for ASP v1.1.0.
+
+   Delete the ConfigMap, Deployment, and kill all ASP pods:
+
+   .. code-block:: bash
+
+      $ kubectl delete -f f5-asp-k8s-example-configmap.yaml
+      $ kubectl delete -f f5-asp-k8s-example-daemonset.yaml
+      $ kubectl delete pods -l name=f5-asp -n kube-system
+
 
 .. _k8s ephemeral store auth:
 
@@ -75,7 +87,7 @@ This example creates three (3) Secrets:
 .. code-block:: bash
 
    kubectl create secret tls ephemeral-store-root --cert=rootCA.crt --key=rootCA.key
-   kubectl create secret tls ephemeral-store-myuser --cert=myuser.crt --key=myuser.key
+   kubectl create secret tls ephemeral-store-myuser --cert=myuser.crt --key=myuser.key -n kube-system
    kubectl create secret generic ephemeral-store-user-rootca-cert --from-file=rootCA.crt -n kube-system
 
 .. _deploy-ephemeral-store-k8s:
@@ -88,7 +100,9 @@ You can define all of the required resources in a single YAML file.
 
 .. important::
 
-   Each pod requires a **minimum of 1 CPU and 1Gi memory**. [#k8smemory]_
+   - Each ephemeral store Pod requires 1 CPU and at least 1Gi memory.
+   - By default, the ephemeral store PetSet deploys five (5) Pods.
+     **Do not deploy the ephemeral store with fewer than five instances or you may experience data loss.**
 
 \
 
@@ -134,76 +148,7 @@ Next Steps
 
 Once you've set up the ephemeral store, :ref:`install and deploy the ASP <install-asp-k8s>`.
 
-If you already have the ASP running, complete the update tasks provided in the next section.
-
 .. _k8s-ephemeral-store-update:
-
-Update an existing ASP to use the ephemeral store
--------------------------------------------------
-
-#. Update the ASP resource manifest:
-
-   - Add the ephemeral store section to the ASP ConfigMap.
-
-   .. literalinclude:: /_static/config_examples/f5-asp-k8s.yaml
-      :lines: 11-27
-
-   - Update the DaemonSet:
-
-     - Update the ASP image to v1.1.0 (:code:`image: "store/f5networks/asp:1.1.0"`)
-
-     .. literalinclude:: /_static/config_examples/f5-asp-k8s.yaml
-        :lines: 51
-
-     - Add the ASP health sharding :code:`env` section.
-
-     .. literalinclude:: /_static/config_examples/f5-asp-k8s.yaml
-        :lines: 60-66
-
-     - Add the ephemeral store :code:`volumeMounts` to the :code:`container` section.
-     - Add the ephemeral store volumes.
-
-     .. literalinclude:: /_static/config_examples/f5-asp-k8s.yaml
-        :lines: 67-104
-
-
-#. Upload the edited file to the Kubernetes API server.
-
-   .. code-block:: bash
-
-      $ kubectl replace -f f5-asp-k8s.yaml -n kube-system
-
-#. Kill the existing ASP Pods, then verify that the new Pods run with the updated ASP version and configurations.
-
-   .. code-block:: bash
-      :emphasize-lines: 7, 25
-
-      $ kubectl get pods -n kube-system
-      NAME                                 READY     STATUS    RESTARTS   AGE
-      f5-asp-543io                         1/1       Running   0          48m
-      f5-asp-kkze3                         1/1       Running   0          48m
-      ...
-
-      $ kubectl delete pod f5-asp-543io f5-asp-kkze3 -n kube-system
-      pod "f5-asp-543io" deleted
-      pod "f5-asp-kkze3" deleted
-
-      $ kubectl get pods -n kube-system
-      NAME                                 READY     STATUS    RESTARTS   AGE
-      f5-asp-t56e5                         1/1       Running   0          4s
-      f5-asp-v2gxv                         1/1       Running   0          4s
-      ...
-
-      $ kubectl describe pod f5-asp-t56e5 -n kube-system
-      Name:		f5-asp-t56e5
-      Namespace:	kube-system
-      Node:		172.16.1.5/172.16.1.5
-      ...
-      Containers:
-        f5-asp:
-          Container ID:	docker://a469ae3cb7591d37c93c529d1a0271348893e9605e64043e43ed477730913d23
-          Image:		docker-registry.pdbld.f5net.com/velcro/asp:master
-      ...
 
 
 Learn More
