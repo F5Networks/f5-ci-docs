@@ -72,7 +72,7 @@ The ASP's health monitor enhances Kubernetes' native "liveness probes" as follow
 
 You can set up `ASP active health checks </products/asp/latest/#health-check-types>`_ on a per-Service basis.
 Because the ASP's settings are global, this means endpoints will receive redundant probes (one from each ASP instance).
-To reduce redundant probes, the ASP uses a health probe sharding algorithm that allocates a subnet of endpoints to each ASP instance.
+To reduce redundant probes, the ASP uses a health probe sharding algorithm that allocates a subset of endpoints to each ASP instance.
 Each ASP instance adds the health data for its assigned endpoints to the ephemeral store.
 
 Statistics

@@ -22,11 +22,11 @@ data:
         }
       },
       "stats": {
-          "url": "<splunk_url>",
-          "token": "<splunk_auth_token>",
-          "flush-interval": 10000,
-          "backend": "splunk"
-        }
+        "url": "<splunk_url>",
+        "token": "<splunk_auth_token>",
+        "flush-interval": 10000,
+        "backend": "splunk"
+      }
     }
 ---
 apiVersion: extensions/v1beta1

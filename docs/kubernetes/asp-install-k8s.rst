@@ -78,7 +78,7 @@ You can define both resources in a single YAML file.
 
    .. literalinclude:: /_static/config_examples/f5-asp-k8s.yaml
       :linenos:
-      :emphasize-lines: 15-26, 60-66
+      :emphasize-lines: 15-26, 66-72
 
    :fonticon:`fa fa-download` :download:`f5-asp-k8s-example-daemonset.yaml </_static/config_examples/f5-asp-k8s.yaml>`
 
@@ -123,6 +123,12 @@ You can define both resources in a single YAML file.
                 "config-file": "/var/run/kubernetes/proxy-plugin/service-ports.json",
                 "poll-interval": 500
               }
+            }
+            "stats": {
+              "url": "<splunk_url>",
+              "token": "<splunk_auth_token>",
+              "flush-interval": 10000,
+              "backend": "splunk"
             }
           }
       kind: ConfigMap
