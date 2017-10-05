@@ -64,21 +64,20 @@ You can define both resources in a single YAML file.
 
 .. important::
 
-   - You can use the ASP with or without :ref:`ASP health checks <asp-health-k8s>`.
+   - You can use the ASP with or without :ref:`ASP health checks <asp-health-k8s>` and health sharding.
 
-     The example shown below include the sections pertaining to health sharding (highlighted).
+     The example shown below includes the sections pertaining to health sharding (highlighted).
      Click the link below to download an example that excludes these sections.
 
      :fonticon:`fa fa-download` :download:`f5-asp-k8s-no-health-sharding.yaml </_static/config_examples/f5-asp-k8s-no-health-sharding.yaml>`
 
    - Be sure to include the Secret containing your Docker login credentials in the DaemonSet.
 
-
 #. Define the ASP resources.
 
    .. literalinclude:: /_static/config_examples/f5-asp-k8s.yaml
       :linenos:
-      :emphasize-lines: 15-26, 66-72
+      :emphasize-lines: 15-27, 67-74
 
    :fonticon:`fa fa-download` :download:`f5-asp-k8s-example-daemonset.yaml </_static/config_examples/f5-asp-k8s.yaml>`
 
@@ -166,8 +165,6 @@ You can define both resources in a single YAML file.
       - You should see one (1) ``f5-asp`` instance and one (1) ``kube-proxy`` instance for each node in the cluster.
       - The ASP instances may display an error status if all of the :ref:`ephemeral store` Pods haven't successfully launched yet.
         These errors will resolve once all Pods are online.
-
-
 
 Next Steps
 ----------

@@ -128,7 +128,7 @@ rst_epilog = """
 .. _f5-kube-proxy product documentation: %(base_url)s/products/connectors/f5-kube-proxy/latest/
 .. _ASP product documentation: %(base_url)s/products/asp/latest/
 .. _Kubernetes namespace: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
-.. _F5 virtual server properties: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#virtualserver-configmap-properties
+.. _F5 virtual server properties: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#virtualserver
 .. _Marathon: https://mesosphere.github.io/marathon/
 .. _Express middleware: https://expressjs.com/en/guide/using-middleware.html
 .. _Node.js: https://nodejs.org/en/

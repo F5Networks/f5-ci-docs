@@ -10,9 +10,9 @@ For deployment and usage instructions, please refer to the guides below.
    :caption: BIG-IP Controller
    :maxdepth: 1
 
-   Deploy the BIG-IP Controller <kubernetes/kctlr-app-install>
-   Manage BIG-IP objects <kubernetes/kctlr-manage-bigip-objects>
-   Deploy iApps <kubernetes/kctlr-deploy-iapp>
+   Deploy the BIG-IP Controller <kctlr-app-install>
+   Manage BIG-IP objects <kctlr-manage-bigip-objects>
+   Deploy iApps <kctlr-deploy-iapp>
    k8s-bigip-ctlr product information <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
    f5-kube-proxy product information <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
 
@@ -21,10 +21,10 @@ For deployment and usage instructions, please refer to the guides below.
    :caption: Application Services Proxy
    :maxdepth: 1
 
-   Set up the ASP ephemeral store <kubernetes/asp-k-ephemeral-store>
-   Install the ASP <kubernetes/asp-install-k8s>
-   Replace kube-proxy with the f5-kube-proxy <kubernetes/asp-k-deploy>
-   Attach an ASP to a Service <kubernetes/asp-k-virtual-servers>
+   Set up the ASP ephemeral store <asp-k-ephemeral-store>
+   Install the ASP <asp-install-k8s>
+   Replace kube-proxy with the f5-kube-proxy <asp-k-deploy>
+   Attach an ASP to a Service <asp-k-virtual-servers>
    ASP product information <http://clouddocs.f5.com/products/asp/latest>
 
 
@@ -107,9 +107,6 @@ The ASP's health monitor enhances Kubernetes' native "liveness probes" as follow
 - adds/removes endpoints from load balancing pool automatically based on health status;
 - provides opportunistic health checks by observing client traffic;
 - combines data from various health check types -- passive and active -- to provide a more comprehensive view of endpoints' health status.
-
-You can :ref:`set up ASP health checks <k8s-health-checks>` on a per-Service basis.
-Because each ASP instance (one per Node) shares the same global configurations, the Service endpoints will receive health probes from all of the ASP instances. To reduce this probe redundancy, the ASP can use a health probe sharding algorithm. This algorithm allocates a subset of endpoints to each ASP instance. Each ASP instance adds the health data for its assigned endpoints to the ephemeral store, where the data can then be accessed by all other ASP instances.
 
 Statistics
 ``````````

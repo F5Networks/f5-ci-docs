@@ -92,6 +92,17 @@ To activate the ASP's health monitor:
      $ kubectl replace -f f5-asp-k8s-example-service.yaml
      service "myService" replaced
 
+/
+
+.. important::
+
+   Because each ASP instance (one per Node) shares the same global configurations, Service endpoints will receive health probes from all of the ASP instances. The ASP can use a health probe sharding algorithm to reduce probe redundancy.
+
+   This algorithm allocates a subset of endpoints to each ASP instance. Each ASP instance adds the health data for its assigned endpoints to the :ref:`ephemeral store <ephemeral store>`, giving all ASP instances access to the data for all endpoints.
+
+   You can set up ASP health sharding when you :ref:`deploy the ASP <asp-deploy-k8s>`.
+
+
 Next Steps
 ----------
 

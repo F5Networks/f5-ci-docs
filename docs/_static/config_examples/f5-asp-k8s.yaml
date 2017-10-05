@@ -12,10 +12,11 @@ data:
           # Cluster IP address of the ephemeral store Service
           "host": "<ephemeral-store-service_cluster-IP>",
           "port": 8087,
+          // required for ASP health sharding
           "components": {
             "health": {
               "nodes": [
-                # Provide the Node ID for each node the ASP daemonset will run on
+                // Provide the Node ID for each node the ASP daemonset will run on
                 "172.16.1.3",
                 "172.16.1.5",
                 "172.16.1.6",
@@ -63,6 +64,7 @@ spec:
             - /etc/configmap/asp.config.json
           securityContext:
             privileged: false
+          # Required for ASP health data sharding
           env:
           - name: ASP_HEALTH_NODE_ID
             valueFrom:

@@ -8,19 +8,19 @@ Please refer to the guides below for deployment and usage instructions.
    :caption: BIG-IP Controller
    :maxdepth: 1
 
-   Set up DC/OS auth <marathon/mctlr-authenticate-dcos>
-   Deploy the BIG-IP Controller <marathon/mctlr-app-install>
-   Manage BIG-IP objects <marathon/mctlr-manage-bigip-objects>
-   Deploy iApps <marathon/mctlr-deploy-iapp>
+   Set up DC/OS auth <mctlr-authenticate-dcos>
+   Deploy the BIG-IP Controller <mctlr-app-install>
+   Manage BIG-IP objects <mctlr-manage-bigip-objects>
+   Deploy iApps <mctlr-deploy-iapp>
    marathon-bigip-ctlr product information <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest>
 
 .. toctree::
    :caption: Application Services Proxy
    :maxdepth: 1
 
-   Set up the ASP ephemeral store <marathon/asp-m-ephemeral-store>
-   Install the ASP <marathon/asp-install-marathon>
-   Launch an ASP for a Marathon App <marathon/asp-m-virtual-servers>
+   Set up the ASP ephemeral store <asp-m-ephemeral-store>
+   Install the ASP <asp-install-marathon>
+   Launch an ASP for a Marathon App <asp-m-virtual-servers>
    ASP product information <http://clouddocs.f5.com/products/asp/latest>
    marathon-asp-ctlr product information <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest>
 
