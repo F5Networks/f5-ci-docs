@@ -3,6 +3,44 @@
 F5 Kubernetes Container Integration
 ===================================
 
+This document provides general information regarding the F5 Integration for Kubernetes.
+For deployment and usage instructions, please refer to the guides below.
+
+.. toctree::
+   :caption: BIG-IP Controller
+   :maxdepth: 1
+
+   Deploy the BIG-IP Controller <kubernetes/kctlr-app-install>
+   Manage BIG-IP objects <kubernetes/kctlr-manage-bigip-objects>
+   Deploy iApps <kubernetes/kctlr-deploy-iapp>
+   k8s-bigip-ctlr product information <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
+   f5-kube-proxy product information <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
+
+
+.. toctree::
+   :caption: Application Services Proxy
+   :maxdepth: 1
+
+   Set up the ASP ephemeral store <kubernetes/asp-k-ephemeral-store>
+   Install the ASP <kubernetes/asp-install-k8s>
+   Replace kube-proxy with the f5-kube-proxy <kubernetes/asp-k-deploy>
+   Attach an ASP to a Service <kubernetes/asp-k-virtual-servers>
+   ASP product information <http://clouddocs.f5.com/products/asp/latest>
+
+
+Related
+-------
+
+.. toctree::
+   :glob:
+   :maxdepth: 1
+
+   asp*
+   k8s-bigip-ctlr docs <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
+
+   F5 ASP docs <http://clouddocs.f5.com/products/asp/latest>
+
+
 Overview
 --------
 
@@ -20,7 +58,7 @@ The |asp| provides load balancing and telemetry for containerized applications, 
 .. _k8s-prereqs:
 
 General Prerequisites
----------------------
+`````````````````````
 
 The F5 Integration for Kubernetes documentation set assumes that you:
 
@@ -61,7 +99,7 @@ It allows ASP instances to share non-persistent, or :dfn:`ephemeral`, data.
 Health monitors
 ```````````````
 
-The ASP's built-in `health monitor middleware </products/asp/latest/#health-monitors>`_ monitors endpoint health using both active and passive checks.
+The ASP's built-in `health monitor </products/asp/latest/#health-monitors>`_ detects endpoint health using both active and passive checks.
 The ASP adds and removes endpoints from load balancing pools based on the health status determined by these checks.
 The ASP's health monitor enhances Kubernetes' native "liveness probes" as follows:
 
@@ -70,10 +108,8 @@ The ASP's health monitor enhances Kubernetes' native "liveness probes" as follow
 - provides opportunistic health checks by observing client traffic;
 - combines data from various health check types -- passive and active -- to provide a more comprehensive view of endpoints' health status.
 
-You can set up `ASP active health checks </products/asp/latest/#health-check-types>`_ on a per-Service basis.
-Because the ASP's settings are global, this means endpoints will receive redundant probes (one from each ASP instance).
-To reduce redundant probes, the ASP uses a health probe sharding algorithm that allocates a subset of endpoints to each ASP instance.
-Each ASP instance adds the health data for its assigned endpoints to the ephemeral store.
+You can :ref:`set up ASP health checks <k8s-health-checks>` on a per-Service basis.
+Because each ASP instance (one per Node) shares the same global configurations, the Service endpoints will receive health probes from all of the ASP instances. To reduce this probe redundancy, the ASP can use a health probe sharding algorithm. This algorithm allocates a subset of endpoints to each ASP instance. Each ASP instance adds the health data for its assigned endpoints to the ephemeral store, where the data can then be accessed by all other ASP instances.
 
 Statistics
 ``````````
@@ -82,12 +118,6 @@ The |asp| collects traffic statistics for the Services it load balances.
 These stats are either logged locally or sent to an external analytics application, like :ref:`Splunk <send-stats-splunk>`.
 
 You can set the location and type of the analytics application in the `stats </products/asp/latest/index.html#stats>`_ section of the :ref:`ASP ConfigMap <asp-configure-k8s>`.
-
-.. seealso::
-
-   - :ref:`ephemeral store`
-   - :ref:`Install the ASP <install-asp-k8s>`
-   - :ref:`Add an ASP instance to a Service <k8s-launch-asp>`
 
 
 F5-kube-proxy
@@ -249,21 +279,5 @@ When running in :ref:`cluster mode`, the |kctlr| has visibility into the health 
 .. tip::
 
    In either mode of operation, it's good practice to :ref:`add a BIG-IP health monitor <k8s-config-bigip-health-monitor>` to the virtual server to ensure the BIG-IP system knows when resources go down.
-
-
-Related
--------
-
-.. toctree::
-   :glob:
-   :maxdepth: 1
-
-   kctlr*
-   ../openshift/index
-   asp*
-   k8s-bigip-ctlr docs <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
-   f5-kube-proxy docs <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
-   F5 ASP docs <http://clouddocs.f5.com/products/asp/latest>
-
 
 .. _Cluster Network: https://kubernetes.io/docs/concepts/cluster-administration/networking/

@@ -2,8 +2,8 @@
 
 .. _k8s-asp-deploy:
 
-Replace kube-proxy with f5-kube-proxy
-=====================================
+Replace kube-proxy with the f5-kube-proxy
+=========================================
 
 .. sidebar:: Docs test matrix
 
