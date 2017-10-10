@@ -3,14 +3,16 @@
    single: BIG-IP Controller; OpenShift
    single: BIG-IP Controller; setup
    single: BIG-IP Controller; mode
-   single: concept
 
 .. _kctlr modes:
 
 Nodeport mode vs Cluster mode
 =============================
 
-If you're setting up a Kubernetes cluster and/or the |kctlr-long| for the first time, you may be asking yourself *"What is the pool-member-type setting and which mode should I choose?"*.
+If you're setting up a Kubernetes or OpenShift cluster with the |kctlr| for the first time, you may be asking yourself,
+
+*"What is the pool-member-type setting and which mode should I choose?"*.
+
 This document clarifies the available options and provides vital information to take into account when making this decision.
 
 In brief: The :code:`pool-member-type` setting determines what mode the Controller runs in -- :code:`nodeport` or :code:`cluster`.
@@ -20,7 +22,7 @@ In brief: The :code:`pool-member-type` setting determines what mode the Controll
 Nodeport mode
 -------------
 
-Nodeport mode is the default mode of operation for the |kctlr|.
+Nodeport mode is the default mode of operation for the |kctlr| in Kubernetes.
 From a configuration standpoint, it's easier to set up since it doesn't matter what Kubernetes `Cluster Network`_ you use.
 In addition, NodePort mode doesn't have any specific BIG-IP licensing requirements.
 
@@ -48,7 +50,12 @@ If you want to use NodePort mode, continue on to :ref:`Install the BIG-IP Contro
 Cluster mode
 ------------
 
-You should use :code:`cluster` mode if you intend to integrate your BIG-IP device into the Kubernetes cluster network. [#clusternet]_
+You should use :code:`cluster` mode if you intend to integrate your BIG-IP device into the Kubernetes cluster network.
+
+.. important::
+
+   OpenShift users must run the |kctlr| in cluster mode.
+
 Cluster mode requires a `Better or Best license`_ that includes SDN services and advanced routing.
 While there are additional networking configurations to make, cluster mode has distinct benefits over nodeport mode:
 
@@ -135,7 +142,6 @@ What's Next
 - `Configuration options for the BIG-IP Controller </products/connectors/k8s-bigip-ctlr/latest/#controller-configuration-parameters>`_
 
 .. rubric:: Footnotes
-.. [#clusternet] OpenShift users must run the |kctlr| in cluster mode.
 .. [#servicetype] See `Publishing Services - Service Types <https://kubernetes.io/docs/concepts/services-networking/service>`_ in the Kubernetes documentation.
 .. [#ansible] See the `f5-ansible repo on GitHub <https://github.com/F5Networks/f5-ansible>`_ for Ansible modules that can manipulate F5 products.
 .. [#encap] Be sure to use the correct encapsulation format for your network.

@@ -106,9 +106,9 @@ You can define all of the required resources in a single YAML file.
 
 \
 
-.. literalinclude:: /_static/config_examples/f5-ephemeral-store-k8s-example.yaml
+.. literalinclude:: /kubernetes/config_examples/f5-ephemeral-store-k8s-example.yaml
 
-:fonticon:`fa fa-download` :download:`ephemeral-store-k8s-example.yaml </_static/config_examples/f5-ephemeral-store-k8s-example.yaml>`
+:fonticon:`fa fa-download` :download:`ephemeral-store-k8s-example.yaml </kubernetes/config_examples/f5-ephemeral-store-k8s-example.yaml>`
 
 .. note for kubernetes v1.5 and higher support -- PetSet changed to StatefulSet and requires apps/v1beta1
 

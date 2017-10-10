@@ -17,49 +17,38 @@
    cloudfoundry/cfctlr*
 
 .. toctree::
-   :caption: Kubernetes
+   :caption: Kubernetes / OpenShift
    :maxdepth: 1
    :glob:
 
-   BIG-IP Controller - K8s <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
-   F5-proxy - K8s <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest/>
-   Integration Overview <kubernetes/index>
+   BIG-IP Controller home <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
+   F5-kube-proxy home <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest/>
+   Kubernetes overview <kubernetes/index>
+   OpenShift overview <openshift/index>
    kubernetes/kctlr-modes
-   kubernetes/kctlr-configure
+   openshift/kctlr-use-bigip-openshift
    kubernetes/kctlr-app-install
-   kubernetes/kctlr-ingress
+   openshift/kctlr-openshift-app-install
    kubernetes/kctlr-secrets
+   kubernetes/kctlr-ingress
    kubernetes/kctlr-manage-bigip-objects
    kubernetes/kctlr-deploy-iapp
-   kubernetes/asp*
+   openshift/replace-f5-router.rst
+   openshift/kctlr-openshift-routes.rst
 
 .. toctree::
    :caption: Mesos Marathon
    :glob:
    :maxdepth: 1
 
-   BIG-IP Controller - Marathon <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
-   ASP Controller - Marathon <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest/>
+   BIG-IP Controller home <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
+   ASP Controller home <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest/>
    Integration Overview <marathon/index>
    marathon/mctlr-app-install
    marathon/mctlr-configure
    marathon/mctlr-authenticate-dcos
    marathon/mctlr-manage-bigip-objects
    marathon/mctlr-deploy-iapp
-   marathon/asp*
-
-.. toctree::
-   :caption: OpenShift
-   :maxdepth: 1
-   :glob:
-
-   BIG-IP Controller - K8s <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
-   Integration Overview <openshift/index>
-   openshift/kctlr-use-bigip-openshift
-   openshift/kctlr-openshift-app-install
-   openshift/replace-f5-router.rst
-   openshift/kctlr-openshift-routes.rst
-
 
 .. toctree::
    :caption: Support

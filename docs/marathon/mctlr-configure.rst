@@ -25,7 +25,7 @@ F5_CC_PARTITIONS	    The `BIG-IP partition`_ |mctlr| should manage
 =====================   =======================================================
 
 
-.. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example.json
+.. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example.json
    :caption: Example Application definition
    :emphasize-lines: 17-21
    :linenos:
@@ -88,6 +88,6 @@ F5\_{n}_IAPP_OPTION_*               Template-specific [#iapplabels]_
 See Also
 --------
 
-See the `marathon-bigip-ctlr product documentation </products/connectors/marathon-bigip-ctlr/latest/index.html>`_ for the full list of available configuration parameters.
+See the `marathon-bigip-ctlr reference documentation`_ for the full list of available configuration parameters.
 
 .. _BIG-IP partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-13-0-0/2.html

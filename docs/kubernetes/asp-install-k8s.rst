@@ -5,7 +5,7 @@
 
 .. sidebar:: Docs test matrix
 
-   We tested this documentation with:
+   Documentation manually tested with:
 
    - Kubernetes 1.4.8, coreos-beta-1465.3.0, ASP 1.1.0, f5-kube-proxy 1.0.0
    - Kubernetes 1.4.8, coreos-7.2.1511, ASP 1.0.0, f5-kube-proxy 1.0.0
@@ -69,17 +69,17 @@ You can define both resources in a single YAML file.
      The example shown below includes the sections pertaining to health sharding (highlighted).
      Click the link below to download an example that excludes these sections.
 
-     :fonticon:`fa fa-download` :download:`f5-asp-k8s-no-health-sharding.yaml </_static/config_examples/f5-asp-k8s-no-health-sharding.yaml>`
+     :fonticon:`fa fa-download` :download:`f5-asp-k8s-no-health-sharding.yaml </kubernetes/config_examples/f5-asp-k8s-no-health-sharding.yaml>`
 
    - Be sure to include the Secret containing your Docker login credentials in the DaemonSet.
 
 #. Define the ASP resources.
 
-   .. literalinclude:: /_static/config_examples/f5-asp-k8s.yaml
+   .. literalinclude:: /kubernetes/config_examples/f5-asp-k8s.yaml
       :linenos:
       :emphasize-lines: 15-27, 67-74
 
-   :fonticon:`fa fa-download` :download:`f5-asp-k8s-example-daemonset.yaml </_static/config_examples/f5-asp-k8s.yaml>`
+   :fonticon:`fa fa-download` :download:`f5-asp-k8s-example-daemonset.yaml </kubernetes/config_examples/f5-asp-k8s.yaml>`
 
 #. Upload the resources to the Kubernetes API server.
 
@@ -94,7 +94,7 @@ You can define both resources in a single YAML file.
    .. code-block:: bash
       :caption: ASP ConfigMap
 
-      $ kubectl get configmap f5-asp-config -o yaml --namespace kube-system
+      kubectl get configmap f5-asp-config -o yaml --namespace kube-system
       apiVersion: v1
       data:
         asp.config.json: |
@@ -145,7 +145,7 @@ You can define both resources in a single YAML file.
       :caption: ASP Pods
       :emphasize-lines: 3-4
 
-      $ kubectl get pods --namespace kube-system -o wide
+      kubectl get pods --namespace kube-system -o wide
       NAME                                  READY     STATUS    RESTARTS   AGE       IP            NODE
       f5-asp-2uore                          1/1       Running   0          55m       172.16.1.21   172.16.1.21
       f5-asp-r4e94                          1/1       Running   0          55m       172.16.1.19   172.16.1.19

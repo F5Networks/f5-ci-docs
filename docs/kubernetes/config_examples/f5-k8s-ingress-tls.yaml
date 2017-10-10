@@ -4,10 +4,10 @@ metadata:
   name: ingressTLS
   namespace: default
   annotations:
-    # Provide an IP address for the BIG-IP pool you want to handle traffic.
+    # Provide a BIG-IP Self IP address to assign to the virtual server.
     virtual-server.f5.com/ip: "1.2.3.4"
-    # Specify the BIG-IP partition containing the virtual server.
-    virtual-server.f5.com/partition: "k8s"
+    # Specify the BIG-IP partition where the Controller should create the virtual server.
+    virtual-server.f5.com/partition: "kubernetes"
     # Allow/deny TLS connections
     ingress.kubernetes.io/ssl-redirect: "true"
     # Allow/deny HTTP connections

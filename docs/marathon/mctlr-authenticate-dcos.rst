@@ -16,7 +16,7 @@ Apache Mesos `DC/OS Open <https://dcos.io/>`_ uses `DC/OS oauth <https://dcos.io
 
 #. Add the token to your |mctlr| App definition using the ``F5_CC_DCOS_AUTH_TOKEN`` configuration parameter.
 
-   .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example.json
+   .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example.json
       :linenos:
       :lines: 1-18, 22-26
       :emphasize-lines: 22-23
@@ -44,7 +44,7 @@ DC/OS Enterprise
 
    .. code-block:: bash
 
-      $ curl -k -v https://<cluster-url>/ca/dcos-ca.crt -o dcos-ca.crt
+      curl -k -v https://<cluster-url>/ca/dcos-ca.crt -o dcos-ca.crt
 
    .. important::
 
@@ -72,7 +72,7 @@ DC/OS Enterprise
 
 #. Add the ``F5_CC_DCOS_AUTH_CREDENTIALS`` and ``F5_CC_MARATHON_CA_CERT`` |mctlr-long| `configuration labels </products/connectors/marathon-bigip-ctlr/latest/#configuration-parameters>`_ to the |mctlr| App definition.
 
-   .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example.json
+   .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example.json
       :lines: 1-18, 22-26
       :linenos:
       :emphasize-lines: 19-21

@@ -8,7 +8,7 @@ Install the BIG-IP Controller in Kubernetes
 
 .. sidebar:: Docs test matrix
 
-   We tested this documentation with:
+   Documentation manually tested with:
 
    - ``kubernetes-v1.6.4 on Ubuntu-16.4.2``
    - ``kubernetes-v1.4.8 on CoreOS 1409.6.0``
@@ -27,85 +27,107 @@ The Deployment creates a `ReplicaSet`_ that, in turn, launches a `Pod`_ running 
 Initial Setup
 -------------
 
-#. `Create a new partition`_ for Kubernetes on your BIG-IP system.
-   The |kctlr| can not manage objects in the ``/Common`` partition.
+.. include:: /_static/reuse/kctlr-initial-setup.rst
+   :end-line: 4
 
-#. :ref:`Add a Kubernetes Secret <k8s-add-secret>` containing your BIG-IP login credentials to your Kubernetes master node.
+.. include:: /_static/reuse/kctlr-initial-setup.rst
+   :start-line: 6
 
-#. `Create a Kubernetes Secret containing your Docker login credentials`_ (required if you need to pull the container image from a private Docker registry).
+.. _k8s-rbac:
 
-.. _create-k8s-deployment:
+Set up RBAC Authentication
+--------------------------
 
-.. important::
+.. note::
 
-   You should create all |kctlr| objects in the ``kube-system`` `namespace`_, unless otherwise specified in the deployment instructions.
+   If your cluster doesn't use `Role Based Access Control <https://kubernetes.io/docs/admin/authorization/rbac/>`_ , you can skip this step.
+
+#. Create a Service Account for the |kctlr|.
+
+   .. code-block:: console
+
+      $ kubectl create serviceaccount bigip-ctlr -n kube-system
+      serviceaccount "bigip-ctlr" created
+
+#. Create a `Cluster Role`_ and `Cluster Role Binding`_.
+
+   You can restrict the permissions granted in the cluster role as needed for your deployment.
+   The supported permission set is shown in the table and Cluster Role example below.
+
+   +--------------+-------------------+---------------------------------------------+
+   | API groups   | Resources         | Actions                                     |
+   +==============+===================+=============================================+
+   | ""           | endpoints         | get, list, watch                            |
+   |              +-------------------+                                             |
+   |              | namespaces        |                                             |
+   |              +-------------------+                                             |
+   |              | nodes             |                                             |
+   |              +-------------------+                                             |
+   |              | services          |                                             |
+   +--------------+-------------------+---------------------------------------------+
+   | "extensions" | ingresses         | get, list, watch                            |
+   +--------------+-------------------+---------------------------------------------+
+   | ""           | configmaps        | get, list, watch, update, create, patch     |
+   +--------------+-------------------+                                             |
+   |              | events            |                                             |
+   +--------------+-------------------+---------------------------------------------+
+   | "extensions" | ingresses/status  | get, list, watch, update, create, patch     |
+   +--------------+-------------------+---------------------------------------------+
+
+   \
+
+   .. literalinclude:: /kubernetes/config_examples/f5-k8s-sample-rbac.yaml
+      :linenos:
+
+   :fonticon:`fa fa-download` :download:`f5-k8s-sample-rbac.yaml </kubernetes/config_examples/f5-k8s-sample-rbac.yaml>`
+
 
 .. _k8s-bigip-ctlr-deployment:
 
 Create a Deployment
 -------------------
 
-#. Define a `Kubernetes Deployment`_ using valid JSON or YAML.
+#. Define the |kctlr| configurations in a `Kubernetes Deployment`_ using valid JSON or YAML.
 
-   The deployment example below also creates a `ServiceAccount`_ for the controller to use.
-
-   .. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
+   .. literalinclude:: /kubernetes/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
       :linenos:
-      :caption: Example Kubernetes Manifest
-      :emphasize-lines: 2,50
 
-   :fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_image-secret.yaml </_static/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml>`
+   :fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_image-secret.yaml </kubernetes/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml>`
 
-Set up RBAC Authentication
-``````````````````````````
-
-.. note::
-
-   - If your cluster is not using `Role Based Access Control <https://kubernetes.io/docs/admin/authorization/rbac/>`_ , you can skip this step.
-
-Create a `cluster role <https://kubernetes.io/docs/admin/authorization/rbac/#role-and-clusterrole>`_ and `cluster role binding <https://kubernetes.io/docs/admin/authorization/rbac/#rolebinding-and-clusterrolebinding>`_.
-These resources allow the |kctlr| to monitor and update the resources it manages.
-
-You can restrict the permissions granted in the cluster role as needed for your deployment.
-Those shown below are the supported permission set.
-
-
-.. literalinclude:: /_static/config_examples/f5-k8s-sample-rbac.yaml
-   :linenos:
-   :caption: Example ``ClusterRole`` and ``ClusterRoleBinding``
-
-:fonticon:`fa fa-download` :download:`f5-k8s-sample-rbac.yaml </_static/config_examples/f5-k8s-sample-rbac.yaml>`
-
-Upload the Deployment
----------------------
+Upload the resources to the Kubernetes API server
+-------------------------------------------------
 
 Upload the Deployment, Cluster Role, and Cluster Role Binding to the Kubernetes API server using ``kubectl apply``.
 Be sure to create all resources in the ``kube-system`` namespace.
 
 .. code-block:: console
 
-   user@k8s-master:~$ kubectl apply -f f5-k8s-bigip-ctlr_image-secret.yaml --namespace=kube-system
-   user@k8s-master:~$ kubectl apply -f f5-k8s-sample-rbac.yaml --namespace=kube-system
+   kubectl apply -f f5-k8s-bigip-ctlr_image-secret.yaml --namespace=kube-system
+   kubectl apply -f f5-k8s-sample-rbac.yaml --namespace=kube-system
+   deployment "k8s-bigip-ctlr-deployment" created
+   cluster role "bigip-ctlr-clusterrole" created
+   cluster role binding "bigip-ctlr-clusterrole-binding" created
 
 
 Verify creation
 ---------------
 
-When you create a Deployment, a `ReplicaSet`_ and `Pod`_ (s) launch automatically.
-Use ``kubectl`` to verify all of the objects launched successfully.
+Use :command:`kubectl get` to verify all of the objects launched successfully.
+
+You should see one (1) `ReplicaSet`_, as well as one (1) k8s-bigip-ctlr `Pod`_ for each node in the cluster. The example below shows one (1) Pod running the k8s-bigip-ctlr in a test cluster with one worker node.
 
 .. code-block:: console
-   :emphasize-lines: 3, 7, 11
+   :emphasize-lines: 3, 7, 11, 13
 
-   user@k8s-master:~$ kubectl get deployments --namespace=kube-system
+   kubectl get deployments --namespace=kube-system
    NAME             DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
    k8s-bigip-ctlr   1         1         1            1           1h
 
-   user@k8s-master:~$ kubectl get replicasets --namespace=kube-system
+   kubectl get replicasets --namespace=kube-system
    NAME                       DESIRED   CURRENT   AGE
    k8s-bigip-ctlr-331478340   1         1         1h
 
-   user@k8s-master:~$ kubectl get pods --namespace=kube-system
+   kubectl get pods --namespace=kube-system
    NAME                                  READY     STATUS    RESTARTS   AGE
    k8s-bigip-ctlr-331478340-ke0h9        1/1       Running   0          1h
    kube-apiserver-172.16.1.19            1/1       Running   0          2d
@@ -116,8 +138,8 @@ Use ``kubectl`` to verify all of the objects launched successfully.
    kube-scheduler-172.16.1.19            1/1       Running   0          2d
    kubernetes-dashboard-172.16.1.19      1/1       Running   0          2d
 
-.. _ReplicaSet: https://kubernetes.io/docs/user-guide/replicasets/
-.. _Pod: https://kubernetes.io/docs/user-guide/pods/
-.. _ServiceAccount: https://kubernetes.io/docs/admin/service-accounts-admin/
-.. _Create a new partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-implementations-12-1-0/29.html
-.. _Create a Kubernetes Secret containing your Docker login credentials: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+What's Next
+-----------
+
+- Check out the `k8s-bigip-ctlr reference documentation`_.
+- Learn how to :ref:`expose Services to external traffic using an Ingress <kctlr-ingress-config>`.

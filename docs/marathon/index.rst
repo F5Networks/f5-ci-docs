@@ -65,7 +65,7 @@ The ASP integrates with container environment management and orchestration syste
 
 .. seealso::
 
-   `ASP product documentation`_
+   `ASP reference documentation`_
 
 .. _aspm-overview:
 
@@ -132,14 +132,13 @@ When the |mctlr-long| discovers Applications with new or updated F5 Application 
 When the |aspm-long| discovers Applications configured with the ``"f5-asp": "enable"`` label, it launches an ASP instance for that app.
 F5 Application Labels define the ASP configurations.
 
-See the |mctlr| `product documentation </products/connectors/marathon-bigip-ctlr/latest/>`_ for the full list of F5 Application Labels.
+See the |mctlr| `reference documentation </products/connectors/marathon-bigip-ctlr/latest/>`_ for the full list of F5 Application Labels.
 
 .. tip::
 
    You can download the code example used in the following sections and modify it to suit your environment.
 
-   :fonticon:`fa fa-download` :download:`f5-marathon-bigip-ctlr-example_pm_hc.json </_static/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json>`
-
+   :fonticon:`fa fa-download` :download:`f5-marathon-bigip-ctlr-example_pm_hc.json </marathon/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json>`
 
 
 iApps Application Labels
@@ -148,7 +147,7 @@ iApps Application Labels
 You can use the |mctlr-long| to deploy BIG-IP iApps using a special set of customizable iApps Application Labels. The iApp you want to deploy must already exist on the BIG-IP device (can be in the ``/Common`` partition).
 
 A few of the key iApp Application Labels depend on the iApp you want to deploy, as well as your environment and needs.
-See :ref:`Required iApp Application Labels <marathon-required-iapp-labels>` and the `marathon-bigip-ctlr product documentation </products/connectors/marathon-bigip-ctlr/latest/>`_ for more information.
+See :ref:`Required iApp Application Labels <marathon-required-iapp-labels>` and the `marathon-bigip-ctlr reference documentation`_ for more information.
 
 
 Apache Mesos DNS and ASP Discovery
@@ -188,7 +187,7 @@ These parameters include ``{n}`` in the label key; simply replace ``{n}`` with t
 
 The code sample below defines an Application with three (3) port indices.
 
-.. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
+.. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
    :caption: Service definition with multiple ports
    :lines: 1-25
    :linenos:
@@ -198,7 +197,7 @@ The code sample below defines an Application with three (3) port indices.
 In the ``labels`` section, we specify that we want to create HTTP virtual servers on the BIG-IP device for port indices ``0`` and ``1``.
 In this example, ``0`` refers to the first mapping defined above (``"containerPort": "8088"``) and ``1`` refers to the second (``"containerPort": "8188"``).
 
-.. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
+.. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
    :caption: |mctlr| labels defining BIG-IP objects for two (2) port indices
    :lines: 26-38
    :lineno-start: 26
@@ -220,7 +219,7 @@ For ports configured with Marathon health checks, the |mctlr|:
 
 Here, we create health checks for each of the port indices defined for our Application.
 
-.. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
+.. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
    :caption: Defining health checks for multiple ports
    :lines: 39-65
    :lineno-start: 39

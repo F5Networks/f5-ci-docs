@@ -49,10 +49,10 @@ Deploy the ephemeral store
 
 #. Define the ephemeral store configurations in a JSON file.
 
-   .. literalinclude:: /_static/config_examples/f5-ephemeral-store-marathon-example.json
+   .. literalinclude:: /marathon/config_examples/f5-ephemeral-store-marathon-example.json
       :linenos:
 
-   :download:`f5-ephemeral-store-marathon-example.json </_static/config_examples/f5-ephemeral-store-marathon-example.json>`
+   :download:`f5-ephemeral-store-marathon-example.json </marathon/config_examples/f5-ephemeral-store-marathon-example.json>`
 
 #. Upload the config file to the Marathon API server.
 

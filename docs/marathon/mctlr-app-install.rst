@@ -5,7 +5,7 @@ Install the |mctlr-long|
 
 .. sidebar:: Docs test matrix
 
-   We tested this documentation with:
+   Documentation manually tested with:
 
    ==================== ===================== =========== ===============
    Platform             OS                    ASP         ASP Controller
@@ -31,11 +31,11 @@ Launch the |mctlr| App using the Marathon REST API
 
 #. Create a JSON config file containing the :ref:`required configuration parameters <mctlr-configuration>`.
 
-   .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-example.json
+   .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example.json
       :linenos:
       :emphasize-lines: 12, 16-27
 
-   :fonticon:`fa fa-download` :download:`f5-marathon-bigip-ctlr-example.json </_static/config_examples/f5-marathon-bigip-ctlr-example.json>`
+   :fonticon:`fa fa-download` :download:`f5-marathon-bigip-ctlr-example.json </marathon/config_examples/f5-marathon-bigip-ctlr-example.json>`
 
 
 #. Upload the config file to the Marathon API server.
@@ -44,8 +44,7 @@ Launch the |mctlr| App using the Marathon REST API
       :linenos:
       :emphasize-lines: 1
 
-      user@mesos-master:~$ curl -X POST -H "Content-Type: application/json" http://<marathon_uri>/v2/apps -d @marathon-bigip-ctlr.json
-
+      curl -X POST -H "Content-Type: application/json" http://<marathon_uri>/v2/apps -d @marathon-bigip-ctlr.json
 
 Verify creation
 ---------------
@@ -59,9 +58,7 @@ Send a GET request to the Marathon API server to verify successful creation of t
 .. code-block:: bash
    :emphasize-lines: 1
 
-   user@mesos-master:~$ curl -X GET http://<marathon_uri>/v2/apps/marathon-bigip-ctlr | jq .
+   curl -X GET http://<marathon_uri>/v2/apps/marathon-bigip-ctlr | jq .
 
-
-.. _Create a new partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-implementations-12-1-0/29.html
 .. _Application: https://mesosphere.github.io/marathon/docs/application-basics.html
 .. _Marathon Web Interface: https://mesosphere.github.io/marathon/docs/marathon-ui.html

@@ -18,16 +18,18 @@ Take the steps below to replace the `OpenShift F5 Router`_ with the |kctlr-long|
 ===== ==================================================================================
 Step  Task
 ===== ==================================================================================
-1.    Remove the existing OpenShift F5 Router.
+1.    :ref:`remove f5 router`.
 ----- ----------------------------------------------------------------------------------
-2.    Install the |kctlr| in OpenShift.
+2.    :ref:`oc install kctlr`.
 ----- ----------------------------------------------------------------------------------
-3.    Configure the |kctlr| to use OpenShift routes.
+3.    :ref:`set up kctlr routes`.
 ----- ----------------------------------------------------------------------------------
-4.    Create OpenShift routes.
+4.    :ref:`deploy route resource`.
 ----- ----------------------------------------------------------------------------------
-5.    Verify route creation on the BIG-IP system.
+5.    :ref:`verify BIG-IP route objects`.
 ===== ==================================================================================
+
+.. _remove f5 router:
 
 Remove the OpenShift F5 Router
 ------------------------------
@@ -43,7 +45,9 @@ Use the OpenShift CLI to remove the pod(s) associated with the F5 Router.
 
 .. code-block:: console
 
-   $ oc delete pod <pod>
+   $ oc delete pod <pod-name>
+
+.. _oc install kctlr:
 
 Install the |kctlr|
 -------------------
@@ -52,19 +56,17 @@ Install the |kctlr|
 #. :ref:`Set up RBAC Authentication <openshift-rbac>`.
 #. :ref:`Create a Deployment <create-openshift-deployment>` for the |kctlr|.
 
-   Define the parameters highlighted below in your Deployment to set up route handling.
+   Define the parameters highlighted below in your Deployment to set up the BIG-IP Controller to communicate with the BIG-IP device and set it to manage objects for OpenShift routes.
 
-   .. literalinclude:: /_static/config_examples/f5-kctlr-openshift-routes.yaml
+   .. literalinclude:: /openshift/config_examples/f5-kctlr-openshift-routes.yaml
       :linenos:
-      :emphasize-lines: 38-45
+      :emphasize-lines: 36-64
 
 #. :ref:`Upload the Deployment <upload openshift deployment>` to the OpenShift API server.
-
 
 When you upload the Deployment to your OpenShift API server, the |kctlr| will automatically detect any existing OpenShift Routes and create corresponding routes on the BIG-IP system.
 
 If you set up the |kctlr| to manage the same BIG-IP partition you used with the OpenShift F5 Router, the |kctlr| automatically replaces any remaining F5 Router artifacts in the partition with new objects.
-
 
 What's Next
 -----------

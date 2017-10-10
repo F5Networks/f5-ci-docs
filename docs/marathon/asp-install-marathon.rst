@@ -3,7 +3,7 @@
 
 .. sidebar:: Docs test matrix
 
-   We tested this documentation with:
+   Documentation manually tested with:
 
    - Mesos 1.0.3, Marathon 1.3.9, Ubuntu 16.04, ASP 1.1.0, ASP Controller 1.0.0
    - Mesos 1.0.3, Marathon 1.3.9, Ubuntu 16.04, ASP 1.0.0, ASP Controller 1.0.0
@@ -46,17 +46,17 @@ Deploy the |aspm-long|
 
    \
 
-   .. literalinclude:: /_static/config_examples/f5-marathon-asp-ctlr-example.json
+   .. literalinclude:: /marathon/config_examples/f5-marathon-asp-ctlr-example.json
       :linenos:
 
-   :fonticon:`fa fa-download` :download:`f5-marathon-asp-ctlr-example.json </_static/config_examples/f5-marathon-asp-ctlr-example.json>`
+   :fonticon:`fa fa-download` :download:`f5-marathon-asp-ctlr-example.json </marathon/config_examples/f5-marathon-asp-ctlr-example.json>`
 
 #. Upload the config file to the Marathon API server.
 
    .. code-block:: console
       :linenos:
 
-      $ curl -X POST -H "Content-Type: application/json" http://<marathon-uri>:8080/v2/apps -d @f5-marathon-asp-ctlr.json
+      curl -X POST -H "Content-Type: application/json" http://10.190.25.75:8080/v2/apps -d @f5-marathon-asp-ctlr.json
 
 #. Send a GET request to the Marathon API server to verify successful creation of the |aspm| App.
 
@@ -68,7 +68,7 @@ Deploy the |aspm-long|
    :linenos:
    :emphasize-lines: 1
 
-   $ curl -X GET http://10.190.25.75:8080/v2/apps/marathon-asp-ctlr | jq .
+   curl -X GET http://10.190.25.75:8080/v2/apps/marathon-asp-ctlr | jq .
       {
         "app": {
           "id": "/marathon-asp-ctlr",

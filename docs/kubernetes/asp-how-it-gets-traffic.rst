@@ -59,11 +59,11 @@ In this example, you'll use the `kube-proxy`_ in its default ``iptables`` mode, 
 
    .. code-block:: console
 
-      user@k8s-master:~$ kubectl run my-nginx --image=nginx --replicas=2
-      user@k8s-master:~$ kubectl get deployment -o wide
+      kubectl run my-nginx --image=nginx --replicas=2
+      kubectl get deployment -o wide
       NAME       DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE       CONTAINER(S)   IMAGE(S)   SELECTOR
       my-nginx   2         2         2            2           15m       my-nginx       nginx      run=my-nginx
-      user@k8s-master:~$ kubectl get pods -o wide
+      kubectl get pods -o wide
       NAME                       READY     STATUS    RESTARTS   AGE       IP                NODE
       my-nginx-858393261-gngw8   1/1       Running   0          12m       192.168.36.129    kubeadm-worker-0
       my-nginx-858393261-sl5kh   1/1       Running   0          12m       192.168.155.193   kubeadm-worker-2
@@ -75,10 +75,10 @@ In this example, you'll use the `kube-proxy`_ in its default ``iptables`` mode, 
 
    .. code-block:: console
     
-      user@k8s-master:~$ kubectl expose deployment my-nginx --port=80
-      user@k8s-master:~$ kubectl get service -o wide         NAME         CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE       SELECTOR
+      kubectl expose deployment my-nginx --port=80
+      kubectl get service -o wide         NAME         CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE       SELECTOR
       my-nginx     10.111.94.71   <none>        80/TCP    19m       run=my-nginx
-      user@k8s-master:~$ kubectl get endpoints -o wide
+      kubectl get endpoints -o wide
       NAME         ENDPOINTS                              AGE
       my-nginx     192.168.155.193:80,192.168.36.129:80   20m
 
@@ -93,9 +93,9 @@ In this example, you'll use the `kube-proxy`_ in its default ``iptables`` mode, 
 
    .. code-block:: console
 
-      user@k8s-master:~$ kubectl run -i --tty toolbox --image=sjourdan/toolbox --restart=Never -- sh
+      kubectl run -i --tty toolbox --image=sjourdan/toolbox --restart=Never -- sh
       If you don't see a command prompt, try pressing enter.
-      / # curl -v my-nginx
+      / #curl -v my-nginx
       * Rebuilt URL to: my-nginx/
       *   Trying 10.111.94.71...
       * TCP_NODELAY set
@@ -130,7 +130,7 @@ You can see these rules on any of the nodes in the Cluster.
 
 .. code-block:: console
 
-	user@k8s-master:~$ sudo iptables -L -t nat
+	sudo iptables -L -t nat
 	Chain KUBE-SERVICES (2 references)
 	target                     prot opt source               destination
 	KUBE-SVC-BEPXDJBUHFCSYIC3  tcp  --  anywhere             10.111.94.71        /* default/my-nginx: cluster IP */ tcp dpt:http
@@ -216,7 +216,7 @@ Practice Exercise #2
    .. code-block:: console
       :emphasize-lines: 5-11
 
-      user@k8s-master:~$ kubectl edit service my-nginx
+      kubectl edit service my-nginx
       apiVersion: v1
       kind: Service
       metadata:
@@ -326,7 +326,6 @@ This allows the ASP to function as a full client-side proxy, thereby providing a
 
 .. _DaemonSet: https://kubernetes.io/docs/admin/daemons/
 .. _Cluster: https://kubernetes.io/docs/admin/cluster-management/
-.. _Pods: https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/
 .. _Calico: https://www.projectcalico.org/
 .. _ASP 1.0.0: /products/asp/v1.0
 .. _f5-kube-proxy 1.0.0: /products/connectors/f5-kube-proxy/v1.0

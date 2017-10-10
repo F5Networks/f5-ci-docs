@@ -7,7 +7,7 @@ Replace kube-proxy with the f5-kube-proxy
 
 .. sidebar:: Docs test matrix
 
-   We tested this documentation with:
+   Documentation manually tested with:
 
    Kubernetes 1.4.8, coreos-beta-1465.3.0, ASP 1.1.0
    Kubernetes 1.4.8, coreos-7.2.1511, ASP 1.0.0
@@ -38,7 +38,7 @@ Replace kube-proxy with |aspk| in the Pod Manifests
 .. code-block:: console
    :caption: SSH to a node and edit the kube-proxy manifest
 
-   $ ssh core@172.16.1.21
+   ssh core@172.16.1.21
    Last login: Fri Feb 17 18:33:35 UTC 2017 from 172.16.1.20 on pts/0
    CoreOS alpha (1185.3.0)
    Update Strategy: No Reboots
@@ -90,17 +90,17 @@ Replace kube-proxy with |aspk| in the Pod Manifests
 Examples
 --------
 
-.. literalinclude:: /_static/config_examples/f5-kube-proxy-manifest-master.yaml
+.. literalinclude:: /kubernetes/config_examples/f5-kube-proxy-manifest-master.yaml
     :caption: kube-proxy manifest on MASTER node
     :linenos:
 
-:fonticon:`fa fa-download` :download:`f5-kube-proxy-manifest-master.yaml </_static/config_examples/f5-kube-proxy-manifest-master.yaml>`
+:fonticon:`fa fa-download` :download:`f5-kube-proxy-manifest-master.yaml </kubernetes/config_examples/f5-kube-proxy-manifest-master.yaml>`
 
-.. literalinclude:: /_static/config_examples/f5-kube-proxy-manifest-worker.yaml
+.. literalinclude:: /kubernetes/config_examples/f5-kube-proxy-manifest-worker.yaml
     :caption: kube-proxy manifest on WORKER node
     :linenos:
 
-:fonticon:`fa fa-download` :download:`f5-kube-proxy-manifest-worker.yaml </_static/config_examples/f5-kube-proxy-manifest-worker.yaml>`
+:fonticon:`fa fa-download` :download:`f5-kube-proxy-manifest-worker.yaml </kubernetes/config_examples/f5-kube-proxy-manifest-worker.yaml>`
 
 
 .. _Pod: https://kubernetes.io/docs/user-guide/pods/

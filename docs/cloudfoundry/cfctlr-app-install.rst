@@ -19,7 +19,7 @@ Before you begin
 Create an application manifest
 ------------------------------
 
-Create a new Application Manifest file defining the |cfctlr| `configuration parameters </products/connectors/cf-bigip-ctlr/latest/index.html#configuration-parameters>`_ you want to apply for your cloud.
+Create a new Application Manifest file defining the `BIG-IP Controller for Cloud Foundry configuration parameters`_ you want to apply for your cloud.
 
 The :code:`bigip` section of the example |cfctlr| manifest below does the following:
 
@@ -38,13 +38,13 @@ The :code:`bigip` section of the example |cfctlr| manifest below does the follow
       * :code:`oauth`  (REQUIRED)
       * :code:`route_mode`  (OPTIONAL)
 
-   See the |cfctlr| `configuration parameters`_ table for more information.
+   See the |cfctlr| `BIG-IP Controller for Cloud Foundry configuration parameters`_ table for more information.
 
-.. literalinclude:: /_static/config_examples/manifest.yaml
+.. literalinclude:: /cloudfoundry/config_examples/manifest.yaml
    :linenos:
    :caption: Example App Manifest for cf-bigip-ctlr
 
-:fonticon:`fa fa-download` :download:`manifest.yaml </_static/config_examples/manifest.yaml>`
+:fonticon:`fa fa-download` :download:`manifest.yaml </cloudfoundry/config_examples/manifest.yaml>`
 
 
 .. tip::

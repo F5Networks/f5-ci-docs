@@ -98,6 +98,7 @@ rst_epilog = """
 .. |mctlr| replace:: BIG-IP Controller
 .. |aspm-long| replace:: ASP Controller for Marathon
 .. |aspm| replace:: ASP Controller
+.. |octlr-long| replace:: BIG-IP Controller for OpenShift
 .. _BIG-IP: https://f5.com/products/big-ip
 .. _BIG-IP System User Account Administration -> Administrative Partitions: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-12-0-0/3.html
 .. _system configuration: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-initial-configuration-12-0-0/2.html#conceptid
@@ -124,11 +125,12 @@ rst_epilog = """
 .. _Secret: https://kubernetes.io/docs/user-guide/secrets/
 .. _Ingress Resource: https://kubernetes.io/docs/concepts/services-networking/ingress/
 .. _Kubernetes Ingress controller: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-controllers
+.. _Ingress controller: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-controllers
 .. _Local Traffic Policies: https://support.f5.com/csp/article/K04597703
-.. _f5-kube-proxy product documentation: %(base_url)s/products/connectors/f5-kube-proxy/latest/
-.. _ASP product documentation: %(base_url)s/products/asp/latest/
+.. _f5-kube-proxy reference documentation: %(base_url)s/products/connectors/f5-kube-proxy/latest/
+.. _ASP reference documentation: %(base_url)s/products/asp/latest/
 .. _Kubernetes namespace: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
-.. _F5 virtual server properties: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#virtualserver
+.. _F5 virtual server properties: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#virtualserver-configmap-properties
 .. _Marathon: https://mesosphere.github.io/marathon/
 .. _Express middleware: https://expressjs.com/en/guide/using-middleware.html
 .. _Node.js: https://nodejs.org/en/
@@ -165,6 +167,29 @@ rst_epilog = """
 .. _ASP virtual server configuration parameters: %(base_url)s/products/asp/latest/#virtual-server
 .. _ASP event handlers: %(base_url)s/products/asp/latest/event-handlers.html
 .. _ASP Middleware API: %(base_url)s/products/asp/latest/middleware-api.html
+.. _k8s-bigip-ctlr configuration parameters: %(base_url)s/products/k8s-bigip-ctlr/latest/#controller-configuration-parameters
+.. _k8s-bigip-ctlr reference documentation: %(base_url)s/products/k8s-bigip-ctlr/latest/
+.. _k8s-bigip-ctlr virtual server parameters: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/index.html#virtualserver
+.. _k8s-bigip-ctlr iApp parameters: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/index.html#iapps
+.. _iApp Pool Member table: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/index.html#iapp-pool-member-table
+.. _configuration parameters specific to OpenShift: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/index.html#openshift-sdn
+.. _Cluster Role: https://kubernetes.io/docs/admin/authorization/rbac/#role-and-clusterrole
+.. _Cluster Role Binding: https://kubernetes.io/docs/admin/authorization/rbac/#rolebinding-and-clusterrolebinding
+.. _ReplicaSet: https://kubernetes.io/docs/user-guide/replicasets/
+.. _Pod: https://kubernetes.io/docs/user-guide/pods/
+.. _Pods: https://kubernetes.io/docs/user-guide/pods/
+.. _marathon-bigip-ctlr reference documentation: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/
+.. _marathon-bigip-ctlr iApp configuration parameters: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/index.html#iApp
+.. _ServiceAccount: https://kubernetes.io/docs/admin/service-accounts-admin/
+.. _Create a new partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-implementations-12-1-0/29.html
+.. _Create a Kubernetes Secret containing your Docker login credentials: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+.. _supported Ingress annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-annotations
+.. _store your Docker login credentials as a Secret: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+.. _Route configuration parameters: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-routes
+.. _BIG-IP Controller for Cloud Foundry configuration parameters: %(base_url)s//products/connectors/cf-bigip-ctlr/v1.0/#configuration-parameters
+.. _supported OpenShift Route annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-route-configurations
+.. _Create a new partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-implementations-12-1-0/29.html
+.. _BIG-IP Controller for Kubernetes: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest
 """% {
     'base_url': 'http://clouddocs.f5.com'
 }
