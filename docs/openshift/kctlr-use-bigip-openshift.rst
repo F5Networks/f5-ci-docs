@@ -128,11 +128,10 @@ Next Steps
 - :ref:`Configure the F5 BIG-IP Controller for use in OpenShift <kctlr-configure-openshift>`
 
 .. rubric:: Footnotes
-.. [#ossdn] See the `OpenShift SDN documentation <https://docs.openshift.org/latest/architecture/additional_concepts/sdn.html#sdn-design-on-masters>`_.
+.. [#ossdn] See the `OpenShift SDN documentation <https://docs.openshift.org/1.4/architecture/additional_concepts/sdn.html#sdn-design-on-masters>`_.
 
 .. _OpenShift: https://www.openshift.org/
 .. _Create an OpenShift service account: https://docs.openshift.org/latest/admin_guide/service_accounts.html
-.. _VXLAN profile:
 .. _Self IP address: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-12-1-1/5.html
 .. _cluster role binding:
 .. _cluster role: https://docs.openshift.org/latest/architecture/additional_concepts/authorization.html

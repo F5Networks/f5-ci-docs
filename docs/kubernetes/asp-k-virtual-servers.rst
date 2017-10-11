@@ -8,12 +8,11 @@ Attach an ASP to a Kubernetes Service
 .. sidebar:: Docs test matrix
 
    We tested this documentation with:
-   - ``kubernetes-v1.4.8_coreos.0``
-   - ``k8s-bigip-ctlr v1.0.0``
+
+   - Kubernetes 1.4.8, coreos-beta-1465.3.0, ASP 1.1.0, f5-kube-proxy 1.0.0
+   - Kubernetes 1.4.8, coreos-7.2.1511, ASP 1.0.0, f5-kube-proxy 1.0.0
    - `kubernetes hello-world`_ service, with :ref:`ASP annotation <k8s-service-annotate>`
 
-Summary
--------
 
 The |asp| (ASP) watches Kubernetes `Service`_ definitions for a set of annotations defining virtual server objects.
  The annotation should include a JSON blob defining of a set of `ASP configuration parameters </products/asp/latest/index.html#configuration-parameters>`_.
@@ -21,37 +20,93 @@ The |asp| (ASP) watches Kubernetes `Service`_ definitions for a set of annotatio
 
 .. _k8s-service-annotate:
 
-Annotate a Kubernetes Service
------------------------------
+Add the ASP annotation to the Service
+-------------------------------------
 
-Use one of the options below to attach an ASP to a Kubernetes `Service`_.
+To attach an ASP to a Kubernetes `Service`_, add an Annotation containing the ASP configurations.
 
-#. Annotate the `Service`_ definition with the key-value pair ``asp.f5.com/config="<JSON-config-blob>"``.
+Use ``kubectl annotate``
+````````````````````````
 
-   .. important::
+Annotate the `Service`_ definition with the key-value pair ``asp.f5.com/config="<JSON-config-blob>"``.
+The JSON config blob should contain the desired `ASP virtual server configuration parameters`_.
 
-      When you annotate the Service this way, you must encode the JSON config blob as shown in the example below (escape all quotes -- ``\"``).
+.. important::
+
+   When you annotate the Service using :code:`kubectl annotate`, the JSON config blob must use the encoding shown in the example below. Use a backslash -- ``\"`` -- to escape all quotation marks.
+
+\
+
+.. code-block:: bash
+
+   $ kubectl annotate service example-service asp.f5.com/config="{\"ip-protocol\":\"http\",\"load-balancing-mode\":\"round-robin\"}"
+   service "example-service" annotated
 
 
-   .. code-block:: bash
+Edit the Service definition
+```````````````````````````
 
-      user@k8s-master:~$ kubectl annotate service example-service asp.f5.com/config="{\"ip-protocol\":\"http\",\"load-balancing-mode\":\"round-robin\"}"
-      service "example-service" annotated
+Edit the Service definition file, then upload the file to the Kubernetes API server.
 
+.. literalinclude:: /_static/config_examples/f5-asp-k8s-example-service.yaml
+   :caption: Service definition with ASP annotation
+   :linenos:
+   :lines: 1-13, 31-48
 
-#. Edit the Service definition and add the annotation section with the `ASP configurations </products/asp/latest/#configuration-parameters>`_.
+:fonticon:`fa fa-download` :download:`f5-asp-k8s-example-service.yaml </_static/config_examples/f5-asp-k8s-example-service.yaml>`
 
-   .. code-block:: bash
+.. code-block:: bash
+   :caption: Upload the Service definition to the Kubernetes API server
 
-      user@k8s-master:~$ kubectl edit service example-service
+   $ kubectl replace -f f5-asp-k8s-example-service.yaml
+   service "myService" replaced
+
+\
+
+.. note::
+
+   - Remove any comments from the annotation section of the example configuration file *before* uploading it to Kubernetes.
+   - The downloadable example includes a health check section. If you want to attach an ASP instance to a Service *without* using health checks, **remove lines 14-30** from the example annotation.
+
+.. _k8s-health-checks:
+
+Add health checks to an ASP annotation
+``````````````````````````````````````
+
+.. include:: /_static/reuse/asp-version-added-1_1.rst
+
+To activate the ASP's health monitor:
+
+#. Add the desired `ASP health check parameters`_ to the ASP annotation in the Service definition.
 
    .. literalinclude:: /_static/config_examples/f5-asp-k8s-example-service.yaml
+      :caption: Service definition with ASP health checks
       :linenos:
-      :emphasize-lines: 4-13
 
-   :fonticon:`fa fa-download` :download:`Download an example Service definition with the ASP annotation </_static/config_examples/f5-asp-k8s-example-service.yaml>`
+   :fonticon:`fa fa-download` :download:`f5-asp-k8s-example-service.yaml </_static/config_examples/f5-asp-k8s-example-service.yaml>`
 
-#. (Optional) :ref:`Verify that the ASP handles traffic for the Service <k8s-asp-verify>`
+#. Upload the edited definition to the Kubernetes API server.
+
+   .. code-block:: bash
+
+     $ kubectl replace -f f5-asp-k8s-example-service.yaml
+     service "myService" replaced
+
+/
+
+.. important::
+
+   Because each ASP instance (one per Node) shares the same global configurations, Service endpoints will receive health probes from all of the ASP instances. The ASP can use a health probe sharding algorithm to reduce probe redundancy.
+
+   This algorithm allocates a subset of endpoints to each ASP instance. Each ASP instance adds the health data for its assigned endpoints to the :ref:`ephemeral store <ephemeral store>`, giving all ASP instances access to the data for all endpoints.
+
+   You can set up ASP health sharding when you :ref:`deploy the ASP <asp-deploy-k8s>`.
+
+
+Next Steps
+----------
+
+:ref:`Verify that the ASP handles traffic for the Service <k8s-asp-verify>`.
 
 
 .. _kubernetes hello-world: https://kubernetes.io/docs/tutorials/stateless-application/expose-external-ip-address-service/

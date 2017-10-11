@@ -1,6 +1,30 @@
 F5 Container Integration for Marathon
 =====================================
 
+This document provides general information regarding the F5 Integration for Marathon.
+Please refer to the guides below for deployment and usage instructions.
+
+.. toctree::
+   :caption: BIG-IP Controller
+   :maxdepth: 1
+
+   Set up DC/OS auth <mctlr-authenticate-dcos>
+   Deploy the BIG-IP Controller <mctlr-app-install>
+   Manage BIG-IP objects <mctlr-manage-bigip-objects>
+   Deploy iApps <mctlr-deploy-iapp>
+   marathon-bigip-ctlr product information <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest>
+
+.. toctree::
+   :caption: Application Services Proxy
+   :maxdepth: 1
+
+   Set up the ASP ephemeral store <asp-m-ephemeral-store>
+   Install the ASP <asp-install-marathon>
+   Launch an ASP for a Marathon App <asp-m-virtual-servers>
+   ASP product information <http://clouddocs.f5.com/products/asp/latest>
+   marathon-asp-ctlr product information <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest>
+
+
 Overview
 --------
 
@@ -37,9 +61,11 @@ The ASP integrates with container environment management and orchestration syste
 
 .. important::
 
-   In Mesos Marathon, the ASP runs as a reverse proxy.
+   The ASP runs as a reverse proxy in Mesos Marathon.
 
-.. seealso:: `ASP product documentation`_
+.. seealso::
+
+   `ASP product documentation`_
 
 .. _aspm-overview:
 
@@ -56,14 +82,11 @@ These configurations -- set in the "env" (or, "Environment", in the Web UI) sect
 The |aspm-long| also has a set of "override" labels. [#overridelabel]_
 When you add these labels to the definition for an Application you want the ASP to proxy, they take precedence over the default |aspm| settings.
 
-
 By default, the |aspm| starts one (1) |asp| instance per application.
 You can override this setting using the ``ASP_COUNT_PER_APP`` :ref:`F5 application label <app-labels>`.
 
-The |asp| collects traffic statistics for the Applications it load balances; these stats are either logged locally or sent to an external analytics application.
+The |asp| collects traffic statistics for the Applications it load balances; these stats are either logged locally or sent to an external analytics application, like :ref:`Splunk <send-stats-splunk>`.
 You can set the location and type of the analytics application using the ``ASP_DEFAULT_STATS_URL`` label.
-
-.. todo:: add "Export ASP Stats to an analytics provider"
 
 .. [#overridelabel] See the `Marathon ASP configuration labels </products/connectors/marathon-asp-ctlr/latest/index.html#configuration-parameters>`_ table.
 

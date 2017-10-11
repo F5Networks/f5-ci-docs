@@ -1,6 +1,6 @@
 .. toctree::
    :caption: Application Services Proxy
-   :maxdepth: 2
+   :maxdepth: 1
    :glob:
 
    ASP home <http://clouddocs.f5.com/products/asp/latest>
@@ -9,7 +9,7 @@
 
 .. toctree::
    :caption: Cloud Foundry
-   :maxdepth: 2
+   :maxdepth: 1
    :glob:
 
    BIG-IP Controller - Cloud Foundry <http://clouddocs.f5.com/products/connectors/cf-bigip-ctlr/v1.0-beta>
@@ -18,7 +18,7 @@
 
 .. toctree::
    :caption: Kubernetes
-   :maxdepth: 2
+   :maxdepth: 1
    :glob:
 
    BIG-IP Controller - K8s <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
@@ -36,7 +36,7 @@
 .. toctree::
    :caption: Mesos Marathon
    :glob:
-   :maxdepth: 2
+   :maxdepth: 1
 
    BIG-IP Controller - Marathon <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
    ASP Controller - Marathon <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest/>
@@ -50,7 +50,7 @@
 
 .. toctree::
    :caption: OpenShift
-   :maxdepth: 2
+   :maxdepth: 1
    :glob:
 
    BIG-IP Controller - K8s <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
@@ -61,7 +61,7 @@
 .. toctree::
    :caption: Support
    :glob:
-   :maxdepth: 2
+   :maxdepth: 1
 
    releases_and_versioning
    acknowledgements
@@ -71,14 +71,14 @@
    :hidden:
    :caption: Troubleshooting
    :glob:
-   :maxdepth: 2
+   :maxdepth: 1
 
    troubleshooting/*
 
 .. toctree::
    :caption: Tutorials
    :glob:
-   :maxdepth: 2
+   :maxdepth: 1
 
    tutorials/*
 
