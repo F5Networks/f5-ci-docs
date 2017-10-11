@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Route
+metadata:
+  name: route-reencrypt-secured
+spec:
+  host: mysite.example.com
+  to:
+    kind: Service
+    name: myService1
+  tls:
+    termination: reencrypt
+    key: [as in edge termination]
+    certificate: [as in edge termination]
+    caCertificate: [as in edge termination]
+    destinationCACertificate: |-
+      -----BEGIN CERTIFICATE-----
+      [...]
+      -----END CERTIFICATE-----

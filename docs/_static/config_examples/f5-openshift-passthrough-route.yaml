@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Route
+metadata:
+  name: route-passthrough-secured
+spec:
+  host: mysite.example.com
+  to:
+    kind: Service
+    name: myService1
+  tls:
+    termination: passthrough
