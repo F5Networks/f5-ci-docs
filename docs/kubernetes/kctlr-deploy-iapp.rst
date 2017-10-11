@@ -1,7 +1,7 @@
 .. _kctlr-deploy-iapps:
 
-Deploy iApps with |kctlr-long|
-==============================
+Deploy iApps with the BIG-IP Controller
+=======================================
 
 .. sidebar:: Docs test matrix
 

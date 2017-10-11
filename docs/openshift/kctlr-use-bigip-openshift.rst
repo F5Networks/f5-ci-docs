@@ -45,7 +45,6 @@ Create a new OpenShift HostSubnet
       The VNID ``0`` grants the BIG-IP device access to all OpenShift projects.
 
 
-
    .. literalinclude:: /_static/config_examples/f5-kctlr-openshift-hostsubnet.yaml
       :linenos:
       :emphasize-lines: 5-7, 9, 13
@@ -90,8 +89,6 @@ Create a BIG-IP VXLAN tunnel
 
    - Use the OpenShift HostSubnet's ``hostIP`` address as the VXLAN ``local-address`` (the BIG-IP VTEP).
    - Set the ``key`` to ``0`` to grant the BIG-IP device access to all OpenShift projects and subnets.
-   - Use the OpenShift HostSubnet's ``hostIP`` address as the VXLAN ``local-address`` (the VTEP).
-   - The ``key`` must be ``0`` if you want to give the BIG-IP access to all OpenShift subnets.
 
    .. code-block:: console
 
@@ -111,9 +108,14 @@ Add the BIG-IP device to the OpenShift overlay network
 
 #. Create a BIG-IP self IP address.
 
-   - Use an address in the range defined in the :ref:`HostSubnet <k8s-openshift-hostsubnet>` allocated earlier.
+   - Use an address in the range allocated for the :ref:`HostSubnet <k8s-openshift-hostsubnet>` created earlier.
      **This ensures that all VXLAN traffic is correctly routed via the** :code:`openshift_vxlan` **tunnel.** [#ossdn]_
-   - Assign asubnet mask that matches that of the OpenShift SDN cluster network. In OpenShift Origin 1.4, for example, the default is ``/14``.
+   - Assign a subnet mask that matches that of the OpenShift SDN cluster network. In OpenShift Origin 1.4, for example, the default is ``/14``.
+
+     .. tip::
+
+        When creating a self IP using the BIG-IP configuration utility, specify the full netmask (for example, :code:`255.252.0.0`).
+
    - If you don't specify a traffic group, the self IP uses the BIG-IP system's default.
 
    .. code-block:: console
@@ -128,7 +130,7 @@ Next Steps
 - :ref:`Configure the F5 BIG-IP Controller for use in OpenShift <kctlr-configure-openshift>`
 
 .. rubric:: Footnotes
-.. [#ossdn] See the `OpenShift SDN documentation <https://docs.openshift.org/latest/architecture/additional_concepts/sdn.html#sdn-design-on-masters>`_.
+.. [#ossdn] See the `OpenShift SDN documentation <https://docs.openshift.org/1.4/architecture/additional_concepts/sdn.html#sdn-design-on-masters>`_.
 
 .. _OpenShift: https://www.openshift.org/
 .. _Create an OpenShift service account: https://docs.openshift.org/latest/admin_guide/service_accounts.html

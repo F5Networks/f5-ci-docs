@@ -16,7 +16,7 @@ spec:
       serviceAccountName: bigip-ctlr
       containers:
         - name: k8s-bigip-ctlr
-          image: "f5networks/k8s-bigip-ctlr:1.2.0"
+          image: "f5networks/k8s-bigip-ctlr:1.3.0"
           env:
             - name: BIGIP_USERNAME
               valueFrom:
@@ -37,11 +37,15 @@ spec:
             "--pool-member-type=cluster",
             # Path to the BIG-IP VXLAN connected to the OpenShift HostSubnet
             "--openshift-sdn-name=/Common/openshift_vxlan",
+            # Enables use of a BIG-IP device as an OpenShift Router
             "--manage-routes=true",
-            # Assign an IP address from the HostSubnet to the BIG-IP virtual server
+            # Assign an IP address to the BIG-IP virtual server
+            # Be sure to use an IP address from the HostSubnet to which the
+            # BIG-IP device connects
             "--route-vserver-addr=1.2.3.4"
-            # Provide the "f5type" label you want the BIG-IP Controller to watch for
-            # This information would be defined in a Route as, for example, "f5type: App1"
+            # OPTIONAL: Provide an "f5type" label you want the BIG-IP Controller
+            # to watch for. This information should be defined in a Route
+            # Resource (for example, "f5type: App1")
             "--route-label=App1"
             ]
       imagePullSecrets:
