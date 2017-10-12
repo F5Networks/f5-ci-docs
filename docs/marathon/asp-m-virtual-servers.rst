@@ -94,7 +94,7 @@ Take the steps below to add event handlers to an ASP.
 
       Convert the JSON list to a string, like that shown in the example.
 
-\
+   \
 
    .. literalinclude:: /_static/config_examples/app_asp-enabled-custom.json
       :language: javascript

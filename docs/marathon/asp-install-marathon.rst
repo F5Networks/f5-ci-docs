@@ -15,7 +15,7 @@ The |aspm-long| is a Docker container that runs as a Marathon `Application`_. Yo
 
 The |aspm-long| dynamically deploys the |asp| (ASP) in `Apache Mesos Marathon`_ when it discovers a Marathon Application that has the ``f5-asp:enable`` label.
 
-When you launch the |aspm-long|, provide the global configuration parameter(s) you want the |aspm| to use when creating new ASP instances. You can `override the global configurations`_ on a per-Application basis.
+When you launch the |aspm-long|, provide the global configuration parameter(s) you want the |aspm| to use when creating new ASP instances. You can :ref:`override the global configurations <marathon-asp-custom-config>` on a per-Application basis.
 
 Initial Setup
 -------------

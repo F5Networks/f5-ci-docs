@@ -66,46 +66,10 @@ Edit the Service definition file, then upload the file to the Kubernetes API ser
    $ kubectl replace -f f5-asp-k8s-example-service.yaml
    service "myService" replaced
 
-
-.. _k8s-health-checks:
-
-Add health checks to an ASP annotation
-``````````````````````````````````````
-
-.. include:: /_static/reuse/asp-version-added-1_1.rst
-
-To activate the ASP's health monitor:
-
-#. Add the desired `ASP health check parameters`_ to the ASP annotation in the Service definition.
-
-   .. literalinclude:: /_static/config_examples/f5-asp-k8s-example-service.yaml
-      :caption: Service definition with ASP health checks
-      :linenos:
-
-
-   :fonticon:`fa fa-download` :download:`f5-asp-k8s-example-service.yaml </_static/config_examples/f5-asp-k8s-example-service.yaml>`
-
-#. Upload the updated Service definition to the Kubernetes API server.
-
-   .. code-block:: bash
-
-     $ kubectl replace -f f5-asp-k8s-example-service.yaml
-     service "myService" replaced
-
-/
-
-.. important::
-
-   Because each ASP instance (one per Node) shares the same global configurations, Service endpoints will receive health probes from all of the ASP instances. The ASP can use a health probe sharding algorithm to reduce probe redundancy.
-
-   This algorithm allocates a subset of endpoints to each ASP instance. Each ASP instance adds the health data for its assigned endpoints to the :ref:`ephemeral store <ephemeral store>`, giving all ASP instances access to the data for all endpoints.
-
-   You can set up ASP health sharding when you :ref:`deploy the ASP <asp-deploy-k8s>`.
-
 .. _event-handlers-k8s:
 
-Add event handlers
-``````````````````
+ASP event handlers
+~~~~~~~~~~~~~~~~~~
 
 You can set up `ASP event handlers`_ as part of the virtual server annotation.
 
@@ -114,27 +78,44 @@ You can set up `ASP event handlers`_ as part of the virtual server annotation.
    - Learn about the `ASP event handlers`_.
    - Learn about the `ASP Middleware API`_.
 
-Take the steps below to add event handlers to an ASP.
+Add the ``event-handlers`` JSON string to the Service definition.
 
-#. Add the ``event-handlers`` JSON string to the Service definition.
+.. important::
 
-   .. important::
+   Be sure to format the JSON list as a string as shown in the example below.
 
-      Be sure to format the JSON list as a string as shown in the example below.
+\
 
-   \
+.. literalinclude:: /_static/config_examples/f5-asp-k8s-example-service.yaml
+   :linenos:
+   :lines: 12-19
 
-   .. literalinclude:: /_static/config_examples/f5-asp-k8s-example-service.yaml
-      :linenos:
-      :lines: 10-23
-      :emphasize-lines: 4, 8
 
-#. Upload the updated Service definition to the Kubernetes API server.
 
-   .. code-block:: bash
+.. _k8s-health-checks:
 
-     $ kubectl replace -f f5-asp-k8s-example-service.yaml
-     service "myService" replaced
+ASP health checks
+~~~~~~~~~~~~~~~~~
+
+.. include:: /_static/reuse/asp-version-added-1_1.rst
+
+To activate the ASP's health monitor:
+
+Add the desired `ASP health check parameters`_ to the ASP annotation in the Service definition.
+
+.. literalinclude:: /_static/config_examples/f5-asp-k8s-example-service.yaml
+   :linenos: 
+   :lines: 24-39
+
+:fonticon:`fa fa-download` :download:`f5-asp-k8s-example-service.yaml </_static/config_examples/f5-asp-k8s-example-service.yaml>`
+
+.. important::
+
+   Because each ASP instance (one per Node) shares the same global configurations, Service endpoints will receive health probes from all of the ASP instances. The ASP can use a health probe sharding algorithm to reduce probe redundancy.
+
+   This algorithm allocates a subset of endpoints to each ASP instance. Each ASP instance adds the health data for its assigned endpoints to the :ref:`ephemeral store <ephemeral store>`, giving all ASP instances access to the data for all endpoints.
+
+   You can set up ASP health sharding when you :ref:`deploy the ASP <asp-deploy-k8s>`.
 
 
 Next Steps
