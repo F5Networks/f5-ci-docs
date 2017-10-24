@@ -60,27 +60,24 @@ Install the |kctlr|
 
 #. :ref:`Upload the Deployment <upload openshift deployment>` to the OpenShift API server.
 
-Create OpenShift Routes
------------------------
 
-.. important::
+When you upload the Deployment to your OpenShift API server, the |kctlr| will automatically detect any existing OpenShift Routes and create corresponding routes on the BIG-IP system.
 
-   When you upload the Deployment to your OpenShift API server, the |kctlr| automatically detects existing OpenShift Routes and creates corresponding routes on the BIG-IP system.
+If you set up the |kctlr| to manage the same BIG-IP partition you used with the OpenShift F5 Router, the |kctlr| automatically replaces any remaining F5 Router artifacts in the partition with new objects.
 
-   If you used the same BIG-IP partition for the F5 Router, the |kctlr| will replace any remaining F5 Router artifacts with new objects.
 
-OpenShift supports 4 (4) types of routes: edge, passthrough, re-encrypt, and unsecure.
-The |kctlr| supports all four types.
+What's Next
+-----------
 
-You can download sample Route definitions for each type below.
-See `Supported Route Configurations </products/connectors/k8s-bigip-ctlr/#Supported-route-configurations>`_ for more information.
+- See :ref:`kctlr-openshift-routes` to learn about creating new Routes for the |kctlr| to manage.
+- Discover the |kctlr| `supported route configuration parameters </products/connectors/k8s-bigip-ctlr/#supported-route-configurations>`_.
 
-:fonticon:`fa fa-download` `sample-unsecured-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/_downloads/sample-unsecured-route.yaml>`_
+Example Route Resource definitions
+``````````````````````````````````
 
-:fonticon:`fa fa-download` `sample-edge-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/_downloads/sample-edge-route.yaml>`_
-
-:fonticon:`fa fa-download` `sample-passthrough-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/_downloads/sample-passthrough-route.yaml>`_
-
-:fonticon:`fa fa-download` `sample-reencrypt-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/_downloads/sample-reencrypt-route.yaml>`_
+- :fonticon:`fa fa-download` `sample-unsecured-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/_downloads/sample-unsecured-route.yaml>`_
+- :fonticon:`fa fa-download` `sample-edge-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/_downloads/sample-edge-route.yaml>`_
+- :fonticon:`fa fa-download` `sample-passthrough-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/_downloads/sample-passthrough-route.yaml>`_
+- :fonticon:`fa fa-download` `sample-reencrypt-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/_downloads/sample-reencrypt-route.yaml>`_
 
 .. _OpenShift F5 Router: https://docs.openshift.org/1.4/install_config/router/f5_router.html

@@ -7,10 +7,8 @@ Install the BIG-IP Controller in OpenShift
 
    We tested this documentation with:
 
-   - ``OpenShift v1.4.1 on CentOS 7.2.1511``
-   - ``k8s-bigip-ctlr v1.1.0``
-   - ``k8s-bigip-ctlr v1.0.0``
-
+   - OpenShift v1.4.1 on CentOS 7.2.1511
+   - k8s-bigip-ctlr v1.1.0-1.3.0
 
 You can install the |kctlr-long| in `OpenShift`_ via a Deployment.
 The Deployment creates a `ReplicaSet`_ that, in turn, launches a `Pod`_ running the |kctlr| app.
@@ -112,10 +110,12 @@ Define an OpenShift Deployment using valid JSON or YAML.
 
 .. important::
 
-    OpenShift Deployments must use the following required configuration parameters:
+   OpenShift Deployments must use the following required configuration parameters:
 
-    - ``pool-member-type=cluster``
-    - ``openshift-sdn-name=</BIG-IP-partition/BIG-IP-vxlan-tunnel>``
+   - ``pool-member-type=cluster``
+   - ``openshift-sdn-name=</BIG-IP-partition/BIG-IP-vxlan-tunnel>``
+
+   If using the |kctlr| to manage OpenShift Routes, include the desired `Route configuration parameters`_.
 
 .. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml
     :linenos:
@@ -128,7 +128,10 @@ Upload the Deployment
 ---------------------
 
 Upload the Deployment to the OpenShift API server using ``oc apply``.
-Be sure to create all resources in the ``kube-system`` namespace.
+
+.. tip::
+
+   Be sure to create the Deployment in the ``kube-system`` namespace.
 
 .. code-block:: console
 
@@ -153,15 +156,18 @@ You can use ``oc get`` to verify all of the objects launched successfully.
    k8s-bigip-ctlr-331478340   1         1         1h
 
    user@k8s-master:~$ oc get pods --namespace=kube-system
-   NAME                                  READY     STATUS    RESTARTS   AGE
-   k8s-bigip-ctlr-331478340-ke0h9        1/1       Running   0          1h
-   kube-apiserver-172.16.1.19            1/1       Running   0          2d
-   kube-controller-manager-172.16.1.19   1/1       Running   0          2d
-   kube-dns-v11-2a66j                    4/4       Running   0          2d
-   kube-proxy-172.16.1.19                1/1       Running   0          2d
-   kube-proxy-172.16.1.21                1/1       Running   0          2d
-   kube-scheduler-172.16.1.19            1/1       Running   0          2d
-   kubernetes-dashboard-172.16.1.19      1/1       Running   0          2d
+   NAME                              READY     STATUS    RESTARTS   AGE
+   k8s-bigip-ctlr-1962020886-s31l4   1/1       Running   0          1m
+
+What's next
+-----------
+
+Now that you have the |kctlr| up and running, here are a few things you can do with it:
+
+- :ref:`kctlr-create-vs`
+- :ref:`kctlr-deploy-iapps`
+- :ref:`kctlr-ingress-config`
+- :ref:`kctlr-openshift-routes`
 
 .. _OpenShift: https://www.openshift.org/
 .. _ReplicaSet: https://kubernetes.io/docs/user-guide/replicasets/
@@ -169,3 +175,4 @@ You can use ``oc get`` to verify all of the objects launched successfully.
 .. _ServiceAccount: https://kubernetes.io/docs/admin/service-accounts-admin/
 .. _Create a new partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-implementations-12-1-0/29.html
 .. _Create a Kubernetes Secret containing your Docker login credentials: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+.. _Route configuration parameters: /products/connectors/k8s-bigip-ctlr/latest/#openshift-routes

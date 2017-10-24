@@ -11,14 +11,13 @@ This documentation release, |release|, applies to the following versions of each
 ===================         ==============
 Component                   Version
 ===================         ==============
-|cf-long|                   v1.0.0-beta.1
-|kctlr-long|                v1.0.0,
-                            v1.1.0
+|cf-long|                   v1.0.0
+|kctlr-long|                v1.0.0-1.3.0
 |mctlr-long|                v1.0.0,
                             v1.1.0
-``asp``                     v1.0.0
+``asp``                     v1.0.0, v1.1.0
 |aspk-long|                 v1.0.0
-|aspm-long|                 v1.0.0
+|aspm-long|                 v1.0.0, v1.1.0
 ===================         ==============
 
 |asp|
@@ -27,13 +26,13 @@ Component                   Version
 =================   ====================    =======================
 ASP Version         Platform                Version(s)
 =================   ====================    =======================
-v1.0.0              Kubernetes              v1.3.7, v1.4.x, v1.5.x
+v1.0.0, 1.1.0       Kubernetes              v1.3.7, v1.4.x, v1.5.x
 -----------------   --------------------    -----------------------
-v1.0.0              Apache Mesos            v1.0.3
+v1.0.0, 1.1.0       Apache Mesos            v1.0.3
 -----------------   --------------------    -----------------------
-v1.0.0              Apache Marathon         v1.3.9
+v1.0.0, 1.1.0       Apache Marathon         v1.3.9
 -----------------   --------------------    -----------------------
-v1.0.0              Mesos DC/OS &           v1.7.x, v1.8.x
+v1.0.0, 1.1.0       Mesos DC/OS &           v1.7.x, v1.8.x
                     DC/OS Enterprise
 =================   ====================    =======================
 
@@ -41,17 +40,16 @@ v1.0.0              Mesos DC/OS &           v1.7.x, v1.8.x
 Container Connectors
 --------------------
 
-
 +--------------------------+-----------------------+--------------------------+--------------------+--------------------------------------------+--------------------------------+
 | Connector                | Version               | BIG-IP version(s)        | ASP version(s)     | Platform                                   | Version(s)                     |
 +==========================+=======================+==========================+====================+============================================+================================+
-| |cf-long|                | v1.0.0-beta.1         | v11.6.1+, v12.x, v13.x   | N/A                | Pivotal Cloud Foundry (PCF)                | v1.9.6                         |
+| |cf-long|                | v1.0.0                | v11.6.1+, v12.x, v13.x   | N/A                | Pivotal Cloud Foundry (PCF)                | v1.9.6                         |
 +--------------------------+-----------------------+--------------------------+--------------------+--------------------------------------------+--------------------------------+
 | |kctlr-long|             | v1.0.0,               | v11.6.1+, v12.x, v13.x   | N/A                | Kubernetes                                 | v1.3.7, v1.4.x, v1.5.x         |
 |                          |                       |                          |                    |                                            |                                |
 |                          | v1.1.0                |                          |                    |                                            |                                |
 |                          +-----------------------+                          |                    |                                            +--------------------------------+
-|                          | v1.2.0                |                          |                    |                                            | v1.4.x, v1.5.x, v1.6.x, v1.7.x |
+|                          | v1.2.0, 1.3.0         |                          |                    |                                            | v1.4.x, v1.5.x, v1.6.x, v1.7.x |
 +--------------------------+-----------------------+--------------------------+--------------------+--------------------------------------------+--------------------------------+
 | |mctlr-long|             | v1.0.0,               | v11.6.1+, v12.x, v13.x   | N/A                | Apache Mesos                               | v1.0.3                         |
 |                          |                       |                          |                    +--------------------------------------------+--------------------------------+
@@ -77,13 +75,12 @@ Notice to Beta Customers
 
 Thank you for participating in the F5 Beta/Early Release program!
 
-Feature enhancements introduced as part of a beta release have a **"New in version"** tag like the example below:
+Feature enhancements introduced as part of a beta release have a **"Beta feature"** tag like the example below to the right.
+If you require assistance with a beta version, please contact your F5 Sales Representative.
 
-.. note::
+.. sidebar::
 
-   :fonticon:`fa fa-wrench` **Beta feature**
+   :fonticon:`fa fa-flask` **Beta feature**
 
    Introduced in <product-name> <version>.
-
-If you require assistance with a beta version, please contact your F5 Sales Representative.
 

@@ -236,4 +236,3 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
 .. _local traffic policy: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-local-traffic-policies-getting-started-13-0-0/1.html
 .. _iRule: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-irules-concepts-11-6-0/1.html
 .. _basic Hello Marathon App: https://mesosphere.github.io/marathon/docs/application-basics.html#hello-marathon-an-inline-shell-script
-.. _marathon-bigip-ctlr beta documentation: /products/connectors/marathon-bigip-ctlr/v1.1-beta/
