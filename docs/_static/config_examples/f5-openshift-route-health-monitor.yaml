@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Route
+metadata:
+  name: route-unsecured
+  annotations:
+    virtual-server.f5.com/health: |
+      [
+        {
+          "path":     "mysite.example.com/app1",
+          "send":     "HTTP GET /health/app1",
+          "interval": 5,
+          "timeout":  10
+        }
+      ]
+spec:
+  host: mysite.example.com
+  path: "/app1"
+  to:
+    kind: Service
+    name: myService1

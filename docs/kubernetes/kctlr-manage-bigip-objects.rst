@@ -118,8 +118,7 @@ Use ``kubectl edit`` to open the ConfigMap in your default text editor and make 
            }
          }
        }
-     # If you're running v1.0, use schema v0.1.2
-     schema: f5schemadb://bigip-virtual-server_v0.1.3.json
+     schema: f5schemadb://bigip-virtual-server_v0.1.4.json
    kind: ConfigMap
    metadata:
      creationTimestamp: 2017-02-14T17:24:34Z
@@ -298,7 +297,7 @@ Attach a pool to a virtual server
               }
             }
           }
-        schema: f5schemadb://bigip-virtual-server_v0.1.3.json
+        schema: f5schemadb://bigip-virtual-server_v0.1.4.json
       kind: ConfigMap
       metadata:
         creationTimestamp: 2017-02-14T17:24:34Z
@@ -381,7 +380,7 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
               }
             }
           }
-        schema: f5schemadb://bigip-virtual-server_v0.1.3.json
+        schema: f5schemadb://bigip-virtual-server_v0.1.4.json
       kind: ConfigMap
       metadata:
         creationTimestamp: 2017-02-14T17:24:34Z

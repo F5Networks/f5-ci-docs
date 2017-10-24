@@ -12,7 +12,7 @@
    :maxdepth: 2
    :glob:
 
-   BIG-IP Controller - Cloud Foundry <http://clouddocs.f5.com/products/connectors/cf-bigip-ctlr/v1.0-beta>
+   BIG-IP Controller - Cloud Foundry <http://clouddocs.f5.com/products/connectors/cf-bigip-ctlr/latest>
    Integration Overview <cloudfoundry/index>
    cloudfoundry/cfctlr*
 
@@ -57,6 +57,9 @@
    Integration Overview <openshift/index>
    openshift/kctlr-use-bigip-openshift
    openshift/kctlr-openshift-app-install
+   openshift/replace-f5-router.rst
+   openshift/kctlr-openshift-routes.rst
+
 
 .. toctree::
    :caption: Support

@@ -89,6 +89,8 @@ The |kctlr| integration for OpenShift Routes works as follows:
 
 - User deletes all routes (and associated endpoints) in OpenShift --> The |kctlr| deletes the associated virtual servers, pools, and pool members from the BIG-IP system.
 
+See how to :ref:`expose OpenShift Services to external traffic <kctlr-openshift-routes>` for configuration details.
+
 Related
 -------
 
