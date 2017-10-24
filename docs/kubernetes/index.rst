@@ -162,7 +162,9 @@ An :ref:`F5 Resource JSON blob <f5-resource-blob>` may contain the properties sh
    =============================================== ============================
    Schema version                                  k8s-bigip-ctlr version
    =============================================== ============================
-   f5schemadb://bigip-virtual-server_v0.1.3.json   1.1.0
+   f5schemadb://bigip-virtual-server_v0.1.4.json   1.3.0
+   ----------------------------------------------- ----------------------------
+   f5schemadb://bigip-virtual-server_v0.1.3.json   1.1.0, 1.2.0
    ----------------------------------------------- ----------------------------
    f5schemadb://bigip-virtual-server_v0.1.2.json   1.0.0
    =============================================== ============================

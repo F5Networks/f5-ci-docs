@@ -12,7 +12,7 @@
    :maxdepth: 2
    :glob:
 
-   BIG-IP Controller - Cloud Foundry <http://clouddocs.f5.com/products/connectors/cf-bigip-ctlr/v1.0-beta>
+   BIG-IP Controller - Cloud Foundry <http://clouddocs.f5.com/products/connectors/cf-bigip-ctlr/latest>
    Integration Overview <cloudfoundry/index>
    cloudfoundry/cfctlr*
 

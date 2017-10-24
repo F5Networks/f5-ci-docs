@@ -18,8 +18,8 @@ metadata:
     # the type of resource you want to create on the BIG-IP
     f5type: virtual-server
 data:
-  # If you're running v1.0, use schema v0.1.2
-  schema: "f5schemadb://bigip-virtual-server_v0.1.3.json"
+  # schema v.0.1.4 is required as of k8s-bigip-ctlr v1.3.0
+  schema: "f5schemadb://bigip-virtual-server_v0.1.4.json"
   data: |
     {
       "virtualServer": {
