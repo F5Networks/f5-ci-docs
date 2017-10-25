@@ -78,9 +78,7 @@ Thank you for participating in the F5 Beta/Early Release program!
 Feature enhancements introduced as part of a beta release have a **"Beta feature"** tag like the example below to the right.
 If you require assistance with a beta version, please contact your F5 Sales Representative.
 
-.. sidebar::
-
-   :fonticon:`fa fa-flask` **Beta feature**
+.. sidebar:: :fonticon:`fa fa-flask` **Beta feature**
 
    Introduced in <product-name> <version>.
 

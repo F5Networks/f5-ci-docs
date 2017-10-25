@@ -38,7 +38,7 @@ The :code:`bigip` section of the example |cfctlr| manifest below does the follow
       * :code:`oauth`  (REQUIRED)
       * :code:`route_mode`  (OPTIONAL)
 
-   See the |cfctlr| `configuration parameters </products/connectors/cf-bigip-ctlr/v1.0/#configuration-parameters>`_ table for more information.
+   See the |cfctlr| `configuration parameters`_ table for more information.
 
 .. literalinclude:: /_static/config_examples/manifest.yaml
    :linenos:
