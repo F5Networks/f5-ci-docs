@@ -8,7 +8,7 @@ F5 Cloud Foundry Container Integration
 Overview
 --------
 
-The F5 Container Integration for `Cloud Foundry`_  consists of the `BIG-IP Controller for Cloud Foundry`_.
+The F5 Container Integration for `Cloud Foundry`_  consists of the |cf-long|, or `cf-bigip-ctlr`_.
 The |cf-long| lets you use your F5 BIG-IP device as an Application Delivery Controller (ADC) in Cloud Foundry, serving North-South traffic.
 You can use the |cfctlr| with `Cloud Foundry`_ or `Pivotal Cloud Foundry`_ (PCF).
 
