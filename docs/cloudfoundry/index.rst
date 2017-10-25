@@ -1,19 +1,16 @@
 .. _cf-home:
 
-F5 Cloud Foundry Container Integration :fonticon:`fa fa-wrench`
-===============================================================
+F5 Cloud Foundry Container Integration
+======================================
+
 .. _cf-overview:
 
 Overview
 --------
 
-.. include:: /_static/reuse/beta-announcement-cf.rst
-
-The F5 Container Integration for `Cloud Foundry`_  consists of the `F5 BIG-IP Controller for Cloud Foundry </products/connectors/cf-bigip-ctlr/latest>`_.
-
-The |cf-long| configures BIG-IP Local Traffic Manager (LTM) objects for Cloud Foundry applications, serving North-South traffic.
-
-You can use the |cf-long| with `Cloud Foundry`_ or `Pivotal Cloud Foundry`_ (PCF).
+The F5 Container Integration for `Cloud Foundry`_  consists of the |cf-long|, or `cf-bigip-ctlr`_.
+The |cf-long| lets you use your F5 BIG-IP device as an Application Delivery Controller (ADC) in Cloud Foundry, serving North-South traffic.
+You can use the |cfctlr| with `Cloud Foundry`_ or `Pivotal Cloud Foundry`_ (PCF).
 
 .. _cf-prereqs:
 
@@ -34,22 +31,25 @@ The F5 Integration for Cloud Foundry's documentation set assumes that you:
 The |cf-long| is a Docker container-based application that runs on a Cloud Foundry `Diego cell`_.
 
 You can :ref:`deploy the F5 BIG-IP Controller for Cloud Foundry <deploy-cf-ctlr>` using an `Application Manifest`_.
-The Application Manifest tells the |cf-long|
+The Application Manifest tells Cloud Foundry and the |cfctlr|
 
-- how to log in to the BIG-IP device, and
-- how to set up the BIG-IP device when you launch the |cfctlr| for the first time.
+- how to deploy the |cfctlr| into the Cloud Foundry environment,
+- how to log in to the BIG-IP device,
+- how to set up the BIG-IP device when you launch the |cfctlr| for the first time, and
+- how to access orchestration information from the environment.
 
 Once the |cf-long| is running, it
 
-- creates a BIG-IP virtual server, which serves as the entry point for traffic into the cloud;
-- creates a `BIG-IP Local Traffic policy`_ (maximum of two - one each for http and https) with rules for each route it finds in Cloud Foundry;
-- creates a pool for each route, with members for each application instance;
+- creates BIG-IP virtual servers, which serve as the entry points for traffic into the cloud;
+- creates a `BIG-IP Local Traffic policy`_ with rules for each HTTP route it finds in Cloud Foundry;
+- creates a pool for each TCP and HTTP route, with members for each application instance;
 - associates each application's traffic policy rule with its pool.
 
 .. attention::
 
-   The |cf-long| can create a maximum of two (2) virtual servers for Cloud Foundry: one (1) for HTTP and one (1) for HTTPS.
-   The |cf-long| creates an HTTP virtual server by default.
+   - The |cfctlr| can create two (2) L7 virtual servers for Cloud Foundry: one (1) for HTTP and one (1) for HTTPS.
+   - The |cfctlr| creates an HTTP virtual server by default.
+   - The |cfctlr| creates an L4 (TCP) virtual server for each mapped route to a TCP domain.
 
 
 .. _cf-key-concepts:
@@ -57,19 +57,23 @@ Once the |cf-long| is running, it
 Key Cloud Foundry Concepts
 --------------------------
 
-|cf-long| configurations are "global", meaning a single set of configurations apply to all of the pools/pools members created for Cloud Foundry Apps.
+The |cfctlr| configurations are "global", meaning a single set of configurations apply to all of the pools/pool members created for Cloud Foundry Routes and Applications.
 The Cloud Foundry :ref:`Application Manifest <create-application-manifest>` file is the means via which you can identify the BIG-IP policies, profiles, etc., you want to apply.
+
+.. important::
+
+   Some policy and profile configurations only apply to L7 (HTTP) virtual servers. See the `configuration parameters </products/connectors/cf-bigip-ctlr/latest/index.html#configuration-parameters>`_ table for more information.
 
 .. _cf-gorouter-nats:
 
-Gorouter and NATS
-`````````````````
+Routes, NATS, and Routing API
+`````````````````````````````
 
-In Cloud Foundry, the `Gorouter`_ component routes all incoming traffic.
-Similarly, the |cf-long| uses Cloud Foundry's routing tables to direct traffic to the correct Diego cell virtual machine(s) for a requested application.
-The |cf-long| watches the `NATS bus`_ for route updates; when it discovers changes, it configures the BIG-IP device(s) accordingly.
+In Cloud Foundry, the `Gorouter`_ component routes all incoming L7 traffic. The `TCP Router`_ component routes all incoming L4 traffic.
+Similarly, the |cfctlr| uses Cloud Foundry's routing tables to direct traffic to the correct virtual machine(s) for a requested application.
+The |cfctlr| watches the `NATS bus`_ and `Routing API`_ for route updates; when the Controller discovers changes, it configures the BIG-IP device(s) accordingly.
 
-When you deploy a new application in Cloud Foundry, the |cf-long| automatically creates a BIG-IP pool, pool members, and traffic policy rule for the new route.
+When you deploy a new application with a mapped HTTP route in Cloud Foundry, the |cfctlr| automatically creates a BIG-IP pool, pool members, and traffic policy rule for the new route. When you deploy a new application with a mapped TCP route in Cloud Foundry, the |cfctlr| automatically creates a BIG-IP virtual server, pool, and pool members for the new route.
 
 .. seealso::
 
@@ -82,15 +86,16 @@ When you deploy a new application in Cloud Foundry, the |cf-long| automatically 
 BIG-IP Local Traffic Manager Services
 -------------------------------------
 
-You can apply existing BIG-IP health monitors, policies, and SSL profiles to the virtual server(s) and pools the |cf-long| creates.
-Likewise, you can select any load balancing mode that exists on the BIG-IP device.
+You can apply existing BIG-IP health monitors, policies, profiles, and SSL profiles to the virtual server(s) and pools the |cfctlr| creates for HTTP routes (these configurations do not apply to objects managed for TCP routes).
+Likewise, you can select any BIG-IP load balancing mode (applies to both HTTP and TCP pools).
 Define the |cfctlr| `configuration parameters </products/connectors/cf-bigip-ctlr/latest/index.html#configuration-parameters>`_ in your :ref:`Application Manifest <create-application-manifest>`.
 
 .. tip::
 
-   You can enable "x-forwarded-for" and "x-forwarded-proto" profiles for the BIG-IP virtual server(s).
-   Just create the profiles on the BIG-IP, then add them to the Application Manifest before launching the |cfctlr|.
+   You can apply additional BIG-IP configurations to achieve greater feature parity with `Gorouter`_.
+   For example, you can add 'X_FORWARDED_PROTO: HTTP' and  'X_FORWARDED_PROTO: HTTPS' headers using BIG-IP policies and profiles.
 
+   See :ref:`Deploy the BIG-IP Controller for Cloud Foundry <create-application-manifest>` for instructions.
 
 .. Related
    -------
@@ -101,5 +106,7 @@ Define the |cfctlr| `configuration parameters </products/connectors/cf-bigip-ctl
 
 .. _BIG-IP Local Traffic policy: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/local-traffic-policies-getting-started-12-1-0/1.html
 .. _Gorouter: https://docs.cloudfoundry.org/concepts/architecture/router.html
+.. _TCP Router: https://docs.cloudfoundry.org/adminguide/enabling-tcp-routing.html
+.. _Routing API: https://github.com/cloudfoundry-incubator/routing-api
 .. _Routes and Domains documentation: https://docs.cloudfoundry.org/devguide/deploy-apps/routes-domains.html
 
