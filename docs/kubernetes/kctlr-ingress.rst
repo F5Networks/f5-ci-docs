@@ -19,7 +19,7 @@ The |kctlr| supports four (4) types of Kubernetes `Ingress Resource`_:
 
 .. attention::
 
-   The |kctlr| can create one (1) BIG-IP virtual server per Ingress resource.
+   The |kctlr| creates one (1) BIG-IP virtual server per Ingress resource. If the Ingress resource incorporates multiple Services, the |kctlr| creates a pool for each Service.
 
 \
 
@@ -265,7 +265,4 @@ See the `TMSH Reference Guide`_ (PDF) for the relevant :command:`tmsh ltm` comma
 .. _Host header: https://tools.ietf.org/html/rfc7230#section-5.4
 .. _Kubernetes documentation: https://kubernetes.io/docs/concepts/services-networking/ingress/#name-based-virtual-hosting
 .. _TLS ingress: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
-<<<<<<< HEAD
-=======
 .. _Self IP address: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-13-0-0/5.html#guid-52e1f1d8-9a6b-48cc-acfa-07745b757f07
->>>>>>> WIP Fixes #277

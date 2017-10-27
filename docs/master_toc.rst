@@ -33,8 +33,9 @@
    kubernetes/kctlr-ingress
    kubernetes/kctlr-manage-bigip-objects
    kubernetes/kctlr-deploy-iapp
-   openshift/replace-f5-router.rst
-   openshift/kctlr-openshift-routes.rst
+   kubernetes/kctlr-multi-tenancy
+   openshift/replace-f5-router
+   openshift/kctlr-openshift-routes
 
 .. toctree::
    :caption: Mesos Marathon
