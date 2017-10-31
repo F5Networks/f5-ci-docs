@@ -13,7 +13,7 @@
         }
       ],
       "privileged": false,
-      "image": "<my-app-image:version",
+      "image": "someImage:version>",
       "network": "BRIDGE",
       "forcePullImage": true
     },
@@ -26,10 +26,8 @@
     "f5-asp": "enable",
     "ASP_LOG_LEVEL": "debug",
     "ASP_VS_KEEP_ALIVE": 50,
-    "ASP_VS_FLAGS": {
-      "x-forwarded-for": true,
-      "x-forwarded-by": true
-    },
+    "ASP_VS_FLAGS" : "{ \"x-forwarded-for\": true, \"x-forwarded-by\": true}",
+    "ASP_VS_EVENT_HANDLERS": "[{\"http-request\": \"module.exports = (req, res, next) => {\n if (req.method === 'POST') {\n res.statusCode = 503;\n res.end('POST Method not supported');\n } else { \n next(); \n } \n}\n\"}, {\"http-response\": \"module.exports = (res, next) => { res.headers['x-my-bar'] = 'foo'; next(); }\"}]",
     "ASP_COUNT_PER_APP": 2
   },
   "cpus": 0.25,
