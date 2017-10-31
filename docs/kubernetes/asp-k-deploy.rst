@@ -2,16 +2,15 @@
 
 .. _k8s-asp-deploy:
 
-Replace kube-proxy with f5-kube-proxy
-=====================================
+Replace kube-proxy with the f5-kube-proxy
+=========================================
 
 .. sidebar:: Docs test matrix
 
    We tested this documentation with:
 
-   - ``kubernetes-v1.4.8_coreos.0``
-   - ``k8s-bigip-ctlr v1.0.0``
-   - ``asp v1.0.0``
+   Kubernetes 1.4.8, coreos-beta-1465.3.0, ASP 1.1.0
+   Kubernetes 1.4.8, coreos-7.2.1511, ASP 1.0.0
 
 Summary
 -------
@@ -34,21 +33,17 @@ Replace kube-proxy with |aspk| in the Pod Manifests
    Kubernetes "master" and "worker" nodes have distinct Pod Manifests.
    You need to update both to use |aspk|.
 
-   See the CoreOS documentation regarding `setting up kube-proxy on the master <https://coreos.com/kubernetes/docs/latest/deploy-master.html#set-up-the-kube-proxy-pod>`_ and `setting up kube-proxy on the workers <https://coreos.com/kubernetes/docs/latest/deploy-workers.html#set-up-the-kube-proxy-pod>`_ for more information.
+   The `CoreOS on Kubernetes Getting Started Guide`_ provides instructions for setting up kube-proxy on master and worker nodes.
 
-.. hint::
+.. code-block:: console
+   :caption: SSH to a node and edit the kube-proxy manifest
 
-   In CoreOS, the `kube-proxy`_ manifest lives in the path ``/etc/kubernetes/manifests/kube-proxy.yaml``.
-
-   .. code-block:: console
-      :caption: SSH to a node and edit the kube-proxy manifest
-
-      user@k8s-master:~$ ssh core@172.16.1.21
-      Last login: Fri Feb 17 18:33:35 UTC 2017 from 172.16.1.20 on pts/0
-      CoreOS alpha (1185.3.0)
-      Update Strategy: No Reboots
-      core@k8s-worker-0 ~ $ sudo su
-      k8s-worker-0 core \# vim /etc/kubernetes/manifests/kube-proxy.yaml
+   $ ssh core@172.16.1.21
+   Last login: Fri Feb 17 18:33:35 UTC 2017 from 172.16.1.20 on pts/0
+   CoreOS alpha (1185.3.0)
+   Update Strategy: No Reboots
+   core@k8s-worker-0 ~ $ sudo su
+   k8s-worker-0 core \# vim /etc/kubernetes/manifests/kube-proxy.yaml
 
 #. Edit the `kube-proxy`_ manifest on each node to match the :ref:`manifest examples <k8s-pod-manifest-examples>`.
 
@@ -111,3 +106,4 @@ Examples
 .. _Pod: https://kubernetes.io/docs/user-guide/pods/
 .. _Cluster: https://kubernetes.io/docs/admin/cluster-management/
 .. _Node: https://kubernetes.io/docs/admin/node/
+.. _CoreOS on Kubernetes Getting Started Guide: https://coreos.com/kubernetes/docs/1.6.1/deploy-master.html#set-up-the-kube-proxy-pod

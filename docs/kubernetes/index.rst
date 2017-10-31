@@ -3,6 +3,44 @@
 F5 Kubernetes Container Integration
 ===================================
 
+This document provides general information regarding the F5 Integration for Kubernetes.
+For deployment and usage instructions, please refer to the guides below.
+
+.. toctree::
+   :caption: BIG-IP Controller
+   :maxdepth: 1
+
+   Deploy the BIG-IP Controller <kctlr-app-install>
+   Manage BIG-IP objects <kctlr-manage-bigip-objects>
+   Deploy iApps <kctlr-deploy-iapp>
+   k8s-bigip-ctlr product information <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
+   f5-kube-proxy product information <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
+
+
+.. toctree::
+   :caption: Application Services Proxy
+   :maxdepth: 1
+
+   Set up the ASP ephemeral store <asp-k-ephemeral-store>
+   Install the ASP <asp-install-k8s>
+   Replace kube-proxy with the f5-kube-proxy <asp-k-deploy>
+   Attach an ASP to a Service <asp-k-virtual-servers>
+   ASP product information <http://clouddocs.f5.com/products/asp/latest>
+
+
+Related
+-------
+
+.. toctree::
+   :glob:
+   :maxdepth: 1
+
+   asp*
+   k8s-bigip-ctlr docs <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
+
+   F5 ASP docs <http://clouddocs.f5.com/products/asp/latest>
+
+
 Overview
 --------
 
@@ -20,7 +58,7 @@ The |asp| provides load balancing and telemetry for containerized applications, 
 .. _k8s-prereqs:
 
 General Prerequisites
----------------------
+`````````````````````
 
 The F5 Integration for Kubernetes documentation set assumes that you:
 
@@ -39,41 +77,73 @@ The F5 Integration for Kubernetes documentation set assumes that you:
 |asp|
 -----
 
-The |asp| (ASP) provides container-to-container load balancing, traffic visibility, and inline programmability for applications. Its light form factor allows for rapid deployment in datacenters and across cloud services. The ASP integrates with container environment management and orchestration systems and enables application delivery service automation.
-
-The |asp| collects traffic statistics for the Services it load balances; these stats are either logged locally or sent to an external analytics application. You can set the location and type of the analytics application in the `stats </products/asp/latest/index.html#stats>`_ section of the :ref:`Service annotation <k8s-service-annotate>`.
+The |asp| (ASP) provides container-to-container load balancing, traffic visibility, and inline programmability for applications.
+Its light form factor allows for rapid deployment in datacenters and across cloud services.
+The ASP integrates with container environment management and orchestration systems and enables application delivery service automation.
 
 .. important::
 
    In Kubernetes, the ASP runs as a forward, or client-side, proxy.
 
-.. todo:: add "Export ASP Stats to an analytics provider"
 
-.. seealso::
+Ephemeral store
+```````````````
 
-    `ASP product documentation`_
+.. include:: /_static/reuse/asp-version-added-1_1.rst
+
+The `ASP ephemeral store`_ is a distributed, in-memory, secure key-value store.
+It allows ASP instances to share non-persistent, or :dfn:`ephemeral`, data.
+
+.. _asp-health-k8s:
+
+Health monitors
+```````````````
+
+The ASP's built-in `health monitor </products/asp/latest/#health-monitors>`_ detects endpoint health using both active and passive checks.
+The ASP adds and removes endpoints from load balancing pools based on the health status determined by these checks.
+The ASP's health monitor enhances Kubernetes' native "liveness probes" as follows:
+
+- provides a network view of service health;
+- adds/removes endpoints from load balancing pool automatically based on health status;
+- provides opportunistic health checks by observing client traffic;
+- combines data from various health check types -- passive and active -- to provide a more comprehensive view of endpoints' health status.
+
+Statistics
+``````````
+
+The |asp| collects traffic statistics for the Services it load balances.
+These stats are either logged locally or sent to an external analytics application, like :ref:`Splunk <send-stats-splunk>`.
+
+You can set the location and type of the analytics application in the `stats </products/asp/latest/index.html#stats>`_ section of the :ref:`ASP ConfigMap <asp-configure-k8s>`.
 
 
-|aspk-long|
------------
+F5-kube-proxy
+-------------
 
-The |aspk-long| -- |aspk| -- replaces the standard Kubernetes network proxy, or `kube-proxy`_. The ``asp`` and |aspk| work together to proxy traffic for Kubernetes `Services`_ as follows:
+The |aspk-long| -- |aspk| -- replaces the standard Kubernetes network proxy, or `kube-proxy`_.
+
+The ASP and |aspk| work together to proxy traffic for Kubernetes `Services`_ as follows:
 
 - The |aspk| provides the same L4 services as `kube-proxy`_, include iptables and basic load balancing.
 - For Services that have the :ref:`ASP Service annotation <k8s-service-annotate>`, the |aspk| hands off traffic to the ASP running on the same node as the client.
 - The ASP then provides `L7 traffic services </products/asp/latest/index.html#built-in-middleware>`_ and `L7 telemetry </products/asp/latest/index.html#telemetry>`_ to your Kubernetes `Service`_.
 
-By default, the |aspk| forwards traffic to ASP on port 10000. You can change this, if needed, to avoid port conflicts. See the `f5-kube-proxy product documentation`_ for more information.
+.. important::
+
+   By default, the |aspk| forwards traffic to ASP on port 10000.
+   You can change this, if needed, to avoid port conflicts.
+
+   See the `f5-kube-proxy product documentation`_ for more information.
 
 
 |kctlr-long|
 ------------
 
 The |kctlr-long| is a Docker container that runs on a `Kubernetes Pod`_.
-To launch the |kctlr| application in Kubernetes, :ref:`create a Deployment <install-kctlr>`.
+You can `launch the k8s-bigip-ctlr application <install-kctlr>` in Kubernetes using a Deployment.
 
 Once the |kctlr| pod is running, it watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for special Kubernetes "F5 Resource" `ConfigMap`_ s.
-These ConfigMaps contain an F5 Resource JSON blob that tells |kctlr|:
+An F5 Resource ConfigMap contains a JSON blob that tells |kctlr|:
 
 - what `Kubernetes Service`_ it should manage, and
 - what objects it should create/update on the BIG-IP system for that Service.
@@ -83,10 +153,10 @@ When the |kctlr| discovers new or updated :ref:`virtual server <kctlr-create-vs>
 .. caution::
 
    * The |kctlr-long| cannot manage objects in the ``/Common`` :term:`partition`.
-   * The BIG-IP partition must exist before you launch the |kctlr|.
-   * The |kctlr-long| can't create or destroy BIG-IP partitions.
-   * If you're running more than one (1) |kctlr|, **each must manage a separate BIG-IP partition** (for example, ``k8s-1`` and ``k8s-2``).
-   * Each :ref:`virtual server F5 Resource <kctlr-create-vs>` defines a BIG-IP LTM virtual server object for one (1) port associated with one (1) `Service`_.
+   * The BIG-IP partition you want to manage must exist before you launch the |kctlr|.
+   * The |kctlr-long| does not create or destroy BIG-IP partitions.
+   * You can use multiple |kctlr| instances to manage **separate** BIG-IP partitions.
+   * You can create one (1) BIG-IP virtual server per Service port.
      *Create a separate* :ref:`virtual server F5 Resource ConfigMap <kctlr-create-vs>` *for each Service port you wish to expose.*
 
 The |kctlr| can:
@@ -95,7 +165,7 @@ The |kctlr| can:
 - :ref:`use an IPAM system to assign IP addresses to virtual servers <kctlr-ipam>`
 - :ref:`create unattached pools <kctlr-pool-only>` (pools that aren't attached to virtual servers)
 - :ref:`deploy iApps <kctlr-deploy-iapps>`
-- act as a `Kubernetes Ingress controller`_ to :ref:`expose Kubernetes Services to external traffic <kctlr-ingress-config>`
+- act as a `Kubernetes Ingress controller`_ to :ref:`expose Kubernetes Services to external traffic <kctlr-ingress-config>`.
 
 Key Kubernetes Concepts
 -----------------------
@@ -208,20 +278,5 @@ When running in :ref:`cluster mode`, the |kctlr| has visibility into the health 
 .. tip::
 
    In either mode of operation, it's good practice to :ref:`add a BIG-IP health monitor <k8s-config-bigip-health-monitor>` to the virtual server to ensure the BIG-IP system knows when resources go down.
-
-
-Related
--------
-
-.. toctree::
-   :glob:
-
-   kctlr*
-   ../openshift/index
-   asp*
-   k8s-bigip-ctlr docs <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
-   f5-kube-proxy docs <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
-   F5 Application Services Proxy docs <http://clouddocs.f5.com/products/asp/latest>
-
 
 .. _Cluster Network: https://kubernetes.io/docs/concepts/cluster-administration/networking/

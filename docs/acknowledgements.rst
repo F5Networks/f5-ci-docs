@@ -8,7 +8,7 @@ F5 Networks, Inc. (F5) believes the information it furnishes to be accurate and 
 Trademarks
 ----------
 
-For a current list of F5 trademarks and service marks, see https://www.f5.com/about/guidelines-policies/trademarks.
+For a current list of F5 trademarks and service marks, see https://f5.com/about-us/policies/trademarks.
 
 All other product and company names herein may be trademarks of their respective owners.
 

@@ -1,4 +1,4 @@
-Before you can use the |asp|, you must complete the following tasks:
+Before you deploy the |asp|, complete the following tasks:
 
 #. Accept the Terms of Service in Docker Store.
 

@@ -1,0 +1,45 @@
+// NOTE: REMOVE COMMENTS BEFORE USING
+{
+  "id": "ephemeral-store",
+  "instances": 5,
+  "cpus": 1,
+  "mem": 1024,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "forcePullImage": true,
+      "network": "HOST",
+      "image": "f5networks/ephemeral-store:latest"
+    }
+  },
+  "env": {
+    "ORCHESTRATION": "marathon",
+    // Replace "myUser" with the name of your ephemeral-store user
+    // that matches the Common Name of the certificate generated for that user
+    // Paste in the complete cert and key for the rootCA user
+    "EPHEMERAL_STORE_USER": "{ \"name\" : \"myUser\", \"auth_mode\" : \"certificate\" }",
+    "EPHEMERAL_STORE_ROOT_CA_CERT": "<root-ca-cert-in-PEM-format>",
+    "EPHEMERAL_STORE_ROOT_CA_KEY": "<root-ca-key-in-PEM-format>"
+  },
+  "portDefinitions": [
+    {
+      "port": 8087,
+      "protocol": "tcp",
+      "labels": {
+        "VIP_0": "ephemeral-store:8087"
+      },
+      "name": "proto"
+    },
+    {
+      "port": 4369,
+      "protocol": "tcp",
+      "name": "epmd"
+    },
+    {
+      "port": 8099,
+      "protocol": "tcp",
+      "name": "handoff"
+    }
+  ],
+  "requirePorts": true
+}
