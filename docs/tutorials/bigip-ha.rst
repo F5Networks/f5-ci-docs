@@ -22,8 +22,15 @@ You can use any BIG-IP Controller to manage a BIG-IP HA active-standby pair. Whi
 
 Any given BIG-IP Controller instance is responsible for a single administrative partition on the BIG-IP system. To provide redundancy for all partitions, you should deploy a backup of each Controller instance in the "standby" data center.
 
-Deploy backup BIG-Controllers for BIG-IP HA Pairs
--------------------------------------------------
+.. caution::
+
+   F5 does not recommended using automatic configuration sync for BIG-IP devices managed by BIG-IP Controllers. The BIG-IP Controller automatically reconfigures its managed device if it discovers changes from what it knows to be the desired state.
+
+   This means that the Controller overwrites *all manual changes*, whether made directly to the managed device or to a device that syncs with the managed device.
+
+
+Deploy backup BIG-IP Controllers for a BIG-IP HA Pair
+-----------------------------------------------------
 
 Cloud Foundry
 `````````````
