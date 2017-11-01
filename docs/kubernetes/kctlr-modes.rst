@@ -139,7 +139,7 @@ What's Next
 - :ref:`Install the BIG-IP Controller in standard Kubernetes <install-kctlr>`
 - :ref:`Add your BIG-IP device to an OpenShift Cluster <bigip-openshift-setup>`
 - :ref:`Install the BIG-IP Controller in OpenShift <install-kctlr-openshift>`
-- `Configuration options for the BIG-IP Controller </products/connectors/k8s-bigip-ctlr/latest/#controller-configuration-parameters>`_
+- `k8s-bigip-ctlr configuration parameters`_
 
 .. rubric:: Footnotes
 .. [#servicetype] See `Publishing Services - Service Types <https://kubernetes.io/docs/concepts/services-networking/service>`_ in the Kubernetes documentation.

@@ -1,7 +1,5 @@
-.. _install-ephemeral-store-k8s:
-
 .. index::
-   single: Application Services Proxy, Ephemeral store
+   single: Application Services Proxy; Ephemeral store; Kubernetes
 
 .. include:: /_static/reuse/asp-version-added-1_1.rst
 
@@ -11,6 +9,7 @@
 
    - Kubernetes 1.4.8, coreos-beta-1465.3.0, ASP 1.1.0, f5-kube-proxy 1.0.0
 
+.. _install-ephemeral-store-k8s:
 .. _ephemeral store:
 
 Set up the ASP ephemeral store - Kubernetes
@@ -157,6 +156,6 @@ Learn More
 See the `ASP ephemeral store`_ and `ASP health monitor`_ documentation.
 
 .. rubric:: Footnotes
-.. [#k8smemory] See `Set Pod CPU & Memory Limit <https://kubernetes.io/docs/tasks/administer-cluster/cpu-memory-limit/>`_ :fonticon:`fa fa-external-link`.
-.. [#petset] PetSets changed to StatefulSets in Kubernetes v1.5. F5 does not support deployment of the ASP on v1.5 or later.
+.. [#k8smemory] See `Set Pod CPU & Memory Limit <https://kubernetes.io/docs/tasks/administer-cluster/memory-default-namespace/>`_ :fonticon:`fa fa-external-link`.
+.. [#petset] PetSets changed to StatefulSets in Kubernetes v1.5.
 

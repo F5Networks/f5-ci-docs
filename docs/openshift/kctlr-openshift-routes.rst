@@ -1,7 +1,5 @@
 .. index::
-   single: OpenShift Route; k8s-bigip-ctlr
-   single: F5 Router; OpenShift
-   single: OpenShift Route; BIG-IP
+   single: BIG-IP Controller; OpenShift; Route; F5 Router; BIG-IP
 
 .. include:: /_static/reuse/k8s-version-added-1_2.rst
 
@@ -135,7 +133,7 @@ Health monitors
 
 .. include:: /_static/reuse/k8s-version-added-1_3.rst
 
-#. Define the :code:`virtual-server.f5.com/health` annotation JSON blob using the |kctlr| `supported route annotations </products/connectors/k8s-bigip-ctlr/latest/#supported-route-configurations>`_.
+#. Define the :code:`virtual-server.f5.com/health` annotation JSON blob using the |kctlr| supported `route annotations`_.
 
 #. Add the health monitor annotation to the Route Resource.
 

@@ -1,18 +1,22 @@
-.. _kctlr-deploy-iapps:
-
-Deploy iApps with the BIG-IP Controller
-=======================================
+.. index::
+   single: BIG-IP Controller; Kubernetes; iApps
 
 .. sidebar:: Docs test matrix
 
    Documentation manually tested with:
 
-   - ``kubernetes-v1.6.4 on Ubuntu-16.4.2``
-   - ``kubernetes-v1.4.8 on CoreOS 1409.6.0``
-   - ``k8s-bigip-ctlr v1.1.0``
-   - ``k8s-bigip-ctlr v1.0.0``
+   - kubernetes-v1.6.4 on Ubuntu-16.4.2
+   - kubernetes-v1.4.8 on CoreOS 1409.6.0
+   - k8s-bigip-ctlr v1.1.0
+   - k8s-bigip-ctlr v1.0.0
 
-The |kctlr| can deploy any iApp on a BIG-IP device via a set of `iApp configuration parameters </products/connectors/k8s-bigip-ctlr/latest/index.html#iApp>`_. The iApp must exist on your BIG-IP before |kctlr| attempts to deploy it. The steps presented here apply to any built-in or custom iApp.
+.. _kctlr-deploy-iapps:
+
+Deploy iApps - Kubernetes/OpenShift
+===================================
+
+
+The |kctlr| can deploy any iApp on a BIG-IP device using the `k8s-bigip-ctlr iApp configuration parameters`_. The iApp must exist on your BIG-IP before |kctlr| attempts to deploy it. The steps presented here apply to any built-in or custom iApp.
 
 .. note::
 

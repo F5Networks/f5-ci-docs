@@ -1,10 +1,6 @@
 .. index::
-   single: BIG-IP Controller for Kubernetes; OpenShift
-   single: OpenShift
-   pair: BIG-IP Controller for Kubernetes; OpenShift
-   triple: BIG-IP Controller for Kubernetes; OpenShift; F5 Router
-   triple: OpenShift; F5 Router; replace
-   triple: OpenShift; F5 Router; upgrade
+   single: BIG-IP Controller; Kubernetes; OpenShift
+   single: BIG-IP Controller; OpenShift; F5 Router
 
 .. _upgrade f5 router:
 
@@ -72,14 +68,14 @@ What's Next
 -----------
 
 - See :ref:`kctlr-openshift-routes` to learn about creating new Routes for the |kctlr| to manage.
-- Discover the |kctlr| `supported route configuration parameters </products/connectors/k8s-bigip-ctlr/#supported-route-configurations>`_.
+- Discover the |kctlr| supported `route configuration parameters`_.
 
 Example Route Resource definitions
 ``````````````````````````````````
 
-- :fonticon:`fa fa-download` `sample-unsecured-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/_downloads/sample-unsecured-route.yaml>`_
-- :fonticon:`fa fa-download` `sample-edge-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/_downloads/sample-edge-route.yaml>`_
-- :fonticon:`fa fa-download` `sample-passthrough-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/_downloads/sample-passthrough-route.yaml>`_
-- :fonticon:`fa fa-download` `sample-reencrypt-route.yaml </products/connectors/k8s-bigip-ctlr/v1.2/_downloads/sample-reencrypt-route.yaml>`_
+- :fonticon:`fa fa-download` :download:`sample-unsecured-route.yaml </openshift/config_examples/f5-openshift-unsecured-route.yaml>`
+- :fonticon:`fa fa-download` :download:`sample-edge-route.yaml </openshift/config_examples/f5-openshift-edge-route.yaml>`
+- :fonticon:`fa fa-download` :download:`sample-passthrough-route.yaml </openshift/config_examples/f5-openshift-passthrough-route.yaml>`
+- :fonticon:`fa fa-download` :download:`sample-reencrypt-route.yaml </openshift/config_examples/f5-openshift-reencrypt-route.yaml>`
 
 .. _OpenShift F5 Router: https://docs.openshift.org/1.4/install_config/router/f5_router.html

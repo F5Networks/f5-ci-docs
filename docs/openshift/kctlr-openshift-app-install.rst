@@ -1,5 +1,5 @@
 .. index::
-   single: OpenShift; k8s-bigip-ctlr
+   single: OpenShift; BIG-IP Controller
    single: OpenShift; BIG-IP Controller; install
    single: OpenShift; RBAC; BIG-IP Controller
 
@@ -190,5 +190,4 @@ Now that you have the |kctlr| up and running, here are a few things you can do w
 
 .. _OpenShift: https://www.openshift.org/
 .. _ReplicaSet: https://kubernetes.io/docs/user-guide/replicasets/
-.. _Pod: https://kubernetes.io/docs/user-guide/pods/
 .. _ServiceAccount: https://kubernetes.io/docs/admin/service-accounts-admin/

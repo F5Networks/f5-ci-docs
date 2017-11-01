@@ -88,8 +88,8 @@ release = 'v1.3'
 
 rst_epilog = """
 .. |asp| replace:: Application Services Proxy
-.. |aspk-long| replace:: F5-proxy for Kubernetes
-.. |aspk| replace:: F5-proxy
+.. |aspk-long| replace:: ASP Controller for Kubernetes
+.. |aspk| replace:: f5-kube-proxy
 .. |cfctlr| replace:: BIG-IP Controller
 .. |cf-long| replace:: BIG-IP Controller for Cloud Foundry
 .. |kctlr-long| replace:: BIG-IP Controller for Kubernetes
@@ -99,97 +99,99 @@ rst_epilog = """
 .. |aspm-long| replace:: ASP Controller for Marathon
 .. |aspm| replace:: ASP Controller
 .. |octlr-long| replace:: BIG-IP Controller for OpenShift
-.. _BIG-IP: https://f5.com/products/big-ip
-.. _BIG-IP System User Account Administration -> Administrative Partitions: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-12-0-0/3.html
-.. _system configuration: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-initial-configuration-12-0-0/2.html#conceptid
-.. _local traffic management: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-basics-12-0-0.html
-.. _F5 Docker registry: https://hub.docker.com/r/f5networks/
-.. _Kubernetes: https://kubernetes.io/
-.. _kubectl: https://kubernetes.io/docs/user-guide/kubectl-overview/
-.. _kube-proxy: https://kubernetes.io/docs/admin/kube-proxy/
-.. _namespace: https://kubernetes.io/docs/user-guide/namespaces/
-.. _ConfigMap: https://kubernetes.io/docs/user-guide/configmap/
-.. _Kubernetes Deployment: https://kubernetes.io/docs/user-guide/deployments/
-.. _Deployment: https://kubernetes.io/docs/user-guide/deployments/
-.. _Kubernetes Service: https://kubernetes.io/docs/user-guide/services/
-.. _Service: https://kubernetes.io/docs/user-guide/services/
-.. _Services: https://kubernetes.io/docs/user-guide/services/
-.. _Kubernetes Cluster: https://kubernetes.io/docs/admin/
-.. _Kubernetes DaemonSet: https://kubernetes.io/docs/admin/daemons/
-.. _Daemonset: https://kubernetes.io/docs/admin/daemons/
-.. _Kubernetes Dashboard: https://kubernetes.io/docs/user-guide/ui/
-.. _Static Pod: https://kubernetes.io/docs/admin/static-pods/
-.. _Kubernetes pod: https://kubernetes.io/docs/user-guide/pods/
-.. _Kubernetes node: https://kubernetes.io/docs/admin/node/
-.. _Kubernetes Secret: https://kubernetes.io/docs/user-guide/secrets/
-.. _Secret: https://kubernetes.io/docs/user-guide/secrets/
-.. _Ingress Resource: https://kubernetes.io/docs/concepts/services-networking/ingress/
-.. _Kubernetes Ingress controller: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-controllers
-.. _Ingress controller: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-controllers
-.. _Local Traffic Policies: https://support.f5.com/csp/article/K04597703
-.. _f5-kube-proxy reference documentation: %(base_url)s/products/connectors/f5-kube-proxy/latest/
-.. _ASP reference documentation: %(base_url)s/products/asp/latest/
-.. _Kubernetes namespace: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
-.. _F5 virtual server properties: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#virtualserver-configmap-properties
-.. _Marathon: https://mesosphere.github.io/marathon/
-.. _Express middleware: https://expressjs.com/en/guide/using-middleware.html
-.. _Node.js: https://nodejs.org/en/
-.. _Express: https://expressjs.com/
-.. _Splunk: https://www.splunk.com/
-.. _Apache Mesos: https://mesosphere.com/
-.. _Marathon: https://mesosphere.github.io/marathon/
 .. _Apache Mesos Marathon: https://mesosphere.github.io/marathon/
-.. _Marathon Apps: https://mesosphere.github.io/marathon/docs/application-basics.html
-.. _Marathon Applications: https://mesosphere.github.io/marathon/docs/application-basics.html
-.. _Docker: https://www.docker.com/
-.. _Marathon Web Interface: https://mesosphere.github.io/marathon/docs/marathon-ui.html
+.. _Apache Mesos: https://mesosphere.com/
+.. _Application labels for iApp mode: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/#application-labels-for-iapp-mode
+.. _Application Manifest: https://docs.pivotal.io/pivotalcf/1-7/devguide/deploy-apps/manifest.html
+.. _Application Services Proxy: %(base_url)s/products/asp/latest/
+.. _ASP Controller for Marathon: %(base_url)s/products/connectors/marathon-asp-ctlr/latest
+.. _ASP ephemeral store: %(base_url)s/products/asp/latest/#ephemeral-store
+.. _ASP event handlers: %(base_url)s/products/asp/latest/event-handlers.html
+.. _ASP global and orchestration configuration parameters: %(base_url)s/products/asp/latest/#global
+.. _ASP health check parameters: %(base_url)s/products/asp/latest/#health-check-types
+.. _ASP health monitor: %(base_url)s/products/asp/latest/#health-monitors
+.. _ASP Marathon configuration labels: %(base_url)s/products/connectors/marathon-asp-ctlr/latest/#configuration-parameters
+.. _ASP Middleware API: %(base_url)s/products/asp/latest/middleware-api.html
+.. _ASP reference documentation: %(base_url)s/products/asp/latest/
+.. _ASP stats configuration parameters: %(base_url)s/products/asp/latest/#stats
+.. _ASP virtual server configuration parameters: %(base_url)s/products/asp/latest/#virtual-server
+.. _Better or Best license: https://f5.com/products/how-to-buy/simplified-licensing
+.. _BIG-IP Controller for Cloud Foundry: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/
+.. _BIG-IP Controller for Kubernetes: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest
+.. _BIG-IP Controller for Marathon: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest
 .. _BIG-IP partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-13-0-0/2.html
 .. _BIG-IP SSL profile: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-profiles-reference-12-1-0/6.html
-.. _Pivotal Cloud Foundry: https://pivotal.io/platform
-.. _Cloud Foundry: https://www.cloudfoundry.org/platform/
-.. _Diego cell: https://docs.cloudfoundry.org/concepts/architecture/#diego-cell
-.. _NATS bus: https://docs.cloudfoundry.org/concepts/architecture/router.html#use
-.. _Cloud Foundry CLI: https://docs.cloudfoundry.org/cf-cli/getting-started.html
-.. _Application Manifest: https://docs.pivotal.io/pivotalcf/1-7/devguide/deploy-apps/manifest.html
-.. _f5-kube-proxy: %(base_url)s/products/connectors/f5-kube-proxy/latest/
-.. _marathon-asp-ctlr: %(base_url)s/products/connectors/marathon-asp-ctlr/latest/
-.. _marathon-bigip-ctlr: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/
-.. _k8s-bigip-ctlr: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/
+.. _BIG-IP System User Account Administration -> Administrative Partitions: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-12-0-0/3.html
+.. _BIG-IP: https://f5.com/products/big-ip
+.. _built-in middleware: %(base_url)s/products/asp/latest/#built-in-middleware
+.. _cf-bigip-ctlr configuration parameters: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/#configuration-parameters
 .. _cf-bigip-ctlr: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/
-.. _Application Services Proxy: %(base_url)s/products/asp/latest/
+.. _Cloud Foundry CLI: https://docs.cloudfoundry.org/cf-cli/getting-started.html
+.. _Cloud Foundry: https://cloudfoundry.org/why-cloud-foundry/
 .. _Cluster network: https://kubernetes.io/docs/concepts/cluster-administration/networking/
-.. _Better or Best license: https://f5.com/products/how-to-buy/simplified-licensing
-.. _OpenShift route resources: /products/connectors/k8s-bigip-ctlr/latest/#openshift-route-resources
-.. _Route annotations: /products/connectors/k8s-bigip-ctlr/latest/#supported-annotations
-.. _ASP ephemeral store: %(base_url)s/products/asp/latest/#ephemeral-store
-.. _ASP health monitor: %(base_url)s/products/asp/latest/#health-monitors
-.. _ASP health check parameters: %(base_url)s/products/asp/latest/#health-check-types
-.. _ASP virtual server configuration parameters: %(base_url)s/products/asp/latest/#virtual-server
-.. _ASP event handlers: %(base_url)s/products/asp/latest/event-handlers.html
-.. _ASP Middleware API: %(base_url)s/products/asp/latest/middleware-api.html
-.. _k8s-bigip-ctlr configuration parameters: %(base_url)s/products/k8s-bigip-ctlr/latest/#controller-configuration-parameters
-.. _k8s-bigip-ctlr reference documentation: %(base_url)s/products/k8s-bigip-ctlr/latest/
-.. _k8s-bigip-ctlr virtual server parameters: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/index.html#virtualserver
-.. _k8s-bigip-ctlr iApp parameters: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/index.html#iapps
-.. _iApp Pool Member table: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/index.html#iapp-pool-member-table
-.. _configuration parameters specific to OpenShift: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/index.html#openshift-sdn
-.. _Cluster Role: https://kubernetes.io/docs/admin/authorization/rbac/#role-and-clusterrole
 .. _Cluster Role Binding: https://kubernetes.io/docs/admin/authorization/rbac/#rolebinding-and-clusterrolebinding
-.. _ReplicaSet: https://kubernetes.io/docs/user-guide/replicasets/
-.. _Pod: https://kubernetes.io/docs/user-guide/pods/
-.. _Pods: https://kubernetes.io/docs/user-guide/pods/
-.. _marathon-bigip-ctlr reference documentation: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/
-.. _marathon-bigip-ctlr iApp configuration parameters: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/index.html#iApp
-.. _ServiceAccount: https://kubernetes.io/docs/admin/service-accounts-admin/
-.. _Create a new partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-implementations-12-1-0/29.html
+.. _Cluster Role: https://kubernetes.io/docs/admin/authorization/rbac/#role-and-clusterrole
+.. _Cluster: https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/
+.. _ConfigMap: https://kubernetes.io/docs/tasks/configure-pod-container/configmap/
+.. _configuration parameters specific to OpenShift: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-sdn
 .. _Create a Kubernetes Secret containing your Docker login credentials: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-.. _supported Ingress annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-annotations
-.. _store your Docker login credentials as a Secret: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-.. _Route configuration parameters: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-routes
-.. _BIG-IP Controller for Cloud Foundry configuration parameters: %(base_url)s//products/connectors/cf-bigip-ctlr/v1.0/#configuration-parameters
-.. _supported OpenShift Route annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-route-configurations
 .. _Create a new partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-implementations-12-1-0/29.html
-.. _BIG-IP Controller for Kubernetes: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest
+.. _DaemonSet: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+.. _Deployment: https://kubernetes.io/docs/user-guide/deployments/
+.. _Diego cell: https://docs.cloudfoundry.org/concepts/architecture/#diego-cell
+.. _Docker: https://www.docker.com/
+.. _Express middleware: https://expressjs.com/en/guide/using-middleware.html
+.. _Express: https://expressjs.com/
+.. _F5 Docker registry: https://hub.docker.com/r/f5networks/
+.. _F5 virtual server properties: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#virtualserver-configmap-properties
+.. _f5-kube-proxy reference documentation: %(base_url)s/products/connectors/f5-kube-proxy/latest/
+.. _f5-kube-proxy: %(base_url)s/products/connectors/f5-kube-proxy/latest/
+.. _iApp Pool Member table: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#iapp-pool-member-table
+.. _Ingress controller: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-controllers
+.. _Ingress Resource: https://kubernetes.io/docs/concepts/services-networking/ingress/
+.. _k8s-bigip-ctlr configuration parameters: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#controller-configuration-parameters
+.. _k8s-bigip-ctlr iApp configuration parameters: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#iApp
+.. _k8s-bigip-ctlr reference documentation: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/
+.. _k8s-bigip-ctlr virtual server configuration parameters: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#virtualserver
+.. _k8s-bigip-ctlr: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/
+.. _kube-proxy: https://kubernetes.io/docs/admin/kube-proxy/
+.. _kubectl: https://kubernetes.io/docs/user-guide/kubectl-overview/
+.. _Kubernetes Dashboard: https://kubernetes.io/docs/user-guide/ui/
+.. _Kubernetes Ingress controller: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-controllers
+.. _Kubernetes node: https://kubernetes.io/docs/admin/node/
+.. _Kubernetes Service: https://kubernetes.io/docs/user-guide/services/
+.. _Kubernetes: https://kubernetes.io/
+.. _local traffic management: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-basics-12-0-0.html
+.. _Local Traffic Policies: https://support.f5.com/csp/article/K04597703
+.. _Marathon Applications: https://mesosphere.github.io/marathon/docs/application-basics.html
+.. _Marathon Apps: https://mesosphere.github.io/marathon/docs/application-basics.html
+.. _Marathon Web Interface: https://mesosphere.github.io/marathon/docs/marathon-ui.html
+.. _marathon-asp-ctlr override labels: %(base_url)s/products/connectors/marathon-asp-ctlr/latest/#configuration-parameters
+.. _marathon-asp-ctlr: %(base_url)s/products/connectors/marathon-asp-ctlr/latest/
+.. _marathon-bigip-ctlr iApp configuration parameters: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/#iApp
+.. _marathon-bigip-ctlr reference documentation: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/
+.. _marathon-bigip-ctlr: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/
+.. _Marathon: https://mesosphere.github.io/marathon/
+.. _namespace: https://kubernetes.io/docs/user-guide/namespaces/
+.. _NATS bus: https://docs.cloudfoundry.org/concepts/architecture/router.html#use
+.. _Node.js: https://nodejs.org/en/
+.. _OpenShift route resources: /products/connectors/k8s-bigip-ctlr/latest/#openshift-route-resources
+.. _Pivotal Cloud Foundry: https://pivotal.io/platform
+.. _Pod: https://kubernetes.io/docs/concepts/workloads/pods/pod/
+.. _Pods: https://kubernetes.io/docs/concepts/workloads/pods/pod/
+.. _ReplicaSet: https://kubernetes.io/docs/user-guide/replicasets/
+.. _Route annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-annotations
+.. _Route configuration parameters: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-routes
+.. _Secret: https://kubernetes.io/docs/user-guide/secrets/
+.. _Service: https://kubernetes.io/docs/concepts/services-networking/service/
+.. _ServiceAccount: https://kubernetes.io/docs/admin/service-accounts-admin/
+.. _Services: https://kubernetes.io/docs/user-guide/services/
+.. _Splunk: https://www.splunk.com/
+.. _Static Pod: https://kubernetes.io/docs/admin/static-pods/
+.. _store your Docker login credentials as a Secret: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+.. _supported Ingress annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-annotations
+.. _system configuration: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-initial-configuration-12-0-0/2.html#conceptid
+.. _telemetry module: %(base_url)s/products/asp/latest/#telemetry
 """% {
     'base_url': 'http://clouddocs.f5.com'
 }
@@ -382,11 +384,12 @@ htmlhelp_basename = 'F5_Container Integrations_doc'
 #linkcheck_ignore = [r'http://localhost:\d+/']
 
 # The number of times the linkcheck builder will attempt to check a URL before declaring it broken. Defaults to 1 attempt.
-linkcheck_retries=2
+linkcheck_retries = 2
 
 # A timeout value, in seconds, for the linkcheck builder. The default is to use Python’s global socket timeout.
-linkcheck_timeout=5
+linkcheck_timeout = 5
 
+linkcheck_anchors = False
 
 # -- Options for LaTeX output ---------------------------------------------
 

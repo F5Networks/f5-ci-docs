@@ -12,7 +12,7 @@ Please refer to the guides below for deployment and usage instructions.
    Deploy the BIG-IP Controller <mctlr-app-install>
    Manage BIG-IP objects <mctlr-manage-bigip-objects>
    Deploy iApps <mctlr-deploy-iapp>
-   marathon-bigip-ctlr product information <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest>
+   Reference <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest>
 
 .. toctree::
    :caption: Application Services Proxy
@@ -21,14 +21,14 @@ Please refer to the guides below for deployment and usage instructions.
    Set up the ASP ephemeral store <asp-m-ephemeral-store>
    Install the ASP <asp-install-marathon>
    Launch an ASP for a Marathon App <asp-m-virtual-servers>
-   ASP product information <http://clouddocs.f5.com/products/asp/latest>
-   marathon-asp-ctlr product information <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest>
+   ASP Reference <http://clouddocs.f5.com/products/asp/latest>
+   marathon-asp-ctlr Reference <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest>
 
 
 Overview
 --------
 
-The F5 Container Integration  for `Apache Mesos Marathon`_ consists of the `F5 BIG-IP Controller for Marathon </products/connectors/marathon-bigip-ctlr/latest>`_, the `F5 Application Services Proxy </products/asp/latest>`_ (ASP), and the `F5 Marathon ASP Controller </products/connectors/marathon-asp-ctlr/latest>`_.
+The F5 Container Integration  for `Apache Mesos Marathon`_ consists of the `BIG-IP Controller for Marathon`_, the `Application Services Proxy`_ (ASP), and the `ASP Controller for Marathon`_.
 
 The |mctlr-long| configures BIG-IP Local Traffic Manager (LTM) objects for Applications in a `Mesos cluster`_, serving North-South traffic.
 
@@ -77,7 +77,7 @@ Like the |mctlr-long|, the |aspm-long| watches the Marathon API for Apps defined
 When it finds an Application configured with the ``f5-asp: enable`` label, it launches an instance of the |asp| to front the App and creates a virtual server on the |asp| instance.
 The |aspm-long| maintains an address in the |asp| pool configuration for each of an Application's tasks.
 
-The |aspm-long| App definition contains a set of default `Marathon ASP configuration labels </products/connectors/marathon-asp-ctlr/latest/index.html#configuration-parameters>`_.
+The |aspm-long| App definition contains a set of default `ASP Marathon configuration labels`_.
 These configurations -- set in the "env" (or, "Environment", in the Web UI) section of the |aspm| :ref:`App definition <install-asp-marathon>` -- apply to each ASP instance the |aspm| launches.
 The |aspm-long| also has a set of "override" labels. [#overridelabel]_
 When you add these labels to the definition for an Application you want the ASP to proxy, they take precedence over the default |aspm| settings.
@@ -88,7 +88,7 @@ You can override this setting using the ``ASP_COUNT_PER_APP`` :ref:`F5 applicati
 The |asp| collects traffic statistics for the Applications it load balances; these stats are either logged locally or sent to an external analytics application, like :ref:`Splunk <send-stats-splunk>`.
 You can set the location and type of the analytics application using the ``ASP_DEFAULT_STATS_URL`` label.
 
-.. [#overridelabel] See the `Marathon ASP configuration labels </products/connectors/marathon-asp-ctlr/latest/index.html#configuration-parameters>`_ table.
+.. [#overridelabel] See the `ASP Marathon configuration labels`_.
 
 |mctlr-long|
 ------------
@@ -132,7 +132,7 @@ When the |mctlr-long| discovers Applications with new or updated F5 Application 
 When the |aspm-long| discovers Applications configured with the ``"f5-asp": "enable"`` label, it launches an ASP instance for that app.
 F5 Application Labels define the ASP configurations.
 
-See the |mctlr| `reference documentation </products/connectors/marathon-bigip-ctlr/latest/>`_ for the full list of F5 Application Labels.
+See the `marathon-bigip-ctlr reference documentation`_ for the full list of F5 Application Labels.
 
 .. tip::
 
@@ -146,8 +146,7 @@ iApps Application Labels
 
 You can use the |mctlr-long| to deploy BIG-IP iApps using a special set of customizable iApps Application Labels. The iApp you want to deploy must already exist on the BIG-IP device (can be in the ``/Common`` partition).
 
-A few of the key iApp Application Labels depend on the iApp you want to deploy, as well as your environment and needs.
-See :ref:`Required iApp Application Labels <marathon-required-iapp-labels>` and the `marathon-bigip-ctlr reference documentation`_ for more information.
+A few of the key iApp Application Labels depend on the iApp you want to deploy, as well as your environment and needs. See the `marathon-bigip-ctlr reference documentation`_ for more information about the Application labels required for iApp deployment.
 
 
 Apache Mesos DNS and ASP Discovery
@@ -236,9 +235,9 @@ Related
 
    mctlr*
    asp*
-   marathon-bigip-ctlr docs <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
-   marathon-asp-ctlr docs <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest/>
-   F5 Application Services Proxy docs <http://clouddocs.f5.com/products/asp/latest>
+   marathon-bigip-ctlr Reference <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
+   marathon-asp-ctlr Reference <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest/>
+   F5 ASP Reference <http://clouddocs.f5.com/products/asp/latest>
 
 .. _Marathon Application: https://docs.mesosphere.com/1.8/overview/concepts/#marathon-application
 .. _Marathon REST API: https://mesosphere.github.io/marathon/api-console/index.html

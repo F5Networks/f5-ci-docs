@@ -7,13 +7,13 @@
 
    Documentation manually tested with:
 
-   - Kubernetes 1.4.8, coreos-beta-1465.3.0, ASP 1.1.0, f5-kube-proxy 1.0.0
-   - Kubernetes 1.4.8, coreos-7.2.1511, ASP 1.0.0, f5-kube-proxy 1.0.0
+   - Kubernetes 1.4.8; coreos-beta-1465.3.0; ASP v1.1.0; f5-kube-proxy v1.0.0
+   - Kubernetes 1.4.8; coreos-7.2.1511; ASP v1.0.0; f5-kube-proxy v1.0.0
 
 .. _install-asp-k8s:
 
-Install the ASP in Kubernetes
-=============================
+Install the ASP - Kubernetes
+============================
 
 The |asp|, or ASP, runs on each node in a Kubernetes `Cluster`_.
 Create a `ConfigMap`_ to configure the ASP; then, create a `DaemonSet`_ to run the ASP in a pod on each node in your cluster.
@@ -58,7 +58,7 @@ Set up and launch the ASP
 -------------------------
 
 The ASP consists of a ConfigMap and a DaemonSet.
-The former contains the ASP's `global and orchestration configurations </products/asp/latest/#global>`_.
+The former contains the `ASP global and orchestration configuration parameters`_.
 The latter launches and manages a set of Pods running the ASP application.
 You can define both resources in a single YAML file.
 
@@ -174,5 +174,3 @@ Next Steps
 .. rubric:: Footnotes
 .. [#aspreq] *Required as of* ``asp v1.1.0``.
 
-.. _DaemonSet: https://kubernetes.io/docs/admin/daemons/
-.. _Cluster: https://kubernetes.io/docs/admin/cluster-management/

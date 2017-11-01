@@ -22,7 +22,7 @@ Component                   Version
 Container Connector compatibility
 ---------------------------------
 
-The tables below show the versions used in development testing. The F5 Container Connectors may work with versions not shown here, but functionality in those versions has not been verified.
+The tables below show the versions used in development testing. The F5 Container Connectors may work with versions not shown here; F5 has not verified functionality in those versions.
 
 |asp|
 `````

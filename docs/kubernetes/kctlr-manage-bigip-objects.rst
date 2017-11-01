@@ -1,7 +1,6 @@
 .. index::
-   single: Kubernetes, manage BIG-IP objects
-   single: OpenShift, manage BIG-IP objects
-
+   single: Kubernetes; BIG-IP; virtual server
+   single: OpenShift; BIG-IP; virtual server
 
 .. sidebar:: Docs test matrix
 
@@ -13,8 +12,8 @@
 
 .. _kctlr-manage-bigip-objects:
 
-Manage BIG-IP LTM objects
-=========================
+Manage BIG-IP virtual servers - Kubernetes/OpenShift
+====================================================
 
 The |kctlr-long| and OpenShift watches the Kubernetes/OpenShift API for `Services`_ with associated :ref:`F5 resources <k8s-f5-resources>` and creates/modifies BIG-IP Local Traffic Manager (LTM) objects accordingly.
 F5 resources provide the settings you want the |kctlr| to apply when creating objects on the BIG-IP system.
@@ -137,11 +136,11 @@ Take the steps below to add a BIG-IP health monitor(s) to an existing virtual se
 
       oc replace -f <myConfigMap.yaml> [--namespace <service-namespace>]
 
-#. Verify that the health monitor was added to the Service's virtual server..
+#. Use the BIG-IP management console to verify the Service's virtual server has an attached health monitor.
 
    .. code-block:: console
 
-      admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)show ltm virtual
+      admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)show ltm virtual <virtual-name>
 
 
 .. _kctlr-delete-objects:

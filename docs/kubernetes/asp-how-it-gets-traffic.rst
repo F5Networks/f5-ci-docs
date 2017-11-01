@@ -324,8 +324,6 @@ This allows the ASP to function as a full client-side proxy, thereby providing a
 .. rubric:: **Footnotes**
 .. [#k8sservice] See `Kubernetes Services without Selectors <https://kubernetes.io/docs/concepts/services-networking/service/#services-without-selectors>`_ :fonticon:`fa fa-external`.
 
-.. _DaemonSet: https://kubernetes.io/docs/admin/daemons/
-.. _Cluster: https://kubernetes.io/docs/admin/cluster-management/
 .. _Calico: https://www.projectcalico.org/
 .. _ASP 1.0.0: /products/asp/v1.0
 .. _f5-kube-proxy 1.0.0: /products/connectors/f5-kube-proxy/v1.0

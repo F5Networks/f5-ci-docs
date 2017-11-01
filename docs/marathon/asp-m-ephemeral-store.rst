@@ -1,15 +1,18 @@
-.. include:: /_static/reuse/asp-version-added-1_1.rst
+.. index::
+   single: Application Services Proxy; Ephemeral store; Marathon
 
 .. sidebar:: Docs test matrix
 
    We tested this documentation with:
 
-   - Mesos 1.0.3, Marathon 1.3.9, Ubuntu 16.04, ASP 1.1.0, ASP Controller 1.0.0
+   - Mesos 1.0.3, Marathon 1.3.9; Ubuntu 16.04; ASP v1.1.0; ASP Controller v1.0.0
 
 .. _install-ephemeral-store-marathon:
 
 Set up the ASP ephemeral store - Marathon
 =========================================
+
+.. include:: /_static/reuse/asp-version-added-1_1.rst
 
 The |asp| (ASP) shares non-persistent, or ephemeral, data across instances.
 It does so by way of a distributed, secure, key-value store called the Ephemeral Store.

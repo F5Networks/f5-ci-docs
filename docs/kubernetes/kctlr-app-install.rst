@@ -1,22 +1,24 @@
 .. STAGED IN K8S_BIGIP_CTLR REPO
 .. todo:: remove from this repo and add redirect in AWS
 
-.. _install-kctlr:
-
-Install the BIG-IP Controller in Kubernetes
-===========================================
+.. index::
+   single: BIG-IP Controller; Kubernetes
 
 .. sidebar:: Docs test matrix
 
    Documentation manually tested with:
 
-   - ``kubernetes-v1.6.4 on Ubuntu-16.4.2``
-   - ``kubernetes-v1.4.8 on CoreOS 1409.6.0``
-   - ``k8s-bigip-ctlr v1.1.0``
-   - ``k8s-bigip-ctlr v1.0.0``
+   - kubernetes-v1.6.4 on Ubuntu-16.4.2
+   - kubernetes-v1.4.8 on CoreOS 1409.6.0
+   - k8s-bigip-ctlr v1.1.0
+   - k8s-bigip-ctlr v1.0.0
 
+.. _install-kctlr:
 
-The |kctlr-long| installs via a `Kubernetes Deployment`_.
+Install the BIG-IP Controller in Kubernetes
+===========================================
+
+The |kctlr-long| installs via a Kubernetes `Deployment`_.
 The Deployment creates a `ReplicaSet`_ that, in turn, launches a `Pod`_ running the |kctlr| app.
 
 .. attention::
@@ -52,7 +54,7 @@ Set up RBAC Authentication
 #. Create a `Cluster Role`_ and `Cluster Role Binding`_.
 
    You can restrict the permissions granted in the cluster role as needed for your deployment.
-   The supported permission set is shown in the table and Cluster Role example below.
+   The table below shows the supported permission set (these are also provided in the Cluster Role example below).
 
    +--------------+-------------------+---------------------------------------------+
    | API groups   | Resources         | Actions                                     |
@@ -87,7 +89,7 @@ Set up RBAC Authentication
 Create a Deployment
 -------------------
 
-#. Define the |kctlr| configurations in a `Kubernetes Deployment`_ using valid JSON or YAML.
+#. Define the |kctlr| configurations in a Kubernetes `Deployment`_ using valid JSON or YAML.
 
    .. literalinclude:: /kubernetes/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
       :linenos:

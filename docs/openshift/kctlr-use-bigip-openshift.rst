@@ -1,7 +1,5 @@
-.. _bigip-openshift-setup:
-
-Add your BIG-IP device to an OpenShift Cluster
-==============================================
+.. index::
+   single: OpenShift; BIG-IP; setup
 
 .. sidebar:: Docs test matrix
 
@@ -9,6 +7,11 @@ Add your BIG-IP device to an OpenShift Cluster
 
    - BIG-IP v12.1.1
    - OpenShift Origin v1.4
+
+.. _bigip-openshift-setup:
+
+Add your BIG-IP device to an OpenShift Cluster
+==============================================
 
 Tasks
 -----

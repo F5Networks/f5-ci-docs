@@ -1,17 +1,20 @@
 .. todo: MOVE TO ASP REPO
 
-.. _k8s-launch-asp:
-
-Attach an ASP to a Kubernetes Service
-=====================================
+.. index::
+   single: Application Services Proxy; Kubernetes
 
 .. sidebar:: Docs test matrix
 
    Documentation manually tested with:
 
-   - Kubernetes 1.4.8, coreos-beta-1465.3.0, ASP 1.1.0, f5-kube-proxy 1.0.0
-   - Kubernetes 1.4.8, coreos-7.2.1511, ASP 1.0.0, f5-kube-proxy 1.0.0
+   - Kubernetes 1.4.8; coreos-beta-1465.3.0; ASP v1.1.0; f5-kube-proxy v1.0.0
+   - Kubernetes 1.4.8; coreos-7.2.1511; ASP v1.0.0; f5-kube-proxy v1.0.0
    - `kubernetes hello-world`_ service, with :ref:`ASP annotation <k8s-service-annotate>`
+
+.. _k8s-launch-asp:
+
+Attach an ASP to a Kubernetes Service
+=====================================
 
 The |asp| (ASP) watches the Kubernetes API for `Services`_ that contain an ASP virtual server `Annotation`_.
 The `Annotation`_ consists of a specially-formatted JSON blob defining the `ASP virtual server configuration parameters`_.
@@ -121,6 +124,5 @@ Next Steps
 - :ref:`Verify that the ASP handles traffic for the Service <k8s-asp-verify>`.
 - :ref:`Verify execution of event handlers <k8s-asp-event-handlers-verify>`.
 
-.. _kubernetes hello-world: https://kubernetes.io/docs/tutorials/stateless-application/expose-external-ip-address-service/
-.. _Service: https://kubernetes.io/docs/user-guide/services/
+.. _kubernetes hello-world: https://kubernetes.io/docs/tasks/access-application-cluster/service-access-application-cluster/
 .. _Annotation: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/

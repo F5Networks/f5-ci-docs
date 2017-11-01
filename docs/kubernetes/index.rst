@@ -36,9 +36,8 @@ Related
    :maxdepth: 1
 
    asp*
-   k8s-bigip-ctlr docs <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
-
-   F5 ASP docs <http://clouddocs.f5.com/products/asp/latest>
+   k8s-bigip-ctlr Reference <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
+   F5 ASP Reference <http://clouddocs.f5.com/products/asp/latest>
 
 
 Overview
@@ -46,7 +45,7 @@ Overview
 
 The F5 Container Integration for `Kubernetes`_ consists of the `BIG-IP Controller for Kubernetes`_ and the `Application Services Proxy`_ (ASP).
 
-The |kctlr-long| configures BIG-IP Local Traffic Manager (LTM) objects for applications in a `Kubernetes cluster`_, serving North-South traffic.
+The |kctlr-long| configures BIG-IP Local Traffic Manager (LTM) objects for applications in a Kubernetes `cluster`_, serving North-South traffic.
 
 The |asp| provides load balancing and telemetry for containerized applications, serving East-West traffic.
 
@@ -62,7 +61,7 @@ General Prerequisites
 
 The F5 Integration for Kubernetes documentation set assumes that you:
 
-- already have a `Kubernetes cluster`_ running;
+- already have a Kubernetes `cluster`_ running;
 - are familiar with the `Kubernetes dashboard`_ and `kubectl`_ ;
 - already have a BIG-IP :term:`device` licensed and provisioned for your requirements; [#bigipcaveat]_ and
 - are familiar with BIG-IP LTM concepts and ``tmsh`` commands. [#bigipcaveat]_
@@ -100,7 +99,7 @@ It allows ASP instances to share non-persistent, or :dfn:`ephemeral`, data.
 Health monitors
 ```````````````
 
-The ASP's built-in `health monitor </products/asp/latest/#health-monitors>`_ detects endpoint health using both active and passive checks.
+The `ASP health monitor`_ detects endpoint health using both active and passive checks.
 The ASP adds and removes endpoints from load balancing pools based on the health status determined by these checks.
 The ASP's health monitor enhances Kubernetes' native "liveness probes" as follows:
 
@@ -114,8 +113,7 @@ Statistics
 
 The |asp| collects traffic statistics for the Services it load balances.
 These stats are either logged locally or sent to an external analytics application, like :ref:`Splunk <send-stats-splunk>`.
-
-You can set the location and type of the analytics application in the `stats </products/asp/latest/index.html#stats>`_ section of the :ref:`ASP ConfigMap <asp-configure-k8s>`.
+Use the `ASP stats configuration parameters`_ to set the location and type of the analytics application in the :ref:`ASP ConfigMap <asp-configure-k8s>`.
 
 
 F5-kube-proxy
@@ -127,7 +125,7 @@ The ASP and |aspk| work together to proxy traffic for Kubernetes `Services`_ as 
 
 - The |aspk| provides the same L4 services as `kube-proxy`_, include iptables and basic load balancing.
 - For Services that have the :ref:`ASP Service annotation <k8s-service-annotate>`, the |aspk| hands off traffic to the ASP running on the same node as the client.
-- The ASP then provides L7 traffic services, via `built-in middleware </products/asp/latest/index.html#built-in-middleware>`_, and `L7 telemetry </products/asp/latest/index.html#telemetry>`_ to your Kubernetes `Service`_.
+- The ASP provides L7 traffic services to your Kubernetes `Service`_ via its `built-in middleware`_ and `telemetry module`_ .
 
 .. important::
 
@@ -141,7 +139,7 @@ The ASP and |aspk| work together to proxy traffic for Kubernetes `Services`_ as 
 |kctlr-long|
 ------------
 
-The |kctlr-long| is a Docker container that runs on a `Kubernetes Pod`_.
+The |kctlr-long| is a Docker container that runs on a Kubernetes `Pod`_.
 You can `launch the k8s-bigip-ctlr application <install-kctlr>` in Kubernetes using a Deployment.
 
 Once the |kctlr| pod is running, it watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for special Kubernetes "F5 Resource" `ConfigMap`_ s.
@@ -191,7 +189,7 @@ Namespaces
 
 .. include:: /_static/reuse/k8s-version-added-1_1.rst
 
-The `Kubernetes namespace`_ allows you to create/manage multiple cluster environments.
+The Kubernetes `Namespace`_ allows you to create/manage multiple cluster environments.
 The |kctlr-long| can manage all namespaces; a single namespace; or pretty much anything in between.
 
 When :ref:`creating a BIG-IP front-end virtual server <kctlr-create-vs>` for a `Service`_, you can:
@@ -257,7 +255,7 @@ The |kctlr| uses the ``f5type`` property differently depending on the use case.
 
 The ``frontend`` property defines how to expose a Service on a BIG-IP device.
 
-- You can define ``frontend`` using the standard `k8s-bigip-ctlr Virtual Server parameters`_ or the `k8s-bigip-ctlr iApp parameters`_.
+- You can define ``frontend`` using the standard `k8s-bigip-ctlr Virtual Server configuration parameters`_ or the `k8s-bigip-ctlr iApp configuration parameters`_.
 
 - The ``frontend`` iApp configuration parameters include a set of customizable ``iappVariables`` parameters.
   These custom user-defined parameters must correspond to fields in the iApp template you want to launch.

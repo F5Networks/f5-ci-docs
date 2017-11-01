@@ -1,21 +1,23 @@
-.. _install-aspm-marathon:
-.. _install-asp-marathon:
+.. index::
+   single: Application Services Proxy; install; Marathon
 
 .. sidebar:: Docs test matrix
 
    Documentation manually tested with:
 
-   - Mesos 1.0.3, Marathon 1.3.9, Ubuntu 16.04, ASP 1.1.0, ASP Controller 1.0.0
-   - Mesos 1.0.3, Marathon 1.3.9, Ubuntu 16.04, ASP 1.0.0, ASP Controller 1.0.0
+   - Mesos 1.0.3, Marathon 1.3.9; Ubuntu 16.04; ASP v1.1.0; ASP Controller v1.0.0
+   - Mesos 1.0.3, Marathon 1.3.9; Ubuntu 16.04; ASP v1.0.0; ASP Controller v1.0.0
 
-Install the |aspm-long|
-=======================
+.. _install-aspm-marathon:
+.. _install-asp-marathon:
+
+Install the ASP and ASP Controller - Marathon
+=============================================
 
 The |aspm-long| is a Docker container that runs as a Marathon `Application`_. You can install it via the Marathon REST API or the `Marathon Web Interface`_.
+The |aspm| dynamically deploys the |asp| (ASP) when it discovers a Marathon Application with the ``f5-asp:enable`` label.
 
-The |aspm-long| dynamically deploys the |asp| (ASP) in `Apache Mesos Marathon`_ when it discovers a Marathon Application that has the ``f5-asp:enable`` label.
-
-When you launch the |aspm-long|, provide the global configuration parameter(s) you want the |aspm| to use when creating new ASP instances. You can :ref:`override the global configurations <marathon-asp-custom-config>` on a per-Application basis.
+When you launch the |aspm|, provide the global configuration parameter(s) you want it to apply to new ASP instances. You can :ref:`override the global configurations <marathon-asp-custom-config>` on a per-Application basis.
 
 Initial Setup
 -------------
@@ -37,7 +39,7 @@ Initial Setup
 Deploy the |aspm-long|
 ----------------------
 
-#. Define the default `Marathon ASP configuration labels </products/connectors/marathon-asp-ctlr/latest/index.html#configuration-parameters>`_ in a JSON file.
+#. Define the default `ASP Marathon configuration labels`_ in a JSON file.
 
    .. tip::
 

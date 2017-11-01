@@ -1,9 +1,14 @@
-.. include:: /_static/reuse/k8s-version-added-1_1.rst
+.. index::
+   single: Kubernetes; Ingress
+   single: OpenShift; Ingress
+   single: BIG-IP Controller; Ingress
 
 .. _kctlr-ingress-config:
 
-Expose Services to External Traffic using an Ingress
-====================================================
+Expose Services to External Traffic using Ingresses
+===================================================
+
+.. include:: /_static/reuse/k8s-version-added-1_1.rst
 
 .. change title to "Use BIG-IP as an Edge Load Balancer "??
 

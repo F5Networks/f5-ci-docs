@@ -1,19 +1,16 @@
-.. _install-mctlr:
-
-Install the |mctlr-long|
-========================
+.. index::
+   single: BIG-IP Controller; Marathon
 
 .. sidebar:: Docs test matrix
 
    Documentation manually tested with:
 
-   ==================== ===================== =========== ===============
-   Platform             OS                    ASP         ASP Controller
-   ==================== ===================== =========== ===============
-   Mesos 1.0.3,         Ubuntu 16.04          1.0.0       1.0.0
-   Marathon 1.3.9
-   ==================== ===================== =========== ===============
+   Mesos 1.0.3, Marathon 1.3.9; Ubuntu 16.04; ASP v1.0.0; marathon-asp-ctlr v1.0.0
 
+.. _install-mctlr:
+
+Install the BIG-IP Controller - Marathon
+========================================
 
 The |mctlr-long| installs as a Marathon `Application`_.
 You can do this via the Marathon REST API, or via the `Marathon Web Interface`_.

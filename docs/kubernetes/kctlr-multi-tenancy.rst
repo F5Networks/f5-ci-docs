@@ -1,6 +1,6 @@
 .. index::
-   single: kubernetes; multi-tenancy
-   single: openshift; multi-tenancy
+   single: BIG-IP Controller; Kubernetes; multi-tenancy
+   single: BIG-IP Controller; Openshift; multi-tenancy
 
 .. _openshift multi-tenancy:
 
@@ -12,7 +12,11 @@ Overview
 
 BIG-IP administrative partitions allow you to isolate tenants from each other and to configure objects for specific tenants, where only authorized users can access them. To manage multi-tenant BIG-IP systems with the |kctlr-long| and OpenShift, F5 recommends deploying one (1) instance of the :code:`k8s-bigip-ctlr` per BIG-IP partition.
 
-There are a few different ways you can set up the |kctlr| for multi-tenancy, as described in the sections that follow. Each of the use cases described here uses namespaces (or projects, in OpenShift) to achieve multi-tenancy in the Kubernetes Cluster. In each use case, the various Controller instances *can* use the same Service Account/Cluster Role/Cluster Role Binding. Whether or not the Controllers *should* use the same Service Account depends on the requirements of your tenants/Cluster.
+You can set up the |kctlr| for multi-tenancy a few different ways, as described in the sections that follow. Each of the use cases described here uses namespaces (or projects, in OpenShift) to achieve multi-tenancy in the Kubernetes/OpenShift Cluster.
+
+.. note::
+
+   In each use case, the various Controller instances *can* use the same Service Account/Cluster Role/Cluster Role Binding. Whether or not the Controllers *should* use the same Service Account depends on the requirements of your tenants/Cluster.
 
 .. sidebar:: :fonticon:`fa fa-question-circle-o` Did you know?
 
@@ -22,6 +26,7 @@ There are a few different ways you can set up the |kctlr| for multi-tenancy, as 
    - Resource Adminstrator
    - Manager
 
+.. _multi-tenant use-case-1:
 
 Use case 1: 1 partition, 1 Controller, all namespaces
 -----------------------------------------------------
@@ -45,6 +50,7 @@ For example, you have two (2) namespaces in your Cluster: "photos" and "videos".
 
 :fonticon:`fa fa-download` :download:`Download an example manifest for this use case </kubernetes/config_examples/f5-k8s_multi-tenant-1.yaml>`
 
+.. _multi-tenant use-case-2A:
 
 Use case 2A: 1 partition and 1 Controller per namespace
 -------------------------------------------------------
@@ -73,6 +79,7 @@ You have two (2) namespaces in your Cluster: "test" and "prod". You use the "pro
 
 :fonticon:`fa fa-download` :download:`Download an example manifest for this use case </kubernetes/config_examples/f5-k8s_multi-tenant-2a.yaml>`
 
+.. _multi-tenant use-case-2B:
 
 Use case 2B: 1 partition and 1 Controller for 2 or more namespaces
 ------------------------------------------------------------------
@@ -82,6 +89,7 @@ In this use case, namespaces in your Cluster correspond to specific partitions o
 .. tip::
 
    You can `create a new namespace`_ for your Controllers to run in (for example: "bigip-controllers"). To see all of your |kctlr| instances at once, you'd run :code:`kubectl get pods -n bigip-controllers`.
+
 \
 
 .. figure:: /_static/media/kctlr-mt-2b.png
@@ -121,6 +129,8 @@ You have two (2) tenants in your Cluster: "customerA" and "customerB". Customer 
 
   :fonticon:`fa fa-download` :download:`Download an example manifest for Customer B </kubernetes/config_examples/f5-k8s_multi-tenant-2b_custB.yaml>`
 
+.. _multi-tenant use-case-3:
+
 Use case 3: Partition/Controller selected by Application
 --------------------------------------------------------
 
@@ -136,7 +146,7 @@ In this use case, you have a number of :code:`k8s-bigip-ctlr` instances deployed
 - Set each Controller to watch all namespaces and manage a different BIG-IP partition.
 - For each Service needing a BIG-IP virtual server:
 
-  - Create a :ref:`single ingress` --OR-- an F5 resource :ref:`virtual server ConfigMap <kctlr-create-vs>`.
+  - Create a :ref:`single service` Ingress --OR-- an F5 resource :ref:`virtual server ConfigMap <kctlr-create-vs>`.
   - Specify the desired BIG-IP partition for the Service - :code:`virtual-server.f5.com/partition` or :code:`frontend.partition`, respectively.
 
 **For example:**
@@ -146,7 +156,14 @@ You have two (2) :code:`k8s-bigip-ctlr` instances running. Each manages a separa
 :fonticon:`fa fa-download` :download:`Download an example manifest for this use case </kubernetes/config_examples/f5-k8s_multi-tenant-3.yaml>`
 
 
-.. _global configuration parameters: /products/connectors/k8s-bigip-ctlr/latest/#controller-configuration-parameters
+Related
+-------
+
+- :ref:`kctlr-manage-bigip-objects`
+- :ref:`kctlr-ingress-config`
+- :ref:`kctlr-deploy-iapps`
+- :ref:`kctlr-openshift-routes`
+
 .. _Projects: https://docs.openshift.org/1.4/architecture/core_concepts/projects_and_users.html#projects
 .. _BIG-IP user account: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-13-0-0/1.html
 .. _Create a new namespace: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/

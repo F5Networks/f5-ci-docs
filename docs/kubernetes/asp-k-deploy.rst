@@ -2,8 +2,8 @@
 
 .. _k8s-asp-deploy:
 
-Replace kube-proxy with the f5-kube-proxy
-=========================================
+Deploy the ASP Controller - Kubernetes
+======================================
 
 .. sidebar:: Docs test matrix
 
@@ -15,7 +15,7 @@ Replace kube-proxy with the f5-kube-proxy
 Summary
 -------
 
-The |aspk| is a container-based application that runs in a `Pod`_ on each `Node`_ in a Kubernetes `Cluster`_.
+The |aspk-long| (|aspk|) is a container-based application that runs in a `Pod`_ on each `Node`_ in a Kubernetes `Cluster`_.
 It takes the place of the standard Kubernetes ``kube-proxy`` component.
 
 .. seealso::
@@ -103,7 +103,5 @@ Examples
 :fonticon:`fa fa-download` :download:`f5-kube-proxy-manifest-worker.yaml </kubernetes/config_examples/f5-kube-proxy-manifest-worker.yaml>`
 
 
-.. _Pod: https://kubernetes.io/docs/user-guide/pods/
-.. _Cluster: https://kubernetes.io/docs/admin/cluster-management/
-.. _Node: https://kubernetes.io/docs/admin/node/
+.. _Node: https://kubernetes.io/docs/concepts/architecture/nodes/
 .. _CoreOS on Kubernetes Getting Started Guide: https://coreos.com/kubernetes/docs/1.6.1/deploy-master.html#set-up-the-kube-proxy-pod
