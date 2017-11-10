@@ -116,7 +116,7 @@ Verify creation
 
 Use :command:`kubectl get` to verify all of the objects launched successfully.
 
-You should see one (1) `ReplicaSet`_, as well as one (1) k8s-bigip-ctlr `Pod`_ for each node in the cluster. The example below shows one (1) Pod running the k8s-bigip-ctlr in a test cluster with one worker node.
+You should see one (1) Deployment_, as well as one (1) k8s-bigip-ctlr `Pod`_ for each node in the cluster. The example below shows one (1) Pod running the k8s-bigip-ctlr in a test cluster with one worker node.
 
 .. code-block:: console
    :emphasize-lines: 3, 7, 11, 13
@@ -124,10 +124,6 @@ You should see one (1) `ReplicaSet`_, as well as one (1) k8s-bigip-ctlr `Pod`_ f
    kubectl get deployments --namespace=kube-system
    NAME             DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
    k8s-bigip-ctlr   1         1         1            1           1h
-
-   kubectl get replicasets --namespace=kube-system
-   NAME                       DESIRED   CURRENT   AGE
-   k8s-bigip-ctlr-331478340   1         1         1h
 
    kubectl get pods --namespace=kube-system
    NAME                                  READY     STATUS    RESTARTS   AGE
