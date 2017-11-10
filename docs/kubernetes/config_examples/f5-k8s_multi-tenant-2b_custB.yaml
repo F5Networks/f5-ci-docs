@@ -51,7 +51,7 @@ metadata:
     # BIG-IP partition
     virtual-server.f5.com/partition: "customerB"
     # Load balancing algorithm
-    virtual-server.f5.com/balance: "round-robin"
+    virtual-server.f5.com/balance: "least-connections-node"
 spec:
   rules:
   - http:

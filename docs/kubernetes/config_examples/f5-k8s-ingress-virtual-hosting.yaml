@@ -9,7 +9,7 @@ metadata:
   # BIG-IP partition
   virtual-server.f5.com/partition: "kubernetes"
   # Load balancing algorithm
-  virtual-server.f5.com/balance: "round-robin"
+  virtual-server.f5.com/balance: "least-connections-node"
   # Specify the port you want to handle requests
   virtual-server.f5.com/http-port: "80"
 spec:

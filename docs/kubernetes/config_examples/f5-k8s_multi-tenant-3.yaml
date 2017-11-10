@@ -134,7 +134,7 @@ data:
             "bindAddr": "173.16.2.2"
           },
           "partition": "ctlr1",
-          "balance": "round-robin",
+          "balance": "least-connections-node",
           "mode": "http"
         }
       }

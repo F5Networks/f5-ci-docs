@@ -48,7 +48,7 @@ metadata:
  annotations:
   virtual-server.f5.com/ip: "1.2.3.4"
   virtual-server.f5.com/partition: "ose-cluster"
-  virtual-server.f5.com/balance: "round-robin"
+  virtual-server.f5.com/balance: "least-connections-node"
   virtual-server.f5.com/http-port: "443"
   ingress.kubernetes.io/ssl-redirect: "true"
   ingress.kubernetes.io/allow-http: "false"
@@ -78,7 +78,7 @@ metadata:
  annotations:
   virtual-server.f5.com/ip: "10.11.12.13"
   virtual-server.f5.com/partition: "ose-cluster"
-  virtual-server.f5.com/balance: "round-robin"
+  virtual-server.f5.com/balance: "least-connections-node"
   virtual-server.f5.com/http-port: "443"
   ingress.kubernetes.io/ssl-redirect: "true"
   ingress.kubernetes.io/allow-http: "false"

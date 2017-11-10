@@ -26,7 +26,7 @@ data:
             "port": 80
           },
           "partition": "kubernetes",
-          "balance": "round-robin",
+          "balance": "least-connections-node",
           "mode": "http"
         }
       }
