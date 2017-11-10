@@ -21,10 +21,14 @@ It allows multiple ASP instances to share non-persistent, or :dfn:`ephemeral`, d
 
 .. attention::
 
-   The ASP ephemeral store requires a Kubernetes alpha resource (PetSet).
+   The ASP ephemeral store requires a Kubernetes alpha resource (PetSet) for Kubernetes v1.4.x.
    You must have alpha resources enabled on the Kubernetes API server in order to use the ASP with the ephemeral store.
 
+   For Kubernetes v1.6.x and beyond use the StatefulSet beta resource.
+
+
    See the `Kubernetes API overview <https://kubernetes.io/docs/concepts/overview/kubernetes-api/>`_ for more information.
+
 
 .. important::
 
@@ -73,7 +77,7 @@ Create Secrets for the certificates
 Run the commands shown below to encrypt the certificates as Kubernetes Secrets.
 This example creates three (3) Secrets:
 
-- Provide the first (``ephemeral-store-root``) in the ephemeral store PetSet.
+- Provide the first (``ephemeral-store-root``) in the ephemeral store StatefulSet/PetSet.
 - Provide the second and third in the :ref:`ASP Daemonset <asp-deploy-k8s>`.
   These allow ASP instances to access the ephemeral store.
 
@@ -95,7 +99,17 @@ This example creates three (3) Secrets:
 Deploy the ephemeral store
 --------------------------
 
-The ephemeral store deployment consists of a ConfigMap, two (2) Services, and a PetSet. [#petset]_
+.. important::
+
+   For the ephemeral store to be up and running it must talk to the Kubernetes API server. From Kubernetes v1.6.x pods
+   need authorization to talk to the Kubernetes API server. Refer :ref:`this <k8s-rbac>` section to see one 
+   way of providing this authorization.
+
+.. seealso::
+
+   `Kubernetes RBAC Authorization documentation <https://kubernetes.io/docs/admin/authorization/rbac/>`_
+
+The ephemeral store deployment consists of a ConfigMap, two (2) Services, and a StatefulSet/PetSet. [#petset]_
 You can define all of the required resources in a single YAML file.
 
 .. important::
@@ -110,7 +124,6 @@ You can define all of the required resources in a single YAML file.
 
 :fonticon:`fa fa-download` :download:`ephemeral-store-k8s-example.yaml </_static/config_examples/f5-ephemeral-store-k8s-example.yaml>`
 
-.. note for kubernetes v1.5 and higher support -- PetSet changed to StatefulSet and requires apps/v1beta1
 
 #. Upload the YAML file containing the ConfigMap, Services, and PetSet to the Kubernetes API server.
 
@@ -143,6 +156,35 @@ You can define all of the required resources in a single YAML file.
       ephemeral-store-3          1/1       Running             0          1m        10.2.55.5   172.16.1.183
       ephemeral-store-4          1/1       Running             0          1m        10.2.76.5   172.16.1.184
 
+.. _k8s-rbac:
+
+Authorization to access Kubernetes API server
+`````````````````````````````````````````````
+
+For Kubernetes v1.6.x and beyond to get ephemeral store up and running create a `ClusterRoleBinding  <https://kubernetes.io/docs/admin/authorization/rbac/#rolebinding-and-clusterrolebinding>`_ that binds service account system:serviceaccount:default:default (which is the default account bound to Pod) with role cluster-admin. This gives cluster admin access to all pods in default account. You might want to create a RoleBinding that gives a more restrictive access.
+
+.. code-block:: bash
+   :caption: **f5-rbac.yaml**
+
+   apiVersion: rbac.authorization.k8s.io/v1beta1
+   kind: ClusterRoleBinding
+   metadata:
+     name: f5-rbac
+   subjects:
+     - kind: ServiceAccount
+       # Reference to upper's `metadata.name`
+       name: default
+       # Reference to upper's `metadata.namespace`
+       namespace: default
+   roleRef:
+     kind: ClusterRole
+     name: cluster-admin
+     apiGroup: rbac.authorization.k8s.io
+
+.. code-block:: bash
+
+   kubectl apply -f f5-rbac.yaml
+
 Next Steps
 ----------
 
@@ -158,5 +200,5 @@ See the `ASP ephemeral store`_ and `ASP health monitor`_ documentation.
 
 .. rubric:: Footnotes
 .. [#k8smemory] See `Set Pod CPU & Memory Limit <https://kubernetes.io/docs/tasks/administer-cluster/cpu-memory-limit/>`_ :fonticon:`fa fa-external-link`.
-.. [#petset] PetSets changed to StatefulSets in Kubernetes v1.5. F5 does not support deployment of the ASP on v1.5 or later.
+.. [#petset] PetSets changed to StatefulSets in Kubernetes v1.5.
 

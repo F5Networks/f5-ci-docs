@@ -93,6 +93,11 @@ spec:
             # the path the directory will be added to; DO NOT CHANGE
             mountPath: /ephemeral-store-certs/rootca-cert
             readOnly: true
+      # For Kubernetes v1.6.x and higher add toleration to make asp
+      # run on master node. For Kubernetes v1.4.x remove toleration
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
       volumes:
         - name: plugin-config
           hostPath:

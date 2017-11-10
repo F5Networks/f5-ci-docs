@@ -22,6 +22,63 @@ It takes the place of the standard Kubernetes ``kube-proxy`` component.
 
    `Kubernetes Proxies <https://kubernetes.io/docs/concepts/cluster-administration/proxies/>`_
 
+For Kubernetes v1.6.x and higher, see :ref:`Patch the kube-proxy daemonset with F5-proxy <patch-kube-proxy>`.
+
+For Kubernetes v1.4.x, see :ref:`Replace kube-proxy with F5-proxy in the Pod Manifests <k8s-pod-manifest>`.
+
+.. _patch-kube-proxy:
+
+Patch kube-proxy daemonset with |aspk|
+--------------------------------------
+
+* You can patch the generic kube-proxy daemonset with the JSON block shown below.
+
+  .. code-block:: bash
+     
+     {
+       "spec": {
+         "template": {
+           "spec": {
+             "containers": [
+               {
+                 "name": "kube-proxy",
+                 "image": f5networks/f5-kube-proxy:1.1.0
+                 "volumeMounts": [
+                   {
+                     "mountPath": "/var/run/kubernetes/proxy-plugin",
+                     "name": "plugin-config"
+                   }
+                 ]
+               }
+             ],
+             "volumes": [
+               {
+                 "name": "plugin-config",
+                 "hostPath": {
+                   "path": "/var/run/kubernetes/proxy-plugin",
+                   "type": "DirectoryOrCreate"
+                }
+              }
+             ]
+           }
+         },
+         # to make sure the f5-kube-proxy patch needs to be applied only once
+         "updateStrategy": {
+           "type": "RollingUpdate",
+           "rollingUpdate": {
+             # just needs to be more than the number of nodes we might possibly have
+             "maxUnavailable": 10
+           }
+         }
+       }
+     }
+
+* Run the following command with the string version of the JSON block.
+
+  .. code-block:: bash
+   
+     kubectl patch daemonset kube-proxy -n kube-system -p <JSON patch>
+
 
 .. _k8s-pod-manifest:
 

@@ -42,9 +42,13 @@ spec:
   selector:
     name: ephemeral-store
 ---
-# The PetSet creates a cluster of five (5) pods running the ephemeral store Service.
-apiVersion: apps/v1alpha1
-kind: PetSet
+# For Kubernetes v1.4.x use PetSet. For v1.6.x and higher use StatefulSet
+# The StatefulSet/PetSet creates a cluster of five (5) pods running the ephemeral store service.
+apiVersion: apps/v1beta1
+kind: StatefulSet
+# NOTE: For Kubernetes v1.4.x
+#apiVersion: apps/v1alpha1
+#kind: PetSet
 metadata:
   name: ephemeral-store
 spec:
@@ -54,8 +58,9 @@ spec:
     metadata:
       labels:
         name: ephemeral-store
-      annotations:
-        pod.alpha.kubernetes.io/initialized: "true"
+# NOTE: For Kubernetes v1.4.x
+#     annotations:
+#       pod.alpha.kubernetes.io/initialized: "true"
     spec:
       terminationGracePeriodSeconds: 0
       containers:
