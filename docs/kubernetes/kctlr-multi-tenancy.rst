@@ -46,7 +46,23 @@ In this use case, one (1) :code:`k8s-bigip-ctlr` instance watches all of the nam
 
 #. Create BIG-IP virtual servers for each namespace using an :ref:`Ingress <kctlr-ingress-config>`, :ref:`Virtual Server ConfigMaps <kctlr-create-vs>`, or :ref:`Route Resources <kctlr-openshift-routes>` (Route support is available in OpenShift only).
 
-For example, you have two (2) namespaces in your Cluster: "photos" and "videos". Each contains the Services for a specific segment of your website (mysite.example.com/photos and mysite.example.com/videos). When you create a :ref:`simple fanout <simple fanout>` Ingress with :ref:`ingress-TLS` for each namespace, the |kctlr| creates corresponding HTTPS virtual servers on the BIG-IP system to expose the Services defined in each Ingress to external traffic.
+**For example:**
+
+You have multiple namespaces in your cluster, each representing a separate tenant. For tenant1, you want to create three (3) separate BIG-IP virtual servers that correspond to specific segments of tenant1's website:
+
+- images
+- videos
+- ads
+
+
+Each contains the Services for a specific segment of your website (mysite.example.com/photos and mysite.example.com/videos). When you create a :ref:`simple fanout <simple fanout>` Ingress with :ref:`ingress-TLS` for each namespace, the |kctlr| creates corresponding HTTPS virtual servers on the BIG-IP system to expose the Services defined in each Ingress to external traffic.
+
+.. include:: /_static/reuse/k8s-vs-naming.rst
+
+   Following this naming convention, your virtual servers would appear on the BIG-IP system as:
+
+   - "tenant1_photos-ingress_
+
 
 :fonticon:`fa fa-download` :download:`Download an example manifest for this use case </kubernetes/config_examples/f5-k8s_multi-tenant-1.yaml>`
 

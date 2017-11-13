@@ -43,8 +43,8 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
- name: photos-ingress
- namespace: photos
+ name: photos.https.vs
+ namespace: tenant1
  annotations:
   virtual-server.f5.com/ip: "1.2.3.4"
   virtual-server.f5.com/partition: "ose-cluster"
@@ -73,8 +73,8 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
- name: videos-ingress
- namespace: videos
+ name: videos.https.vs
+ namespace: tenant1
  annotations:
   virtual-server.f5.com/ip: "10.11.12.13"
   virtual-server.f5.com/partition: "ose-cluster"

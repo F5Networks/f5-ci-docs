@@ -27,11 +27,7 @@ F5 resources provide the settings you want the |kctlr| to apply when creating ob
 Create a BIG-IP front-end virtual server for a Service
 ------------------------------------------------------
 
-.. note::
-
-   The |kctlr| prefaces all BIG-IP virtual server objects with :code:`[namespace]_[configmap-name]`.
-
-   For example, if :code:`default` is the namespace and ``k8s.vs`` is the ConfigMap name, the object preface is :code:`default_k8s.vs_173.16.2.2:80`.
+.. include:: /_static/reuse/k8s-vs-naming.rst
 
 Take the steps below to create a new BIG-IP virtual server for a Service.
 
