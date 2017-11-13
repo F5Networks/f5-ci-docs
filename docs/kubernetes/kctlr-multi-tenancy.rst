@@ -135,18 +135,18 @@ You have two (2) tenants in your Cluster: "customerA" and "customerB". Customer 
 - You deploy one (1) :code:`k8s-bigip-ctlr` instance.
 - The Controller manages two (2) namespaces - ``custA_test`` and ``custA_prod``.
 - The Controller creates objects in the "customerA" BIG-IP partition.
-- You use two (2) :ref:`name-based virtual hosting` Ingresses to create separate virtual servers for the test and production versions of Customer A's website.
+- You use two (2) :ref:`simple fanout <simple fanout>` Ingresses to create separate virtual servers for the test and production versions of Customer A's website.
 
-  :fonticon:`fa fa-download` :download:`Download an example manifest for Customer A </kubernetes/config_examples/f5-k8s_multi-tenant-2b_custA.yaml>`
+:fonticon:`fa fa-download` :download:`Download an example manifest for Customer A </kubernetes/config_examples/f5-k8s_multi-tenant-2b_custA.yaml>`
 
 **For Customer B:**
 
 - You deploy one (1) :code:`k8s-bigip-ctlr` instance.
 - The Controller manages one (1) namespace - ``custB``.
 - The Controller creates objects in the "customerB" BIG-IP partition.
-- You create one (1) :ref:`name-based virtual hosting` Ingress to create a virtual server for Customer B's website.
+- You create one (1) :ref:`simple fanout <simple fanout>` Ingress to create a virtual server for Customer B's website.
 
-  :fonticon:`fa fa-download` :download:`Download an example manifest for Customer B </kubernetes/config_examples/f5-k8s_multi-tenant-2b_custB.yaml>`
+:fonticon:`fa fa-download` :download:`Download an example manifest for Customer B </kubernetes/config_examples/f5-k8s_multi-tenant-2b_custB.yaml>`
 
 .. _multi-tenant use-case-3:
 
