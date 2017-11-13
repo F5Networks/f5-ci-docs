@@ -31,7 +31,7 @@ You can set up the |kctlr| for multi-tenancy a few different ways, as described 
 Use case 1: 1 partition, 1 Controller, all namespaces
 -----------------------------------------------------
 
-In this use case, one (1) :code:`k8s-bigip-ctlr` instance watches all of the namespaces in the Cluster and creates all objects in a single BIG-IP partition. You can isolate the Cluster tenants from each other on the BIG-IP system by creating virtual servers in each tenant's namespace.
+In this use case, one (1) :code:`k8s-bigip-ctlr` instance watches all of the namespaces in the Cluster and creates all objects in a single BIG-IP partition. You can isolate the Cluster tenants from each other on the BIG-IP system by creating virtual servers within each tenant's namespace.
 
 .. figure:: /_static/media/kctlr-mt-1.png
    :scale: 70
@@ -44,27 +44,30 @@ In this use case, one (1) :code:`k8s-bigip-ctlr` instance watches all of the nam
    - watch all namespaces (the default behavior);
    - manage a single BIG-IP partition (for example, "ose-cluster").
 
-#. Create BIG-IP virtual servers for each namespace using an :ref:`Ingress <kctlr-ingress-config>`, :ref:`Virtual Server ConfigMaps <kctlr-create-vs>`, or :ref:`Route Resources <kctlr-openshift-routes>` (Route support is available in OpenShift only).
+#. Create BIG-IP virtual servers for each namespace using an :ref:`Ingress <kctlr-ingress-config>`, :ref:`Virtual Server ConfigMaps <kctlr-create-vs>`, or :ref:`Route Resources <kctlr-openshift-routes>` (Route support available in OpenShift only).
 
 **For example:**
 
-You have multiple namespaces in your cluster, each representing a separate tenant. For tenant1, you want to create three (3) separate BIG-IP virtual servers that correspond to specific segments of tenant1's website:
+You have multiple namespaces in your cluster, each representing a separate tenant. "Tenant1" deploys an application consisting of:
 
-- images
-- videos
-- ads
+- a web front end (www.myapp.com);
+- a set of app services that hold images (\https://myapp.com/images);
+- a set of app services that hold videos (\https://myapp.com/videos); and
+- a set of app services that deal with 3rd party ad servers (\https://myapp.com/ads).
 
+For Tenant1, you'll create one (1) BIG-IP virtual server that has one (1) pool for each of its applications.
 
-Each contains the Services for a specific segment of your website (mysite.example.com/photos and mysite.example.com/videos). When you create a :ref:`simple fanout <simple fanout>` Ingress with :ref:`ingress-TLS` for each namespace, the |kctlr| creates corresponding HTTPS virtual servers on the BIG-IP system to expose the Services defined in each Ingress to external traffic.
+#. Create a :ref:`simple fanout <simple fanout>` Ingress that includes the path for each application.
 
-.. include:: /_static/reuse/k8s-vs-naming.rst
+   .. tip::
 
-   Following this naming convention, your virtual servers would appear on the BIG-IP system as:
+      You can use any existing BIG-IP SSL profile with a Kubernetes :ref:`TLS ingress <ingress-TLS>` to secure traffic.
 
-   - "tenant1_photos-ingress_
+The |kctlr| creates an HTTPS virtual server and pools on the BIG-IP system to expose the app Services to external traffic. Following the :ref:`standard naming convention <k8s-vs-naming>`, Tenant1's virtual server would appear on the BIG-IP system as "tenant1_myapp.https_1.2.3.4".
 
+.. literalinclude:: /kubernetes/config_examples/f5-k8s_multi-tenant-1.yaml
 
-:fonticon:`fa fa-download` :download:`Download an example manifest for this use case </kubernetes/config_examples/f5-k8s_multi-tenant-1.yaml>`
+:fonticon:`fa fa-download` :download:`Download the example manifest for this use case </kubernetes/config_examples/f5-k8s_multi-tenant-1.yaml>`
 
 .. _multi-tenant use-case-2A:
 

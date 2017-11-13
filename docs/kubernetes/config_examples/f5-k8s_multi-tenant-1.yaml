@@ -39,11 +39,11 @@ spec:
             ]
 
 ---
-# Ingress resource for namespace 1
+# simple fanout Ingress resource
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
- name: photos.https.vs
+ name: myapp.https
  namespace: tenant1
  annotations:
   virtual-server.f5.com/ip: "1.2.3.4"
@@ -54,48 +54,31 @@ metadata:
   ingress.kubernetes.io/allow-http: "false"
 spec:
   rules:
-  - host: mysite.example.com
+  - host: www.myapp.com
     http:
       paths:
-      - path: /photos/app1
+      - path: myapp.com
         backend:
-          serviceName: myService1
+          serviceName: web-frontend
           servicePort: 443
-      - path: /photos/app2
+      - path: myapp.com/images
         backend:
-          serviceName: myService2
+          serviceName: image-svc1
+          servicePort: 443
+          serviceName: image-svc2
+          servicePort: 443
+      - path: myapp.com/videos
+        backend:
+          serviceName: video-svc1
+          servicePort: 443
+          serviceName: video-svc2
+          servicePort: 443
+      - path: myapp.com/ads
+        backend:
+          serviceName: ad-svc1
+          servicePort: 443
+          serviceName: ad-svc2
           servicePort: 443
   tls:
     - secretName: /Common/clientssl
-
----
-# Ingress resource for namespace 2
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
- name: videos.https.vs
- namespace: tenant1
- annotations:
-  virtual-server.f5.com/ip: "10.11.12.13"
-  virtual-server.f5.com/partition: "ose-cluster"
-  virtual-server.f5.com/balance: "least-connections-node"
-  virtual-server.f5.com/http-port: "443"
-  ingress.kubernetes.io/ssl-redirect: "true"
-  ingress.kubernetes.io/allow-http: "false"
-spec:
-  rules:
-  - host: mysite.example.com
-    http:
-      paths:
-      - path: /videos/app1
-        backend:
-          serviceName: myService1
-          servicePort: 443
-      - path: /videos/app2
-        backend:
-          serviceName: myService2
-          servicePort: 443
-  tls:
-    - secretName: /Common/clientssl
-
 
