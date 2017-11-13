@@ -16,6 +16,7 @@
    Kubernetes Integration overview <kubernetes/index>
    OpenShift Integration overview <openshift/index>
    kubernetes/kctlr-modes
+   kubernetes/kctlr-use-bigip-k8s
    openshift/kctlr-use-bigip-openshift
    kubernetes/kctlr-app-install
    openshift/kctlr-openshift-app-install
@@ -25,6 +26,7 @@
    kubernetes/kctlr-deploy-iapp
    openshift/replace-f5-router
    openshift/kctlr-openshift-routes
+   kubernetes/flannel-bigip-info
 
 
 .. toctree::

@@ -116,10 +116,11 @@ Take these into consideration if you're deciding how to set up your cluster netw
    |                       | :ref:`Add a new VXLAN network to the BIG-IP system <k8s-openshift-vxlan-setup>`         | configurations.                                     |
    |                       | that corresponds to the subnet. [#encap]_                                               |                                                     |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
-   | Flannel VXLAN         | Allocate an overlay IP address from Flannel for the BIG-IP self IP.                     | `Add an FDB entry and ARP record`_ for each node.   |
+   | Flannel VXLAN         | :ref:`Create a VXLAN tunnel on the BIG-IP system <k8s-vxlan-setup>`.                    | None. The |kctlr| automatically detects Kubernetes  |
+   |                       |                                                                                         | Nodes and makes the necessary BIG-IP system         |
+   |                       | :ref:`Create a fake BIG-IP Node in Kubernetes <k8s-bigip-node>`.                        | configurations.                                     |
    |                       |                                                                                         |                                                     |
-   |                       | Create a network and VXLAN tunnel on the BIG-IP system with a VTEP in the Flannel       |                                                     |
-   |                       | VXLAN network.                                                                          |                                                     |
+   |                       | Allocate an overlay IP address from Flannel for the BIG-IP self IP.                     |                                                     |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
    | **Layer 3 networks**                                                                                                                                                  |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
