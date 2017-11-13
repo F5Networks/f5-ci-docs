@@ -10,6 +10,7 @@ For deployment and usage instructions, please refer to the guides below.
    :caption: BIG-IP Controller
    :maxdepth: 1
 
+   Add BIG-IP device to the Kubernetes Cluster <kctlr-use-bigip-k8s>
    Deploy the BIG-IP Controller <kctlr-app-install>
    Manage BIG-IP objects <kctlr-manage-bigip-objects>
    Deploy iApps <kctlr-deploy-iapp>

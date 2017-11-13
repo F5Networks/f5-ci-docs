@@ -7,38 +7,25 @@ metadata:
 rules:
 - apiGroups:
   - ""
+  - "extensions"
   resources:
   - nodes
   - services
   - endpoints
   - namespaces
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - extensions
-  resources:
   - ingresses
+  - secrets
+  - pods
   verbs:
   - get
   - list
   - watch
 - apiGroups:
   - ""
+  - "extensions"
   resources:
   - configmaps
   - events
-  verbs:
-  - get
-  - list
-  - watch
-  - update
-  - create
-  - patch
-- apiGroups:
-  - "extensions"
-  resources:
   - ingresses/status
   verbs:
   - get

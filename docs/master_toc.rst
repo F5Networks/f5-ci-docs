@@ -25,6 +25,7 @@
    F5-proxy - K8s <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest/>
    Integration Overview <kubernetes/index>
    kubernetes/kctlr-modes
+   kubernetes/kctlr-use-bigip-k8s
    kubernetes/kctlr-configure
    kubernetes/kctlr-app-install
    kubernetes/kctlr-ingress
