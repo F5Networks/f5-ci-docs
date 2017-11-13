@@ -4,25 +4,26 @@ metadata:
  name: ing-virtual-hosting
  namespace: default
  annotations:
-  # BIG-IP pool member IP address
+  # Provide an IP address from the external VLAN on your BIG-IP device;
+  # use DNS lookup; or use the default IP
   virtual-server.f5.com/ip: "1.2.3.4"
-  # BIG-IP partition
-  virtual-server.f5.com/partition: "kubernetes"
-  # Load balancing algorithm
+  # Specify the BIG-IP partition where the Controller should create the virtual server.
+  virtual-server.f5.com/partition: "k8s"
+  # Specify the desired load balancing algorithm
   virtual-server.f5.com/balance: "least-connections-node"
-  # Specify the port you want to handle requests
+  # Specify the port on which you want to handle requests
   virtual-server.f5.com/http-port: "80"
 spec:
  rules:
- # omit host name (URL) to match all hosts
+ # Omit the host name (URL) to match all hosts
  - http:
-     # Provide path to each Service you want to proxy
+     # Provide the path to each Service you want to proxy
      paths:
-     - path: /myApp1
+     - path: /app1
        backend:
          serviceName: myService1
          servicePort: 80
-     - path: /myApp2
+     - path: /app2
        backend:
          serviceName: myService2
          servicePort: 80

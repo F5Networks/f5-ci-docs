@@ -95,16 +95,36 @@ The table below shows what BIG-IP configurations the |kctlr| applies for common 
                                    BIG-IP system.
    ============================  ==========================================================
 
+Advanced Deployments
+````````````````````
+
+The |octlr-long| supports the following OpenShift `Advanced Deployment Strategies`_:
+
+- `Blue-Green Deployment`_
+- `A/B Deployment`_
+
+Follow the instructions provided in the OpenShift documentation to use these deployment strategies with your BIG-IP Controller and BIG-IP device(s).
+
+.. important::
+
+   The |octlr-long| provides the following advantages over the native HAProxy when working with `alternate backends`_:
+
+   - You use any of the BIG-IP load balancing algorithms the Controller supports (not just round robin). [#lb]_
+   - When you assign a weight to a Service in an OpenShift Route, the |kctlr| assigns that weight to the Service's pool on the BIG-IP device. The weight isn't split across the Service's endpoints and there are no per-endpoint weight restrictions.
+
 
 What's Next
 -----------
 
-Refer to the docs listed below for setup and configuration instructions.
+Refer to the docs below for setup and configuration instructions.
 
 - :ref:`Add your BIG-IP device to an OpenShift Cluster <bigip-openshift-setup>`.
-- :ref:`Use the BIG-IP Controller as an Ingress controller <kctlr-ingress-config>` to expose Services to external traffic.
-- :ref:`Use the BIG-IP Controller to manage routes <kctlr-openshift-routes>`.
+- :ref:`Use the BIG-IP Controller to manage Routes <kctlr-openshift-routes>`.
+- :ref:`Manage BIG-IP objects <kctlr-manage-bigip-objects>` with the |octlr-long|.
 - See the `k8s-bigip-ctlr reference documentation`_.
+
+.. rubric:: **Footnotes**
+.. [#lb] The |kctlr| supports BIG-IP load balancing algorithms that do not require additional configuration parameters. You can view the full list of supported algorithms in the `f5-cccl schema <https://github.com/f5devcentral/f5-cccl/blob/03e22c4779ceb88f529337ade3ca31ddcd57e4c8/f5_cccl/schemas/cccl-ltm-api-schema.yml#L515>`_. See the `BIG-IP Local Traffic Management Basics user guide <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-basics-13-0-0/4.html>`_ for information about each load balancing mode.
 
 .. _OpenShift: https://www.openshift.org/
 .. _OpenShift service account: https://docs.openshift.org/latest/admin_guide/service_accounts.html
@@ -113,3 +133,6 @@ Refer to the docs listed below for setup and configuration instructions.
 .. _OpenShift SDN: https://docs.openshift.org/latest/architecture/networking/sdn.html
 .. _Better or Best license: https://f5.com/products/how-to-buy/simplified-licensing
 .. _F5 Native Integration: https://docs.openshift.org/1.4/architecture/additional_concepts/f5_big_ip.html#architecture-f5-native-integration
+.. _Advanced Deployment Strategies: https://docs.openshift.com/container-platform/3.6/dev_guide/deployments/advanced_deployment_strategies.html
+.. _Blue-Green Deployment: https://docs.openshift.com/container-platform/3.6/dev_guide/deployments/advanced_deployment_strategies.html#advanced-deployment-strategies-blue-green-deployments
+.. _A/B Deployment: https://docs.openshift.com/container-platform/3.6/dev_guide/deployments/advanced_deployment_strategies.html#advanced-deployment-a-b-deployment

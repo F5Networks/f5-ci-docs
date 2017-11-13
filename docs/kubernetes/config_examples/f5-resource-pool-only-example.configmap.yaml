@@ -6,8 +6,8 @@ metadata:
   labels:
     f5type: virtual-server
 data:
-  # NOTE: k8s-bigip-ctlr v1.0.0 requires schema v0.1.2
-  schema: "f5schemadb://bigip-virtual-server_v0.1.3.json"
+  # schema v0.1.5 required as of k8s-bigip-ctlr v1.4.0
+  schema: "f5schemadb://bigip-virtual-server_v0.1.5.json"
   data: |
     {
       "virtualServer": {
@@ -25,7 +25,7 @@ data:
           "virtualAddress": {
             "port": 80
           },
-          "partition": "kubernetes",
+          "partition": "k8s",
           "balance": "least-connections-node",
           "mode": "http"
         }

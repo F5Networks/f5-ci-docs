@@ -1,5 +1,4 @@
 .. toctree::
-   :caption: Cloud Foundry
    :maxdepth: 1
    :glob:
 
@@ -16,16 +15,17 @@
    Kubernetes Integration overview <kubernetes/index>
    OpenShift Integration overview <openshift/index>
    kubernetes/kctlr-modes
+   kubernetes/flannel-bigip-info
+   kubernetes/kctlr-use-bigip-k8s
    openshift/kctlr-use-bigip-openshift
+   openshift/replace-f5-router
    kubernetes/kctlr-app-install
    openshift/kctlr-openshift-app-install
    kubernetes/kctlr-secrets
    kubernetes/kctlr-ingress
    kubernetes/kctlr-manage-bigip-objects
    kubernetes/kctlr-deploy-iapp
-   openshift/replace-f5-router
    openshift/kctlr-openshift-routes
-
 
 .. toctree::
    :caption: Mesos Marathon
