@@ -7,9 +7,9 @@ metadata:
     # IP address of a BIG-IP pool member
     virtual-server.f5.com/ip: "1.2.3.4"
     # BIG-IP partition
-    virtual-server.f5.com/partition: "k8s"
+    virtual-server.f5.com/partition: "kubernetes"
     # Load balancing algorithm
-    virtual-server.f5.com/balance: "round-robin"
+    virtual-server.f5.com/balance: "least-connections-node"
 spec:
   rules:
   - host: mysite.example.com

@@ -1,22 +1,25 @@
-.. _mctlr-manage-bigip-objects:
-
-Manage BIG-IP LTM objects in Marathon
-=====================================
+.. index::
+   single: Marathon; BIG-IP; virtual server
 
 .. sidebar:: Docs test matrix
 
-   We tested this documentation with:
+   Documentation manually tested with:
 
-   - ``marathon-1.3.9``
-   - ``mesos-1.0.3``
-   - ``marathon-bigip-ctlr v1.0.0``
+   - marathon-1.3.9
+   - mesos-1.0.3
+   - marathon-bigip-ctlr v1.0.0
+
+.. _mctlr-manage-bigip-objects:
+
+Manage BIG-IP virtual servers - Marathon
+========================================
 
 The |mctlr-long| watches the Mesos/Marathon API for Applications with associated :ref:`F5 Application Labels <app-labels>`.
 These Application Labels define the BIG-IP LTM objects |mctlr| creates/manages.
 
 The example JSON blob shown below tells |mctlr| to create one (1) virtual server - with one (1) health monitor and one (1) pool - in the ``/mesos`` partition on the BIG-IP device.
 
-.. literalinclude:: /_static/config_examples/hello-marathon-example.json
+.. literalinclude:: /marathon/config_examples/hello-marathon-example.json
    :caption: Example F5 Application Labels defining a BIG-IP virtual server
    :lines: 8,10,14-17
 
@@ -38,9 +41,9 @@ Create a BIG-IP virtual server for a Marathon Application
 
    .. note:: This sample App definition shows labels that use the default :ref:`port index <port-mappings>` (``0``).
 
-   .. literalinclude:: /_static/config_examples/hello-marathon-example.json
+   .. literalinclude:: /marathon/config_examples/hello-marathon-example.json
 
-   :fonticon:`fa fa-download` :download:`hello-marathon-example.json </_static/config_examples/hello-marathon-example.json>`
+   :fonticon:`fa fa-download` :download:`hello-marathon-example.json </marathon/config_examples/hello-marathon-example.json>`
 
 
 #. Deploy the application in Marathon via the REST API using the JSON file.
@@ -82,7 +85,7 @@ Update a BIG-IP front-end virtual server
 
    .. code-block:: console
 
-      user@mesos-master:~$ curl -X PUT http://10.190.25.75:8080/v2/apps/basic-0 -d @hello-marathon-example.json -H "Content-type: application/json"
+      curl -X PUT http://10.190.25.75:8080/v2/apps/basic-0 -d @hello-marathon-example.json -H "Content-type: application/json"
       {"version":"2017-02-21T21:48:12.755Z","deploymentId":"02529d16-258b-41d4-ba06-9765c4d1f8d3"}
 
 #. Verify your changes on the BIG-IP via ``tmsh`` or the configuration utility.
@@ -102,7 +105,7 @@ Delete BIG-IP LTM objects
 
    .. code-block:: console
 
-      user@mesos-master:~$ curl -X PUT http://10.190.25.75:8080/v2/apps/basic-0 -d @hello-marathon-example.json -H "Content-type: application/json"
+      curl -X PUT http://10.190.25.75:8080/v2/apps/basic-0 -d @hello-marathon-example.json -H "Content-type: application/json"
       {"version":"2017-02-21T21:58:11.111Z","deploymentId":"8bdf03d2-8568-46b3-a5a3-61cc397185a1"}
 
 #. Verify the BIG-IP LTM object(s) no longer exist.
@@ -166,9 +169,9 @@ Create a pool without a virtual server
 
       This sample App definition uses the default :ref:`port index <port-mappings>` (``0``).
 
-   .. literalinclude:: /_static/config_examples/hello-marathon-pool-only-example.json
+   .. literalinclude:: /marathon/config_examples/hello-marathon-pool-only-example.json
 
-   :fonticon:`fa fa-download` :download:`hello-marathon-pool-only-example.json </_static/config_examples/hello-marathon-pool-only-example.json>`
+   :fonticon:`fa fa-download` :download:`hello-marathon-pool-only-example.json </marathon/config_examples/hello-marathon-pool-only-example.json>`
 
 #. Deploy the application in Marathon via the REST API.
 

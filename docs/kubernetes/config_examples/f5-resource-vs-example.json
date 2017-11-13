@@ -1,4 +1,4 @@
-// Note: Remove all comments before using
+// Note: Remove all comments before using //
 {
   "virtualServer": {
     "backend": {
@@ -19,6 +19,8 @@
         "bindAddr": "173.16.2.2"
       },
       "partition": "kubernetes",
+      // Accepts any BIG-IP load balancing mode; defaults to round-robin if
+      // mode is not provided //
       "balance": "round-robin",
       "mode": "http"
     }

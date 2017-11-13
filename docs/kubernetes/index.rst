@@ -13,8 +13,8 @@ For deployment and usage instructions, please refer to the guides below.
    Deploy the BIG-IP Controller <kctlr-app-install>
    Manage BIG-IP objects <kctlr-manage-bigip-objects>
    Deploy iApps <kctlr-deploy-iapp>
-   k8s-bigip-ctlr product information <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
-   f5-kube-proxy product information <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
+   k8s-bigip-ctlr reference <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
+   f5-kube-proxy reference <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
 
 
 .. toctree::
@@ -25,7 +25,7 @@ For deployment and usage instructions, please refer to the guides below.
    Install the ASP <asp-install-k8s>
    Replace kube-proxy with the f5-kube-proxy <asp-k-deploy>
    Attach an ASP to a Service <asp-k-virtual-servers>
-   ASP product information <http://clouddocs.f5.com/products/asp/latest>
+   ASP reference <http://clouddocs.f5.com/products/asp/latest>
 
 
 Related
@@ -36,17 +36,16 @@ Related
    :maxdepth: 1
 
    asp*
-   k8s-bigip-ctlr docs <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
-
-   F5 ASP docs <http://clouddocs.f5.com/products/asp/latest>
+   k8s-bigip-ctlr Reference <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
+   F5 ASP Reference <http://clouddocs.f5.com/products/asp/latest>
 
 
 Overview
 --------
 
-The F5 Container Integration for `Kubernetes`_ consists of the `F5 BIG-IP Controller for Kubernetes </products/connectors/k8s-bigip-ctlr/latest>`_ and the `F5 Application Services Proxy </products/asp/latest>`_ (ASP).
+The F5 Container Integration for `Kubernetes`_ consists of the `BIG-IP Controller for Kubernetes`_ and the `Application Services Proxy`_ (ASP).
 
-The |kctlr-long| configures BIG-IP Local Traffic Manager (LTM) objects for applications in a `Kubernetes cluster`_, serving North-South traffic.
+The |kctlr-long| configures BIG-IP Local Traffic Manager (LTM) objects for applications in a Kubernetes `cluster`_, serving North-South traffic.
 
 The |asp| provides load balancing and telemetry for containerized applications, serving East-West traffic.
 
@@ -62,17 +61,18 @@ General Prerequisites
 
 The F5 Integration for Kubernetes documentation set assumes that you:
 
-- already have a `Kubernetes cluster`_ running;
+- already have a Kubernetes `cluster`_ running;
 - are familiar with the `Kubernetes dashboard`_ and `kubectl`_ ;
 - already have a BIG-IP :term:`device` licensed and provisioned for your requirements; [#bigipcaveat]_ and
 - are familiar with BIG-IP LTM concepts and ``tmsh`` commands. [#bigipcaveat]_
 
-.. seealso::
-
-    :ref:`OpenShift Origin Prerequisites <openshift-origin-prereqs>`
-
 .. [#bigipcaveat] Not required for the |asp| and ASP controllers (|aspk|, |aspm|).
 
+.. note::
+
+   When using the |kctlr| in OpenShift, make sure your BIG-IP license includes SDN services.
+
+.. _k8s asp overview:
 
 |asp|
 -----
@@ -99,7 +99,7 @@ It allows ASP instances to share non-persistent, or :dfn:`ephemeral`, data.
 Health monitors
 ```````````````
 
-The ASP's built-in `health monitor </products/asp/latest/#health-monitors>`_ detects endpoint health using both active and passive checks.
+The `ASP health monitor`_ detects endpoint health using both active and passive checks.
 The ASP adds and removes endpoints from load balancing pools based on the health status determined by these checks.
 The ASP's health monitor enhances Kubernetes' native "liveness probes" as follows:
 
@@ -113,8 +113,7 @@ Statistics
 
 The |asp| collects traffic statistics for the Services it load balances.
 These stats are either logged locally or sent to an external analytics application, like :ref:`Splunk <send-stats-splunk>`.
-
-You can set the location and type of the analytics application in the `stats </products/asp/latest/index.html#stats>`_ section of the :ref:`ASP ConfigMap <asp-configure-k8s>`.
+Use the `ASP stats configuration parameters`_ to set the location and type of the analytics application in the :ref:`ASP ConfigMap <asp-configure-k8s>`.
 
 
 F5-kube-proxy
@@ -126,26 +125,30 @@ The ASP and |aspk| work together to proxy traffic for Kubernetes `Services`_ as 
 
 - The |aspk| provides the same L4 services as `kube-proxy`_, include iptables and basic load balancing.
 - For Services that have the :ref:`ASP Service annotation <k8s-service-annotate>`, the |aspk| hands off traffic to the ASP running on the same node as the client.
-- The ASP then provides `L7 traffic services </products/asp/latest/index.html#built-in-middleware>`_ and `L7 telemetry </products/asp/latest/index.html#telemetry>`_ to your Kubernetes `Service`_.
+- The ASP provides L7 traffic services to your Kubernetes `Service`_ via its `built-in middleware`_ and `telemetry module`_ .
 
 .. important::
 
    By default, the |aspk| forwards traffic to ASP on port 10000.
    You can change this, if needed, to avoid port conflicts.
 
-   See the `f5-kube-proxy product documentation`_ for more information.
+   See the `f5-kube-proxy`_ reference documentation for more information.
 
+.. _kctlr overview:
 
 |kctlr-long|
 ------------
 
-The |kctlr-long| is a Docker container that runs on a `Kubernetes Pod`_.
+The |kctlr-long| is a Docker container that runs on a Kubernetes `Pod`_.
 You can `launch the k8s-bigip-ctlr application <install-kctlr>` in Kubernetes using a Deployment.
 
 Once the |kctlr| pod is running, it watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for special Kubernetes "F5 Resource" `ConfigMap`_ s.
 An F5 Resource ConfigMap contains a JSON blob that tells |kctlr|:
 
-- what `Kubernetes Service`_ it should manage, and
+Once the |kctlr| pod is running, it watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for special "F5 Resource" `ConfigMap`_ s.
+These ConfigMaps contain an F5 Resource JSON blob that tells the |kctlr|:
+
+- what `Service`_ it should manage, and
 - what objects it should create/update on the BIG-IP system for that Service.
 
 When the |kctlr| discovers new or updated :ref:`virtual server <kctlr-create-vs>` or :ref:`iApp <kctlr-deploy-iapps>` F5 Resource ConfigMaps, it configures the BIG-IP system accordingly.
@@ -186,22 +189,22 @@ Namespaces
 
 .. include:: /_static/reuse/k8s-version-added-1_1.rst
 
-The `Kubernetes namespace`_ allows you to create/manage multiple environments within a cluster.
+The Kubernetes `Namespace`_ allows you to create/manage multiple cluster environments.
 The |kctlr-long| can manage all namespaces; a single namespace; or pretty much anything in between.
 
-When :ref:`creating a BIG-IP front-end virtual server <kctlr-create-vs>` for a `Kubernetes Service`_, you can:
+When :ref:`creating a BIG-IP front-end virtual server <kctlr-create-vs>` for a `Service`_, you can:
 
-- specify a single namespace to watch (this is the only supported mode prior to k8s-bigip-ctlr v1.1.0);
-- specify multiple namespaces (pass in each as a separate flag); or
-- omit the namespace flag (meaning you want to watch all namespaces); **this is the default setting** as of k8s-bigip-ctlr v1.1.0.
+- specify a single namespace to watch (*this is the only supported mode in k8s-bigip-ctlr v1.0.0*);
+- specify multiple namespaces by passing each in as a separate flag; or
+- watch all namespaces (by omitting the namespace flag); **this is the default setting** as of k8s-bigip-ctlr v1.1.0.
 
 .. _k8s-f5-resources:
 
 F5 Resource Properties
 ``````````````````````
 
-The |kctlr-long| uses special 'F5 Resources' to identify what BIG-IP LTM objects it should create.
-An F5 resource is a JSON blob included in a Kubernetes `ConfigMap`_.
+The |kctlr-long| uses special 'F5 Resources' to identify what BIG-IP objects it should create.
+An F5 resource is a JSON blob defined in a Kubernetes `ConfigMap`_.
 
 An :ref:`F5 Resource JSON blob <f5-resource-blob>` may contain the properties shown below.
 
@@ -220,9 +223,11 @@ An :ref:`F5 Resource JSON blob <f5-resource-blob>` may contain the properties sh
    ----------------------- -------------------------------------------------------- -----------
    data                    A JSON object                                            Required
    ----------------------- -------------------------------------------------------- -----------
-     frontend              Defines the BIG-IP LTM objects you want to create.
+     frontend              Defines the BIG-IP virtual server.
    ----------------------- -------------------------------------------------------- -----------
      backend               Identifies the Service you want to proxy.
+
+                           Defines BIG-IP health monitor(s) for the Service.
    ======================= ======================================================== ===========
 
 \
@@ -230,7 +235,7 @@ An :ref:`F5 Resource JSON blob <f5-resource-blob>` may contain the properties sh
 .. table:: F5 schema and k8s-bigip-ctlr version compatibility
 
    =============================================== ============================
-   Schema version                                  k8s-bigip-ctlr version
+   Schema version                                  k8s-bigip-ctlr version(s)
    =============================================== ============================
    f5schemadb://bigip-virtual-server_v0.1.4.json   1.3.0
    ----------------------------------------------- ----------------------------
@@ -244,33 +249,40 @@ The |kctlr| uses the ``f5type`` property differently depending on the use case.
 
 - **When used in a virtual server F5 Resource** ConfigMap, set :code:`f5type: virtual-server`.
   This tells the |kctlr| what type of resource you want to create.
-- **When used in Route definitions**, you can define it any way you like.
-  You can set the |kctlr| to only watch for Routes configured with a specific ``f5type`` label.
+- **When used in OpenShift Route definitions**, you can define it any way you like.
+  You can set the |kctlr| to watch for Routes configured with a specific ``f5type`` label.
   For example: :code:`f5type: App1` [#routes]_
 
 The ``frontend`` property defines how to expose a Service on a BIG-IP device.
 
-- You can define ``frontend`` using the standard `k8s-bigip-ctlr virtualServer parameters </products/connectors/k8s-bigip-ctlr/latest/index.html#virtualserver>`_ or the `k8s-bigip-ctlr iApp parameters </products/connectors/k8s-bigip-ctlr/latest/index.html#iapps>`_.
+- You can define ``frontend`` using the standard `k8s-bigip-ctlr Virtual Server configuration parameters`_ or the `k8s-bigip-ctlr iApp configuration parameters`_.
 
 - The ``frontend`` iApp configuration parameters include a set of customizable ``iappVariables`` parameters.
   These custom user-defined parameters must correspond to fields in the iApp template you want to launch.
-  In addition, you can define the `iApp Pool Member Table </products/connectors/k8s-bigip-ctlr/latest/index.html#iapp-pool-member-table>`_ that the iApp creates on the BIG-IP system.
+  You can also define the `iApp pool member table`_ that the iApp creates on the BIG-IP system.
 
 The ``backend`` property identifies the `Kubernetes Service`_ that makes up the server pool.
-You can define health monitors for your BIG-IP LTM virtual server(s) and pool(s) in this section.
+You can define BIG-IP health monitors in this section.
 
-.. [#routes] The |kctlr| only supports routes in OpenShift deployments. See :ref:`OpenShift Routes` for more information.
+.. _f5-resource-blob:
 
-Kubernetes and OpenShift
-------------------------
+Example F5 virtual server resource
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Find out more about :ref:`using the BIG-IP Controller for Kubernetes in OpenShift <openshift-home>`.
+The below example creates one (1) virtual server for the Service named "myService", with one (1) health monitor and one (1) pool. The Controller will create the virtual server in the :code:`kubernetes` partition on the BIG-IP system.
+
+.. literalinclude:: /kubernetes/config_examples/f5-resource-vs-example.json
+   :caption: Example F5 Resource definition
+
+.. [#routes] The |kctlr| supports Routes in OpenShift deployments. See :ref:`OpenShift Routes` for more information.
+
+
+.. _k8s node health:
 
 Node Health
 -----------
 
-When the |kctlr-long| runs in :ref:`nodeport mode` -- the default setting -- the |kctlr| doesn't have visibility into the health of Kubernetes Pods.
-It knows when Nodes are down and when all Pods are down.
+When the |kctlr-long| runs in :ref:`nodeport mode` -- the default setting -- the |kctlr| doesn't have visibility into the health of individual Kubernetes Pods. It knows when Nodes are down and when **all Pods** are down.
 Because of this limited visibility, a pool member may remain active on the BIG-IP system even if the corresponding Pod isn't available.
 
 When running in :ref:`cluster mode`, the |kctlr| has visibility into the health of individual Pods.
@@ -278,5 +290,13 @@ When running in :ref:`cluster mode`, the |kctlr| has visibility into the health 
 .. tip::
 
    In either mode of operation, it's good practice to :ref:`add a BIG-IP health monitor <k8s-config-bigip-health-monitor>` to the virtual server to ensure the BIG-IP system knows when resources go down.
+
+OpenShift
+---------
+
+The |kctlr| provides additional functionality in OpenShift deployments, including support for Routes.
+
+:fonticon:`fa fa-info-circle` :ref:`Learn about using the BIG-IP Controller in OpenShift <openshift-home>`.
+
 
 .. _Cluster Network: https://kubernetes.io/docs/concepts/cluster-administration/networking/

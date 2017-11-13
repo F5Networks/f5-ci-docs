@@ -1,3 +1,4 @@
+# For use in OpenShift clusters
 apiVersion: v1
 kind: ClusterRole
 metadata:
@@ -34,3 +35,18 @@ rules:
   - update
   - create
   - patch
+
+---
+
+apiVersion: v1
+kind: ClusterRoleBinding
+metadata:
+    name: bigip-ctlr-role
+userNames:
+- system:serviceaccount:kube-system:bigip-ctlr
+subjects:
+- kind: ServiceAccount
+  namespace: kube-system
+  name: bigip-ctlr
+roleRef:
+  name: system:bigip-ctlr
