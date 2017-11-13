@@ -10,11 +10,14 @@ For deployment and usage instructions, please refer to the guides below.
    :caption: BIG-IP Controller Guides
    :maxdepth: 1
 
+   Add BIG-IP device to the Kubernetes Cluster <kctlr-use-bigip-k8s>
    Deploy the BIG-IP Controller <kctlr-app-install>
    Manage BIG-IP objects <kctlr-manage-bigip-objects>
    Deploy iApps <kctlr-deploy-iapp>
    Troubleshooting <../troubleshooting/kubernetes>
    k8s-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
+
+   Extended information: Flannel VXLAN, Kubernetes, and BIG-IP <flannel-bigip-info>
 
 Overview
 --------
