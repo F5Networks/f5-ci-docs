@@ -26,7 +26,7 @@ The |kctlr| supports four (4) types of Kubernetes `Ingress Resource`_:
 
    The |kctlr| creates one (1) BIG-IP virtual server per Ingress resource. If the Ingress resource incorporates multiple Services, the |kctlr| creates a pool for each Service.
 
-   If you set setting :code:`allowHttp` or :code:`sslRedirect` to "True", the Controller creates two (2) virtual servers.
+   If you set :code:`allowHttp` or :code:`sslRedirect` to "True", the Controller creates two (2) virtual servers.
 
 \
 

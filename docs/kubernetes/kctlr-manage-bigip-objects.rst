@@ -22,6 +22,7 @@ F5 resources provide the settings you want the |kctlr| to apply when creating ob
 
    The |kctlr| can also :ref:`deploy iApps <kctlr-deploy-iapps>`.
 
+
 .. _kctlr-create-vs:
 
 Create a BIG-IP front-end virtual server for a Service
@@ -69,7 +70,7 @@ Take the steps below to create a new BIG-IP virtual server for a Service.
 
    .. code-block:: console
 
-      admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)$ show ltm virtual
+      admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)show ltm virtual
       ------------------------------------------------------------------
       Ltm::Virtual Server: frontend_173.16.2.2_80
       ------------------------------------------------------------------
@@ -146,6 +147,7 @@ Take the steps below to add a BIG-IP health monitor(s) to an existing virtual se
       admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)$ show ltm virtual <virtual-name>
 
 
+
 .. _kctlr-delete-objects:
 
 Delete BIG-IP virtual servers
@@ -172,6 +174,7 @@ Delete BIG-IP virtual servers
    .. code-block:: console
 
       admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)$ show ltm virtual frontend_173.16.2.2_80
+
 
 
 .. _kctlr-downed-services:
