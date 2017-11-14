@@ -33,6 +33,7 @@
    kubernetes/kctlr-ingress
    kubernetes/kctlr-manage-bigip-objects
    kubernetes/kctlr-deploy-iapp
+   kubernetes/kctlr-multi-tenancy
    openshift/replace-f5-router
    openshift/kctlr-openshift-routes
 

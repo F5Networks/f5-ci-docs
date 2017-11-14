@@ -34,9 +34,10 @@ spec:
             "--bigip-url=10.190.24.171",
             "--bigip-username=$(BIGIP_USERNAME)",
             "--bigip-password=$(BIGIP_PASSWORD)",
-            "use-secrets=true",
+            "--use-secrets=true",
             "--namespace=custA_test",
             "--namespace=custA_prod",
+            "--pool-member-type=cluster",
             ...
             ]
 ---
@@ -44,7 +45,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: test
+  name: test.vs
   namespace: custA_test
   annotations:
     # IP address of a BIG-IP pool member
@@ -70,7 +71,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: prod
+  name: prod.vs
   namespace: custA_prod
   annotations:
     # IP address of a BIG-IP pool member

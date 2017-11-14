@@ -5,7 +5,7 @@ applications:
     env:
       BIGIP_CTLR_CFG: |
                       bigip:
-                        url: <bigip_url>
+                        url: <url-for-active-bigip>
                         user: <bigip_username>
                         pass: <bigip_password>
                         partition:
@@ -36,3 +36,7 @@ applications:
                         uri: http://api.system.cf.local
                         port: 80
                       auth_disabled: false
+
+                      profiles: <my_bigip_profile>
+
+                      policies: <my_bigip_traffic-policy>

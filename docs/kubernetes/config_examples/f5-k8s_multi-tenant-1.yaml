@@ -34,7 +34,8 @@ spec:
             "--bigip-url=10.190.24.171",
             "--bigip-username=$(BIGIP_USERNAME)",
             "--bigip-password=$(BIGIP_PASSWORD)",
-            "use-secrets=true",
+            "--use-secrets=true",
+            "--pool-member-type=cluster",
             ...
             ]
 
@@ -50,6 +51,30 @@ metadata:
   virtual-server.f5.com/partition: "ose-cluster"
   virtual-server.f5.com/balance: "least-connections-node"
   virtual-server.f5.com/http-port: "443"
+  virtual-server.f5.com/health: |
+      [
+        {
+          "path":     "myapp.com/",
+          "send":     "HTTP GET /health/",
+          "interval": 5,
+          "timeout":  10
+        }, {
+          "path":     "myapp.com/images/",
+          "send":     "HTTP GET /health/images/",
+          "interval": 5,
+          "timeout":  5
+        }, {
+          "path":     "myapp.com/videos/",
+          "send":     "HTTP GET /health/videos/",
+          "interval": 5,
+          "timeout":  5
+        }, {
+          "path":     "myapp.com/ads/",
+          "send":     "HTTP GET /health/ads/",
+          "interval": 5,
+          "timeout":  5
+        }
+      ]
   ingress.kubernetes.io/ssl-redirect: "true"
   ingress.kubernetes.io/allow-http: "false"
 spec:

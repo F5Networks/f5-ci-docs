@@ -37,7 +37,7 @@ The |kctlr-long| configures BIG-IP Local Traffic Manager (LTM) objects for appli
 The |asp| provides load balancing and telemetry for containerized applications, serving East-West traffic.
 
 .. image:: /_static/media/kubernetes_solution.png
-   :scale: 50 %
+   :scale: 50%
    :alt: F5 Container Solution for Kubernetes
 
 

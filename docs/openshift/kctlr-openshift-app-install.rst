@@ -176,7 +176,7 @@ What's Next
 -----------
 
 - Check out the `k8s-bigip-ctlr reference documentation`_.
-- Learn how to :ref:`Expose Services to external traffic using an Ingress <kctlr-ingress-config>` or `Manage OpenShift Routes <kctlr-openshift-routes>`.
+- Learn how to :ref:`Expose Services to external traffic using an Ingress <kctlr-ingress-config>` or :ref:`Manage OpenShift Routes <kctlr-openshift-routes>`.
 
 What's next
 -----------
