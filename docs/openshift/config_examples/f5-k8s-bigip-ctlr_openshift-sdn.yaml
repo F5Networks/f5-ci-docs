@@ -21,32 +21,36 @@ spec:
             - name: BIGIP_USERNAME
               valueFrom:
                 secretKeyRef:
+                  # Replace with the name of the Secret containing your login
+                  # credentials
                   name: bigip-login
                   key: username
             - name: BIGIP_PASSWORD
               valueFrom:
                 secretKeyRef:
+                  # Replace with the name of the Secret containing your login
+                  # credentials
                   name: bigip-login
                   key: password
           command: ["/app/bin/k8s-bigip-ctlr"]
           args: [
             "--bigip-username=$(BIGIP_USERNAME)",
             "--bigip-password=$(BIGIP_PASSWORD)",
+            # Replace with the IP address or hostname of your BIG-IP device
             "--bigip-url=10.190.24.171",
+            # Replace with the name of the BIG-IP partition you want to manage
             "--bigip-partition=openshift",
+            # To manage a single namespace, enter it below
+            # (required in v1.0.0), e.g.:
+            #"--namespace=default",
+            # To manage multiple namespaces, enter a separate flag for each
+            # namespace below (as of v1.1.0)
+            # To manage all namespaces, omit the `namespace` entry
+            # (default as of v1.1.0)
             "--pool-member-type=cluster",
-            # Path to the BIG-IP VXLAN connected to the OpenShift HostSubnet
-            "--openshift-sdn-name=/Common/openshift_vxlan",
-            # Enables use of a BIG-IP device as an OpenShift Router
-            "--manage-routes=true",
-            # Assign an IP address to the BIG-IP virtual server
-            # Be sure to use an IP address from the HostSubnet to which the
-            # BIG-IP device connects
-            "--route-vserver-addr=1.2.3.4"
-            # OPTIONAL: Provide an "f5type" label you want the BIG-IP Controller
-            # to watch for. This information should be defined in a Route
-            # Resource (for example, "f5type: App1")
-            "--route-label=App1"
+            # Replace with the path to the BIG-IP VXLAN connected to the
+            # OpenShift HostSubnet
+            "--openshift-sdn-name=/Common/openshift_vxlan"
             ]
       imagePullSecrets:
         - name: f5-docker-images

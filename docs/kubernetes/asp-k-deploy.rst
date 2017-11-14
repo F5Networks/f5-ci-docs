@@ -2,12 +2,12 @@
 
 .. _k8s-asp-deploy:
 
-Replace kube-proxy with the f5-kube-proxy
-=========================================
+Deploy the ASP Controller - Kubernetes
+======================================
 
 .. sidebar:: Docs test matrix
 
-   We tested this documentation with:
+   Documentation manually tested with:
 
    Kubernetes 1.4.8, coreos-beta-1465.3.0, ASP 1.1.0
    Kubernetes 1.4.8, coreos-7.2.1511, ASP 1.0.0
@@ -15,7 +15,7 @@ Replace kube-proxy with the f5-kube-proxy
 Summary
 -------
 
-The |aspk| is a container-based application that runs in a `Pod`_ on each `Node`_ in a Kubernetes `Cluster`_.
+The |aspk-long| (|aspk|) is a container-based application that runs in a `Pod`_ on each `Node`_ in a Kubernetes `Cluster`_.
 It takes the place of the standard Kubernetes ``kube-proxy`` component.
 
 .. seealso::
@@ -95,7 +95,7 @@ Replace kube-proxy with |aspk| in the Pod Manifests
 .. code-block:: console
    :caption: SSH to a node and edit the kube-proxy manifest
 
-   $ ssh core@172.16.1.21
+   ssh core@172.16.1.21
    Last login: Fri Feb 17 18:33:35 UTC 2017 from 172.16.1.20 on pts/0
    CoreOS alpha (1185.3.0)
    Update Strategy: No Reboots
@@ -147,20 +147,18 @@ Replace kube-proxy with |aspk| in the Pod Manifests
 Examples
 --------
 
-.. literalinclude:: /_static/config_examples/f5-kube-proxy-manifest-master.yaml
+.. literalinclude:: /kubernetes/config_examples/f5-kube-proxy-manifest-master.yaml
     :caption: kube-proxy manifest on MASTER node
     :linenos:
 
-:fonticon:`fa fa-download` :download:`f5-kube-proxy-manifest-master.yaml </_static/config_examples/f5-kube-proxy-manifest-master.yaml>`
+:fonticon:`fa fa-download` :download:`f5-kube-proxy-manifest-master.yaml </kubernetes/config_examples/f5-kube-proxy-manifest-master.yaml>`
 
-.. literalinclude:: /_static/config_examples/f5-kube-proxy-manifest-worker.yaml
+.. literalinclude:: /kubernetes/config_examples/f5-kube-proxy-manifest-worker.yaml
     :caption: kube-proxy manifest on WORKER node
     :linenos:
 
-:fonticon:`fa fa-download` :download:`f5-kube-proxy-manifest-worker.yaml </_static/config_examples/f5-kube-proxy-manifest-worker.yaml>`
+:fonticon:`fa fa-download` :download:`f5-kube-proxy-manifest-worker.yaml </kubernetes/config_examples/f5-kube-proxy-manifest-worker.yaml>`
 
 
-.. _Pod: https://kubernetes.io/docs/user-guide/pods/
-.. _Cluster: https://kubernetes.io/docs/admin/cluster-management/
-.. _Node: https://kubernetes.io/docs/admin/node/
+.. _Node: https://kubernetes.io/docs/concepts/architecture/nodes/
 .. _CoreOS on Kubernetes Getting Started Guide: https://coreos.com/kubernetes/docs/1.6.1/deploy-master.html#set-up-the-kube-proxy-pod

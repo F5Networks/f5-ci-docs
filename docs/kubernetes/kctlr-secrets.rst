@@ -1,9 +1,14 @@
 .. _k8s-add-secret:
 
-Secure sensitive information with Kubernetes Secrets
-====================================================
+Secure sensitive information with Secrets
+=========================================
 
-A Kubernetes `Secret`_ allows you to securely store and consume sensitive data in your Kubernetes cluster.
+In Kubernetes and OpenShift, a `Secret`_ allows you to securely store and consume sensitive data in your cluster.
+
+.. tip::
+
+   - Be sure to create your Secret in the same `Namespace`_ as the resource that needs to access it.
+   - If using OpenShift, substitute :code:`kubectl` with :code:`oc` when following the examples provided.
 
 .. _k8s-tls-cert:
 
@@ -28,22 +33,21 @@ Add a TLS certificate and key
 Pull an image from a private Docker registry
 --------------------------------------------
 
-The Kubernetes documentation covers this topic well:
+If you need to pull images from a private Docker registry, follow the instructions provided in the Kubernetes documentation:
 
 - `Pull an image from a private registry <https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/>`_
--  `Creating a Secret with a Docker config <https://kubernetes.io/docs/concepts/containers/images/#creating-a-secret-with-a-docker-config>`_
+- `Creating a Secret with a Docker config <https://kubernetes.io/docs/concepts/containers/images/#creating-a-secret-with-a-docker-config>`_
 
 .. _secret-bigip-login:
 
 Secure your BIG-IP credentials
 ------------------------------
 
-Create a generic Kubernetes Secret to secure your BIG-IP login information.
+Create a generic Secret containing your BIG-IP login information.
 
 .. code-block:: bash
-   :caption: Create a secret for your BIG-IP login credentials
 
-   user@k8s-master:~$ kubectl create secret generic bigip-login --namespace kube-system --from-literal=username=admin --from-literal=password=admin
+   $ kubectl create secret generic bigip-login --namespace kube-system --from-literal=username=admin --from-literal=password=admin
    secret "bigip-login" created
 
 .. _secret verify:

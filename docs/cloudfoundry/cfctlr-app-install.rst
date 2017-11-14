@@ -19,7 +19,7 @@ Before you begin
 Create an application manifest
 ------------------------------
 
-Create a new Application Manifest file defining the |cfctlr| `configuration parameters </products/connectors/cf-bigip-ctlr/latest/index.html#configuration-parameters>`_ you want to apply for your cloud.
+Create a new Application Manifest file defining the `cf-bigip-ctlr configuration parameters`_ you want to apply for your cloud.
 
 The :code:`bigip` section of the example |cfctlr| manifest below does the following:
 
@@ -34,17 +34,17 @@ The :code:`bigip` section of the example |cfctlr| manifest below does the follow
    - To support L7 (HTTP) routing, you must include the :code:`nats` section in the Controller manifest.
    - To support L4 (TCP) routing, you must define the following sections:
 
-      * :code:`routing_api` (REQUIRED)
-      * :code:`oauth`  (REQUIRED)
-      * :code:`route_mode`  (OPTIONAL)
+     * :code:`routing_api` (REQUIRED)
+     * :code:`oauth`  (REQUIRED)
+     * :code:`route_mode`  (OPTIONAL)
 
-   See the |cfctlr| `configuration parameters`_ table for more information.
+   See the `cf-bigip-ctlr configuration parameters`_ table for more information.
 
-.. literalinclude:: /_static/config_examples/manifest.yaml
+.. literalinclude:: /cloudfoundry/config_examples/manifest.yaml
    :linenos:
    :caption: Example App Manifest for cf-bigip-ctlr
 
-:fonticon:`fa fa-download` :download:`manifest.yaml </_static/config_examples/manifest.yaml>`
+:fonticon:`fa fa-download` :download:`manifest.yaml </cloudfoundry/config_examples/manifest.yaml>`
 
 
 .. tip::

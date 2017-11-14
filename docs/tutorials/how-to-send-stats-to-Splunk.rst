@@ -27,7 +27,7 @@ Before you begin
 
 .. seealso::
 
-   `Application Services Proxy Telemetry Module </products/asp/latest/index.html#telemetry>`_
+   Application Services Proxy `Telemetry Module`_
 
 
 Set up Splunk to receive data
