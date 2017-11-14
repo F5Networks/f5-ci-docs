@@ -2,7 +2,6 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: k8s-bigip-ctlr
-  namespace: kube-system
 spec:
   replicas: 1
   template:
@@ -16,7 +15,7 @@ spec:
       serviceAccountName: bigip-ctlr
       containers:
         - name: k8s-bigip-ctlr
-          image: "f5networks/k8s-bigip-ctlr:1.4.0"
+          image: "f5networks/k8s-bigip-ctlr:1.4.2"
           env:
             - name: BIGIP_USERNAME
               valueFrom:

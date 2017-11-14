@@ -4,7 +4,6 @@ metadata:
   labels:
     name: myService
   name: myService-route-passthrough
-  namespace: default
   annotations:
     # Specify a supported BIG-IP load balancing mode
     virtual-server.f5.com/balance: least-connections-member
