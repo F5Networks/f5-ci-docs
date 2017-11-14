@@ -34,7 +34,8 @@ spec:
             "--bigip-url=10.190.24.171",
             "--bigip-username=$(BIGIP_USERNAME)",
             "--bigip-password=$(BIGIP_PASSWORD)",
-            "use-secrets=true",
+            "--use-secrets=true",
+            "--pool-member-type=cluster",
             ...
             ]
 

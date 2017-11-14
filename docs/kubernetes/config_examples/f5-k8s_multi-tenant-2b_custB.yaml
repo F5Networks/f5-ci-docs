@@ -34,33 +34,54 @@ spec:
             "--bigip-url=10.190.24.171",
             "--bigip-username=$(BIGIP_USERNAME)",
             "--bigip-password=$(BIGIP_PASSWORD)",
-            "use-secrets=true",
             "--namespace=custB",
+            "--pool-member-type=cluster",
             ...
             ]
 ---
-# Name-based virtual hosting ingress serving traffic for all hosts
+# Ingress serving traffic for custB.com
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: custB.com
   namespace: custB
   annotations:
-    # IP address of a BIG-IP pool member
-    virtual-server.f5.com/ip: "10.12.13.14"
-    # BIG-IP partition
-    virtual-server.f5.com/partition: "customerB"
-    # Load balancing algorithm
+    virtual-server.f5.com/ip: "1.2.3.4"
+    virtual-server.f5.com/partition: "ose-cluster"
     virtual-server.f5.com/balance: "least-connections-node"
+    virtual-server.f5.com/http-port: "80"
+    virtual-server.f5.com/health: |
+      [
+        {
+          "path":     "custB.com/",
+          "send":     "HTTP GET /health/",
+          "interval": 5,
+          "timeout":  10
+        }, {
+          "path":     "custB.com/app1/",
+          "send":     "HTTP GET /health/app1/",
+          "interval": 5,
+          "timeout":  5
+        }, {
+          "path":     "custB.com/app2/",
+          "send":     "HTTP GET /health/app2/",
+          "interval": 5,
+          "timeout":  5
+        }
+      ]
 spec:
   rules:
   - http:
       paths:
-      - path: /myApp1
+      - path: custB.com
         backend:
-          serviceName: myService1
+          serviceName: frontend
           servicePort: 80
-      - path: /myApp2
+      - path: /app1
         backend:
-          serviceName: myService2
+          serviceName: App1
+          servicePort: 80
+      - path: /app2
+        backend:
+          serviceName: App2
           servicePort: 80

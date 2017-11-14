@@ -172,7 +172,6 @@ Upload the Deployment
       NAME                              READY     STATUS    RESTARTS   AGE
       k8s-bigip-ctlr-1962020886-s31l4   1/1       Running   0          1m
 
-
 What's next
 -----------
 
