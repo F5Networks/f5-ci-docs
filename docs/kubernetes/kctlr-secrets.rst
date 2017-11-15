@@ -21,7 +21,6 @@ Add a TLS certificate and key
 
 .. seealso::
 
-
    See the Kubernetes documentation: `Distribute Credentials Securely Using Secrets <https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/>`_.
 
 .. _k8s-secret-docker-config:
