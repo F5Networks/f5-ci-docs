@@ -14,133 +14,26 @@ For deployment and usage instructions, please refer to the guides below.
    Manage BIG-IP objects <kctlr-manage-bigip-objects>
    Deploy iApps <kctlr-deploy-iapp>
    k8s-bigip-ctlr reference <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
-   f5-kube-proxy reference <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
-
-
-.. toctree::
-   :caption: Application Services Proxy
-   :maxdepth: 1
-
-   Set up the ASP ephemeral store <asp-k-ephemeral-store>
-   Install the ASP <asp-install-k8s>
-   Replace kube-proxy with the f5-kube-proxy <asp-k-deploy>
-   Attach an ASP to a Service <asp-k-virtual-servers>
-   ASP reference <http://clouddocs.f5.com/products/asp/latest>
 
 Overview
 --------
 
-The F5 Container Integration for `Kubernetes`_ consists of the `BIG-IP Controller for Kubernetes`_ and the `Application Services Proxy`_ (ASP).
-
-The |kctlr-long| configures BIG-IP Local Traffic Manager (LTM) objects for applications in a Kubernetes `cluster`_, serving North-South traffic.
-
-The |asp| provides load balancing and telemetry for containerized applications, serving East-West traffic.
+The F5 Container Integration for `Kubernetes`_ consists of the `BIG-IP Controller for Kubernetes`_. The |kctlr| configures BIG-IP objects for applications in a Kubernetes `cluster`_, serving North-South traffic.
 
 .. image:: /_static/media/kubernetes_solution.png
    :scale: 50 %
    :alt: F5 Container Solution for Kubernetes
 
-
-.. _k8s-prereqs:
-
-General Prerequisites
-`````````````````````
-
-The F5 Integration for Kubernetes documentation set assumes that you:
-
-- already have a Kubernetes `cluster`_ running;
-- are familiar with the `Kubernetes dashboard`_ and `kubectl`_ ;
-- already have a BIG-IP :term:`device` licensed and provisioned for your requirements; [#bigipcaveat]_ and
-- are familiar with BIG-IP LTM concepts and ``tmsh`` commands. [#bigipcaveat]_
-
-.. [#bigipcaveat] Not required for the |asp| and ASP controllers (|aspk|, |aspm|).
-
-.. note::
-
-   When using the |kctlr| in OpenShift, make sure your BIG-IP license includes SDN services.
-
-.. _k8s asp overview:
-
-|asp|
------
-
-The |asp| (ASP) provides container-to-container load balancing, traffic visibility, and inline programmability for applications.
-Its light form factor allows for rapid deployment in datacenters and across cloud services.
-The ASP integrates with container environment management and orchestration systems and enables application delivery service automation.
-
-.. important::
-
-   In Kubernetes, the ASP runs as a forward, or client-side, proxy.
-
-
-Ephemeral store
-```````````````
-
-.. include:: /_static/reuse/asp-version-added-1_1.rst
-
-The `ASP ephemeral store`_ is a distributed, in-memory, secure key-value store.
-It allows ASP instances to share non-persistent, or :dfn:`ephemeral`, data.
-
-.. _asp-health-k8s:
-
-Health monitors
-```````````````
-
-The `ASP health monitor`_ detects endpoint health using both active and passive checks.
-The ASP adds and removes endpoints from load balancing pools based on the health status determined by these checks.
-The ASP's health monitor enhances Kubernetes' native "liveness probes" as follows:
-
-- provides a network view of service health;
-- adds/removes endpoints from load balancing pool automatically based on health status;
-- provides opportunistic health checks by observing client traffic;
-- combines data from various health check types -- passive and active -- to provide a more comprehensive view of endpoints' health status.
-
-Statistics
-``````````
-
-The |asp| collects traffic statistics for the Services it load balances.
-These stats are either logged locally or sent to an external analytics application, like :ref:`Splunk <send-stats-splunk>`.
-Use the `ASP stats configuration parameters`_ to set the location and type of the analytics application in the :ref:`ASP ConfigMap <asp-configure-k8s>`.
-
-
-F5-kube-proxy
--------------
-
-The |aspk-long| -- |aspk| -- replaces the standard Kubernetes network proxy, or `kube-proxy`_.
-
-The ASP and |aspk| work together to proxy traffic for Kubernetes `Services`_ as follows:
-
-- The |aspk| provides the same L4 services as `kube-proxy`_, include iptables and basic load balancing.
-- For Services that have the :ref:`ASP Service annotation <k8s-service-annotate>`, the |aspk| hands off traffic to the ASP running on the same node as the client.
-- The ASP provides L7 traffic services to your Kubernetes `Service`_ via its `built-in middleware`_ and `telemetry module`_ .
-
-.. important::
-
-   By default, the |aspk| forwards traffic to ASP on port 10000.
-   You can change this, if needed, to avoid port conflicts.
-
-   See the `f5-kube-proxy`_ reference documentation for more information.
-
 .. _kctlr overview:
 
-|kctlr-long|
-------------
-
-The |kctlr-long| is a Docker container that runs on a Kubernetes `Pod`_.
-You can `launch the k8s-bigip-ctlr application <install-kctlr>` in Kubernetes using a Deployment.
-
-Once the |kctlr| pod is running, it watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for special Kubernetes "F5 Resource" `ConfigMap`_ s.
-An F5 Resource ConfigMap contains a JSON blob that tells |kctlr|:
-
-Once the |kctlr| pod is running, it watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for special "F5 Resource" `ConfigMap`_ s.
-These ConfigMaps contain an F5 Resource JSON blob that tells the |kctlr|:
+The |kctlr-long| is a Docker container that runs on a Kubernetes `Pod`_. You can `launch the k8s-bigip-ctlr application <install-kctlr>` in Kubernetes using a Deployment. Once the |kctlr| pod is running, it watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for specially-formatted :ref:`"F5 Resource" <k8s-f5-resources>` ConfigMaps. The `ConfigMap`_ contains a JSON blob that tells the |kctlr|:
 
 - what `Service`_ it should manage, and
 - what objects it should create/update on the BIG-IP system for that Service.
 
-When the |kctlr| discovers new or updated :ref:`virtual server <kctlr-create-vs>` or :ref:`iApp <kctlr-deploy-iapps>` F5 Resource ConfigMaps, it configures the BIG-IP system accordingly.
+You can use F5 Resource ConfigMaps to deploy BIG-IP :ref:`virtual servers <kctlr-create-vs>` or :ref:`iApps <kctlr-deploy-iapps>`.
 
-.. caution::
+.. sidebar:: :fonticon:`fa fa-exclamation-circle` Important:
 
    * The |kctlr-long| cannot manage objects in the ``/Common`` :term:`partition`.
    * The BIG-IP partition you want to manage must exist before you launch the |kctlr|.
@@ -157,33 +50,23 @@ The |kctlr| can:
 - :ref:`deploy iApps <kctlr-deploy-iapps>`
 - act as a `Kubernetes Ingress controller`_ to :ref:`expose Kubernetes Services to external traffic <kctlr-ingress-config>`.
 
-Key Kubernetes Concepts
------------------------
 
-Cluster Network
-```````````````
+.. _k8s-prereqs:
 
-The basic assumption of the Kubernetes `Cluster Network`_ is that pods can communicate with other pods, regardless of what host they're on.
-You have a few different options when connecting your BIG-IP device (platform or Virtual Edition) to a Kubernetes cluster network and the |kctlr|.
-How (or whether) you choose to integrate your BIG-IP device into the cluster network -- and the framework you use -- impacts how the BIG-IP system forwards traffic to your Kubernetes Services.
+General Prerequisites
+`````````````````````
 
-See :ref:`Nodeport mode vs Cluster mode <kctlr modes>` for more information.
+The F5 Integration for Kubernetes documentation set assumes that you:
 
-.. _k8s-namespaces:
+- already have a Kubernetes `cluster`_ running;
+- are familiar with the `Kubernetes dashboard`_ and `kubectl`_ ;
+- already have a BIG-IP :term:`device` licensed and provisioned for your requirements; and
+- are familiar with BIG-IP LTM concepts and ``tmsh`` commands. [#bigipcaveat]_
 
-Namespaces
-``````````
+.. note::
 
-.. include:: /_static/reuse/k8s-version-added-1_1.rst
+   When using the |kctlr| in OpenShift, make sure your BIG-IP license includes SDN services.
 
-The Kubernetes `Namespace`_ allows you to create/manage multiple cluster environments.
-The |kctlr-long| can manage all namespaces; a single namespace; or pretty much anything in between.
-
-When :ref:`creating a BIG-IP front-end virtual server <kctlr-create-vs>` for a `Service`_, you can:
-
-- specify a single namespace to watch (*this is the only supported mode in k8s-bigip-ctlr v1.0.0*);
-- specify multiple namespaces by passing each in as a separate flag; or
-- watch all namespaces (by omitting the namespace flag); **this is the default setting** as of k8s-bigip-ctlr v1.1.0.
 
 .. _k8s-f5-resources:
 
@@ -249,10 +132,38 @@ The below example creates one (1) virtual server for the Service named "myServic
 .. [#routes] The |kctlr| supports Routes in OpenShift deployments. See :ref:`OpenShift Routes` for more information.
 
 
+Key Kubernetes Concepts
+-----------------------
+
+Cluster Network
+```````````````
+
+The basic assumption of the Kubernetes `Cluster Network`_ is that pods can communicate with other pods, regardless of what host they're on.
+You have a few different options when connecting your BIG-IP device (platform or Virtual Edition) to a Kubernetes cluster network and the |kctlr|.
+How (or whether) you choose to integrate your BIG-IP device into the cluster network -- and the framework you use -- impacts how the BIG-IP system forwards traffic to your Kubernetes Services.
+
+See :ref:`Nodeport mode vs Cluster mode <kctlr modes>` for more information.
+
+.. _k8s-namespaces:
+
+Namespaces
+``````````
+
+.. include:: /_static/reuse/k8s-version-added-1_1.rst
+
+The Kubernetes `Namespace`_ allows you to create/manage multiple cluster environments.
+The |kctlr-long| can manage all namespaces; a single namespace; or pretty much anything in between.
+
+When :ref:`creating a BIG-IP front-end virtual server <kctlr-create-vs>` for a `Service`_, you can:
+
+- specify a single namespace to watch (*this is the only supported mode in k8s-bigip-ctlr v1.0.0*);
+- specify multiple namespaces by passing each in as a separate flag; or
+- watch all namespaces (by omitting the namespace flag); **this is the default setting** as of k8s-bigip-ctlr v1.1.0.
+
 .. _k8s node health:
 
 Node Health
------------
+```````````
 
 When the |kctlr-long| runs in :ref:`nodeport mode` -- the default setting -- the |kctlr| doesn't have visibility into the health of individual Kubernetes Pods. It knows when Nodes are down and when **all Pods** are down.
 Because of this limited visibility, a pool member may remain active on the BIG-IP system even if the corresponding Pod isn't available.

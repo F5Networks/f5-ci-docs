@@ -18,17 +18,6 @@ For deployment and usage instructions, please refer to the guides below.
    k8s-bigip-ctlr reference <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
    f5-kube-proxy reference <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
 
-.. toctree::
-   :caption: Application Services Proxy
-   :maxdepth: 1
-
-   Set up the ASP ephemeral store <../kubernetes/asp-k-ephemeral-store>
-   Install the ASP <../kubernetes/asp-install-k8s>
-   Replace kube-proxy with the f5-kube-proxy <../kubernetes/asp-k-deploy>
-   Attach an ASP to a Service <../kubernetes/asp-k-virtual-servers>
-   ASP reference <http://clouddocs.f5.com/products/asp/latest>
-
-
 Overview
 --------
 

@@ -1,13 +1,4 @@
 .. toctree::
-   :caption: Application Services Proxy
-   :maxdepth: 1
-   :glob:
-
-   ASP home <http://clouddocs.f5.com/products/asp/latest>
-   kubernetes/asp*
-   marathon/asp*
-
-.. toctree::
    :caption: Cloud Foundry
    :maxdepth: 1
    :glob:
@@ -22,7 +13,6 @@
    :glob:
 
    BIG-IP Controller home <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
-   F5-kube-proxy home <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest/>
    Kubernetes overview <kubernetes/index>
    OpenShift overview <openshift/index>
    kubernetes/kctlr-modes
@@ -36,13 +26,13 @@
    openshift/replace-f5-router
    openshift/kctlr-openshift-routes
 
+
 .. toctree::
    :caption: Mesos Marathon
    :glob:
    :maxdepth: 1
 
    BIG-IP Controller home <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
-   ASP Controller home <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest/>
    Integration Overview <marathon/index>
    marathon/mctlr-app-install
    marathon/mctlr-configure
@@ -67,10 +57,9 @@
 
    troubleshooting/*
 
-.. toctree::
+.. toctree
    :caption: Tutorials
    :glob:
    :maxdepth: 1
-
    tutorials/*
 
