@@ -15,7 +15,7 @@ The ``X-Served-By`` line should match the IP address of an ASP pod.
 .. code-block:: bash
    :emphasize-lines: 15
 
-   k8s-worker-0 core:~$ curl -v http://172.16.1.19:30597
+   k8s-worker-0 core:~curl -v http://172.16.1.19:30597
    * Rebuilt URL to: http://172.16.1.19:30597/
    *   Trying 172.16.1.19...
    * TCP_NODELAY set
@@ -46,7 +46,7 @@ Verify the execution of Event Handlers
    .. code-block:: bash
      :emphasize-lines: 10,17
 
-     core@asp-ctlr-master-k8s-functest-master-0 ~ $ curl -X POST -v http://10.3.0.155:80/
+     core@asp-ctlr-master-k8s-functest-master-0 ~ curl -X POST -v http://10.3.0.155:80/
      *   Trying 10.3.0.155...
      * TCP_NODELAY set
      * Connected to 10.3.0.155 (10.3.0.155) port 80 (#0)
@@ -69,7 +69,7 @@ Verify the execution of Event Handlers
    .. code-block:: bash
      :emphasize-lines: 20
 
-     core@asp-ctlr-master-k8s-functest-master-0 ~ $ curl -v http://10.3.0.155:80/
+     core@asp-ctlr-master-k8s-functest-master-0 ~ curl -v http://10.3.0.155:80/
      *   Trying 10.3.0.155...
      * TCP_NODELAY set
      * Connected to 10.3.0.155 (10.3.0.155) port 80 (#0)

@@ -58,14 +58,14 @@ Create a new OpenShift HostSubnet
 
    .. code-block:: console
 
-      user@openshift:~$ oc create -f f5-kctlr-openshift-hostsubnet.yaml
+      oc create -f f5-kctlr-openshift-hostsubnet.yaml
 
 #. Verify creation of the HostSubnet.
 
    .. code-block:: console
       :emphasize-lines: 3
 
-      $ oc get hostsubnet
+      oc get hostsubnet
       NAME                  HOST                  HOST IP         SUBNET
       f5-server             f5-server             172.16.1.28     10.129.2.0/23
       master.internal.net   master.internal.net   172.16.1.10     10.129.0.0/23
@@ -138,5 +138,4 @@ Next Steps
 
 .. _OpenShift: https://www.openshift.org/
 .. _Create an OpenShift service account: https://docs.openshift.org/latest/admin_guide/service_accounts.html
-.. _VXLAN profile:
 .. _Self IP address: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-13-0-0/5.html

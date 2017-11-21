@@ -115,7 +115,7 @@ Kubernetes
 
    .. code-block:: bash
 
-      $ kubectl edit service <service-name>
+      kubectl edit service <service-name>
 
 #. Add the "stats" JSON blob.
 
@@ -136,7 +136,7 @@ Kubernetes
 
    .. code-block:: bash
 
-      $ kubectl get service <service-name>
+      kubectl get service <service-name>
 
 Marathon
 ````````

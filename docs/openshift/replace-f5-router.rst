@@ -41,7 +41,7 @@ Use the OpenShift CLI to remove the pod(s) associated with the F5 Router.
 
 .. code-block:: console
 
-   $ oc delete pod <pod-name>
+   oc delete pod <pod-name>
 
 .. _oc install kctlr:
 

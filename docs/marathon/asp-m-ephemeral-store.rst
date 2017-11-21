@@ -61,7 +61,7 @@ Deploy the ephemeral store
 
    .. code-block:: bash
 
-      $ curl -X POST -H "Content-Type: application/json" http://<marathon-uri>:8080/v2/apps -d @f5-ephemeral-store-marathon-example.json
+      curl -X POST -H "Content-Type: application/json" http://<marathon-uri>:8080/v2/apps -d @f5-ephemeral-store-marathon-example.json
 
 
 #. To verify creation, send a GET request to the Marathon API server.
@@ -74,7 +74,7 @@ Deploy the ephemeral store
       :linenos:
       :emphasize-lines: 1
 
-      $ curl -X GET http://<marathon-uri>:8080/v2/apps/ephemeral-store | jq .
+      curl -X GET http://<marathon-uri>:8080/v2/apps/ephemeral-store | jq .
         % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                        Dload  Upload   Total   Spent    Left  Speed
       100  4079    0  4079    0     0   332k      0 --:--:-- --:--:-- --:--:--  362k

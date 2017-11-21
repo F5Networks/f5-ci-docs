@@ -55,7 +55,7 @@ Set up RBAC Authentication
 
    .. code-block:: console
 
-      $ oc create serviceaccount bigip-ctlr -n kube-system
+      oc create serviceaccount bigip-ctlr -n kube-system
       serviceaccount "bigip-ctlr" created
 
 #. Create a `Cluster Role`_ and `Cluster Role Binding`_. The |kctlr| for OpenShift requires the permissions shown in the table below.
@@ -95,7 +95,7 @@ Set up RBAC Authentication
 
    .. code-block:: console
 
-      $ oc create -f f5-kctlr-openshift-clusterrole.yaml
+      oc create -f f5-kctlr-openshift-clusterrole.yaml
       clusterrole "system:bigip-ctlr" created
       clusterrolebinding "bigip-ctlr-role" created
 
@@ -114,7 +114,7 @@ Define the k8s-bigip-ctlr configuration in an OpenShift Deployment
 
 The |kctlr| has a subset of `configuration parameters specific to OpenShift`_. At minimum, you must include the following configuration parameters in your Deployment:
 
-- :code:`openshift-sdn-name=/path/to/bigip_openshift_vxlan`
+- :code:`--openshift-sdn-name=/path/to/bigip_openshift_vxlan`
 - :code:`--pool-member-type=cluster`
 
 If using the |kctlr| to manage OpenShift Routes, include the desired `Route configuration parameters`_.
@@ -150,7 +150,7 @@ Upload the Deployment
 
    .. code-block:: console
 
-      $ oc create -f f5-k8s-bigip-ctlr_openshift-sdn.yaml --namespace=kube-system
+      oc create -f f5-k8s-bigip-ctlr_openshift-sdn.yaml --namespace=kube-system
       deployment "k8s-bigip-ctlr" created
 
 #. Verify creation using :command:`oc get`.
@@ -159,16 +159,16 @@ Upload the Deployment
 
    .. code-block:: console
 
-      $ oc get deployments --namespace=kube-system
+      oc get deployments --namespace=kube-system
       NAME             DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
       k8s-bigip-ctlr   1         1         1            1           1h
 
-      $ oc get replicasets --namespace=kube-system
+      oc get replicasets --namespace=kube-system
       NAME                       DESIRED   CURRENT   AGE
       k8s-bigip-ctlr-331478340   1         1         1h
 
-      $ oc get pods --namespace=kube-system
-      user@k8s-master:~$ oc get pods --namespace=kube-system
+      oc get pods --namespace=kube-system
+      user@k8s-master:~oc get pods --namespace=kube-system
       NAME                              READY     STATUS    RESTARTS   AGE
       k8s-bigip-ctlr-1962020886-s31l4   1/1       Running   0          1m
 

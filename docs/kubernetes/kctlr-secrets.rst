@@ -47,7 +47,7 @@ Create a generic Secret containing your BIG-IP login information.
 
 .. code-block:: bash
 
-   $ kubectl create secret generic bigip-login --namespace kube-system --from-literal=username=admin --from-literal=password=admin
+   kubectl create secret generic bigip-login --namespace kube-system --from-literal=username=admin --from-literal=password=admin
    secret "bigip-login" created
 
 .. _secret verify:

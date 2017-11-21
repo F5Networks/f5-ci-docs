@@ -44,7 +44,7 @@ Initial Setup
 
    .. code-block:: bash
 
-      $ kubectl get nodes -o 'custom-columns=IP:.spec.externalID'
+      kubectl get nodes -o 'custom-columns=IP:.spec.externalID'
       IP
       172.16.1.3
       172.16.1.5
@@ -85,7 +85,7 @@ You can define both resources in a single YAML file.
 
    .. code-block:: bash
 
-      $ kubectl create -f f5-asp-k8s.yaml
+      kubectl create -f f5-asp-k8s.yaml
       configmap "f5-asp-config" created
       daemonset "f5-asp" created
 

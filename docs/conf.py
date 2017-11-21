@@ -143,6 +143,7 @@ rst_epilog = """
 .. _Express middleware: https://expressjs.com/en/guide/using-middleware.html
 .. _Express: https://expressjs.com/
 .. _F5 Docker registry: https://hub.docker.com/r/f5networks/
+.. _F5 schema: https://github.com/F5Networks/k8s-bigip-ctlr/tree/master/schemas
 .. _F5 virtual server properties: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#virtualserver-configmap-properties
 .. _f5-kube-proxy reference documentation: %(base_url)s/products/connectors/f5-kube-proxy/latest/
 .. _f5-kube-proxy: %(base_url)s/products/connectors/f5-kube-proxy/latest/
@@ -189,7 +190,9 @@ rst_epilog = """
 .. _Splunk: https://www.splunk.com/
 .. _Static Pod: https://kubernetes.io/docs/admin/static-pods/
 .. _store your Docker login credentials as a Secret: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-.. _supported Ingress annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-annotations
+.. _supported Ingress Annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-annotations
+.. _supported Route configurations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-route-configurations
+.. _supported Route Annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#id20
 .. _system configuration: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-initial-configuration-12-0-0/2.html#conceptid
 .. _telemetry module: %(base_url)s/products/asp/latest/#telemetry
 """% {

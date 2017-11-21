@@ -11,7 +11,6 @@
 
 .. _install-ephemeral-store-k8s:
 .. _ephemeral store:
-.. _install-ephemeral-store-k8s:
 
 Set up the ASP ephemeral store - Kubernetes
 ===========================================
@@ -38,9 +37,9 @@ It allows multiple ASP instances to share non-persistent, or :dfn:`ephemeral`, d
 
    .. code-block:: bash
 
-      $ kubectl delete -f f5-asp-k8s-example-configmap.yaml
-      $ kubectl delete -f f5-asp-k8s-example-daemonset.yaml
-      $ kubectl delete pods -l name=f5-asp -n kube-system
+      kubectl delete -f f5-asp-k8s-example-configmap.yaml
+      kubectl delete -f f5-asp-k8s-example-daemonset.yaml
+      kubectl delete pods -l name=f5-asp -n kube-system
 
    **OpenShift users**: substitute :code:`oc` for :code:`kubectl` in the example commands.
 

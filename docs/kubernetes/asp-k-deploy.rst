@@ -62,11 +62,11 @@ Patch kube-proxy daemonset with |aspk|
              ]
            }
          },
-         # to make sure the f5-kube-proxy patch needs to be applied only once
+         # Apply the f5-kube-proxy patch once
          "updateStrategy": {
            "type": "RollingUpdate",
            "rollingUpdate": {
-             # just needs to be more than the number of nodes we might possibly have
+             # Set to a number higher than the possible number of nodes needed
              "maxUnavailable": 10
            }
          }
@@ -99,7 +99,7 @@ Replace kube-proxy with |aspk| in the Pod Manifests
    Last login: Fri Feb 17 18:33:35 UTC 2017 from 172.16.1.20 on pts/0
    CoreOS alpha (1185.3.0)
    Update Strategy: No Reboots
-   core@k8s-worker-0 ~ $ sudo su
+   core@k8s-worker-0 ~ sudo su
    k8s-worker-0 core \# vim /etc/kubernetes/manifests/kube-proxy.yaml
 
 #. Edit the `kube-proxy`_ manifest on each node to match the :ref:`manifest examples <k8s-pod-manifest-examples>`.

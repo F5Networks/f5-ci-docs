@@ -48,7 +48,7 @@ Set up RBAC Authentication
 
    .. code-block:: console
 
-      $ kubectl create serviceaccount bigip-ctlr -n kube-system
+      kubectl create serviceaccount bigip-ctlr -n kube-system
       serviceaccount "bigip-ctlr" created
 
 #. Create a `Cluster Role`_ and `Cluster Role Binding`_.
@@ -66,6 +66,8 @@ Set up RBAC Authentication
    |              | nodes             |                                             |
    |              +-------------------+                                             |
    |              | services          |                                             |
+   |              +-------------------+                                             |
+   |              | secrets           |                                             |
    +--------------+-------------------+---------------------------------------------+
    | "extensions" | ingresses         | get, list, watch                            |
    +--------------+-------------------+---------------------------------------------+

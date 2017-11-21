@@ -203,10 +203,7 @@ An :ref:`F5 Resource JSON blob <f5-resource-blob>` may contain the properties sh
    f5type                  A ``label`` property watched by the |kctlr|.             Optional
    ----------------------- -------------------------------------------------------- -----------
    schema                  The schema |kctlr| uses to interpret the                 Required
-                           encoded data.
-
-                           **BE SURE TO USE THE CORRECT SCHEMA VERSION FOR YOUR**
-                           **VERSION OF THE CONTROLLER** (see below)
+                           encoded data. [#schema]_
    ----------------------- -------------------------------------------------------- -----------
    data                    A JSON object                                            Required
    ----------------------- -------------------------------------------------------- -----------
@@ -217,20 +214,8 @@ An :ref:`F5 Resource JSON blob <f5-resource-blob>` may contain the properties sh
                            Defines BIG-IP health monitor(s) for the Service.
    ======================= ======================================================== ===========
 
-\
 
-.. table:: F5 schema and k8s-bigip-ctlr version compatibility
-
-   =============================================== ============================
-   Schema version                                  k8s-bigip-ctlr version(s)
-   =============================================== ============================
-   f5schemadb://bigip-virtual-server_v0.1.4.json   1.3.0
-   ----------------------------------------------- ----------------------------
-   f5schemadb://bigip-virtual-server_v0.1.3.json   1.1.0, 1.2.0
-   ----------------------------------------------- ----------------------------
-   f5schemadb://bigip-virtual-server_v0.1.2.json   1.0.0
-   =============================================== ============================
-
+.. [#schema] See the :ref:`F5 schema compatibility table <schema-table>` for more information.
 
 The |kctlr| uses the ``f5type`` property differently depending on the use case.
 
