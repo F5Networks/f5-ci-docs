@@ -165,6 +165,9 @@ rst_epilog = """
 .. _ASP virtual server configuration parameters: %(base_url)s/products/asp/latest/#virtual-server
 .. _ASP event handlers: %(base_url)s/products/asp/latest/event-handlers.html
 .. _ASP Middleware API: %(base_url)s/products/asp/latest/middleware-api.html
+.. _contact F5 support: https://f5.com/about-us/contact/regional-offices#regional-support
+.. _oc: https://docs.openshift.com/enterprise/3.0/cli_reference/basic_cli_operations.html
+.. _Ingress annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#ingress-resources
 """% {
     'base_url': 'http://clouddocs.f5.com'
 }
