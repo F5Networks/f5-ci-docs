@@ -1,64 +1,61 @@
 .. _openshift-home:
 
-F5 OpenShift Origin Container Integration
-=========================================
+F5 Container Integration - OpenShift
+====================================
+
+This document provides general information regarding the F5 Integration for OpenShift.
+For deployment and usage instructions, please refer to the guides below.
+
+.. toctree::
+   :caption: BIG-IP Controller
+   :maxdepth: 1
+
+   Add BIG-IP device to OpenShift Cluster <kctlr-use-bigip-openshift>
+   Deploy the BIG-IP Controller <kctlr-openshift-app-install>
+   Manage BIG-IP objects <../kubernetes/kctlr-manage-bigip-objects>
+   Deploy iApps <../kubernetes/kctlr-deploy-iapp>
+   Expose Services using Routes <kctlr-openshift-routes>
+   k8s-bigip-ctlr reference <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
+   f5-kube-proxy reference <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
+
+.. toctree::
+   :caption: Application Services Proxy
+   :maxdepth: 1
+
+   Set up the ASP ephemeral store <../kubernetes/asp-k-ephemeral-store>
+   Install the ASP <../kubernetes/asp-install-k8s>
+   Replace kube-proxy with the f5-kube-proxy <../kubernetes/asp-k-deploy>
+   Attach an ASP to a Service <../kubernetes/asp-k-virtual-servers>
+   ASP reference <http://clouddocs.f5.com/products/asp/latest>
+
 
 Overview
 --------
 
-Red Hat's `OpenShift Origin`_ is a containerized application platform with a native Kubernetes integration.
-The |kctlr-long| enables use of a BIG-IP device as an edge load balancer, proxying traffic from outside networks to pods inside an OpenShift cluster.
-OpenShift Origin uses a pod network defined by the `OpenShift SDN`_.
+The |octlr-long| enables use of a BIG-IP device in `OpenShift`_. Because OpenShift has a native Kubernetes integration, the F5 Integration for OpenShift utilizes the same controller as the :ref:`F5 Integration for Kubernetes <k8s-home>`. In OpenShift, you can use the |kctlr| to use a BIG-IP device(s) to:
 
-The :ref:`F5 Integration for Kubernetes overview <k8s-home>` describes how the |kctlr| works with Kubernetes.
-Because OpenShift has a native Kubernetes integration, the |kctlr| works essentially the same in both environments.
-It does have a few OpenShift-specific prerequisites, noted below.
+- :ref:`proxy traffic for Services <kctlr-ingress-config>` --OR--
+- :ref:`proxy traffic for OpenShift routes <kctlr-openshift-routes>`.
 
 .. _openshift-origin-prereqs:
 
-Prerequisites
-`````````````
+.. note::
 
-The following are in addition to the F5 Integration for Kubernetes' :ref:`general prerequisites <k8s-prereqs>`:
-
-- Integration with `OpenShift SDN`_ requires a BIG-IP `Better or Best license`_ with SDN services.
-- The |kctlr| needs a Cluster Role with the appropriate permissions.
-  See :ref:`Set up RBAC Authentication for the BIG-IP Controller <k8s-openshift-serviceaccount>` for more information.
-
-.. _kctlr-configure-openshift:
-
-Required configuration parameters for OpenShift clusters
---------------------------------------------------------
-
-Define the following parameters in your Deployment when using |kctlr| in an OpenShift cluster.
-
-=====================   ===================================================
-Parameter               Description
-=====================   ===================================================
-pool-member-type        Must be ``cluster``.
----------------------   ---------------------------------------------------
-openshift-sdn-name      TMOS path to the BIG-IP VXLAN tunnel providing
-                        access to the Openshift SDN and Pod network;
-                        include the partition and vxlan name.
-
-                        Example: ``/Common/openshift_vxlan`` [#tunnel]_
-=====================   ===================================================
-
-.. [#tunnel] The VXLAN tunnel does not need to reside in the same partition managed by the |kctlr-long|.
+   Integration with `OpenShift SDN`_  requires a BIG-IP `Better or Best license`_ with SDN services.
 
 .. _openshift-origin-node-health:
 
 OpenShift Node Health
 ---------------------
 
-In OpenShift clusters, the Kubernetes NodeList records status for all nodes registered with the master.
+In OpenShift clusters, the Kubernetes NodeList records status for all nodes registered with the master. Because the |kctlr| integrates with the cluster network, it can access the NodeList in OpenShift’s underlying Kubernetes API server and watch it for changes. The |kctlr| creates/updates FDB (Forwarding DataBase) entries for the configured VXLAN tunnel according to the NodeList. This ensures the |kctlr| only makes VXLAN requests to reported nodes.
 
-When the |kctlr| runs with :code:`pool-member-type` set to :code:`cluster` – which integrates the BIG-IP device into the OpenShift cluster network – it watches the NodeList in OpenShift’s underlying Kubernetes API server.
-The |kctlr| creates/updates FDB (Forwarding DataBase) entries for the configured VXLAN tunnel according to the NodeList.
-This ensures the |kctlr| only makes VXLAN requests to reported nodes.
+As a function of the BIG-IP VXLAN, the BIG-IP device only communicates with healthy cluster nodes. The BIG-IP device does not attempt to route traffic to an unresponsive node, even if the node remains in the NodeList.
 
-As a function of the BIG-IP VXLAN, the BIG-IP device only communicates with healthy cluster nodes.
-The BIG-IP device does not attempt to route traffic to an unresponsive node, even if the node remains in the NodeList.
+.. tip::
+
+   You can also :ref:`set up BIG-IP health monitors <k8s-config-bigip-health-monitor>` for OpenShift Services.
+
 
 .. _openshift routes:
 
@@ -67,45 +64,57 @@ OpenShift Routes
 
 .. include:: /_static/reuse/k8s-version-added-1_2.rst
 
-In OpenShift, the |kctlr| can manage BIG-IP objects for routes, in addition to managing virtual servers for Services or Ingress resources.
+In OpenShift, the |kctlr| can manage BIG-IP objects for routes.
 
-The |kctlr| operates as follows when configured with `OpenShift route resources`_ :
+.. tip::
 
-- runs as non-root, unique user;
-- listens for HTTP route events in OpenShift and can create/delete/expire routes on BIG-IP devices
-  (including L7 config policies such as wildcard routes, prefixes, etc.);
-- can apply client SSL certificates from Kubernetes/OpenShift Secrets to BIG-IP LTM objects;
-- can apply existing BIG-IP SSL certificates to BIG-IP LTM objects;
-- provides edge, passthrough, and re-encryption modes of SSL termination.
+   See :ref:`manage OpenShift Routes with the BIG-IP Controller <kctlr-openshift-routes>` for configuration instructions.
 
-The |kctlr| OpenShift route integration follows what the OpenShift Origin documentation refers to as an `F5 Native Integration`_.
-See :ref:`Add your BIG-IP device to an OpenShift Cluster <bigip-openshift-setup>` for deployment instructions.
+Setting up `OpenShift Route resources`_ provides the following functionality:
 
-The |kctlr| integration for OpenShift Routes works as follows:
+- listen for HTTP route events in OpenShift and create/delete/expire routes on BIG-IP devices (including L7 config policies such as wildcard routes, prefixes, etc.);
+- apply client SSL certificates from Kubernetes/OpenShift Secrets to BIG-IP LTM objects;
+- apply existing BIG-IP SSL certificates to BIG-IP LTM objects;
+- SSL termination using edge, passthrough, or re-encryption mode.
 
-- User creates a route in OpenShift --> The |kctlr| creates corresponding virtual servers (one HTTP and one HTTPS), pools, and pool members on BIG-IP system with the policies defined for OpenShift.
+The table below shows what BIG-IP configurations the |kctlr| applies for common admin tasks in OpenShift.
 
-- User adds/removes endpoints in OpenShift --> The |kctlr| adds/removes pool members from the route's pool on the BIG-IP system.
+.. table::
 
-- User deletes all routes (and associated endpoints) in OpenShift --> The |kctlr| deletes the associated virtual servers, pools, and pool members from the BIG-IP system.
+   ============================  ==========================================================
+   User action                   Controller action
+   ============================  ==========================================================
+   Create OpenShift Route        - Create two virtual servers:
 
-See how to :ref:`expose OpenShift Services to external traffic <kctlr-openshift-routes>` for configuration details.
+                                   - one (1) HTTP
+                                   - one (1) HTTPS
 
-Related
--------
+                                 - Create pools and pool members with policies attached.
+                                 - Attach defined policies to virtual servers.
+   ----------------------------  ----------------------------------------------------------
+   Add/remove endpoint(s)        - Add/remove the pool member(s) that correspond to the
+                                   endpoint(s) from the Route's pool.
+   ----------------------------  ----------------------------------------------------------
+   Delete all Routes             - Remove all objects associated with the Routes
+                                   (virtual servers, pools, and pool members) from the
+                                   BIG-IP system.
+   ============================  ==========================================================
 
-.. toctree::
-   :glob:
-   :titlesonly:
 
-   *
-   ../kubernetes/kctlr*
-   BIG-IP Controller - K8s <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
+What's Next
+-----------
 
-.. _OpenShift Origin: https://www.openshift.org/
+Refer to the docs listed below for setup and configuration instructions.
+
+- :ref:`Add your BIG-IP device to an OpenShift Cluster <bigip-openshift-setup>`.
+- :ref:`Use the BIG-IP Controller as an Ingress controller <kctlr-ingress-config>` to expose Services to external traffic.
+- :ref:`Use the BIG-IP Controller to manage routes <kctlr-openshift-routes>`.
+- See the `k8s-bigip-ctlr reference documentation`_.
+
+.. _OpenShift: https://www.openshift.org/
 .. _OpenShift service account: https://docs.openshift.org/latest/admin_guide/service_accounts.html
 .. _Authorization Policy: https://docs.openshift.org/latest/admin_guide/manage_authorization_policy.html
-.. _OpenShift Origin CLI: https://docs.openshift.org/latest/cli_reference/index.html
+.. _OpenShift CLI: https://docs.openshift.org/latest/cli_reference/index.html
 .. _OpenShift SDN: https://docs.openshift.org/latest/architecture/networking/sdn.html
 .. _Better or Best license: https://f5.com/products/how-to-buy/simplified-licensing
 .. _F5 Native Integration: https://docs.openshift.org/1.4/architecture/additional_concepts/f5_big_ip.html#architecture-f5-native-integration

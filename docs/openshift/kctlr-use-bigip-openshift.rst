@@ -1,14 +1,17 @@
-.. _bigip-openshift-setup:
-
-How to add your BIG-IP device to an OpenShift Cluster
-=====================================================
+.. index::
+   single: OpenShift; BIG-IP; setup
 
 .. sidebar:: Docs test matrix
 
-   We tested this documentation with:
+   Documentation manually tested with:
 
    - BIG-IP v12.1.1
    - OpenShift Origin v1.4
+
+.. _bigip-openshift-setup:
+
+Add your BIG-IP device to an OpenShift Cluster
+==============================================
 
 Tasks
 -----
@@ -41,26 +44,28 @@ Create a new OpenShift HostSubnet
 
    .. important::
 
-      You must include the "annotation" section shown in the example below.
-      The VNID ``0`` grants the BIG-IP device access to all OpenShift projects.
+      Include the "annotation" section shown in the example below with VNID ``0``. This grants the BIG-IP device access to all OpenShift projects.
 
+   \
 
-   .. literalinclude:: /_static/config_examples/f5-kctlr-openshift-hostsubnet.yaml
+   .. literalinclude:: /openshift/config_examples/f5-kctlr-openshift-hostsubnet.yaml
       :linenos:
       :emphasize-lines: 5-7, 9, 13
 
-   :fonticon:`fa fa-download` :download:`f5-kctlr-openshift-hostsubnet.yaml </_static/config_examples/f5-kctlr-openshift-hostsubnet.yaml>`
+   :fonticon:`fa fa-download` :download:`f5-kctlr-openshift-hostsubnet.yaml </openshift/config_examples/f5-kctlr-openshift-hostsubnet.yaml>`
+
+#. Upload the Host Subnet to the OpenShift API server.
 
    .. code-block:: console
 
-      user@openshift:~$ oc create -f f5-kctlr-openshift-hostsubnet.yaml
+      oc create -f f5-kctlr-openshift-hostsubnet.yaml
 
 #. Verify creation of the HostSubnet.
 
    .. code-block:: console
       :emphasize-lines: 3
 
-      $ oc get hostsubnet
+      oc get hostsubnet
       NAME                  HOST                  HOST IP         SUBNET
       f5-server             f5-server             172.16.1.28     10.129.2.0/23
       master.internal.net   master.internal.net   172.16.1.10     10.129.0.0/23
@@ -126,14 +131,11 @@ Add the BIG-IP device to the OpenShift overlay network
 Next Steps
 ----------
 
-- :ref:`Install the F5 BIG-IP Controller in Openshift <install-kctlr-openshift>`
-- :ref:`Configure the F5 BIG-IP Controller for use in OpenShift <kctlr-configure-openshift>`
+- :ref:`Deploy the BIG-IP Controller for Openshift <install-kctlr-openshift>`
 
 .. rubric:: Footnotes
 .. [#ossdn] See the `OpenShift SDN documentation <https://docs.openshift.org/1.4/architecture/additional_concepts/sdn.html#sdn-design-on-masters>`_.
 
 .. _OpenShift: https://www.openshift.org/
 .. _Create an OpenShift service account: https://docs.openshift.org/latest/admin_guide/service_accounts.html
-.. _Self IP address: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-12-1-1/5.html
-.. _cluster role binding:
-.. _cluster role: https://docs.openshift.org/latest/architecture/additional_concepts/authorization.html
+.. _Self IP address: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-13-0-0/5.html

@@ -1,5 +1,5 @@
 .. index::
-   single: Application Services Proxy, Ephemeral store
+   single: Application Services Proxy; Ephemeral store; Kubernetes
 
 .. include:: /_static/reuse/asp-version-added-1_1.rst
 
@@ -9,8 +9,8 @@
 
    - Kubernetes 1.4.8, coreos-beta-1465.3.0, ASP 1.1.0, f5-kube-proxy 1.0.0
 
-.. _ephemeral store:
 .. _install-ephemeral-store-k8s:
+.. _ephemeral store:
 
 Set up the ASP ephemeral store - Kubernetes
 ===========================================
@@ -37,9 +37,9 @@ It allows multiple ASP instances to share non-persistent, or :dfn:`ephemeral`, d
 
    .. code-block:: bash
 
-      $ kubectl delete -f f5-asp-k8s-example-configmap.yaml
-      $ kubectl delete -f f5-asp-k8s-example-daemonset.yaml
-      $ kubectl delete pods -l name=f5-asp -n kube-system
+      kubectl delete -f f5-asp-k8s-example-configmap.yaml
+      kubectl delete -f f5-asp-k8s-example-daemonset.yaml
+      kubectl delete pods -l name=f5-asp -n kube-system
 
    **OpenShift users**: substitute :code:`oc` for :code:`kubectl` in the example commands.
 
@@ -199,7 +199,7 @@ Learn More
 See the `ASP ephemeral store`_ and `ASP health monitor`_ reference documentation.
 
 .. rubric:: Footnotes
-.. [#k8smemory] See `Set Pod CPU & Memory Limit <https://kubernetes.io/docs/tasks/administer-cluster/cpu-memory-limit/>`_ :fonticon:`fa fa-external-link`.
+.. [#k8smemory] See `Set Pod CPU & Memory Limit <https://kubernetes.io/docs/tasks/administer-cluster/memory-default-namespace/>`_ :fonticon:`fa fa-external-link`.
 .. [#petset] PetSets changed to StatefulSets in Kubernetes v1.5.
 
 .. _StatefulSets: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/

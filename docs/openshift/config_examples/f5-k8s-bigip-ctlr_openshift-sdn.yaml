@@ -11,6 +11,8 @@ spec:
       labels:
         app: k8s-bigip-ctlr
     spec:
+      # Name of the Service Account bound to a Cluster Role with the required
+      # permissions
       serviceAccountName: bigip-ctlr
       containers:
         - name: k8s-bigip-ctlr
@@ -19,28 +21,35 @@ spec:
             - name: BIGIP_USERNAME
               valueFrom:
                 secretKeyRef:
+                  # Replace with the name of the Secret containing your login
+                  # credentials
                   name: bigip-login
                   key: username
             - name: BIGIP_PASSWORD
               valueFrom:
                 secretKeyRef:
+                  # Replace with the name of the Secret containing your login
+                  # credentials
                   name: bigip-login
                   key: password
           command: ["/app/bin/k8s-bigip-ctlr"]
           args: [
             "--bigip-username=$(BIGIP_USERNAME)",
             "--bigip-password=$(BIGIP_PASSWORD)",
+            # Replace with the IP address or hostname of your BIG-IP device
             "--bigip-url=10.190.24.171",
+            # Replace with the name of the BIG-IP partition you want to manage
             "--bigip-partition=openshift",
             # To manage a single namespace, enter it below
-            # (required in v1.0.0)
-            # To manage all namespaces, omit the `namespace` entry
-            # (default as of v1.1.0)
+            # (required in v1.0.0), e.g.:
+            #"--namespace=default",
             # To manage multiple namespaces, enter a separate flag for each
             # namespace below (as of v1.1.0)
-            "--namespace=default",
+            # To manage all namespaces, omit the `namespace` entry
+            # (default as of v1.1.0)
             "--pool-member-type=cluster",
-            # Path to the BIG-IP VXLAN connected to the OpenShift HostSubnet
+            # Replace with the path to the BIG-IP VXLAN connected to the
+            # OpenShift HostSubnet
             "--openshift-sdn-name=/Common/openshift_vxlan"
             ]
       imagePullSecrets:

@@ -1,15 +1,18 @@
-.. include:: /_static/reuse/asp-version-added-1_1.rst
+.. index::
+   single: Application Services Proxy; Ephemeral store; Marathon
 
 .. sidebar:: Docs test matrix
 
    We tested this documentation with:
 
-   - Mesos 1.0.3, Marathon 1.3.9, Ubuntu 16.04, ASP 1.1.0, ASP Controller 1.0.0
+   - Mesos 1.0.3, Marathon 1.3.9; Ubuntu 16.04; ASP v1.1.0; ASP Controller v1.0.0
 
 .. _install-ephemeral-store-marathon:
 
 Set up the ASP ephemeral store - Marathon
 =========================================
+
+.. include:: /_static/reuse/asp-version-added-1_1.rst
 
 The |asp| (ASP) shares non-persistent, or ephemeral, data across instances.
 It does so by way of a distributed, secure, key-value store called the Ephemeral Store.
@@ -49,16 +52,16 @@ Deploy the ephemeral store
 
 #. Define the ephemeral store configurations in a JSON file.
 
-   .. literalinclude:: /_static/config_examples/f5-ephemeral-store-marathon-example.json
+   .. literalinclude:: /marathon/config_examples/f5-ephemeral-store-marathon-example.json
       :linenos:
 
-   :download:`f5-ephemeral-store-marathon-example.json </_static/config_examples/f5-ephemeral-store-marathon-example.json>`
+   :download:`f5-ephemeral-store-marathon-example.json </marathon/config_examples/f5-ephemeral-store-marathon-example.json>`
 
 #. Upload the config file to the Marathon API server.
 
    .. code-block:: bash
 
-      $ curl -X POST -H "Content-Type: application/json" http://<marathon-uri>:8080/v2/apps -d @f5-ephemeral-store-marathon-example.json
+      curl -X POST -H "Content-Type: application/json" http://<marathon-uri>:8080/v2/apps -d @f5-ephemeral-store-marathon-example.json
 
 
 #. To verify creation, send a GET request to the Marathon API server.
@@ -71,7 +74,7 @@ Deploy the ephemeral store
       :linenos:
       :emphasize-lines: 1
 
-      $ curl -X GET http://<marathon-uri>:8080/v2/apps/ephemeral-store | jq .
+      curl -X GET http://<marathon-uri>:8080/v2/apps/ephemeral-store | jq .
         % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                        Dload  Upload   Total   Spent    Left  Speed
       100  4079    0  4079    0     0   332k      0 --:--:-- --:--:-- --:--:--  362k
