@@ -1,7 +1,17 @@
 .. _cf-home:
 
-F5 Cloud Foundry Container Integration
-======================================
+F5 Container Integration - Cloud Foundry
+========================================
+
+This document provides general information regarding the F5 Integration for Cloud Foundry.
+For deployment and usage instructions, please refer to the guides below.
+
+.. toctree::
+   :caption: BIG-IP Controller
+   :maxdepth: 1
+
+   Install the BIG-IP Controller in Cloud Foundry <cfctlr-app-install>
+   cf-bigip-ctlr Reference <http://clouddocs.f5.com/products/connectors/cf-bigip-ctlr/latest>
 
 .. _cf-overview:
 
@@ -62,7 +72,7 @@ The Cloud Foundry :ref:`Application Manifest <create-application-manifest>` file
 
 .. important::
 
-   Some policy and profile configurations only apply to L7 (HTTP) virtual servers. See the `configuration parameters </products/connectors/cf-bigip-ctlr/latest/index.html#configuration-parameters>`_ table for more information.
+   Some policy and profile configurations only apply to L7 (HTTP) virtual servers. See the `cf-bigip-ctlr configuration parameters`_ table for more information.
 
 .. _cf-gorouter-nats:
 
@@ -88,7 +98,7 @@ BIG-IP Local Traffic Manager Services
 
 You can apply existing BIG-IP health monitors, policies, profiles, and SSL profiles to the virtual server(s) and pools the |cfctlr| creates for HTTP routes (these configurations do not apply to objects managed for TCP routes).
 Likewise, you can select any BIG-IP load balancing mode (applies to both HTTP and TCP pools).
-Define the |cfctlr| `configuration parameters </products/connectors/cf-bigip-ctlr/latest/index.html#configuration-parameters>`_ in your :ref:`Application Manifest <create-application-manifest>`.
+Define the `cf-bigip-ctlr configuration parameters`_ in your :ref:`Application Manifest <create-application-manifest>`.
 
 .. tip::
 

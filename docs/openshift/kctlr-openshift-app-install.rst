@@ -1,55 +1,64 @@
+.. index::
+   single: OpenShift; BIG-IP Controller
+   single: OpenShift; BIG-IP Controller; install
+   single: OpenShift; RBAC; BIG-IP Controller
+
+.. sidebar:: Docs test matrix
+
+   Documentation manually tested with:
+
+   - OpenShift v1.4.1 on CentOS 7.2.1511
+   - k8s-bigip-ctlr v1.1.0-1.3.0
+
 .. _install-kctlr-openshift:
 
 Install the BIG-IP Controller in OpenShift
 ==========================================
 
-.. sidebar:: Docs test matrix
-
-   We tested this documentation with:
-
-   - OpenShift v1.4.1 on CentOS 7.2.1511
-   - k8s-bigip-ctlr v1.1.0-1.3.0
-
-You can install the |kctlr-long| in `OpenShift`_ via a Deployment.
-The Deployment creates a `ReplicaSet`_ that, in turn, launches a `Pod`_ running the |kctlr| app.
+Use a `Deployment`_ to install the |kctlr-long| in `OpenShift`_.
+The Deployment creates a `ReplicaSet`_ that, in turn, launches the |kctlr| app in `Pods`_.
 
 .. attention::
 
-   These instructions are for the `Openshift`_ Origin Kubernetes distribution.
-   **If you are using standard Kubernetes**, see :ref:`Install the BIG-IP Controller for Kubernetes <install-kctlr>`.
+   These instructions are for the `Openshift`_ Kubernetes distribution.
+   **If you are using standard Kubernetes**, see :ref:`Install the BIG-IP Controller in Kubernetes <install-kctlr>`.
+
+
+.. table:: Task table
+
+   =======  ===================================================================
+   Step     Task
+   =======  ===================================================================
+   1.       Complete :ref:`openshift initial setup`.
+
+   2.       :ref:`openshift-rbac`
+
+   3.       :ref:`kctlr-configure-openshift`
+
+   4.       :ref:`upload openshift deployment` to OpenShift
+   =======  ===================================================================
 
 .. _openshift initial setup:
 
 Initial Setup
 -------------
 
-#. :ref:`Add your BIG-IP device to the OpenShift Cluster <bigip-openshift-setup>`.
-
-#. `Create a new partition`_ for Kubernetes on your BIG-IP system.
-   The |kctlr| can not manage objects in the ``/Common`` partition.
-
-#. :ref:`Add a Kubernetes Secret <k8s-add-secret>` containing your BIG-IP login credentials to your Kubernetes master node.
-
-#. `Create a Kubernetes Secret containing your Docker login credentials`_ (required if you need to pull the container image from a private Docker registry).
-
-.. important::
-
-   You should create all |kctlr| objects in the ``kube-system`` `namespace`_, unless otherwise specified in the deployment instructions.
+.. include:: /_static/reuse/kctlr-initial-setup.rst
 
 .. _k8s-openshift-serviceaccount:
 .. _openshift-rbac:
 
-Set up RBAC Authentication for the |kctlr|
-------------------------------------------
+Set up RBAC Authentication
+--------------------------
 
-#. Create a Service Account.
+#. Create a Service Account for the |kctlr|.
 
    .. code-block:: console
 
-      user@openshift:~$ oc create serviceaccount bigip-ctlr -n kube-system
+      oc create serviceaccount bigip-ctlr -n kube-system
       serviceaccount "bigip-ctlr" created
 
-#. Create a Cluster Role with the permissions shown in the table below.
+#. Create a `Cluster Role`_ and `Cluster Role Binding`_. The |kctlr| for OpenShift requires the permissions shown in the table below.
 
    +-------------------+---------------------------------------------+
    | Resources         | Actions                                     |
@@ -77,87 +86,97 @@ Set up RBAC Authentication for the |kctlr|
 
    \
 
-   .. code-block:: console
-
-      user@openshift:~$ oc create -f f5-kctlr-openshift-clusterrole.yaml
-      clusterrole "system:bigip-ctlr" created
-
-   .. literalinclude:: /_static/config_examples/f5-kctlr-openshift-clusterrole.yaml
+   .. literalinclude:: /openshift/config_examples/f5-kctlr-openshift-clusterrole.yaml
       :linenos:
 
-   :fonticon:`fa fa-download` :download:`f5-kctlr-openshift-clusterrole.yaml </_static/config_examples/f5-kctlr-openshift-clusterrole.yaml>`
+   :fonticon:`fa fa-download` :download:`f5-kctlr-openshift-clusterrole.yaml </openshift/config_examples/f5-kctlr-openshift-clusterrole.yaml>`
 
-#. Create a Cluster Role Binding.
+#. Upload the Cluster Role and Cluster Role Binding to the API server.
 
    .. code-block:: console
 
-      user@openshift:~$ oc create -f f5-kctlr-openshift-clusterrole-binding.yaml
+      oc create -f f5-kctlr-openshift-clusterrole.yaml
+      clusterrole "system:bigip-ctlr" created
       clusterrolebinding "bigip-ctlr-role" created
 
-   .. literalinclude:: /_static/config_examples/f5-kctlr-openshift-clusterrole-binding.yaml
-       :linenos:
-
-   :fonticon:`fa fa-download` :download:`f5-kctlr-openshift-clusterrole-binding.yaml </_static/config_examples/f5-kctlr-openshift-clusterrole-binding.yaml>`
 
 .. _create-openshift-deployment:
 
 .. _openshift-bigip-ctlr-deployment:
 
-Create a Deployment
--------------------
+Deploy the k8s-bigip-ctlr
+-------------------------
 
-Define an OpenShift Deployment using valid JSON or YAML.
+.. _kctlr-configure-openshift:
 
-.. important::
+Define the k8s-bigip-ctlr configuration in an OpenShift Deployment
+``````````````````````````````````````````````````````````````````
 
-   OpenShift Deployments must use the following required configuration parameters:
+The |kctlr| has a subset of `configuration parameters specific to OpenShift`_. At minimum, you must include the following configuration parameters in your Deployment:
 
-   - ``pool-member-type=cluster``
-   - ``openshift-sdn-name=</BIG-IP-partition/BIG-IP-vxlan-tunnel>``
+- :code:`--openshift-sdn-name=/path/to/bigip_openshift_vxlan`
+- :code:`--pool-member-type=cluster`
 
-   If using the |kctlr| to manage OpenShift Routes, include the desired `Route configuration parameters`_.
+If using the |kctlr| to manage OpenShift Routes, include the desired `Route configuration parameters`_.
 
-.. literalinclude:: /_static/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml
-    :linenos:
+The Deployment must consist of valid JSON or YAML.
 
-:fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_openshift-sdn.yaml </_static/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml>`
+Ingress Deployment
+~~~~~~~~~~~~~~~~~~
+
+The example below shows the |kctlr| configurations required if you want to :ref:`expose OpenShift Services to external traffic using an Ingress <kctlr-ingress-config>`.
+
+.. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml
+   :caption: Example k8s-bigip-ctlr OpenShift Deployment
+   :linenos:
+
+:fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_openshift-sdn.yaml </openshift/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml>`
+
+Routes Deployment
+~~~~~~~~~~~~~~~~~
+
+The example below shows the |kctlr| configurations required if you want to :ref:`expose OpenShift Services to external traffic using Routes <kctlr-openshift-routes>`.
+
+.. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml
+   :caption: Example k8s-bigip-ctlr OpenShift Deployment
+   :linenos:
 
 .. _upload openshift deployment:
 
 Upload the Deployment
----------------------
+`````````````````````
 
-Upload the Deployment to the OpenShift API server using ``oc apply``.
+#. Upload the Deployment to the OpenShift API server using :command:`oc create`.
 
-.. tip::
+   .. code-block:: console
 
-   Be sure to create the Deployment in the ``kube-system`` namespace.
+      oc create -f f5-k8s-bigip-ctlr_openshift-sdn.yaml --namespace=kube-system
+      deployment "k8s-bigip-ctlr" created
 
-.. code-block:: console
+#. Verify creation using :command:`oc get`.
 
-   user@openshift-master:~$ oc apply -f f5-k8s-bigip-ctlr_openshift-sdn.yaml --namespace=kube-system
-   deployment "k8s-bigip-ctlr" created
+   You should see one (1) `ReplicaSet`_, as well as one (1) k8s-bigip-ctlr `Pod`_ for each Node in the Cluster. The example below shows one (1) Pod running the k8s-bigip-ctlr in a test cluster with one worker node.
 
-Verify creation
----------------
+   .. code-block:: console
 
-When you create a Deployment, a `ReplicaSet`_ and `Pod`_ (s) launch automatically.
-You can use ``oc get`` to verify all of the objects launched successfully.
+      oc get deployments --namespace=kube-system
+      NAME             DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+      k8s-bigip-ctlr   1         1         1            1           1h
 
-.. code-block:: console
-   :emphasize-lines: 3, 7, 11
+      oc get replicasets --namespace=kube-system
+      NAME                       DESIRED   CURRENT   AGE
+      k8s-bigip-ctlr-331478340   1         1         1h
 
-   user@k8s-master:~$ oc get deployments --namespace=kube-system
-   NAME             DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-   k8s-bigip-ctlr   1         1         1            1           1h
+      oc get pods --namespace=kube-system
+      user@k8s-master:~oc get pods --namespace=kube-system
+      NAME                              READY     STATUS    RESTARTS   AGE
+      k8s-bigip-ctlr-1962020886-s31l4   1/1       Running   0          1m
 
-   user@k8s-master:~$ oc get replicasets --namespace=kube-system
-   NAME                       DESIRED   CURRENT   AGE
-   k8s-bigip-ctlr-331478340   1         1         1h
+What's Next
+-----------
 
-   user@k8s-master:~$ oc get pods --namespace=kube-system
-   NAME                              READY     STATUS    RESTARTS   AGE
-   k8s-bigip-ctlr-1962020886-s31l4   1/1       Running   0          1m
+- Check out the `k8s-bigip-ctlr reference documentation`_.
+- Learn how to :ref:`Expose Services to external traffic using an Ingress <kctlr-ingress-config>` or `Manage OpenShift Routes <kctlr-openshift-routes>`.
 
 What's next
 -----------
@@ -171,8 +190,4 @@ Now that you have the |kctlr| up and running, here are a few things you can do w
 
 .. _OpenShift: https://www.openshift.org/
 .. _ReplicaSet: https://kubernetes.io/docs/user-guide/replicasets/
-.. _Pod: https://kubernetes.io/docs/user-guide/pods/
 .. _ServiceAccount: https://kubernetes.io/docs/admin/service-accounts-admin/
-.. _Create a new partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-implementations-12-1-0/29.html
-.. _Create a Kubernetes Secret containing your Docker login credentials: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-.. _Route configuration parameters: /products/connectors/k8s-bigip-ctlr/latest/#openshift-routes

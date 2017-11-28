@@ -1,19 +1,21 @@
-.. _mctlr-deploy-iapps:
-
-Deploy iApps with |mctlr-long|
-==============================
+.. index::
+   single: BIG-IP Controller; Marathon; iApps
 
 .. sidebar:: Docs test matrix
 
-   We tested this documentation with:
+   Documentation manually tested with:
 
    - ``marathon-1.3.9``
    - ``mesos-1.0.3``
    - ``marathon-bigip-ctlr v1.0.0``
    - Marathon `basic-3 example app`_
 
-The |mctlr| can deploy any iApp on a BIG-IP device via a set of `iApp configuration parameters </products/connectors/marathon-bigip-ctlr/latest/index.html#iApp>`_.
-The iApp must exist on your BIG-IP device before |mctlr| attempts to deploy it.
+.. _mctlr-deploy-iapps:
+
+Deploy iApps - Marathon
+=======================
+
+The |mctlr| can deploy any iApp on a BIG-IP device via the `marathon-bigip-ctlr iApp configuration parameters`_. The iApp must exist on your BIG-IP device before |mctlr| attempts to deploy it.
 The steps presented here apply to any built-in or custom iApp.
 
 If you prefer not to use iApps, you can also :ref:`manage BIG-IP objects directly <mctlr-manage-bigip-objects>` with |mctlr|.
@@ -31,25 +33,25 @@ You can create iApp variables for any built-in or custom iApp.
 
 .. seealso::
 
-   The  `marathon-bigip-ctlr product documentation </products/connectors/marathon-bigip-ctlr/index.html>`_ for detailed information about iApp labels.
+   The  `marathon-bigip-ctlr reference documentation`_ for detailed information about iApp labels.
 
 Deploy the iApp
 ---------------
 
 #. Add the iApp labels section to the service definition of your Marathon Application.
 
-   .. literalinclude:: /_static/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json
+   .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json
       :caption: Example F5 iApp Application Labels
       :linenos:
       :emphasize-lines: 21-34
 
-   :fonticon:`fa fa-download` :download:`Download f5-marathon-bigip-ctlr-vs-iApp-example.json </_static/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json>`
+   :fonticon:`fa fa-download` :download:`Download f5-marathon-bigip-ctlr-vs-iApp-example.json </marathon/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json>`
 
 #. Send a PUT request to the Marathon API server to update the Application definition.
 
    .. code-block:: bash
 
-      user@mesos-master:~$ curl -X PUT -H 'Content-Type: application/json' http://10.190.25.75:8080/v2/apps/basic-3 -d @marathon-iapp-example.json
+      curl -X PUT -H 'Content-Type: application/json' http://10.190.25.75:8080/v2/apps/basic-3 -d @marathon-iapp-example.json
 
 #. Verify creation of the iApp, and its related objects, on the BIG-IP. This is most easily done via the configuration utility:
 
@@ -66,7 +68,7 @@ Delete iApp objects
 
    .. code-block:: bash
 
-      user@mesos-master:~$ curl -X PUT -H 'Content-Type: application/json' http://10.190.25.75:8080/v2/apps/basic-3 -d @marathon-iapp-example.json
+      curl -X PUT -H 'Content-Type: application/json' http://10.190.25.75:8080/v2/apps/basic-3 -d @marathon-iapp-example.json
 
 #. Verify the iApp and its related objects no longer exist on the BIG-IP.
 
