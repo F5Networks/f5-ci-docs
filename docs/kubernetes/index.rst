@@ -20,9 +20,8 @@ Overview
 
 The F5 Container Integration for `Kubernetes`_ consists of the `BIG-IP Controller for Kubernetes`_. The |kctlr| configures BIG-IP objects for applications in a Kubernetes `cluster`_, serving North-South traffic.
 
-.. image:: /_static/media/kubernetes_solution.png
-   :scale: 50 %
-   :alt: F5 Container Solution for Kubernetes
+.. image:: /_static/media/cc_solution.png
+   :alt: Solution design: The Container Connector runs as an App within the cluster; it configures the BIG-IP device as needed to handle traffic for Apps in the cluster
 
 .. _kctlr overview:
 
