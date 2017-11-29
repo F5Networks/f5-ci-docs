@@ -80,41 +80,24 @@ author = u'F5 Networks'
 # built documents.
 #
 # The short X.Y version.
-version = 'v1'
+version = 'v2'
 # The full version, including alpha/beta/rc tags.
-release = 'v1.3'
+release = 'v2.0'
 
 # All substitutions
 
 rst_epilog = """
-.. |asp| replace:: Application Services Proxy
-.. |aspk-long| replace:: ASP Controller for Kubernetes
-.. |aspk| replace:: f5-kube-proxy
 .. |cfctlr| replace:: BIG-IP Controller
 .. |cf-long| replace:: BIG-IP Controller for Cloud Foundry
 .. |kctlr-long| replace:: BIG-IP Controller for Kubernetes
 .. |kctlr| replace:: BIG-IP Controller
 .. |mctlr-long| replace:: BIG-IP Controller for Marathon
 .. |mctlr| replace:: BIG-IP Controller
-.. |aspm-long| replace:: ASP Controller for Marathon
-.. |aspm| replace:: ASP Controller
 .. |octlr-long| replace:: BIG-IP Controller for OpenShift
 .. _Apache Mesos Marathon: https://mesosphere.github.io/marathon/
 .. _Apache Mesos: https://mesosphere.com/
 .. _Application labels for iApp mode: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/#application-labels-for-iapp-mode
 .. _Application Manifest: https://docs.pivotal.io/pivotalcf/1-7/devguide/deploy-apps/manifest.html
-.. _Application Services Proxy: %(base_url)s/products/asp/latest/
-.. _ASP Controller for Marathon: %(base_url)s/products/connectors/marathon-asp-ctlr/latest
-.. _ASP ephemeral store: %(base_url)s/products/asp/latest/#ephemeral-store
-.. _ASP event handlers: %(base_url)s/products/asp/latest/event-handlers.html
-.. _ASP global and orchestration configuration parameters: %(base_url)s/products/asp/latest/#global
-.. _ASP health check parameters: %(base_url)s/products/asp/latest/#health-check-types
-.. _ASP health monitor: %(base_url)s/products/asp/latest/#health-monitors
-.. _ASP Marathon configuration labels: %(base_url)s/products/connectors/marathon-asp-ctlr/latest/#configuration-parameters
-.. _ASP Middleware API: %(base_url)s/products/asp/latest/middleware-api.html
-.. _ASP reference documentation: %(base_url)s/products/asp/latest/
-.. _ASP stats configuration parameters: %(base_url)s/products/asp/latest/#stats
-.. _ASP virtual server configuration parameters: %(base_url)s/products/asp/latest/#virtual-server
 .. _Better or Best license: https://f5.com/products/how-to-buy/simplified-licensing
 .. _BIG-IP Controller for Cloud Foundry: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/
 .. _BIG-IP Controller for Kubernetes: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest
@@ -126,6 +109,7 @@ rst_epilog = """
 .. _built-in middleware: %(base_url)s/products/asp/latest/#built-in-middleware
 .. _cf-bigip-ctlr configuration parameters: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/#configuration-parameters
 .. _cf-bigip-ctlr: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/
+.. _cf-bigip-ctlr v1.0.0-beta.1: %(base_url)s/products/connectors/cf-bigip-ctlr/v1.0-beta/
 .. _Cloud Foundry CLI: https://docs.cloudfoundry.org/cf-cli/getting-started.html
 .. _Cloud Foundry: https://cloudfoundry.org/why-cloud-foundry/
 .. _Cluster network: https://kubernetes.io/docs/concepts/cluster-administration/networking/
@@ -155,6 +139,10 @@ rst_epilog = """
 .. _k8s-bigip-ctlr reference documentation: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/
 .. _k8s-bigip-ctlr virtual server configuration parameters: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#virtualserver
 .. _k8s-bigip-ctlr: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/
+.. _k8s-bigip-ctlr v1.1.0-beta.1: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.1-beta/
+.. _k8s-bigip-ctlr v1.1.0: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.1/
+.. _k8s-bigip-ctlr v1.2.0: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.2/
+.. _k8s-bigip-ctlr v1.3.0: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.3/
 .. _kube-proxy: https://kubernetes.io/docs/admin/kube-proxy/
 .. _kubectl: https://kubernetes.io/docs/user-guide/kubectl-overview/
 .. _Kubernetes Dashboard: https://kubernetes.io/docs/user-guide/ui/
@@ -167,16 +155,16 @@ rst_epilog = """
 .. _Marathon Applications: https://mesosphere.github.io/marathon/docs/application-basics.html
 .. _Marathon Apps: https://mesosphere.github.io/marathon/docs/application-basics.html
 .. _Marathon Web Interface: https://mesosphere.github.io/marathon/docs/marathon-ui.html
-.. _marathon-asp-ctlr override labels: %(base_url)s/products/connectors/marathon-asp-ctlr/latest/#configuration-parameters
-.. _marathon-asp-ctlr: %(base_url)s/products/connectors/marathon-asp-ctlr/latest/
 .. _marathon-bigip-ctlr iApp configuration parameters: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/#iApp
 .. _marathon-bigip-ctlr reference documentation: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/
 .. _marathon-bigip-ctlr: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/
+.. _marathon-bigip-ctlr v1.1.0-beta.1: %(base_url)s/products/connectors/marathon-bigip-ctlr/v1.1-beta/
+.. _marathon-bigip-ctlr v1.1.0: %(base_url)s/products/connectors/marathon-bigip-ctlr/v1.1/
 .. _Marathon: https://mesosphere.github.io/marathon/
 .. _namespace: https://kubernetes.io/docs/user-guide/namespaces/
 .. _NATS bus: https://docs.cloudfoundry.org/concepts/architecture/router.html#use
 .. _Node.js: https://nodejs.org/en/
-.. _OpenShift route resources: /products/connectors/k8s-bigip-ctlr/latest/#openshift-route-resources
+.. _OpenShift route resources: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-route-resources
 .. _Pivotal Cloud Foundry: https://pivotal.io/platform
 .. _Pod: https://kubernetes.io/docs/concepts/workloads/pods/pod/
 .. _Pods: https://kubernetes.io/docs/concepts/workloads/pods/pod/
@@ -195,6 +183,7 @@ rst_epilog = """
 .. _supported Route Annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#id20
 .. _system configuration: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-initial-configuration-12-0-0/2.html#conceptid
 .. _telemetry module: %(base_url)s/products/asp/latest/#telemetry
+
 """% {
     'base_url': 'http://clouddocs.f5.com'
 }

@@ -93,11 +93,7 @@ In Marathon, container-based applications using Docker BRIDGE mode must have `po
 
 .. sidebar:: :fonticon:`fa fa-exclamation-circle` Important:
 
-   Apache Mesos commonly restricts binding to ports in a specific range.
-   Consult the Apache Mesos `ports resource`_ to see what ports are available in your cluster before defining service ports and/or port mappings for your applications.
-
-   Incorrect port mappings may result in deployment failures.
-   See :ref:`Troubleshooting your Marathon deployments <troubleshoot-marathon>` for more information.
+   Apache Mesos commonly restricts binding to ports in a specific range. Consult the Apache Mesos `ports resource`_ to see what ports are available in your cluster before defining service ports and/or port mappings for your applications. Incorrect port mappings may result in deployment failures.
 
 Most F5 Application Labels let you specify an index into the port mapping array, beginning at ``0``.
 These parameters include ``{n}`` in the label key; simply replace ``{n}`` with the port index to which you want the setting to apply.

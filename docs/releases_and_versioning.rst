@@ -72,7 +72,7 @@ The tables below show the versions used in development testing. The F5 Container
    | OpenShift                |                       |                                            |                                |
    +--------------------------+-----------------------+--------------------------------------------+--------------------------------+
 
-.. _F5 schema:
+.. _f5-schema:
 
 F5 schema
 ---------

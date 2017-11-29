@@ -61,7 +61,7 @@ The F5 Integration for Kubernetes documentation set assumes that you:
 - already have a Kubernetes `cluster`_ running;
 - are familiar with the `Kubernetes dashboard`_ and `kubectl`_ ;
 - already have a BIG-IP :term:`device` licensed and provisioned for your requirements; and
-- are familiar with BIG-IP LTM concepts and ``tmsh`` commands. [#bigipcaveat]_
+- are familiar with BIG-IP LTM concepts and ``tmsh`` commands.
 
 .. note::
 

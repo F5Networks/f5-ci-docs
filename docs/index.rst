@@ -12,7 +12,6 @@ F5's Container Integrations make it possible to dynamically allocate BIG-IP L4-L
 =======================     ===================================================
 Container Connector         Description
 =======================     ===================================================
-
 `cf-bigip-ctlr`_            Integrates BIG-IP as an
                             Application Delivery Controller (ADC) in
                             `Pivotal Cloud Foundry`_, serving North-South
@@ -27,30 +26,30 @@ Container Connector         Description
                             virtual servers, serving North-South traffic.
 =======================     ===================================================
 
----------------------------------
+\
 
 .. image:: /_static/media/container_connectors_north-south.png
    :scale: 50 %
    :alt: North-South architecture
 
----------------------------------
+
 
 Design
 ------
 
 Each CC is uniquely suited to its specific container orchestration environment and purpose, utilizing the architecture and language appropriate for the environment. Application Developers interact with the platform's API; the container connectors watch the API for certain events, then act accordingly.
 
----------------------------------
+
 
 .. image:: /_static/media/container_connector-framework.png
    :scale: 50 %
    :alt: F5 Container Connector framework
 
----------------------------------
+
 
 For example, when you create an App in Marathon with the :ref:`F5 application labels <app-labels>` applied, the |mctlr-long| uses the information defined in the labels to create objects on the BIG-IP device for that App.
 
----------------------------------
+
 
 .. image:: /_static/media/mesos_flow.png
    :scale: 50 %
