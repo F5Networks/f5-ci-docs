@@ -28,7 +28,7 @@ Initial Setup
    Kubernetes' documentation provides instructions for creating the Secret:
 
    - `Pull an Image from a Private Registry <https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/>`_
-   - `Kubernetes API docs <https://kubernetes.io/docs/user-guide/kubectl/v1.6/>`_ (see :code:`secret docker-registry`)
+   - `Kubernetes API docs <https://kubernetes.io/docs/reference/generated/kubectl/kubectl-options/>`_ (see :code:`secret docker-registry`)
 
    \
 
