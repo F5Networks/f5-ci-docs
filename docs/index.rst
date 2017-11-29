@@ -52,10 +52,16 @@ For example, when you create an App in Marathon with the :ref:`F5 application la
 
 The Container Connector is stateless. The inputs are:
 
-- the inputs are the container orchestration environment's config,
+- the container orchestration environment's config,
 - the BIG-IP device config, and
 - the CC config (provided via the appropriate means for the container orchestration environment).
 
 This means an instance of a Container Connector can be readily discarded. Migrating a CC is as easy as destroying it in one place and spinning up a new one somewhere else. Wherever a Container Connector runs, it always watches the API and attempts to bring the BIG-IP up-to-date with the latest applicable configurations.
+
+
+---------------------------------
+
+Site Contents
+-------------
 
 .. include:: master_toc.rst

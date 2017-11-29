@@ -21,6 +21,7 @@ The F5 Container Integration  for `Apache Mesos Marathon`_ consists of the `BIG-
 The |mctlr-long| is a container-based `Marathon Application`_ -- |mctlr|. You can :ref:`launch <install-mctlr>` the |mctlr-long| in Marathon via the `Marathon REST API`_ or the `Marathon Web Interface`_ [#mgui]_.
 
 .. image:: /_static/media/cc_solution.png
+   :scale: 65%
    :alt: Solution design: The Container Connector runs as an App within the cluster; it configures the BIG-IP device as needed to handle traffic for Apps in the cluster
 
 The |mctlr| watches the Marathon API for special "F5 Application Labels" that tell it:
@@ -31,6 +32,7 @@ The |mctlr| watches the Marathon API for special "F5 Application Labels" that te
 When the |mctlr-long| discovers new or updated Marathon Applications with the F5 Application Labels, it dynamically applies the desired settings to the BIG-IP device.
 
 .. image:: /_static/media/mesos_flow.png
+   :scale: 65%
    :alt: Diagram demonstrating how the BIG-IP Controller picks up configurations from F5 Application labels and applies the desired config to BIG-IP devices.
 
 

@@ -21,16 +21,12 @@ Overview
 The F5 Container Integration for `Kubernetes`_ consists of the `BIG-IP Controller for Kubernetes`_. The |kctlr| configures BIG-IP objects for applications in a Kubernetes `cluster`_, serving North-South traffic.
 
 .. image:: /_static/media/cc_solution.png
+   :scale: 60%
    :alt: Solution design: The Container Connector runs as an App within the cluster; it configures the BIG-IP device as needed to handle traffic for Apps in the cluster
 
 .. _kctlr overview:
 
-The |kctlr-long| is a Docker container that runs on a Kubernetes `Pod`_. You can `launch the k8s-bigip-ctlr application <install-kctlr>` in Kubernetes using a Deployment. Once the |kctlr| pod is running, it watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for specially-formatted :ref:`"F5 Resource" <k8s-f5-resources>` ConfigMaps. The `ConfigMap`_ contains a JSON blob that tells the |kctlr|:
-
-- what `Service`_ it should manage, and
-- what objects it should create/update on the BIG-IP system for that Service.
-
-You can use F5 Resource ConfigMaps to deploy BIG-IP :ref:`virtual servers <kctlr-create-vs>` or :ref:`iApps <kctlr-deploy-iapps>`.
+The |kctlr-long| is a Docker container that runs on a Kubernetes `Pod`_. You can :Ref:`launch the k8s-bigip-ctlr application <install-kctlr>` in Kubernetes using a Deployment. Once the |kctlr| pod is running, it watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for specially-formatted :ref:`"F5 Resource" <k8s-f5-resources>` ConfigMaps. The `ConfigMap`_ contains a JSON blob that tells the |kctlr|:
 
 .. sidebar:: :fonticon:`fa fa-exclamation-circle` Important:
 
@@ -40,6 +36,11 @@ You can use F5 Resource ConfigMaps to deploy BIG-IP :ref:`virtual servers <kctlr
    * You can use multiple |kctlr| instances to manage **separate** BIG-IP partitions.
    * You can create one (1) BIG-IP virtual server per Service port.
      *Create a separate* :ref:`virtual server F5 Resource ConfigMap <kctlr-create-vs>` *for each Service port you wish to expose.*
+
+- what `Service`_ it should manage, and
+- what objects it should create/update on the BIG-IP system for that Service.
+
+You can use F5 Resource ConfigMaps to deploy BIG-IP :ref:`virtual servers <kctlr-create-vs>` or :ref:`iApps <kctlr-deploy-iapps>`.
 
 The |kctlr| can:
 
