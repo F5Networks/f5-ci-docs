@@ -23,6 +23,8 @@ Initial Setup
 #. `Create a new partition`_ for Marathon on your BIG-IP device.
    The |mctlr-long| cannot manage objects in the ``/Common`` partition.
 
+.. _mctlr-deploy:
+
 Launch the |mctlr| App using the Marathon REST API
 --------------------------------------------------
 

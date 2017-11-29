@@ -37,7 +37,7 @@ The |kctlr-long| configures BIG-IP Local Traffic Manager (LTM) objects for appli
 The |asp| provides load balancing and telemetry for containerized applications, serving East-West traffic.
 
 .. image:: /_static/media/kubernetes_solution.png
-   :scale: 50 %
+   :scale: 50%
    :alt: F5 Container Solution for Kubernetes
 
 
@@ -214,7 +214,6 @@ An :ref:`F5 Resource JSON blob <f5-resource-blob>` may contain the properties sh
                            Defines BIG-IP health monitor(s) for the Service.
    ======================= ======================================================== ===========
 
-
 .. [#schema] See the :ref:`F5 schema compatibility table <schema-table>` for more information.
 
 The |kctlr| uses the ``f5type`` property differently depending on the use case.
@@ -247,7 +246,6 @@ The below example creates one (1) virtual server for the Service named "myServic
    :caption: Example F5 Resource definition
 
 .. [#routes] The |kctlr| supports Routes in OpenShift deployments. See :ref:`OpenShift Routes` for more information.
-
 
 .. _k8s node health:
 
