@@ -14,7 +14,7 @@ We write documentation in `reStructuredText <http://docutils.sourceforge.net/rst
 Contributing
 ------------
 
-If you want to contribute to this documentation set, please consult the `F5 Open Source Style Guide <tbd>`_ and `training <tbd>`_ first. Once you've completed the training and are ready to start writing, fork this repo.
+If you want to contribute to this documentation set, please consult the `F5 Open Source Style Guide <https://s3-us-west-2.amazonaws.com/staging-c2ub89n2qjgt1/docs-training/style_guide/index.html>`_ and `training <https://gitlab.pdbld.f5net.com/tools/f5-docs-training/>`_ first (NOTE: training repo is only accessible by F5 employees). Once you've completed the training and are ready to start writing, fork this repo.
 
 * Create an `issue <https://github.com/F5Networks/f5-ci-docs/issues>`_ corresponding to the changes/additions you plan to make. When your work is complete, `open a pull request <https://github.com/F5Networks/f5-ci-docs/pulls>`_.
 * Be sure to fetch often so your fork stays up-to-date!
