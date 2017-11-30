@@ -18,25 +18,8 @@ For deployment and usage instructions, please refer to the guides below.
 Overview
 --------
 
-The F5 Container Integration for `Cloud Foundry`_  consists of the |cf-long|, or `cf-bigip-ctlr`_.
-The |cf-long| lets you use your F5 BIG-IP device as an Application Delivery Controller (ADC) in Cloud Foundry, serving North-South traffic.
-You can use the |cfctlr| with `Cloud Foundry`_ or `Pivotal Cloud Foundry`_ (PCF).
-
-.. _cf-prereqs:
-
-General Prerequisites
----------------------
-
-The F5 Integration for Cloud Foundry's documentation set assumes that you:
-
-- already have a functional Cloud Foundry or Pivotal Cloud Foundry deployment;
-- are familiar with the `Cloud Foundry CLI`_ and API;
-- already have a BIG-IP :term:`device` licensed and provisioned for your requirements; and
-- are familiar with BIG-IP LTM concepts and ``tmsh`` commands.
-
-
-|cf-long|
----------
+The F5 Container Integration for `Cloud Foundry`_  consists of the |cf-long| (``cf-bigip-ctlr``).
+The |cfctlr| lets you use your F5 BIG-IP device as an Application Delivery Controller (ADC) in Cloud Foundry, serving North-South traffic. You can use the |cfctlr| with `Cloud Foundry`_ or `Pivotal Cloud Foundry`_ (PCF).
 
 The |cf-long| is a Docker container-based application that runs on a Cloud Foundry `Diego cell`_.
 
@@ -60,6 +43,18 @@ Once the |cf-long| is running, it
    - The |cfctlr| can create two (2) L7 virtual servers for Cloud Foundry: one (1) for HTTP and one (1) for HTTPS.
    - The |cfctlr| creates an HTTP virtual server by default.
    - The |cfctlr| creates an L4 (TCP) virtual server for each mapped route to a TCP domain.
+
+.. _cf-prereqs:
+
+General Prerequisites
+`````````````````````
+
+The F5 Integration for Cloud Foundry's documentation set assumes that you:
+
+- already have a functional Cloud Foundry or Pivotal Cloud Foundry deployment;
+- are familiar with the `Cloud Foundry CLI`_ and API;
+- already have a BIG-IP :term:`device` licensed and provisioned for your requirements; and
+- are familiar with BIG-IP LTM concepts and ``tmsh`` commands.
 
 
 .. _cf-key-concepts:
