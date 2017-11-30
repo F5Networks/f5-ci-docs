@@ -57,9 +57,10 @@
 
    troubleshooting/*
 
-.. toctree
+.. toctree::
    :caption: Tutorials
    :glob:
    :maxdepth: 1
+
    tutorials/*
 
