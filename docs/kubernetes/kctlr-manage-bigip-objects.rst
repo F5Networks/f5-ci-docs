@@ -8,7 +8,7 @@
 
    - kubernetes-v1.6.4_ubuntu-16.4.2
    - kubernetes-v1.4.8_coreos.0
-   - k8s-bigip-ctlr v1.0.0-1.3.0
+   - ``k8s-bigip-ctlr`` v1.0.0-1.3.0
 
 .. _kctlr-manage-bigip-objects:
 
@@ -20,7 +20,7 @@ F5 resources provide the settings you want the |kctlr| to apply when creating ob
 
 .. tip::
 
-   The k8s-bigip-ctlr can also :ref:`deploy iApps <kctlr-deploy-iapps>`.
+   The |kctlr| can also :ref:`deploy iApps <kctlr-deploy-iapps>`.
 
 .. _kctlr-create-vs:
 

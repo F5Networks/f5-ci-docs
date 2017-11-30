@@ -5,20 +5,20 @@ This document provides general information regarding the F5 Integration for Mara
 Please refer to the guides below for deployment and usage instructions.
 
 .. toctree::
-   :caption: BIG-IP Controller
+   :caption: BIG-IP Controller Guides
    :maxdepth: 1
 
    Set up DC/OS auth <mctlr-authenticate-dcos>
    Deploy the BIG-IP Controller <mctlr-app-install>
    Manage BIG-IP objects <mctlr-manage-bigip-objects>
    Deploy iApps <mctlr-deploy-iapp>
-   marathon-bigip-ctlr Reference <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest>
+   marathon-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest>
 
 Overview
 --------
 
-The F5 Container Integration  for `Apache Mesos Marathon`_ consists of the `BIG-IP Controller for Marathon`_. The |mctlr| configures BIG-IP objects for Applications in a `Mesos cluster`_, serving North-South traffic.
-The |mctlr-long| is a container-based `Marathon Application`_ -- |mctlr|. You can :ref:`launch <install-mctlr>` the |mctlr-long| in Marathon via the `Marathon REST API`_ or the `Marathon Web Interface`_ [#mgui]_.
+The |mctlr-long|  (``marathon-bigip-ctlr``) configures BIG-IP objects for Applications in a `Mesos cluster`_, serving North-South traffic.
+The |mctlr| is a container-based `Marathon Application`_ that runs within the Marathon cluster. It configures the BIG-IP device as needed to handle traffic for Apps within the cluster. You can :ref:`launch <install-mctlr>` the |mctlr| in Marathon via the `Marathon REST API`_ or the `Marathon Web Interface`_ [#mgui]_.
 
 .. image:: /_static/media/cc_solution.png
    :scale: 65%
@@ -29,7 +29,7 @@ The |mctlr| watches the Marathon API for special "F5 Application Labels" that te
 * what Marathon Application we want it to manage, and
 * what BIG-IP LTM objects we want to create for that specific Application.
 
-When the |mctlr-long| discovers new or updated Marathon Applications with the F5 Application Labels, it dynamically applies the desired settings to the BIG-IP device.
+When the |mctlr| discovers new or updated Marathon Applications with the F5 Application Labels, it dynamically applies the desired settings to the BIG-IP device.
 
 .. image:: /_static/media/mesos_flow.png
    :scale: 65%
@@ -38,9 +38,9 @@ When the |mctlr-long| discovers new or updated Marathon Applications with the F5
 
 .. sidebar:: :fonticon:`fa fa-exclamation-circle` Important:
 
-   The |mctlr-long| cannot manage objects in the ``/Common``  `BIG-IP partition`_.
+   The |mctlr| cannot manage objects in the ``/Common``  `BIG-IP partition`_.
 
-You can use the |mctlr-long| to:
+You can use the |mctlr| to:
 
 - :ref:`create BIG-IP LTM virtual servers <mctlr-create-vs>`
 - :ref:`assign IP addresses to BIG-IP LTM virtual servers using IPAM <mctlr-ipam>`
@@ -83,7 +83,7 @@ See the `marathon-bigip-ctlr reference documentation`_ for the full list of F5 A
 iApps Application Labels
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use the |mctlr-long| to deploy BIG-IP iApps using a special set of customizable iApps Application Labels. The iApp you want to deploy must already exist on the BIG-IP device (can be in the ``/Common`` partition).
+You can use the |mctlr| to deploy BIG-IP iApps using a special set of customizable iApps Application Labels. The iApp you want to deploy must already exist on the BIG-IP device (can be in the ``/Common`` partition).
 
 A few of the key iApp Application Labels depend on the iApp you want to deploy, as well as your environment and needs. See the `marathon-bigip-ctlr reference documentation`_ for more information about the Application labels required for iApp deployment.
 
@@ -92,7 +92,7 @@ A few of the key iApp Application Labels depend on the iApp you want to deploy, 
 Port Mapping
 ````````````
 
-In Marathon, container-based applications using Docker BRIDGE mode must have `port mappings`_ configured. [#dockerbridge]_ For Applications proxied by the |mctlr-long|, these port mappings make it possible for the BIG-IP device to route external traffic to `service ports`_ inside the Apache Mesos cluster. You can define multiple port mappings for a Marathon Application.
+In Marathon, container-based applications using Docker BRIDGE mode must have `port mappings`_ configured. [#dockerbridge]_ For Applications proxied by the |mctlr|, these port mappings make it possible for the BIG-IP device to route external traffic to `service ports`_ inside the Apache Mesos cluster. You can define multiple port mappings for a Marathon Application.
 
 .. sidebar:: :fonticon:`fa fa-exclamation-circle` Important:
 
@@ -127,7 +127,7 @@ In this example, ``0`` refers to the first mapping defined above (``"containerPo
 Marathon Health Checks
 ``````````````````````
 
-The |mctlr-long| provides compatibilty with existing Marathon `Health Checks`_. For ports configured with Marathon health checks, the |mctlr|:
+The |mctlr| provides compatibilty with existing Marathon `Health Checks`_. For ports configured with Marathon health checks, the |mctlr|:
 
 * creates corresponding BIG-IP health monitors;
 * checks the specified port's health status *before* adding it to a BIG-IP pool. [#setuphealthchecks]_

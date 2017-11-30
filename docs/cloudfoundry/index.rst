@@ -7,21 +7,20 @@ This document provides general information regarding the F5 Integration for Clou
 For deployment and usage instructions, please refer to the guides below.
 
 .. toctree::
-   :caption: BIG-IP Controller
+   :caption: BIG-IP Controller Guides
    :maxdepth: 1
 
    Install the BIG-IP Controller in Cloud Foundry <cfctlr-app-install>
-   cf-bigip-ctlr Reference <http://clouddocs.f5.com/products/connectors/cf-bigip-ctlr/latest>
+   cf-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/cf-bigip-ctlr/latest>
 
 .. _cf-overview:
 
 Overview
 --------
 
-The F5 Container Integration for `Cloud Foundry`_  consists of the |cf-long| (``cf-bigip-ctlr``).
-The |cfctlr| lets you use your F5 BIG-IP device as an Application Delivery Controller (ADC) in Cloud Foundry, serving North-South traffic. You can use the |cfctlr| with `Cloud Foundry`_ or `Pivotal Cloud Foundry`_ (PCF).
+The |cf-long| (``cf-bigip-ctlr``) lets you use your F5 BIG-IP device as an Application Delivery Controller (ADC) in Cloud Foundry, serving North-South traffic. You can use the |cfctlr| with `Cloud Foundry`_ or `Pivotal Cloud Foundry`_ (PCF).
 
-The |cf-long| is a Docker container-based application that runs on a Cloud Foundry `Diego cell`_.
+The |cfctlr| is a Docker container-based application that runs on a Cloud Foundry `Diego cell`_.
 
 You can :ref:`deploy the F5 BIG-IP Controller for Cloud Foundry <deploy-cf-ctlr>` using an `Application Manifest`_.
 The Application Manifest tells Cloud Foundry and the |cfctlr|

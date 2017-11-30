@@ -3,7 +3,7 @@
    :maxdepth: 1
    :glob:
 
-   BIG-IP Controller - Cloud Foundry <http://clouddocs.f5.com/products/connectors/cf-bigip-ctlr/latest>
+   cf-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/cf-bigip-ctlr/latest>
    Integration Overview <cloudfoundry/index>
    cloudfoundry/cfctlr*
 
@@ -12,9 +12,9 @@
    :maxdepth: 1
    :glob:
 
-   BIG-IP Controller home <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
-   Kubernetes overview <kubernetes/index>
-   OpenShift overview <openshift/index>
+   k8s-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
+   Kubernetes Integration overview <kubernetes/index>
+   OpenShift Integration overview <openshift/index>
    kubernetes/kctlr-modes
    openshift/kctlr-use-bigip-openshift
    kubernetes/kctlr-app-install
@@ -32,7 +32,7 @@
    :glob:
    :maxdepth: 1
 
-   BIG-IP Controller home <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
+   marathon-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
    Integration Overview <marathon/index>
    marathon/mctlr-app-install
    marathon/mctlr-configure

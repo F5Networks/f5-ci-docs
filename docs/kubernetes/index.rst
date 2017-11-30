@@ -7,18 +7,19 @@ This document provides general information regarding the F5 Integration for Kube
 For deployment and usage instructions, please refer to the guides below.
 
 .. toctree::
-   :caption: BIG-IP Controller
+   :caption: BIG-IP Controller Guides
    :maxdepth: 1
 
    Deploy the BIG-IP Controller <kctlr-app-install>
    Manage BIG-IP objects <kctlr-manage-bigip-objects>
    Deploy iApps <kctlr-deploy-iapp>
-   k8s-bigip-ctlr reference <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
+   Troubleshooting <../troubleshooting/kubernetes>
+   k8s-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
 
 Overview
 --------
 
-The F5 Container Integration for `Kubernetes`_ consists of the `BIG-IP Controller for Kubernetes`_. The |kctlr| configures BIG-IP objects for applications in a Kubernetes `cluster`_, serving North-South traffic.
+The |kctlr-long| (``k8s-bigip-ctlr``) configures BIG-IP objects for applications in a Kubernetes `cluster`_, serving North-South traffic.
 
 .. image:: /_static/media/cc_solution.png
    :scale: 60%
@@ -30,9 +31,9 @@ The |kctlr-long| is a Docker container that runs on a Kubernetes `Pod`_. You can
 
 .. sidebar:: :fonticon:`fa fa-exclamation-circle` Important:
 
-   * The |kctlr-long| cannot manage objects in the ``/Common`` :term:`partition`.
+   * The |kctlr| cannot manage objects in the ``/Common`` :term:`partition`.
    * The BIG-IP partition you want to manage must exist before you launch the |kctlr|.
-   * The |kctlr-long| does not create or destroy BIG-IP partitions.
+   * The |kctlr| does not create or destroy BIG-IP partitions.
    * You can use multiple |kctlr| instances to manage **separate** BIG-IP partitions.
    * You can create one (1) BIG-IP virtual server per Service port.
      *Create a separate* :ref:`virtual server F5 Resource ConfigMap <kctlr-create-vs>` *for each Service port you wish to expose.*
@@ -156,9 +157,9 @@ The |kctlr-long| can manage all namespaces; a single namespace; or pretty much a
 
 When :ref:`creating a BIG-IP front-end virtual server <kctlr-create-vs>` for a `Service`_, you can:
 
-- specify a single namespace to watch (*this is the only supported mode in k8s-bigip-ctlr v1.0.0*);
+- specify a single namespace to watch (*this is the only supported mode in ``k8s-bigip-ctlr`` v1.0.0*);
 - specify multiple namespaces by passing each in as a separate flag; or
-- watch all namespaces (by omitting the namespace flag); **this is the default setting** as of k8s-bigip-ctlr v1.1.0.
+- watch all namespaces (by omitting the namespace flag); **this is the default setting** as of ``k8s-bigip-ctlr`` v1.1.0.
 
 .. _k8s node health:
 

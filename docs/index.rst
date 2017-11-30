@@ -18,8 +18,8 @@ Container Connector         Description
                             traffic.
 -----------------------     ---------------------------------------------------
 `k8s-bigip-ctlr`_           Configures a BIG-IP device to expose applications
-                            in a `Kubernetes`_ cluster as virtual servers,
-                            serving North-South traffic.
+                            in `Kubernetes`_ and `Red Hat OpenShift`_ clusters
+                            as virtual servers, serving North-South traffic.
 -----------------------     ---------------------------------------------------
 `marathon-bigip-ctlr`_      Configures a BIG-IP device to expose applications
                             in an `Apache Mesos`_ `Marathon`_ cluster as

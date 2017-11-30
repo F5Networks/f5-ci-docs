@@ -85,6 +85,7 @@ version = 'v2'
 release = 'v2.0'
 
 # All substitutions
+# Try to keep sorted alphabetically
 
 rst_epilog = """
 .. |cfctlr| replace:: BIG-IP Controller
@@ -109,7 +110,6 @@ rst_epilog = """
 .. _built-in middleware: %(base_url)s/products/asp/latest/#built-in-middleware
 .. _cf-bigip-ctlr configuration parameters: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/#configuration-parameters
 .. _cf-bigip-ctlr: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/
-.. _cf-bigip-ctlr v1.0.0-beta.1: %(base_url)s/products/connectors/cf-bigip-ctlr/v1.0-beta/
 .. _Cloud Foundry CLI: https://docs.cloudfoundry.org/cf-cli/getting-started.html
 .. _Cloud Foundry: https://cloudfoundry.org/why-cloud-foundry/
 .. _Cluster network: https://kubernetes.io/docs/concepts/cluster-administration/networking/
@@ -168,6 +168,7 @@ rst_epilog = """
 .. _Pivotal Cloud Foundry: https://pivotal.io/platform
 .. _Pod: https://kubernetes.io/docs/concepts/workloads/pods/pod/
 .. _Pods: https://kubernetes.io/docs/concepts/workloads/pods/pod/
+.. _Red Hat OpenShift: https://www.openshift.com/container-platform/index.html
 .. _ReplicaSet: https://kubernetes.io/docs/user-guide/replicasets/
 .. _Route annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-annotations
 .. _Route configuration parameters: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-routes
@@ -182,8 +183,6 @@ rst_epilog = """
 .. _supported Route configurations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-route-configurations
 .. _supported Route Annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#id20
 .. _system configuration: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-initial-configuration-12-0-0/2.html#conceptid
-.. _telemetry module: %(base_url)s/products/asp/latest/#telemetry
-
 """% {
     'base_url': 'http://clouddocs.f5.com'
 }

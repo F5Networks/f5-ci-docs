@@ -8,7 +8,7 @@
    Documentation manually tested with:
 
    - OpenShift v1.4.1 on CentOS 7.2.1511
-   - k8s-bigip-ctlr v1.1.0-1.3.0
+   - ``k8s-bigip-ctlr`` v1.1.0-1.3.0
 
 .. _install-kctlr-openshift:
 
@@ -104,13 +104,13 @@ Set up RBAC Authentication
 
 .. _openshift-bigip-ctlr-deployment:
 
-Deploy the k8s-bigip-ctlr
--------------------------
+Deploy the |kctlr|
+------------------
 
 .. _kctlr-configure-openshift:
 
-Define the k8s-bigip-ctlr configuration in an OpenShift Deployment
-``````````````````````````````````````````````````````````````````
+Create an OpenShift Deployment
+``````````````````````````````
 
 The |kctlr| has a subset of `configuration parameters specific to OpenShift`_. At minimum, you must include the following configuration parameters in your Deployment:
 
@@ -127,7 +127,7 @@ Ingress Deployment
 The example below shows the |kctlr| configurations required if you want to :ref:`expose OpenShift Services to external traffic using an Ingress <kctlr-ingress-config>`.
 
 .. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml
-   :caption: Example k8s-bigip-ctlr OpenShift Deployment
+   :caption: Example OpenShift Ingress Deployment
    :linenos:
 
 :fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_openshift-sdn.yaml </openshift/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml>`
@@ -138,7 +138,7 @@ Routes Deployment
 The example below shows the |kctlr| configurations required if you want to :ref:`expose OpenShift Services to external traffic using Routes <kctlr-openshift-routes>`.
 
 .. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml
-   :caption: Example k8s-bigip-ctlr OpenShift Deployment
+   :caption: Example OpenShift Route Deployment
    :linenos:
 
 .. _upload openshift deployment:
@@ -155,7 +155,7 @@ Upload the Deployment
 
 #. Verify creation using :command:`oc get`.
 
-   You should see one (1) `ReplicaSet`_, as well as one (1) k8s-bigip-ctlr `Pod`_ for each Node in the Cluster. The example below shows one (1) Pod running the k8s-bigip-ctlr in a test cluster with one worker node.
+   You should see one (1) `ReplicaSet`_, as well as one (1) ``k8s-bigip-ctlr`` `Pod`_ for each Node in the Cluster. The example below shows one (1) Pod running the ``k8s-bigip-ctlr`` in a test cluster with one worker node.
 
    .. code-block:: console
 
@@ -172,11 +172,6 @@ Upload the Deployment
       NAME                              READY     STATUS    RESTARTS   AGE
       k8s-bigip-ctlr-1962020886-s31l4   1/1       Running   0          1m
 
-What's Next
------------
-
-- Check out the `k8s-bigip-ctlr reference documentation`_.
-- Learn how to :ref:`Expose Services to external traffic using an Ingress <kctlr-ingress-config>` or `Manage OpenShift Routes <kctlr-openshift-routes>`.
 
 What's next
 -----------

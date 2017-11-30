@@ -10,8 +10,8 @@
 
    - kubernetes-v1.6.4 on Ubuntu-16.4.2
    - kubernetes-v1.4.8 on CoreOS 1409.6.0
-   - k8s-bigip-ctlr v1.1.0
-   - k8s-bigip-ctlr v1.0.0
+   - ``k8s-bigip-ctlr`` v1.1.0
+   - ``k8s-bigip-ctlr`` v1.0.0
 
 .. _install-kctlr:
 
@@ -118,7 +118,7 @@ Verify creation
 
 Use :command:`kubectl get` to verify all of the objects launched successfully.
 
-You should see one (1) Deployment_, as well as one (1) k8s-bigip-ctlr `Pod`_ for each node in the cluster. The example below shows one (1) Pod running the k8s-bigip-ctlr in a test cluster with one worker node.
+You should see one (1) Deployment_, as well as one (1) ``k8s-bigip-ctlr`` `Pod`_ for each node in the cluster. The example below shows one (1) Pod running the ``k8s-bigip-ctlr`` in a test cluster with one worker node.
 
 .. code-block:: console
    :emphasize-lines: 3, 7, 11, 13

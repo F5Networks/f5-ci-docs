@@ -10,4 +10,4 @@
 
 #. :ref:`Store your BIG-IP login credentials in a Secret <secret-bigip-login>`.
 
-#. If you need to pull the k8s-bigip-ctlr image from a private Docker registry, `store your Docker login credentials as a Secret`_.
+#. If you need to pull the ``k8s-bigip-ctlr`` image from a private Docker registry, `store your Docker login credentials as a Secret`_.

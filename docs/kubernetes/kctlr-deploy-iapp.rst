@@ -7,8 +7,8 @@
 
    - kubernetes-v1.6.4 on Ubuntu-16.4.2
    - kubernetes-v1.4.8 on CoreOS 1409.6.0
-   - k8s-bigip-ctlr v1.1.0
-   - k8s-bigip-ctlr v1.0.0
+   - ``k8s-bigip-ctlr`` v1.1.0
+   - ``k8s-bigip-ctlr`` v1.0.0
 
 .. _kctlr-deploy-iapps:
 

@@ -7,7 +7,7 @@ This document provides general information regarding the F5 Integration for Open
 For deployment and usage instructions, please refer to the guides below.
 
 .. toctree::
-   :caption: BIG-IP Controller
+   :caption: BIG-IP Controller Guides
    :maxdepth: 1
 
    Add BIG-IP device to OpenShift Cluster <kctlr-use-bigip-openshift>
@@ -15,13 +15,13 @@ For deployment and usage instructions, please refer to the guides below.
    Manage BIG-IP objects <../kubernetes/kctlr-manage-bigip-objects>
    Deploy iApps <../kubernetes/kctlr-deploy-iapp>
    Expose Services using Routes <kctlr-openshift-routes>
-   k8s-bigip-ctlr reference <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
-   f5-kube-proxy reference <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
+   Troubleshooting <../troubleshooting/kubernetes>
+   k8s-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
 
 Overview
 --------
 
-The |octlr-long| enables use of a BIG-IP device in `OpenShift`_. Because OpenShift has a native Kubernetes integration, the F5 Integration for OpenShift utilizes the same controller as the :ref:`F5 Integration for Kubernetes <k8s-home>`. The |kctlr| configures BIG-IP objects for applications in an OpenShift `cluster`_, serving North-South traffic.
+The |octlr-long| enables use of a BIG-IP device in `OpenShift`_. Because OpenShift has a native Kubernetes integration, the F5 Integration for OpenShift utilizes the same controller as the :ref:`F5 Integration for Kubernetes <k8s-home>` (``k8s-bigip-ctlr``). The |kctlr| configures BIG-IP objects for applications in an OpenShift `cluster`_, serving North-South traffic.
 
 .. image:: /_static/media/cc_solution.png
    :scale: 60%
