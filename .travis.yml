@@ -17,7 +17,7 @@ deploy:
     branch: v2
     repo: F5Networks/f5-ci-docs
   script:
-  - ./scripts/deploy-docs.sh publish-container-docs-to-prod containers v1
+  - ./scripts/deploy-docs.sh publish-container-docs-to-prod containers v2
 notifications:
   slack:
     secure: JPfhrjoJMHIolWfr+BggymfsuzcMq8hQrI6NgmbH9Op/1LnP7v0pzXabvePBX6jCzEpB6E/pizwrw/7D5r78+GD6gm2eiZ3NNupBSnVBwSQr51pfAH23RB1pafTgjyllrNJLAWia23ihB1oa+yj3ll/clOXke5o8436IJp+KRUk0q8F0HBbke7lLcGii/H2WqGZ9f6bqee0w6wVCjKL86o5EjbF/muBScw6npeGAyuShILsUybgQwJnCHG2Vn4o4L+ZzGga8FljhUJxEIx4v+m0wwTg7mIRrLQbZ0qCXQfc8hU858koa5+nVTt9Cj3fiLNIOtd0K6RujwTqdPTSMBrpbs7Gr1wzaejaKYsWUeJ1DG75MfpbHhTuUgNHNktgEVU6xiS8NL3RwsqfzU6vLbwe2e1EmAOQN6mTKkD+QU3dtJCPHr1tDydN5BSt+uVrd2EiGGuQMIfLGSPBJgCieu0dHgCAKOArKU0zn/gHJhwjxBALq2w0G75JR/wzz7agyQ4awCYZy866hLJPAMKtk+6Bl9qvmKfWBaXQDqrRpZBlhQqOKz2BL/wLPsP3/fVdubn98Ip3ZiTbXmxSRfNCCk4URsx1k9iWk9Qxs+oXIgBfvXuOJxAuwG7OYSbu6HCf18FbaZ2dmkU2hjicEL3BThHjWwf7V4aNdbtanJqkbh6s=
