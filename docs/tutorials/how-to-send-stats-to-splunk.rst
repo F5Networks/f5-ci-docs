@@ -40,7 +40,7 @@ Set up Splunk to receive data
    * Enter a name for the token, then click :guilabel:`Next`.
    * On the :guilabel:`Input Settings` screen, click :guilabel:`Create a new index`.
    * Name the index, then click :guilabel:`Save`.
-   * Make sure the index is set as the :guilabel:`Default index`.
+   * Make sure the new index is the :guilabel:`Default index`.
    * Click :guilabel:`Review`, then click :guilabel:`Submit`.
    * Record the :guilabel:`Token Value` Splunk created for your HTTP Event Collector; **you'll configure the BIG-IP system with this value later**.
 
