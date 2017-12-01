@@ -5,116 +5,60 @@ This document provides general information regarding the F5 Integration for Mara
 Please refer to the guides below for deployment and usage instructions.
 
 .. toctree::
-   :caption: BIG-IP Controller
+   :caption: BIG-IP Controller Guides
    :maxdepth: 1
 
    Set up DC/OS auth <mctlr-authenticate-dcos>
    Deploy the BIG-IP Controller <mctlr-app-install>
    Manage BIG-IP objects <mctlr-manage-bigip-objects>
    Deploy iApps <mctlr-deploy-iapp>
-   marathon-bigip-ctlr Reference <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest>
-
-.. toctree::
-   :caption: Application Services Proxy
-   :maxdepth: 1
-
-   Set up the ASP ephemeral store <asp-m-ephemeral-store>
-   Install the ASP <asp-install-marathon>
-   Launch an ASP for a Marathon App <asp-m-virtual-servers>
-   ASP Reference <http://clouddocs.f5.com/products/asp/latest>
-   marathon-asp-ctlr Reference <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest>
-
+   marathon-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest>
 
 Overview
 --------
 
-The F5 Container Integration  for `Apache Mesos Marathon`_ consists of the `BIG-IP Controller for Marathon`_, the `Application Services Proxy`_ (ASP), and the `ASP Controller for Marathon`_.
+The |mctlr-long|  (``marathon-bigip-ctlr``) configures BIG-IP objects for Applications in a `Mesos cluster`_, serving North-South traffic.
+The |mctlr| is a container-based `Marathon Application`_ that runs within the Marathon cluster. It configures the BIG-IP device as needed to handle traffic for Apps within the cluster. You can :ref:`launch <install-mctlr>` the |mctlr| in Marathon via the `Marathon REST API`_ or the `Marathon Web Interface`_ [#mgui]_.
 
-The |mctlr-long| configures BIG-IP Local Traffic Manager (LTM) objects for Applications in a `Mesos cluster`_, serving North-South traffic.
-
-The |asp| provides load balancing and telemetry for containerized applications, serving East-West traffic. The |aspm-long| deploys ASP instances 'on-demand' for `Marathon Applications`_.
-
-.. image:: /_static/media/mesos_solution.png
-   :scale: 50 %
-   :alt: F5 Container Solution for Marathon
-
-
-General Prerequisites
----------------------
-
-The F5 Container Integration for Mesos Marathon documentation set assumes that you:
-
-- already have a `Mesos cluster`_ running;
-- are familiar with the `Marathon Web Interface`_ ;
-- are comfortable using `HTTP methods`_ to make REST API calls;
-- already have a BIG-IP :term:`device` licensed and provisioned for your requirements; [#bigipcaveat]_ and
-- are familiar with BIG-IP Local Traffic Manager (LTM) concepts and ``tmsh`` commands. [#bigipcaveat]_
-
-.. [#bigipcaveat] Not required for the |asp| and ASP controllers (|aspk|, |aspm|).
-
-|asp|
------
-
-The |asp| (ASP) provides container-to-container load balancing, traffic visibility, and inline programmability for applications.
-Its light form factor allows for rapid deployment in datacenters and across cloud services.
-The ASP integrates with container environment management and orchestration systems and enables application delivery service automation.
-
-.. important::
-
-   The ASP runs as a reverse proxy in Mesos Marathon.
-
-.. seealso::
-
-   `ASP reference documentation`_
-
-.. _aspm-overview:
-
-|aspm-long|
------------
-
-The |aspm-long| -- |aspm| -- deploys the |asp|.
-Like the |mctlr-long|, the |aspm-long| watches the Marathon API for Apps defined with a specific set of labels.
-When it finds an Application configured with the ``f5-asp: enable`` label, it launches an instance of the |asp| to front the App and creates a virtual server on the |asp| instance.
-The |aspm-long| maintains an address in the |asp| pool configuration for each of an Application's tasks.
-
-The |aspm-long| App definition contains a set of default `ASP Marathon configuration labels`_.
-These configurations -- set in the "env" (or, "Environment", in the Web UI) section of the |aspm| :ref:`App definition <install-asp-marathon>` -- apply to each ASP instance the |aspm| launches.
-The |aspm-long| also has a set of "override" labels. [#overridelabel]_
-When you add these labels to the definition for an Application you want the ASP to proxy, they take precedence over the default |aspm| settings.
-
-By default, the |aspm| starts one (1) |asp| instance per application.
-You can override this setting using the ``ASP_COUNT_PER_APP`` :ref:`F5 application label <app-labels>`.
-
-The |asp| collects traffic statistics for the Applications it load balances; these stats are either logged locally or sent to an external analytics application, like :ref:`Splunk <send-stats-splunk>`.
-You can set the location and type of the analytics application using the ``ASP_DEFAULT_STATS_URL`` label.
-
-.. [#overridelabel] See the `ASP Marathon configuration labels`_.
-
-|mctlr-long|
-------------
-
-The |mctlr-long| is a container-based `Marathon Application`_ -- |mctlr|.
-You can :ref:`launch <install-mctlr>` the |mctlr-long| in Marathon via the `Marathon REST API`_ or the `Marathon Web Interface`_.
+.. image:: /_static/media/cc_solution.png
+   :scale: 65%
+   :alt: Solution design: The Container Connector runs as an App within the cluster; it configures the BIG-IP device as needed to handle traffic for Apps in the cluster
 
 The |mctlr| watches the Marathon API for special "F5 Application Labels" that tell it:
 
 * what Marathon Application we want it to manage, and
 * what BIG-IP LTM objects we want to create for that specific Application.
 
-When the |mctlr-long| discovers new or updated Marathon Applications with the F5 Application Labels, it dynamically applies the desired settings to the BIG-IP device.
+When the |mctlr| discovers new or updated Marathon Applications with the F5 Application Labels, it dynamically applies the desired settings to the BIG-IP device.
 
-.. important::
+.. image:: /_static/media/mesos_flow.png
+   :scale: 65%
+   :alt: Diagram demonstrating how the BIG-IP Controller picks up configurations from F5 Application labels and applies the desired config to BIG-IP devices.
 
-   The |mctlr-long| cannot manage objects in the ``/Common``  `BIG-IP partition`_.
 
+.. sidebar:: :fonticon:`fa fa-exclamation-circle` Important:
 
-You can use the |mctlr-long| to:
+   The |mctlr| cannot manage objects in the ``/Common``  `BIG-IP partition`_.
+
+You can use the |mctlr| to:
 
 - :ref:`create BIG-IP LTM virtual servers <mctlr-create-vs>`
 - :ref:`assign IP addresses to BIG-IP LTM virtual servers using IPAM <mctlr-ipam>`
 - :ref:`create unattached BIG-IP LTM pools <mctlr-pool-only>` (pools without virtual servers)
 - :ref:`deploy iApps <mctlr-deploy-iapps>`
 
+General Prerequisites
+`````````````````````
+
+The F5 Container Integration for Mesos Marathon documentation set assumes that you:
+
+- already have a `Mesos cluster`_ running;
+- are familiar with the `Marathon Web Interface`_ ;
+- are comfortable using `HTTP methods`_ to make REST API calls;
+- already have a BIG-IP :term:`device` licensed and provisioned for your requirements; and
+- are familiar with BIG-IP Local Traffic Manager (LTM) concepts and ``tmsh`` commands.
+
+.. [#mgui] Per the Marathon documentation, the `Marathon Web Interface`_ is no longer actively developed. Use the Marathon REST API to access the latest Marathon features.
 
 Key Apache Mesos/Marathon Concepts
 ----------------------------------
@@ -124,13 +68,7 @@ Key Apache Mesos/Marathon Concepts
 Application Labels
 ``````````````````
 
-In Marathon, you can `associate labels with Application tasks`_ for tracking/reporting purposes.
-We've developed a set of custom "F5 Application Labels" as a way notify the |mctlr-long| and |aspm-long| that they have work to do.
-
-When the |mctlr-long| discovers Applications with new or updated F5 Application Labels, it dynamically creates BIG-IP virtual servers, pools, pool members, and HTTP :ref:`health monitors <health-checks>` for each of the Application's tasks.
-
-When the |aspm-long| discovers Applications configured with the ``"f5-asp": "enable"`` label, it launches an ASP instance for that app.
-F5 Application Labels define the ASP configurations.
+In Marathon, you can `associate labels with Application tasks`_ for tracking/reporting purposes. The custom "F5 Application Labels" notify the |mctlr| that it has work to do. When the |mctlr| discovers Applications with new or updated F5 Application Labels, it dynamically creates BIG-IP virtual servers, pools, pool members, and HTTP :ref:`health monitors <health-checks>` for each of the Application's tasks.
 
 See the `marathon-bigip-ctlr reference documentation`_ for the full list of F5 Application Labels.
 
@@ -140,44 +78,25 @@ See the `marathon-bigip-ctlr reference documentation`_ for the full list of F5 A
 
    :fonticon:`fa fa-download` :download:`f5-marathon-bigip-ctlr-example_pm_hc.json </marathon/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json>`
 
+.. _iapps labels:
 
 iApps Application Labels
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use the |mctlr-long| to deploy BIG-IP iApps using a special set of customizable iApps Application Labels. The iApp you want to deploy must already exist on the BIG-IP device (can be in the ``/Common`` partition).
+You can use the |mctlr| to deploy BIG-IP iApps using a special set of customizable iApps Application Labels. The iApp you want to deploy must already exist on the BIG-IP device (can be in the ``/Common`` partition).
 
 A few of the key iApp Application Labels depend on the iApp you want to deploy, as well as your environment and needs. See the `marathon-bigip-ctlr reference documentation`_ for more information about the Application labels required for iApp deployment.
-
-
-Apache Mesos DNS and ASP Discovery
-``````````````````````````````````
-
-Each |asp| instance is discoverable via an Apache Mesos DNS SRV query, which returns its IP address, port, and protocol.
-By convention, the DNS name of an |asp| instance for an Application is “<ASP_ENABLE_LABLE>-<application name>.<domain name>”.
-
-For example:
-
-- ``ASP_ENABLE_LABEL``: "f5-asp" +
-- Application name: "app1" +
-- Domain name: "marathon.mesos" =
-- ASP DNS name: "f5-asp-app1.marathon.mesos"
 
 .. _port-mappings:
 
 Port Mapping
 ````````````
 
-In Marathon, container-based applications using Docker BRIDGE mode must have `port mappings`_ configured. [#dockerbridge]_
-For Applications proxied by the |mctlr-long|, these port mappings make it possible for the BIG-IP device to route external traffic to `service ports`_ inside the Apache Mesos cluster.
-You can define multiple port mappings for a Marathon Application.
+In Marathon, container-based applications using Docker BRIDGE mode must have `port mappings`_ configured. [#dockerbridge]_ For Applications proxied by the |mctlr|, these port mappings make it possible for the BIG-IP device to route external traffic to `service ports`_ inside the Apache Mesos cluster. You can define multiple port mappings for a Marathon Application.
 
-.. important::
+.. sidebar:: :fonticon:`fa fa-exclamation-circle` Important:
 
-   Apache Mesos commonly restricts binding to ports in a specific range.
-   Consult the Apache Mesos `ports resource`_ to see what ports are available in your cluster before defining service ports and/or port mappings for your applications.
-
-   Incorrect port mappings may result in deployment failures.
-   See :ref:`Troubleshooting your Marathon deployments <troubleshoot-marathon>` for more information.
+   Apache Mesos commonly restricts binding to ports in a specific range. Consult the Apache Mesos `ports resource`_ to see what ports are available in your cluster before defining service ports and/or port mappings for your applications. Incorrect port mappings may result in deployment failures.
 
 Most F5 Application Labels let you specify an index into the port mapping array, beginning at ``0``.
 These parameters include ``{n}`` in the label key; simply replace ``{n}`` with the port index to which you want the setting to apply.
@@ -187,7 +106,7 @@ These parameters include ``{n}`` in the label key; simply replace ``{n}`` with t
 The code sample below defines an Application with three (3) port indices.
 
 .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
-   :caption: Service definition with multiple ports
+   :caption: Define an Application 3 port indices
    :lines: 1-25
    :linenos:
    :emphasize-lines: 13-23
@@ -208,36 +127,20 @@ In this example, ``0`` refers to the first mapping defined above (``"containerPo
 Marathon Health Checks
 ``````````````````````
 
-The |mctlr-long| provides compatibilty with existing Marathon `Health Checks`_.
-For ports configured with Marathon health checks, the |mctlr|:
+The |mctlr| provides compatibilty with existing Marathon `Health Checks`_. For ports configured with Marathon health checks, the |mctlr|:
 
 * creates corresponding BIG-IP health monitors;
 * checks the specified port's health status *before* adding it to a BIG-IP pool. [#setuphealthchecks]_
 
-.. rubric:: To continue our example:
-
-Here, we create health checks for each of the port indices defined for our Application.
+.. rubric:: To continue the previous example:
 
 .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
-   :caption: Defining health checks for multiple ports
+   :caption: Create health checks for each of the Application's port indices
    :lines: 39-65
    :lineno-start: 39
 
 
 .. [#setuphealthchecks] Occurs when ``F5_CC_USE_HEALTHCHECK``'s value is "True".
-
-
-Related
--------
-
-.. toctree::
-   :glob:
-
-   mctlr*
-   asp*
-   marathon-bigip-ctlr Reference <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
-   marathon-asp-ctlr Reference <http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest/>
-   F5 ASP Reference <http://clouddocs.f5.com/products/asp/latest>
 
 .. _Marathon Application: https://docs.mesosphere.com/1.8/overview/concepts/#marathon-application
 .. _Marathon REST API: https://mesosphere.github.io/marathon/api-console/index.html
@@ -249,4 +152,4 @@ Related
 .. _Marathon documentation: https://mesosphere.github.io/marathon/docs/
 .. _ports resource: http://mesos.apache.org/documentation/latest/attributes-resources/
 .. _service ports: https://mesosphere.github.io/marathon/docs/ports.html
-
+.. _App definition: tbd

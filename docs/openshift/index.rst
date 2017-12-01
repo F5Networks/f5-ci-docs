@@ -7,7 +7,7 @@ This document provides general information regarding the F5 Integration for Open
 For deployment and usage instructions, please refer to the guides below.
 
 .. toctree::
-   :caption: BIG-IP Controller
+   :caption: BIG-IP Controller Guides
    :maxdepth: 1
 
    Add BIG-IP device to OpenShift Cluster <kctlr-use-bigip-openshift>
@@ -15,24 +15,19 @@ For deployment and usage instructions, please refer to the guides below.
    Manage BIG-IP objects <../kubernetes/kctlr-manage-bigip-objects>
    Deploy iApps <../kubernetes/kctlr-deploy-iapp>
    Expose Services using Routes <kctlr-openshift-routes>
-   k8s-bigip-ctlr reference <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
-   f5-kube-proxy reference <http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest>
-
-.. toctree::
-   :caption: Application Services Proxy
-   :maxdepth: 1
-
-   Set up the ASP ephemeral store <../kubernetes/asp-k-ephemeral-store>
-   Install the ASP <../kubernetes/asp-install-k8s>
-   Replace kube-proxy with the f5-kube-proxy <../kubernetes/asp-k-deploy>
-   Attach an ASP to a Service <../kubernetes/asp-k-virtual-servers>
-   ASP reference <http://clouddocs.f5.com/products/asp/latest>
-
+   Troubleshooting <../troubleshooting/kubernetes>
+   k8s-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
 
 Overview
 --------
 
-The |octlr-long| enables use of a BIG-IP device in `OpenShift`_. Because OpenShift has a native Kubernetes integration, the F5 Integration for OpenShift utilizes the same controller as the :ref:`F5 Integration for Kubernetes <k8s-home>`. In OpenShift, you can use the |kctlr| to use a BIG-IP device(s) to:
+The |octlr-long| enables use of a BIG-IP device in `OpenShift`_. Because OpenShift has a native Kubernetes integration, the F5 Integration for OpenShift utilizes the same controller as the :ref:`F5 Integration for Kubernetes <k8s-home>` (``k8s-bigip-ctlr``). The |kctlr| configures BIG-IP objects for applications in an OpenShift `cluster`_, serving North-South traffic.
+
+.. image:: /_static/media/cc_solution.png
+   :scale: 60%
+   :alt: Solution design: The Container Connector runs as an App within the cluster; it configures the BIG-IP device as needed to handle traffic for Apps in the cluster
+
+In OpenShift, you can use the |kctlr| to use a BIG-IP device(s) to:
 
 - :ref:`proxy traffic for Services <kctlr-ingress-config>` --OR--
 - :ref:`proxy traffic for OpenShift routes <kctlr-openshift-routes>`.

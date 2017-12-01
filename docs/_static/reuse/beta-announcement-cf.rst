@@ -1,3 +1,3 @@
 .. sidebar:: :fonticon:`fa fa-flask` Beta feature
 
-   Introduced in ``cf-bigip-ctlr`` `v1.0.0-beta.1 </products/connectors/cf-bigip-ctlr/v1.0-beta/>`_.
+   Introduced in `cf-bigip-ctlr v1.0.0-beta.1`_.
