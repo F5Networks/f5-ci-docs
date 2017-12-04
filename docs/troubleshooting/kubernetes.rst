@@ -48,7 +48,7 @@ You can use `kubectl`_ or `oc`_ commands to check the |kctlr| configurations usi
 What happened to my BIG-IP configuration changes?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you make changes to objects in the partition managed by the |kctlr| -- whether via configuration sync or manually -- **the Controller will overwrite them**. By design, the |kctlr| keeps the BIG-IP system  in sync with what it knows to be the desired configuration. For this reason, F5 does not recommend making any manual changes to objects in the partition(s) managed by the |kctlr|.
+If you make changes to objects in the partition managed by the |kctlr| -- whether via configuration sync or manually -- **the Controller will overwrite them**. By design, the |kctlr| keeps the BIG-IP system in sync with what it knows to be the desired configuration. For this reason, F5 does not recommend making any manual changes to objects in the partition(s) managed by the |kctlr|.
 
 -----------------------------------------
 
@@ -248,51 +248,49 @@ Set the log level
 
 To change the log level for the |kctlr|:
 
-#. Edit the :ref:`Deployment <k8s-bigip-ctlr-deployment>` for each k8s-bigip-ctlr instance. Be sure to specify the correct namespace for the instance.
+#. Annotate the :ref:`Deployment <k8s-bigip-ctlr-deployment>` for the |kctlr|. **Be sure to specify the namespace** the |kctlr| runs in. ::
 
-   .. code-block:: bash
+      .. code-block:: bash
 
-      kubectl edit my-bigip-ctlr.yaml [--namespace kube-system]
-      oc edit my-bigip-ctlr.yaml [--namespace kube-system]
-
-#. Add the desired log-level to the :code:`args` section, then save and exit the editor.
-
-   For example: ::
-
-   --log-level=debug
+         kubectl annotate my-bigip-ctlr.yaml "--log-level=DEBUG" --namespace=kube-system
+         oc annotate my-bigip-ctlr.yaml "--log-level=DEBUG" --namespace=kube-system
 
 #. Verify the Deployment updated successfully.
 
    .. code-block:: bash
 
-      kubectl describe deployment my-bigip-ctlr -o wide [--namespace kube-system]
-      oc describe deployment my-bigip-ctlr -o wide [--namespace kube-system]
+      kubectl describe deployment my-bigip-ctlr -o wide --namespace kube-system
+      oc describe deployment my-bigip-ctlr -o wide --namespace kube-system
 
 -----------------------------------------
+
+.. _k8s-troubleshoot view-logs:
 
 View the logs
 ~~~~~~~~~~~~~
 
-- To view the logs:
+#. Find the name of the k8s-bigip-ctlr for which you want to view logs. **Be sure to specify the namespace** the |kctlr| runs in. ::
 
-  .. code-block:: bash
+      kubectl get pod --namespace kube-system                                 \\ Kubernetes
+      oc get pod --namespace=kube-system                                      \\ OpenShift
+      NAME                             READY     STATUS    RESTARTS   AGE
+      k8s-bigip-ctlr-687734628-7fdds   1/1       Running   0          15d
 
-     kubectl logs my-bigip-ctlr-pod
-     oc logs my-bigip-ctlr-pod
+#. View the logs. ::
 
-- To follow the logs:
+      kubectl logs k8s-bigip-ctlr-687734628-7fdds --namespace kube-system     \\ Kubernetes
+      oc logs k8s-bigip-ctlr-687734628-7fdds --namespace kube-system          \\ OpenShift
 
-  .. code-block:: bash
+#. Follow the logs. ::
 
-     kubectl logs -f my-bigip-ctlr-pod
-     oc logs -f my-bigip-ctlr-pod
+      kubectl logs -f k8s-bigip-ctlr-687734628-7fdds --namespace=kube-system  \\Kubernetes
+      oc logs -f k8s-bigip-ctlr-687734628-7fdds --namespace=kube-system       \\ OpenShift
 
-- To view logs for a container that isn't responding:
 
-  .. code-block:: bash
+#. To view logs for a container that isn't responding: ::
 
-     kubectl logs --previous my-bigip-ctlr-pod
-     oc logs --previous my-bigip-ctlr-pod
+      kubectl logs --previous k8s-bigip-ctlr-687734628-7fdds --namespace kube-system   \\ Kubernetes
+      oc logs --previous k8s-bigip-ctlr-687734628-7fdds --namespace kube-system        \\ OpenShift
 
 -----------------------------------------
 
@@ -310,25 +308,13 @@ How do I verify connectivity between the BIG-IP VTEP Self IP and the OSE Node's 
 
      ping -s 1600 <OSE_Node_IP>
 
-#. Increase the log level to DEBUG and monitor the |kctlr| log files.
+#. :ref:`k8s-troubleshoot view-logs` for the k8s-bigip-ctlr.
 
-   - Get the name of the k8s-bigip-ctlr for which you want to view logs. Be sure to specify the namespace the |kctlr| runs in. ::
+   .. tip:: Use the ``-f`` option to follow the logs.
 
-       oc get pod --namespace=kube-system
-       NAME                             READY     STATUS    RESTARTS   AGE
-       k8s-bigip-ctlr-687734628-7fdds   1/1       Running   0          15d
+#. In a TMOS shell, output the REST requests from the BIG-IP logs.
 
-   - Add the log-level=DEBUG annotation to the |kctlr| Deployment YAML file. ::
-
-       oc annotate myDeployment.yaml "--log-level=DEBUG" --namespace=kube-system
-
-   - Follow the logs. ::
-
-       oc logs -f k8s-bigip-ctlr-687734628-7fdds --namespace=kube-system
-
-#. Output the REST requests from the BIG-IP logs.
-
-   - Using the BIG-IP CLI, do a ``tcpdump`` of the underlay network. ::
+   - Do a ``tcpdump`` of the underlay network. ::
 
        tcpdump -i <name-of-BIG-IP-VXLAN-tunnel>
 
@@ -337,13 +323,13 @@ How do I verify connectivity between the BIG-IP VTEP Self IP and the OSE Node's 
      .. code-block:: console
         :caption: Example showing two-way communication on port 4789 between the BIG-IP VTEP IP and the OSE node VTEP IPs.
 
-        tcpdump -i ocpvlan
+        root@localhost:Active:Standalone] config # tcpdump -i ocpvlan
         08:08:06.933951 IP 10.214.1.102.58472 > 10.214.1.23.4789: VXLAN, flags [I] (0x08), vni 0
         IP 10.130.0.27.http > 10.128.2.10.37542: Flags [.], ack 9, win 219, options [nop,nop,TS val 573988389 ecr 3961177660], length 0 in slot1/tmm1 lis=_wcard_tunnel_/Common/ose-tunnel
         08:08:06.934310 IP 10.214.1.23.28277 > 10.214.1.102.4789: VXLAN, flags [I] (0x08), vni 0
         IP 10.128.2.10.37542 > 10.130.0.27.http: Flags [.], ack 923, win 251, options [nop,nop,TS val 3961177661 ecr 573988389], length 0 out slot1/tmm0 lis=_wcard_tunnel_/Common/ose-tunnel
 
-   - Using the BIG-IP CLI, do a ``tcpdump`` of the overlay network. ::
+   - Do a ``tcpdump`` of the overlay network. ::
 
        tcpdump -i <name-of-BIG-IP-VXLAN-tunnel>
 
@@ -352,13 +338,13 @@ How do I verify connectivity between the BIG-IP VTEP Self IP and the OSE Node's 
      .. code-block:: console
         :caption: Example showing traffic on the overlay network; at minimum, you should see BIG-IP health monitors for the pod IP addresses.
 
-         tcpdump -i ose-tunnel
-         08:09:51.911667 IP 10.128.2.10.38036 > 10.130.0.27.http: Flags [.], ack 1, win 229, options [nop,nop,TS val 3961282640 ecr 574093366], length 0 out slot1/tmm0 lis=
-         08:09:51.911672 IP 10.128.2.10.38036 > 10.130.0.27.http: Flags [P.], seq 1:8, ack 1, win 229, options [nop,nop,TS val 3961282640 ecr 574093366], length 7 out slot1/tmm0 lis=
-         08:09:51.913161 IP 10.130.0.27.http > 10.128.2.10.38036: Flags [.], ack 8, win 219, options [nop,nop,TS val 574093369 ecr 3961282640], length 0 in slot1/tmm0 lis=
-         08:09:51.913265 IP 10.130.0.27.http > 10.128.2.10.38036: Flags [P.], seq 1:922, ack 8, win 219, options [nop,nop,TS val 574093369 ecr 3961282640], length 921 in slot1/tmm0 lis=
+        root@localhost:Active:Standalone] config # tcpdump -i ose-tunnel
+        08:09:51.911667 IP 10.128.2.10.38036 > 10.130.0.27.http: Flags [.], ack 1, win 229, options [nop,nop,TS val 3961282640 ecr 574093366], length 0 out slot1/tmm0 lis=
+        08:09:51.911672 IP 10.128.2.10.38036 > 10.130.0.27.http: Flags [P.], seq 1:8, ack 1, win 229, options [nop,nop,TS val 3961282640 ecr 574093366], length 7 out slot1/tmm0 lis=
+        08:09:51.913161 IP 10.130.0.27.http > 10.128.2.10.38036: Flags [.], ack 8, win 219, options [nop,nop,TS val 574093369 ecr 3961282640], length 0 in slot1/tmm0 lis=
+        08:09:51.913265 IP 10.130.0.27.http > 10.128.2.10.38036: Flags [P.], seq 1:922, ack 8, win 219, options [nop,nop,TS val 574093369 ecr 3961282640], length 921 in slot1/tmm0 lis=
 
-#. Use the BIG-IP CLI to view VLAN statistics.
+#. In a TMOS shell, view the VLAN statistics.
 
    - Underlay ::
 
@@ -369,7 +355,7 @@ How do I verify connectivity between the BIG-IP VTEP Self IP and the OSE Node's 
      .. code-block:: console
         :caption: Example
 
-        tmsh show net vlan ocpvlan
+        root@localhost:Active:Standalone] config # tmsh show net vlan ocpvlan
         -------------------------------------
         Net::Vlan: ocpvlan
         -------------------------------------
@@ -399,7 +385,7 @@ How do I verify connectivity between the BIG-IP VTEP Self IP and the OSE Node's 
      .. code-block:: console
         :caption: Example
 
-        tmsh show net tunnels tunnel ose-tunnel
+        root@localhost:Active:Standalone] config # tmsh show net tunnels tunnel ose-tunnel
         -------------------------------------
         Net::Tunnel: ose-tunnel
         -------------------------------------
@@ -417,7 +403,7 @@ How do I verify connectivity between the BIG-IP VTEP Self IP and the OSE Node's 
         HC Outgoing Multicast Packets   91.6K
         HC Outgoing Broadcast Packets   92.7K
 
-#. View the MAC address entries. This will show the mac address and IP addresses of all of the OpenShift endpoints.
+#. In a TMOS shell, view the MAC address entries for the OSE tunnel. This will show the mac address and IP addresses of all of the OpenShift endpoints.
 
    ::
 
@@ -426,9 +412,9 @@ How do I verify connectivity between the BIG-IP VTEP Self IP and the OSE Node's 
    \
 
    .. code-block:: console
-     :caption: Example
+      :caption: Example
 
-      tmsh show net fdb tunnel ose-tunnel
+      root@localhost:Active:Standalone] config # tmsh show net fdb tunnel ose-tunnel
       -------------------------------------------------------------
       Net::FDB
       Tunnel      Mac Address        Member                 Dynamic
@@ -438,11 +424,11 @@ How do I verify connectivity between the BIG-IP VTEP Self IP and the OSE Node's 
       ose-tunnel  0a:58:0a:82:00:25  endpoint:10.214.1.102  yes
 
 
-#. View the ARP entries. This will show all of the ARP entries; you should see the VTEP entries on the ocpvlan and the pod IP addresses on ose-tunnel.
+#. In a TMOS shell, view the ARP entries. This will show all of the ARP entries; you should see the VTEP entries on the ocpvlan and the pod IP addresses on ``ose-tunnel``.
 
    .. code-block:: console
 
-      tmsh show net arp
+      root@localhost:Active:Standalone] config # tmsh show net arp
       ------------------------------------------------------------------------------------------
       Net::Arp
       Name          Address       HWaddress          Vlan                Expire-in-sec  Status
