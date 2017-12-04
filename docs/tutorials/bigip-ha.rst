@@ -70,7 +70,7 @@ To deploy identical |cfctlr| instances for each BIG-IP device in an active-stand
       cf push -o f5networks/cf-bigip-ctlr -f manifest_ha-standby.yaml
 
 
-.. [#cf] See the :ref:`BIG-IP Controller for Cloud Foundry <cfctlr>` for more information.
+.. [#cf] See :ref:`BIG-IP Controller for Cloud Foundry <cf-home>` for more information.
 
 Kubernetes/OpenShift
 ````````````````````
