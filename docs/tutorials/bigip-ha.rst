@@ -17,19 +17,15 @@ You can use any BIG-IP Controller to manage a BIG-IP HA active-standby pair or d
 
 **For example**:
 
-You have one (1) active and one (1) standby BIG-IP device, which reside in separate data centers. You want to create objects for a Kubernetes Cluster to a single partition on the BIG-IP system. [#mtuc1]. For your HA setup, you'd deploy two (2) |kctlr| instances - one in each data center.
+You have one (1) active and one (1) standby BIG-IP device. You want to manage a Kubernetes Cluster in a single partition on the BIG-IP system. [#mtuc1]_. For your HA setup, you'd deploy two (2) |kctlr| instances - one for each BIG-IP device. To ensure Controller HA, deploy each Controller instance on a separate node in the cluster.
 
 .. figure:: /_static/media/bigip-ha.png
-   :alt: A diagram showing 2 separate data centers. Each contains a BIG-IP device and a BIG-IP Controller.
-
-Any given BIG-IP Controller instance is responsible for a single administrative partition on the BIG-IP system. If you use multiple controller instances to manage multiple partitions, be sure to deploy a backup of each Controller instance in the "standby" data center.
+   :alt: A diagram showing a BIG-IP active-standby device pair and 2 BIG-IP Controllers, running on separate nodes in a Kubernetes Cluster.
 
 .. [#cccl] See `Introduction to F5 Common Controller Core Library <https://devcentral.f5.com/articles/introduction-to-f5-common-controller-core-library-cccl-28355>`_ on DevCentral for more information.
 
 BIG-IP config sync
 ------------------
-
-If you do use config sync, **do not deploy additional BIG-IP Controllers** in your standby datacenter.
 
 .. warning::
 
@@ -37,9 +33,16 @@ If you do use config sync, **do not deploy additional BIG-IP Controllers** in yo
 
    This means that the Controller overwrites *all manual changes*, whether made directly to the managed BIG-IP device or to a BIG-IP that automatically syncs its configuration to the managed BIG-IP device.
 
-If you do manually sync device group configurations, be sure to always sync configurations *from* the BIG-IP device managed by the |kctlr| *to* the other devices in the group. The Controller will overwrite any changes synced to its managed device from other devices in the group.
+If you do use automatic config sync, be sure to exclude the partition you want the |kctlr| to manage from the existing device group. Set the :guilabel:`Device Group` to :menuselection:`None` and uncheck the :menuselection:`Inherit device group from root folder` box.
 
-.. todo:: find BIG-IP docs note about config sync and tunnels; in OpenShift, this means that you can never use config sync, otherwise the tunnels won't know how to route on the standby device
+.. figure:: /_static/media/bigip-ha_local-partition.png
+   :alt: A screen capture from the BIG-IP configuration utility, showing the Device Group settings section of the create new partition screen.
+
+If you manually sync device group configurations, be sure to always sync configurations *from* the BIG-IP device managed by the |kctlr| *to* the other devices in the group. The Controller will overwrite any changes synced to its managed device from other devices in the group.
+
+.. important::
+
+   If your BIG-IP HA pair is integrated into the Cluster network, you should disable config sync for tunnels. See "About configuring VXLAN tunnels on high availability BIG-IP device pairs in the `BIG-IP TMOS Tunneling and IPsec Guide <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-tmos-tunnels-ipsec-13-0-0/2.html>`_ for more information.
 
 Examples
 --------
@@ -81,13 +84,13 @@ Kubernetes/OpenShift
 
 #. :ref:`Set up RBAC <k8s-rbac>` as needed.
 #. :ref:`Create a Deployment <k8s-bigip-ctlr-deployment>` for each ``k8s-bigip-ctlr`` instance.
-#. Include the correct IP address or hostname for each BIG-IP device in each Deployment.
+#. Provide the IP address/hostname for the active device in one Deployment, and the standby device in the other Deployment.
 
    .. literalinclude:: /kubernetes/config_examples/f5-k8s-bigip-ctlr_ha-active.yaml
       :emphasize-lines: 31
       :caption: Deployment with IP address for active BIG-IP device
 
-#. Upload the Deployment to the Kubernetes/OpenShift API server in each Cluster.
+#. Upload the Deployments to the Kubernetes/OpenShift API server.
 
    .. code-block:: console
 
@@ -98,6 +101,10 @@ Kubernetes/OpenShift
 
       kubectl apply -f f5-k8s-bigip-ctlr_ha-standby.yaml --namespace=kube-system
       deployment "k8s-bigip-ctlr-deployment" created
+
+.. seealso::
+
+   `Learn how to deploy Pods to specific Nodes in Kubernetes <https://kubernetes.io/docs/concepts/configuration/assign-pod-node/>`_.
 
 
 Mesos
