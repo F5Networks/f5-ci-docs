@@ -103,6 +103,13 @@ Kubernetes/OpenShift
 
 .. todo:: add information about using namespace-labels
 
+.. note::
+
+   Using one Controller and autosync means that at failover there is a window where the FDB entries won’t be populated on the new active device (config sync does not populate FDB entries). This window will be, at minumum, the length of the poll-interval setting - the interval at which the Controller polls for Kubernetes nodes. The window can be reduced with shorter polling to the API server by reducing the poll-interval config value (5-10 seconds instead of hte default 30).
+
+   Using two Controllers creates FDB entries on both the active and stand-by devices. This option involves a shorter delay at failover, since the standby device doesn't have to wait for the FDB updates.
+
+ 
 Mesos
 `````
 
