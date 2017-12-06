@@ -17,7 +17,7 @@ You can use any BIG-IP Controller to manage a BIG-IP HA active-standby pair or d
 
 **For example**:
 
-You have one (1) active and one (1) standby BIG-IP device. You want to manage a Kubernetes Cluster in a single partition on the BIG-IP system. [#mtuc1]_. For your HA setup, you'd deploy two (2) |kctlr| instances - one for each BIG-IP device. To ensure Controller HA, deploy each Controller instance on a separate node in the cluster.
+You have one (1) active and one (1) standby BIG-IP device. You want to manage a Kubernetes Cluster in a single partition on the BIG-IP system. For your HA setup, you'd deploy two (2) |kctlr| instances - one for each BIG-IP device. To ensure Controller HA, deploy each Controller instance on a separate node in the cluster.
 
 .. figure:: /_static/media/bigip-ha.png
    :alt: A diagram showing a BIG-IP active-standby device pair and 2 BIG-IP Controllers, running on separate nodes in a Kubernetes Cluster.
@@ -101,6 +101,7 @@ Kubernetes/OpenShift
 
    `Learn how to deploy Pods to specific Nodes in Kubernetes <https://kubernetes.io/docs/concepts/configuration/assign-pod-node/>`_.
 
+.. todo:: add information about using namespace-labels
 
 Mesos
 `````
