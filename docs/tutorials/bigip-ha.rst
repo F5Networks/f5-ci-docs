@@ -33,16 +33,11 @@ BIG-IP config sync
 
    This means that the Controller overwrites *all manual changes*, whether made directly to the managed BIG-IP device or to a BIG-IP that automatically syncs its configuration to the managed BIG-IP device.
 
-If you do use automatic config sync, be sure to exclude the partition you want the |kctlr| to manage from the existing device group. Set the :guilabel:`Device Group` to :menuselection:`None` and uncheck the :menuselection:`Inherit device group from root folder` box.
-
-.. figure:: /_static/media/bigip-ha_local-partition.png
-   :alt: A screen capture from the BIG-IP configuration utility, showing the Device Group settings section of the create new partition screen.
-
-If you manually sync device group configurations, be sure to always sync configurations *from* the BIG-IP device managed by the |kctlr| *to* the other devices in the group. The Controller will overwrite any changes synced to its managed device from other devices in the group.
+If you do use config sync, you should deploy one (1) |kctlr| instance to manage the active device. If you manually sync device group configurations, be sure to always sync configurations *from* the BIG-IP device managed by the |kctlr| *to* the other devices in the group. The Controller will overwrite any changes synced to its managed device from other devices in the group.
 
 .. important::
 
-   If your BIG-IP HA pair is integrated into the Cluster network, you should disable config sync for tunnels. See "About configuring VXLAN tunnels on high availability BIG-IP device pairs in the `BIG-IP TMOS Tunneling and IPsec Guide <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-tmos-tunnels-ipsec-13-0-0/2.html>`_ for more information.
+   If you use tunnels to connect your BIG-IP HA pair to the Cluster network, you should disable config sync for tunnels. See "About configuring VXLAN tunnels on high availability BIG-IP device pairs in the `BIG-IP TMOS Tunneling and IPsec Guide <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-tmos-tunnels-ipsec-13-0-0/2.html>`_ for more information.
 
 Examples
 --------
