@@ -261,7 +261,7 @@ To verify using the BIG-IP configuration utility:
 See the `TMSH Reference Guide`_ (PDF) for the relevant :command:`tmsh ltm` commands.
 
 
-.. What's Next?
+.. What's Next
    ------------
    -- add links
    -- to new Ingress use-case
@@ -272,4 +272,3 @@ See the `TMSH Reference Guide`_ (PDF) for the relevant :command:`tmsh ltm` comma
 .. _Host header: https://tools.ietf.org/html/rfc7230#section-5.4
 .. _Kubernetes documentation: https://kubernetes.io/docs/concepts/services-networking/ingress/#name-based-virtual-hosting
 .. _TLS ingress: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
-.. _Self IP address: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-13-0-0/5.html#guid-52e1f1d8-9a6b-48cc-acfa-07745b757f07

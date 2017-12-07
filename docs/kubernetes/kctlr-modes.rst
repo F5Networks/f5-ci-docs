@@ -112,15 +112,15 @@ Take these into consideration if you're deciding how to set up your cluster netw
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
    | Openshift SDN         | :ref:`Create a new OpenShift HostSubnet <k8s-openshift-hostsubnet>` for the BIG-IP      | None. The |kctlr| automatically detects OpenShift   |
    |                       | self IP.                                                                                | routes and makes the necessary BIG-IP system        |
-   |                       |                                                                                         |                                                     |
-   |                       | :ref:`Add a new VXLAN network to the BIG-IP system <k8s-openshift-vxlan-setup>`         | configurations.                                     |
+   |                       |                                                                                         | configurations.                                     |
+   |                       | :ref:`Add a new VXLAN network to the BIG-IP system <k8s-openshift-vxlan-setup>`         |                                                     |
    |                       | that corresponds to the subnet. [#encap]_                                               |                                                     |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
-   | Flannel VXLAN         | :ref:`Create a VXLAN tunnel on the BIG-IP system <k8s-vxlan-setup>`.                    | None. The |kctlr| automatically detects Kubernetes  |
+   | flannel VXLAN         | :ref:`Create a VXLAN tunnel on the BIG-IP system <k8s-vxlan-setup>`.                    | None. The |kctlr| automatically detects Kubernetes  |
    |                       |                                                                                         | Nodes and makes the necessary BIG-IP system         |
    |                       | :ref:`Create a fake BIG-IP Node in Kubernetes <k8s-bigip-node>`.                        | configurations.                                     |
    |                       |                                                                                         |                                                     |
-   |                       | Allocate an overlay IP address from Flannel for the BIG-IP self IP.                     |                                                     |
+   |                       | :ref:`Add the BIG-IP to the flannel overlay network <k8s-assign-ip>`.                   |                                                     |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
    | **Layer 3 networks**                                                                                                                                                  |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
@@ -129,7 +129,7 @@ Take these into consideration if you're deciding how to set up your cluster netw
    |                       |                                                                                         | **NOTE:** Depending on the BGP configuration, you   |
    |                       |                                                                                         | may need to update the BGP neighbor table.          |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
-   | Flannel host-gw       | Configure routes in Flannel and on the BIG-IP device for per-node                       | Add/update per-node subnet routes on the BIG-IP     |
+   | flannel host-gw       | Configure routes in flannel and on the BIG-IP device for per-node                       | Add/update per-node subnet routes on the BIG-IP     |
    |                       | subnet(s).                                                                              | device.                                             |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
 
@@ -137,10 +137,20 @@ Take these into consideration if you're deciding how to set up your cluster netw
 What's Next
 -----------
 
+Review the `k8s-bigip-ctlr configuration parameters`_.
+
+Kubernetes
+``````````
+
+- :ref:`bigip-k8s-setup`
 - :ref:`Install the BIG-IP Controller in standard Kubernetes <install-kctlr>`
+
+OpenShift
+`````````
+
 - :ref:`Add your BIG-IP device to an OpenShift Cluster <bigip-openshift-setup>`
 - :ref:`Install the BIG-IP Controller in OpenShift <install-kctlr-openshift>`
-- `k8s-bigip-ctlr configuration parameters`_
+
 
 .. rubric:: Footnotes
 .. [#servicetype] See `Publishing Services - Service Types <https://kubernetes.io/docs/concepts/services-networking/service>`_ in the Kubernetes documentation.
@@ -149,7 +159,6 @@ What's Next
 
 .. _Cluster Networking: https://kubernetes.io/docs/concepts/cluster-administration/networking/
 .. _OpenShift Origin SDN: https://docs.openshift.org/latest/architecture/additional_concepts/sdn.html
-.. _Flannel: https://docs.openshift.org/latest/architecture/additional_concepts/flannel.html
 .. _Open vSwitch VXLAN network: https://kubernetes.io/docs/admin/ovs-networking/
 .. _Calico for Kubernetes: https://docs.projectcalico.org/latest/getting-started/kubernetes/
 .. _Calico BGP: https://docs.projectcalico.org/v2.4/usage/configuration/bgp

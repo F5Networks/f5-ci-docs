@@ -128,8 +128,8 @@ Add the BIG-IP device to the OpenShift overlay network
       admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create net self 10.129.2.10/14 allow-service all vlan openshift_vxlan
 
 
-Next Steps
-----------
+What's Next
+-----------
 
 - :ref:`Deploy the BIG-IP Controller for Openshift <install-kctlr-openshift>`
 
@@ -138,4 +138,3 @@ Next Steps
 
 .. _OpenShift: https://www.openshift.org/
 .. _Create an OpenShift service account: https://docs.openshift.org/latest/admin_guide/service_accounts.html
-.. _Self IP address: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-13-0-0/5.html
