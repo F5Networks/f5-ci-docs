@@ -17,7 +17,7 @@ For deployment and usage instructions, please refer to the guides below.
    Troubleshooting <../troubleshooting/kubernetes>
    k8s-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
 
-   Extended information: Flannel VXLAN, Kubernetes, and BIG-IP <flannel-bigip-info>
+   Extended information: flannel VXLAN, Kubernetes, and BIG-IP <flannel-bigip-info>
 
 Overview
 --------
