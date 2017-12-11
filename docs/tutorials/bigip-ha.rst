@@ -8,8 +8,8 @@
 
 .. _manage BIG-IP HA:
 
-How to manage BIG-IP HA pairs
-=============================
+Manage BIG-IP HA pairs with the F5 Container Connectors
+=======================================================
 
 The F5 Container Connectors provide platform-native integrations for BIG-IP devices from PaaS providers like Cloud Foundry, Kubernetes, Mesos, & OpenShift. The BIG-IP Controllers for these platforms translate native commands to F5 Python SDK/iControl REST calls. [#cccl]_
 
@@ -29,15 +29,17 @@ BIG-IP config sync
 
 .. warning::
 
-   F5 does not recommended using automatic configuration sync for BIG-IP devices managed by BIG-IP Controllers. The BIG-IP Controller automatically reconfigures its managed device if it discovers changes from what it knows to be the desired state.
+   Each |kctlr| monitors the BIG-IP partition it manages for configuration changes. If it discovers changes, the Controller reapplies its own configuration to the BIG-IP system.
 
-   This means that the Controller overwrites *all manual changes*, whether made directly to the managed BIG-IP device or to a BIG-IP that automatically syncs its configuration to the managed BIG-IP device.
+   F5 does not recommend making configuration changes to objects in any partition managed by the |kctlr| via any other means (for example, the configuration utility, TMOS, or by syncing configuration with another device or service group). Doing so may result in disruption of service or unexpected behavior.
 
-If you do use config sync, you should deploy one |kctlr| instance to manage the active device. If you manually sync device group configurations, be sure to always sync configurations *from* the BIG-IP device managed by the |kctlr| *to* the other devices in the group. The Controller will overwrite any changes synced to its managed device from other devices in the group.
+If you use automatic config sync, you should deploy one |kctlr| instance to manage the active device.
+
+If you sync device group configurations manually, you can use the two-instance deployment. If you choose to deploy one |kctlr| instance and manually sync configurations to the standby device, be sure to always sync *from* the BIG-IP device managed by the |kctlr| *to* the other device(s) in the group.
 
 .. important::
 
-   If you use tunnels to connect your BIG-IP HA pair to the Cluster network, you should disable config sync for tunnels. See "About configuring VXLAN tunnels on high availability BIG-IP device pairs in the `BIG-IP TMOS Tunneling and IPsec Guide <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-tmos-tunnels-ipsec-13-0-0/2.html>`_ for more information.
+   If you use tunnels to connect your BIG-IP device(s) to the Cluster network, you should disable config sync for tunnels. See "About configuring VXLAN tunnels on high availability BIG-IP device pairs" in the `BIG-IP TMOS Tunneling and IPsec Guide <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-tmos-tunnels-ipsec-13-0-0/2.html>`_ for more information.
 
 Examples
 --------
@@ -79,11 +81,22 @@ Kubernetes/OpenShift
 
 #. :ref:`Set up RBAC <k8s-rbac>` as needed.
 #. :ref:`Create a Deployment <k8s-bigip-ctlr-deployment>` for each ``k8s-bigip-ctlr`` instance.
-#. Provide the IP address/hostname for the active device in one Deployment, and the standby device in the other Deployment.
+
+   F5 does not recommend creating two Deployments in a single manifest file. If you launch two |kctlr| instances using a single manifest, both will run on the same Pod. This means that if the Pod goes down, you lose both Controllers.
+
+   .. tip::
+
+      You can :k8sdocs:`Assign Pods to Nodes </concepts/configuration/assign-pod-node/>` in Kubernetes using Node labels and ``nodeSelector``.
+      The examples provided below use Node labels to assign each Pod to a different Node.
+
+#. Provide the IP address/hostname for the active device in the first Deployment. Provide the IP address/hostname for the standby device in the second Deployment.
 
    .. literalinclude:: /kubernetes/config_examples/f5-k8s-bigip-ctlr_ha-active.yaml
       :emphasize-lines: 31
-      :caption: Deployment with IP address for active BIG-IP device
+      :caption: Deployment with the IP address for the active BIG-IP device
+
+   :fonticon:`fa fa-download` :download:`Download the ha-active Deployment </kubernetes/config_examples/f5-k8s-bigip-ctlr_ha-active.yaml>`
+   :fonticon:`fa fa-download` :download:`Download the ha-standby Deployment </kubernetes/config_examples/f5-k8s-bigip-ctlr_ha-active.yaml>`
 
 #. Upload the Deployments to the Kubernetes/OpenShift API server.
 

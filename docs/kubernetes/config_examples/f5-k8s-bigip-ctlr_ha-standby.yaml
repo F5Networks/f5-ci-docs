@@ -28,14 +28,14 @@ spec:
                   key: password
           command: ["/app/bin/k8s-bigip-ctlr"]
           args: [
-            "--bigip-url=<url-for-active-bigip>",
+            "--bigip-url=<url-for-standby-bigip>",
             "--bigip-username=$(BIGIP_USERNAME)",
             "--bigip-password=$(BIGIP_PASSWORD)",
-            "--bigip-partition=<bigip_partition>",
+            "--bigip-partition=myPartition",
             "--use-secrets=true",
             "--resolve-ingress-names=LOOKUP",
             "--pool-member-type=cluster",
-            "--node-label-selector=f5device=active"
+            "--node-label-selector=f5device=standby"
             ]
       imagePullSecrets:
         - name: f5-docker-images
