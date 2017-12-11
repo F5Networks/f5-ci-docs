@@ -447,6 +447,10 @@ h6,
   font-weight: bold;
 }
 
+span.caption-text {
+    font-weight: bold;
+}
+
 caption {
   display: table-caption;
   text-align: -webkit-center;
@@ -454,4 +458,42 @@ caption {
   font-size: 15px;
   font-style: italic;
   color: #000;
+}
+
+.highlight .hll {
+    background-color: #FFF200;
+}
+
+.literal-block-wrapper.docutils.container,
+.highlight-console,
+.highlight-bash,
+.highlight-javascript,
+.highlight-shell,
+.highlight-default {
+  max-width: 80%;
+}
+
+pre {
+    display: block;
+    padding: 10.5px;
+    margin: 0 0 11px;
+    font-size: 15px;
+    line-height: 1.375;
+    word-break: break-all;
+    word-wrap: break-word;
+    color: black;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 0;
+}
+
+.highlight.pre {
+    color: #f5f5f5;
+}
+
+
+code.xref.download.docutils.literal,
+span.icon.fa.fa-download {
+    color: #00A1E4;
+    background-color: transparent;
 }
