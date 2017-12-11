@@ -21,6 +21,7 @@ You have one active and one standby BIG-IP device. You want to manage a Kubernet
 
 .. figure:: /_static/media/bigip-ha.png
    :alt: A diagram showing a BIG-IP active-standby device pair and 2 BIG-IP Controllers, running on separate nodes in a Kubernetes Cluster.
+   :scale: 65%
 
 .. [#cccl] See `Introduction to F5 Common Controller Core Library <https://devcentral.f5.com/articles/introduction-to-f5-common-controller-core-library-cccl-28355>`_ on DevCentral for more information.
 
@@ -40,6 +41,14 @@ If you sync device group configurations manually, you can use the two-instance d
 .. important::
 
    If you use tunnels to connect your BIG-IP device(s) to the Cluster network, you should disable config sync for tunnels. See "About configuring VXLAN tunnels on high availability BIG-IP device pairs" in the `BIG-IP TMOS Tunneling and IPsec Guide <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-tmos-tunnels-ipsec-13-0-0/2.html>`_ for more information.
+
+.. caution::
+
+   **BIG-IP config sync does not include FDB entries**.
+
+   In Kubernetes, this means that if failover occurs there will be a window between the standby device activating and the |kctlr| updating its FBD records. This window will be, at minumum, the length of the ``k8s-bigip-ctlr`` ``node-poll-interval`` setting - the interval at which the Controller polls the API server for updates. You can reduce this window by setting the ``node-poll-interval`` to 5-10 seconds instead of using the default (30).
+
+   When you deploy one Controller per device, both devices receive the same FDB record updates. This translates to a shorter potential delay if/when failover happens.
 
 Examples
 --------
@@ -79,6 +88,7 @@ Kubernetes/OpenShift
 
    In most cases, OpenShift users can substitute :command:`oc` for :command:`kubectl`.
 
+
 #. :ref:`Set up RBAC <k8s-rbac>` as needed.
 #. :ref:`Create a Deployment <k8s-bigip-ctlr-deployment>` for each ``k8s-bigip-ctlr`` instance.
 
@@ -110,19 +120,7 @@ Kubernetes/OpenShift
       kubectl apply -f f5-k8s-bigip-ctlr_ha-standby.yaml --namespace=kube-system
       deployment "k8s-bigip-ctlr-deployment" created
 
-.. seealso::
 
-   `Learn how to deploy Pods to specific Nodes in Kubernetes <https://kubernetes.io/docs/concepts/configuration/assign-pod-node/>`_.
-
-.. todo:: add information about using namespace-labels
-
-.. note::
-
-   Using one Controller and autosync means that at failover there is a window where the FDB entries won’t be populated on the new active device (config sync does not populate FDB entries). This window will be, at minumum, the length of the poll-interval setting - the interval at which the Controller polls for Kubernetes nodes. The window can be reduced with shorter polling to the API server by reducing the poll-interval config value (5-10 seconds instead of hte default 30).
-
-   Using two Controllers creates FDB entries on both the active and stand-by devices. This option involves a shorter delay at failover, since the standby device doesn't have to wait for the FDB updates.
-
- 
 Mesos
 `````
 
