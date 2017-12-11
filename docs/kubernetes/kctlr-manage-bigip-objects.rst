@@ -43,7 +43,7 @@ Take the steps below to create a new BIG-IP virtual server for a Service.
 
 #. Create a ConfigMap containing the :ref:`virtual server F5 resource JSON blob <f5-resource-blob>`.
 
-   The example below creates one (1) HTTP virtual server and one (1) HTTPS virtual server for a Service, with health monitors defined for each.
+   The example below creates one HTTP virtual server and one HTTPS virtual server for a Service, with health monitors defined for each.
 
    .. literalinclude:: /kubernetes/config_examples/f5-resource-vs-example.configmap.yaml
      :linenos:

@@ -155,7 +155,7 @@ Upload the Deployment
 
 #. Verify creation using :command:`oc get`.
 
-   You should see one (1) `ReplicaSet`_, as well as one (1) ``k8s-bigip-ctlr`` `Pod`_ for each Node in the Cluster. The example below shows one (1) Pod running the ``k8s-bigip-ctlr`` in a test cluster with one worker node.
+   You should see one `ReplicaSet`_, as well as one ``k8s-bigip-ctlr`` `Pod`_ for each Node in the Cluster. The example below shows one Pod running the ``k8s-bigip-ctlr`` in a test cluster with one worker node.
 
    .. code-block:: console
 

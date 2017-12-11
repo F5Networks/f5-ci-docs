@@ -167,7 +167,7 @@ You can also use an existing `BIG-IP SSL profile`_ to secure traffic for a Route
 
 .. note::
 
-   Each SSL profile applies to one (1) individual Route. In addition, the Controller creates one client ssl
+   Each SSL profile applies to one individual Route. In addition, the Controller creates one client ssl
    and one server ssl profile for the https virtual server, called "default-client-ssl" and "default-server-ssl".
    **These are the default profiles used for SNI.**
 

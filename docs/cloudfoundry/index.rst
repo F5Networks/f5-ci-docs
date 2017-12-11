@@ -38,7 +38,7 @@ Once the |cf-long| is running, it
 
 .. attention::
 
-   - The |cfctlr| can create two (2) L7 virtual servers for Cloud Foundry: one (1) for HTTP and one (1) for HTTPS.
+   - The |cfctlr| can create two L7 virtual servers for Cloud Foundry: one for HTTP and one for HTTPS.
    - The |cfctlr| creates an HTTP virtual server by default.
    - The |cfctlr| creates an L4 (TCP) virtual server for each mapped route to a TCP domain.
 

@@ -10,7 +10,7 @@ Multi-tenancy in Kubernetes and OpenShift
 Overview
 --------
 
-BIG-IP administrative partitions allow you to isolate tenants from each other and to configure objects for specific tenants, where only authorized users can access them. To manage multi-tenant BIG-IP systems with the |kctlr-long| and OpenShift, F5 recommends deploying one (1) instance of the :code:`k8s-bigip-ctlr` per BIG-IP partition.
+BIG-IP administrative partitions allow you to isolate tenants from each other and to configure objects for specific tenants, where only authorized users can access them. To manage multi-tenant BIG-IP systems with the |kctlr-long| and OpenShift, F5 recommends deploying one instance of the :code:`k8s-bigip-ctlr` per BIG-IP partition.
 
 You can set up the |kctlr| for multi-tenancy a few different ways. Each of the example use cases described here uses namespaces (or projects, in OpenShift) to achieve multi-tenancy in the Kubernetes/OpenShift Cluster.
 
@@ -50,7 +50,7 @@ Use case 1: 1 partition, 1 Controller, all namespaces
 
    You can run the |kctlr| in either ``nodeport`` or ``cluster`` mode for this use case.
 
-In this use case, one (1) :code:`k8s-bigip-ctlr` instance watches all of the namespaces in the Cluster and creates all objects in a single BIG-IP partition. You can isolate the Cluster tenants from each other on the BIG-IP system by creating virtual servers within each tenant's namespace.
+In this use case, one :code:`k8s-bigip-ctlr` instance watches all of the namespaces in the Cluster and creates all objects in a single BIG-IP partition. You can isolate the Cluster tenants from each other on the BIG-IP system by creating virtual servers within each tenant's namespace.
 
 .. figure:: /_static/media/kctlr-mt-1.png
    :scale: 70
@@ -79,7 +79,7 @@ You have multiple namespaces in your cluster, each representing a separate tenan
 - a set of app services that hold videos (\https://myapp.com/videos); and
 - a set of app services that deal with 3rd party ad servers (\https://myapp.com/ads).
 
-For Tenant1, you'll create one (1) BIG-IP virtual server that has one (1) pool for each of its applications via a :ref:`simple fanout <simple fanout>` Ingress. The |kctlr| creates an HTTPS virtual server and pools on the BIG-IP system to expose the Services specified in the Ingress to external traffic. Following the :ref:`standard naming convention <k8s-vs-naming>`, Tenant1's virtual server would appear on the BIG-IP system as "tenant1_myapp.https_1.2.3.4".
+For Tenant1, you'll create one BIG-IP virtual server that has one pool for each of its applications via a :ref:`simple fanout <simple fanout>` Ingress. The |kctlr| creates an HTTPS virtual server and pools on the BIG-IP system to expose the Services specified in the Ingress to external traffic. Following the :ref:`standard naming convention <k8s-vs-naming>`, Tenant1's virtual server would appear on the BIG-IP system as "tenant1_myapp.https_1.2.3.4".
 
 :fonticon:`fa fa-hand-o-right` :ref:`View the example manifest <k8s-mt-1>`
 
@@ -94,7 +94,7 @@ Use case 2A: 1 partition and 1 Controller per namespace
 
    You must run the |kctlr| in ``cluster`` mode for this use case to avoid IP address collisions in overlapping subnets.
 
-In this use case, you have multiple namespaces in your Cluster that each have 1:1 affinity with partitions on the BIG-IP system. You deploy one (1) :code:`k8s-bigip-ctlr` instance in each namespace; each |kctlr| instance manages objects in a BIG-IP partition allocated for its namespace. You can create virtual servers in each namespace as needed.
+In this use case, you have multiple namespaces in your Cluster that each have 1:1 affinity with partitions on the BIG-IP system. You deploy one :code:`k8s-bigip-ctlr` instance in each namespace; each |kctlr| instance manages objects in a BIG-IP partition allocated for its namespace. You can create virtual servers in each namespace as needed.
 
 .. figure:: /_static/media/kctlr-mt-2a.png
    :scale: 70
@@ -111,7 +111,7 @@ In this use case, you have multiple namespaces in your Cluster that each have 1:
 
 **For example:**
 
-You have two (2) namespaces in your Cluster: "test" and "prod". You use the "prod" namespace for mission-critical Apps. You want to use the "test" namespace to test an upgrade of the k8s-bigip-ctlr to version 1.3.0 by deploying an iApp.
+You have two namespaces in your Cluster: "test" and "prod". You use the "prod" namespace for mission-critical Apps. You want to use the "test" namespace to test an upgrade of the k8s-bigip-ctlr to version 1.3.0 by deploying an iApp.
 
 - The ``test_k8s-bigip-ctlr`` will run in the "k8s_test" namespace; it will deploy the ``f5.http`` iApp in the "test" partition on the BIG-IP system.
 - The ``prod_k8s-bigip-ctlr`` runs in the "k8s_prod" namespace; it manages objects in the in the "prod" partition on the BIG-IP system.
@@ -129,7 +129,7 @@ Use case 2B: 1 partition and 1 Controller for 2 or more namespaces
 
    You must run the |kctlr| in ``cluster`` mode for this use case to avoid IP address collisions in overlapping subnets.
 
-In this use case, namespaces in your Cluster correspond to specific partitions on the BIG-IP system. The key difference between this use case and #2A is that you may have two (2) or more namespaces that correspond to a single BIG-IP partition. The |kctlr| instances do not need to run within a tenant's namespace, since each may manage more than just a single namespace. You can create virtual servers in each namespace as needed.
+In this use case, namespaces in your Cluster correspond to specific partitions on the BIG-IP system. The key difference between this use case and #2A is that you may have two or more namespaces that correspond to a single BIG-IP partition. The |kctlr| instances do not need to run within a tenant's namespace, since each may manage more than just a single namespace. You can create virtual servers in each namespace as needed.
 
 .. tip::
 
@@ -145,23 +145,23 @@ In this use case, namespaces in your Cluster correspond to specific partitions o
 
 #. `Create a new namespace`_ for your |kctlr| instances (*OPTIONAL*).
 #. :ref:`Create a Secret with the BIG-IP login credentials <secret-bigip-login>` for each |kctlr| instance.
-#. Deploy two (2) :code:`k8s-bigip-ctlr` instances in the Controller namespace. Set each instance to:
+#. Deploy two :code:`k8s-bigip-ctlr` instances in the Controller namespace. Set each instance to:
 
-   - watch one (1) or more specific namespaces (e.g., :code:`--namespace=customerA-test` and :code:`--namespace=customerA-prod`), and
+   - watch one or more specific namespaces (e.g., :code:`--namespace=customerA-test` and :code:`--namespace=customerA-prod`), and
    - manage the BIG-IP partition assigned to the tenant (e.g., "customerA").
 
 #. Create BIG-IP virtual servers using an :ref:`Ingress <kctlr-ingress-config>`, :ref:`Virtual Server ConfigMaps <kctlr-create-vs>`, or :ref:`OpenShift Route Resources <kctlr-openshift-routes>`.
 
 **For example:**
 
-You have two (2) tenants in your Cluster: "customerA" and "customerB". Customer A uses "test" and "prod" environments that each have a dedicated namespace (like in use case 2A). Customer B has a single namespace. You have a single BIG-IP partition dedicated to each customer.
+You have two tenants in your Cluster: "customerA" and "customerB". Customer A uses "test" and "prod" environments that each have a dedicated namespace (like in use case 2A). Customer B has a single namespace. You have a single BIG-IP partition dedicated to each customer.
 
 **For Customer A:**
 
-- You deploy one (1) :code:`k8s-bigip-ctlr` instance.
-- The Controller manages two (2) namespaces - ``custA_test`` and ``custA_prod``.
+- You deploy one :code:`k8s-bigip-ctlr` instance.
+- The Controller manages two namespaces - ``custA_test`` and ``custA_prod``.
 - The Controller manages objects in the "customerA" BIG-IP partition.
-- You use two (2) :ref:`simple fanout <simple fanout>` Ingresses to create separate virtual servers for the test and production versions of Customer A's website.
+- You use two :ref:`simple fanout <simple fanout>` Ingresses to create separate virtual servers for the test and production versions of Customer A's website.
 
   - custA_test_test.vs_1.2.3.4
   - custA_prod_prod.vs_10.12.13.14
@@ -172,10 +172,10 @@ You have two (2) tenants in your Cluster: "customerA" and "customerB". Customer 
 
 **For Customer B:**
 
-- You deploy one (1) :code:`k8s-bigip-ctlr` instance.
-- The Controller manages one (1) namespace - ``custB``.
+- You deploy one :code:`k8s-bigip-ctlr` instance.
+- The Controller manages one namespace - ``custB``.
 - The Controller creates objects in the "customerB" BIG-IP partition.
-- You create one (1) :ref:`simple fanout <simple fanout>` Ingress to create a virtual server for Customer B's website.
+- You create one :ref:`simple fanout <simple fanout>` Ingress to create a virtual server for Customer B's website.
 
 :fonticon:`fa fa-hand-o-right` :ref:`View the example manifest <k8s-mt-2b-b>`
 
@@ -205,7 +205,7 @@ In this use case, you have a number of :code:`k8s-bigip-ctlr` instances deployed
 
 **For example:**
 
-You have two (2) :code:`k8s-bigip-ctlr` instances running. Each manages a separate BIG-IP partition (ctlr1 and ctlr2). You set the partition you want to create objects in on a per-Service basis using an Ingress and a virtual server ConfigMap. The |kctlr| instance responsible for the selected partition will configure objects on the BIG-IP system for each Service.
+You have two :code:`k8s-bigip-ctlr` instances running. Each manages a separate BIG-IP partition (ctlr1 and ctlr2). You set the partition you want to create objects in on a per-Service basis using an Ingress and a virtual server ConfigMap. The |kctlr| instance responsible for the selected partition will configure objects on the BIG-IP system for each Service.
 
 :fonticon:`fa fa-hand-o-right` :ref:`View the example manifest <k8s-mt-3>`
 

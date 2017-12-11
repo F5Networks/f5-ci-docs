@@ -24,9 +24,9 @@ The |kctlr| supports four (4) types of Kubernetes `Ingress Resource`_:
 
 .. attention::
 
-   The |kctlr| creates one (1) BIG-IP virtual server per Ingress resource. If the Ingress resource incorporates multiple Services, the |kctlr| creates a pool for each Service.
+   The |kctlr| creates one BIG-IP virtual server per Ingress resource. If the Ingress resource incorporates multiple Services, the |kctlr| creates a pool for each Service.
 
-   If you set :code:`allowHttp` or :code:`sslRedirect` to "True", the Controller creates two (2) virtual servers.
+   If you set :code:`allowHttp` or :code:`sslRedirect` to "True", the Controller creates two virtual servers.
 
 \
 
@@ -149,7 +149,7 @@ Name-based virtual hosting
 
 A :dfn:`Name-based virtual hosting` ingress creates the following BIG-IP objects:
 
-- One (1) virtual server with one (1) pool for each Service.
+- One virtual server with one pool for each Service.
 - Local traffic policies that route requests to specific pools based on host name and path.
 
 .. tip::
@@ -185,7 +185,7 @@ You can secure an Ingress using :ref:`Secrets <k8s-ingress-secrets>` or :ref:`BI
 
 .. note::
 
-   - You can specify one (1) or more SSL profiles in your Ingress resource.
+   - You can specify one or more SSL profiles in your Ingress resource.
    - If you specify a :code:`spec.tls` section without providing the TLS Ingress properties,the BIG-IP device uses local traffic policies to redirect HTTP requests to HTTPS.
 
 \

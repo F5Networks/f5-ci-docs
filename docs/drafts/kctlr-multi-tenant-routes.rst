@@ -48,7 +48,7 @@ Run one k8s-bigip-ctlr instance per partition
 Create a Deployment
 ```````````````````
 
-To launch one (1) instance of the |kctlr| for each BIG-IP partition, take the steps below.
+To launch one instance of the |kctlr| for each BIG-IP partition, take the steps below.
 
 #. Define the desired number of |kctlr| instances as separate Deployments. Be sure to enter the name of the BIG-IP partition you want to manage in the "containr.arg" section of the Deployment.
 

@@ -13,11 +13,11 @@ How to manage BIG-IP HA pairs
 
 The F5 Container Connectors provide platform-native integrations for BIG-IP devices from PaaS providers like Cloud Foundry, Kubernetes, Mesos, & OpenShift. The BIG-IP Controllers for these platforms translate native commands to F5 Python SDK/iControl REST calls. [#cccl]_
 
-You can use any BIG-IP Controller to manage a BIG-IP HA active-standby pair or device group. While the platform details vary, all of the Controllers operate on the same basic principle: To provide redundancy, run one (1) Controller instance for each BIG-IP device.
+You can use any BIG-IP Controller to manage a BIG-IP HA active-standby pair or device group. While the platform details vary, all of the Controllers operate on the same basic principle: To provide redundancy, run one Controller instance for each BIG-IP device.
 
 **For example**:
 
-You have one (1) active and one (1) standby BIG-IP device. You want to manage a Kubernetes Cluster in a single partition on the BIG-IP system. For your HA setup, you'd deploy two (2) |kctlr| instances - one for each BIG-IP device. To ensure Controller HA, deploy each Controller instance on a separate node in the cluster.
+You have one active and one standby BIG-IP device. You want to manage a Kubernetes Cluster in a single partition on the BIG-IP system. For your HA setup, you'd deploy two |kctlr| instances - one for each BIG-IP device. To ensure Controller HA, deploy each Controller instance on a separate node in the cluster.
 
 .. figure:: /_static/media/bigip-ha.png
    :alt: A diagram showing a BIG-IP active-standby device pair and 2 BIG-IP Controllers, running on separate nodes in a Kubernetes Cluster.
@@ -33,7 +33,7 @@ BIG-IP config sync
 
    This means that the Controller overwrites *all manual changes*, whether made directly to the managed BIG-IP device or to a BIG-IP that automatically syncs its configuration to the managed BIG-IP device.
 
-If you do use config sync, you should deploy one (1) |kctlr| instance to manage the active device. If you manually sync device group configurations, be sure to always sync configurations *from* the BIG-IP device managed by the |kctlr| *to* the other devices in the group. The Controller will overwrite any changes synced to its managed device from other devices in the group.
+If you do use config sync, you should deploy one |kctlr| instance to manage the active device. If you manually sync device group configurations, be sure to always sync configurations *from* the BIG-IP device managed by the |kctlr| *to* the other devices in the group. The Controller will overwrite any changes synced to its managed device from other devices in the group.
 
 .. important::
 
