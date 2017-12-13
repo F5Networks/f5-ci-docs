@@ -36,7 +36,6 @@ spec:
             "--bigip-password=$(BIGIP_PASSWORD)",
             "--namespace=custB",
             "--pool-member-type=cluster",
-            ...
             ]
 ---
 # Ingress serving traffic for custB.com

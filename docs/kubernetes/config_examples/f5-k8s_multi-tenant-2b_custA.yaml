@@ -38,7 +38,6 @@ spec:
             "--namespace=custA_test",
             "--namespace=custA_prod",
             "--pool-member-type=cluster",
-            ...
             ]
 ---
 # Ingress for all hosts in custA_test

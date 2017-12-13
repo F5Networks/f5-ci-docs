@@ -55,7 +55,7 @@ Set up RBAC Authentication
 
    .. code-block:: console
 
-      oc create serviceaccount bigip-ctlr -n kube-system
+      oc create serviceaccount bigip-ctlr
       serviceaccount "bigip-ctlr" created
 
 #. Create a `Cluster Role`_ and `Cluster Role Binding`_. The |kctlr| for OpenShift requires the permissions shown in the table below.
@@ -150,7 +150,7 @@ Upload the Deployment
 
    .. code-block:: console
 
-      oc create -f f5-k8s-bigip-ctlr_openshift-sdn.yaml --namespace=kube-system
+      oc create -f f5-k8s-bigip-ctlr_openshift-sdn.yaml
       deployment "k8s-bigip-ctlr" created
 
 #. Verify creation using :command:`oc get`.

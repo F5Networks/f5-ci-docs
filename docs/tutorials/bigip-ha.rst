@@ -11,8 +11,6 @@
 Manage BIG-IP HA pairs with the F5 Container Connectors
 =======================================================
 
-The F5 Container Connectors provide platform-native integrations for BIG-IP devices from PaaS providers like Cloud Foundry, Kubernetes, Mesos, & OpenShift. The BIG-IP Controllers for these platforms translate native commands to F5 Python SDK/iControl REST calls. [#cccl]_
-
 You can use any BIG-IP Controller to manage a BIG-IP HA active-standby pair or device group. While the platform details vary, all of the Controllers operate on the same basic principle: To provide redundancy, run one Controller instance for each BIG-IP device.
 
 **For example**:
@@ -22,8 +20,6 @@ You have one active and one standby BIG-IP device. You want to manage a Kubernet
 .. figure:: /_static/media/bigip-ha.png
    :alt: A diagram showing a BIG-IP active-standby device pair and 2 BIG-IP Controllers, running on separate nodes in a Kubernetes Cluster.
    :scale: 65%
-
-.. [#cccl] See `Introduction to F5 Common Controller Core Library <https://devcentral.f5.com/articles/introduction-to-f5-common-controller-core-library-cccl-28355>`_ on DevCentral for more information.
 
 BIG-IP config sync
 ------------------

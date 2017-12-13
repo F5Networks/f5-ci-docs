@@ -35,7 +35,6 @@ spec:
             "--bigip-username=$(BIGIP_USERNAME)",
             "--bigip-password=$(BIGIP_PASSWORD)",
             "use-secrets=true",
-            ...
             ]
 
 ---
@@ -76,7 +75,6 @@ spec:
             "--bigip-password=$(BIGIP_PASSWORD)",
             "--use-secrets=true",
             "--pool-member-type=cluster",
-            ...
             ]
 
 ---

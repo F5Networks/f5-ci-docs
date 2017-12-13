@@ -112,7 +112,7 @@ The same basic steps apply to any changes you may want to make to an existing Se
    .. code-block:: console
       :caption: openshift cli
 
-      oc apply -f <myConfigMap.yaml> [--namespace <service-namespace>]
+      oc apply -f <myConfigMap.yaml>
 
 .. _k8s-config-bigip-health-monitor:
 
@@ -138,7 +138,7 @@ Take the steps below to add a BIG-IP health monitor(s) to an existing virtual se
    .. code-block:: console
       :caption: openshift cli
 
-      oc replace -f <myConfigMap.yaml> [--namespace <service-namespace>]
+      oc replace -f <myConfigMap.yaml>
 
 #. Use the BIG-IP management console to verify the Service's virtual server has an attached health monitor.
 
@@ -252,7 +252,7 @@ Create an unattached pool
    .. code-block:: console
       :caption: openshift cli
 
-      oc create -f f5-resource-pool-only-example.configmap.yaml [--namespace=<service-namespace>]
+      oc create -f f5-resource-pool-only-example.configmap.yaml
       configmap "http.pool_only" created
 
 .. important::
@@ -310,7 +310,7 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
       :emphasize-lines: 18-19
 
       kubectl edit configmap http.vs [--namespace <service-namespace>] \\
-      oc edit configmap http.vs [--namespace <service-namespace>]
+      oc edit configmap http.vs
       ----
       # Please edit the object below.
       # ...

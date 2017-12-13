@@ -12,7 +12,7 @@ Overview
 
 BIG-IP administrative partitions allow you to isolate tenants from each other and to configure objects for specific tenants, where only authorized users can access them. To manage multi-tenant BIG-IP systems with the |kctlr-long| and OpenShift, F5 recommends deploying one instance of the :code:`k8s-bigip-ctlr` per BIG-IP partition.
 
-You can set up the |kctlr| for multi-tenancy a few different ways. Each of the example use cases described here uses namespaces (or projects, in OpenShift) to achieve multi-tenancy in the Kubernetes/OpenShift Cluster.
+You can set up the |kctlr| for multi-tenancy a few different ways. Each of the example use cases described here uses `Namespaces`_ to achieve multi-tenancy in a Kubernetes Cluster (in OpenShift, you'd use `Projects`_).
 
 .. note::
 
@@ -29,7 +29,7 @@ You can deploy any of the use cases summarized here by taking the steps below:
    .. code-block:: bash
 
       kubectl create -f f5-k8s_manifest.yaml [--namespace=<namespace]   \\ Kubernetes
-      oc create -f f5-k8s_manifest.yaml [--namespace=<namespace]        \\ OpenShift
+      oc create -f f5-k8s_manifest.yaml                                 \\ OpenShift
 
 
 .. sidebar:: :fonticon:`fa fa-question-circle-o` Did you know?
@@ -220,6 +220,7 @@ Related
 - :ref:`kctlr-deploy-iapps`
 - :ref:`kctlr-openshift-routes`
 
-.. _Projects: https://docs.openshift.org/1.4/architecture/core_concepts/projects_and_users.html#projects
+.. _Namespaces: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+.. _Projects: https://docs.openshift.org/latest/architecture/core_concepts/projects_and_users.html#projects
 .. _BIG-IP user account: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-13-0-0/1.html
 .. _Create a new namespace: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
