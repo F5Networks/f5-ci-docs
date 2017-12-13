@@ -40,8 +40,8 @@ You can use `kubectl`_ or `oc`_ commands to check the |kctlr| configurations usi
 
 .. code-block:: console
 
-   kubectl [|oc] get pod -o yaml [--namespace=kube-system]          \\ Returns the Pod's YAML settings
-   kubectl [|oc] describe pod myBigIpCtlr [--namespace=kube-system] \\ Returns an information dump about the Pod you can use to troubleshoot specific issues
+   kubectl [oc] get pod -o yaml [--namespace=kube-system]          \\ Returns the Pod's YAML settings
+   kubectl [oc] describe pod myBigIpCtlr [--namespace=kube-system] \\ Returns an information dump about the Pod you can use to troubleshoot specific issues
 
 -----------------------------------------
 
@@ -59,8 +59,8 @@ If you launched the |kctlr| in the ``--kube-system`` namespace, you should add t
 
 .. code-block:: console
 
-   kubectl [|oc] get pods --namespace=kube-system
-   kubectl [|oc] get pod myBigIpCtlr --namespace=kube-system
+   kubectl [oc] get pods --namespace=kube-system
+   kubectl [oc] get pod myBigIpCtlr --namespace=kube-system
 
 -----------------------------------------
 
