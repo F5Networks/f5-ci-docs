@@ -164,6 +164,7 @@ rst_epilog = """
 .. _marathon-bigip-ctlr v1.1.0: %(base_url)s/products/connectors/marathon-bigip-ctlr/v1.1/
 .. _Marathon: https://mesosphere.github.io/marathon/
 .. _namespace: https://kubernetes.io/docs/user-guide/namespaces/
+.. _namespaces: https://kubernetes.io/docs/user-guide/namespaces/
 .. _NATS bus: https://docs.cloudfoundry.org/concepts/architecture/router.html#use
 .. _Node.js: https://nodejs.org/en/
 .. _oc: https://docs.openshift.com/enterprise/3.0/cli_reference/basic_cli_operations.html

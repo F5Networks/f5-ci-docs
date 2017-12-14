@@ -213,12 +213,11 @@ In the example below, the servicePort and serviceName don't match the name and t
 Do the service types match?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- The default `service type`_ used by Kubernetes is ``clusterIP``.
-- The default service type used by the |kctlr| is ``nodeport``.
+The default type used for `Services`_ in Kubernetes is ``clusterIP``. The corresponding setting for the k8s-bigip-ctlr -- ``pool-member-type`` -- defaults to ``nodeport``.
 
-**If you didn't specify a service type** in the Service definition or the |kctlr| Deployment, you probably have a service type mismatch.
+**If you didn't specify a type** in the Service definition --OR-- a ``pool-member-type`` in the |kctlr| Deployment, you probably have a service type mismatch.
 
-See :ref:`Nodeport mode vs Cluster mode <kctlr modes>` for more information about each service type and recommended use.
+See :ref:`Nodeport mode vs Cluster mode <kctlr modes>` for more information about each service type and its recommended use.
 
 
 .. _json troubleshoot k8s:
