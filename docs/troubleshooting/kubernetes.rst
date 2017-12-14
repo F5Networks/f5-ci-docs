@@ -11,7 +11,7 @@ If the issue you're experiencing isn't covered here, try one of the following op
 
 - `Contact F5 Support`_ (valid support contract required).
 - `Report a bug <https://github.com/F5Networks/k8s-bigip-ctlr/issues>`_ in the k8s-bigip-ctlr GitHub repo.
-- `Ask a question <https://f5cloudsolutions.slack.com>`_ in the #cc-kubernetes channel in the F5 Cloud Solutions Slack team.
+- `Join the F5 Cloud Solutions Slack team <https://f5cloudsolutions.herokuapp.com/>`_ and ask a question in the #cc-kubernetes channel.
 
 
 General Kubernetes troubleshooting
@@ -182,7 +182,14 @@ Are the Service name and port correct?
 
 Make sure the name and port in your virtual server ConfigMap match those defined for the Service.
 
-In the example below, the servicePort and serviceName don't match those of our :ref:`example Service <example-service>`.
+==============================   ==================================
+Service field                    ConfigMap ``data.data.`` field
+==============================   ==================================
+metadata.name                    virtualServer.backend.serviceName
+spec.ports.[port | targetPort]   virtualServer.backend.servicePort
+==============================   ==================================
+
+In the example below, the servicePort and serviceName don't match the name and targetPort of our :ref:`example Service <example-service>`.
 
 .. code-block:: yaml
    :caption: Excerpt from a sample virtual server ConfigMap
