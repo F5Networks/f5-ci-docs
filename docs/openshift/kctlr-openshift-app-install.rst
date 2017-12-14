@@ -15,8 +15,7 @@
 Install the BIG-IP Controller in OpenShift
 ==========================================
 
-Use a `Deployment`_ to install the |kctlr-long| in `OpenShift`_.
-The Deployment creates a `ReplicaSet`_ that, in turn, launches the |kctlr| app in `Pods`_.
+Use a `Deployment`_ to install the |octlr-long|.
 
 .. attention::
 
@@ -58,7 +57,7 @@ Set up RBAC Authentication
       oc create serviceaccount bigip-ctlr -n kube-system
       serviceaccount "bigip-ctlr" created
 
-#. Create a `Cluster Role`_ and `Cluster Role Binding`_. The |kctlr| for OpenShift requires the permissions shown in the table below.
+#. Create a `Cluster Role`_ and `Cluster Role Binding`_. The |octlr-long| requires the permissions shown in the table below.
 
    +--------------+-------------------+---------------------------------------------+
    | API groups   | Resources         | Actions                                     |
@@ -158,7 +157,6 @@ Upload the Deployment
       k8s-bigip-ctlr-331478340   1         1         1h
 
       oc get pods
-      user@k8s-master:~oc get pods --namespace=kube-system
       NAME                              READY     STATUS    RESTARTS   AGE
       k8s-bigip-ctlr-1962020886-s31l4   1/1       Running   0          1m
 
