@@ -28,7 +28,7 @@ The following troubleshooting docs may help with Kubernetes-specific issues.
 BIG-IP Controller troubleshooting
 ---------------------------------
 
-.. tip::
+.. hint::
 
    You can use `kubectl`_ commands to check the |kctlr| configurations using the command line.
 
@@ -37,6 +37,19 @@ BIG-IP Controller troubleshooting
       kubectl get pod -o yaml [--namespace=kube-system]          \\ Returns the Pod's YAML settings
       kubectl describe pod myBigIpCtlr [--namespace=kube-system] \\ Returns an information dump about the Pod you can use to troubleshoot specific issues
 
+.. hint::
+
+   When in doubt, restart the Controller.
+
+   Just like your wifi at home, sometimes you just need to turn it off and turn it back on again. With the |kctlr|, you can do this by deleting the ``k8s-bigip-ctlr`` Pod. A new Pod deploys automatically, thanks to the `ReplicaSet`_.
+
+   .. code-block:: console
+
+      kubectl get pod --namespace=kube-system
+      NAME                             READY     STATUS            RESTARTS   AGE
+      k8s-bigip-ctlr-687734628-7fdds   0/1       CrashLoopBackoff  2          15d
+
+      kubectl delete pod k8s-bigip-ctlr-687734628-7fdds --namespace=kube-system
 
 .. _controller verify k8s:
 
