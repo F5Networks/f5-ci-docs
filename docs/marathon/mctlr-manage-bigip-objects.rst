@@ -17,7 +17,7 @@ Manage BIG-IP virtual servers - Marathon
 The |mctlr-long| watches the Mesos/Marathon API for Applications with associated :ref:`F5 Application Labels <app-labels>`.
 These Application Labels define the BIG-IP LTM objects |mctlr| creates/manages.
 
-The example JSON blob shown below tells |mctlr| to create one (1) virtual server - with one (1) health monitor and one (1) pool - in the ``/mesos`` partition on the BIG-IP device.
+The example JSON blob shown below tells |mctlr| to create one virtual server - with one health monitor and one pool - in the ``/mesos`` partition on the BIG-IP device.
 
 .. literalinclude:: /marathon/config_examples/hello-marathon-example.json
    :caption: Example F5 Application Labels defining a BIG-IP virtual server

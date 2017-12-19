@@ -22,6 +22,7 @@ F5 resources provide the settings you want the |kctlr| to apply when creating ob
 
    The |kctlr| can also :ref:`deploy iApps <kctlr-deploy-iapps>`.
 
+
 .. _kctlr-create-vs:
 
 Create a BIG-IP front-end virtual server for a Service
@@ -42,7 +43,7 @@ Take the steps below to create a new BIG-IP virtual server for a Service.
 
 #. Create a ConfigMap containing the :ref:`virtual server F5 resource JSON blob <f5-resource-blob>`.
 
-   The example below creates one (1) HTTP virtual server and one (1) HTTPS virtual server for a Service, with health monitors defined for each.
+   The example below creates one HTTP virtual server and one HTTPS virtual server for a Service, with health monitors defined for each.
 
    .. literalinclude:: /kubernetes/config_examples/f5-resource-vs-example.configmap.yaml
      :linenos:
@@ -69,7 +70,7 @@ Take the steps below to create a new BIG-IP virtual server for a Service.
 
    .. code-block:: console
 
-      admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)$ show ltm virtual
+      admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)show ltm virtual
       ------------------------------------------------------------------
       Ltm::Virtual Server: frontend_173.16.2.2_80
       ------------------------------------------------------------------
@@ -111,7 +112,7 @@ The same basic steps apply to any changes you may want to make to an existing Se
    .. code-block:: console
       :caption: openshift cli
 
-      oc apply -f <myConfigMap.yaml> [--namespace <service-namespace>]
+      oc apply -f <myConfigMap.yaml>
 
 .. _k8s-config-bigip-health-monitor:
 
@@ -137,13 +138,14 @@ Take the steps below to add a BIG-IP health monitor(s) to an existing virtual se
    .. code-block:: console
       :caption: openshift cli
 
-      oc replace -f <myConfigMap.yaml> [--namespace <service-namespace>]
+      oc replace -f <myConfigMap.yaml>
 
 #. Use the BIG-IP management console to verify the Service's virtual server has an attached health monitor.
 
    .. code-block:: console
 
       admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)$ show ltm virtual <virtual-name>
+
 
 
 .. _kctlr-delete-objects:
@@ -172,6 +174,7 @@ Delete BIG-IP virtual servers
    .. code-block:: console
 
       admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)$ show ltm virtual frontend_173.16.2.2_80
+
 
 
 .. _kctlr-downed-services:
@@ -249,7 +252,7 @@ Create an unattached pool
    .. code-block:: console
       :caption: openshift cli
 
-      oc create -f f5-resource-pool-only-example.configmap.yaml [--namespace=<service-namespace>]
+      oc create -f f5-resource-pool-only-example.configmap.yaml
       configmap "http.pool_only" created
 
 .. important::
@@ -307,7 +310,7 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
       :emphasize-lines: 18-19
 
       kubectl edit configmap http.vs [--namespace <service-namespace>] \\
-      oc edit configmap http.vs [--namespace <service-namespace>]
+      oc edit configmap http.vs
       ----
       # Please edit the object below.
       # ...

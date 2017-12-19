@@ -55,7 +55,7 @@ Set up RBAC Authentication
 
    .. code-block:: console
 
-      oc create serviceaccount bigip-ctlr -n kube-system
+      oc create serviceaccount bigip-ctlr
       serviceaccount "bigip-ctlr" created
 
 #. Create a `Cluster Role`_ and `Cluster Role Binding`_. The |kctlr| for OpenShift requires the permissions shown in the table below.
@@ -150,12 +150,12 @@ Upload the Deployment
 
    .. code-block:: console
 
-      oc create -f f5-k8s-bigip-ctlr_openshift-sdn.yaml --namespace=kube-system
+      oc create -f f5-k8s-bigip-ctlr_openshift-sdn.yaml
       deployment "k8s-bigip-ctlr" created
 
 #. Verify creation using :command:`oc get`.
 
-   You should see one (1) `ReplicaSet`_, as well as one (1) ``k8s-bigip-ctlr`` `Pod`_ for each Node in the Cluster. The example below shows one (1) Pod running the ``k8s-bigip-ctlr`` in a test cluster with one worker node.
+   You should see one `ReplicaSet`_, as well as one ``k8s-bigip-ctlr`` `Pod`_ for each Node in the Cluster. The example below shows one Pod running the ``k8s-bigip-ctlr`` in a test cluster with one worker node.
 
    .. code-block:: console
 
@@ -171,7 +171,6 @@ Upload the Deployment
       user@k8s-master:~oc get pods --namespace=kube-system
       NAME                              READY     STATUS    RESTARTS   AGE
       k8s-bigip-ctlr-1962020886-s31l4   1/1       Running   0          1m
-
 
 What's next
 -----------

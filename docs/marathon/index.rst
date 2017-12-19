@@ -103,7 +103,7 @@ These parameters include ``{n}`` in the label key; simply replace ``{n}`` with t
 
 .. rubric:: For example:
 
-The code sample below defines an Application with three (3) port indices.
+The code sample below defines an Application with three port indices.
 
 .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
    :caption: Define an Application 3 port indices
@@ -116,7 +116,7 @@ In the ``labels`` section, we specify that we want to create HTTP virtual server
 In this example, ``0`` refers to the first mapping defined above (``"containerPort": "8088"``) and ``1`` refers to the second (``"containerPort": "8188"``).
 
 .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
-   :caption: |mctlr| labels defining BIG-IP objects for two (2) port indices
+   :caption: |mctlr| labels defining BIG-IP objects for two port indices
    :lines: 26-38
    :lineno-start: 26
 

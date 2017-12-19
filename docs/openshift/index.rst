@@ -81,8 +81,8 @@ The table below shows what BIG-IP configurations the |kctlr| applies for common 
    ============================  ==========================================================
    Create OpenShift Route        - Create two virtual servers:
 
-                                   - one (1) HTTP
-                                   - one (1) HTTPS
+                                   - one HTTP
+                                   - one HTTPS
 
                                  - Create pools and pool members with policies attached.
                                  - Attach defined policies to virtual servers.

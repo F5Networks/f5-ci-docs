@@ -47,6 +47,7 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinxjp.themes.basicstrap',
     'cloud_sptheme.ext.table_styling',
+    'sphinx.ext.extlinks'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -83,6 +84,11 @@ author = u'F5 Networks'
 version = 'v2'
 # The full version, including alpha/beta/rc tags.
 release = 'v2.0'
+
+# External link shortcuts
+
+extlinks = {'k8sdocs': ('https://kubernetes.io/docs/%s',
+                      '')}
 
 # All substitutions
 # Try to keep sorted alphabetically

@@ -35,7 +35,7 @@ The |kctlr-long| is a Docker container that runs on a Kubernetes `Pod`_. You can
    * The BIG-IP partition you want to manage must exist before you launch the |kctlr|.
    * The |kctlr| does not create or destroy BIG-IP partitions.
    * You can use multiple |kctlr| instances to manage **separate** BIG-IP partitions.
-   * You can create one (1) BIG-IP virtual server per Service port.
+   * You can create one BIG-IP virtual server per Service port.
      *Create a separate* :ref:`virtual server F5 Resource ConfigMap <kctlr-create-vs>` *for each Service port you wish to expose.*
 
 - what `Service`_ it should manage, and
@@ -98,7 +98,6 @@ An :ref:`F5 Resource JSON blob <f5-resource-blob>` may contain the properties sh
                            Defines BIG-IP health monitor(s) for the Service.
    ======================= ======================================================== ===========
 
-
 .. [#schema] See the :ref:`F5 schema compatibility table <schema-table>` for more information.
 
 The |kctlr| uses the ``f5type`` property differently depending on the use case.
@@ -125,13 +124,12 @@ You can define BIG-IP health monitors in this section.
 Example F5 virtual server resource
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The below example creates one (1) virtual server for the Service named "myService", with one (1) health monitor and one (1) pool. The Controller will create the virtual server in the :code:`kubernetes` partition on the BIG-IP system.
+The below example creates one virtual server for the Service named "myService", with one health monitor and one pool. The Controller will create the virtual server in the :code:`kubernetes` partition on the BIG-IP system.
 
 .. literalinclude:: /kubernetes/config_examples/f5-resource-vs-example.json
    :caption: Example F5 Resource definition
 
 .. [#routes] The |kctlr| supports Routes in OpenShift deployments. See :ref:`OpenShift Routes` for more information.
-
 
 Key Kubernetes Concepts
 -----------------------

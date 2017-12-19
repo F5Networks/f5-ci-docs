@@ -69,7 +69,7 @@ Deploy the iApp
    .. code-block:: console
       :caption: openshift cli
 
-      oc create -f f5-resource-vs-iApp-example.configmap.yaml [--namespace=<service-namespace>]
+      oc create -f f5-resource-vs-iApp-example.configmap.yaml
       configmap "k8s.http" created
 
 #. Verify creation of the iApp and its related objects on the BIG-IP system.

@@ -1,0 +1,86 @@
+# Deploy a BIG-IP Controller instance in the custB namespace
+# Manages the customerB partition on the BIG-IP system
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: custB_k8s-bigip-ctlr
+  namespace: bigip-controllers
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: custB_k8s-bigip-ctlr
+      labels:
+        app: k8s-bigip-ctlr
+    spec:
+      serviceAccountName: bigip-ctlr-serviceaccountB
+      containers:
+        - name: custB_k8s-bigip-ctlr
+          image: "f5networks/k8s-bigip-ctlr:1.3.0"
+          env:
+            - name: BIGIP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: custB_bigip-login
+                  key: username
+            - name: BIGIP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: custB_bigip-login
+                  key: password
+          command: ["/app/bin/k8s-bigip-ctlr"]
+          args: [
+            "--bigip-partition=customerB",
+            "--bigip-url=10.190.24.171",
+            "--bigip-username=$(BIGIP_USERNAME)",
+            "--bigip-password=$(BIGIP_PASSWORD)",
+            "--namespace=custB",
+            "--pool-member-type=cluster",
+            ]
+---
+# Ingress serving traffic for custB.com
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: custB.com
+  namespace: custB
+  annotations:
+    virtual-server.f5.com/ip: "1.2.3.4"
+    virtual-server.f5.com/partition: "ose-cluster"
+    virtual-server.f5.com/balance: "least-connections-node"
+    virtual-server.f5.com/http-port: "80"
+    virtual-server.f5.com/health: |
+      [
+        {
+          "path":     "custB.com/",
+          "send":     "HTTP GET /health/",
+          "interval": 5,
+          "timeout":  10
+        }, {
+          "path":     "custB.com/app1/",
+          "send":     "HTTP GET /health/app1/",
+          "interval": 5,
+          "timeout":  5
+        }, {
+          "path":     "custB.com/app2/",
+          "send":     "HTTP GET /health/app2/",
+          "interval": 5,
+          "timeout":  5
+        }
+      ]
+spec:
+  rules:
+  - http:
+      paths:
+      - path: custB.com
+        backend:
+          serviceName: frontend
+          servicePort: 80
+      - path: /app1
+        backend:
+          serviceName: App1
+          servicePort: 80
+      - path: /app2
+        backend:
+          serviceName: App2
+          servicePort: 80

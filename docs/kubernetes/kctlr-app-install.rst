@@ -118,7 +118,7 @@ Verify creation
 
 Use :command:`kubectl get` to verify all of the objects launched successfully.
 
-You should see one (1) Deployment_, as well as one (1) ``k8s-bigip-ctlr`` `Pod`_ for each node in the cluster. The example below shows one (1) Pod running the ``k8s-bigip-ctlr`` in a test cluster with one worker node.
+You should see one Deployment_, as well as one ``k8s-bigip-ctlr`` `Pod`_ for each node in the cluster. The example below shows one Pod running the ``k8s-bigip-ctlr`` in a test cluster with one worker node.
 
 .. code-block:: console
    :emphasize-lines: 3, 7, 11, 13

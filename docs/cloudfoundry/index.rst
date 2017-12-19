@@ -21,7 +21,6 @@ Overview
 The |cf-long| (``cf-bigip-ctlr``) lets you use your F5 BIG-IP device as an Application Delivery Controller (ADC) in Cloud Foundry, serving North-South traffic. You can use the |cfctlr| with `Cloud Foundry`_ or `Pivotal Cloud Foundry`_ (PCF).
 
 The |cfctlr| is a Docker container-based application that runs on a Cloud Foundry `Diego cell`_.
-
 You can :ref:`deploy the F5 BIG-IP Controller for Cloud Foundry <deploy-cf-ctlr>` using an `Application Manifest`_.
 The Application Manifest tells Cloud Foundry and the |cfctlr|
 
@@ -39,7 +38,7 @@ Once the |cf-long| is running, it
 
 .. attention::
 
-   - The |cfctlr| can create two (2) L7 virtual servers for Cloud Foundry: one (1) for HTTP and one (1) for HTTPS.
+   - The |cfctlr| can create two L7 virtual servers for Cloud Foundry: one for HTTP and one for HTTPS.
    - The |cfctlr| creates an HTTP virtual server by default.
    - The |cfctlr| creates an L4 (TCP) virtual server for each mapped route to a TCP domain.
 

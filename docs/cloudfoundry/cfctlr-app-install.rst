@@ -70,8 +70,8 @@ Verify creation of BIG-IP objects
 Virtual Servers
 ```````````````
 
-The |cf-long| creates and manages BIG-IP virtual servers. You should see one (1) virtual server per TCP route configured in your Cloud Foundry
-deployment. You should also have at least one (1) virtual server handling unencrypted HTTP traffic on port 80. If the configuration manifest contains an SSL profile, the Controller creates another L7 virtual server on port 443.
+The |cf-long| creates and manages BIG-IP virtual servers. You should see one virtual server per TCP route configured in your Cloud Foundry
+deployment. You should also have at least one virtual server handling unencrypted HTTP traffic on port 80. If the configuration manifest contains an SSL profile, the Controller creates another L7 virtual server on port 443.
 
 #. Log in to the BIG-IP configuration utility at the management IP address (for example, :code:`https://10.90.25.228/xui`).
 #. Choose the configured partition ("cf" in our examples) from the :guilabel:`Partition` dropdown menu.
