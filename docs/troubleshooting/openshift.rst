@@ -131,7 +131,7 @@ Here are a few basic things to check:
 Why did I see a traffic group error when I deployed my iApp?
 ````````````````````````````````````````````````````````````
 
-When deploying an iApp with the |kctlr-long| and OpenShift, the iApp may create a virtual IP in the wrong traffic group. If this occurs, you will see an error message like that below.
+When deploying an iApp with the |octlr-long| , the iApp may create a virtual IP in the wrong traffic group. If this occurs, you will see an error message like that below.
 
 .. code-block:: console
 

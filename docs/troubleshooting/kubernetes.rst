@@ -140,34 +140,23 @@ Why didn't the BIG-IP Controller create any objects on my BIG-IP?
 
 Check the |kctlr| settings against those of the Service you want it to watch to make sure everything aligns correctly.
 
-.. _example-service:
+Do the namespaces match?
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the |kctlr| watches all Kubernetes `Namespaces`_ (as of v1.3.0). If you do specify a Namespace to watch in the k8s-bigip-ctlr Deployment, make sure it matches that of the Kubernetes Resources you want to manage.
+
+In the examples below, the Namespace in the Service doesn't match that provided in the sample Deployment. [#service]_
 
 .. code-block:: yaml
    :caption: Sample Kubernetes Service
-   :emphasize-lines: 4,5,11
+   :emphasize-lines: 4,5
 
    kind: Service
    apiVersion: v1
    metadata:
      name: hello
    namespace: test
-   spec:
-     selector:
-       app: hello
-       tier: backend
-     ports:
-     - protocol: TCP
-       port: 80
-       targetPort: http
 
-*Source:* `Connect a Front End to a Back End Using a Service <https://kubernetes.io/docs/tasks/access-application-cluster/connecting-frontend-backend/#creating-the-backend-service-object>`_
-
-Do the namespaces match?
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-By default, the |kctlr| watches all Kubernetes `Namespaces`_ (as of v1.3.0). If you do specify a Namespace to watch in the k8s-bigip-ctlr Deployment, make sure it matches that of the Kubernetes Resources you want to manage.
-
-In the example below, the Namespace doesn't match that of our :ref:`example Service <example-service>`.
 
 .. code-block:: yaml
    :caption: Excerpt from a sample Deployment
@@ -202,7 +191,25 @@ metadata.name                    virtualServer.backend.serviceName
 spec.ports.[port | targetPort]   virtualServer.backend.servicePort
 ==============================   ==================================
 
-In the example below, the servicePort and serviceName don't match the name and targetPort of our :ref:`example Service <example-service>`.
+In the examples below, the servicePort and serviceName don't match the name and port in the example Service. [#service]_
+
+.. code-block:: yaml
+   :caption: Sample Kubernetes Service
+   :emphasize-lines: 4,13
+
+   kind: Service
+   apiVersion: v1
+   metadata:
+     name: hello
+   namespace: test
+   spec:
+     selector:
+       app: hello
+       tier: backend
+     ports:
+     - protocol: TCP
+       port: 80
+       targetPort: http
 
 .. code-block:: yaml
    :caption: Excerpt from a sample virtual server ConfigMap
@@ -222,6 +229,8 @@ In the example below, the servicePort and serviceName don't match the name and t
            },
       ...
        }
+
+.. [#service] *Example Service referenced from* `Connect a Front End to a Back End Using a Service <https://kubernetes.io/docs/tasks/access-application-cluster/connecting-frontend-backend/#creating-the-backend-service-object>`_
 
 Do the service types match?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
