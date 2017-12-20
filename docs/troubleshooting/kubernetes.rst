@@ -145,7 +145,7 @@ Do the namespaces match?
 
 By default, the |kctlr| watches all Kubernetes `Namespaces`_ (as of v1.3.0). If you do specify a Namespace to watch in the k8s-bigip-ctlr Deployment, make sure it matches that of the Kubernetes Resources you want to manage.
 
-In the examples below, the Namespace in the Service doesn't match that provided in the sample Deployment. [#service]_
+In the examples below, the Namespace in the Service doesn't match that provided in the sample Deployment. [#servicesrc]_
 
 .. code-block:: yaml
    :caption: Sample Kubernetes Service
@@ -191,7 +191,7 @@ metadata.name                    virtualServer.backend.serviceName
 spec.ports.[port | targetPort]   virtualServer.backend.servicePort
 ==============================   ==================================
 
-In the examples below, the servicePort and serviceName don't match the name and port in the example Service. [#service]_
+In the examples below, the servicePort and serviceName don't match the name and port in the example Service. [#servicesrc]_
 
 .. code-block:: yaml
    :caption: Sample Kubernetes Service
@@ -230,7 +230,7 @@ In the examples below, the servicePort and serviceName don't match the name and 
       ...
        }
 
-.. [#service] *Example Service referenced from* `Connect a Front End to a Back End Using a Service <https://kubernetes.io/docs/tasks/access-application-cluster/connecting-frontend-backend/#creating-the-backend-service-object>`_
+.. [#servicesrc] *Example Service referenced from* `Connect a Front End to a Back End Using a Service <https://kubernetes.io/docs/tasks/access-application-cluster/connecting-frontend-backend/#creating-the-backend-service-object>`_
 
 Do the service types match?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
