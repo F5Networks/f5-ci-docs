@@ -91,6 +91,8 @@ Kubernetes
                                       ingress.kubernetes.io/ssl-redirect="true"
                                       ingress.kubernetes.io/allow-http="false"
                                       kubernetes.io/ingress.class="f5"
+   // Also valid
+   kubectl annotate ingress myIngress virtual-server.f5.com/ip="controller-default"
 
 
 OpenShift
@@ -106,6 +108,22 @@ OpenShift
                                  ingress.kubernetes.io/ssl-redirect="true"
                                  ingress.kubernetes.io/allow-http="false"
                                  kubernetes.io/ingress.class="f5"
+
+.. tip::
+
+   There are multiple ways to configure the Virtual IP address for Ingress resources:
+     #. Do not specify it at all, and the controller creates only pools.
+     #. Have an external controller (or manually) set the ``virtual-server.f5.com/ip`` annotation with the desired address.
+     #. Use the DNS lookup option (``resolve-ingress-names``) in the `k8s-bigip-ctlr configuration parameters`_.
+
+        - Controller sets the IP address to the resolved host's IP Address
+
+     #. Set the ``default-ingress-ip`` in the `k8s-bigip-ctlr configuration parameters`_.
+
+        - The controller configures Ingresses with the annotation ``virtual-server.f5.com/ip="controller-default"`` with the IP address specified in the ``default-ingress-ip`` parameter.
+        - Note that there is only one of these ``default-ingress-ip`` parameters per controller. If you want multiple IP addresses, then you can
+          run multiple controllers that each monitor different namespaces. This also enables access control if you don't want certain namespaces
+          to be able to attach to certain VIPs.
 
 
 .. _create k8s ingress:
