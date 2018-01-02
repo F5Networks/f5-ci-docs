@@ -10,9 +10,9 @@ DC/OS Open
 
 Apache Mesos `DC/OS Open <https://dcos.io/>`_ uses `DC/OS oauth <https://dcos.io/docs/1.8/administration/id-and-access-mgt/>`_ to secure access. To use the |mctlr| App with a secure cluster, assign it a user account with permission to access the desired cluster.
 
-#. `Create a user account for the App <https://dcos.io/docs/1.8/administration/id-and-access-mgt/managing-authentication>`_
+#. `Create a user account for the App <https://docs.mesosphere.com/1.8/administration/id-and-access-mgt/oss/managing-authentication/>`_
 
-#. `Generate the HTTP API token <https://dcos.io/docs/1.8/administration/id-and-access-mgt/iam-api/>`_ and record it in a safe place.
+#. `Generate the HTTP API token <https://dcos.io/docs/1.8/administration/id-and-access-mgt/oss/iam-api/>`_ and record it in a safe place.
 
 #. Add the token to your |mctlr| App definition using the ``F5_CC_DCOS_AUTH_TOKEN`` configuration parameter.
 
@@ -25,12 +25,12 @@ Apache Mesos `DC/OS Open <https://dcos.io/>`_ uses `DC/OS oauth <https://dcos.io
 DC/OS Enterprise
 ----------------
 
-`DC/OS Enterprise <https://docs.mesosphere.com/>`_ provides access control via `Service Accounts <https://docs.mesosphere.com/1.8/administration/id-and-access-mgt/service-auth/>`_.
+`DC/OS Enterprise <https://docs.mesosphere.com/>`_ provides access control via `Service Accounts <https://docs.mesosphere.com/1.8/administration/id-and-access-mgt/ent/service-auth/>`_.
 
-- If you use the ``permissive`` or ``strict`` `Security Mode <https://docs.mesosphere.com/1.8/administration/installing/custom/configuration-parameters/#security>`_, you'll need to create a Service Account for the |mctlr|.
+- If you use the ``permissive`` or ``strict`` `Security Mode <https://docs.mesosphere.com/1.8/administration/installing/ent/custom/configuration-parameters/#security>`_, you'll need to create a Service Account for the |mctlr|.
 - If you have disabled the Security Mode, you don't need to create a Service Account for the |mctlr|.
 
-#. `Create a Service Account <https://docs.mesosphere.com/1.8/administration/id-and-access-mgt/service-auth/custom-service-auth>`_ with the permissions shown below.
+#. `Create a Service Account <https://docs.mesosphere.com/1.8/administration/id-and-access-mgt/ent/service-auth/custom-service-auth>`_ with the permissions shown below.
 
    ================================================   =======
    Resource                                           Action
