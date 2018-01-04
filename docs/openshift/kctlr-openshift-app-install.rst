@@ -15,7 +15,8 @@
 Install the BIG-IP Controller in OpenShift
 ==========================================
 
-Use a `Deployment`_ to install the |octlr-long|.
+Use a `Deployment`_ to install the |kctlr-long| in `OpenShift`_.
+The Deployment creates a `ReplicaSet`_ that, in turn, launches the |kctlr| app in `Pods`_.
 
 .. attention::
 
@@ -57,7 +58,7 @@ Set up RBAC Authentication
       oc create serviceaccount bigip-ctlr -n kube-system
       serviceaccount "bigip-ctlr" created
 
-#. Create a `Cluster Role`_ and `Cluster Role Binding`_. The |octlr-long| requires the permissions shown in the table below.
+#. Create a `Cluster Role`_ and `Cluster Role Binding`_. The |kctlr| for OpenShift requires the permissions shown in the table below.
 
    +--------------+-------------------+---------------------------------------------+
    | API groups   | Resources         | Actions                                     |
@@ -116,19 +117,31 @@ The |kctlr| has a subset of `configuration parameters specific to OpenShift`_. A
 - :code:`--openshift-sdn-name=/path/to/bigip_openshift_vxlan`
 - :code:`--pool-member-type=cluster`
 
-The Deployment must consist of valid JSON or YAML. The example below shows the basic |kctlr| configurations. You can customize this for your environment using the `k8s-bigip-ctlr configuration parameters`_.
+If using the |kctlr| to manage OpenShift Routes, include the desired `Route configuration parameters`_.
+
+The Deployment must consist of valid JSON or YAML.
+
+Ingress Deployment
+~~~~~~~~~~~~~~~~~~
+
+The example below shows the |kctlr| configurations required if you want to :ref:`expose OpenShift Services to external traffic using an Ingress <kctlr-ingress-config>`.
 
 .. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml
-   :caption: Example OpenShift Deployment
+   :caption: Example OpenShift Ingress Deployment
    :linenos:
 
 :fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_openshift-sdn.yaml </openshift/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml>`
 
-The example below shows the basic |kctlr| `Route configuration parameters`_ needed to manage Routes. See :ref:`kctlr-openshift-routes` for additional information.
+Routes Deployment
+~~~~~~~~~~~~~~~~~
+
+The example below shows the |kctlr| configurations required if you want to :ref:`expose OpenShift Services to external traffic using Routes <kctlr-openshift-routes>`.
 
 .. literalinclude:: /openshift/config_examples/f5-kctlr-openshift-routes.yaml
    :caption: Example OpenShift Route Deployment
    :linenos:
+
+:fonticon:`fa fa-download` :download:`f5-kctlr-openshift-routes.yaml </openshift/config_examples/f5-kctlr-openshift-routes.yaml>`
 
 .. _upload openshift deployment:
 
@@ -139,7 +152,7 @@ Upload the Deployment
 
    .. code-block:: console
 
-      oc create -f f5-k8s-bigip-ctlr_openshift-sdn.yaml
+      oc create -f f5-k8s-bigip-ctlr_openshift-sdn.yaml --namespace=kube-system
       deployment "k8s-bigip-ctlr" created
 
 #. Verify creation using :command:`oc get`.
@@ -148,15 +161,16 @@ Upload the Deployment
 
    .. code-block:: console
 
-      oc get deployments
+      oc get deployments --namespace=kube-system
       NAME             DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
       k8s-bigip-ctlr   1         1         1            1           1h
 
-      oc get replicasets
+      oc get replicasets --namespace=kube-system
       NAME                       DESIRED   CURRENT   AGE
       k8s-bigip-ctlr-331478340   1         1         1h
 
-      oc get pods
+      oc get pods --namespace=kube-system
+      user@k8s-master:~oc get pods --namespace=kube-system
       NAME                              READY     STATUS    RESTARTS   AGE
       k8s-bigip-ctlr-1962020886-s31l4   1/1       Running   0          1m
 
@@ -168,6 +182,7 @@ Now that you have the |kctlr| up and running, here are a few things you can do w
 
 - :ref:`kctlr-create-vs`
 - :ref:`kctlr-deploy-iapps`
+- :ref:`kctlr-ingress-config`
 - :ref:`kctlr-openshift-routes`
 
 .. _OpenShift: https://www.openshift.org/

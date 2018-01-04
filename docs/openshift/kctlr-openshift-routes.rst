@@ -55,7 +55,7 @@ If you haven't already done so, add the |kctlr| `Route configuration parameters`
 
 .. literalinclude:: /openshift/config_examples/f5-kctlr-openshift-routes.yaml
    :linenos:
-   :emphasize-lines: 40-45
+   :emphasize-lines: 47-56
 
 
 .. _create os route:
