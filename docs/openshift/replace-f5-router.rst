@@ -32,7 +32,7 @@ Remove the OpenShift F5 Router
 
 .. todo:: **NEEDS VERIFICATION FROM RED HAT**
 
-Use the OpenShift CLI to remove the pod(s) associated with the F5 Router.
+Use the OpenShift CLI to remove the Pod(s) associated with the F5 Router.
 
 .. note::
 
@@ -56,7 +56,7 @@ Install the |kctlr|
 
    .. literalinclude:: /openshift/config_examples/f5-kctlr-openshift-routes.yaml
       :linenos:
-      :emphasize-lines: 36-64
+      :emphasize-lines: 44-56
 
 #. :ref:`Upload the Deployment <upload openshift deployment>` to the OpenShift API server.
 

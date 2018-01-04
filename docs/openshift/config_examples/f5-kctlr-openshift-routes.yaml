@@ -40,19 +40,11 @@ spec:
             "--bigip-url=10.190.24.171",
             # Replace with the name of the BIG-IP partition you want to manage
             "--bigip-partition=openshift",
-            # To manage a single namespace, enter it below
-            # (required in v1.0.0)
-            # To manage all namespaces, omit the `namespace` entry
-            # (default as of v1.1.0)
-            # To manage multiple namespaces, enter a separate flag for each
-            # namespace below (as of v1.1.0)
-            #"--namespace=default",
             "--pool-member-type=cluster",
             # Replace with the path to the BIG-IP VXLAN connected to the
             # OpenShift HostSubnet
             "--openshift-sdn-name=/Common/openshift_vxlan",
             # Enables use of a BIG-IP device as an OpenShift Router
-            # (available as of v1.2.0)
             "--manage-routes=true",
             # Assign an IP address to the BIG-IP virtual server
             # Be sure to use an IP address from the HostSubnet to which the
@@ -65,3 +57,4 @@ spec:
             ]
       imagePullSecrets:
         - name: f5-docker-images
+        - name: bigip-login
