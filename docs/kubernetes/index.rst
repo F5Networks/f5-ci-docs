@@ -27,7 +27,7 @@ The |kctlr-long| (``k8s-bigip-ctlr``) configures BIG-IP objects for applications
 
 .. _kctlr overview:
 
-The |kctlr-long| is a Docker container that runs on a Kubernetes `Pod`_. You can :Ref:`launch the k8s-bigip-ctlr application <install-kctlr>` in Kubernetes using a Deployment. Once the |kctlr| pod is running, it watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for specially-formatted :ref:`"F5 Resource" <k8s-f5-resources>` ConfigMaps. The `ConfigMap`_ contains a JSON blob that tells the |kctlr|:
+The |kctlr-long| is a Docker container that runs on a Kubernetes `Pod`_. You can :Ref:`launch the k8s-bigip-ctlr application <install-kctlr>` in Kubernetes using a Deployment. Once the |kctlr| Pod is running, it watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for specially-formatted :ref:`"F5 Resource" <k8s-f5-resources>` ConfigMaps. The `ConfigMap`_ contains a JSON blob that tells the |kctlr|:
 
 .. sidebar:: :fonticon:`fa fa-exclamation-circle` Important:
 
@@ -139,7 +139,7 @@ Key Kubernetes Concepts
 Cluster Network
 ```````````````
 
-The basic assumption of the Kubernetes `Cluster Network`_ is that pods can communicate with other pods, regardless of what host they're on.
+The basic assumption of the Kubernetes `Cluster Network`_ is that Pods can communicate with other Pods, regardless of what host they're on.
 You have a few different options when connecting your BIG-IP device (platform or Virtual Edition) to a Kubernetes cluster network and the |kctlr|.
 How (or whether) you choose to integrate your BIG-IP device into the cluster network -- and the framework you use -- impacts how the BIG-IP system forwards traffic to your Kubernetes Services.
 
