@@ -47,7 +47,7 @@ The tables below show the versions used in development testing. The F5 Container
    |                          |                       |                                            |                                |                          |
    |                          |                       | DC/OS Enterprise                           |                                |                          |
    |                          +-----------------------+--------------------------------------------+--------------------------------+                          |
-   |                          | v1.1.1                | Apache Marathon                            | v1.3.9, v1.5.x                 |                          |
+   |                          | v1.1.1+               | Apache Marathon                            | v1.3.9, v1.5.x                 |                          |
    |                          |                       +--------------------------------------------+--------------------------------+                          |
    |                          |                       | Apache Mesos DC/OS                         | v1.7.x, v1.8.x, v1.9.x,        |                          |
    |                          |                       |                                            | v1.10.x                        |                          |
