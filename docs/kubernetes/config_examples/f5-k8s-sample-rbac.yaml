@@ -46,5 +46,5 @@ roleRef:
   name: bigip-ctlr-clusterrole
 subjects:
 - kind: ServiceAccount
-  name: bigip-ctlr-serviceaccount
+  name: bigip-ctlr
   namespace: kube-system

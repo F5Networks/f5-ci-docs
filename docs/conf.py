@@ -116,7 +116,7 @@ rst_epilog = """
 .. _Cluster Role Binding: https://kubernetes.io/docs/admin/authorization/rbac/#rolebinding-and-clusterrolebinding
 .. _Cluster Role: https://kubernetes.io/docs/admin/authorization/rbac/#role-and-clusterrole
 .. _Cluster: https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/
-.. _ConfigMap: https://kubernetes.io/docs/tasks/configure-pod-container/configmap/
+.. _ConfigMap: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/
 .. _configuration parameters specific to OpenShift: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-sdn
 .. _contact F5 support: https://f5.com/about-us/contact/regional-offices#regional-support
 .. _Create a Kubernetes Secret containing your Docker login credentials: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
