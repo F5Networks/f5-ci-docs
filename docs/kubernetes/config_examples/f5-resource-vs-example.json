@@ -16,9 +16,9 @@
         "port": 80,
         // Sets the IP address of the BIG-IP front-end virtual server //
         // omit if you want to create a pool without a virtual server //
-        "bindAddr": "173.16.2.2"
+        "bindAddr": "1.2.3.4"
       },
-      "partition": "kubernetes",
+      "partition": "k8s",
       // Accepts any BIG-IP load balancing mode; defaults to round-robin if
       // mode is not provided //
       "balance": "round-robin",
