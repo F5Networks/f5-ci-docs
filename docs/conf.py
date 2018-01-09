@@ -72,7 +72,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'F5 Container Integrations'
-copyright = u'2017 F5 Networks Inc'
+copyright = u'2018 F5 Networks Inc'
 author = u'F5 Networks'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -116,8 +116,9 @@ rst_epilog = """
 .. _Cluster Role Binding: https://kubernetes.io/docs/admin/authorization/rbac/#rolebinding-and-clusterrolebinding
 .. _Cluster Role: https://kubernetes.io/docs/admin/authorization/rbac/#role-and-clusterrole
 .. _Cluster: https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/
-.. _ConfigMap: https://kubernetes.io/docs/tasks/configure-pod-container/configmap/
+.. _ConfigMap: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/
 .. _configuration parameters specific to OpenShift: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-sdn
+.. _contact F5 support: https://f5.com/about-us/contact/regional-offices#regional-support
 .. _Create a Kubernetes Secret containing your Docker login credentials: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 .. _Create a new partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-implementations-12-1-0/29.html
 .. _DaemonSet: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
@@ -132,6 +133,7 @@ rst_epilog = """
 .. _f5-kube-proxy reference documentation: %(base_url)s/products/connectors/f5-kube-proxy/latest/
 .. _f5-kube-proxy: %(base_url)s/products/connectors/f5-kube-proxy/latest/
 .. _iApp Pool Member table: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#iapp-pool-member-table
+.. _Ingress annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#ingress-resources
 .. _Ingress controller: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-controllers
 .. _Ingress Resource: https://kubernetes.io/docs/concepts/services-networking/ingress/
 .. _k8s-bigip-ctlr configuration parameters: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#controller-configuration-parameters
@@ -162,8 +164,10 @@ rst_epilog = """
 .. _marathon-bigip-ctlr v1.1.0: %(base_url)s/products/connectors/marathon-bigip-ctlr/v1.1/
 .. _Marathon: https://mesosphere.github.io/marathon/
 .. _namespace: https://kubernetes.io/docs/user-guide/namespaces/
+.. _namespaces: https://kubernetes.io/docs/user-guide/namespaces/
 .. _NATS bus: https://docs.cloudfoundry.org/concepts/architecture/router.html#use
 .. _Node.js: https://nodejs.org/en/
+.. _oc: https://docs.openshift.com/enterprise/3.0/cli_reference/basic_cli_operations.html
 .. _OpenShift route resources: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-route-resources
 .. _Pivotal Cloud Foundry: https://pivotal.io/platform
 .. _Pod: https://kubernetes.io/docs/concepts/workloads/pods/pod/
