@@ -69,11 +69,13 @@ You can set a default IP address for Ingress resources. To do so:
 
 The |kctlr| will replace "controller-default" with the IP address provided for the ``default-ingress-ip`` parameter.
 
+When you define a default ingress IP address, each Ingress resource configured to use the "controller-default" IP shares the same BIG-IP virtual server. The |kctlr| attaches a separate policy to the virtual server for each Ingress to ensure correct traffic routing for those resources.
+
 .. important::
 
-   You can only define ``--default-ingress-ip`` once for a single |kctlr| instance.
+   You can only define one ``--default-ingress-ip`` per |kctlr| instance.
 
-   If you're running multiple Controllers to monitor separate namespaces, you can define a default IP address for each Controller. This type of deployment allows you to isolate the VIPs in each namespace from each other.
+If you're using multiple Controllers to monitor separate namespaces, you can define a default IP address for each Controller. This type of deployment allows you to isolate the VIPs in each namespace from each other.
 
 DNS lookup
 ~~~~~~~~~~
