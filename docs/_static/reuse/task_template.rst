@@ -7,16 +7,12 @@ Brief (1-3 sentences, ideally) overview of the information you're going to provi
 Give context.
 Be clear and concise.
 
-.. rubric:: Prerequisites
+"Complete the steps provided below to ..."
 
-- Provide any prereqs beyond the basic ones (listed in the overview for the solution, e.g., `lbaas/index.rst`)
-- as a bulleted list
+Before you begin
+----------------
 
-.. rubric:: Caveats
-
-- Caveats are important information that could
-- potentially trip up users
-- Also a bulleted list
+Any steps the user should complete before beginning the task at hand.
 
 Task 1
 ------
@@ -47,7 +43,9 @@ Learn More
 ----------
 
 Include any additional background information or context that will help the users better understand the tool they're using here.
-If you're going to be verbose, this is the place.
+If you're going to be verbose, this is the place to do it.
+
+---OPTIONAL---
 
 Use Case
 ````````
@@ -60,11 +58,14 @@ You can provide a diagram if it's a particularly complex subject.
    :alt: Description of the diagram for screen readers; should allow a visually-impaired user to understand what the diagram shows
    :scale: 60% \\ use this option to scale back large images for better in-page display
 
-.. seealso::
+---
 
-   - add links to relevant docs
-   - here as a
-   - bulleted list
+What's Next
+-----------
+
+- add links to relevant docs
+- here as a
+- bulleted list
 
 How to format footnotes, if used:
 

@@ -18,16 +18,12 @@
 #
 import os
 import sys
-
-sys.path.insert(0, os.path.abspath('.'))
-sys.path.insert(0, os.path.abspath('../'))
-
-
 import f5_sphinx_theme
 import recommonmark
 import CommonMark
 
-
+sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('../'))
 from recommonmark.parser import CommonMarkParser
 
 # -- General configuration ------------------------------------------------
@@ -61,7 +57,6 @@ source_suffix = ['.rst', '.md']
 source_parsers = {
     '.md': CommonMarkParser,
 }
-
 
 # The encoding of source files.
 #
@@ -100,6 +95,7 @@ rst_epilog = """
 .. _Application labels for iApp mode: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/#application-labels-for-iapp-mode
 .. _Application Manifest: https://docs.pivotal.io/pivotalcf/1-7/devguide/deploy-apps/manifest.html
 .. _Better or Best license: https://f5.com/products/how-to-buy/simplified-licensing
+.. _BIG-IP Application Security Manager: https://f5.com/products/big-ip/application-security-manager-asm
 .. _BIG-IP Controller for Cloud Foundry: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/
 .. _BIG-IP Controller for Kubernetes: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest
 .. _BIG-IP Controller for Marathon: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest
@@ -110,6 +106,8 @@ rst_epilog = """
 .. _built-in middleware: %(base_url)s/products/asp/latest/#built-in-middleware
 .. _cf-bigip-ctlr configuration parameters: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/#configuration-parameters
 .. _cf-bigip-ctlr: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/
+.. _cf-bigip-ctlr v1.1.0: %(base_url)s/products/connectors/cf-bigip-ctlr/v1.1/
+.. _cf-bigip-ctlr reference documentation: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/
 .. _Cloud Foundry CLI: https://docs.cloudfoundry.org/cf-cli/getting-started.html
 .. _Cloud Foundry: https://cloudfoundry.org/why-cloud-foundry/
 .. _Cluster network: https://kubernetes.io/docs/concepts/cluster-administration/networking/
@@ -180,6 +178,7 @@ rst_epilog = """
 .. _Service: https://kubernetes.io/docs/concepts/services-networking/service/
 .. _ServiceAccount: https://kubernetes.io/docs/admin/service-accounts-admin/
 .. _Services: https://kubernetes.io/docs/user-guide/services/
+.. _Service Broker: https://docs.cloudfoundry.org/services/overview.html
 .. _Splunk: https://www.splunk.com/
 .. _Static Pod: https://kubernetes.io/docs/admin/static-pods/
 .. _store your Docker login credentials as a Secret: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/

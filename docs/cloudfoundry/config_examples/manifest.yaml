@@ -3,36 +3,74 @@ applications:
     health-check-type: http
     health-check-http-endpoint: /health
     env:
+      # Provide the desired BIG-IP configurations including partition, load
+      # balancing algorithm, and Self IP address to assign to the virtual server
+      # THE SETTINGS IN THIS SECTION ARE GLOBAL
+      # Set "broker_mode" to "true" to run the BIG-IP Controller as a
+      # Service Broker
       BIGIP_CTLR_CFG: |
                       bigip:
-                        url: https://1.2.3.4
-                        user: <myUsername>
-                        pass: <myPassword>
+                        url: https://bigip.example.com
+                        user: myBigipUsername
+                        pass: myBigipPassword
                         partition:
                           - cf
-                        balance: round-robin
+                        broker_mode: false
+                        balance: least-connections-member
                         verify_interval: 30
-                        external_addr: 10.100.100.101
+                        external_addr: 192.168.1.1
+                        healthMonitors:
+                          - /Common/http.get
 
                       route_mode: all
 
                       nats:
-                        - host: 10.100.100.25
+                        - host: 192.168.10.1
                           port: 4222
-                          user: <myNatsUser>
-                          pass: <myNatsPassword>
+                          user: myNatsUser
+                          pass: myNatsPassword
 
                       logging:
                         level: info
 
                       oauth:
                         token_endpoint: uaa.system.cf.local
-                        client_name: <myAdminUser>
-                        client_secret: <myAdminSecret>
+                        client_name: adminUsername
+                        client_secret: adminSecret
                         port: 443
                         skip_ssl_validation: true
+                        ca_certs:
 
                       routing_api:
                         uri: http://api.system.cf.local
                         port: 80
                       auth_disabled: false
+
+                      # Required to authenticate to the BIG-IP Controller API
+                      status:
+                        user: myUsername
+                        pass: myPassword
+      # Include the section below to use the cf-bigip-ctlr as a Service Broker
+      # THE SETTINGS IN THIS SECTION ARE ROUTE-SPECIFIC
+      SERVICE_BROKER_CONFIG: |
+                            plans:
+                              - description: plan for sb test example,
+                                name: sbtest,
+                                virtualServer:
+                                  - policies:
+                                    - /Common/PreventSpoofOfXFF
+                                  - profiles:
+                                    - /Common/x-forwarded-for
+                                  - sslProfiles:
+                                    - /Common/server-ssl
+                                pool:
+                                  balance: ratio-member
+                                  healthMonitors:
+                                    # Use a health monitor that already exists in the cf partition on the BIG-IP device
+                                    - name: /cf/my-healthMonitor
+                                    # Create a new health monitor
+                                    - name: hm-test
+                                      type: http
+                                      interval: 12
+                                      timeout: 5
+                                      send: hello
