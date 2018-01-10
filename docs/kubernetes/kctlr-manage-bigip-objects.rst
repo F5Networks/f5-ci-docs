@@ -223,7 +223,7 @@ The |kctlr-long| can create and manage BIG-IP Local Traffic Manager (LTM) pools 
 
 .. important::
 
-   Before creating unattached pools, make sure the BIG-IP system has another wat to route traffic to the Service(s), such as an `iRule`_ or a `local traffic policy`_. After creating an unattached pool for a Service, use the BIG-IP config utility to add the pool members to the iRule or traffic policy. This ensures proper handling of client connections to your back-end applications.
+   Before creating unattached pools, make sure the BIG-IP system has another way to route traffic to the Service(s), such as an `iRule`_ or a `local traffic policy`_. After creating an unattached pool for a Service, use the BIG-IP config utility to add the pool members to the iRule or traffic policy. This ensures proper handling of client connections to your back-end applications.
 
 .. _kctlr-create-unattached-pool:
 

@@ -4,8 +4,8 @@ metadata:
   name: ing1
   namespace: default
   annotations:
-    virtual-server.f5.com/ip:        "1.2.3.4"
-    virtual-server.f5.com/partition: "kubernetes"
+    virtual-server.f5.com/ip: "controller-default"
+    virtual-server.f5.com/partition: "k8s"
     virtual-server.f5.com/health: |
       [
         {
