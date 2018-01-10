@@ -80,7 +80,7 @@ If you're using multiple Controllers to monitor separate namespaces, you can def
 DNS lookup
 ~~~~~~~~~~
 
-The |kctlr| uses DNS lookup to resolve hostnames by default (as of v1.3.0). Provide the hostname in the ``virtual-server.f5.com/ip=`` annotation. The Controller will attempt to resolve the hostname and assign the resolved host's IP address to the Ingress' virtual server.
+The |kctlr| uses DNS lookup to resolve hostnames by default (as of v1.3.0). When you provide the hostname in the :code:`spec` section of the k8s-bigip-ctlr Deployment file, the Controller attempts to resolve that hostname. It then assigns the resolved host's IP address to the Ingress' virtual server.
 
 Unattached pools
 ~~~~~~~~~~~~~~~~
@@ -267,7 +267,7 @@ A :dfn:`Name-based virtual hosting` ingress creates the following BIG-IP objects
 
 .. tip::
 
-   If you don't specify any hosts or paths, the BIG-IP device will proxy traffic for all hosts/paths for the Service specified in the :code:`backend` section of the virtual-server annotation.
+   If you don't specify any hosts or paths, the BIG-IP device will proxy traffic for all hosts/paths for the Service specified in the :code:`backend` section of the Ingress Resource.
 
 \
 
