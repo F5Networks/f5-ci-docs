@@ -80,7 +80,7 @@ If you're using multiple Controllers to monitor separate namespaces, you can def
 DNS lookup
 ~~~~~~~~~~
 
-The |kctlr| uses DNS lookup to resolve hostnames by default (as of v1.3.0). The |kctlr| attempts to resolve any hostname provided in the :code:`spec.rules.host` section of the Ingress Resource. It then assigns the resolved host's IP address to the Ingress' virtual server.
+The |kctlr| uses DNS lookup to resolve hostnames by default (as of v1.3.0). The |kctlr| attempts to resolve the first hostname provided in the :code:`spec.rules.host` section of the Ingress Resource. It then assigns the resolved host's IP address to the Ingress' virtual server.
 
 Unattached pools
 ~~~~~~~~~~~~~~~~
