@@ -29,12 +29,6 @@ Step  Task
       BIG-IP `Self IP address`_.
 ===== ==================================================================================
 
-\
-
-.. tip::
-
-   The examples provided here deploy the |kctlr| to the 'default' namespace and assign it a Service Account named 'bigip-ctlr'.
-
 .. _k8s-openshift-hostsubnet:
 
 Create a new OpenShift HostSubnet
@@ -127,6 +121,9 @@ Add the BIG-IP device to the OpenShift overlay network
 
       admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create net self 10.129.2.10/14 allow-service all vlan openshift_vxlan
 
+\
+
+.. seealso:: See :ref:`networking troubleshoot openshift` if you're having trouble with your network setup.
 
 What's Next
 -----------
