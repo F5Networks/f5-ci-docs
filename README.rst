@@ -7,9 +7,9 @@ f5-ci-docs
 Overview
 --------
 
-This repository houses the end-user documentation for F5 Networks' Container Connectors (CC) and Application Services Proxy (ASP).
+This repository houses the end-user documentation for F5 Networks' Container Connectors (CC). The documentation is published at http://clouddocs.f5.com/containers/latest.
 
-We write documentation in `reStructuredText <http://docutils.sourceforge.net/rst.html>`_ (rST); build with `Sphinx <http://www.sphinx-doc.org/>`_ ; test with `Travis-CI <https://travis-ci.com/>`_ ; and host the docs website in `Amazon s3 <https://aws.amazon.com/s3/>`_.
+We write documentation in `reStructuredText <http://docutils.sourceforge.net/rst.html>`_ (rST); build with `Sphinx <http://www.sphinx-doc.org/>`_ ; test with `Travis-CI <https://travis-ci.com/>`_ ; and publish to a static website hosted in `Amazon s3 <https://aws.amazon.com/s3/>`_.
 
 Contributing
 ------------
@@ -17,7 +17,7 @@ Contributing
 If you want to contribute to this documentation set, please consult the `F5 Open Source Style Guide <tbd>`_ and `training <tbd>`_ first. Once you've completed the training and are ready to start writing, fork this repo.
 
 * Create an `issue <https://github.com/F5Networks/f5-ci-docs/issues>`_ corresponding to the changes/additions you plan to make. When your work is complete, `open a pull request <https://github.com/F5Networks/f5-ci-docs/pulls>`_.
-* Be sure to fetch often so your fork stays up-to-date!
+* Be sure to fetch and rebase often so your fork stays up-to-date!
 
 
 Build and Test
@@ -60,7 +60,7 @@ See `Support <SUPPORT>`_.
 Copyright and License
 ---------------------
 
-Copyright 2015-2017 F5 Networks Inc.
+Copyright 2015-2018 F5 Networks Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
