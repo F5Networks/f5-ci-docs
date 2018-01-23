@@ -11,9 +11,9 @@ This documentation release, |release|, applies to the following versions of each
 ===================         ==============
 Component                   Version
 ===================         ==============
-|cf-long|                   v1.0.x
-|kctlr-long|                v1.0.x-1.3.x
-|mctlr-long|                v1.0.x, v1.1.x
+|cf-long|                   v1.0.x-1.1.x
+|kctlr-long|                v1.0.x-1.4.x
+|mctlr-long|                v1.0.x-v1.2.x
 ===================         ==============
 
 Container Connector compatibility
@@ -27,19 +27,20 @@ The tables below show the versions used in development testing. The F5 Container
    +--------------------------+-----------------------+--------------------------------------------+--------------------------------+--------------------------+
    | Connector                | Version(s)            | Platform                                   | Version(s)                     | BIG-IP version(s)        |
    +==========================+=======================+============================================+================================+==========================+
-   | |cf-long|                | v1.0.x                | Pivotal Cloud Foundry (PCF)                | v1.9.6                         | v11.6.1+, v12.x, v13.x   |
+   | |cf-long|                | v1.0.x. v1.1.x        | Pivotal Cloud Foundry (PCF)                | v1.9.6                         | v11.6.1+, v12.x, v13.0.x |
    |                          |                       |                                            |                                |                          |
    | ``cf-bigip-ctlr``        |                       |                                            |                                |                          |
    +--------------------------+-----------------------+--------------------------------------------+--------------------------------+--------------------------+
    |                                                                                                                                                           |
    +--------------------------+-----------------------+--------------------------------------------+--------------------------------+--------------------------+
-   | |kctlr-long|             | v1.0.x, v1.1.x        | Kubernetes                                 | v1.3.7, v1.4.x, v1.5.x         | v11.6.1+, v12.x, v13.x   |
-   |                          |                       |                                            |                                |                          |
-   | ``k8s-bigip-ctlr``       | v1.2.x, 1.3.x         |                                            | v1.4.x, v1.5.x, v1.6.x, v1.7.x |                          |
+   | |kctlr-long|             | v1.0.x, v1.1.x        | Kubernetes                                 | v1.3.7, v1.4.x, v1.5.x         | v11.6.1+, v12.x, v13.0.x |
+   |                          +-----------------------+                                            +--------------------------------+                          |
+   | ``k8s-bigip-ctlr``       | v1.2.x, v1.3.x,       |                                            | v1.4.x, v1.5.x, v1.6.x, v1.7.x |                          |
+   |                          | v1.4.x                |                                            |                                |                          |
    +--------------------------+-----------------------+--------------------------------------------+--------------------------------+--------------------------+
    |                                                                                                                                                           |
    +--------------------------+-----------------------+--------------------------------------------+--------------------------------+--------------------------+
-   | |mctlr-long|             | v1.0.x, v1.1.0        | Apache Mesos                               | v1.0.3                         | v11.6.1+, v12.x, v13.x   |
+   | |mctlr-long|             | v1.0.x, v1.1.0        | Apache Mesos                               | v1.0.3                         | v11.6.1+, v12.x, v13.0.x |
    |                          |                       +--------------------------------------------+--------------------------------+                          |
    | ``marathon-bigip-ctlr``  |                       | Apache Marathon                            | v1.3.9                         |                          |
    |                          |                       +--------------------------------------------+--------------------------------+                          |
@@ -55,33 +56,28 @@ The tables below show the versions used in development testing. The F5 Container
    +--------------------------+-----------------------+--------------------------------------------+--------------------------------+--------------------------+
    |                                                                                                                                                           |
    +--------------------------+-----------------------+--------------------------------------------+--------------------------------+--------------------------+
-   | |octlr-long|             | v1.0.x, v1.1.x,       | OpenShift Origin                           | v1.4.x                         | v11.6.1+, v12.x, v13.x   |
-   |                          | v1.2.x, v1.3.x        |                                            |                                |                          |
-   | ``k8s-bigip-ctlr``       |                       |                                            +--------------------------------+                          |
-   |                          |                       |                                            | v1.4.x, v1.5.x, v1.6.x, v1.7.x |                          |
+   | |octlr-long|             | v1.0.x, v1.1.x,       | OpenShift Origin                           | v1.4.x                         | v11.6.1+, v12.x, v13.0.x |
+   |                          | v1.2.x                |                                            |                                |                          |
+   | ``k8s-bigip-ctlr``       +-----------------------+--------------------------------------------+--------------------------------+                          |
+   |                          | v1.3.x, v1.4.x        | OpenShift Origin                           | v1.4.x, v1.5.x                 |                          |
+   |                          +-----------------------+--------------------------------------------+--------------------------------+                          |
+   |                          | v1.3.x, v1.4.x        | Red Hat OpenShift Container Platform       | v3.6.x, v3.7.x                 |                          |
    +--------------------------+-----------------------+--------------------------------------------+--------------------------------+--------------------------+
 
 \
 
 .. important::
 
-   Red Hat has independently verified BIG-IP Controller compatibility as follows:
-
-   +--------------------------+-----------------------+--------------------------------------------+--------------------------------+
-   | Connector                | Version               | Platform                                   | Version(s)                     |
-   +==========================+=======================+============================================+================================+
-   | BIG-IP Controller for    | v1.2.x, v1.3.x        | Red Hat OpenShift Container Platform       | 3.4.x, 3.5.x, 3.7.x            |
-   | OpenShift                |                       |                                            |                                |
-   +--------------------------+-----------------------+--------------------------------------------+--------------------------------+
-
-   \
+   F5 Networks is a `Red Hat Certified Container Partner <https://access.redhat.com/containers/#/vendor/f5networks>`_. Please see the Red Hat Container Catalog for more information.
 
 .. _f5-schema:
 
 F5 schema
 ---------
 
-The `F5 schema`_ allows the |kctlr-long| & OpenShift to communicate with BIG-IP systems. While all versions of the BIG-IP Controllers are backwards-compatible, using an older schema may limit Controller functionality. Be sure to use the schema version that corresponds with your Controller version to ensure access to the full feature set.
+The `F5 schema`_ allows the |kctlr-long| & OpenShift to communicate with BIG-IP systems. While all versions of the BIG-IP Controllers are backwards-compatible, using an older schema may limit Controller functionality.
+
+Be sure to use the **most recent** schema version that corresponds to your Controller version to ensure access to the full feature set.
 
 .. _schema-table:
 
@@ -90,6 +86,10 @@ The `F5 schema`_ allows the |kctlr-long| & OpenShift to communicate with BIG-IP 
    =============================================== =============================
    Schema version                                  ``k8s-bigip-ctlr`` version(s)
    =============================================== =============================
+   f5schemadb://bigip-virtual-server_v0.1.7.json   1.4.x
+   ----------------------------------------------- -----------------------------
+   f5schemadb://bigip-virtual-server_v0.1.6.json   1.4.x
+   ----------------------------------------------- -----------------------------
    f5schemadb://bigip-virtual-server_v0.1.5.json   1.3.x
    ----------------------------------------------- -----------------------------
    f5schemadb://bigip-virtual-server_v0.1.4.json   1.3.x
