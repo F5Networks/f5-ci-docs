@@ -16,6 +16,8 @@ Component                   Version
 |mctlr-long|                v1.0.x-v1.2.x
 ===================         ==============
 
+.. _connector compatibility:
+
 Container Connector compatibility
 ---------------------------------
 
