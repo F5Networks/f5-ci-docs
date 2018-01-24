@@ -101,7 +101,7 @@ Register the BIG-IP Controller as a Service Broker
    You'll need to provide the following information:
 
    - a name for the Service Broker;
-   - the username and password provided in the :code:`bigip.status` section of the Application Manifest; this will be used to authenticate to the |cfctlr| Service Broker API;
+   - the username and password provided in the :code:`bigip.status` section of the Application Manifest (lets the Cloud Controller authenticate to the |cfctlr| Service Broker API;
    - the Route created in the previous step.
 
    .. code-block:: console

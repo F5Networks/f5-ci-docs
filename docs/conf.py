@@ -81,9 +81,11 @@ version = 'v2'
 release = 'v2.0'
 
 # External link shortcuts
-
 extlinks = {'k8sdocs': ('https://kubernetes.io/docs/%s',
-                      '')}
+                      ''),
+            'issues': ('https://github.com/F5Networks/f5-ci-docs/issue/%s',
+                       'issue ')
+            }
 
 # All substitutions
 # Try to keep sorted alphabetically

@@ -26,12 +26,14 @@
   "labels": {
     "F5_PARTITION": "mesos",
     // Assigns an IP address to the BIG-IP front-end virtual server
-    // Omit this label if creating pools without virtual servers (Not available in v1.0)
+    // Omit this label if creating pools without virtual servers (introduced in v1.1.0)
     "F5_0_BIND_ADDR": "10.190.25.240",
     "F5_0_MODE": "http",
+    // Specify a supported BIG-IP load balancing mode
+    "F5_0_BALANCE": "least-connections-node",
     "F5_0_PORT": "8080",
     // Assigns an IP address to the BIG-IP front-end virtual server
-    // Omit this label if creating pools without virtual servers (Not available in v1.0)
+    // Omit this label if creating pools without virtual servers (introduced in v1.1.0)
     "F5_1_BIND_ADDR": "10.190.25.242",
     "F5_1_MODE": "http",
     "F5_1_PORT": "8090"

@@ -13,8 +13,8 @@ metadata:
     # tells the k8s-bigip-ctlr to watch this ConfigMap
     f5type: virtual-server
 data:
-  # NOTE: schema v0.1.5 is required as of k8s-bigip-ctlr v1.4.0
-  schema: "f5schemadb://bigip-virtual-server_v0.1.5.json"
+  # NOTE: schema v0.1.7 is required as of k8s-bigip-ctlr v1.4.0
+  schema: "f5schemadb://bigip-virtual-server_v0.1.7.json"
   data: |
     {
       "virtualServer": {
@@ -34,12 +34,12 @@ data:
             "bindAddr": "1.2.3.4"
           },
           "partition": "k8s",
-          "balance": "least-connections-node",
+          "balance": "least-connections-member",
           "mode": "http"
         }
       }
     }
-----
+---
 kind: ConfigMap
 apiVersion: v1
 metadata:
@@ -47,7 +47,7 @@ metadata:
   labels:
     f5type: virtual-server
 data:
-  schema: "f5schemadb://bigip-virtual-server_v0.1.5.json"
+  schema: "f5schemadb://bigip-virtual-server_v0.1.7.json"
   data: |
     {
       "virtualServer": {
@@ -56,7 +56,7 @@ data:
           "serviceName": "myService",
           "healthMonitors": [{
             "interval": 30,
-            "protocol": "https",
+            "protocol": "http",
             "send": "GET /\r\n",
             "timeout": 120
           }]
@@ -67,7 +67,7 @@ data:
             "bindAddr": "1.2.3.4"
           },
           "partition": "k8s",
-          "balance": "least-connections-node",
+          "balance": "least-connections-member",
           "mode": "http",
           "sslProfile": {
           "f5ProfileName": "Common/clientssl"

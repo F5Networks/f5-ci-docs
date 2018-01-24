@@ -136,3 +136,4 @@ Refer to the docs below for setup and configuration instructions.
 .. _Advanced Deployment Strategies: https://docs.openshift.com/container-platform/3.6/dev_guide/deployments/advanced_deployment_strategies.html
 .. _Blue-Green Deployment: https://docs.openshift.com/container-platform/3.6/dev_guide/deployments/advanced_deployment_strategies.html#advanced-deployment-strategies-blue-green-deployments
 .. _A/B Deployment: https://docs.openshift.com/container-platform/3.6/dev_guide/deployments/advanced_deployment_strategies.html#advanced-deployment-a-b-deployment
+.. _alternate backends: https://docs.openshift.com/container-platform/3.7/architecture/networking/routes.html#alternateBackends

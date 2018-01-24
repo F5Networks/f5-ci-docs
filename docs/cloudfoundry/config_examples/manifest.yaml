@@ -15,27 +15,38 @@ applications:
                         pass: myBigipPassword
                         partition:
                           - cf
-                        balance: round-robin
+                        balance: least-connections-node
                         verify_interval: 30
                         external_addr: 10.100.100.101
+                        ssl_profiles:
+                          - /Common/my-ssl-policy
+                        policies:
+                          - /Common/example-ltm-policy
+                        profiles:
+                          - /Common/example-profile
+                        health_monitors:
+                          - /Common/tcp_half_open
+
+                      logging:
+                        level: info
 
                       route_mode: all
 
+                      # Required for HTTP routing
                       nats:
                         - host: 192.168.10.1
                           port: 4222
                           user: myNatsUser
                           pass: myNatsPassword
 
-                      logging:
-                        level: info
-
+                      # Required for TCP routing
                       oauth:
                         token_endpoint: uaa.system.cf.local
-                        client_name: <myAdminUser>
-                        client_secret: <myAdminSecret>
+                        client_name: uaa-client
+                        client_secret: uaa-secret
                         port: 443
                         skip_ssl_validation: true
+                        ca-certs:
 
                       routing_api:
                         uri: http://api.system.cf.local
@@ -72,3 +83,4 @@ applications:
                                       interval: 12
                                       timeout: 5
                                       send: hello
+

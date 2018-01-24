@@ -1,4 +1,3 @@
-// Note: Remove all comments before using //
 {
   "virtualServer": {
     "backend": {
@@ -14,14 +13,10 @@
     "frontend": {
       "virtualAddress": {
         "port": 80,
-        // Sets the IP address of the BIG-IP front-end virtual server //
-        // omit if you want to create a pool without a virtual server //
         "bindAddr": "1.2.3.4"
       },
       "partition": "k8s",
-      // Accepts any BIG-IP load balancing mode; defaults to round-robin if
-      // mode is not provided //
-      "balance": "round-robin",
+      "balance": "least-connections-member",
       "mode": "http"
     }
   }

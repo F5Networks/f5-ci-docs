@@ -5,6 +5,9 @@ metadata:
     name: myService
   name: myService-route-unsecured
   namespace: default
+  annotations:
+    # Specify a supported BIG-IP load balancing mode
+    virtual-server.f5.com/balance: least-connections-node
 spec:
   host: mysite.example.com
   path: "/myApp"
