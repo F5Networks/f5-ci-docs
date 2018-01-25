@@ -60,7 +60,7 @@ Create a VXLAN tunnel on the BIG-IP device
 #. Create a new BIG-IP VXLAN tunnel.
 
    - Use the BIG-IP VTEP (internal) address as the VXLAN ``local-address``.
-   - Set the ``key`` to ``1`` to grant the BIG-IP device access to all Kubernetes/Flannel projects and subnets.
+   - Set the ``key`` to ``1`` to grant the BIG-IP device access to all Kubernetes/flannel projects and subnets.
 
    .. code-block:: console
 
@@ -78,14 +78,10 @@ Create a VXLAN tunnel on the BIG-IP device
 Deploy flannel for Kubernetes
 -----------------------------
 
-Most users deploy flannel as a `network addon`_ when setting up ``kubeadm``. See Kubernetes` :k8sdocs:`Installing a Pod network <setup/independent/create-cluster-kubeadm/#pod-network>` guide for instructions.
+#. Edit the flannel `kube-flannel manifest`_.
 
-**If you want to install flannel manually**, take the steps below.
-
-#. (Optional) Edit the flannel `kube-flannel manifest`_.
-
-   - ``Backend``: Defaults to ``vxlan``; see `Backends <https://github.com/coreos/flannel/blob/master/Documentation/backends.md>`_ for additional information.
-   - ``Network``: Should match the Pod network CIDR. Flannel will populate this information automatically.
+   - ``Backend``: Defaults to ``vxlan``.
+   - ``Network``: Should match the Pod network CIDR. Flannel populates this information automatically.
 
 #. Use :command:`kubectl apply` to deploy the flannel manifest.
 
@@ -95,13 +91,20 @@ Most users deploy flannel as a `network addon`_ when setting up ``kubeadm``. See
 
    \
 
-.. seealso::
+   .. seealso::
 
-   For more information about flannel and Kubernetes, see `Using flannel with Kubernetes`_.
+      For more information about flannel and Kubernetes, see `Using flannel with Kubernetes`_.
 
 #. Verify flannel deployment.
 
-   Check the Node resource(s) for the following Annotations: ::
+   Use the :command:`kubectl describe` command to check the Node resource(s).
+
+   .. code-block:: console
+
+      kubectl describe nodes flannel --namespace=kube-system
+
+   You should see the following Annotations in the output: ::
+
 
       flannel.alpha.coreos.com/backend-data:'{"VtepMAC":"<mac-address>"}'
       flannel.alpha.coreos.com/backend-type: 'vxlan'
@@ -113,10 +116,9 @@ Most users deploy flannel as a `network addon`_ when setting up ``kubeadm``. See
    - The ``kube-subnet-manager`` annotation tells flannel to use the Kubernetes API (instead of ``etcd``) to find the information it cares about.
    - The ``kube-subnet-manager`` allocates an IP address from the Node's subnet and populates the ``public-ip`` annotation.
 
-
 .. _k8s-bigip-node:
 
-Create a dummy Kubernetes Node for the BIG-IP device
+Create a Dummy Kubernetes Node for the BIG-IP device
 ----------------------------------------------------
 
 .. note::
@@ -182,7 +184,7 @@ What's Next
 - :ref:`Configure the F5 BIG-IP Controller for use in Kubernetes <kctlr-configuration>`
 
 .. rubric:: Footnotes
-.. [#fdocs] See the `Flannel documentation <https://github.com/coreos/flannel#flannel>`_.
+.. [#fdocs] See the `flannel documentation <https://github.com/coreos/flannel#flannel>`_.
 
 .. _kube-flannel manifest: https://github.com/coreos/flannel/blob/master/Documentation/kube-flannel.yml
 .. _network addon: https://kubernetes.io/docs/concepts/cluster-administration/addons/

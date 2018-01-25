@@ -4,6 +4,7 @@
 
    cf-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/cf-bigip-ctlr/latest>
    Integration Overview <cloudfoundry/index>
+   cloudfoundry/cf-per-route-virtuals
    cloudfoundry/cfctlr*
 
 .. toctree::

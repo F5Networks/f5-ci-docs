@@ -15,7 +15,7 @@ Overview of Cluster Networking with flannel in Kubernetes
 
 `Flannel`_ is a layer 3 network fabric (or, in their words, "a virtual network that attaches IP addresses to containers"). Flannel assigns a subnet to each Node and allocates an IP address within the Node's subnet to each of the Node's Pods.
 
-For Kubernetes v1.6 and later, flannel provides a ``kubeadm`` network add-on. When you apply the `flannel manifest`_ in Kubernetes, the flannel Pod deploys on each Node in the Cluster. The Pod consists of two containers:
+When you apply the `flannel manifest`_ in Kubernetes, the flannel Pod deploys on each Node in the Cluster. The Pod consists of two containers:
 
 - ``install-cni``: Deploys the configurations needed for the `flannel-cni network plugin`_.
 - ``flanneld``: Runs the flannel daemon.

@@ -13,20 +13,65 @@ Deploy the BIG-IP Controller for Cloud Foundry with per-Route Virtual Servers
 
 Follow the instructions provided here to run the |cf-long| in :code:`broker_mode`. In :code:`broker_mode`, the |cfctlr| acts as a `Service Broker`_ to let you deploy per-Route BIG-IP virtual servers.
 
+.. table:: Task table
+
+   =======  ===================================================================
+   Step     Task
+   =======  ===================================================================
+   1.       :ref:`define per-route vs settings`
+
+            :ref:`cf-routes-apply-policies-profiles` (OPTIONAL)
+
+            :ref:`cf-route-health-monitors` (OPTIONAL)
+
+   2.       :ref:`push cf-bigip-ctlr per-route`
+
+   3.       :ref:`register cf-ctlr service broker`
+
+   4.       :ref:`service broker bind`
+
+   5.       :ref:`manage-bigip-objects-cf-routes`
+   =======  ===================================================================
+
+
 .. _define per-route vs settings:
 
-Define the Virtual Server Settings in a Service Plan
-----------------------------------------------------
+Define the Virtual Server Settings in the Application Manifest
+--------------------------------------------------------------
 
-#. Create an Application Manifest for the |cfctlr|.
+Define the desired BIG-IP virtual server settings as a `Service Plan`_ in the |cfctlr| Application Manifest. You can add the Service Plan section to the Application Manifest for an existing |cfctlr| instance, or when deploying the Controller for the first time.
 
-#. Include the :code:`bigip.status` and :code:`SERVICE_BROKER_CONFIG` sections of the Application Manifest shown in the example below.
+You can use as many Service Plans as you need to define the BIG-IP services your Apps require. When you :ref:`register cf-ctlr service broker`, the :code:`f5servicebroker` Service discovers Service Plan(s) associated with the |cfctlr| automatically.
 
-   .. note::
+.. warning::
 
-      The Service Plan, in the :code:`SERVICE_BROKER_CONFIG` section, contains the settings you want to apply to the BIG-IP virtual server. The :code:`f5servicebroker` Service discovers the Service Plan(s) automatically.
+   Cloud Foundry supports **one Route Service Binding** per Route. While you can define multiple Service Plans in a single |cfctlr| Application Manifest, you cannot apply multiple plans to the same Application.
 
-      Cloud Foundry supports **one Route Service Binding** per Route. While you can define multiple Service Plans, each must apply to a separate Application.
+#. :ref:`Deploy <deploy-cf-ctlr>` or update the |cfctlr| Application with the following settings:
+
+   - Set :code:`broker_mode` to :code:`true`.
+   - Provide a :code:`tier2_ip_range` in CIDR format.
+   - Include the :code:`SERVICE_BROKER_CONFIG` section. Use the `cf-bigip-ctlr Service Broker config parameters`_ to define the desired virtual server settings.
+
+   \
+
+   .. tip::
+
+      You can also :ref:`cf-routes-apply-policies-profiles` and/or :ref:`cf-route-health-monitors` in the Service Plan.
+
+   \
+
+   .. literalinclude:: /cloudfoundry/config_examples/manifest.yaml
+      :linenos:
+      :caption: Example App Manifest for cf-bigip-ctlr Service Broker
+
+   :fonticon:`fa fa-download` :download:`Download the example manifest </cloudfoundry/config_examples/manifest.yaml>`
+
+#. To add a Service Plan for a Controller that's already registered as a `Service Broker`_:
+
+   - Edit the :code:`cf-cigip-ctlr` Application Manifest.
+   - Add the desired Service Plan.
+   - `Restart the App`_ to make the new settings take effect.
 
 .. sidebar:: :fonticon:`fa fa-question-circle-o` Did you know?
 
@@ -34,42 +79,36 @@ Define the Virtual Server Settings in a Service Plan
 
    View the `PreventSpoofOfXFF policy`_ referenced in the example :fonticon:`fa fa-external`.
 
-You can attach any of the following BIG-IP objects to a per-Route virtual server:
+.. _cf-routes-apply-policies-profiles:
+
+Apply BIG-IP policies and profiles
+``````````````````````````````````
+
+Include any of the following BIG-IP objects in the Service Plan to attach them to the Route's virtual server:
 
 - policies (`BIG-IP Application Security Manager`_, L7 forwarding, compression, etc.),
 - profiles (tcp optimizations, x-forwarded-for, OneConnect, etc.),
 - pool settings (including **health monitors** and **load balancing algorithm**), and
 - server ssl profiles.
 
-The |cfctlr| cannot create or manage BIG-IP policies or profiles. With the exception of health monitors, all of the BIG-IP objects that you want to apply to the virtual server must already exist on the BIG-IP device.
+.. warning::
 
-You can create a new health monitor in the Service Plan, use an existing BIG-IP health monitor, or both (shown in the example below).
+   The |cfctlr| cannot create or manage policies or profiles on the BIG-IP system. All of the BIG-IP objects that you want to apply to the virtual server -- With the exception of health monitors -- must already exist on the BIG-IP device.
+
+.. _cf-route-health-monitors:
+
+Add BIG-IP Health Monitors
+``````````````````````````
+
+You can create a new health monitor in the Service Plan, use an existing BIG-IP health monitor, or both:
 
 .. literalinclude:: /cloudfoundry/config_examples/manifest.yaml
    :linenos:
-   :caption: Example App Manifest for cf-bigip-ctlr Service Broker
+   :lines: 69-90
+   :emphasize-lines: 14-22
+   :caption: Example health monitor configuration for cf-bigip-ctlr Service Broker
 
 :fonticon:`fa fa-download` :download:`Download the example manifest </cloudfoundry/config_examples/manifest.yaml>`
-
-.. _add-remove service plans:
-
-Add/Remove Service Plans
-````````````````````````
-
-You can use as many Service Plans as you need to define the BIG-IP services your Apps require. If you want to add or remove a Service Plan for a Controller that's already registered as a Service Broker:
-
-#. Edit the Application Manifest to add or remove the desired Service Plan.
-#. `Restart the App`_ to make the new settings take effect.
-
-When you remove a Service Plan from the Application Manifest, the Controller removes all of the BIG-IP objects associated with the Plan. This is the case regardless of whether any Routes are still bound to the Service when you delete the plan.
-
-.. note::
-
-   - If you remove all bound Routes before you delete the Plan, the Controller will clean up the BIG-IP objects and remove the Plan from the data group before the restart occurs.
-
-   - If you remove the Plan without unbinding the Routes, the Controller logs will show a diff of the data group vs any incoming Plans. It will remove all BIG-IP objects associated with the deleted plan. If you try to unbind a Route *after* removing its associated Plan, the Controller takes no action on the BIG-IP.
-
-   - Altering Plans that are already in effect may cause interruptions in traffic, depending on what settings have changed.
 
 .. _push cf-bigip-ctlr per-route:
 
@@ -116,7 +155,7 @@ Register the BIG-IP Controller as a Service Broker
 
 #. `Create a Service instance`_ for your users.
 
-   .. tip:: Provide a Plan name that matches a Plan defined in your Application Manifest.
+   .. tip:: The plan name you provide here -- "sbtest" in the example below -- must match the name of a plan defined in your :code:`cf-bigip-ctlr` Application Manifest.
 
    .. code-block:: console
 
@@ -143,10 +182,35 @@ Once an administrator has completed the section above, developers can use the :c
 
 When you `bind a Route to the Service`_, the |cfctlr| creates a virtual server, pool(s), and pool member(s) on the BIG-IP device with the requested policy(ies) and profile(s) attached.
 
+
+.. _manage-bigip-objects-cf-routes:
+
+Edit or Remove BIG-IP Objects for Cloud Foundry Routes
+------------------------------------------------------
+
+.. note::
+
+   - If you remove all bound Routes before you delete the associated Service Plan, the Controller cleans up the BIG-IP objects and removes the Plan from the data group before restarting.
+
+   - If you remove a Plan without unbinding the associated Routes, the Controller logs will show a diff of the data group vs any incoming Plans. It will remove all BIG-IP objects associated with the deleted plan. If you try to unbind a Route *after* removing its associated Plan, the Controller takes no action on the BIG-IP.
+
+   - Altering Plans that are already in effect may cause interruptions in traffic, depending on what settings have changed.
+
+Edit or Remove a Service Plan
+`````````````````````````````
+
+When you remove a Service Plan from the Application Manifest, the Controller removes all of the BIG-IP objects associated with the Plan. This is the case regardless of whether any Routes are still bound to the Service when you delete the plan.
+
+
+#. To edit or remove a Service Plan for a Controller that's already registered as a `Service Broker`_:
+
+   - Edit the Application Manifest to edit or remove the desired Service Plan.
+   - `Restart the App`_ to make the new settings take effect.
+
 .. _service broker unbind:
 
-Unbind the f5servicebroker Service
-----------------------------------
+Stop using the f5servicebroker Service
+``````````````````````````````````````
 
 If you no longer want to use the F5 Service Broker for an App, unbind the Service from the Route.
 
@@ -157,7 +221,7 @@ If you no longer want to use the F5 Service Broker for an App, unbind the Servic
 What's Next
 -----------
 
-- :ref:`verify BIG-IP objects`
+- :ref:`cf-verify BIG-IP objects`
 - View the `cf-bigip-ctlr reference documentation`_
 
 
@@ -168,3 +232,4 @@ What's Next
 .. _PreventSpoofOfXFF policy: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-local-traffic-policies-getting-started-13-1-0/4.html
 .. _Restart the App: http://cli.cloudfoundry.org/en-US/cf/restart.html
 .. _bind a Route to the Service: http://cli.cloudfoundry.org/en-US/cf/bind-route-service.html
+.. _Service Plan: https://docs.cloudfoundry.org/devguide/services/

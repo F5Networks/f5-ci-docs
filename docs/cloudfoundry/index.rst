@@ -74,7 +74,7 @@ You can use the |cfctlr| to apply existing BIG-IP services -- health monitors, p
 
 The Cloud Foundry :ref:`Application Manifest <create-application-manifest>` file provides the means of identifying the BIG-IP policies, profiles, etc., you want to apply. Some policy and profile configurations only apply to L7 (HTTP) virtual servers. See the `cf-bigip-ctlr configuration parameters`_ table for more information.
 
-.. tip:: See :ref:`apply-policies-profiles` for an example using "x-forwarded-for" and "x-forwarded-proto" headers.
+.. tip:: See :ref:`cf-apply-policies-profiles` for an example using "x-forwarded-for" and "x-forwarded-proto" headers.
 
 .. _cf-key-concepts:
 

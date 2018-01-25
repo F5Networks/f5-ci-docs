@@ -18,6 +18,8 @@ applications:
                         balance: least-connections-node
                         verify_interval: 30
                         external_addr: 10.100.100.101
+                        # Required if running the Controller in broker mode
+                        tier2_ip_range: 255.255.255.0
                         ssl_profiles:
                           - /Common/my-ssl-policy
                         policies:
@@ -26,6 +28,10 @@ applications:
                           - /Common/example-profile
                         health_monitors:
                           - /Common/tcp_half_open
+
+                      # Required to run the BIG-IP Controller as a Service
+                      # Broker (introduced in v1.1.0)
+                      broker_mode: true
 
                       logging:
                         level: info
@@ -54,7 +60,6 @@ applications:
                         auth_disabled: false
 
                       # User account for authentication to the Service Broker API
-                      # introduced in v1.1.0
                       status:
                         user: user
                         pass: pass
@@ -83,4 +88,3 @@ applications:
                                       interval: 12
                                       timeout: 5
                                       send: hello
-

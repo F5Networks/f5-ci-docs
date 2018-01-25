@@ -14,6 +14,25 @@ Complete the steps provided below to deploy the |cf-long| using the default glob
 
    If you need to configure BIG-IP objects for individual Routes, you'll need to register the |cfctlr| as a `Service Broker`_. See :ref:`cfctlr per-route vs` for more information.
 
+
+.. table:: Task table
+
+   =======  ===================================================================
+   Step     Task
+   =======  ===================================================================
+   1.       :ref:`Complete the setup prerequisites <cf-deployment-prereqs>`
+
+   2.       :ref:`create-application-manifest`
+
+            :ref:`cf-health-monitors` (OPTIONAL)
+
+            :ref:`cf-apply-policies-profiles` (OPTIONAL)
+
+   3.       :ref:`push cf-bigip-ctlr global`
+
+   4.       :ref:`cf-verify BIG-IP objects`
+   =======  ===================================================================
+
 .. _cf-deployment-prereqs:
 
 Before you begin
@@ -87,7 +106,7 @@ In the global :code:`bigip` configuration section, you can attach health monitor
 
 .. tip:: You can create new health monitors and/or attach existing BIG-IP health monitors for `per-Route virtual servers <define per-route vs settings>`.
 
-.. _apply-policies-profiles:
+.. _cf-apply-policies-profiles:
 
 Apply BIG-IP policies and profiles
 ``````````````````````````````````
@@ -124,7 +143,7 @@ Push the |cfctlr| app to Cloud Foundry
 .. include:: /_static/reuse/push-cfctlr-app.rst
 
 
-.. _verify BIG-IP objects:
+.. _cf-verify BIG-IP objects:
 
 Verify object creation on the BIG-IP system
 -------------------------------------------
