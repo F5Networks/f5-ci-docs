@@ -84,6 +84,27 @@ version = 'v1'
 # The full version, including alpha/beta/rc tags.
 release = 'v1.3'
 
+# Deprecated version notice
+rst_prolog = """
+.. raw:: html
+   
+   <script type="text/javascript">
+     function replaceVersion() {
+       var currentPage = location.pathname;
+       var re = /(v1)/;
+       var newPage = currentPage.replace(re,"latest");
+
+       location.replace(newPage)
+     }
+   </script>
+   
+   <div class="alert alert-danger alert-dismissible">
+     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+     <p><strong>WARNING!</strong> You are viewing an outdated documentation set.</p>
+     <p><a href="javascript:replaceVersion();">View the latest version</a></p>
+   </div>
+"""
+
 # All substitutions
 
 rst_epilog = """

@@ -14,7 +14,7 @@ deploy:
 - provider: script
   skip_cleanup: true
   on:
-    branch: v1
+    branch: v1-eol
     repo: F5Networks/f5-ci-docs
   script:
   - ./scripts/deploy-docs.sh publish-container-docs-to-prod containers v1
