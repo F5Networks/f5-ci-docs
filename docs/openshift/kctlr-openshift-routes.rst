@@ -111,7 +111,7 @@ Passthrough Termination
 Re-encryption Termination
 `````````````````````````
 
-.. todo:: Add one-line description of reencryption-termination route
+.. important:: The |kctlr| does not support path-based Routes for TLS re-encryption.
 
 .. literalinclude:: /openshift/config_examples/f5-openshift-reencrypt-route.yaml
    :linenos:

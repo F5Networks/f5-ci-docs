@@ -5,7 +5,7 @@
       "servicePort": 3000
     },
     "frontend": {
-      "partition": "kubernetes",
+      "partition": "k8s",
       "iapp": "/Common/f5.http",
       "iappPoolMemberTable": {
         "name": "pool__members",

@@ -3,36 +3,88 @@ applications:
     health-check-type: http
     health-check-http-endpoint: /health
     env:
+      # Provide the desired BIG-IP configurations including partition, load
+      # balancing algorithm, and Self IP address to assign to the virtual server
+      # THE SETTINGS IN THIS SECTION ARE GLOBAL
+      # Set "broker_mode" to "true" to run the BIG-IP Controller as a
+      # Service Broker
       BIGIP_CTLR_CFG: |
                       bigip:
-                        url: https://1.2.3.4
-                        user: <myUsername>
-                        pass: <myPassword>
+                        url: https://bigip.example.com
+                        user: myBigipUsername
+                        pass: myBigipPassword
                         partition:
                           - cf
-                        balance: round-robin
+                        balance: least-connections-node
                         verify_interval: 30
                         external_addr: 10.100.100.101
+                        # Required if running the Controller in broker mode
+                        tier2_ip_range: 255.255.255.0
+                        ssl_profiles:
+                          - /Common/my-ssl-policy
+                        policies:
+                          - /Common/example-ltm-policy
+                        profiles:
+                          - /Common/example-profile
+                        health_monitors:
+                          - /Common/tcp_half_open
 
-                      route_mode: all
-
-                      nats:
-                        - host: 10.100.100.25
-                          port: 4222
-                          user: <myNatsUser>
-                          pass: <myNatsPassword>
+                      # Required to run the BIG-IP Controller as a Service
+                      # Broker (introduced in v1.1.0)
+                      broker_mode: true
 
                       logging:
                         level: info
 
+                      route_mode: all
+
+                      # Required for HTTP routing
+                      nats:
+                        - host: 192.168.10.1
+                          port: 4222
+                          user: myNatsUser
+                          pass: myNatsPassword
+
+                      # Required for TCP routing
                       oauth:
                         token_endpoint: uaa.system.cf.local
-                        client_name: <myAdminUser>
-                        client_secret: <myAdminSecret>
+                        client_name: uaa-client
+                        client_secret: uaa-secret
                         port: 443
                         skip_ssl_validation: true
+                        ca-certs:
 
                       routing_api:
                         uri: http://api.system.cf.local
                         port: 80
-                      auth_disabled: false
+                        auth_disabled: false
+
+                      # User account for authentication to the Service Broker API
+                      status:
+                        user: user
+                        pass: pass
+
+      # Include the section below to use the cf-bigip-ctlr as a Service Broker
+      # THE SETTINGS IN THIS SECTION ARE ROUTE-SPECIFIC
+      SERVICE_BROKER_CONFIG: |
+                            plans:
+                              - description: plan for sb test example,
+                                name: sbtest,
+                                virtualServer:
+                                  - policies:
+                                    - /Common/PreventSpoofOfXFF
+                                  - profiles:
+                                    - /Common/x-forwarded-for
+                                  - sslProfiles:
+                                    - /Common/server-ssl
+                                pool:
+                                  balance: ratio-member
+                                  healthMonitors:
+                                    # Use a health monitor that already exists in the cf partition on the BIG-IP device
+                                    - name: /cf/my-healthMonitor
+                                    # Create a new health monitor
+                                    - name: hm-test
+                                      type: http
+                                      interval: 12
+                                      timeout: 5
+                                      send: hello
