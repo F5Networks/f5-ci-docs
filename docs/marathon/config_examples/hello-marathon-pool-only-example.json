@@ -9,6 +9,8 @@
       // BIG-IP partition
       "F5_PARTITION": "mesos",
       "F5_0_MODE": "http",
-      "F5_0_PORT": "8080"
+      "F5_0_PORT": "8080",
+      // Specify a supported BIG-IP load balancing mode
+      "F5_0_BALANCE": "weighted-least-connections-member"
     }
 }

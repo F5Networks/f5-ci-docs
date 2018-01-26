@@ -6,8 +6,8 @@ metadata:
   labels:
     f5type: virtual-server
 data:
-  # schema v.0.1.4 is required as of k8s-bigip-ctlr v1.3.0
-  schema: "f5schemadb://bigip-virtual-server_v0.1.4.json"
+  # schema v0.1.7 is required as of k8s-bigip-ctlr v1.4.0
+  schema: "f5schemadb://bigip-virtual-server_v0.1.7.json"
   data: |
     {
       "virtualServer": {
@@ -16,7 +16,7 @@ data:
           "servicePort": 3000
         },
         "frontend": {
-          "partition": "kubernetes",
+          "partition": "k8s",
           "iapp": "/Common/f5.http",
           "iappPoolMemberTable": {
             "name": "pool__members",

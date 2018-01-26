@@ -91,12 +91,12 @@ Set up RBAC Authentication
 Create a Deployment
 -------------------
 
-#. Define the |kctlr| configurations in a Kubernetes `Deployment`_ using valid JSON or YAML.
+Define the |kctlr| configurations in a Kubernetes `Deployment`_ using valid JSON or YAML.
 
-   .. literalinclude:: /kubernetes/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
+.. literalinclude:: /kubernetes/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
       :linenos:
 
-   :fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_image-secret.yaml </kubernetes/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml>`
+:fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_image-secret.yaml </kubernetes/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml>`
 
 Upload the resources to the Kubernetes API server
 -------------------------------------------------
@@ -142,4 +142,5 @@ What's Next
 -----------
 
 - Check out the `k8s-bigip-ctlr reference documentation`_.
-- Learn how to :ref:`expose Services to external traffic using an Ingress <kctlr-ingress-config>`.
+- :ref:`Create a BIG-IP Virtual Server for a Service <kctlr-create-vs>`.
+- :ref:`Create a BIG-IP Virtual Server for an Ingress Resource <kctlr-ingress-config>`.

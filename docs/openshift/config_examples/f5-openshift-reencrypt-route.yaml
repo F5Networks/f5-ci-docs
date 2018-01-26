@@ -5,6 +5,15 @@ metadata:
     name: myService
   name: myService-route-reencrypt
   namespace: default
+  annotations:
+    virtual-server.f5.com/balance: round-robin
+    # Provide the name of an existing BIG-IP client SSL profile
+    virtual-server.f5.com/clientssl: /Common/client-ssl
+    # Provide the name of an existing BIG-IP server SSL profile
+    virtual-server.f5.com/serverssl: /Common/server-ssl
+    # Set to True to validate the server-side SSL certificate of
+    # re-encrypt terminated routes.
+    virtual-server.f5.com/secure-serverssl: True
 spec:
   host: mysite.example.com
   path: "/myApp"

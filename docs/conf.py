@@ -18,16 +18,12 @@
 #
 import os
 import sys
-
-sys.path.insert(0, os.path.abspath('.'))
-sys.path.insert(0, os.path.abspath('../'))
-
-
 import f5_sphinx_theme
 import recommonmark
 import CommonMark
 
-
+sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('../'))
 from recommonmark.parser import CommonMarkParser
 
 # -- General configuration ------------------------------------------------
@@ -47,6 +43,7 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinxjp.themes.basicstrap',
     'cloud_sptheme.ext.table_styling',
+    'sphinx.ext.extlinks'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -61,7 +58,6 @@ source_suffix = ['.rst', '.md']
 source_parsers = {
     '.md': CommonMarkParser,
 }
-
 
 # The encoding of source files.
 #
@@ -82,7 +78,14 @@ author = u'F5 Networks'
 # The short X.Y version.
 version = 'v2'
 # The full version, including alpha/beta/rc tags.
-release = 'v2.0'
+release = ''
+
+# External link shortcuts
+extlinks = {'k8sdocs': ('https://kubernetes.io/docs/%s',
+                      ''),
+            'issues': ('https://github.com/F5Networks/f5-ci-docs/issue/%s',
+                       'issue ')
+            }
 
 # All substitutions
 # Try to keep sorted alphabetically
@@ -100,6 +103,7 @@ rst_epilog = """
 .. _Application labels for iApp mode: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/#application-labels-for-iapp-mode
 .. _Application Manifest: https://docs.pivotal.io/pivotalcf/1-7/devguide/deploy-apps/manifest.html
 .. _Better or Best license: https://f5.com/products/how-to-buy/simplified-licensing
+.. _BIG-IP Application Security Manager: https://f5.com/products/big-ip/application-security-manager-asm
 .. _BIG-IP Controller for Cloud Foundry: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/
 .. _BIG-IP Controller for Kubernetes: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest
 .. _BIG-IP Controller for Marathon: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest
@@ -110,6 +114,9 @@ rst_epilog = """
 .. _built-in middleware: %(base_url)s/products/asp/latest/#built-in-middleware
 .. _cf-bigip-ctlr configuration parameters: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/#configuration-parameters
 .. _cf-bigip-ctlr: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/
+.. _cf-bigip-ctlr v1.1.0: %(base_url)s/products/connectors/cf-bigip-ctlr/v1.1/
+.. _cf-bigip-ctlr reference documentation: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/
+.. _cf-bigip-ctlr service broker config parameters: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/#broker-configs
 .. _Cloud Foundry CLI: https://docs.cloudfoundry.org/cf-cli/getting-started.html
 .. _Cloud Foundry: https://cloudfoundry.org/why-cloud-foundry/
 .. _Cluster network: https://kubernetes.io/docs/concepts/cluster-administration/networking/
@@ -132,6 +139,8 @@ rst_epilog = """
 .. _F5 virtual server properties: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#virtualserver-configmap-properties
 .. _f5-kube-proxy reference documentation: %(base_url)s/products/connectors/f5-kube-proxy/latest/
 .. _f5-kube-proxy: %(base_url)s/products/connectors/f5-kube-proxy/latest/
+.. _flannel: https://github.com/coreos/flannel
+.. _flannel manifest: https://github.com/coreos/flannel/blob/master/Documentation/kube-flannel.yml
 .. _iApp Pool Member table: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#iapp-pool-member-table
 .. _Ingress annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#ingress-resources
 .. _Ingress controller: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-controllers
@@ -145,6 +154,7 @@ rst_epilog = """
 .. _k8s-bigip-ctlr v1.1.0: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.1/
 .. _k8s-bigip-ctlr v1.2.0: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.2/
 .. _k8s-bigip-ctlr v1.3.0: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.3/
+.. _k8s-bigip-ctlr v1.4.0: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.4/
 .. _kube-proxy: https://kubernetes.io/docs/admin/kube-proxy/
 .. _kubectl: https://kubernetes.io/docs/user-guide/kubectl-overview/
 .. _Kubernetes Dashboard: https://kubernetes.io/docs/user-guide/ui/
@@ -177,9 +187,11 @@ rst_epilog = """
 .. _Route annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-annotations
 .. _Route configuration parameters: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-routes
 .. _Secret: https://kubernetes.io/docs/user-guide/secrets/
+.. _Self IP address: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-13-0-0/5.html#guid-52e1f1d8-9a6b-48cc-acfa-07745b757f07
 .. _Service: https://kubernetes.io/docs/concepts/services-networking/service/
 .. _ServiceAccount: https://kubernetes.io/docs/admin/service-accounts-admin/
 .. _Services: https://kubernetes.io/docs/user-guide/services/
+.. _Service Broker: https://docs.cloudfoundry.org/services/overview.html
 .. _Splunk: https://www.splunk.com/
 .. _Static Pod: https://kubernetes.io/docs/admin/static-pods/
 .. _store your Docker login credentials as a Secret: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -187,6 +199,7 @@ rst_epilog = """
 .. _supported Route configurations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-route-configurations
 .. _supported Route Annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#id20
 .. _system configuration: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-initial-configuration-12-0-0/2.html#conceptid
+.. _Using flannel with Kubernetes: https://coreos.com/flannel/docs/latest/kubernetes.html
 """% {
     'base_url': 'http://clouddocs.f5.com'
 }
@@ -250,7 +263,6 @@ pygments_style = 'sphinx'
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = False
 
-
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -276,11 +288,11 @@ html_sidebars = {
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-#html_title = 'F5 Container Integrations'
+html_title = 'F5 Container Integrations'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
-html_short_title = 'Home'
+html_short_title = 'Container Connectors Home'
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
