@@ -1,4 +1,8 @@
+Container Connectors
+````````````````````
+
 .. toctree::
+   :caption: Cloud Foundry
    :maxdepth: 1
    :glob:
 
@@ -36,10 +40,12 @@
    marathon-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
    Integration Overview <marathon/index>
    marathon/mctlr-app-install
-   marathon/mctlr-configure
    marathon/mctlr-authenticate-dcos
    marathon/mctlr-manage-bigip-objects
    marathon/mctlr-deploy-iapp
+
+Support
+```````
 
 .. toctree::
    :caption: Support
@@ -51,7 +57,6 @@
    cla_landing
 
 .. toctree::
-   :hidden:
    :caption: Troubleshooting
    :glob:
    :maxdepth: 1
