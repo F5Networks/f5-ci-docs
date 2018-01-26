@@ -5,6 +5,13 @@ metadata:
     name: myService
   name: myService-route-edge
   namespace: default
+  annotations:
+    # Specify a supported BIG-IP load balancing mode
+    virtual-server.f5.com/balance: least-connections-member
+    # Provide the name of an existing BIG-IP client SSL profile
+    virtual-server.f5.com/clientssl: /Common/client-ssl
+    # Provide the name of an existing BIG-IP server SSL profile
+    virtual-server.f5.com/serverssl: /Common/server-ssl
 spec:
   host: mysite.example.com
   path: "/myApp"

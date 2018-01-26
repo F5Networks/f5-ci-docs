@@ -1,15 +1,15 @@
 f5-ci-docs
 ==========
 
-.. image:: https://travis-ci.com/F5Networks/f5-ci-docs.svg?token=9DzDpZ48B74dRXvdFxM2&branch=master
-    :target: https://travis-ci.com/F5Networks/f5-ci-docs
+.. image:: https://travis-ci.org/F5Networks/f5-ci-docs.svg?token=9DzDpZ48B74dRXvdFxM2&branch=master
+   :target: https://travis-ci.org/F5Networks/f5-ci-docs
 
 Overview
 --------
 
 This repository houses the end-user documentation for F5 Networks' Container Connectors (CC). The documentation is published at http://clouddocs.f5.com/containers/latest.
 
-We write documentation in `reStructuredText <http://docutils.sourceforge.net/rst.html>`_ (rST); build with `Sphinx <http://www.sphinx-doc.org/>`_ ; test with `Travis-CI <https://travis-ci.com/>`_ ; and publish to a static website hosted in `Amazon s3 <https://aws.amazon.com/s3/>`_.
+We write documentation in `reStructuredText <http://docutils.sourceforge.net/rst.html>`_ (rST); build with `Sphinx <http://www.sphinx-doc.org/>`_ ; test with `Travis-CI <https://travis-ci.org/>`_ ; and publish to a static website hosted in `Amazon s3 <https://aws.amazon.com/s3/>`_.
 
 Contributing
 ------------
