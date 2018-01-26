@@ -4,22 +4,24 @@ metadata:
   name: ing-fanout
   namespace: default
   annotations:
-    # IP address of a BIG-IP pool member
+    # Provide an IP address for the BIG-IP virtual server;
+    # Set to "controller-default" if you want to use the Controller's
+    # "default-ingress-ip" (introduced in v1.4.0)
     virtual-server.f5.com/ip: "1.2.3.4"
-    # BIG-IP partition
-    virtual-server.f5.com/partition: "kubernetes"
-    # Load balancing algorithm
+    # Specify the BIG-IP partition where the Controller should create the virtual server.
+    virtual-server.f5.com/partition: "k8s"
+    # Specify the desired load balancing algorithm
     virtual-server.f5.com/balance: "least-connections-node"
 spec:
   rules:
   - host: mysite.example.com
     http:
       paths:
-      - path: /mysite/app1
+      - path: /app1
         backend:
           serviceName: myService1
           servicePort: 80
-      - path: /mysite/app2
+      - path: /app2
         backend:
           serviceName: myService2
           servicePort: 80

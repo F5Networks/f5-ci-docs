@@ -4,8 +4,11 @@ metadata:
   name: ing1
   namespace: default
   annotations:
-    virtual-server.f5.com/ip:        "1.2.3.4"
-    virtual-server.f5.com/partition: "kubernetes"
+    # Provide an IP address for the BIG-IP virtual server;
+    # Set to "controller-default" if you want to use the Controller's
+    # "default-ingress-ip" (introduced in v1.4.0)
+    virtual-server.f5.com/ip: "controller-default"
+    virtual-server.f5.com/partition: "k8s"
     virtual-server.f5.com/health: |
       [
         {

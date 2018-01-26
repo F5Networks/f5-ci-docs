@@ -1,3 +1,6 @@
+Container Connectors
+````````````````````
+
 .. toctree::
    :caption: Cloud Foundry
    :maxdepth: 1
@@ -5,6 +8,7 @@
 
    cf-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/cf-bigip-ctlr/latest>
    Integration Overview <cloudfoundry/index>
+   cloudfoundry/cf-per-route-virtuals
    cloudfoundry/cfctlr*
 
 .. toctree::
@@ -16,16 +20,17 @@
    Kubernetes Integration overview <kubernetes/index>
    OpenShift Integration overview <openshift/index>
    kubernetes/kctlr-modes
+   kubernetes/flannel-bigip-info
+   kubernetes/kctlr-use-bigip-k8s
    openshift/kctlr-use-bigip-openshift
+   openshift/replace-f5-router
    kubernetes/kctlr-app-install
    openshift/kctlr-openshift-app-install
    kubernetes/kctlr-secrets
    kubernetes/kctlr-ingress
    kubernetes/kctlr-manage-bigip-objects
    kubernetes/kctlr-deploy-iapp
-   openshift/replace-f5-router
    openshift/kctlr-openshift-routes
-
 
 .. toctree::
    :caption: Mesos Marathon
@@ -35,10 +40,12 @@
    marathon-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
    Integration Overview <marathon/index>
    marathon/mctlr-app-install
-   marathon/mctlr-configure
    marathon/mctlr-authenticate-dcos
    marathon/mctlr-manage-bigip-objects
    marathon/mctlr-deploy-iapp
+
+Support
+```````
 
 .. toctree::
    :caption: Support
@@ -50,7 +57,6 @@
    cla_landing
 
 .. toctree::
-   :hidden:
    :caption: Troubleshooting
    :glob:
    :maxdepth: 1
