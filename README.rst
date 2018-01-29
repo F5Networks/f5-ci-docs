@@ -1,8 +1,8 @@
 f5-ci-docs
 ==========
 
-.. image:: https://travis-ci.org/F5Networks/f5-ci-docs.svg?token=9DzDpZ48B74dRXvdFxM2&branch=master
-   :target: https://travis-ci.org/F5Networks/f5-ci-docs
+.. image:: https://travis-ci.org/F5Networks/f5-ci-docs.svg?branch=master
+    :target: https://travis-ci.org/F5Networks/f5-ci-docs
 
 Overview
 --------
@@ -73,5 +73,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
-
