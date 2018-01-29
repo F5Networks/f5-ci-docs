@@ -292,7 +292,7 @@ If you have created a new Ingress resource, use the :command:`create` command to
 
 .. code-block:: console
 
-   kubectl create ingress -f myIngress.yaml
+   kubectl create -f myIngress.yaml
 
 You can apply updates to an existing Ingress resource using the :command:`apply` command.
 
