@@ -3,52 +3,47 @@
 
 .. _flannel-bigip-info:
 
-BIG-IP device integration with flannel VXLAN in Kubernetes
-==========================================================
+BIG-IP and flannel VXLAN Integration
+====================================
+
+This document provides a general overview of the BIG-IP device integration with flannel VXLAN in Kubernetes. For set-up instructions, see :ref:`use-bigip-k8s-flannel`.
 
 Overview of Cluster Networking with flannel in Kubernetes
 ---------------------------------------------------------
 
-.. sidebar:: :fonticon:`fa fa-info-circle` Related
+.. sidebar:: :fonticon:`fa fa-info-circle` Related:
 
    Read about the Kubernetes `Cluster Network`_ and `Using flannel with Kubernetes`_.
 
-`Flannel`_ is a layer 3 network fabric (or, in their words, "a virtual network that attaches IP addresses to containers"). Flannel assigns a subnet to each Node and allocates an IP address within the Node's subnet to each of the Node's Pods.
+`Flannel`_ is a layer 3 network fabric (or, in their words, "a virtual network that attaches IP addresses to containers"). In Kubernetes, the flannel runs as a Pod on each Node in the Cluster. The Pod consists of two containers -- :code:`install-cni` and :code:`flanneld` -- which allow flannel to provide network information to Nodes and to read information about Nodes from the Kubernetes API server.
 
-When you apply the `flannel manifest`_ in Kubernetes, the flannel Pod deploys on each Node in the Cluster. The Pod consists of two containers:
-
-- ``install-cni``: Deploys the configurations needed for the `flannel-cni network plugin`_.
-- ``flanneld``: Runs the flannel daemon.
-
-These containers allow flannel to provide network information to Nodes and to read information about Nodes from the Kubernetes API server.
+Flannel assigns a subnet to each Kubernetes Node. It allocates an IP address within that subnet to each Pod running on the Node. Because the flannel daemon (:code:`flanneld`) runs on every Node, all of the Pods across the Cluster can talk to each other directly.
 
 .. note::
 
-   In older versions of Kubernetes (pre-1.6), flannel used an ``etcd`` key-value store to read and write information about Kubernetes Nodes. This information included the VTEP (VXLAN tunnel endpoint) of each Node and a subnet within the defined flannel network range. Though ``etcd`` is still viable in later versions, it's not as common.
+   In older versions of Kubernetes (pre-1.6), flannel used an ``etcd`` key-value store to read and write information about Kubernetes Nodes. Though ``etcd`` is still viable in later versions, it's not commonly used.
 
-Once you have the flannel daemon running on each Node, all of the Pods across the Cluster can talk to each other.
+.. _k8s-to-bigip:
 
-Now that we have flannel set up, let's focus on your BIG-IP.
-
-BIG-IP devices and the Kubernetes Cluster network
+How the BIG-IP system knows about Kubernetes Pods
 -------------------------------------------------
 
-As discussed in :ref:`kctlr modes`, when you integrate your BIG-IP device into the Kubernetes Cluster Network, it can load balance directly to any Pod in the Cluster. Read on for a high-level view of how the integration works.
+.. sidebar:: :fonticon:`fa fa-exclamation-circle` Important:
 
-.. tip::
+   See :ref:`use-bigip-k8s-flannel` for step-by-step set-up instructions.
 
-   See :ref:`bigip-k8s-setup` for step-by-step instructions.
+As discussed in :ref:`kctlr modes`, when a BIG-IP device is part of the Kubernetes Cluster Network, it can load balance directly to any Pod in the Cluster. This is the case because, via flannel and the |kctlr|, the BIG-IP can find each Pod's public-IP address. Read on for an overview of how this works.
 
-Tell the BIG-IP about Kubernetes
-````````````````````````````````
+The BIG-IP device connects to the flannel network via a VXLAN tunnel. The |kctlr| populates this tunnel with the following information about the flannel network:
 
-First, you'll connect the BIG-IP device to the Kubernetes Cluster Network using a VXLAN tunnel. When you launch the |kctlr|, it will populate the tunnel with forwarding database (FDB) records. The FDB records map each Kubernetes Node's [cluster] IP address to the MAC address of its flannel VXLAN interface. The |kctlr| will also create static ARP entries. The ARP entries map the flannel VXLAN interface's MAC address to the public IP address assigned to the Pod by flannel; this public IP address is also assigned to the node on the BIG-IP.
+- forwarding database (FDB) records that map the MAC address of each Kubernetes Node's flannel VXLAN interface to the Node IP address;
+- static ARP entries that map the flannel VXLAN interface's MAC address to the Pod's flannel :code:`public-IP`.
 
-.. todo:: Verify if the above statement re cluster IP is correct.
+The |kctlr| also assigns each Pod's flannel :code:`public_ip` address to a node on the BIG-IP.
 
-**For example:**
+.. rubric:: **Example:**
 
-Node1 has the IP address, MAC address, and Pod IP address shown in the table below.
+Node1 has the NodeIP address, MAC address, and Pod :code:`public_ip` address shown in the table below.
 
 +-------------------------------------------------------------------+
 | Kubernetes Node1                                                  |
@@ -60,7 +55,7 @@ Node1 has the IP address, MAC address, and Pod IP address shown in the table bel
 | Pod public_ip address assigned by flannel     | 10.244.1.2        |
 +-----------------------------------------------+-------------------+
 
-The BIG-IP FDB record created for this Node would look like this ::
+The |kctlr| uses this information to create an FDB record for the Node on the BIG-IP system: ::
 
    flannel_vxlan {
     records [
@@ -70,7 +65,7 @@ The BIG-IP FDB record created for this Node would look like this ::
     ]
    }
 
-and the static ARP entry would look like this: ::
+The |kctlr| also creates a static ARP entry for the Node: ::
 
    {
       name: k8s-10.244.1.2
@@ -78,39 +73,36 @@ and the static ARP entry would look like this: ::
       macaddress: 98:ba:76:dc:54:fe
    }
 
-Together, these records tell the BIG-IP device what Kubernetes resource(s) should receive traffic from the node whose IP address is "10.244.1.2".
+Together, these records tell the BIG-IP device that a Pod on Node1 what Kubernetes resource(s) should receive traffic from the BIG-IP node with the IP address "10.244.1.2".
 
-Tell flannel about the BIG-IP
+.. _bigip snats:
+
+BIG-IP SNATs and SNAT automap
 `````````````````````````````
 
-At this point, your BIG-IP device knows how to route to the Kubernetes network, but it isn't a part of the network yet. You'll need to set up flannel to be aware of the BIG-IP device. To do so, you'll create an additional flannel subnet and allocate a self IP address from this subnet as the BIG-IP's VTEP.
+All virtual servers created by the |kctlr| use the `BIG-IP SNAT`_ automap feature. The SNAT automap feature lets you map original IP addresses -- in this case, the flannel :code:`public_ip` for each Pod -- to a pool of translation addresses on the BIG-IP system. The self IP address that serves as the BIG-IP VTEP for the VXLAN tunnel also functions as a SNAT pool. The subnet mask you provide when creating the self IP will define the addresses available in the SNAT pool. The self IP's subnet mask must match the flannel podCIDR.
 
-When setting up a new subnet to use for the BIG-IP, make sure that it doesn't collide with any of the Node subnets.
+When the BIG-IP system processes connections from the Pod :code:`public_ip` addresses, it chooses a translation address from the pool of available self IP addresses. SNAT automap prefers floating self IP addresses to support seamless failover between paired or clustered devices.
 
-**For example:**
-First, define a subnet to allocate BIG-IP self IP addresses from: ``10.244.30.0/24``.
+.. warning::
 
-Then, create a self IP to use as the VTEP for the VXLAN tunnel: ``10.244.30.15/16``. The subnet mask -- ``/16`` -- matches the flannel network range's default subnet mask.
+   If the SNAT automap feature can't find an available floating self IP on the flannel VXLAN, it may use a floating self IP from another VLAN as the translation address. Always use a floating self IP address as the VTEP when working with BIG-IP device pairs or clusters.
 
-As mentioned earlier, flannel knows about Kubernetes Nodes via the Kubernetes API. This means that, in order for flannel to add the BIG-IP device to the Kubernetes network,
-the Kubernetes API has to know about the BIG-IP device. How can we possibly do that?
+   Refer to `Overview of SNAT features`_ and `SNAT Automap and self IP address selection`_ in the AskF5 Knowledge Base for more information.
 
-Add the BIG-IP device as a Node in Kubernetes, of course!
+How flannel knows about the BIG-IP device
+-----------------------------------------
 
-This may seem complicated at first, but it's actually fairly simple. When you create a new Node resource for the BIG-IP device, add the flannel Annotations and podCIDR.
+At this point, your BIG-IP device knows how to route to the Kubernetes network, but flannel doesn't know about the BIG-IP device. You'll have to add a dummy Node to the Kubernetes Cluster to represent the BIG-IP device to make flannel aware of it.
 
-Here is what the BIG-IP Node resource looks like:
+Flannel's :code:`kube-subnet-manager` uses the Kubernetes API to discover information about Kubernetes Nodes. This means that, to add the BIG-IP device to the flannel network, we need to add the BIG-IP device as a Node in Kubernetes.
 
-.. literalinclude:: /kubernetes/config_examples/f5-kctlr-bigip-node.yaml
-   :linenos:
-
-Flannel sees its Annotations on the Node and adds the BIG-IP device to the VXLAN.
+When you add a new Node to Kubernetes to represent the BIG-IP device, :ref:`add the flannel Annotations <add flannel annotations>` and podCIDR to the Node resource. Once the Node is up and running, flannel will discover its Annotations and add the BIG-IP device to the VXLAN.
  
-With all of these pieces in place, we can successfully send traffic from (or through) a BIG-IP virtual server to a specific Kubernetes Pod!
+With all of these pieces in place, you can successfully send traffic from (or through) a BIG-IP virtual server to a specific Kubernetes Pod!
 
 What's Next
 -----------
 
-:ref:`Add your BIG-IP device to the Kubernetes Cluster <bigip-k8s-setup>`.
+:ref:`Add your BIG-IP device to the Kubernetes Cluster <use-bigip-k8s-flannel>`.
 
-.. _flannel-cni network plugin: https://github.com/containernetworking/plugins/tree/master/plugins/meta/flannel

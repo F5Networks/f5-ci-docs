@@ -120,7 +120,7 @@ For example: to use the "x-forwarded-for" and "x-forwarded-proto" headers, take 
 
    .. code-block:: yaml
       :caption: Excerpt from example manifest with policy and profile defined
-      :emphasize-lines: 11-12
+      :emphasize-lines: 11-14
 
       BIGIP_CTLR_CFG: |
                 bigip:
@@ -132,8 +132,10 @@ For example: to use the "x-forwarded-for" and "x-forwarded-proto" headers, take 
                   balance: round-robin
                   verify_interval: 30
                   external_addr: 192.168.1.1
-                  profiles: /Common/x-forwarded-for
-                  policies: /Common/x-forwarded-proto
+                  profiles:
+                  - /Common/x-forwarded-for
+                  policies:
+                  - /Common/x-forwarded-proto
 
 .. _push cf-bigip-ctlr global:
 

@@ -118,9 +118,7 @@ Take these into consideration if you're deciding how to set up your cluster netw
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
    | flannel VXLAN         | :ref:`Create a VXLAN tunnel on the BIG-IP system <k8s-vxlan-setup>`.                    | None. The |kctlr| automatically detects Kubernetes  |
    |                       |                                                                                         | Nodes and makes the necessary BIG-IP system         |
-   |                       | :ref:`Create a fake BIG-IP Node in Kubernetes <k8s-bigip-node>`.                        | configurations.                                     |
-   |                       |                                                                                         |                                                     |
-   |                       | :ref:`Add the BIG-IP to the flannel overlay network <k8s-assign-ip>`.                   |                                                     |
+   |                       | :ref:`Add the BIG-IP to the flannel overlay network <k8s-bigip-node>`.                  | configurations.                                     |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
    | **Layer 3 networks**                                                                                                                                                  |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
@@ -142,7 +140,7 @@ Review the `k8s-bigip-ctlr configuration parameters`_.
 Kubernetes
 ``````````
 
-- :ref:`bigip-k8s-setup`
+- :ref:`use-bigip-k8s-flannel`
 - :ref:`Install the BIG-IP Controller in standard Kubernetes <install-kctlr>`
 
 OpenShift

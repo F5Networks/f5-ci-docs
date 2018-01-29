@@ -160,9 +160,11 @@ How do I verify connectivity between the BIG-IP VTEP and the OSE Node?
 
 #. Ping the Node's VTEP IP address.
 
-   Use the ``-s`` flag to set the MTU of the packets to allow for VxLAN encapsulation. ::
+   Use the ``-s`` flag to set the MTU of the packets to allow for VxLAN encapsulation.
 
-     ping -s 1600 <OSE_Node_IP>
+   .. code-block:: console
+
+      ping -s 1600 <OSE_Node_IP>
 
 #. :ref:`View the logs <troubleshoot openshift view-logs>` for the k8s-bigip-ctlr.
 
@@ -170,31 +172,35 @@ How do I verify connectivity between the BIG-IP VTEP and the OSE Node?
 
 #. In a TMOS shell, output the REST requests from the BIG-IP logs.
 
-   - Do a ``tcpdump`` of the underlay network. ::
+   - Do a ``tcpdump`` of the underlay network.
 
-       tcpdump -i <name-of-BIG-IP-VXLAN-tunnel>
+     .. code-block:: console
+
+        tcpdump -i <name-of-BIG-IP-VXLAN-tunnel>
 
      \
 
      .. code-block:: console
         :caption: Example showing two-way communication on port 4789 between the BIG-IP VTEP IP and the OSE node VTEP IPs.
 
-        root@localhost:Active:Standalone] config # tcpdump -i ocpvlan
+        admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ tcpdump -i ocpvlan
         08:08:06.933951 IP 10.214.1.102.58472 > 10.214.1.23.4789: VXLAN, flags [I] (0x08), vni 0
         IP 10.130.0.27.http > 10.128.2.10.37542: Flags [.], ack 9, win 219, options [nop,nop,TS val 573988389 ecr 3961177660], length 0 in slot1/tmm1 lis=_wcard_tunnel_/Common/ose-tunnel
         08:08:06.934310 IP 10.214.1.23.28277 > 10.214.1.102.4789: VXLAN, flags [I] (0x08), vni 0
         IP 10.128.2.10.37542 > 10.130.0.27.http: Flags [.], ack 923, win 251, options [nop,nop,TS val 3961177661 ecr 573988389], length 0 out slot1/tmm0 lis=_wcard_tunnel_/Common/ose-tunnel
 
-   - Do a ``tcpdump`` of the overlay network. ::
+   - Do a ``tcpdump`` of the overlay network.
 
-       tcpdump -i <name-of-BIG-IP-VXLAN-tunnel>
+     .. code-block:: console
+
+        tcpdump -i <name-of-BIG-IP-VXLAN-tunnel>
 
      \
 
      .. code-block:: console
         :caption: Example showing traffic on the overlay network; at minimum, you should see BIG-IP health monitors for the Pod IP addresses.
 
-        root@localhost:Active:Standalone] config # tcpdump -i ose-tunnel
+        admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ tcpdump -i ose-tunnel
         08:09:51.911667 IP 10.128.2.10.38036 > 10.130.0.27.http: Flags [.], ack 1, win 229, options [nop,nop,TS val 3961282640 ecr 574093366], length 0 out slot1/tmm0 lis=
         08:09:51.911672 IP 10.128.2.10.38036 > 10.130.0.27.http: Flags [P.], seq 1:8, ack 1, win 229, options [nop,nop,TS val 3961282640 ecr 574093366], length 7 out slot1/tmm0 lis=
         08:09:51.913161 IP 10.130.0.27.http > 10.128.2.10.38036: Flags [.], ack 8, win 219, options [nop,nop,TS val 574093369 ecr 3961282640], length 0 in slot1/tmm0 lis=
@@ -202,16 +208,18 @@ How do I verify connectivity between the BIG-IP VTEP and the OSE Node?
 
 #. In a TMOS shell, view the VLAN statistics.
 
-   - Underlay ::
+   - Underlay
 
-       tmsh show net vlan <name_of_vlan_used_for_VTEP>
+     .. code-block:: console
+
+        tmsh show /net vlan <name_of_vlan_used_for_VTEP>
 
      \
 
      .. code-block:: console
         :caption: Example
 
-        root@localhost:Active:Standalone] config # tmsh show net vlan ocpvlan
+        admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net vlan ocpvlan
         -------------------------------------
         Net::Vlan: ocpvlan
         -------------------------------------
@@ -232,16 +240,18 @@ How do I verify connectivity between the BIG-IP VTEP and the OSE Node?
              -------------------------------------------------------------
              | 1.1       up  52.8G  17.0G  14.6M  7.4M      0     0   none
 
-   - Overlay ::
+   - Overlay
 
-       tmsh show net vlan <name_of_VXLAN_tunnel_on_BIG-IP>
+     .. code-block:: console
+
+        tmsh show /net vlan <name_of_VXLAN_tunnel_on_BIG-IP>
 
      \
 
      .. code-block:: console
         :caption: Example
 
-        root@localhost:Active:Standalone] config # tmsh show net tunnels tunnel ose-tunnel
+        admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net tunnels tunnel ose-tunnel
         -------------------------------------
         Net::Tunnel: ose-tunnel
         -------------------------------------
@@ -261,16 +271,16 @@ How do I verify connectivity between the BIG-IP VTEP and the OSE Node?
 
 #. In a TMOS shell, view the MAC address entries for the OSE tunnel. This will show the mac address and IP addresses of all of the OpenShift endpoints.
 
-   ::
+   .. code-block:: console
 
-      tmsh show net fdb tunnel <name_of_VXLAN_tunnel on BIG-IP>
+      tmsh show /net fdb tunnel <name_of_VXLAN_tunnel on BIG-IP>
 
    \
 
    .. code-block:: console
       :caption: Example
 
-      root@localhost:Active:Standalone] config # tmsh show net fdb tunnel ose-tunnel
+      admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net fdb tunnel ose-tunnel
       -------------------------------------------------------------
       Net::FDB
       Tunnel      Mac Address        Member                 Dynamic
@@ -284,7 +294,7 @@ How do I verify connectivity between the BIG-IP VTEP and the OSE Node?
 
    .. code-block:: console
 
-      root@localhost:Active:Standalone] config # tmsh show net arp
+      admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net arp
       ------------------------------------------------------------------------------------------
       Net::Arp
       Name          Address       HWaddress          Vlan                Expire-in-sec  Status

@@ -117,7 +117,7 @@ In this example, ``0`` refers to the first mapping defined above (``"containerPo
 
 .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
    :caption: |mctlr| labels defining BIG-IP objects for two (2) port indices
-   :lines: 26-38
+   :lines: 26-40
    :lineno-start: 26
 
 .. [#dockerbridge] See the `Docker Networking <https://docs.docker.com/engine/userguide/networking/>`_ documentation for more information.
@@ -136,8 +136,8 @@ The |mctlr| provides compatibilty with existing Marathon `Health Checks`_. For p
 
 .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
    :caption: Create health checks for each of the Application's port indices
-   :lines: 39-65
-   :lineno-start: 39
+   :lines: 41-67
+   :lineno-start: 41
 
 
 .. [#setuphealthchecks] Occurs when ``F5_CC_USE_HEALTHCHECK``'s value is "True".
@@ -152,4 +152,3 @@ The |mctlr| provides compatibilty with existing Marathon `Health Checks`_. For p
 .. _Marathon documentation: https://mesosphere.github.io/marathon/docs/
 .. _ports resource: http://mesos.apache.org/documentation/latest/attributes-resources/
 .. _service ports: https://mesosphere.github.io/marathon/docs/ports.html
-.. _App definition: tbd

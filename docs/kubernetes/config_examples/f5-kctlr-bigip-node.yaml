@@ -13,5 +13,5 @@ metadata:
 spec:
   # This defines the Flannel subnet for the BIG-IP device. Be sure this subnet
   # does not collide with the subnets of the other Nodes. The BIG-IP device's
-  # self-ip address will be defined in this subnet.
+  # self-ip address and floating IP will be allocated from this subnet.
   podCIDR: 10.244.30.0/24

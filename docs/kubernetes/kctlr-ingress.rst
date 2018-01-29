@@ -179,7 +179,7 @@ Add the :code:`virtual-server.f5.com/health` annotation to your Ingress resource
 .. literalinclude:: /kubernetes/config_examples/f5-k8s-ingress-health-monitor.yaml
    :caption: Health Monitor Example
    :linenos:
-   :emphasize-lines: 9-22
+   :emphasize-lines: 10-25
 
 
 .. _ingress-TLS:

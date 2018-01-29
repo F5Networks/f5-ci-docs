@@ -304,7 +304,7 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
 
    .. code-block:: console
       :linenos:
-      :emphasize-lines: 18-19
+      :emphasize-lines: 20-21
 
       kubectl edit configmap http.vs [--namespace <service-namespace>] \\
       oc edit configmap http.vs [--namespace <service-namespace>]
@@ -314,6 +314,7 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
       #
       apiVersion: v1
       data:
+        schema: "f5schemadb://bigip-virtual-server_v0.1.7.json"
         data: |
           {
             "virtualServer": {
@@ -333,7 +334,6 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
               }
             }
           }
-        schema: f5schemadb://bigip-virtual-server_v0.1.4.json
       kind: ConfigMap
       metadata:
         creationTimestamp: 2017-02-14T17:24:34Z
