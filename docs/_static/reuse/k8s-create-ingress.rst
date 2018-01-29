@@ -9,7 +9,7 @@
             `F5 virtual server properties`_.
    3.       `POST the Ingress Resource to the Kubernetes API server`_ or
 
-            run :code:`kubectl create ingress -f <filename.yaml>`
+            run :code:`kubectl create -f <filename.yaml>`
    =======  ===================================================================
 
 \
