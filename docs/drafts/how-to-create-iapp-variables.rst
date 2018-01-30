@@ -3,6 +3,13 @@
 How to Create iApp Variables
 ============================
 
+----------------------------
+
+You can use iApps with the F5 Container Connectors to manage a wide variety of BIG-IP objects.
+This is particularly useful if you want to deploy objects across BIG-IP modules, like the `Microsoft Office 365 IdP iApp <https://support.f5.com/csp/article/K15656>`_, which deploys both Local Traffic Management (LTM) and Access Policy Manager (APM) objects,.
+
+----------------------------
+
 The |kctlr-long| and |mctlr-long| both support deployment of iApps, which gives them access to essentially all the advanced l4-l7 features on BIG-IP. To deploy an iApp, you need to create custom ``iappVariables`` key-value pairs; these provide the information the iApp needs to configure the BIG-IP.
 
 .. important::

@@ -1,3 +1,8 @@
+:product: BIG-IP Controller for Kubernetes
+:type: concept
+
+.. _troubleshoot k8s deployment:
+
 Troubleshoot Your Kubernetes Deployment
 =======================================
 
@@ -235,7 +240,7 @@ In the examples below, the servicePort and serviceName don't match the name and 
 Do the service types match?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The default type used for `Services`_ in Kubernetes is ``clusterIP``. The corresponding setting for the k8s-bigip-ctlr -- ``pool-member-type`` -- defaults to ``nodeport``.
+The default type used for `Service resources`_ in Kubernetes is ``clusterIP``. The corresponding setting for the k8s-bigip-ctlr -- ``pool-member-type`` -- defaults to ``nodeport``.
 
 **If you didn't specify a type** in the Service definition --OR-- a ``pool-member-type`` in the |kctlr| Deployment, you probably have a service type mismatch.
 

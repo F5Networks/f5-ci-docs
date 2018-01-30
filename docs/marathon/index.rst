@@ -1,5 +1,10 @@
-F5 Container Integration - Marathon
-=====================================
+:product: BIG-IP Controller for Marathon
+:type: concept
+
+.. _mesos-home:
+
+F5 Container Connector - Marathon
+=================================
 
 This document provides general information regarding the F5 Integration for Marathon.
 Please refer to the guides below for deployment and usage instructions.
@@ -8,10 +13,10 @@ Please refer to the guides below for deployment and usage instructions.
    :caption: BIG-IP Controller Guides
    :maxdepth: 1
 
-   Set up DC/OS auth <mctlr-authenticate-dcos>
-   Deploy the BIG-IP Controller <mctlr-app-install>
-   Manage BIG-IP objects <mctlr-manage-bigip-objects>
-   Deploy iApps <mctlr-deploy-iapp>
+   mctlr-authenticate-dcos
+   mctlr-app-install
+   mctlr-manage-bigip-objects
+   mctlr-deploy-iapp
    marathon-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest>
 
 Overview
@@ -55,7 +60,7 @@ The F5 Container Integration for Mesos Marathon documentation set assumes that y
 - already have a `Mesos cluster`_ running;
 - are familiar with the `Marathon Web Interface`_ ;
 - are comfortable using `HTTP methods`_ to make REST API calls;
-- already have a BIG-IP :term:`device` licensed and provisioned for your requirements; and
+- already have a BIG-IP device licensed and provisioned for your requirements; and
 - are familiar with BIG-IP Local Traffic Manager (LTM) concepts and ``tmsh`` commands.
 
 .. [#mgui] Per the Marathon documentation, the `Marathon Web Interface`_ is no longer actively developed. Use the Marathon REST API to access the latest Marathon features.

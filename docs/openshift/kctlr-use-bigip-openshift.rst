@@ -1,12 +1,5 @@
-.. index::
-   single: OpenShift; BIG-IP; setup
-
-.. sidebar:: Docs test matrix
-
-   Documentation manually tested with:
-
-   - BIG-IP v12.1.1
-   - OpenShift Origin v1.4
+:product: BIG-IP Controller for Kubernetes
+:type: task
 
 .. _bigip-openshift-setup:
 
@@ -20,7 +13,7 @@ This document provides step-by-step instructions for integrating a **standalone*
 
 Complete the following tasks to add a BIG-IP device to an `OpenShift`_ cluster network.
 
-.. table:: Task Table
+.. table:: Task Summary
 
    ===== ==================================================================================
    Step  Task

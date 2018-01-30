@@ -1,21 +1,10 @@
-.. STAGED IN K8S_BIGIP_CTLR REPO
-.. todo:: remove from this repo and add redirect in AWS
-
-.. index::
-   single: BIG-IP Controller; Kubernetes
-
-.. sidebar:: Docs test matrix
-
-   Documentation manually tested with:
-
-   - kubernetes-v1.6.4 on Ubuntu-16.4.2
-   - kubernetes-v1.4.8 on CoreOS 1409.6.0
-   - ``k8s-bigip-ctlr`` v1.0.0-v1.4.0
+:product: BIG-IP Controller for Kubernetes
+:type: task
 
 .. _install-kctlr:
 
-Install the BIG-IP Controller in Kubernetes
-===========================================
+Install the BIG-IP Controller: Kubernetes
+=========================================
 
 The |kctlr-long| installs via a Kubernetes `Deployment`_.
 The Deployment creates a `ReplicaSet`_ that, in turn, launches a `Pod`_ running the |kctlr| app.
@@ -91,6 +80,15 @@ Create a Deployment
 
 Define the |kctlr| configurations in a Kubernetes `Deployment`_ using valid JSON or YAML.
 
+.. literalinclude:: /kubernetes/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
+   :linenos:
+
+:fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_image-secret.yaml </kubernetes/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml>`
+
+.. danger::
+
+   Do not increase the :code:`replica` count in the Deployment. Running duplicate Controller instances may cause errors and/or service interruptions.
+
 .. important::
 
    If :ref:`your BIG-IP device connects to the Cluster network via flannel VXLAN <use-bigip-k8s-flannel>`, be sure to define the following `k8s-bigip-ctlr configuration parameters`_ in your Deployment:
@@ -98,12 +96,9 @@ Define the |kctlr| configurations in a Kubernetes `Deployment`_ using valid JSON
    - :code:`--pool-member-type=cluster` (See :ref:`cluster mode` for more information.)
    - :code:`--flannel-name=[bigip_tunnel_name]`
 
-.. literalinclude:: /kubernetes/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
-   :linenos:
+.. _upload to k8s api:
 
-:fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_image-secret.yaml </kubernetes/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml>`
-
-Upload the resources to the Kubernetes API server
+Upload the Resources to the Kubernetes API server
 -------------------------------------------------
 
 Upload the Deployment, Cluster Role, and Cluster Role Binding to the Kubernetes API server using ``kubectl apply``.
@@ -123,13 +118,10 @@ Verify creation
 
 Use :command:`kubectl get` to verify all of the objects launched successfully.
 
-You should see one (1) Deployment_, as well as one (1) ``k8s-bigip-ctlr`` `Pod`_ for each node in the cluster. The example below shows one (1) Pod running the ``k8s-bigip-ctlr`` in a test cluster with one worker node.
+You should see one ``k8s-bigip-ctlr`` `Pod`_ for each node in the cluster. The example below shows one (1) Pod running the ``k8s-bigip-ctlr`` in a test cluster with one worker node.
 
 .. code-block:: console
-
-   kubectl get deployments --namespace=kube-system
-   NAME             DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-   k8s-bigip-ctlr   1         1         1            1           1h
+   :emphasize-lines: 3
 
    kubectl get pods --namespace=kube-system
    NAME                                  READY     STATUS    RESTARTS   AGE
@@ -145,6 +137,6 @@ You should see one (1) Deployment_, as well as one (1) ``k8s-bigip-ctlr`` `Pod`_
 What's Next
 -----------
 
+- :ref:`Create a BIG-IP Virtual Server for a Service <kctlr-per-svc-vs>` (L4 ingress).
+- :ref:`Create a BIG-IP Virtual Server for an Ingress resource <kctlr-ingress-config>` (L7 ingress).
 - Check out the `k8s-bigip-ctlr reference documentation`_.
-- :ref:`Create a BIG-IP Virtual Server for a Service <kctlr-create-vs>`.
-- :ref:`Create a BIG-IP Virtual Server for an Ingress Resource <kctlr-ingress-config>`.

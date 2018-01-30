@@ -1,7 +1,7 @@
 .. index::
-   single: Cloud Foundry; BIG-IP Controller; deploy
-   single: Cloud Foundry; BIG-IP Controller; Application manifest
-   single: Cloud Foundry; BIG-IP Controller; global configuration
+   single: Cloud Foundry; Deploy BIG-IP Controller
+   single: Cloud Foundry; Application manifest
+   single: Cloud Foundry; Global Configuration
 
 .. _deploy-cf-ctlr:
 
@@ -15,7 +15,7 @@ Complete the steps provided below to deploy the |cf-long| using the default glob
    If you need to configure BIG-IP objects for individual Routes, you'll need to register the |cfctlr| as a `Service Broker`_. See :ref:`cfctlr per-route vs` for more information.
 
 
-.. table:: Task table
+.. table:: Task Summary
 
    =======  ===================================================================
    Step     Task

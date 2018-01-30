@@ -1,3 +1,6 @@
+:product: Container Connectors
+:type: tutorial
+
 .. _send-stats-splunk:
 
 How to send statistics to Splunk

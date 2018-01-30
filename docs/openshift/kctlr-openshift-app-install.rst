@@ -1,9 +1,19 @@
+:product: BIG-IP Controller for Kubernetes
+:type: task
+
 .. _install-kctlr-openshift:
 
-Install the BIG-IP Controller in OpenShift
-==========================================
+Install the BIG-IP Controller: OpenShift
+========================================
 
-.. table:: Task table
+Use a `Deployment`_ to install the |octlr-long|.
+
+.. attention::
+
+   These instructions are for the `Openshift`_ Kubernetes distribution.
+   **If you are using standard Kubernetes**, see :ref:`Install the BIG-IP Controller in Kubernetes <install-kctlr>`.
+
+.. table:: Task Summary
 
    =======  ===================================================================
    Step     Task

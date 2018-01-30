@@ -1,3 +1,8 @@
+:product: BIG-IP Controller for Kubernetes
+:type: concept
+
+.. _troubleshoot openshift deployment:
+
 Troubleshoot Your OpenShift Deployment
 ======================================
 

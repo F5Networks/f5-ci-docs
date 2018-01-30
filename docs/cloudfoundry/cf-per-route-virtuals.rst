@@ -13,7 +13,7 @@ Deploy the BIG-IP Controller for Cloud Foundry with per-Route Virtual Servers
 
 Follow the instructions provided here to run the |cf-long| in :code:`broker_mode`. In :code:`broker_mode`, the |cfctlr| acts as a `Service Broker`_ to let you deploy per-Route BIG-IP virtual servers.
 
-.. table:: Task table
+.. table:: Task Summary
 
    =======  ===================================================================
    Step     Task

@@ -1,3 +1,9 @@
+:product: Container Connectors
+:product: BIG-IP Controller for Kubernetes
+:product: BIG-IP Controller for Cloud Foundry
+:product: BIG-IP Controller for Marathon
+:type: concept
+
 .. _f5-csi_support-matrix:
 
 Releases and Versioning
@@ -6,7 +12,7 @@ Releases and Versioning
 Documentation
 -------------
 
-This documentation release, |release|, applies to the following versions of each F5 Container Integrations component:
+This documentation set applies to the following versions of each F5 Container Integrations component:
 
 ===================         ==============
 Component                   Version
@@ -29,7 +35,7 @@ The tables below show the versions used in development testing. The F5 Container
    +--------------------------+-----------------------+--------------------------------------------+--------------------------------+--------------------------+
    | Connector                | Version(s)            | Platform                                   | Version(s)                     | BIG-IP version(s)        |
    +==========================+=======================+============================================+================================+==========================+
-   | |cf-long|                | v1.0.x. v1.1.x        | Pivotal Cloud Foundry (PCF)                | v1.9.6                         | v11.6.1+, v12.x, v13.0.x |
+   | |cf-long|                | v1.0.x, v1.1.x        | Pivotal Cloud Foundry (PCF)                | v1.9.6                         | v11.6.1+, v12.x, v13.0.x |
    |                          |                       |                                            |                                |                          |
    | ``cf-bigip-ctlr``        |                       |                                            |                                |                          |
    +--------------------------+-----------------------+--------------------------------------------+--------------------------------+--------------------------+
@@ -72,7 +78,6 @@ The tables below show the versions used in development testing. The F5 Container
 
    F5 Networks is a `Red Hat Certified Container Partner <https://access.redhat.com/containers/#/vendor/f5networks>`_. Please see the Red Hat Container Catalog for more information.
 
-.. _f5-schema:
 
 F5 schema
 ---------
@@ -105,12 +110,12 @@ Be sure to use the **most recent** schema version that corresponds to your Contr
 Notice to Beta Customers
 ========================
 
-Thank you for participating in the F5 Beta/Early Release program!
-
-Feature enhancements introduced as part of a beta release have a **"Beta feature"** tag like the example below to the right.
-If you require assistance with a beta version, please contact your F5 Sales Representative.
-
 .. sidebar:: :fonticon:`fa fa-flask` **Beta feature**
 
    Introduced in <product-name> <version>.
+
+Thank you for participating in the F5 Beta/Early Release program!
+
+Feature enhancements introduced as part of a beta release have a **"Beta feature"** tag like the example to the right.
+If you require assistance with a beta version, please contact your F5 Sales Representative.
 

@@ -1,12 +1,13 @@
-.. index::
-   single: BIG-IP Controller; OpenShift; Route; F5 Router; BIG-IP
+:product: BIG-IP Controller for Kubernetes
+:type: task
 
-.. include:: /_static/reuse/k8s-version-added-1_2.rst
 
 .. _kctlr-openshift-routes:
 
-Use Route Resources to Expose OpenShift Services to External Traffic
-====================================================================
+Attach Virtual Servers to OpenShift Routes
+==========================================
+
+.. include:: /_static/reuse/k8s-version-added-1_2.rst
 
 Overview
 --------
@@ -16,19 +17,19 @@ As described in the OpenShift documentation, the IP address assigned to an `Open
 When you use the |kctlr| as a `Router`_, you can
 
 - create BIG-IP `Local Traffic Policies`_ for OpenShift Services;
-- :ref:`use BIG-IP SSL profiles to secure a Route <route-TLS>`; and
-- :ref:`add a BIG-IP health monitor to a Route resource <add health monitor to route>`.
+- :ref:`use BIG-IP SSL profiles to secure Routes <route-TLS>`; and
+- :ref:`add BIG-IP health monitors to Route resources <add health monitor to route>`.
 
 .. attention::
 
-   - All Route resources share two virtual servers:
+   All Route resources share two virtual servers:
 
-     - "ose-vserver" for HTTP traffic, and
-     - "https-ose-vserver" for HTTPS traffic.
+   - "ose-vserver" for HTTP traffic, and
+   - "https-ose-vserver" for HTTPS traffic.
 
-     These are the default names used for the virtual servers. You can set custom names for HTTP and HTTPS virtual servers using the :code:`route-http-vserver` and :code:`route-https-vserver` configuration parameters, respectively.
+   The Controller assigns the names shown above by default. To set set custom names, define :code:`route-http-vserver` and :code:`route-https-vserver` in the |kctlr| :ref:`Deployment <openshift-bigip-ctlr-deployment>`.
 
-.. table:: Task table
+.. table:: Task Summary
 
    =======  ===================================================================
    Step     Task
@@ -48,8 +49,8 @@ When you use the |kctlr| as a `Router`_, you can
 
 .. _set up kctlr routes:
 
-Set up the |kctlr| to manage Routes
------------------------------------
+Set up the BIG-IP Controller to manage Routes
+---------------------------------------------
 
 If you haven't already done so, add the |kctlr| `Route configuration parameters`_ to the |kctlr| Deployment:
 
@@ -57,13 +58,13 @@ If you haven't already done so, add the |kctlr| `Route configuration parameters`
    :linenos:
    :emphasize-lines: 47-56
 
-
 .. _create os route:
 
-Create a new OpenShift Route Resource
--------------------------------------
+Create an OpenShift Route Resource
+----------------------------------
 
-To use the BIG-IP device as an OpenShift Router, create a new `Route Resource`_. The |kctlr| supports use of the following Route Resource types:
+To use the BIG-IP device as an OpenShift Router, create a `Route Resource`_.
+The |kctlr| supports use of the following Route Resource types:
 
 - :ref:`unsecured`
 - :ref:`edge`
@@ -75,8 +76,6 @@ To use the BIG-IP device as an OpenShift Router, create a new `Route Resource`_.
 Unsecured
 `````````
 
-.. todo:: Add one-line description of unsecured route
-
 .. literalinclude:: /openshift/config_examples/f5-openshift-unsecured-route.yaml
    :linenos:
 
@@ -87,8 +86,6 @@ Unsecured
 Edge Termination
 ````````````````
 
-.. todo:: Add one-line description of edge-terminated route
-
 .. literalinclude:: /openshift/config_examples/f5-openshift-edge-route.yaml
    :linenos:
 
@@ -98,8 +95,6 @@ Edge Termination
 
 Passthrough Termination
 ```````````````````````
-
-.. todo:: Add one-line description of passthrough-termination route
 
 .. literalinclude:: /openshift/config_examples/f5-openshift-passthrough-route.yaml
    :linenos:
@@ -133,14 +128,23 @@ Health monitors
 
 .. include:: /_static/reuse/k8s-version-added-1_3.rst
 
-#. Define the :code:`virtual-server.f5.com/health` annotation JSON blob using the |kctlr| supported `route annotations`_.
+You can use the :code:`k8s-bigip-ctlr` `Route annotations`_ to update/add health monitors to OpenShift Routes.
+
+#. Define the :code:`virtual-server.f5.com/health` annotation JSON blob.
 
 #. Add the health monitor annotation to the Route Resource.
 
-   .. literalinclude:: /openshift/config_examples/f5-openshift-route-health-monitor.yaml
-      :caption: Health Monitor Example
-      :linenos:
-      :emphasize-lines: 12-20
+   .. code-block:: console
+      :caption: Annotate an OpenShift Route using the cli
+
+      oc annotate route myRoute virtual-server.f5.com/health='[{"path": "svc1.example.com/app1", "send": "HTTP GET /health/svc1", "interval": 5, "timeout": 10}]'
+
+In the Route resource YAML file, the health monitor should look like this:
+
+.. literalinclude:: /openshift/config_examples/f5-openshift-route-health-monitor.yaml
+   :caption: Example Health Monitor in a Route resource
+   :linenos:
+   :emphasize-lines: 12-20
 
 .. _route-TLS:
 
@@ -149,57 +153,55 @@ SSL Profiles
 
 .. include:: /_static/reuse/k8s-version-added-1_3.rst
 
-By default, the Controller creates custom BIG-IP SSL Profiles using the certificates and keys defined in the Route resource.
+By default, the |kctlr| creates custom BIG-IP SSL Profiles using the certificates and keys defined in the Route resource.
 You can also use an existing `BIG-IP SSL profile`_ to secure traffic for a Route.
 
 - For a Client SSL profile, annotate the Route resource as shown below:
 
   .. code-block:: console
 
-     oc annotate route <route_name> virtual-server.f5.com/clientssl=<BIG-IP-SSL-profile-name>
-
+     oc annotate route <route_name> virtual-server.f5.com/clientssl=</BIG-IP-partition/SSL-profile-name>
 
 - For a Server SSL profile, annotate the Route resource as shown below:
 
   .. code-block:: console
 
-     oc annotate route <route_name> virtual-server.f5.com/serverssl=<BIG-IP-SSL-profile-name>
+     oc annotate route <route_name> virtual-server.f5.com/serverssl=</BIG-IP-partition/SSL-profile-name>
 
 .. note::
 
-   Each SSL profile applies to one (1) individual Route. In addition, the Controller creates one client ssl
-   and one server ssl profile for the https virtual server, called "default-client-ssl" and "default-server-ssl".
-   **These are the default profiles used for SNI.**
+   - Each SSL profile applies to one Route.
+   - The |kctlr| creates one client ssl and one server ssl profile for the HTTPS virtual server. These profiles -- "default-client-ssl" and "default-server-ssl" -- are the **default profiles used for SNI.**
 
 
 .. _deploy route resource:
 
-Deploy the Route Resource
--------------------------
+Upload the Route to the API server
+----------------------------------
 
-Use :command:`oc create` to upload the Route Resource to the OpenShift API server.
+Use the :command:`oc apply` command to upload your Route resource to the OpenShift API server.
 
-.. code-block:: console
+.. include:: /_static/reuse/oc-apply.rst
 
-   oc create route -f <filename>.yaml
-   route myRoute created
 
 .. _verify BIG-IP route objects:
 
 Verify creation of BIG-IP objects
 ---------------------------------
 
-You can use TMOS or the BIG-IP configuration utility to verify that the |kctlr| created the requested BIG-IP objects for your Route.
+.. include:: /_static/reuse/verify-bigip-objects.rst
 
-To verify using the BIG-IP configuration utility:
+.. _delete vs route:
 
-#. Log in to the configuration utility at the management IP address (for example: :code:`https://10.190.25.225/tmui/login.jsp?`).
-#. Select the correct partition from the :guilabel:`Partition` drop-down menu.
-#. Go to :menuselection:`Local Traffic --> Virtual Servers` to view all virtual servers, pools, and pool members.
-#. Go to :menuselection:`Local Traffic --> Policies` to view all of the policies configured in the partition.
+Delete the Route's virtual server
+---------------------------------
 
-To verify using TMOS, see the `TMSH Reference Guide`_ (PDF) for the relevant :command:`tmsh` commands.
+If you want to remove the virtual server associated with a Route from the BIG-IP system, but **keep the Route**:
 
+#. Remove the |kctlr| Annotations from the Route definition.
+#. Update the OpenShift API server.
+
+   .. include:: /_static/reuse/oc-apply.rst
 
 
 .. _OpenShift Pod: https://docs.openshift.com/enterprise/3.0/architecture/core_concepts/pods_and_services.html#pods

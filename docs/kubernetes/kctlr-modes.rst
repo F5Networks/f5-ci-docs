@@ -1,13 +1,10 @@
-.. index::
-   single: BIG-IP Controller; Kubernetes
-   single: BIG-IP Controller; OpenShift
-   single: BIG-IP Controller; setup
-   single: BIG-IP Controller; mode
+:product: BIG-IP Controller for Kubernetes
+:type: concept
 
 .. _kctlr modes:
 
-Nodeport mode vs Cluster mode
-=============================
+BIG-IP Controller Modes
+=======================
 
 If you're setting up a Kubernetes or OpenShift cluster with the |kctlr| for the first time, you may be asking yourself,
 

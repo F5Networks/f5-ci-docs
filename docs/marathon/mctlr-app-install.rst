@@ -1,15 +1,9 @@
-.. index::
-   single: BIG-IP Controller; Marathon
-
-.. sidebar:: Docs test matrix
-
-   Documentation manually tested with:
-
-   - Mesos 1.0.3, Marathon 1.3.9; Ubuntu 16.04
+:product: BIG-IP Controller for Marathon
+:type: task
 
 .. _install-mctlr:
 
-Install the BIG-IP Controller - Marathon
+Install the BIG-IP Controller: Marathon
 ========================================
 
 The |mctlr-long| installs as a Marathon `Application`_. You can do this via the Marathon REST API, or via the `Marathon Web Interface`_.
