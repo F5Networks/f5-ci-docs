@@ -12,8 +12,8 @@
 
 .. _kctlr-manage-bigip-objects:
 
-Manage BIG-IP virtual servers - Kubernetes/OpenShift
-====================================================
+Manage BIG-IP virtual servers for Kubernetes/OpenShift Services
+===============================================================
 
 The |kctlr-long| and OpenShift watches the Kubernetes/OpenShift API for `Services`_ with associated :ref:`F5 resources <k8s-f5-resources>` and creates/modifies BIG-IP Local Traffic Manager (LTM) objects accordingly.
 F5 resources provide the settings you want the |kctlr| to apply when creating objects on the BIG-IP system.

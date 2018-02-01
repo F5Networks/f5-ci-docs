@@ -5,8 +5,8 @@
 
 .. _kctlr-openshift-routes:
 
-Expose OpenShift Services to External Traffic using Routes
-==========================================================
+Use Route Resources to Expose OpenShift Services to External Traffic
+====================================================================
 
 Overview
 --------

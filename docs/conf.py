@@ -179,6 +179,7 @@ rst_epilog = """
 .. _namespaces: https://kubernetes.io/docs/user-guide/namespaces/
 .. _NATS bus: https://docs.cloudfoundry.org/concepts/architecture/router.html#use
 .. _oc: https://docs.openshift.com/enterprise/3.0/cli_reference/basic_cli_operations.html
+.. _OpenShift F5 Router: https://docs.openshift.org/1.4/install_config/router/f5_router.html
 .. _OpenShift route resources: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-route-resources
 .. _Overview of SNAT features: https://support.f5.com/csp/article/K7820
 .. _Pivotal Cloud Foundry: https://pivotal.io/platform

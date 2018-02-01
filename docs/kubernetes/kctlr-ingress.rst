@@ -5,8 +5,8 @@
 
 .. _kctlr-ingress-config:
 
-Use Ingress Resources to Expose Services to External Traffic
-============================================================
+Use Ingress Resources to Expose Kubernetes Services to External Traffic
+=======================================================================
 
 .. include:: /_static/reuse/k8s-version-added-1_1.rst
 

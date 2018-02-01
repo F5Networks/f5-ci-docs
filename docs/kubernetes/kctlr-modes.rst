@@ -111,7 +111,7 @@ Take these into consideration if you're deciding how to set up your cluster netw
    | **Layer 2 networks**                                                                                                                                                  |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
    | Openshift SDN         | :ref:`Create a new OpenShift HostSubnet <k8s-openshift-hostsubnet>` for the BIG-IP      | None. The |kctlr| automatically detects OpenShift   |
-   |                       | self IP.                                                                                | routes and makes the necessary BIG-IP system        |
+   |                       | self IP.                                                                                | Nodes and makes the necessary BIG-IP system         |
    |                       |                                                                                         | configurations.                                     |
    |                       | :ref:`Add a new VXLAN network to the BIG-IP system <k8s-openshift-vxlan-setup>`         |                                                     |
    |                       | that corresponds to the subnet. [#encap]_                                               |                                                     |

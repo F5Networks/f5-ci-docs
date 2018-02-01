@@ -128,7 +128,7 @@ You can define BIG-IP health monitors in this section.
 Example F5 virtual server resource
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The below example creates one (1) virtual server for the Service named "myService", with one (1) health monitor and one (1) pool. The Controller will create the virtual server in the :code:`kubernetes` partition on the BIG-IP system.
+The below example creates one (1) virtual server for the Service named "myService", with one (1) health monitor and one (1) pool. The Controller will create the virtual server in the :code:`k8s` partition on the BIG-IP system.
 
 .. literalinclude:: /kubernetes/config_examples/f5-resource-vs-example.json
    :caption: Example F5 Resource definition
