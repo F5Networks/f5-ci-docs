@@ -19,7 +19,7 @@ Apache Mesos `DC/OS Open <https://dcos.io/>`_ uses `DC/OS oauth <https://dcos.io
    .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example.json
       :linenos:
       :lines: 1-18, 22-26
-      :emphasize-lines: 22-23
+      :emphasize-lines: 21-22
 
 
 DC/OS Enterprise
@@ -73,6 +73,6 @@ DC/OS Enterprise
 #. Add the ``F5_CC_DCOS_AUTH_CREDENTIALS`` and ``F5_CC_MARATHON_CA_CERT`` labels to the |mctlr| App definition.
 
    .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example.json
-      :lines: 1-18, 22-26
+      :lines: 1-23, 26-27
       :linenos:
-      :emphasize-lines: 19-20
+      :emphasize-lines: 19-21
