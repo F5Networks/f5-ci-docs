@@ -109,7 +109,7 @@ Create a self IP address in the VXLAN tunnel. Use an address from the subnet all
 
 .. code-block:: console
 
-   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create /net self 10.129.2.3/23 allow-service all traffic-group traffic-group-1 vlan openshift_vxlan
+   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create /net self 10.129.2.3/23 allow-service none vlan openshift_vxlan
 
 .. important::
 
@@ -126,7 +126,7 @@ Create a floating IP address in the subnet assigned by the OpenShift SDN.
 
 .. code-block:: console
 
-   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create /net self 10.129.2.4/23 allow-service all traffic-group traffic-group-1 vlan openshift_vxlan
+   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create /net self 10.129.2.4/23 allow-service none traffic-group traffic-group-1 vlan openshift_vxlan
 
 .. note::
 

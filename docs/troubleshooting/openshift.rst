@@ -142,7 +142,7 @@ When deploying an iApp with the |octlr-long| , the iApp may create a virtual IP 
 If you've seen this error, you can override or change the default traffic-group as follows:
 
 - Set the specific traffic group you need in the ``iappOptions`` section of the virtual server F5 Resource definition.
-- **Preferred** Set the desired traffic group as the default for the partition you want the |kctlr| to manage. This option doesn't require Kubernetes/OpenShift to know about BIG-IP traffic groups.
+- **Preferred** Set the desired traffic group as the default for the partition you want the |kctlr| to manage. This option doesn't require OpenShift to know about BIG-IP traffic groups.
 
   .. code-block:: javascript
 
@@ -181,12 +181,12 @@ How do I verify connectivity between the BIG-IP VTEP and the OSE Node?
      \
 
      .. code-block:: console
-        :caption: Example showing two-way communication on port 4789 between the BIG-IP VTEP IP and the OSE node VTEP IPs.
+        :caption: Example showing two-way communication between the BIG-IP VTEP IP and the OSE node VTEP IPs.
 
         admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ tcpdump -i ocpvlan
-        08:08:06.933951 IP 10.214.1.102.58472 > 10.214.1.23.4789: VXLAN, flags [I] (0x08), vni 0
+        08:08:06.933951 IP 10.214.1.102.58472 > 10.214.1.23: VXLAN, flags [I] (0x08), vni 0
         IP 10.130.0.27.http > 10.128.2.10.37542: Flags [.], ack 9, win 219, options [nop,nop,TS val 573988389 ecr 3961177660], length 0 in slot1/tmm1 lis=_wcard_tunnel_/Common/ose-tunnel
-        08:08:06.934310 IP 10.214.1.23.28277 > 10.214.1.102.4789: VXLAN, flags [I] (0x08), vni 0
+        08:08:06.934310 IP 10.214.1.23.28277 > 10.214.1.102: VXLAN, flags [I] (0x08), vni 0
         IP 10.128.2.10.37542 > 10.130.0.27.http: Flags [.], ack 923, win 251, options [nop,nop,TS val 3961177661 ecr 573988389], length 0 out slot1/tmm0 lis=_wcard_tunnel_/Common/ose-tunnel
 
    - Do a ``tcpdump`` of the overlay network.
@@ -290,7 +290,9 @@ How do I verify connectivity between the BIG-IP VTEP and the OSE Node?
       ose-tunnel  0a:58:0a:82:00:25  endpoint:10.214.1.102  yes
 
 
-#. In a TMOS shell, view the ARP entries. This will show all of the ARP entries; you should see the VTEP entries on the ocpvlan and the Pod IP addresses on ``ose-tunnel``.
+#. In a TMOS shell, view the ARP entries.
+
+   This will show all of the ARP entries; you should see the VTEP entries on the :code:`ocpvlan` and the Pod IP addresses on :code:`ose-tunnel`.
 
    .. code-block:: console
 

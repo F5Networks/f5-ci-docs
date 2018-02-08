@@ -93,7 +93,7 @@ Create a self IP in the VXLAN
 
 .. code-block:: console
 
-   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create /net self 10.244.30.3/16 allow-service all vlan flannel_vxlan
+   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create /net self 10.244.30.3/16 allow-service none vlan flannel_vxlan
 
 .. important::
 
@@ -110,7 +110,7 @@ Create a floating IP address in the subnet you want to assign to the BIG-IP devi
 
 .. code-block:: console
 
-   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create /net self 10.244.30.4/16 allow-service all traffic-group traffic-group-1 vlan flannel_vxlan
+   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create /net self 10.244.30.4/16 allow-service none traffic-group traffic-group-1 vlan flannel_vxlan
 
 .. note::
 
