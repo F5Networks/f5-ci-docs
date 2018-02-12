@@ -69,18 +69,18 @@ Create a VXLAN tunnel
 
    .. code-block:: console
 
-      admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create /net tunnels vxlan fl-vxlan port 8472 flooding-type none
+      create /net tunnels vxlan fl-vxlan port 8472 flooding-type none
 
 #. Create a VXLAN tunnel.
 
-   - Set the :code:`local-address` to an IP address from the BIG-IP :code:`external` network.
+   - Set the :code:`local-address` to an IP address from the network that will support the VXLAN overlay.
    - Set the :code:`key` to :code:`1` to grant the BIG-IP device access to all Cluster resources.
 
    \
 
    .. code-block:: console
 
-      admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create /net tunnels tunnel flannel_vxlan key 1 profile fl-vxlan local-address 172.16.1.3
+      create /net tunnels tunnel flannel_vxlan key 1 profile fl-vxlan local-address 172.16.1.3
 
 .. _k8s-flannel create bigip self IP:
 
@@ -93,7 +93,7 @@ Create a self IP in the VXLAN
 
 .. code-block:: console
 
-   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create /net self 10.244.30.3/16 allow-service none vlan flannel_vxlan
+   create /net self 10.244.30.3/16 allow-service none vlan flannel_vxlan
 
 .. important::
 
@@ -110,7 +110,7 @@ Create a floating IP address in the subnet you want to assign to the BIG-IP devi
 
 .. code-block:: console
 
-   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create /net self 10.244.30.4/16 allow-service none traffic-group traffic-group-1 vlan flannel_vxlan
+   create /net self 10.244.30.4/16 allow-service none traffic-group traffic-group-1 vlan flannel_vxlan
 
 .. note::
 
@@ -126,9 +126,9 @@ You can use a TMOS shell or the BIG-IP configuration utility to verify object cr
 
 .. code-block:: console
 
-   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net tunnels tunnel flannel_vxlan
-   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net running-config self 10.244.30.3/16
-   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net running-config self 10.244.30.4/16
+   show /net tunnels tunnel flannel_vxlan
+   show /net running-config self 10.244.30.3/16
+   show /net running-config self 10.244.30.4/16
 
 
 .. _add bigip to flannel overlay:
@@ -148,7 +148,7 @@ You can find the MAC address of your BIG-IP VXLAN tunnel using a TMOS shell.
 
 .. code-block:: console
 
-   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net tunnels tunnel flannel_vxlan all-properties
+   show /net tunnels tunnel flannel_vxlan all-properties
    -------------------------------------------------
    Net::Tunnel: flannel_vxlan
    -------------------------------------------------

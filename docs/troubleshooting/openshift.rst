@@ -183,7 +183,7 @@ How do I verify connectivity between the BIG-IP VTEP and the OSE Node?
      .. code-block:: console
         :caption: Example showing two-way communication between the BIG-IP VTEP IP and the OSE node VTEP IPs.
 
-        admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ tcpdump -i ocpvlan
+        admin@(BIG-IP)(cfg-sync Standalone)(Active)(/Common)(tmos)$ tcpdump -i ocpvlan
         08:08:06.933951 IP 10.214.1.102.58472 > 10.214.1.23: VXLAN, flags [I] (0x08), vni 0
         IP 10.130.0.27.http > 10.128.2.10.37542: Flags [.], ack 9, win 219, options [nop,nop,TS val 573988389 ecr 3961177660], length 0 in slot1/tmm1 lis=_wcard_tunnel_/Common/ose-tunnel
         08:08:06.934310 IP 10.214.1.23.28277 > 10.214.1.102: VXLAN, flags [I] (0x08), vni 0
@@ -200,7 +200,7 @@ How do I verify connectivity between the BIG-IP VTEP and the OSE Node?
      .. code-block:: console
         :caption: Example showing traffic on the overlay network; at minimum, you should see BIG-IP health monitors for the Pod IP addresses.
 
-        admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ tcpdump -i ose-tunnel
+        admin@(BIG-IP)(cfg-sync Standalone)(Active)(/Common)(tmos)$ tcpdump -i ose-tunnel
         08:09:51.911667 IP 10.128.2.10.38036 > 10.130.0.27.http: Flags [.], ack 1, win 229, options [nop,nop,TS val 3961282640 ecr 574093366], length 0 out slot1/tmm0 lis=
         08:09:51.911672 IP 10.128.2.10.38036 > 10.130.0.27.http: Flags [P.], seq 1:8, ack 1, win 229, options [nop,nop,TS val 3961282640 ecr 574093366], length 7 out slot1/tmm0 lis=
         08:09:51.913161 IP 10.130.0.27.http > 10.128.2.10.38036: Flags [.], ack 8, win 219, options [nop,nop,TS val 574093369 ecr 3961282640], length 0 in slot1/tmm0 lis=
@@ -219,7 +219,7 @@ How do I verify connectivity between the BIG-IP VTEP and the OSE Node?
      .. code-block:: console
         :caption: Example
 
-        admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net vlan ocpvlan
+        admin@(BIG-IP)(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net vlan ocpvlan
         -------------------------------------
         Net::Vlan: ocpvlan
         -------------------------------------
@@ -251,7 +251,7 @@ How do I verify connectivity between the BIG-IP VTEP and the OSE Node?
      .. code-block:: console
         :caption: Example
 
-        admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net tunnels tunnel ose-tunnel
+        admin@(BIG-IP)(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net tunnels tunnel ose-tunnel
         -------------------------------------
         Net::Tunnel: ose-tunnel
         -------------------------------------
@@ -280,7 +280,7 @@ How do I verify connectivity between the BIG-IP VTEP and the OSE Node?
    .. code-block:: console
       :caption: Example
 
-      admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net fdb tunnel ose-tunnel
+      admin@(BIG-IP)(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net fdb tunnel ose-tunnel
       -------------------------------------------------------------
       Net::FDB
       Tunnel      Mac Address        Member                 Dynamic
@@ -296,7 +296,7 @@ How do I verify connectivity between the BIG-IP VTEP and the OSE Node?
 
    .. code-block:: console
 
-      admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net arp
+      admin@(BIG-IP)(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net arp
       ------------------------------------------------------------------------------------------
       Net::Arp
       Name          Address       HWaddress          Vlan                Expire-in-sec  Status

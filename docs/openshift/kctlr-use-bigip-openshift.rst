@@ -45,7 +45,7 @@ OpenShift SDN uses custom Annotations to identify Nodes as part of the Cluster n
 
 #. Create a HostSubnet manifest.
 
-   Define the :code:`hostIP` with an IP address from the BIG-IP external VLAN. You will use this address later to to :ref:`create the BIG-IP VXLAN tunnel <k8s-openshift-vxlan-setup>`.
+   Define the :code:`hostIP` with a self IP address from the BIG-IP network that will support the VXLAN overlay.
 
    .. literalinclude:: /openshift/config_examples/f5-kctlr-openshift-hostsubnet.yaml
 
@@ -85,18 +85,18 @@ Create a VXLAN tunnel
 
    .. code-block:: console
 
-      admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create /net tunnels vxlan vxlan-mp flooding-type multipoint
+      create /net tunnels vxlan vxlan-mp flooding-type multipoint
 
 #. Create a BIG-IP VXLAN tunnel.
 
-   - Use the IP address you provided for the OpenShift HostSubnet :code:`hostIP` as the VXLAN's :code:`local-address`.
+   - Set the :code:`local-address` to the same IP address you used for the OpenShift HostSubnet :code:`hostIP`.
    - Set the :code:`key` to :code:`0` to grant the BIG-IP device access to all OpenShift projects and subnets.
 
    \
 
    .. code-block:: console
 
-      admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create /net tunnels tunnel openshift_vxlan key 0 profile vxlan-mp local-address 172.16.1.28
+      create /net tunnels tunnel openshift_vxlan key 0 profile vxlan-mp local-address 172.16.1.28
 
 
 .. _k8s-openshift create bigip self IP:
@@ -109,7 +109,7 @@ Create a self IP address in the VXLAN tunnel. Use an address from the subnet all
 
 .. code-block:: console
 
-   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create /net self 10.129.2.3/23 allow-service none vlan openshift_vxlan
+   create /net self 10.129.2.3/23 allow-service none vlan openshift_vxlan
 
 .. important::
 
@@ -126,7 +126,7 @@ Create a floating IP address in the subnet assigned by the OpenShift SDN.
 
 .. code-block:: console
 
-   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ create /net self 10.129.2.4/23 allow-service none traffic-group traffic-group-1 vlan openshift_vxlan
+   create /net self 10.129.2.4/23 allow-service none traffic-group traffic-group-1 vlan openshift_vxlan
 
 .. note::
 
@@ -143,9 +143,9 @@ You can use a TMOS shell or the BIG-IP configuration utility to verify object cr
 
 .. code-block:: console
 
-   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net tunnels tunnel openshift_vxlan
-   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net running-config self 10.129.2.3/23
-   admin@BIG-IP(cfg-sync Standalone)(Active)(/Common)(tmos)$ show /net running-config self 10.129.2.4/23
+   show /net tunnels tunnel openshift_vxlan
+   show /net running-config self 10.129.2.3/23
+   show /net running-config self 10.129.2.4/23
 
 
 You should now be able to successfully send traffic through the BIG-IP system to and from endpoints within your OpenShift Cluster.
