@@ -43,7 +43,7 @@ Deploy the iApp
    .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json
       :caption: Example F5 iApp Application Labels
       :linenos:
-      :emphasize-lines: 21-34
+      :emphasize-lines: 23-33
 
    :fonticon:`fa fa-download` :download:`Download f5-marathon-bigip-ctlr-vs-iApp-example.json </marathon/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json>`
 

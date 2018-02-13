@@ -49,7 +49,7 @@ spec:
             # Assign an IP address to the BIG-IP virtual server
             # Be sure to use an IP address from the HostSubnet to which the
             # BIG-IP device connects
-            "--route-vserver-addr=1.2.3.4"
+            "--route-vserver-addr=1.2.3.4",
             # OPTIONAL: Provide an "f5type" label you want the BIG-IP Controller
             # to watch for. This information should be defined in a Route
             # Resource (for example, "f5type: App1")

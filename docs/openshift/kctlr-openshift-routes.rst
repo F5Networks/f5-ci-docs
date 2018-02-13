@@ -5,8 +5,8 @@
 
 .. _kctlr-openshift-routes:
 
-Expose OpenShift Services to External Traffic using Routes
-==========================================================
+Use Route Resources to Expose OpenShift Services to External Traffic
+====================================================================
 
 Overview
 --------
@@ -140,7 +140,7 @@ Health monitors
    .. literalinclude:: /openshift/config_examples/f5-openshift-route-health-monitor.yaml
       :caption: Health Monitor Example
       :linenos:
-      :emphasize-lines: 5-14
+      :emphasize-lines: 12-20
 
 .. _route-TLS:
 

@@ -12,8 +12,8 @@
 
 .. _kctlr-manage-bigip-objects:
 
-Manage BIG-IP virtual servers - Kubernetes/OpenShift
-====================================================
+Manage BIG-IP virtual servers for Kubernetes/OpenShift Services
+===============================================================
 
 The |kctlr-long| and OpenShift watches the Kubernetes/OpenShift API for `Services`_ with associated :ref:`F5 resources <k8s-f5-resources>` and creates/modifies BIG-IP Local Traffic Manager (LTM) objects accordingly.
 F5 resources provide the settings you want the |kctlr| to apply when creating objects on the BIG-IP system.
@@ -304,7 +304,7 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
 
    .. code-block:: console
       :linenos:
-      :emphasize-lines: 18-19
+      :emphasize-lines: 20-21
 
       kubectl edit configmap http.vs [--namespace <service-namespace>] \\
       oc edit configmap http.vs [--namespace <service-namespace>]
@@ -314,6 +314,7 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
       #
       apiVersion: v1
       data:
+        schema: "f5schemadb://bigip-virtual-server_v0.1.7.json"
         data: |
           {
             "virtualServer": {
@@ -333,7 +334,6 @@ If you want to delete a front-end BIG-IP virtual server, but keep its associated
               }
             }
           }
-        schema: f5schemadb://bigip-virtual-server_v0.1.4.json
       kind: ConfigMap
       metadata:
         creationTimestamp: 2017-02-14T17:24:34Z
