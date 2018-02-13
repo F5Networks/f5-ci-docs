@@ -10,8 +10,7 @@
 
    - kubernetes-v1.6.4 on Ubuntu-16.4.2
    - kubernetes-v1.4.8 on CoreOS 1409.6.0
-   - ``k8s-bigip-ctlr`` v1.1.0
-   - ``k8s-bigip-ctlr`` v1.0.0
+   - ``k8s-bigip-ctlr`` v1.0.0-v1.4.0
 
 .. _install-kctlr:
 
@@ -93,8 +92,15 @@ Create a Deployment
 
 Define the |kctlr| configurations in a Kubernetes `Deployment`_ using valid JSON or YAML.
 
+.. important::
+
+   If :ref:`your BIG-IP device connects to the Cluster network via flannel VXLAN <use-bigip-k8s-flannel>`, be sure to define the following `k8s-bigip-ctlr configuration parameters`_ in your Deployment:
+
+   - :code:`--pool-member-type=cluster` (See :ref:`cluster mode` for more information.)
+   - :code:`--flannel-name=[bigip_tunnel_name]`
+
 .. literalinclude:: /kubernetes/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml
-      :linenos:
+   :linenos:
 
 :fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_image-secret.yaml </kubernetes/config_examples/f5-k8s-bigip-ctlr_image-secret.yaml>`
 
@@ -121,7 +127,6 @@ Use :command:`kubectl get` to verify all of the objects launched successfully.
 You should see one (1) Deployment_, as well as one (1) ``k8s-bigip-ctlr`` `Pod`_ for each node in the cluster. The example below shows one (1) Pod running the ``k8s-bigip-ctlr`` in a test cluster with one worker node.
 
 .. code-block:: console
-   :emphasize-lines: 3, 7, 11, 13
 
    kubectl get deployments --namespace=kube-system
    NAME             DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE

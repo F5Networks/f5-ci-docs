@@ -36,7 +36,7 @@ The example F5 resource JSON blob shown below defines the ``f5.http`` iApp. The 
 .. literalinclude:: /kubernetes/config_examples/f5-resource-vs-iApp-example.json
    :caption: Example F5 iApp Resource definition
    :linenos:
-   :emphasize-lines: 8-30
+   :emphasize-lines: 9-29
 
 :fonticon:`fa fa-download` :download:`Download f5-resource-vs-iApp-example.json </kubernetes/config_examples/f5-resource-vs-iApp-example.json>`
 

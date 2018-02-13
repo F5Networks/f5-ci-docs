@@ -111,16 +111,14 @@ Take these into consideration if you're deciding how to set up your cluster netw
    | **Layer 2 networks**                                                                                                                                                  |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
    | Openshift SDN         | :ref:`Create a new OpenShift HostSubnet <k8s-openshift-hostsubnet>` for the BIG-IP      | None. The |kctlr| automatically detects OpenShift   |
-   |                       | self IP.                                                                                | routes and makes the necessary BIG-IP system        |
+   |                       | self IP.                                                                                | Nodes and makes the necessary BIG-IP system         |
    |                       |                                                                                         | configurations.                                     |
    |                       | :ref:`Add a new VXLAN network to the BIG-IP system <k8s-openshift-vxlan-setup>`         |                                                     |
    |                       | that corresponds to the subnet. [#encap]_                                               |                                                     |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
    | flannel VXLAN         | :ref:`Create a VXLAN tunnel on the BIG-IP system <k8s-vxlan-setup>`.                    | None. The |kctlr| automatically detects Kubernetes  |
    |                       |                                                                                         | Nodes and makes the necessary BIG-IP system         |
-   |                       | :ref:`Create a fake BIG-IP Node in Kubernetes <k8s-bigip-node>`.                        | configurations.                                     |
-   |                       |                                                                                         |                                                     |
-   |                       | :ref:`Add the BIG-IP to the flannel overlay network <k8s-assign-ip>`.                   |                                                     |
+   |                       | :ref:`Add the BIG-IP to the flannel overlay network <k8s-bigip-node>`.                  | configurations.                                     |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
    | **Layer 3 networks**                                                                                                                                                  |
    +-----------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------+
@@ -142,7 +140,7 @@ Review the `k8s-bigip-ctlr configuration parameters`_.
 Kubernetes
 ``````````
 
-- :ref:`bigip-k8s-setup`
+- :ref:`use-bigip-k8s-flannel`
 - :ref:`Install the BIG-IP Controller in standard Kubernetes <install-kctlr>`
 
 OpenShift

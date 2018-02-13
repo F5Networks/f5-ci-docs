@@ -29,7 +29,7 @@ Launch the |mctlr| App using the Marathon REST API
 
    .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example.json
       :linenos:
-      :emphasize-lines: 12, 16-27
+      :emphasize-lines: 11, 16-25
 
    :fonticon:`fa fa-download` :download:`f5-marathon-bigip-ctlr-example.json </marathon/config_examples/f5-marathon-bigip-ctlr-example.json>`
 
@@ -37,8 +37,6 @@ Launch the |mctlr| App using the Marathon REST API
 #. Upload the config file to the Marathon API server.
 
    .. code-block:: bash
-      :linenos:
-      :emphasize-lines: 1
 
       curl -X POST -H "Content-Type: application/json" http://<marathon_uri>/v2/apps -d @marathon-bigip-ctlr.json
 
@@ -52,7 +50,6 @@ Send a GET request to the Marathon API server to verify successful creation of t
    You can pass the response through a pretty-print tool like `jq <https://github.com/stedolan/jq>`_ for better readability.
 
 .. code-block:: bash
-   :emphasize-lines: 1
 
    curl -X GET http://<marathon_uri>/v2/apps/marathon-bigip-ctlr | jq .
 

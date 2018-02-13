@@ -77,5 +77,3 @@ Example Route Resource definitions
 - :fonticon:`fa fa-download` :download:`sample-edge-route.yaml </openshift/config_examples/f5-openshift-edge-route.yaml>`
 - :fonticon:`fa fa-download` :download:`sample-passthrough-route.yaml </openshift/config_examples/f5-openshift-passthrough-route.yaml>`
 - :fonticon:`fa fa-download` :download:`sample-reencrypt-route.yaml </openshift/config_examples/f5-openshift-reencrypt-route.yaml>`
-
-.. _OpenShift F5 Router: https://docs.openshift.org/1.4/install_config/router/f5_router.html

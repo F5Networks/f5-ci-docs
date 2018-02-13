@@ -5,8 +5,8 @@
 
 .. _kctlr-ingress-config:
 
-Use Ingress Resources to Expose Services to External Traffic
-============================================================
+Use Ingress Resources to Expose Kubernetes Services to External Traffic
+=======================================================================
 
 .. include:: /_static/reuse/k8s-version-added-1_1.rst
 
@@ -179,7 +179,7 @@ Add the :code:`virtual-server.f5.com/health` annotation to your Ingress resource
 .. literalinclude:: /kubernetes/config_examples/f5-k8s-ingress-health-monitor.yaml
    :caption: Health Monitor Example
    :linenos:
-   :emphasize-lines: 9-22
+   :emphasize-lines: 10-25
 
 
 .. _ingress-TLS:
