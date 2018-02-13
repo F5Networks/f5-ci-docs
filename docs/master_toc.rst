@@ -28,9 +28,9 @@ Container Connectors
    openshift/kctlr-openshift-app-install
    kubernetes/kctlr-secrets
    kubernetes/kctlr-ingress
+   openshift/kctlr-openshift-routes
    kubernetes/kctlr-manage-bigip-objects
    kubernetes/kctlr-deploy-iapp
-   openshift/kctlr-openshift-routes
 
 .. toctree::
    :caption: Mesos Marathon

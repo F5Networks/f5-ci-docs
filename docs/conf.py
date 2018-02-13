@@ -108,8 +108,10 @@ rst_epilog = """
 .. _BIG-IP Controller for Kubernetes: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest
 .. _BIG-IP Controller for Marathon: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest
 .. _BIG-IP partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-13-0-0/2.html
+.. _BIG-IP SNAT: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-13-1-0/8.html
 .. _BIG-IP SSL profile: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-profiles-reference-12-1-0/6.html
 .. _BIG-IP System User Account Administration -> Administrative Partitions: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-12-0-0/3.html
+.. _BIG-IP TMOS Routing Adminstration Guide: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-13-0-0/
 .. _BIG-IP: https://f5.com/products/big-ip
 .. _built-in middleware: %(base_url)s/products/asp/latest/#built-in-middleware
 .. _cf-bigip-ctlr configuration parameters: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/#configuration-parameters
@@ -176,9 +178,10 @@ rst_epilog = """
 .. _namespace: https://kubernetes.io/docs/user-guide/namespaces/
 .. _namespaces: https://kubernetes.io/docs/user-guide/namespaces/
 .. _NATS bus: https://docs.cloudfoundry.org/concepts/architecture/router.html#use
-.. _Node.js: https://nodejs.org/en/
 .. _oc: https://docs.openshift.com/enterprise/3.0/cli_reference/basic_cli_operations.html
+.. _OpenShift F5 Router: https://docs.openshift.org/1.4/install_config/router/f5_router.html
 .. _OpenShift route resources: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-route-resources
+.. _Overview of SNAT features: https://support.f5.com/csp/article/K7820
 .. _Pivotal Cloud Foundry: https://pivotal.io/platform
 .. _Pod: https://kubernetes.io/docs/concepts/workloads/pods/pod/
 .. _Pods: https://kubernetes.io/docs/concepts/workloads/pods/pod/
@@ -192,6 +195,7 @@ rst_epilog = """
 .. _ServiceAccount: https://kubernetes.io/docs/admin/service-accounts-admin/
 .. _Services: https://kubernetes.io/docs/user-guide/services/
 .. _Service Broker: https://docs.cloudfoundry.org/services/overview.html
+.. _SNAT automap and self IP address selection: https://support.f5.com/csp/article/K7336
 .. _Splunk: https://www.splunk.com/
 .. _Static Pod: https://kubernetes.io/docs/admin/static-pods/
 .. _store your Docker login credentials as a Secret: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
