@@ -119,6 +119,7 @@ rst_epilog = """
 .. _cf-bigip-ctlr v1.1.0: %(base_url)s/products/connectors/cf-bigip-ctlr/v1.1/
 .. _cf-bigip-ctlr reference documentation: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/
 .. _cf-bigip-ctlr service broker config parameters: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/#broker-configs
+.. _CIDR format: https://tools.ietf.org/html/rfc4632
 .. _Cloud Foundry CLI: https://docs.cloudfoundry.org/cf-cli/getting-started.html
 .. _Cloud Foundry: https://cloudfoundry.org/why-cloud-foundry/
 .. _Cluster network: https://kubernetes.io/docs/concepts/cluster-administration/networking/
@@ -182,6 +183,7 @@ rst_epilog = """
 .. _OpenShift F5 Router: https://docs.openshift.org/1.4/install_config/router/f5_router.html
 .. _OpenShift route resources: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-route-resources
 .. _Overview of SNAT features: https://support.f5.com/csp/article/K7820
+.. _Overview of the Standard Virtual Server: https://support.f5.com/csp/article/K93017176
 .. _Pivotal Cloud Foundry: https://pivotal.io/platform
 .. _Pod: https://kubernetes.io/docs/concepts/workloads/pods/pod/
 .. _Pods: https://kubernetes.io/docs/concepts/workloads/pods/pod/
