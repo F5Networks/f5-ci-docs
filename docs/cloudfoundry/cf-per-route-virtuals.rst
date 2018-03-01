@@ -55,6 +55,19 @@ You can use as many Service Plans as you need to define the BIG-IP services your
 
    \
 
+   .. warning::
+
+      It's important to use the proper `CIDR format`_ when allocating IP addresses or networks for the :code:`tier2_ip_range` config parameter (for example, :code:`172.0.0.0/24` for IPv4). Failure to use the proper format may result in errors when the |cfctlr| configures BIG-IP objects.
+
+      When allocating networks, the network prefixes must align with CIDR block boundaries. For example:
+
+      - :code:`10.105.175.245/30` causes failures because it doesn't reference an address at the CIDR boundary.
+      - :code:`10.105.175.244/30`, which correctly references an address at the CIDR boundary, succeeds.
+
+      See `Overview of the Standard Virtual Server`_ on AskF5 for more information.
+
+   \
+
    .. tip::
 
       You can also :ref:`cf-routes-apply-policies-profiles` and/or :ref:`cf-route-health-monitors` in the Service Plan.
@@ -100,7 +113,10 @@ Include any of the following BIG-IP objects in the Service Plan to attach them t
 Add BIG-IP Health Monitors
 ``````````````````````````
 
-You can create a new health monitor in the Service Plan, use an existing BIG-IP health monitor, or both:
+You can attach an existing health monitor, create a new one, or both:
+
+- use any health monitor that exists in the :code:`/Common` partition on the BIG-IP system
+- create a new health monitor in the partition the |cfctlr| manages (in this case, "cf")
 
 .. literalinclude:: /cloudfoundry/config_examples/manifest.yaml
    :linenos:
