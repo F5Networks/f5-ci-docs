@@ -66,25 +66,39 @@ applications:
 
       # Include the section below to use the cf-bigip-ctlr as a Service Broker
       # THE SETTINGS IN THIS SECTION ARE ROUTE-SPECIFIC
+      # See http://clouddocs.f5.com/containers/latest/cloudfoundry/cf-per-route-virtuals.html for more information
       SERVICE_BROKER_CONFIG: |
-                            plans:
-                              - description: plan for sb test example,
-                                name: sbtest,
-                                virtualServer:
-                                  - policies:
-                                    - /Common/PreventSpoofOfXFF
-                                  - profiles:
-                                    - /Common/x-forwarded-for
-                                  - sslProfiles:
-                                    - /Common/server-ssl
-                                pool:
-                                  balance: ratio-member
-                                  healthMonitors:
-                                    # Use a health monitor that already exists in the cf partition on the BIG-IP device
-                                    - name: /cf/my-healthMonitor
-                                    # Create a new health monitor
-                                    - name: hm-test
-                                      type: http
-                                      interval: 12
-                                      timeout: 5
-                                      send: hello
+                             {
+                               "plans": [
+                                 {
+                                   "description": "plan for sb test example",
+                                   "name": "sbtest",
+                                   "virtualServer": {
+                                     "policies": [
+                                       "/Common/PreventSpoofOfXFF"
+                                     ],
+                                     "profiles": [
+                                       "/Common/x-forwarded-for"
+                                     ],
+                                     "sslProfiles": [
+                                       "/Common/server-ssl"
+                                     ]
+                                   },
+                                   "pool": {
+                                     "balance": "ratio-member",
+                                     "healthMonitors": [
+                                       {
+                                         "name": "/Common/my-healthMonitor"
+                                       },
+                                       {
+                                         "name": "hm-test",
+                                         "type": "http",
+                                         "interval": 5,
+                                         "timeout": 12,
+                                         "send": "hello"
+                                       }
+                                     ]
+                                   }
+                                 }
+                               ]
+                             }
