@@ -207,13 +207,17 @@ Create a Kubernetes Node for the BIG-IP device
 
       kubectl get nodes
       NAME           STATUS    AGE       VERSION
-      bigip          Ready     5m        v1.7.5
+      bigip          NotReady 5m        v1.7.5
       k8s-master-0   Ready     2d        v1.7.5
       k8s-worker-0   Ready     2d        v1.7.5
       k8s-worker-1   Ready     2d        v1.7.5
 
 
-You should now be able to successfully send traffic through the BIG-IP system to and from endpoints within your Kubernetes Cluster.
+   .. important::
+
+      The BIG-IP node status will always display as "NotReady" because it is not a schedulable Kubernetes Node.
+
+   Once you've added the BIG-IP "dummy" Node, you should be able to successfully send traffic through the BIG-IP system to and from endpoints within your Kubernetes Cluster.
 
 What's Next
 -----------
