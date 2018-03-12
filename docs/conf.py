@@ -131,6 +131,7 @@ rst_epilog = """
 .. _contact F5 support: https://f5.com/about-us/contact/regional-offices#regional-support
 .. _Create a Kubernetes Secret containing your Docker login credentials: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 .. _Create a new partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-implementations-12-1-0/29.html
+.. _create and set a non-zero default Route Domain for a partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-implementations-13-0-0/4.html#guid-e73e1052-8e05-4913-bba3-99f29d26bc56
 .. _DaemonSet: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
 .. _Deployment: https://kubernetes.io/docs/user-guide/deployments/
 .. _Diego cell: https://docs.cloudfoundry.org/concepts/architecture/#diego-cell
@@ -191,6 +192,7 @@ rst_epilog = """
 .. _ReplicaSet: https://kubernetes.io/docs/user-guide/replicasets/
 .. _Route annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-annotations
 .. _Route configuration parameters: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-routes
+.. _Route domain: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-13-0-0/8.html
 .. _Secret: https://kubernetes.io/docs/user-guide/secrets/
 .. _Self IP address: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-13-0-0/5.html#guid-52e1f1d8-9a6b-48cc-acfa-07745b757f07
 .. _Service: https://kubernetes.io/docs/concepts/services-networking/service/
