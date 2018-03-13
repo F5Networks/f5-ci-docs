@@ -84,7 +84,7 @@ Verify creation of the HostSubnet(s)
    f5-big-ip             f5-bigip-node         172.16.1.28     10.129.2.0/23
    master.internal.net   master.internal.net   172.16.1.10     10.129.0.0/23
    node1.internal.net    node1.internal.net    172.16.1.24     10.130.0.0/23
-   node2.internal.net    node2.internal.net    172.16.1.25     10.128.0.0/23
+   node2.internal.net    node2.internal.net    172.16.1.25     10.128.0.0/14
 
 .. _openshift-bigip-setup:
 
@@ -120,18 +120,15 @@ Create a VXLAN tunnel
 Create a self IP in the VXLAN
 `````````````````````````````
 
-Create a self IP address in the VXLAN tunnel. Use an IP address from the subnet that the OpenShift SDN allocated to the BIG-IP's HostSubnet.
+Create a self IP address in the VXLAN tunnel.
 
-- The subnet mask you assign to the self IP must match the one that the OpenShift SDN assigns to nodes (in this example, it's :code:`/23`).
-
-  .. warning:: The default subnet mask varies depending on which OpenShift platform you're using (Origin/Online vs. Enterprise vs. OCP). Check the documentation for your platform before proceeding.
-
+- The self IP range must fall within the cluster subnet mask. Use the command :command:`oc get clusternetwork` to find the correct subnet mask for your cluster.
 - If you use the BIG-IP configuration utility to create a self IP, you may need to provide the full netmask instead of the CIDR notation.
-- If you don't specify a traffic group, the self IP will use the BIG-IP system's default (:code:`traffic-group-local-only`).
+- Be sure to specify a floating traffic group (for example, :code:`traffic-group-1`). Otherwise, the self IP will use the BIG-IP system's default.
 
 .. parsed-literal::
 
-   create /net self **10.129.2.3/23** allow-service **none** vlan **openshift_vxlan**
+   create /net self **10.129.2.3/14** allow-service **none** vlan **openshift_vxlan**
 
 .. _k8s-openshift create bigip floating IP:
 
@@ -142,12 +139,9 @@ Create a floating IP address on the BIG-IP device. Use an IP address from the su
 
 .. parsed-literal::
 
-   create /net self **10.129.2.4/23** allow-service **none** traffic-group **traffic-group-1** vlan **openshift_vxlan**
+   create /net self **10.129.2.4/14** allow-service **none** traffic-group **traffic-group-1** vlan **openshift_vxlan**
 
-.. note::
-
-   All virtual servers created by the |kctlr| use the `BIG-IP SNAT`_ automap feature, which prefers floating IP addresses over static IPs.
-   See :ref:`bigip snats` for more information.
+.. include:: /_static/reuse/kctlr-snat-note.rst
 
 .. _os-sdn verify bigip:
 
@@ -159,8 +153,8 @@ You can use a TMOS shell or the BIG-IP configuration utility to verify object cr
 .. code-block:: console
 
    show /net tunnels tunnel openshift_vxlan
-   show /net running-config self 10.129.2.3/23
-   show /net running-config self 10.129.2.4/23
+   show /net running-config self 10.129.2.3/14
+   show /net running-config self 10.129.2.4/14
 
 You should now be able to successfully send traffic through the BIG-IP system to and from endpoints within your OpenShift Cluster.
 

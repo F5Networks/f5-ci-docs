@@ -53,6 +53,9 @@ spec:
             # to watch for. This information should be defined in a Route
             # Resource (for example, "f5type: App1")
             "--route-label="App1"
+            # OPTIONAL: Specify a BIG-IP SNAT pool
+            # Default setting is to use SNAT automap; introduced in v1.5.0
+            "--vs-snat-pool-name=my-snat-pool"
             ]
       imagePullSecrets:
         - name: f5-docker-images

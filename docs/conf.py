@@ -168,6 +168,7 @@ rst_epilog = """
 .. _k8s-bigip-ctlr v1.2.0: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.2/
 .. _k8s-bigip-ctlr v1.3.0: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.3/
 .. _k8s-bigip-ctlr v1.4.0: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.4/
+.. _k8s-bigip-ctlr v1.5.0: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.5/
 .. _kube-proxy: https://kubernetes.io/docs/admin/kube-proxy/
 .. _kubectl: https://kubernetes.io/docs/user-guide/kubectl-overview/
 .. _Kubernetes Dashboard: https://kubernetes.io/docs/user-guide/ui/

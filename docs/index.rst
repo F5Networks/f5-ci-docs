@@ -87,6 +87,21 @@ When you deploy one Controller per device, both devices receive the same FDB rec
 
 If you choose to deploy one |kctlr| instance and manually sync configurations to the standby device, be sure to always sync *from* the BIG-IP device managed by the |kctlr| *to* the other device(s) in the group.
 
+.. _bigip snats:
+
+BIG-IP SNATs and SNAT automap
+`````````````````````````````
+
+All virtual servers created by the Container Connectors can use the `BIG-IP SNAT`_ automap feature. This feature lets you map original IP addresses -- for example, the flannel or OpenShift SDN :code:`public-ip` for each Pod -- to a pool of translation addresses on the BIG-IP system.
+
+When the BIG-IP system processes connections from inside the Cluster network, it chooses a translation address from the pool of available self IP addresses. SNAT automap prefers floating self IP addresses to static ones, to support seamless failover between paired or clustered devices.
+
+.. danger::
+
+   If the SNAT automap feature can't find an available floating self IP in the VXLAN tunnel, it may use a floating self IP from another VLAN as the translation address. If the BIG-IP assigns a floating IP from another VLAN as the translation address, you will not be able to pass traffic to your Cluster.
+
+   Refer to `Overview of SNAT features`_ and `SNAT Automap and self IP address selection`_ in the AskF5 Knowledge Base for more information.
+
 ---------------------------------
 
 .. include:: master_toc.rst

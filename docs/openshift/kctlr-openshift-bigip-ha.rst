@@ -190,6 +190,7 @@ Create a self IP address in the VXLAN on each device.
 
    create /net self **10.129.4.3/14** allow-service **none** vlan **openshift_vxlan**
 
+
 .. seealso::
    :class: sidebar
 
@@ -244,14 +245,14 @@ Create an OpenShift Deployment for each Controller (one per BIG-IP device):
 
    If you launch multiple |kctlr| instances using a single manifest, they will run on the same Pod. This means that if the Pod goes down, you lose all of your Controllers.
 
-   The example Deployments below include the settings that the |kctlr| needs to manage OpenShift Routes.
-   If you don't need/want to manage Routes, exclude the following settings:
+The example Deployments below include the settings that the |kctlr| needs to manage OpenShift Routes.
+If you don't need/want to manage Routes, exclude the following settings:
 
-   - :code:`"--manage-routes=true"`
-   - :code:`"--route-vserver-addr=1.2.3.4"`
-   - :code:`"--route-label=App1"`
+- :code:`"--manage-routes=true"`
+- :code:`"--route-vserver-addr=1.2.3.4"`
+- :code:`"--route-label=App1"`
 
-   See :ref:`kctlr-openshift-routes` for additional information.
+See :ref:`kctlr-openshift-routes` for additional information.
 
 .. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift-node01-route.yaml
    :caption: BIG-IP Controller 1

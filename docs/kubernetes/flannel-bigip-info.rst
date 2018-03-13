@@ -75,20 +75,16 @@ The |kctlr| also creates a static ARP entry for the Node: ::
 
 Together, these records tell the BIG-IP device that a Pod on Node1 should receive traffic from the BIG-IP node with the IP address "10.244.1.2".
 
-.. _bigip snats:
+BIG-IP SNAT Pools and SNAT automap
+``````````````````````````````````
 
-BIG-IP SNATs and SNAT automap
-`````````````````````````````
+.. include:: /_static/reuse/k8s-version-added-1_5.rst
 
-All virtual servers created by the |kctlr| use the `BIG-IP SNAT`_ automap feature. The SNAT automap feature lets you map original IP addresses -- in this case, the flannel :code:`public-ip` for each Pod -- to a pool of translation addresses on the BIG-IP system. The self IP address that serves as the BIG-IP VTEP for the VXLAN tunnel also functions as a SNAT pool. The subnet mask you provide when creating the self IP will define the addresses available in the SNAT pool. The self IP's subnet mask must match the flannel podCIDR.
+You can set the |kctlr| to create virtual servers from SNAT pools or to use `BIG-IP SNAT`_ automap. Prior to v1.5.0, the |kctlr| used BIG-IP SNAT automap automatically for all virtual servers. From v1.5.0 forward, use of SNAT automap is the default behavior.
 
-When the BIG-IP system processes connections from the Pod :code:`public-ip` addresses, it chooses a translation address from the pool of available self IP addresses. SNAT automap prefers floating self IP addresses to static ones, to support seamless failover between paired or clustered devices.
+When you use SNAT automap, the self IP address that serves as the VTEP for the VXLAN tunnel also functions as a SNAT pool. The subnet mask you provide when creating the self IP will define the addresses available in the SNAT pool. The self IP subnet mask must match the flannel podCIDR.
 
-.. danger::
-
-   If the SNAT automap feature can't find an available floating self IP in the VXLAN tunnel, it may use a floating self IP from another VLAN as the translation address. If the BIG-IP assigns a floating IP from another VLAN as the translation address, you will not be able to pass traffic to your Cluster.
-
-   Refer to `Overview of SNAT features`_ and `SNAT Automap and self IP address selection`_ in the AskF5 Knowledge Base for more information.
+See :ref:`bigip snats` for more information.
 
 How flannel knows about the BIG-IP device
 -----------------------------------------

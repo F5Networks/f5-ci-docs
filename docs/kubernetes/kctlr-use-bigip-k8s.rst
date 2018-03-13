@@ -58,20 +58,18 @@ Create a VXLAN tunnel
 
 #. Create a VXLAN profile with :code:`flooding-type none`.
 
-   .. code-block:: console
+   .. parsed-literal::
 
-      create /net tunnels vxlan fl-vxlan port 8472 flooding-type none
+      create /net tunnels vxlan **fl-vxlan** flooding-type **none**
 
 #. Create a VXLAN tunnel.
 
    - Set the :code:`local-address` to an IP address from the network that will support the VXLAN overlay.
    - Set the :code:`key` to :code:`1` to grant the BIG-IP device access to all Cluster resources.
 
-   \
+   .. parsed-literal::
 
-   .. code-block:: console
-
-      create /net tunnels tunnel flannel_vxlan key 1 profile fl-vxlan local-address 172.16.1.3
+      create /net tunnels tunnel **flannel_vxlan** key **1** profile **fl-vxlan** local-address **172.16.1.28**
 
 .. _k8s-flannel create bigip self IP:
 
@@ -82,15 +80,15 @@ Create a self IP in the VXLAN
 
 #. Create a self IP using an address from the subnet you want to assign to the BIG-IP device.
 
-.. code-block:: console
-
-   create /net self 10.244.30.3/16 allow-service none vlan flannel_vxlan
-
 .. important::
 
-   - The subnet mask you assign to the self IP must match that of the flannel network (the default is :code:`/16`).
-   - When creating a self IP using the BIG-IP configuration utility instead of TMSH, you may need to provide the full netmask (for example, :code:`255.255.0.0` instead of :code:`/16`).
-   - If you do not specify a traffic group, the self IP will use the BIG-IP system's default.
+   - The self IP range must fall within the cluster subnet mask. The flannel network's default subnet mask is :code:`/16`.
+   - If you use the BIG-IP configuration utility to create a self IP, you may need to provide the full netmask instead of the CIDR notation.
+   - Be sure to specify a floating traffic group (for example, :code:`traffic-group-1`). Otherwise, the self IP will use the BIG-IP system's default.
+
+.. parsed-literal::
+
+   create /net self **10.129.2.3/16** allow-service **none** vlan **flannel_vxlan**
 
 .. _k8s-flannel create floating IP:
 
@@ -99,14 +97,11 @@ Create a floating self IP in the VXLAN
 
 Create a floating IP address in the subnet you want to assign to the BIG-IP device. Use the same subnet mask as the flannel network.
 
-.. code-block:: console
+.. parsed-literal::
 
-   create /net self 10.244.30.4/16 allow-service none traffic-group traffic-group-1 vlan flannel_vxlan
+   create /net self **10.129.2.4/16** allow-service **none** traffic-group **traffic-group-1** vlan **flannel_vxlan**
 
-.. note::
-
-   All virtual servers created by the |kctlr| use the `BIG-IP SNAT`_ automap feature, which prefers floating IP addresses over static IPs.
-   See :ref:`bigip snats` for more information.
+.. include:: /_static/reuse/kctlr-snat-note.rst
 
 .. _k8s-flannel verify objects:
 
@@ -115,12 +110,11 @@ Verify creation of the BIG-IP objects
 
 You can use a TMOS shell or the BIG-IP configuration utility to verify object creation.
 
-.. code-block:: console
+.. parsed-literal::
 
    show /net tunnels tunnel flannel_vxlan
-   show /net running-config self 10.244.30.3/16
-   show /net running-config self 10.244.30.4/16
-
+   show /net running-config self 10.129.2.3/16
+   show /net running-config self 10.129.2.4/16
 
 .. _add bigip to flannel overlay:
 .. _k8s-bigip-node:
@@ -153,7 +147,7 @@ Find the flannel Annotations
 
 Run :command:`kubectl describe` for any Node in the Cluster and make note of the flannel Annotations included in the Node description.
 
-.. code-block:: console
+.. parsed-literal
 
    kubectl describe nodes <node>
    ...
@@ -195,9 +189,9 @@ Create a Kubernetes Node for the BIG-IP device
 
 #. Upload the Node resource to the Kubernetes API server.
 
-   .. code-block:: console
+   .. parsed-literal::
 
-      kubectl create -f f5-kctlr-bigip-node.yaml
+      kubectl create -f **f5-kctlr-bigip-node.yaml**
 
 #. Verify creation of the BIG-IP Node.
 
@@ -206,21 +200,20 @@ Create a Kubernetes Node for the BIG-IP device
 
       kubectl get nodes
       NAME           STATUS    AGE       VERSION
-      bigip          NotReady 5m        v1.7.5
+      bigip          NotReady  5m        v1.7.5
       k8s-master-0   Ready     2d        v1.7.5
       k8s-worker-0   Ready     2d        v1.7.5
       k8s-worker-1   Ready     2d        v1.7.5
 
-
-
-What's Next
------------
-
-- :ref:`Install the F5 BIG-IP Controller in Kubernetes <install-kctlr>`
+You should now be able to successfully send traffic through the BIG-IP system to and from endpoints within your Kubernetes Cluster.
 
 .. seealso::
 
    If you get a configuration error when trying to create a virtual server using an iApp, see :ref:`Troubleshoot Your Kubernetes Deployment <iapp traffic group>`.
+
+
+   If you're having trouble with your network setup, see :ref:`networking troubleshoot openshift`.
+   (This troubleshooting issue references the OpenShift Cluster Network, but the concepts are the same.)
 
 
 .. _Deploy flannel: https://coreos.com/flannel/docs/latest/kubernetes.html
