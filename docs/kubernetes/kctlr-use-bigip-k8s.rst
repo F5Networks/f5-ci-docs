@@ -178,7 +178,15 @@ Run :command:`kubectl describe` for any Node in the Cluster and make note of the
 Create a Kubernetes Node for the BIG-IP device
 ``````````````````````````````````````````````
 
-#. Create a Kubernetes Node resource.
+.. important::
+   :class: sidebar
+
+   You need to create a "dummy" Node in Kubernetes to make the Kubernetes API server aware of the BIG-IP device. The BIG-IP node's status will always display as "NotReady" because it is not actually a fully-participating Kubernetes Node. This status has no effect on the BIG-IP's ability to communicate in the overlay network.
+
+   Once you've set up the BIG-IP tunnel and added the BIG-IP "dummy" Node, you should be able to send traffic through the BIG-IP system to and from endpoints within your Kubernetes Cluster.
+   See :ref:`networking troubleshoot openshift` for tips to verify network connectivity.
+
+#. Create a "dummy" Kubernetes Node resource.
 
    - Include all of the flannel Annotations. Define the :code:`backend-data` and :code:`public-ip` Annotations with data from the BIG-IP VXLAN:
 
@@ -213,11 +221,6 @@ Create a Kubernetes Node for the BIG-IP device
       k8s-worker-1   Ready     2d        v1.7.5
 
 
-   .. important::
-
-      The BIG-IP node status will always display as "NotReady" because it is not a schedulable Kubernetes Node.
-
-   Once you've added the BIG-IP "dummy" Node, you should be able to successfully send traffic through the BIG-IP system to and from endpoints within your Kubernetes Cluster.
 
 What's Next
 -----------
