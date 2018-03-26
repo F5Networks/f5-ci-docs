@@ -12,7 +12,7 @@ data:
       "virtualServer": {
         "backend": {
           "servicePort": 80,
-          "serviceName": "mySuperAwesomeApp",
+          "serviceName": "myService",
           "healthMonitors": [{
             "interval": 30,
             "protocol": "http",

@@ -71,13 +71,13 @@ Use the :code:`data.backend` property to identify the `Kubernetes Service`_ that
 F5 type
 ```````
 
-The usage of the :code:`f5type` property differs depending on whether you're using it in Kubernetes or OpenShift.
+The :code:`f5type` is a Kubernetes Resource metadata label. Its usage differs depending on whether you're working in Kubernetes or OpenShift.
 
-- In an **F5 resource** ConfigMap, the :code:`f5type` value must be :code:`virtual-server`. This tells the |kctlr| that you want it to create a BIG-IP virtual server.
+In Kubernetes, when used in an F5 Resource ConfigMap, the :code:`f5type` **value must be** :code:`virtual-server`.
+This tells the |kctlr| that you want to create a virtual server on the BIG-IP device.
 
-- In an **OpenShift Route resource**, the :code:`f5type` property functions as a :code:`route-label` filter.
-  When you deploy the Controller with :code:`--route-label:true`, the |kctlr| watches the API for OpenShift Routes using the "f5type" label.
-  This is useful when you're using multiple Controllers to manage traffic for different Applications and/or Projects within a single BIG-IP partition.
+In OpenShift, when used in a Route Resource, you can use the :code:`f5type` label to identify which Routes you want the |kctlr| to watch.
+When you deploy the Controller with the :code:`--route-label` setting, the |kctlr| watches the OpenShift API for Routes that contain the specified label. See :ref:`kctlr-openshift-routes` for more information.
 
 .. _f5-schema:
 

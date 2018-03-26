@@ -3,27 +3,17 @@
 
 .. _kctlr-ingress-config:
 
-Attach Virtual Servers to Kubernetes Ingresses
-==============================================
+Attach a Virtual Server to a Kubernetes Ingress
+===============================================
 
 .. include:: /_static/reuse/k8s-version-added-1_1.rst
 
 Overview
 --------
 
-You can use the |kctlr-long| as an `Ingress Controller`_ in Kubernetes.
+You can use the |kctlr-long| as an `Ingress Controller`_ in Kubernetes. To do so, add the |kctlr| `Ingress annotations`_ to a Kubernetes Ingress Resource. The annotations define the objects you want to create on the BIG-IP system.
 
-Use the |kctlr| `Ingress annotations`_ to define the objects you want to create on the BIG-IP system.
-
-- The |kctlr| creates one virtual server for each unique IP address listed in the Ingress resource(s).
-- For Ingress resources that share IP addresses -- like those that use the :ref:`default IP address <ingress default IP>` -- the |kctlr| creates one pool for each Ingress resource on the shared virtual server.
-
-The |kctlr| supports the following Kubernetes `Ingress resource`_ types:
-
-- :ref:`single service`,
-- :ref:`simple fanout`,
-- :ref:`name-based virtual hosting`, and
-- :ref:`TLS <ingress-TLS>`.
+.. seealso:: For more information, see :ref:`k8s-ingress-controller`.
 
 .. table:: Task summary
 

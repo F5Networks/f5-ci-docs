@@ -51,7 +51,7 @@ For example, if your Service looks like this:
    apiVersion: v1
    kind: Service
    metadata:
-     name: mySuperAwesomeApp
+     name: myService
      labels:
        app: myApp
    spec:
