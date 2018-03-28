@@ -16,10 +16,7 @@ This document provides instructions for managing the virtual server(s) associate
 Edit an existing virtual server
 -------------------------------
 
-Services
-````````
-
-The basic steps listed below apply to any changes you may want to make to a virtual server associated with a Service, Ingress, or Route.
+Take the steps below to apply changes to a BIG-IP virtual server associated with a Service, Ingress, or Route.
 
 .. _kctlr upload resource api server:
 
@@ -39,16 +36,16 @@ The basic steps listed below apply to any changes you may want to make to a virt
 Ingresses and Routes
 ````````````````````
 
-In addition to the steps above, you can use the :command:`annotate` command to add/change the |kctlr| Annotations for an Ingress or Route resource.
+In addition to the steps listed above, you can use the :command:`annotate` command to add/change the |kctlr| Annotations for an Ingress or Route resource.
 
 For example, to change the load balancing mode to :code:`least-connections-member`:
 
-.. rubric:: Kubernetes
+.. rubric:: Kubernetes Ingress
 .. parsed-literal::
 
    kubectl annotate ingress **myIngress** virtual-server.f5.com/balance=least-connections-member [--namespace=**myNamespace**]
 
-.. rubric:: OpenShift
+.. rubric:: OpenShift Route
 .. parsed-literal::
 
    oc annotate route **myRoute** virtual-server.f5.com/balance=least-connections-member [--namespace=**myProject**]
@@ -80,39 +77,49 @@ Add/Edit health monitors
 Delete a virtual server
 -----------------------
 
-When you delete any Kubernetes or OpenShift resource, the |kctlr| will delete all of the BIG-IP objects associated with the resource.
+When you delete any Kubernetes or OpenShift resource, the |kctlr| deletes all of its associated BIG-IP objects and F5 resources.
 
 For example:
 
-#. Delete the F5 Resource for myService from the API server.
+When you delete the Service called "myService" from the API server
 
-   .. parsed-literal::
+.. parsed-literal::
 
-      kubectl delete configmap **myConfigMap** [--namespace=**<service_namespace>**]     \\ kubernetes
-      oc delete configmap **myConfigMap** [--namespace=**<service_project>**]          \\ openshift
+   kubectl delete service **myService** [--namespace=**<service_namespace>**]     \\ kubernetes
+   oc delete service ***myService** [--namespace=**<service_project>**]           \\ openshift
 
-#. Verify the BIG-IP objects no longer exist.
+the corresponding F5 resource called **myConfigMap** and the associated BIG-IP objects are also deleted.
 
-   .. parsed-literal::
+You can use a TMOS shell or the BIG-IP configuration utility to verify that the BIG-IP objects no longer exist.
 
-      admin@(bigip)(cfg-sync Standalone)(Active)(/Common) cd **my-partition**
-      admin@(bigip)(cfg-sync Standalone)(Active)(/my-partition) **tmsh**
-      admin@(bigip)(cfg-sync Standalone)(Active)(/my-partition)(tmos)$ **show ltm virtual**
-      admin@(bigip)(cfg-sync Standalone)(Active)(/my-partition)(tmos)$
+For example:
+
+.. parsed-literal::
+
+   admin@(bigip)(cfg-sync Standalone)(Active)(/Common) cd **my-partition**
+   admin@(bigip)(cfg-sync Standalone)(Active)(/my-partition) **tmsh**
+   admin@(bigip)(cfg-sync Standalone)(Active)(/my-partition)(tmos)$ **show ltm virtual**
+   admin@(bigip)(cfg-sync Standalone)(Active)(/my-partition)(tmos)$
 
 .. seealso::
 
    - :ref:`Delete virtual servers for Ingress resources <delete vs ingress>`
    - :ref:`Delete virtual servers for Route resources <delete vs route>`
 
+Downed Services
+---------------
+
+If you need to take down a Service for maintenance and don't want to lose the Service's objects on your BIG-IP, take down the |kctlr| first. The Controller doesn't delete any objects when it shuts down, so you can remove it without affecting the BIG-IP system configuration. When you bring the Controller back up, it will update the BIG-IP configurations to match the current state of the orchestration system.
+
+
 .. _kctlr-pool-only:
 
-Create unattached pools
------------------------
+Pools without Virtual Servers
+-----------------------------
 
 .. include:: /_static/reuse/k8s-version-added-1_1.rst
 
-You can use the |kctlr| to create and manage BIG-IP pools that aren't attached to a front-end virtual server (:dfn:`unattached pools`).
+You can use the |kctlr| to create BIG-IP pools that aren't attached to a front-end virtual server (:dfn:`unattached pools`).
 
 .. important::
 
@@ -141,8 +148,8 @@ Create an unattached pool
 
 .. _kctlr-ipam:
 
-Attach pools to virtual servers using IPAM
-``````````````````````````````````````````
+Attach pools to a virtual server using IPAM
+```````````````````````````````````````````
 
 .. include:: /_static/reuse/k8s-version-added-1_1.rst
 

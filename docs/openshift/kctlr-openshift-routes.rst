@@ -203,6 +203,7 @@ If you want to remove the virtual server associated with a Route from the BIG-IP
 
    .. include:: /_static/reuse/oc-apply.rst
 
+.. seealso:: See :ref:`kctlr-manage-bigip-objects` for more information.
 
 .. _OpenShift Pod: https://docs.openshift.com/enterprise/3.0/architecture/core_concepts/pods_and_services.html#pods
 .. _Router: https://docs.openshift.com/enterprise/3.0/architecture/core_concepts/routes.html#routers

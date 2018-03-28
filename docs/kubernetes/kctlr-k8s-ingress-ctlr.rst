@@ -1,79 +1,103 @@
+:product: BIG-IP Controller for Kubernetes
+:type: concept
+
 .. _k8s-ingress-controller:
 
-Using the BIG-IP Controller as an Ingress Controller
-====================================================
+Using the BIG-IP Controller as a Kubernetes Ingress Controller
+==============================================================
 
-This document provides an overview of what the |kctlr-long| can do when used as an Ingress Controller in Kubernetes.
-See :ref:`kctlr-ingress-config` for step-by-step instructions.
+This document provides an overview of how you can use the |kctlr-long| as an `Ingress Controller`_ in Kubernetes.
+For set-up instructions, see :ref:`kctlr-ingress-config`.
 
 Overview
 --------
 
-You can use the |kctlr| as an `Ingress Controller`_ in Kubernetes. The Controller creates one virtual server for each unique IP address listed in the Ingress resource(s).
+You can use the |kctlr| as a Kubernetes `Ingress Controller`_. The |kctlr| supports the following Kubernetes `Ingress resource`_ types:
 
-For Ingress resources that share IP addresses -- like those that use the :ref:`default IP address <ingress default IP>` -- the |kctlr| creates one pool for each Ingress resource on the shared virtual server.
+- :ref:`single service`
+- :ref:`simple fanout`
+- :ref:`name-based virtual hosting`
+- :ref:`TLS <ingress-TLS>`
 
-The |kctlr| supports the following Kubernetes `Ingress resource`_ types:
+.. _k8s-multiple-ingress-controllers:
 
-- :ref:`single service`,
-- :ref:`simple fanout`,
-- :ref:`name-based virtual hosting`, and
-- :ref:`TLS <ingress-TLS>`.
-
-
-Deployments using multiple Ingress Controllers
-----------------------------------------------
+Using Multiple Ingress Controllers
+``````````````````````````````````
 
 .. important::
 
-   In Kubernetes, the Ingress resource's :code:`ingress.class` property is empty by default.
-   The |kctlr| **automatically manages all Ingress resources that don't have an** :code:`ingress.class` **defined**.
+   The |kctlr| automatically manages all Ingress resources that don't have an :code:`ingress.class` defined.
 
-If you're using more than one Ingress Controller to manage your Ingress resources:
+Because the Ingress resource's :code:`ingress.class` property is empty by default, the |kctlr| will automatically try to manage all Ingress resources residing in the namespace(s) it watches. The |kctlr| ignores Ingress resources that have any :code:`ingress.class` other than "f5".
 
-- Set the :code:`ingress.class` property to "f5" for all Ingress resources you want the |kctlr| to manage. ::
+If you're using another Ingress Controller to manage Kubernetes Ingress resources:
 
-   kubernetes.io/ingress.class="f5"
+#. Set :code:`ingress.class` to "f5" in all Ingress resources you want the |kctlr| to manage.
 
-- Define the :code:`ingress.class` as appropriate for the Ingress resources managed by other Ingress Controllers. The |kctlr| ignores Ingress resources that have any :code:`ingress.class` other than "f5".
+   :code:`kubernetes.io/ingress.class="f5"`
+
+#. Define the :code:`ingress.class` as appropriate in Ingress resources managed by other Ingress Controllers.
+
+.. _k8s-ip-addresses:
 
 IP address assignment
-`````````````````````
+---------------------
 
-The |kctlr| supports the following options for IP address assignment. See the `k8s-bigip-ctlr configuration parameters`_ table for more information about these settings.
+The Controller creates one virtual server for each unique IP address listed in an Ingress resource. You can manage IP address assignment using the options below.
+
+See the `k8s-bigip-ctlr configuration parameters`_ table for more information about the required settings.
 
 .. _ingress default IP:
 
-Default IP address
-~~~~~~~~~~~~~~~~~~
+Set a Default, Shared IP address
+````````````````````````````````
 
 .. include:: /_static/reuse/k8s-version-added-1_4.rst
 
-You can set a default IP address for Ingress resources. To do so:
+When you set the |kctlr| to use a default IP address, you can share that IP address across Ingress resources. When you share the default IP address across Ingress resources, the |kctlr|
 
-#. Add the :code:`default-ingress-ip` config parameter to the :ref:`k8s-bigip-ctlr Deployment <k8s-bigip-ctlr-deployment>`.
-#. Add the annotation :code:`virtual-server.f5.com/ip="controller-default"` to your Ingress resource.
-
-The |kctlr| replaces "controller-default" with the IP address provided as the :code:`default-ingress-ip`.
-
-Each Ingress resource set to use the "controller-default" IP shares the same BIG-IP virtual server. The |kctlr| attaches a unique local traffic policy to the virtual server for each Ingress resource to ensure correct traffic routing.
+- creates a shared virtual server with one pool for each Ingress resource, and
+- attaches a unique local traffic policy for each Ingress resource to the virtual server to ensure correct traffic routing.
 
 .. important::
 
    You can only define one :code:`default-ingress-ip` per |kctlr| instance.
 
-If you're using multiple Controllers to monitor separate namespaces, you can define a default IP address for each Controller. This type of deployment allows you to isolate the VIPs in each namespace from each other.
+   If you're using multiple Controllers to monitor separate namespaces, you can define a default IP address for each Controller. This type of deployment allows you to isolate the VIPs in each namespace from each other.
+
+To share the default IP address across Ingress resources:
+
+#. Define the :code:`default-ingress-ip` setting in your :ref:`k8s-bigip-ctlr Deployment <k8s-bigip-ctlr-deployment>` using the desired IP address.
+#. Add the :code:`virtual-server.f5.com/ip="controller-default"` annotation to each Ingress resource for which you want to share the IP address.
+
+When the |kctlr| creates the virtual server on the BIG-IP system, it replaces "controller-default" with the default IP address.
 
 .. _dns lookup ingress:
 
-DNS lookup
-~~~~~~~~~~
+Use DNS lookup
+``````````````
 
-The |kctlr| uses DNS lookup to resolve hostnames by default (as of v1.3.0). The |kctlr| attempts to resolve the first hostname provided in the :code:`spec.rules.host` section of the Ingress resource. It then assigns the resolved host's IP address to the Ingress' virtual server.
+.. include:: /_static/reuse/k8s-version-added-1_3.rst
 
-IPAM/Unattached pools
-~~~~~~~~~~~~~~~~~~~~~
+The |kctlr| uses DNS lookup to resolve hostnames by default. The |kctlr| attempts to resolve the first hostname provided in the :code:`spec.rules.host` section of the Ingress resource. It then assigns the resolved host's IP address to the Ingress' virtual server.
 
-You can create :ref:`unattached pools <kctlr-pool-only>` for the Services defined in the Ingress resource. To do so, just omit the ``virtual-server.f5.com/ip=`` annotation from your Ingress resource.
+.. _kctlr-assign-ip-ipam:
 
-You can then :ref:`use an IPAM system <kctlr-ipam>` to assign an IP address and attach a virtual server to the pools, or use another means to manually route traffic to the pools on the BIG-IP system.
+Use an IPAM system
+``````````````````
+
+.. include:: /_static/reuse/k8s-version-added-1_1.rst
+
+If you want to assign IP addresses using an IPAM system, use the |kctlr| to :ref:`create unattached pools <kctlr-pool-only>`. To do so, just omit the :code:`virtual-server.f5.com/ip=` annotation from your Ingress resource.
+
+You can then add the virtual-server annotation to the Ingress using the IP address selected by the IPAM system. The |kctlr| will create a new virtual server with the selected IP address and attach the previously-created pool(s) to it.
+
+.. add links/info about IPAM Controller for 1.5.0 release
+
+
+What's Next
+-----------
+
+- :ref:`kctlr-ingress-config`
+- :ref:`kctlr-manage-bigip-objects`
+- :ref:`kctlr-per-svc-vs` for L4 ingress and L7 ingress on non-standard ports

@@ -30,10 +30,12 @@ Container Connecters
    openshift/kctlr-openshift-bigip-ha.rst
    kubernetes/kctlr-app-install
    openshift/kctlr-openshift-app-install
-   kubernetes/kctlr-create-service-vs.rst
-   kubernetes/kctlr-ingress
-   openshift/kctlr-openshift-routes
    kubernetes/kctlr-manage-bigip-objects
+   kubernetes/kctlr-k8s-ingress-ctlr
+   kubernetes/kctlr-ingress
+   kubernetes/kctlr-f5-resource
+   kubernetes/kctlr-create-service-vs
+   openshift/kctlr-openshift-routes
    kubernetes/kctlr-deploy-iapp
    kubernetes/kctlr-secrets
 

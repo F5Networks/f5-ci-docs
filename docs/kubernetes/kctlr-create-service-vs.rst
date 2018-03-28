@@ -133,5 +133,7 @@ If you remove a Service, you should also :ref:`delete the F5 Resource ConfigMap 
 
 When replacing a Service, you should create a new F5 resource ConfigMap that meets the new Service's needs.
 
+.. seealso:: See :ref:`kctlr-manage-bigip-objects` for more information.
+
 .. rubric:: **Footnotes**
 .. [#lb] The |kctlr| supports BIG-IP load balancing algorithms that do not require additional configuration parameters. You can view the full list of supported algorithms in the `f5-cccl schema <https://github.com/f5devcentral/f5-cccl/blob/03e22c4779ceb88f529337ade3ca31ddcd57e4c8/f5_cccl/schemas/cccl-ltm-api-schema.yml#L515>`_. See the `BIG-IP Local Traffic Management Basics user guide <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-basics-13-0-0/4.html>`_ for information about each load balancing mode.
