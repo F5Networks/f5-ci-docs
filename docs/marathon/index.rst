@@ -60,6 +60,24 @@ The F5 Container Integration for Mesos Marathon documentation set assumes that y
 
 .. [#mgui] Per the Marathon documentation, the `Marathon Web Interface`_ is no longer actively developed. Use the Marathon REST API to access the latest Marathon features.
 
+.. _marathon bigip ha:
+
+BIG-IP High Availability and Multi-tenancy
+------------------------------------------
+
+If you want to manage a BIG-IP device pair or cluster with the |mctlr|, you should run one Controller instance per BIG-IP device.
+
+The basic deployment steps are:
+
+#. :ref:`Set up RBAC <mesos-authentication>` as needed.
+#. :ref:`Deploy a JSON Application file <mctlr-deploy>` for each :code:`marathon-bigip-ctlr` instance.
+
+   - Provide a unique name for each Controller instance.
+   - Use a different BIG-IP IP address/hostname for each Controller instance.
+   - Use the same BIG-IP partition for each Controller instance.
+
+:fonticon:`fa fa-download` :download:`Download a sample Application file </marathon/config_examples/f5-marathon-bigip-ctlr_ha-active.json>`
+
 Key Apache Mesos/Marathon Concepts
 ----------------------------------
 
