@@ -4,7 +4,6 @@ metadata:
   labels:
     name: myService
   name: myService-route-reencrypt
-  namespace: default
   annotations:
     virtual-server.f5.com/balance: round-robin
     # Provide the name of an existing BIG-IP client SSL profile

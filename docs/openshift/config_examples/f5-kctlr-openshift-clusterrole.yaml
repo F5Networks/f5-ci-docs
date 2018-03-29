@@ -46,7 +46,6 @@ userNames:
 - system:serviceaccount:kube-system:bigip-ctlr
 subjects:
 - kind: ServiceAccount
-  namespace: kube-system
   name: bigip-ctlr
 roleRef:
   name: system:bigip-ctlr

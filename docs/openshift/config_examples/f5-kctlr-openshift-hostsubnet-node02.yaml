@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: HostSubnet
+metadata:
+  name: f5-bigip-node02
+  annotations:
+    pod.network.openshift.io/fixed-vnid-host: "0"
+    pod.network.openshift.io/assign-subnet: "true"
+# provide a name for the BIG-IP device's host Node
+host: f5-bigip-node02
+# Provide an IP address to serve as the BIG-IP VTEP in the OpenShift SDN
+hostIP: 172.16.1.29

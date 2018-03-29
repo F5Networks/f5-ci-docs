@@ -1,0 +1,55 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata
+  name: f5-bigip-ctlr-02
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: k8s-bigip-ctlr
+      labels:
+        app: k8s-bigip-ctlr
+    spec:
+      # Name of the Service Account bound to a Cluster Role with the required
+      # permissions
+      serviceAccountName: bigip-ctlr
+      containers:
+        - name: k8s-bigip-ctlr
+          image: "f5networks/k8s-bigip-ctlr:1.4"
+          env:
+            - name: BIGIP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  # Replace with the name of the Secret containing your login
+                  # credentials
+                  name: bigip-login
+                  key: username
+            - name: BIGIP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  # Replace with the name of the Secret containing your login
+                  # credentials
+                  name: bigip-login
+                  key: password
+          command: ["/app/bin/k8s-bigip-ctlr"]
+          args: [
+            "--bigip-username=$(BIGIP_USERNAME)",
+            "--bigip-password=$(BIGIP_PASSWORD)",
+            "--bigip-url=<bigip_url_or_hostname>",
+            "--bigip-partition=<my_bigip_partition>",
+            "--pool-member-type=cluster",
+            # The path to the BIG-IP VXLAN that connects to the OpenShift SDN
+            "--openshift-sdn-name=/Common/openshift_vxlan",
+            # Enable use of the BIG-IP device as an OpenShift Router
+            "--manage-routes=true",
+            # Assign an IP address to the virtual server from the "float"
+            # HostSubnet
+            "--route-vserver-addr=<ip_address>"
+            # OPTIONAL: Provide an "f5type" label you want the BIG-IP Controller
+            # to watch for. The label should be defined in a Route Resource as
+            # "f5type: foo" (for example, "f5type: App1")
+            "--route-label=App1"
+            ]
+      imagePullSecrets:
+        - name: f5-docker-images
+        - name: bigip-login

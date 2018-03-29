@@ -50,7 +50,7 @@ Here's the JSON for an example application configured in Marathon
                        }
                     ],
                     "network" : "BRIDGE",
-                    "image" : "docker-registry.pdbld.f5net.com/systest-common/test-nginx",
+                    "image" : "nginx",
                     "parameters" : []
                  },
                  "volumes" : []

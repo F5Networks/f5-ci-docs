@@ -25,23 +25,20 @@ The Deployment creates a `ReplicaSet`_ that, in turn, launches a `Pod`_ running 
    These instructions are for a standard Kubernetes environment.
    **If you are using OpenShift**, see :ref:`Install the BIG-IP Controller for Kubernetes in OpenShift Origin <install-kctlr-openshift>`.
 
+
+.. _kctlr initial setup bigip:
+
 Initial Setup
 -------------
 
-.. include:: /_static/reuse/kctlr-initial-setup.rst
-   :end-line: 4
+.. include:: /_static/reuse/bigip-admin-permissions-reqd.rst
 
 .. include:: /_static/reuse/kctlr-initial-setup.rst
-   :start-line: 6
 
 .. _k8s-rbac:
 
 Set up RBAC Authentication
 --------------------------
-
-.. note::
-
-   If your cluster doesn't use `Role Based Access Control <https://kubernetes.io/docs/admin/authorization/rbac/>`_ , you can skip this step.
 
 #. Create a Service Account for the |kctlr|.
 

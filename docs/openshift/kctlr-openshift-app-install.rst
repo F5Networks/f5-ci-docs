@@ -1,46 +1,34 @@
-.. index::
-   single: OpenShift; BIG-IP Controller
-   single: OpenShift; BIG-IP Controller; install
-   single: OpenShift; RBAC; BIG-IP Controller
-
-.. sidebar:: Docs test matrix
-
-   Documentation manually tested with:
-
-   - OpenShift v1.4.1 on CentOS 7.2.1511
-   - ``k8s-bigip-ctlr`` v1.1.0-1.3.0
-
 .. _install-kctlr-openshift:
 
 Install the BIG-IP Controller in OpenShift
 ==========================================
-
-Use a `Deployment`_ to install the |octlr-long|.
-
-.. attention::
-
-   These instructions are for the `Openshift`_ Kubernetes distribution.
-   **If you are using standard Kubernetes**, see :ref:`Install the BIG-IP Controller in Kubernetes <install-kctlr>`.
-
 
 .. table:: Task table
 
    =======  ===================================================================
    Step     Task
    =======  ===================================================================
-   1.       Complete :ref:`openshift initial setup`.
+   1.       :ref:`openshift initial setup`
+   2.       :ref:`openshift-bigip-ctlr-deployment`
 
-   2.       :ref:`openshift-rbac`
-
-   3.       :ref:`kctlr-configure-openshift`
-
-   4.       :ref:`upload openshift deployment` to OpenShift
+            - :ref:`create-openshift-deployment`
+            - :ref:`upload openshift deployment`
+            - :ref:`kctlr verify pods`
    =======  ===================================================================
+
+.. attention::
+
+   These instructions are for the `OpenShift`_ Kubernetes distribution.
+   **If you are using standard Kubernetes**, see :ref:`Install the BIG-IP Controller in Kubernetes <install-kctlr>`.
 
 .. _openshift initial setup:
 
-Initial Setup
--------------
+Initial Set-up
+--------------
+
+Follow the steps in the guides linked to below to set up your BIG-IP device(s) and OpenShift cluster for use with the |kctlr|.
+
+.. include:: /_static/reuse/bigip-admin-permissions-reqd.rst
 
 .. include:: /_static/reuse/kctlr-initial-setup.rst
 
@@ -50,56 +38,7 @@ Initial Setup
 Set up RBAC Authentication
 --------------------------
 
-#. Create a Service Account for the |kctlr|.
-
-   .. code-block:: console
-
-      oc create serviceaccount bigip-ctlr -n kube-system
-      serviceaccount "bigip-ctlr" created
-
-#. Create a `Cluster Role`_ and `Cluster Role Binding`_. The |octlr-long| requires the permissions shown in the table below.
-
-   +--------------+-------------------+---------------------------------------------+
-   | API groups   | Resources         | Actions                                     |
-   +==============+===================+=============================================+
-   | ""           | endpoints         | get, list, watch                            |
-   |              +-------------------+                                             |
-   |              | namespaces        |                                             |
-   |              +-------------------+                                             |
-   |              | nodes             |                                             |
-   |              +-------------------+                                             |
-   |              | routes            |                                             |
-   |              +-------------------+                                             |
-   |              | services          |                                             |
-   |              +-------------------+                                             |
-   |              | secrets           |                                             |
-   +--------------+-------------------+---------------------------------------------+
-   | "extensions" | ingresses         | get, list, watch                            |
-   +--------------+-------------------+---------------------------------------------+
-   | ""           | configmaps        | get, list, watch, update, create, patch     |
-   +--------------+-------------------+                                             |
-   |              | events            |                                             |
-   +--------------+-------------------+---------------------------------------------+
-   | "extensions" | ingresses/status  | get, list, watch, update, create, patch     |
-   +--------------+-------------------+---------------------------------------------+
-
-   \
-
-   .. literalinclude:: /openshift/config_examples/f5-kctlr-openshift-clusterrole.yaml
-      :linenos:
-
-   :fonticon:`fa fa-download` :download:`f5-kctlr-openshift-clusterrole.yaml </openshift/config_examples/f5-kctlr-openshift-clusterrole.yaml>`
-
-#. Upload the Cluster Role and Cluster Role Binding to the API server.
-
-   .. code-block:: console
-
-      oc create -f f5-kctlr-openshift-clusterrole.yaml
-      clusterrole "system:bigip-ctlr" created
-      clusterrolebinding "bigip-ctlr-role" created
-
-
-.. _create-openshift-deployment:
+.. include:: /_static/reuse/kctlr-openshift-set-up-rbac.rst
 
 .. _openshift-bigip-ctlr-deployment:
 
@@ -108,67 +47,76 @@ Deploy the |kctlr|
 
 .. _kctlr-configure-openshift:
 
-Create an OpenShift Deployment
-``````````````````````````````
 
-The |kctlr| has a subset of `configuration parameters specific to OpenShift`_. At minimum, you must include the following configuration parameters in your Deployment:
+The |kctlr| has a subset of `configuration parameters specific to OpenShift`_.
+Include the following required config parameters in all OpenShift Deployments:
 
 - :code:`--openshift-sdn-name=/path/to/bigip_openshift_vxlan`
 - :code:`--pool-member-type=cluster`
 
-The Deployment must consist of valid JSON or YAML. The example below shows the basic |kctlr| configurations. You can customize this for your environment using the `k8s-bigip-ctlr configuration parameters`_.
+
+Define an OpenShift Deployment config using valid YAML or JSON.
+
+.. _create-openshift-deployment:
+
+Create a Deployment
+```````````````````
+
+Basic Deployment
+~~~~~~~~~~~~~~~~
+
+The example below shows a Deployment with the basic config parameters required to run the |kctlr| in OpenShift.
+With this configuration, you can :ref:`Create BIG-IP virtual servers for Services <kctlr-create-vs>` and :ref:`Deploy Application Services (iApps) <kctlr-deploy-iapps>`.
 
 .. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml
    :caption: Example OpenShift Deployment
-   :linenos:
+
 
 :fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_openshift-sdn.yaml </openshift/config_examples/f5-k8s-bigip-ctlr_openshift-sdn.yaml>`
 
-The example below shows the basic |kctlr| `Route configuration parameters`_ needed to manage Routes. See :ref:`kctlr-openshift-routes` for additional information.
+Deployments for Managing Routes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: /openshift/config_examples/f5-kctlr-openshift-routes.yaml
-   :caption: Example OpenShift Route Deployment
-   :linenos:
+The |kctlr| has a set of `Route configuration parameters`_. See :ref:`Manage Routes with the BIG-IP Controller <kctlr-openshift-routes>` for examples and set-up instructions.
+
+Deployments for BIG-IP HA
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to manage a BIG-IP HA pair or group, you'll need to deploy a |kctlr| instance for each device.
+See :ref:`BIG-IP High Availability in OpenShift <openshift deploy kctlr ha>` for more information.
 
 .. _upload openshift deployment:
 
 Upload the Deployment
 `````````````````````
+.. tip::
+   :class: sidebar
 
-#. Upload the Deployment to the OpenShift API server using :command:`oc create`.
+   For HA deployments, you can pass in each Deployment's filename in a single :command:`oc create` command.
 
-   .. code-block:: console
+Use the :command:`oc create` command to upload the Deployment to the OpenShift API server.
 
-      oc create -f f5-k8s-bigip-ctlr_openshift-sdn.yaml
-      deployment "k8s-bigip-ctlr" created
+.. code-block:: console
 
-#. Verify creation using :command:`oc get`.
+   oc create -f f5-k8s-bigip-ctlr_openshift-sdn.yaml
+   deployment "k8s-bigip-ctlr" created
 
-   You should see one (1) `ReplicaSet`_, as well as one (1) ``k8s-bigip-ctlr`` `Pod`_ for each Node in the Cluster. The example below shows one (1) Pod running the ``k8s-bigip-ctlr`` in a test cluster with one worker node.
+.. _kctlr verify pods:
 
-   .. code-block:: console
+Verify Pod(s)
+`````````````
 
-      oc get deployments
-      NAME             DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-      k8s-bigip-ctlr   1         1         1            1           1h
+You can verify that the Controller(s) created successfully using the :command:`oc get` command.
 
-      oc get replicasets
-      NAME                       DESIRED   CURRENT   AGE
-      k8s-bigip-ctlr-331478340   1         1         1h
+You should see one :code:`k8s-bigip-ctlr` `Pod`_ for each Node in the Cluster. The example below shows one :code:`k8s-bigip-ctlr` Pod running in a test cluster with one worker node.
 
-      oc get pods
-      NAME                              READY     STATUS    RESTARTS   AGE
-      k8s-bigip-ctlr-1962020886-s31l4   1/1       Running   0          1m
+.. code-block:: console
+
+   oc get pods
+   NAME                              READY     STATUS    RESTARTS   AGE
+   k8s-bigip-ctlr-1962020886-s31l4   1/1       Running   0          1m
 
 
-What's next
------------
-
-Now that you have the |kctlr| up and running, here are a few things you can do with it:
-
-- :ref:`kctlr-create-vs`
-- :ref:`kctlr-deploy-iapps`
-- :ref:`kctlr-openshift-routes`
 
 .. _OpenShift: https://www.openshift.org/
 .. _ReplicaSet: https://kubernetes.io/docs/user-guide/replicasets/
