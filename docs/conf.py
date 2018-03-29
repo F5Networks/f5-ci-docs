@@ -67,7 +67,7 @@ source_encoding = 'utf-8-sig'
 master_doc = 'index'
 
 # General information about the project.
-project = u'F5 Container Integrations'
+project = u'F5 Container Connectors'
 copyright = u'2018 F5 Networks Inc'
 author = u'F5 Networks'
 
@@ -103,6 +103,7 @@ rst_epilog = """
 .. _Application labels for iApp mode: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/#application-labels-for-iapp-mode
 .. _Application Manifest: https://docs.pivotal.io/pivotalcf/1-7/devguide/deploy-apps/manifest.html
 .. _Better or Best license: https://f5.com/products/how-to-buy/simplified-licensing
+.. _BIG-IP: https://f5.com/products/big-ip
 .. _BIG-IP Application Security Manager: https://f5.com/products/big-ip/application-security-manager-asm
 .. _BIG-IP Controller for Cloud Foundry: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/
 .. _BIG-IP Controller for Kubernetes: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest
@@ -112,7 +113,7 @@ rst_epilog = """
 .. _BIG-IP SSL profile: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-profiles-reference-12-1-0/6.html
 .. _BIG-IP System User Account Administration -> Administrative Partitions: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-12-0-0/3.html
 .. _BIG-IP TMOS Routing Adminstration Guide: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-13-0-0/
-.. _BIG-IP: https://f5.com/products/big-ip
+.. _BIG-IP user account: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-13-0-0/1.html
 .. _built-in middleware: %(base_url)s/products/asp/latest/#built-in-middleware
 .. _cf-bigip-ctlr configuration parameters: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/#configuration-parameters
 .. _cf-bigip-ctlr: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/
@@ -130,11 +131,14 @@ rst_epilog = """
 .. _configuration parameters specific to OpenShift: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-sdn
 .. _contact F5 support: https://f5.com/about-us/contact/regional-offices#regional-support
 .. _Create a Kubernetes Secret containing your Docker login credentials: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+.. _Create a new namespace: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
 .. _Create a new partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-implementations-12-1-0/29.html
 .. _create and set a non-zero default Route Domain for a partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-implementations-13-0-0/4.html#guid-e73e1052-8e05-4913-bba3-99f29d26bc56
 .. _DaemonSet: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
 .. _Deployment: https://kubernetes.io/docs/user-guide/deployments/
 .. _Diego cell: https://docs.cloudfoundry.org/concepts/architecture/#diego-cell
+.. _Disable automatic configuration sync on the DSC: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-device-service-clustering-administration-13-1-0/5.html
+.. _Disable config sync for tunnels: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-tmos-tunnels-ipsec-13-1-0/2.html#GUID-5E1E2E56-0776-4B7A-A601-98C2C2E3775C
 .. _Docker: https://www.docker.com/
 .. _Express middleware: https://expressjs.com/en/guide/using-middleware.html
 .. _Express: https://expressjs.com/
@@ -188,6 +192,7 @@ rst_epilog = """
 .. _Pivotal Cloud Foundry: https://pivotal.io/platform
 .. _Pod: https://kubernetes.io/docs/concepts/workloads/pods/pod/
 .. _Pods: https://kubernetes.io/docs/concepts/workloads/pods/pod/
+.. _Projects: https://docs.openshift.org/latest/architecture/core_concepts/projects_and_users.html#projects
 .. _Red Hat OpenShift: https://www.openshift.com/container-platform/index.html
 .. _ReplicaSet: https://kubernetes.io/docs/user-guide/replicasets/
 .. _Route annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-annotations
@@ -199,6 +204,7 @@ rst_epilog = """
 .. _ServiceAccount: https://kubernetes.io/docs/admin/service-accounts-admin/
 .. _Services: https://kubernetes.io/docs/user-guide/services/
 .. _Service Broker: https://docs.cloudfoundry.org/services/overview.html
+.. _Set up two or more F5 BIG-IPs in a Device Service Cluster (DSC): https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-device-service-clustering-administration-13-1-0/11.html
 .. _SNAT automap and self IP address selection: https://support.f5.com/csp/article/K7336
 .. _Splunk: https://www.splunk.com/
 .. _Static Pod: https://kubernetes.io/docs/admin/static-pods/
@@ -296,7 +302,7 @@ html_sidebars = {
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-html_title = 'F5 Container Integrations'
+html_title = 'F5 Container Connectors'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -392,7 +398,7 @@ html_show_copyright = True
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'F5_Container Integrations_doc'
+htmlhelp_basename = 'F5_Container Connectors_doc'
 
 # -- Options for linkcheck ------------------------------------------------
 # A list of regular expressions that match URIs that should not be checked when doing a linkcheck build. Example:
@@ -430,8 +436,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'F5_Container Integrations_doc.tex',
-     u'F5 Container Integrations Documentation',
+    (master_doc, 'F5_Container Connectors_doc.tex',
+     u'F5 Container Connectors Documentation',
      'F5 Networks', 'manual'),
 ]
 
@@ -481,8 +487,8 @@ latex_toplevel_sectioning = 'section'
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'F5_Container_Integrations_doc',
-     'F5 Container Integrations Documentation',
+    (master_doc, 'F5_Container_Connectors_doc',
+     'F5 Container Connectors Documentation',
      [author], 1)
 ]
 
@@ -497,9 +503,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'F5_Container_Integrations_doc',
-     'F5 Container Integrations Documentation',
-     author, 'F5 Container Integrations'),
+    (master_doc, 'F5_Container_Connectors_doc',
+     'F5 Container Connectors Documentation',
+     author, 'F5 Container Connectors'),
 ]
 
 # Documents to append as an appendix to all manuals.

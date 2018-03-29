@@ -1,13 +1,13 @@
 .. _containers-home:
 
 .. index::
-   single: F5 Container Integration; overview
+   single: F5 Container Connector; Overview
 
 
-Introduction to F5 Container Integrations
-=========================================
+Introduction to F5 Container Connectors
+=======================================
 
-F5's Container Integrations make it possible to dynamically allocate BIG-IP L4-L7 services in container orchestration environments. The Container Connectors ('CCs') understand the container orchestration environment ('COE'), thereby providing PaaS-native integrations for F5 BIG-IP devices.
+The F5 Container Connectors ('CCs') provide platform-native integrations for BIG-IP devices from PaaS providers like Cloud Foundry, Kubernetes, Mesos, & OpenShift. The CCs make it possible to dynamically allocate BIG-IP L4-L7 services in container orchestration environments by translating native commands to F5 Python SDK/iControl REST calls. [#cccl]_
 
 =======================     ===================================================
 Container Connector         Description
@@ -30,13 +30,17 @@ Container Connector         Description
 
 .. image:: /_static/media/container_connectors_north-south.png
    :scale: 50 %
-   :alt: North-South architecture:
+   :alt: North-South architecture
 
+
+.. [#cccl] See `Introduction to F5 Common Controller Core Library <https://devcentral.f5.com/articles/introduction-to-f5-common-controller-core-library-cccl-28355>`_ on DevCentral for more information.
+
+---------------------------------
 
 Design
 ------
 
-Each CC is uniquely suited to its specific container orchestration environment and purpose, utilizing the architecture and language appropriate for the environment. Application Developers interact with the platform's API; the container connectors watch the API for certain events, then act accordingly.
+Each Container Connector is uniquely suited to its specific container orchestration environment and purpose, utilizing the architecture and language appropriate for the environment. Application Developers interact with the platform's API; the CCs watch the API for certain events, then act accordingly.
 
 .. image:: /_static/media/container_connector-framework.png
    :scale: 50 %
@@ -58,6 +62,47 @@ The Container Connector is stateless. The inputs are:
 
 This means an instance of a Container Connector can be readily discarded. Migrating a CC is as easy as destroying it in one place and spinning up a new one somewhere else. Wherever a Container Connector runs, it always watches the API and attempts to bring the BIG-IP up-to-date with the latest applicable configurations.
 
+---------------------------------
+
+
+Working with BIG-IP HA pairs or device groups
+---------------------------------------------
+
+You can use the F5 Container Connectors to manage a BIG-IP HA active-standby pair or device group. The deployment details vary depending on the platform. For most, the basic principle is the same: You should run one |kctlr| instance for each BIG-IP device.
+
+**For example**:
+
+You have one active and one standby BIG-IP device. You want to manage a Kubernetes Cluster using a single BIG-IP partition. For your HA setup, you'd deploy two |kctlr| instances - one for each BIG-IP device. To help ensure Controller HA, you can deploy each Controller instance on a separate Node in the cluster.
+
+.. figure:: /_static/media/bigip-ha.png
+   :alt: A diagram showing a BIG-IP active-standby device pair and 2 BIG-IP Controllers, running on separate nodes in a Kubernetes Cluster.
+   :scale: 65%
+
+BIG-IP config sync
+``````````````````
+
+Each Container Connector monitors the BIG-IP partition it manages for configuration changes. If it discovers changes, the Connector reapplies its own configuration to the BIG-IP system.
+
+F5 does not recommend making configuration changes to objects in any partition managed by a |kctlr| via any other means (for example, the configuration utility, TMOS, or by syncing configuration from another device or service group). Doing so may result in disruption of service or unexpected behavior.
+
+.. important::
+
+   If you use tunnels to connect your BIG-IP device(s) to the Cluster network, you should `disable config sync for tunnels`_.
+
+Notice for Kubernetes and OpenShift users
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. danger::
+
+   The Container Connector for Kubernetes and OpenShift uses FDB entries and ARP records to identify the Cluster resources associated with BIG-IP Nodes. Because BIG-IP config sync doesn't include FDB entries or ARP records, F5 does not recommend using automatic configuration sync when managing a BIG-IP HA pair or cluster with the |kctlr|.
+
+If you use automatic config sync on devices managed by the |kctlr|, there will be a service interruption window when failover occurs. This window will occur between the standby device activating and the |kctlr| updating the FDB and ARP records on the device.
+
+The length of time for the service interruption will be, at minumum, the length of the :code:`k8s-bigip-ctlr` :code:`--node-poll-interval` setting (the interval at which the Controller polls the Kubernetes or OpenShift API server for updates). You can reduce this window by setting the :code:`node-poll-interval` to 5-10 seconds instead of using the default (30).
+
+When you deploy one Controller per device, both devices receive the same FDB record updates. This translates to a shorter potential delay if/when failover happens.
+
+If you choose to deploy one |kctlr| instance and manually sync configurations to the standby device, be sure to always sync *from* the BIG-IP device managed by the |kctlr| *to* the other device(s) in the group.
 
 ---------------------------------
 

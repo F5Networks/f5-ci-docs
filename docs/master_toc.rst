@@ -31,6 +31,7 @@ Container Connectors
    openshift/kctlr-openshift-routes
    kubernetes/kctlr-manage-bigip-objects
    kubernetes/kctlr-deploy-iapp
+   openshift/kctlr-openshift-bigip-ha.rst
 
 .. toctree::
    :caption: Mesos Marathon
