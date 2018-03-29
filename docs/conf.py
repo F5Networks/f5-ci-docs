@@ -302,7 +302,7 @@ html_sidebars = {
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-html_title = 'F5 Container Integrations'
+html_title = 'F5 Container Connectors'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -398,7 +398,7 @@ html_show_copyright = True
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'F5_Container Integrations_doc'
+htmlhelp_basename = 'F5_Container Connectors_doc'
 
 # -- Options for linkcheck ------------------------------------------------
 # A list of regular expressions that match URIs that should not be checked when doing a linkcheck build. Example:
@@ -436,8 +436,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'F5_Container Integrations_doc.tex',
-     u'F5 Container Integrations Documentation',
+    (master_doc, 'F5_Container Connectors_doc.tex',
+     u'F5 Container Connectors Documentation',
      'F5 Networks', 'manual'),
 ]
 
@@ -487,8 +487,8 @@ latex_toplevel_sectioning = 'section'
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'F5_Container_Integrations_doc',
-     'F5 Container Integrations Documentation',
+    (master_doc, 'F5_Container_Connectors_doc',
+     'F5 Container Connectors Documentation',
      [author], 1)
 ]
 
@@ -503,9 +503,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'F5_Container_Integrations_doc',
-     'F5 Container Integrations Documentation',
-     author, 'F5 Container Integrations'),
+    (master_doc, 'F5_Container_Connectors_doc',
+     'F5 Container Connectors Documentation',
+     author, 'F5 Container Connectors'),
 ]
 
 # Documents to append as an appendix to all manuals.
