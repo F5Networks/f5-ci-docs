@@ -77,7 +77,7 @@ Add/Edit health monitors
 Delete a virtual server
 -----------------------
 
-When you delete any Kubernetes or OpenShift resource, the |kctlr| deletes all of its associated BIG-IP objects and F5 resources.
+When you delete any Kubernetes or OpenShift resource, the |kctlr| deletes all of its associated BIG-IP objects.
 
 For example:
 
@@ -88,7 +88,10 @@ When you delete the Service called "myService" from the API server
    kubectl delete service **myService** [--namespace=**<service_namespace>**]     \\ kubernetes
    oc delete service ***myService** [--namespace=**<service_project>**]           \\ openshift
 
-the corresponding F5 resource called **myConfigMap** and the associated BIG-IP objects are also deleted.
+the |kctlr| removes the corresponding virtual server, pool(s), etc. from the BIG-IP device.
+
+When you delete a Service, you should also delete the F5 Resource ConfigMap, Ingress, and/or Route associated with that Service.
+If you leave these resources in place and create a new Service with the same name, the |kctlr| will create objects on the BIG-IP system for the new Service.
 
 You can use a TMOS shell or the BIG-IP configuration utility to verify that the BIG-IP objects no longer exist.
 
