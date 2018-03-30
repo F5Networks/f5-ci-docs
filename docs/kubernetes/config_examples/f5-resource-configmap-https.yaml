@@ -1,11 +1,10 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: myApp.vs
+  name: myApp.vs.https
   labels:
     f5type: virtual-server
 data:
-  # NOTE: schema v0.1.7 is required as of k8s-bigip-ctlr v1.4.0
   schema: "f5schemadb://bigip-virtual-server_v0.1.7.json"
   data: |
     {
@@ -16,19 +15,22 @@ data:
           "healthMonitors": [{
             "interval": 30,
             "protocol": "http",
-            "send": "GET HTTP/1.1/\r\n",
+            "send": "GET /\r\n",
             "recv": "200|OK",
             "timeout": 120
           }]
         },
         "frontend": {
           "virtualAddress": {
-            "port": 8080,
+            "port": 8443,
             "bindAddr": "1.2.3.4"
           },
           "partition": "k8s",
           "balance": "round-robin",
-          "mode": "tcp"
+          "mode": "http",
+          "sslProfile": {
+          "f5ProfileName": "Common/clientssl"
+          }
         }
       }
     }

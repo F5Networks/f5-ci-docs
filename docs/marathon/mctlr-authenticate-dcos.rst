@@ -1,6 +1,9 @@
+:product: BIG-IP Controller for Marathon
+:type: task
+
 .. _mesos-authentication:
 
-Set up authentication to a secure DC/OS cluster
+Set up Authentication to a Secure DC/OS cluster
 ===============================================
 
 If you're using the Apache Mesos DC/OS `cluster security features <https://docs.mesosphere.com/1.8/overview/features/#identity-access-mgmt>`_, you'll need to give |mctlr-long| access to your cluster.

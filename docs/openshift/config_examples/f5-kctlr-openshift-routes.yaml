@@ -15,7 +15,7 @@ spec:
       serviceAccountName: bigip-ctlr
       containers:
         - name: k8s-bigip-ctlr
-          image: "f5networks/k8s-bigip-ctlr:1.4.2"
+          image: "f5networks/k8s-bigip-ctlr:1.4"
           env:
             - name: BIGIP_USERNAME
               valueFrom:
@@ -52,7 +52,7 @@ spec:
             # OPTIONAL: Provide an "f5type" label you want the BIG-IP Controller
             # to watch for. This information should be defined in a Route
             # Resource (for example, "f5type: App1")
-            "--route-label=App1"
+            "--route-label="App1"
             ]
       imagePullSecrets:
         - name: f5-docker-images

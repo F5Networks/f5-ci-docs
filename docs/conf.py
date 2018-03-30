@@ -89,7 +89,6 @@ extlinks = {'k8sdocs': ('https://kubernetes.io/docs/%s',
 
 # All substitutions
 # Try to keep sorted alphabetically
-
 rst_epilog = """
 .. |cfctlr| replace:: BIG-IP Controller
 .. |cf-long| replace:: BIG-IP Controller for Cloud Foundry
@@ -108,6 +107,8 @@ rst_epilog = """
 .. _BIG-IP Controller for Cloud Foundry: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/
 .. _BIG-IP Controller for Kubernetes: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest
 .. _BIG-IP Controller for Marathon: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest
+.. _BIG-IP Local Traffic Management - Getting Started with Policies: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-local-traffic-policies-getting-started-13-0-0.html
+.. _BIG-IP Local Traffic Management - Profiles Reference Guide: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-profiles-reference-13-0-0.html
 .. _BIG-IP partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-13-0-0/2.html
 .. _BIG-IP SNAT: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-13-1-0/8.html
 .. _BIG-IP SSL profile: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-profiles-reference-12-1-0/6.html
@@ -135,6 +136,7 @@ rst_epilog = """
 .. _Create a new partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-implementations-12-1-0/29.html
 .. _create and set a non-zero default Route Domain for a partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-implementations-13-0-0/4.html#guid-e73e1052-8e05-4913-bba3-99f29d26bc56
 .. _DaemonSet: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+.. _DC/OS and DC/OS Enterprise: https://mesosphere.com/product/
 .. _Deployment: https://kubernetes.io/docs/user-guide/deployments/
 .. _Diego cell: https://docs.cloudfoundry.org/concepts/architecture/#diego-cell
 .. _Disable automatic configuration sync on the DSC: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-device-service-clustering-administration-13-1-0/5.html
@@ -185,7 +187,7 @@ rst_epilog = """
 .. _namespaces: https://kubernetes.io/docs/user-guide/namespaces/
 .. _NATS bus: https://docs.cloudfoundry.org/concepts/architecture/router.html#use
 .. _oc: https://docs.openshift.com/enterprise/3.0/cli_reference/basic_cli_operations.html
-.. _OpenShift F5 Router: https://docs.openshift.org/1.4/install_config/router/f5_router.html
+.. _OpenShift F5 Router: https://docs.openshift.org/latest/install_config/router/f5_router.html
 .. _OpenShift route resources: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-route-resources
 .. _Overview of SNAT features: https://support.f5.com/csp/article/K7820
 .. _Overview of the Standard Virtual Server: https://support.f5.com/csp/article/K93017176
@@ -202,16 +204,14 @@ rst_epilog = """
 .. _Self IP address: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-13-0-0/5.html#guid-52e1f1d8-9a6b-48cc-acfa-07745b757f07
 .. _Service: https://kubernetes.io/docs/concepts/services-networking/service/
 .. _ServiceAccount: https://kubernetes.io/docs/admin/service-accounts-admin/
-.. _Services: https://kubernetes.io/docs/user-guide/services/
+.. _Service resources: https://kubernetes.io/docs/user-guide/services/
 .. _Service Broker: https://docs.cloudfoundry.org/services/overview.html
 .. _Set up two or more F5 BIG-IPs in a Device Service Cluster (DSC): https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-device-service-clustering-administration-13-1-0/11.html
 .. _SNAT automap and self IP address selection: https://support.f5.com/csp/article/K7336
 .. _Splunk: https://www.splunk.com/
 .. _Static Pod: https://kubernetes.io/docs/admin/static-pods/
 .. _store your Docker login credentials as a Secret: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-.. _supported Ingress Annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-annotations
 .. _supported Route configurations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-route-configurations
-.. _supported Route Annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#id20
 .. _system configuration: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-initial-configuration-12-0-0/2.html#conceptid
 .. _Using flannel with Kubernetes: https://coreos.com/flannel/docs/latest/kubernetes.html
 """% {
@@ -334,7 +334,7 @@ html_static_path = ['_static/']
 # bottom, using the given strftime format.
 # The empty string is equivalent to '%b %d, %Y'.
 #
-html_last_updated_fmt = ''
+html_last_updated_fmt = '%Y-%m-%d %I:%M:%S'
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.

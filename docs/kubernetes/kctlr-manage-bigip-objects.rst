@@ -1,236 +1,141 @@
-.. index::
-   single: Kubernetes; BIG-IP; virtual server
-   single: OpenShift; BIG-IP; virtual server
-
-.. sidebar:: Docs test matrix
-
-   Documentation manually tested with:
-
-   - kubernetes-v1.6.4_ubuntu-16.4.2
-   - kubernetes-v1.4.8_coreos.0
-   - ``k8s-bigip-ctlr`` v1.0.0-1.3.0
+:product: BIG-IP Controller for Kubernetes
+:type: tutorial
 
 .. _kctlr-manage-bigip-objects:
 
-Manage BIG-IP virtual servers for Kubernetes/OpenShift Services
-===============================================================
+Manage Your BIG-IP Virtual Servers
+==================================
 
-The |kctlr-long| and OpenShift watches the Kubernetes/OpenShift API for `Services`_ with associated :ref:`F5 resources <k8s-f5-resources>` and creates/modifies BIG-IP Local Traffic Manager (LTM) objects accordingly.
-F5 resources provide the settings you want the |kctlr| to apply when creating objects on the BIG-IP system.
+.. tip:: You can use the |kctlr| to attach the BIG-IP virtual servers and pools to Services in Kubernetes and OpenShift environments.
 
-.. tip::
-
-   The |kctlr| can also :ref:`deploy iApps <kctlr-deploy-iapps>`.
-
-.. _kctlr-create-vs:
-
-Create a BIG-IP front-end virtual server for a Service
-------------------------------------------------------
-
-.. _k8s-vs-naming:
-
-.. note::
-
-   The |kctlr| prefaces all BIG-IP virtual server objects with :code:`[namespace]_[resource-name]`.
-
-   For example, if :code:`default` is the namespace and ``k8s.vs`` is the ConfigMap name, the object preface is :code:`default_k8s.vs_173.16.2.2:80`.
-
-
-Take the steps below to create a new BIG-IP virtual server for a Service.
-
-.. _kctlr configmap example:
-
-#. Create a ConfigMap containing the :ref:`virtual server F5 resource JSON blob <f5-resource-blob>`.
-
-   The example below creates one (1) HTTP virtual server and one (1) HTTPS virtual server for a Service, with health monitors defined for each.
-
-   .. literalinclude:: /kubernetes/config_examples/f5-resource-vs-example.configmap.yaml
-     :linenos:
-
-   :fonticon:`fa fa-download` :download:`f5-resource-vs-example.configmap.yaml </kubernetes/config_examples/f5-resource-vs-example.configmap.yaml>`
-
-#. Upload the ConfigMap to the Kubernetes/OpenShift API server. Be sure to provide the namespace the Service runs in (if something other than :code:`default`).
-
-   .. code-block:: console
-      :caption: kubectl
-
-      kubectl create -f f5-resource-vs-example.configmap.yaml [--namespace=<service-namespace>]
-      configmap "http.vs" created
-      configmap "https.vs" created
-
-   .. code-block:: console
-      :caption: openshift cli
-
-      oc create -f f5-resource-vs-example.configmap.yaml [--namespace=<service-namespace>]
-      configmap "http.vs" created
-      configmap "https.vs" create
-
-#. Verify creation of the BIG-IP virtual server(s).
-
-   .. code-block:: console
-
-      admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)$ show ltm virtual
-      ------------------------------------------------------------------
-      Ltm::Virtual Server: frontend_173.16.2.2_80
-      ------------------------------------------------------------------
-      Status
-        Availability     : available
-        State            : enabled
-        Reason           : The virtual server is available
-        CMP              : enabled
-        CMP Mode         : all-cpus
-        Destination      : 173.16.2.2:80
-      ...
-      Ltm::Virtual Server: frontend_173.16.2.2_443
-      ------------------------------------------------------------------
-      Status
-        Availability     : available
-        State            : enabled
-        Reason           : The virtual server is available
-        CMP              : enabled
-        CMP Mode         : all-cpus
-        Destination      : 173.16.2.2:443
-      ...
-
+You can use the |kctlr-long| and OpenShift to :ref:`kctlr-per-svc-vs` using :ref:`F5 resource ConfigMaps <k8s-f5-resources>`.
+This document provides instructions for managing the virtual server(s) associated with your Service(s).
 
 .. _kctlr-update-vs:
 
-Update a Service's BIG-IP virtual server
-----------------------------------------
+Edit an existing virtual server
+-------------------------------
 
-The same basic steps apply to any changes you may want to make to an existing Service's virtual server's configurations.
+Take the steps below to apply changes to a BIG-IP virtual server associated with a Service, Ingress, or Route.
 
-#. Edit the ConfigMap and make your desired changes.
-#. Upload your changes to the Kubernetes/OpenShift API server using :command:`kubectl apply` or :command:`oc apply`.
+.. _kctlr upload resource api server:
 
-   .. code-block:: console
-      :caption: kubectl
+- Make your desired changes to the resource YAML or JSON file.
 
-      kubectl apply -f <myConfigMap.yaml> [--namespace <service-namespace>]
+- Upload the updated file to the Kubernetes or OpenShift API server using the commands shown below.
 
-   .. code-block:: console
-      :caption: openshift cli
+  .. rubric:: Kubernetes
 
-      oc apply -f <myConfigMap.yaml>
+  .. include:: /_static/reuse/kubectl-apply.rst
+
+  .. rubric:: OpenShift
+
+  .. include:: /_static/reuse/oc-apply.rst
+
+
+Ingresses and Routes
+````````````````````
+
+In addition to the steps listed above, you can use the :command:`annotate` command to add/change the |kctlr| Annotations for an Ingress or Route resource.
+
+For example, to change the load balancing mode to :code:`least-connections-member`:
+
+.. rubric:: Kubernetes Ingress
+.. parsed-literal::
+
+   kubectl annotate ingress **myIngress** virtual-server.f5.com/balance=least-connections-member [--namespace=**myNamespace**]
+
+.. rubric:: OpenShift Route
+.. parsed-literal::
+
+   oc annotate route **myRoute** virtual-server.f5.com/balance=least-connections-member [--namespace=**myProject**]
 
 .. _k8s-config-bigip-health-monitor:
 
-Add health monitors
-```````````````````
+.. _k8s-service healthmonitor:
 
-Take the steps below to add a BIG-IP health monitor(s) to an existing virtual server F5 Resource in standard Kubernetes or OpenShift.
+Add/Edit health monitors
+------------------------
 
-#. Add the health monitor(s) to the backend section of the virtual server :ref:`F5 resource ConfigMap <k8s-f5-resources>`.
+#. Define/edit the desired health monitor(s).
+#. Add the health monitor(s) to the :code:`backend` section of the :ref:`F5 Resource <k8s-f5-resources>` ConfigMap.
+#. :ref:`Update the API server <kctlr upload resource api server>`.
 
-   .. literalinclude:: /kubernetes/config_examples/f5-resource-vs-example.configmap.yaml
-      :linenos:
-      :lines: 1-41
-      :emphasize-lines: 24-29
+.. literalinclude:: /kubernetes/config_examples/f5-resource-vs-example.configmap.yaml
+   :caption: Example F5 resource with health monitor
+   :emphasize-lines: 16-22
 
-#. Update the Kubernetes/OpenShift API server. Be sure to provide the namespace the Service runs in (if not :code:`default`).
+:fonticon:`fa fa-download` :download:`f5-resource-vs-example.configmap.yaml </kubernetes/config_examples/f5-resource-vs-example.configmap.yaml>`
 
-   .. code-block:: console
-      :caption: kubectl
+.. seealso::
 
-      kubectl replace -f <myConfigMap.yaml> [--namespace <service-namespace>]
-
-   .. code-block:: console
-      :caption: openshift cli
-
-      oc replace -f <myConfigMap.yaml>
-
-#. Use the BIG-IP management console to verify the Service's virtual server has an attached health monitor.
-
-   .. code-block:: console
-
-      admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)$ show ltm virtual <virtual-name>
-
+   - :ref:`Health monitors for Ingress resources <add health monitor to ingress>`
+   - :ref:`Health monitors for Route resources <add health monitor to route>`
 
 .. _kctlr-delete-objects:
 
-Delete BIG-IP virtual servers
------------------------------
+Delete a virtual server
+-----------------------
 
-#. Delete the ConfigMap(s) from the Kubernetes/OpenShift API server.
+When you delete any Kubernetes or OpenShift resource, the |kctlr| deletes all of its associated BIG-IP objects.
 
-   The Controller then deletes the corresponding BIG-IP virtual server(s) and its associated objects (pools, pool members, and health monitors).
+For example:
 
-   .. code-block:: console
-      :caption: kubectl
+When you delete the Service called "myService" from the API server
 
-      kubectl delete configmap http.vs
-      configmap "http.vs" deleted
+.. parsed-literal::
 
-   .. code-block:: console
-      :caption: openshift cli
+   kubectl delete service **myService** [--namespace=**<service_namespace>**]     \\ kubernetes
+   oc delete service ***myService** [--namespace=**<service_project>**]           \\ openshift
 
-      oc delete configmap http.vs
-      configmap "http.vs" deleted
+the |kctlr| removes the corresponding virtual server, pool(s), etc. from the BIG-IP device.
 
-#. Verify the BIG-IP LTM objects associated with the Service no longer exist.
+When you delete a Service, you should also delete the F5 Resource ConfigMap, Ingress, and/or Route associated with that Service.
+If you leave these resources in place and create a new Service with the same name, the |kctlr| will create objects on the BIG-IP system for the new Service.
 
-   .. code-block:: console
+You can use a TMOS shell or the BIG-IP configuration utility to verify that the BIG-IP objects no longer exist.
 
-      admin@(bigip)(cfg-sync Standalone)(Active)(/kubernetes)(tmos)$ show ltm virtual frontend_173.16.2.2_80
+For example:
 
+.. parsed-literal::
 
-.. _kctlr-downed-services:
+   admin@(bigip)(cfg-sync Standalone)(Active)(/Common) cd **my-partition**
+   admin@(bigip)(cfg-sync Standalone)(Active)(/my-partition) **tmsh**
+   admin@(bigip)(cfg-sync Standalone)(Active)(/my-partition)(tmos)$ **show ltm virtual**
+   admin@(bigip)(cfg-sync Standalone)(Active)(/my-partition)(tmos)$
 
-Virtual servers for down or replaced Services
----------------------------------------------
+.. seealso::
 
-- If you need to take a Service down temporarily and want to keep the associated BIG-IP objects, leave the F5 Resource ConfigMap in place. The |kctlr| will continue to manage the associated BIG-IP LTM objects when the Service comes back up.
+   - :ref:`Delete virtual servers for Ingress resources <delete vs ingress>`
+   - :ref:`Delete virtual servers for Route resources <delete vs route>`
 
-- If you deploy a new Service with the same name as one you took down, the |kctlr| associates the existing BIG-IP LTM objects with the new Service.
+Downed Services
+---------------
 
-- If you take down a Service and want to remove the corresponding BIG-IP LTM objects, :ref:`delete the F5 Resource ConfigMap <kctlr-delete-objects>`.
+If you need to take down a Service for maintenance and don't want to lose the Service's objects on your BIG-IP, take down the |kctlr| first. The Controller doesn't delete any objects when it shuts down, so you can remove it without affecting the BIG-IP system configuration. When you bring the Controller back up, it will update the BIG-IP configurations to match the current state of the orchestration system.
 
-.. _kctlr-ipam:
-
-Assign IP addresses to BIG-IP virtual servers using IPAM
---------------------------------------------------------
-
-.. include:: /_static/reuse/k8s-version-added-1_1.rst
-
-You can use an IPAM system to assign IP addresses to BIG-IP virtual servers managed by the |kctlr|. To do so, take the steps below:
-
-#. :ref:`kctlr-create-unattached-pool` for the Service on the BIG-IP system.
-
-#. Use your IPAM system to add the IP address to the ConfigMap.
-
-   .. tip::
-
-      F5 recommends using an `Annotation`_ to add the IP address allocated by the IPAM system to the F5 Resource ConfigMap for the unattached pool.
-
-      The annotation should follow the format
-
-      :code:`virtual-server.f5.com/ip=<ipaddress>`.
-
-      This tells the |kctlr-long| to create a BIG-IP virtual server, assign the designated IP address to it, and attach the pool to the virtual server.
 
 .. _kctlr-pool-only:
 
-Pools without virtual servers
+Pools without Virtual Servers
 -----------------------------
 
 .. include:: /_static/reuse/k8s-version-added-1_1.rst
 
-The |kctlr-long| can create and manage BIG-IP Local Traffic Manager (LTM) pools that aren't attached to a front-end BIG-IP virtual server (also referred to as "unattached pools"). The |kctlr-long| applies the following naming convention when creating pool members for unattached pools:
-
-``<namespace>_<configmap-name>``.
-
-   For example, ``default_http.pool_only``.
+You can use the |kctlr| to create BIG-IP pools that aren't attached to a front-end virtual server (:dfn:`unattached pools`).
 
 .. important::
 
-   Before creating unattached pools, make sure the BIG-IP system has another way to route traffic to the Service(s), such as an `iRule`_ or a `local traffic policy`_. After creating an unattached pool for a Service, use the BIG-IP config utility to add the pool members to the iRule or traffic policy. This ensures proper handling of client connections to your back-end applications.
+   The primary use case for unattached pools is to allow the use of an IPAM system to allocate IP addresses for your virtual servers.
+
+   If you create unattached pools and are not using IPAM, the BIG-IP system must have another way to route traffic to the pools (such as `iRules <https://devcentral.f5.com/irules>`_ or `local traffic policies`_).
 
 .. _kctlr-create-unattached-pool:
 
 Create an unattached pool
 `````````````````````````
 
-#. Create an :ref:`F5 resource <k8s-f5-resources>` `ConfigMap`_, but leave out the ``bindAddr`` field.
+#. Create an :ref:`F5 resource <k8s-f5-resources>` **without the** :code:`bindAddr` **property**.
 
    .. literalinclude:: /kubernetes/config_examples/f5-resource-pool-only-example.configmap.yaml
       :linenos:
@@ -238,121 +143,61 @@ Create an unattached pool
 
    :fonticon:`fa fa-download` :download:`f5-resource-pool-only-example.configmap.yaml </kubernetes/config_examples/f5-resource-pool-only-example.configmap.yaml>`
 
-#. Upload the ConfigMap to the Kubernetes/OpenShift API server.
+#. :ref:`Update the Kubernetes API server <kctlr upload resource api server>`.
 
-   .. code-block:: console
-      :caption: kubectl
+#. :ref:`kctlr-ipam` **--OR--**
 
-      kubectl create -f f5-resource-pool-only-example.configmap.yaml [--namespace=<service-namespace>]
-      configmap "http.pool_only" created
+   Use the BIG-IP configuration utility or TMSH to add the pool members to an iRule or traffic policy with the correct routing rules for your application.
 
-   .. code-block:: console
-      :caption: openshift cli
+.. _kctlr-ipam:
 
-      oc create -f f5-resource-pool-only-example.configmap.yaml
-      configmap "http.pool_only" created
+Attach pools to a virtual server using IPAM
+```````````````````````````````````````````
 
-.. important::
+.. include:: /_static/reuse/k8s-version-added-1_1.rst
 
-   Don't forget to attach the pool to the iRule or traffic policy on the BIG-IP system that knows how to route traffic for the Service.
+Set up your IPAM system to annotate the F5 resource ConfigMap with the allocated IP address. Use the Annotation shown below.
+
+:code:`virtual-server.f5.com/ip=<ip_address>`
+
+When the |kctlr| discovers the annotated resource, it:
+
+- creates a new BIG-IP virtual server with the designated IP address, and
+- attaches the existing pool to the virtual server.
 
 .. _kctlr-attach-pool-vs:
 
-Attach a pool to an existing virtual server
-```````````````````````````````````````````
+.. note::
 
-#. Add the desired :code:`bindAddr` to the F5 virtual server resource definition.
+   The Controller doesn't support attaching an unattached pool to an existing BIG-IP virtual server.
 
-   .. tip::
-
-      You can configure your IPAM system to do this automatically. For example:
-
-      :code:`kubectl annotate configmap http.pool_only virtual-server.f5.com/ip=1.2.3.4`
-
-#. Verify the changes using :command:`kubectl get` or :command:`oc get`.
-
-   .. code-block:: console
-
-      kubectl get configmap http.pool_only -o yaml \\
-      oc get configmap http.pool_only -o yaml
-
-#. Go to :menuselection:`Local Traffic --> Virtual Servers` in the BIG-IP configuration utility to verify the pool attached to the virtual server. (Be sure to look in the correct BIG-IP partition.)
-
-
-.. _kctlr-delete-unattached-pool:
-
-Delete an "unattached" pool
-```````````````````````````
-
-#. Remove the ConfigMap from the Kubernetes/OpenShift API server.
-
-   .. code-block:: console
-
-      kubectl delete configmap http.pool_only
-      configmap "http.pool_only" deleted
-
-#. Go to :menuselection:`Local Traffic --> Pools` in the BIG-IP configuration utility to verify deletion of the pool.
+   - If you try to add the pool to an existing virtual that already has pools attached, you'll see errors.
+   - If you try to use an existing virtual server residing in the /Common partition, you'll see conflict errors because the Controller will attempt to create a new virtual server in its managed partition.
+   - If you manually create a virtual server in the managed partition, the Controller will delete it.
 
 .. _kctlr-detach-pool:
 
 Detach a pool from a virtual server
 ```````````````````````````````````
 
-If you want to delete a front-end BIG-IP virtual server, but keep its associated pool(s)/pool member(s):
+When you detach a pool from a virtual server, the |kctlr| will delete the virtual server but keep the pool(s)/pool member(s).
 
 #. Remove the ``bindAddr`` field from the virtual server F5 resource ConfigMap.
+#. :ref:`Update the API server <kctlr upload resource api server>`.
+#. Verify the changes using :command:`kubectl get` (Kubernetes) or :command:`oc get` (OpenShift).
 
-   .. code-block:: console
-      :linenos:
-      :emphasize-lines: 20-21
+.. _kctlr-delete-unattached-pool:
 
-      kubectl edit configmap http.vs [--namespace <service-namespace>] \\
-      oc edit configmap http.vs
-      ----
-      # Please edit the object below.
-      # ...
-      #
-      apiVersion: v1
-      data:
-        schema: "f5schemadb://bigip-virtual-server_v0.1.7.json"
-        data: |
-          {
-            "virtualServer": {
-              "backend": {
-                ...
-                }]
-              },
-              "frontend": {
-                "virtualAddress": {
-                  "port": 80,
-                  \\ REMOVE THE LINE BELOW
-                  "bindAddr": "1.2.3.4"
-                },
-                "partition": "kubernetes",
-                "balance": "round-robin",
-                "mode": "http"
-              }
-            }
-          }
-      kind: ConfigMap
-      metadata:
-        creationTimestamp: 2017-02-14T17:24:34Z
-        labels:
-          f5type: virtual-server
-        name: http.vs
-        namespace: default
+Delete an unattached pool
+`````````````````````````
 
-#. Verify the changes using :command:`kubectl get` or :command:`oc get`.
+The steps for deleting an unattached pool are the same as for :ref:`deleting a virtual server <kctlr-delete-objects>`.
 
-   .. code-block:: console
+.. _verify changes bigip services:
 
-      kubectl get configmap http.vs -o yaml \\
-      oc get configmap http.vs -o yaml
+Verify changes on the BIG-IP system
+-----------------------------------
 
-#. Go to :menuselection:`Local Traffic --> Virtual Servers` in the BIG-IP configuration utility to verify the virtual server no longer exists.
+.. include:: /_static/reuse/verify-bigip-objects.rst
 
-
-.. _local traffic policy: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-local-traffic-policies-getting-started-13-0-0/1.html
-.. _iRule: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-irules-concepts-11-6-0/1.html
 .. _Annotation: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-

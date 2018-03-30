@@ -1,6 +1,9 @@
+:product: BIG-IP Controller for Kubernetes
+:type: task
+
 .. _k8s-add-secret:
 
-Secure sensitive information with Secrets
+Secure Sensitive Information with Secrets
 =========================================
 
 In Kubernetes and OpenShift, a `Secret`_ allows you to securely store and consume sensitive data in your cluster.
@@ -12,7 +15,7 @@ In Kubernetes and OpenShift, a `Secret`_ allows you to securely store and consum
 
 .. _k8s-tls-cert:
 
-Add a TLS certificate and key
+Add a TLS Certificate and Key
 -----------------------------
 
 #. Encode your certificate and key with base64.
@@ -30,7 +33,7 @@ Add a TLS certificate and key
 
 .. _k8s-secret-docker-config:
 
-Pull an image from a private Docker registry
+Pull an Image from a Private Docker Registry
 --------------------------------------------
 
 If you need to pull images from a private Docker registry, follow the instructions provided in the Kubernetes documentation:
@@ -40,7 +43,7 @@ If you need to pull images from a private Docker registry, follow the instructio
 
 .. _secret-bigip-login:
 
-Secure your BIG-IP credentials
+Secure your BIG-IP Credentials
 ------------------------------
 
 Create a generic Secret containing your BIG-IP login information.
@@ -52,7 +55,7 @@ Create a generic Secret containing your BIG-IP login information.
 
 .. _secret verify:
 
-Verify that a Secret exists
+Verify that a Secret Exists
 ---------------------------
 
 If using standard Kubernetes, see the `Kubernetes Secrets documentation <https://kubernetes.io/docs/concepts/configuration/secret/#creating-your-own-secrets>`_.

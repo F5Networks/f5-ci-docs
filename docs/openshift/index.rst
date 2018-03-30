@@ -1,7 +1,10 @@
+:product: BIG-IP Controller for Kubernetes
+:type: concept
+
 .. _openshift-home:
 
-F5 Container Integration - OpenShift
-====================================
+F5 Container Connector - OpenShift
+==================================
 
 This document provides general information regarding the F5 Integration for OpenShift.
 For deployment and usage instructions, please refer to the guides below.
@@ -21,7 +24,7 @@ For deployment and usage instructions, please refer to the guides below.
 Overview
 --------
 
-The |octlr-long| enables use of a BIG-IP device in `OpenShift`_. Because OpenShift has a native Kubernetes integration, the F5 Integration for OpenShift utilizes the same controller as the :ref:`F5 Integration for Kubernetes <k8s-home>` (``k8s-bigip-ctlr``). The |kctlr| configures BIG-IP objects for applications in an OpenShift `cluster`_, serving North-South traffic.
+The |octlr-long| enables use of a BIG-IP device in `OpenShift`_. Because OpenShift has a native Kubernetes integration, the F5 Integration for OpenShift utilizes the same controller as the :ref:`k8s-home` (``k8s-bigip-ctlr``). The |kctlr| configures BIG-IP objects for applications in an OpenShift `cluster`_, serving North-South traffic.
 
 .. image:: /_static/media/cc_solution.png
    :scale: 60%
@@ -29,7 +32,7 @@ The |octlr-long| enables use of a BIG-IP device in `OpenShift`_. Because OpenShi
 
 In OpenShift, you can use the |kctlr| to use a BIG-IP device(s) to:
 
-- :ref:`proxy traffic for Services <kctlr-ingress-config>` --OR--
+- :ref:`proxy traffic for Services <kctlr-per-svc-vs>` --OR--
 - :ref:`proxy traffic for OpenShift routes <kctlr-openshift-routes>`.
 
 .. _openshift-origin-prereqs:

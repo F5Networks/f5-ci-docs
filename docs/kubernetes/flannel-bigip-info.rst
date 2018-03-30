@@ -1,5 +1,5 @@
-.. index::
-   single: BIG-IP; flannel; VXLAN; BIG-IP Controller; Kubernetes; Cluster Network
+:product: BIG-IP Controller for Kubernetes
+:type: concept
 
 .. _flannel-bigip-info:
 
@@ -25,7 +25,7 @@ Flannel assigns a subnet to each Kubernetes Node. It allocates an IP address wit
 
 .. _k8s-to-bigip:
 
-How the BIG-IP system knows about Kubernetes Pods
+BIG-IP Devices and the Kubernetes Cluster Network
 -------------------------------------------------
 
 .. sidebar:: :fonticon:`fa fa-exclamation-circle` Important:

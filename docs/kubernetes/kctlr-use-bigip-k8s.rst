@@ -1,13 +1,5 @@
-.. index::
-   single: BIG-IP; Kubernetes; flannel; Network set-up; VXLAN
-
-.. sidebar:: Docs test matrix
-
-   Documentation manually tested with:
-
-   - BIG-IP v12.1.1
-   - Kubernetes v1.7.5
-   - flannel v0.9.0
+:product: BIG-IP Controller for Kubernetes
+:type: task
 
 .. _use-bigip-k8s-flannel:
 
@@ -18,7 +10,7 @@ This document provides step-by-step instructions for adding a BIG-IP device to a
 
 Complete the following tasks to add a BIG-IP device to a `Kubernetes`_ `Cluster Network`_ using `flannel`_.
 
-.. table:: Task table
+.. table:: Task Summary
 
    ===== ==================================================================================
    Step  Task
@@ -31,7 +23,6 @@ Complete the following tasks to add a BIG-IP device to a `Kubernetes`_ `Cluster 
          - :ref:`k8s-flannel create bigip self IP`
          - :ref:`k8s-flannel create floating IP`
          - :ref:`k8s-flannel verify objects`
-
    ----- ----------------------------------------------------------------------------------
    3.    :ref:`add bigip to flannel overlay`
 

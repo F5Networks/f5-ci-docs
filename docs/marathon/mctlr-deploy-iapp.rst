@@ -1,19 +1,10 @@
-.. index::
-   single: BIG-IP Controller; Marathon; iApps
-
-.. sidebar:: Docs test matrix
-
-   Documentation manually tested with:
-
-   - ``marathon-1.3.9``
-   - ``mesos-1.0.3``
-   - ``marathon-bigip-ctlr v1.0.0``
-   - Marathon `basic-3 example app`_
+:product: BIG-IP Controller for Marathon
+:type: task
 
 .. _mctlr-deploy-iapps:
 
-Deploy iApps - Marathon
-=======================
+Create BIG-IP Objects with iApps
+================================
 
 The |mctlr| can deploy any iApp on a BIG-IP device via the `marathon-bigip-ctlr iApp configuration parameters`_. The iApp must exist on your BIG-IP device before |mctlr| attempts to deploy it.
 The steps presented here apply to any built-in or custom iApp.

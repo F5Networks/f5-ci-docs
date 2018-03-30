@@ -1,5 +1,5 @@
 awscli
-f5-sphinx-theme>=1.0.1
+f5-sphinx-theme>=1.0.2
 sphinx>=1.7
 recommonmark
 sphinxjp.themes.basicstrap

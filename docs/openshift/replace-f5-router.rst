@@ -1,29 +1,30 @@
-.. index::
-   single: BIG-IP Controller; Kubernetes; OpenShift
-   single: BIG-IP Controller; OpenShift; F5 Router
+:product: BIG-IP Controller for Kubernetes
+:type: task
 
 .. _upgrade f5 router:
 
-Replace the OpenShift F5 Router with the BIG-IP Controller
-==========================================================
+Replace the F5 Router in OpenShift
+==================================
 
 .. include:: /_static/reuse/k8s-version-added-1_2.rst
 
 Take the steps below to replace the `OpenShift F5 Router`_ with the |kctlr-long| in OpenShift deployments.
 
-===== ==================================================================================
-Step  Task
-===== ==================================================================================
-1.    :ref:`remove f5 router`.
------ ----------------------------------------------------------------------------------
-2.    :ref:`oc install kctlr`.
------ ----------------------------------------------------------------------------------
-3.    :ref:`set up kctlr routes`.
------ ----------------------------------------------------------------------------------
-4.    :ref:`deploy route resource`.
------ ----------------------------------------------------------------------------------
-5.    :ref:`verify BIG-IP route objects`.
-===== ==================================================================================
+.. table:: Task Summary
+
+   ===== =========================================
+   Step  Task
+   ===== =========================================
+   1.    :ref:`remove f5 router`.
+   ----- -----------------------------------------
+   2.    :ref:`oc install kctlr`.
+   ----- -----------------------------------------
+   3.    :ref:`set up kctlr routes`.
+   ----- -----------------------------------------
+   4.    :ref:`deploy route resource`.
+   ----- -----------------------------------------
+   5.    :ref:`verify BIG-IP route objects`.
+   ===== =========================================
 
 .. _remove f5 router:
 
@@ -67,13 +68,5 @@ If you set up the |kctlr| to manage the same BIG-IP partition you used with the 
 What's Next
 -----------
 
-- See :ref:`kctlr-openshift-routes` to learn about creating new Routes for the |kctlr| to manage.
+- :ref:`kctlr-openshift-routes`
 - Discover the |kctlr| supported `route configuration parameters`_.
-
-Example Route Resource definitions
-``````````````````````````````````
-
-- :fonticon:`fa fa-download` :download:`sample-unsecured-route.yaml </openshift/config_examples/f5-openshift-unsecured-route.yaml>`
-- :fonticon:`fa fa-download` :download:`sample-edge-route.yaml </openshift/config_examples/f5-openshift-edge-route.yaml>`
-- :fonticon:`fa fa-download` :download:`sample-passthrough-route.yaml </openshift/config_examples/f5-openshift-passthrough-route.yaml>`
-- :fonticon:`fa fa-download` :download:`sample-reencrypt-route.yaml </openshift/config_examples/f5-openshift-reencrypt-route.yaml>`

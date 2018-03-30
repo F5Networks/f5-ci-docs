@@ -1,5 +1,8 @@
-Container Connectors
-````````````````````
+Site Contents
+=============
+
+Container Connecters
+--------------------
 
 .. toctree::
    :caption: Cloud Foundry
@@ -7,31 +10,34 @@ Container Connectors
    :glob:
 
    cf-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/cf-bigip-ctlr/latest>
-   Integration Overview <cloudfoundry/index>
+   cloudfoundry/index
+   cloudfoundry/cfctlr-app-install
    cloudfoundry/cf-per-route-virtuals
-   cloudfoundry/cfctlr*
 
 .. toctree::
-   :caption: Kubernetes / OpenShift
+   :caption: Kubernetes & OpenShift
    :maxdepth: 1
    :glob:
 
    k8s-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
-   Kubernetes Integration overview <kubernetes/index>
-   OpenShift Integration overview <openshift/index>
+   kubernetes/index
+   openshift/index
    kubernetes/kctlr-modes
    kubernetes/flannel-bigip-info
    kubernetes/kctlr-use-bigip-k8s
-   openshift/kctlr-use-bigip-openshift
    openshift/replace-f5-router
+   openshift/kctlr-use-bigip-openshift
+   openshift/kctlr-openshift-bigip-ha.rst
    kubernetes/kctlr-app-install
    openshift/kctlr-openshift-app-install
-   kubernetes/kctlr-secrets
-   kubernetes/kctlr-ingress
-   openshift/kctlr-openshift-routes
    kubernetes/kctlr-manage-bigip-objects
+   kubernetes/kctlr-k8s-ingress-ctlr
+   kubernetes/kctlr-ingress
+   kubernetes/kctlr-f5-resource
+   kubernetes/kctlr-create-service-vs
+   openshift/kctlr-openshift-routes
    kubernetes/kctlr-deploy-iapp
-   openshift/kctlr-openshift-bigip-ha.rst
+   kubernetes/kctlr-secrets
 
 .. toctree::
    :caption: Mesos Marathon
@@ -39,14 +45,14 @@ Container Connectors
    :maxdepth: 1
 
    marathon-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/>
-   Integration Overview <marathon/index>
+   marathon/index
    marathon/mctlr-app-install
-   marathon/mctlr-authenticate-dcos
-   marathon/mctlr-manage-bigip-objects
    marathon/mctlr-deploy-iapp
+   marathon/mctlr-manage-bigip-objects
+   marathon/mctlr-authenticate-dcos
 
 Support
-```````
+-------
 
 .. toctree::
    :caption: Support

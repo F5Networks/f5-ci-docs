@@ -19,30 +19,71 @@ If you want to contribute to this documentation set, please consult the `F5 Open
 * Create an `issue <https://github.com/F5Networks/f5-ci-docs/issues>`_ corresponding to the changes/additions you plan to make. When your work is complete, `open a pull request <https://github.com/F5Networks/f5-ci-docs/pulls>`_.
 * Be sure to fetch and rebase often so your fork stays up-to-date!
 
+How to Build, Test, and Deploy Documentation
+````````````````````````````````````````````
 
-Build and Test
-~~~~~~~~~~~~~~
+This project uses CI/CD to build, test, and deploy documentation.
+
+**Tools:**
+
+- `sphinx`: builds HTML, checks syntax, and tests links.
+- `f5-sphinx-theme <https://github.com/f5devcentral/f5-sphinx-theme>`_: F5 theme for sphinx projects.
+- `write-good`: tests grammar.
+- Travis-CI: builds, tests, and deploys documentation.
+- AWS S3/CloudFront: website hosting.
+- Docker image: `f5devcentral/containthedocs <https://hub.docker.com/r/f5devcentral/containthedocs/>`_
+
+**Scripts:**
 
 The `scripts </scripts>`_ directory contains documentation testing resources. We recommend running the test script **before** opening a pull request; if the build associated with your PR doesn't pass, the request won't be accepted.
 
-The test script can be run locally or in a Docker container, which uses an image developed by F5 (https://hub.docker.com/r/f5devcentral/containthedocs/ ). The Ubuntu-based Docker image has all of the dependencies required to build the project documentation pre-installed. If you want to run the test script locally, you'll need to install the `requirements <requirements.txt>`_ first.
+The test script can be run locally or in a Docker container, which uses the F5 ``containthedocs`` image. The Ubuntu-based Docker image has all of the dependencies required to build the project documentation pre-installed. If you want to run the test script locally, you'll need to install the `requirements <requirements.txt>`_ first.
 
-- scripts/docker-docs.sh -- runs a Docker container with the 'containthedocs' image.
-- scripts/test-docs.sh -- builds the documentation (``make -C docs/ html``); runs ``make linkcheck`` to check internal and external links; and checks grammar with ``write-good``. These tests run in travis-ci and must pass before we can accept a pull request.
+- *docker-docs*: Runs a Docker container mounted to your working directory.
+- *test-docs*: Runs the HTML build, grammar check, and linkcheck.
 
-To run the test script in the Docker container: ::
+Building and Testing
+~~~~~~~~~~~~~~~~~~~~
 
-    $ ./scripts/docker-docs.sh ./scripts/test-docs.sh
+You can use the commands below to build and test your work.
+Commands beginning with `docker` run in a Docker container using the same image used in Travis-CI (`f5devcentral/containthedocs <https://hub.docker.com/r/f5devcentral/containthedocs/>`_).
 
-To run the script without using Docker: ::
+You can view the documentation in a web browser on your local machine.
 
-    $ pip install -r requirements.txt
-    $ npm install -g write-good
-    $ ./scripts/test-docs.sh
++------------------------+--------------------------------------------------------+----------------------------------+
+| Command                | Description                                            | How to view docs                 |
++========================+========================================================+==================================+
+| `make html`            | basic HTML build                                       | open docs/_build/html/index.html |
++------------------------+--------------------------------------------------------+----------------------------------+
+| `make preview`         | builds docs as you write; view changes live in browser | open http://0.0.0.0:8000         |
++------------------------+--------------------------------------------------------+----------------------------------+
+| `make test`            | run the docs quality tests                             | open docs/_build/html/index.html |
++------------------------+--------------------------------------------------------+----------------------------------+
+| `make docker-html`     | Runs the docker-docs script with ``make HTML``;        | open docs/_build/html/index.html |
+|                        | uses the same container image as production builds     |                                  |
++------------------------+--------------------------------------------------------+----------------------------------+
+| `make docker-preview`  | Runs the docker-docs script with ``make preview``;     | open http://0.0.0.0:8000         |
+|                        | uses the same container image as production builds     |                                  |
++------------------------+--------------------------------------------------------+----------------------------------+
+| `make docker-test`     | Runs the docker-docs script with ``make test``;        | open docs/_build/html/index.html |
+|                        | uses the same container image as production builds     |                                  |
++------------------------+--------------------------------------------------------+----------------------------------+
 
+.. note:: If you don't use the Docker container, you need to install the project dependencies locally. You can find instructions for installing/using virtualenv and pip `here <https://packaging.python.org/guides/installing-using-pip-and-virtualenv>`_.
+
+::
+
+   virtualenv <my-venv>
+   pip install -r requirements.txt
+   npm install write-good
+
+Tips and Tricks
+```````````````
+
+See the `F5 Open Source Documentation style guide <https://s3-us-west-2.amazonaws.com/staging-c2ub89n2qjgt1/docs-training/style_guide/index.html>`_ for rST and sphinx cheat sheets, as well as general guidelines for writers.
 
 Contributor License Agreement
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`````````````````````````````
 
 Individuals or business entities who contribute to this project must have completed and submitted the `F5 Contributor License Agreement </_static/F5-contributor-license-agreement.pdf>`_ prior to their code submission being included in this project.
 

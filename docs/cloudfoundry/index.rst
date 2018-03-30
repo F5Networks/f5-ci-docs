@@ -1,7 +1,7 @@
 .. _cf-home:
 
-F5 Container Integration - Cloud Foundry
-========================================
+F5 Container Connector - Cloud Foundry
+======================================
 
 This document provides general information regarding the F5 Integration for Cloud Foundry.
 For deployment and usage instructions, please refer to the guides below.
@@ -46,7 +46,7 @@ The F5 Container Connector for Cloud Foundry's documentation set assumes that yo
 
 - already have a functional PCF or Cloud Foundry cloud;
 - are familiar with the `Cloud Foundry CLI`_ and API;
-- already have a BIG-IP :term:`device` licensed and provisioned for your requirements; and
+- already have a BIG-IP device licensed and provisioned for your requirements; and
 - are familiar with BIG-IP LTM concepts and ``tmsh`` commands.
 
 Installation
@@ -64,7 +64,7 @@ Upgrade
 
 To upgrade to a newer version of the |cf-long|, take the steps below.
 
-#. Update the App manifest with the settings for any new features you want to use.
+#. Update the App manifest as desired.
 
 #. .. include:: /_static/reuse/push-cfctlr-app.rst
 

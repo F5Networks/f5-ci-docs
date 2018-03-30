@@ -1,18 +1,10 @@
-.. index::
-   single: Marathon; BIG-IP; virtual server
-
-.. sidebar:: Docs test matrix
-
-   Documentation manually tested with:
-
-   - marathon-1.3.9
-   - mesos-1.0.3
-   - marathon-bigip-ctlr v1.0.0
+:product: BIG-IP Controller for Marathon
+:type: task
 
 .. _mctlr-manage-bigip-objects:
 
-Manage BIG-IP virtual servers - Marathon
-========================================
+Manage BIG-IP Objects
+=====================
 
 The |mctlr-long| watches the Mesos/Marathon API for Applications with associated :ref:`F5 Application Labels <app-labels>`.
 These Application Labels define the BIG-IP LTM objects |mctlr| creates/manages.
