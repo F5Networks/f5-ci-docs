@@ -27,8 +27,8 @@ data:
             "bindAddr": "1.2.3.4"
           },
           "partition": "k8s",
-          "balance": "round-robin",
-          "mode": "tcp"
+          "balance": "least-connections-member",
+          "mode": "http"
         }
       }
     }
