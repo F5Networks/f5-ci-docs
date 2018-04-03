@@ -38,25 +38,36 @@ When you use the |kctlr| as a `Router`_, you can
 
    2.       :ref:`create os route`
 
-   3.       :ref:`route-TLS` (OPTIONAL)
+   3.       :ref:`deploy route resource`
 
-   4.       :ref:`add health monitor to route` (OPTIONAL)
+   4.       :ref:`verify BIG-IP route objects`
 
-   5.       :ref:`deploy route resource`
+   5.       :ref:`attach bigip objects routes`
 
-   6.       :ref:`verify BIG-IP route objects`
+            - :ref:`add health monitor to route`
+            - :ref:`route-TLS`
+            - :ref:`delete vs route`
+
    =======  ===================================================================
 
 .. _set up kctlr routes:
 
-Set up the BIG-IP Controller to manage Routes
----------------------------------------------
+Create a Kubernetes Deployment
+------------------------------
 
-If you haven't already done so, add the |kctlr| `Route configuration parameters`_ to the |kctlr| Deployment:
+.. include:: /_static/reuse/kctlr-openshift-deployment-note.rst
 
-.. literalinclude:: /openshift/config_examples/f5-kctlr-openshift-routes.yaml
+Create a Kubernetes Deployment using valid YAML or JSON. Define the |kctlr| `Route configuration parameters`_ as appropriate to suit your needs.
+
+.. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift_routes.yaml
    :linenos:
-   :emphasize-lines: 47-56
+
+.. warning::
+
+   Use caution when setting the :code:`--route-vserver-addr` and :ref:`specifying a BIG-IP SNAT pool <kctlr-openshift snat deploy>`.
+
+   If you choose to set both options, make sure the IP address defined for the virtual server falls within the range of the selected SNAT pool.
+
 
 .. _create os route:
 
@@ -113,10 +124,28 @@ Re-encryption Termination
 
 :fonticon:`fa fa-download` :download:`f5-openshift-reencrypt-route.yaml </openshift/config_examples/f5-openshift-reencrypt-route.yaml>`
 
+.. _deploy route resource:
+
+Upload the Route to the OpenShift API server
+--------------------------------------------
+
+Use the :command:`oc apply` command to upload your Route resource to the OpenShift API server.
+
+.. include:: /_static/reuse/oc-apply.rst
+
+
+.. _verify BIG-IP route objects:
+
+Verify creation of BIG-IP objects
+---------------------------------
+
+.. include:: /_static/reuse/verify-bigip-objects.rst
+
+
 .. _attach bigip objects routes:
 
-Attach BIG-IP objects to the Route virtual servers
---------------------------------------------------
+Manage BIG-IP objects for Routes
+--------------------------------
 
 Use the |kctlr| `Route annotations`_ to attach various types of BIG-IP objects to the virtual servers corresponding to OpenShift Routes.
 
@@ -173,28 +202,10 @@ You can also use an existing `BIG-IP SSL profile`_ to secure traffic for a Route
    - Each SSL profile applies to one Route.
    - The |kctlr| creates one client ssl and one server ssl profile for the HTTPS virtual server. These profiles -- "default-client-ssl" and "default-server-ssl" -- are the **default profiles used for SNI.**
 
-
-.. _deploy route resource:
-
-Upload the Route to the API server
-----------------------------------
-
-Use the :command:`oc apply` command to upload your Route resource to the OpenShift API server.
-
-.. include:: /_static/reuse/oc-apply.rst
-
-
-.. _verify BIG-IP route objects:
-
-Verify creation of BIG-IP objects
----------------------------------
-
-.. include:: /_static/reuse/verify-bigip-objects.rst
-
 .. _delete vs route:
 
-Delete the Route's virtual server
----------------------------------
+Delete a Route's virtual server
+```````````````````````````````
 
 If you want to remove the virtual server associated with a Route from the BIG-IP system, but **keep the Route**:
 

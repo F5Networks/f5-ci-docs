@@ -8,7 +8,7 @@ Add BIG-IP device to OpenShift Cluster Network
 
 This document provides step-by-step instructions for integrating a **standalone** BIG-IP device into an OpenShift Cluster Network.
 
-- If you are already using the `OpenShift F5 Router`_, see :ref:`upgrade f5 router`.
+- If you are using the `OpenShift F5 Router`_, see :ref:`upgrade f5 router`.
 - If you are using a BIG-IP HA pair or cluster, see :ref:`bigip ha openshift`
 
 Complete the following tasks to add a BIG-IP device to an `OpenShift`_ cluster network.
@@ -37,10 +37,12 @@ Complete the following tasks to add a BIG-IP device to an `OpenShift`_ cluster n
 Create a Node for the BIG-IP device
 -----------------------------------
 
-OpenShift SDN uses custom Annotations to identify Nodes as part of the Cluster network. When you include these Annotations in a HostSubnet manifest, the SDN recognizes the new Node and allocates a subnet to it.
+OpenShift SDN uses custom Annotations to identify Nodes as part of the Cluster network.
 
 - :code:`pod.network.openshift.io/fixed-vnid-host: "0"`
 - :code:`pod.network.openshift.io/assign-subnet: "true"`
+
+When you include these Annotations in a HostSubnet manifest, the SDN recognizes the new Node and allocates a subnet to it.
 
 .. _k8s-openshift-hostsubnet:
 
@@ -61,11 +63,11 @@ For the :code:`hostIP`, provide an IP address from the BIG-IP network that will 
 Upload the Host Subnet to the OpenShift API server
 ``````````````````````````````````````````````````
 
-Use the :command:`oc create <HostSubnet-filename.yaml>` command to upload the HostSubnet file(s) to the OpenShift API server.
+Use the :command:`oc create` command to upload the HostSubnet file(s) to the OpenShift API server.
 
-.. code-block:: console
+.. parsed-literal::
 
-   oc create -f f5-kctlr-openshift-hostsubnet.yaml
+   oc create -f **f5-kctlr-openshift-hostsubnet.yaml**
    hostsubnet "f5-bigip-01" created
 
 
@@ -77,14 +79,11 @@ Verify creation of the HostSubnet(s)
 .. important:: Note the subnet that the OpenShift SDN assigned to the BIG-IP host Node.
 
 .. code-block:: console
-   :emphasize-lines: 3
 
    oc get hostsubnet
    NAME                  HOST                  HOST IP         SUBNET
    f5-big-ip             f5-bigip-node         172.16.1.28     10.129.2.0/23
-   master.internal.net   master.internal.net   172.16.1.10     10.129.0.0/23
-   node1.internal.net    node1.internal.net    172.16.1.24     10.130.0.0/23
-   node2.internal.net    node2.internal.net    172.16.1.25     10.128.0.0/14
+
 
 .. _openshift-bigip-setup:
 
@@ -124,7 +123,6 @@ Create a self IP address in the VXLAN tunnel.
 
 - The self IP range must fall within the cluster subnet mask. Use the command :command:`oc get clusternetwork` to find the correct subnet mask for your cluster.
 - If you use the BIG-IP configuration utility to create a self IP, you may need to provide the full netmask instead of the CIDR notation.
-- Be sure to specify a floating traffic group (for example, :code:`traffic-group-1`). Otherwise, the self IP will use the BIG-IP system's default.
 
 .. parsed-literal::
 
@@ -150,11 +148,11 @@ Verify creation of the BIG-IP objects
 
 You can use a TMOS shell or the BIG-IP configuration utility to verify object creation.
 
-.. code-block:: console
+.. parsed-literal::
 
-   show /net tunnels tunnel openshift_vxlan
-   show /net running-config self 10.129.2.3/14
-   show /net running-config self 10.129.2.4/14
+   show /net tunnels tunnel **openshift_vxlan**
+   show /net running-config self **10.129.2.3/14**
+   show /net running-config self **10.129.2.4/14**
 
 You should now be able to successfully send traffic through the BIG-IP system to and from endpoints within your OpenShift Cluster.
 

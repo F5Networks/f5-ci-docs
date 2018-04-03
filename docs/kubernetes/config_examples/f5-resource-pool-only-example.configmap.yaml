@@ -6,7 +6,8 @@ metadata:
   labels:
     f5type: virtual-server
 data:
-  # schema v0.1.7 required as of k8s-bigip-ctlr v1.4.0
+  # See the f5-schema table for schema-controller compatibility
+  # http://clouddocs.f5.com/containers/latest/releases_and_versioning.html#f5-schema
   schema: "f5schemadb://bigip-virtual-server_v0.1.7.json"
   data: |
     {

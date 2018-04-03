@@ -1,4 +1,4 @@
-#. If you want to use BIG-IP HA, `set up two or more F5 BIG-IPs in a Device Service Cluster (DSC)`_.
+#. If you want to use BIG-IP High Availability (HA), `set up two or more F5 BIG-IPs in a Device Service Cluster (DSC)`_.
 #. `Create a new partition`_ on your BIG-IP system.
 
    .. note::

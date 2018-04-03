@@ -1,5 +1,5 @@
-.. index::
-    single: OpenShift; BIG-IP Controller
+:product: BIG IP Controller for Kubernetes
+:type: task
 
 .. _bigip ha openshift:
 
@@ -254,17 +254,17 @@ If you don't need/want to manage Routes, exclude the following settings:
 
 See :ref:`kctlr-openshift-routes` for additional information.
 
-.. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift-node01-route.yaml
+.. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift_ha-node01.yaml
    :caption: BIG-IP Controller 1
    :linenos:
 
-:fonticon:`fa fa-download` :download:`Download f5-k8s-bigip-ctlr_openshift-node01-route.yaml </openshift/config_examples/f5-k8s-bigip-ctlr_openshift-node01-route.yaml>`
+:fonticon:`fa fa-download` :download:`Download f5-k8s-bigip-ctlr_openshift_ha-node01.yaml </openshift/config_examples/f5-k8s-bigip-ctlr_openshift_ha-node01.yaml>`
 
-.. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift-node02-route.yaml
+.. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift_ha-node02.yaml
    :caption: BIG-IP Controller 2
    :linenos:
 
-:fonticon:`fa fa-download` :download:`Download f5-k8s-bigip-ctlr_openshift-node02-route.yaml </openshift/config_examples/f5-k8s-bigip-ctlr_openshift-node02-route.yaml>`
+:fonticon:`fa fa-download` :download:`Download f5-k8s-bigip-ctlr_openshift_ha-node02.yaml </openshift/config_examples/f5-k8s-bigip-ctlr_openshift_ha-node02.yaml>`
 
 
 .. _openshift upload deployment ha:

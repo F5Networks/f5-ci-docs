@@ -33,7 +33,7 @@ First, you need to determine what fields in the iApp template need corresponding
  
 Here's the JSON for an example application configured in Marathon
 
-.. code-block:: json
+.. code-block:: console
     :linenos:
     :emphasize-lines:
          

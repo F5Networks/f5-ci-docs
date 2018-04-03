@@ -3,8 +3,8 @@
 
 .. _k8s-ingress-controller:
 
-Using the BIG-IP Controller as a Kubernetes Ingress Controller
-==============================================================
+Use the BIG-IP Controller as a Kubernetes Ingress Controller
+============================================================
 
 This document provides an overview of how you can use the |kctlr-long| as an `Ingress Controller`_ in Kubernetes.
 For set-up instructions, see :ref:`kctlr-ingress-config`.
@@ -47,6 +47,15 @@ The Controller creates one virtual server for each unique IP address listed in a
 
 See the `k8s-bigip-ctlr configuration parameters`_ table for more information about the required settings.
 
+Use BIG-IP SNAT Pools and SNAT automap
+``````````````````````````````````````
+
+.. include:: /_static/reuse/k8s-version-added-1_5.rst
+
+.. include:: /_static/reuse/kctlr-snat-note.rst
+
+See :ref:`bigip snats` for more information.
+
 .. _ingress default IP:
 
 Set a Default, Shared IP address
@@ -72,6 +81,12 @@ To share the default IP address across Ingress resources:
 
 When the |kctlr| creates the virtual server on the BIG-IP system, it replaces "controller-default" with the default IP address.
 
+.. warning::
+
+   Use caution when setting the :code:`--default-ingress-ip` and :ref:`specifying a BIG-IP SNAT pool <kctlr snat deploy>`.
+
+   If you choose to set both options, make sure the IP address defined for the virtual server falls within the range of the selected SNAT pool.
+
 .. _dns lookup ingress:
 
 Use DNS lookup
@@ -92,7 +107,7 @@ If you want to assign IP addresses using an IPAM system, use the |kctlr| to :ref
 
 You can then add the virtual-server annotation to the Ingress using the IP address selected by the IPAM system. The |kctlr| will create a new virtual server with the selected IP address and attach the previously-created pool(s) to it.
 
-.. add links/info about IPAM Controller for 1.5.0 release
+The `F5 IPAM Controller`_ can write the :code:`virtual-server.f5.com/ip` annotation for you. See the `f5-ipam-ctlr docs`_ for more information.
 
 
 What's Next

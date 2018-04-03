@@ -84,7 +84,6 @@ Create a self IP in the VXLAN
 
    - The self IP range must fall within the cluster subnet mask. The flannel network's default subnet mask is :code:`/16`.
    - If you use the BIG-IP configuration utility to create a self IP, you may need to provide the full netmask instead of the CIDR notation.
-   - Be sure to specify a floating traffic group (for example, :code:`traffic-group-1`). Otherwise, the self IP will use the BIG-IP system's default.
 
 .. parsed-literal::
 
@@ -95,7 +94,7 @@ Create a self IP in the VXLAN
 Create a floating self IP in the VXLAN
 ``````````````````````````````````````
 
-Create a floating IP address in the subnet you want to assign to the BIG-IP device. Use the same subnet mask as the flannel network.
+Create a floating IP address in the flannel subnet you assigned to the BIG-IP device.
 
 .. parsed-literal::
 
@@ -112,9 +111,9 @@ You can use a TMOS shell or the BIG-IP configuration utility to verify object cr
 
 .. parsed-literal::
 
-   show /net tunnels tunnel flannel_vxlan
-   show /net running-config self 10.129.2.3/16
-   show /net running-config self 10.129.2.4/16
+   show /net tunnels tunnel **flannel_vxlan**
+   show /net running-config self **10.129.2.3/16**
+   show /net running-config self **10.129.2.4/16**
 
 .. _add bigip to flannel overlay:
 .. _k8s-bigip-node:
@@ -122,7 +121,8 @@ You can use a TMOS shell or the BIG-IP configuration utility to verify object cr
 Add the BIG-IP device to the flannel overlay network
 ----------------------------------------------------
 
-Flannel uses a set of custom Annotations to identify Nodes as part of the Cluster network. When you create a dummy Node resource for the BIG-IP that contains these Annotations, flannel can discover the BIG-IP device and monitor it as part of the VXLAN.
+Flannel uses a set of custom Annotations to identify Nodes as part of the Cluster network.
+When you create a dummy Node resource for the BIG-IP that contains these Annotations, flannel can discover the BIG-IP device and monitor it as part of the VXLAN.
 
 .. _find vtepMAC:
 
@@ -131,13 +131,13 @@ Find the VTEP MAC address
 
 You can find the MAC address of your BIG-IP VXLAN tunnel using a TMOS shell.
 
-.. code-block:: console
+.. parsed-literal::
 
-   show /net tunnels tunnel flannel_vxlan all-properties
+   show /net tunnels tunnel **flannel_vxlan all-properties**
    -------------------------------------------------
    Net::Tunnel: flannel_vxlan
    -------------------------------------------------
-   MAC Address                     ab:12:cd:34:ef:56
+   MAC Address                   **ab:12:cd:34:ef:56**
    ...
 
 .. _find flannel annotations:
@@ -147,9 +147,9 @@ Find the flannel Annotations
 
 Run :command:`kubectl describe` for any Node in the Cluster and make note of the flannel Annotations included in the Node description.
 
-.. parsed-literal
+.. code-block:: console
 
-   kubectl describe nodes <node>
+   kubectl describe nodes
    ...
    flannel.alpha.coreos.com/backend-data:'{"VtepMAC":"<mac-address>"}'
    flannel.alpha.coreos.com/backend-type: 'vxlan'
@@ -166,20 +166,18 @@ Create a Kubernetes Node for the BIG-IP device
 .. important::
    :class: sidebar
 
-   You need to create a "dummy" Node in Kubernetes to make the Kubernetes API server aware of the BIG-IP device. The BIG-IP node's status will always display as "NotReady" because it is not actually a fully-participating Kubernetes Node. This status has no effect on the BIG-IP's ability to communicate in the overlay network.
-
-   Once you've set up the BIG-IP tunnel and added the BIG-IP "dummy" Node, you should be able to send traffic through the BIG-IP system to and from endpoints within your Kubernetes Cluster.
-   See :ref:`networking troubleshoot openshift` for tips to verify network connectivity.
+   The BIG-IP dummy Node's status will always be **"NotReady"** because it is not a fully-participating Kubernetes Node (in other words, it's not a Node on which Kubernetes can schedule resources).
+   This status does not affect the BIG-IP device's ability to communicate in the overlay network.
 
 #. Create a "dummy" Kubernetes Node resource.
 
-   - Include all of the flannel Annotations. Define the :code:`backend-data` and :code:`public-ip` Annotations with data from the BIG-IP VXLAN:
+   Include all of the flannel Annotations. Define the :code:`backend-data` and :code:`public-ip` Annotations with data from the BIG-IP VXLAN:
 
-     :code:`flannel.alpha.coreos.com/backend-data:'{"VtepMAC":"<BIG-IP_mac-address>"}'`
+   :code:`flannel.alpha.coreos.com/backend-data:'{"VtepMAC":"<BIG-IP_mac-address>"}'`
 
-     :code:`flannel.alpha.coreos.com/public-ip: <BIG-IP_vtep-address>`
+   :code:`flannel.alpha.coreos.com/public-ip: <BIG-IP_vtep-address>`
 
-     (This is the :ref:`IP address you assigned to the VXLAN tunnel <k8s-flannel create bigip vxlan>`).
+   (This is the :ref:`IP address you assigned to the VXLAN tunnel <k8s-flannel create bigip vxlan>`).
 
    - Set the :code:`podCIDR` to the subnet you used to :ref:`create the self IP <k8s-flannel create bigip self IP>` and floating IP.
 
@@ -193,7 +191,7 @@ Create a Kubernetes Node for the BIG-IP device
 
       kubectl create -f **f5-kctlr-bigip-node.yaml**
 
-#. Verify creation of the BIG-IP Node.
+#. Verify creation of the Node.
 
    .. code-block:: console
       :emphasize-lines: 3
@@ -205,15 +203,14 @@ Create a Kubernetes Node for the BIG-IP device
       k8s-worker-0   Ready     2d        v1.7.5
       k8s-worker-1   Ready     2d        v1.7.5
 
-You should now be able to successfully send traffic through the BIG-IP system to and from endpoints within your Kubernetes Cluster.
+You should now be able to send traffic through the BIG-IP system to and from endpoints within your Kubernetes Cluster.
 
 .. seealso::
 
-   If you get a configuration error when trying to create a virtual server using an iApp, see :ref:`Troubleshoot Your Kubernetes Deployment <iapp traffic group>`.
+   - If you get a configuration error when trying to create a virtual server using an iApp, see :ref:`Troubleshoot Your Kubernetes Deployment <iapp traffic group>`.
 
-
-   If you're having trouble with your network setup, see :ref:`networking troubleshoot openshift`.
-   (This troubleshooting issue references the OpenShift Cluster Network, but the concepts are the same.)
+   - If you're having trouble with your network setup, see :ref:`networking troubleshoot openshift`.
+     (This troubleshooting issue references the OpenShift Cluster Network, but the concepts are the same.)
 
 
 .. _Deploy flannel: https://coreos.com/flannel/docs/latest/kubernetes.html
