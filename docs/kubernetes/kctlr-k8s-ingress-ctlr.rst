@@ -109,6 +109,14 @@ You can then add the virtual-server annotation to the Ingress using the IP addre
 
 The `F5 IPAM Controller`_ can write the :code:`virtual-server.f5.com/ip` annotation for you. See the `f5-ipam-ctlr docs`_ for more information.
 
+.. _k8s ingress-ctlr url rewrite:
+
+URL Rewrite
+-----------
+
+.. include:: /_static/reuse/k8s-version-added-1_5.rst
+
+The |kctlr| has Annotations that provide `Rewrite`_ functionality for Ingress resources. See :ref:`k8s url rewrite` for more information.
 
 What's Next
 -----------
@@ -116,3 +124,6 @@ What's Next
 - :ref:`kctlr-ingress-config`
 - :ref:`kctlr-manage-bigip-objects`
 - :ref:`kctlr-per-svc-vs` for L4 ingress and L7 ingress on non-standard ports
+
+
+.. _Rewrite: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/annotations.md#rewrite

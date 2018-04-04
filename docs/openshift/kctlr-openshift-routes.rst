@@ -135,13 +135,22 @@ Take the steps below to attach a Route to an existing BIG-IP virtual server.
 Create an OpenShift Route Resource
 ----------------------------------
 
-To use the BIG-IP device as an OpenShift Router, create a `Route Resource`_.
-The |kctlr| supports use of the following Route Resource types:
+To use the BIG-IP device as an OpenShift Router, add the |kctlr| `OpenShift Route Annotations`_ to a `Route Resource`_.
+The |kctlr| supports the following types of Route Resource:
 
 - :ref:`unsecured`
 - :ref:`edge`
 - :ref:`passthrough`
 - :ref:`reencrypt`
+
+.. _openshift url rewrite:
+
+Rewrite URLs for Routes
+```````````````````````
+
+.. include:: /_static/reuse/k8s-version-added-1_5.rst
+
+The |kctlr| can rewrite URLs for Routes. See :ref:`k8s url rewrite` for more information.
 
 .. _unsecured:
 

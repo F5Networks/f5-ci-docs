@@ -197,6 +197,7 @@ rst_epilog = """
 .. _NATS bus: https://docs.cloudfoundry.org/concepts/architecture/router.html#use
 .. _oc: https://docs.openshift.com/enterprise/3.0/cli_reference/basic_cli_operations.html
 .. _OpenShift F5 Router: https://docs.openshift.org/latest/install_config/router/f5_router.html
+.. _OpenShift Route Annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-route-annotations
 .. _OpenShift route resources: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-route-resources
 .. _Overview of SNAT features: https://support.f5.com/csp/article/K7820
 .. _Overview of the Standard Virtual Server: https://support.f5.com/csp/article/K93017176

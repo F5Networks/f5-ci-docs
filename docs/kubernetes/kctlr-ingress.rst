@@ -151,10 +151,19 @@ The table below shows how the Controller behaves for different combinations of t
 
    Refer to the `Kubernetes TLS Ingress documentation <https://kubernetes.io/docs/concepts/services-networking/ingress/#tls>`_ for details regarding supported port(s) and termination.
 
+.. _k8s ingress url rewrite:
+
+Rewrite URLs
+------------
+
+.. include:: /_static/reuse/k8s-version-added-1_5.rst
+
+The |kctlr| can rewrite URLs for Routes. See :ref:`k8s url rewrite` for more information.
+
 .. _deploy ingress resource:
 
 Upload the Ingress to the API server
-````````````````````````````````````
+------------------------------------
 
 Use the :command:`kubectl apply` command to upload your new or edited Ingress resource to the Kubernetes API server.
 
