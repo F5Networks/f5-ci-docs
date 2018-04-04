@@ -75,7 +75,7 @@ I just deployed the Controller; how do I verify that it's running?
 
       Kubectl get pod k8s-bigip-ctlr-687734628-7fdds -o yaml --namespace=kube-system
 
-   .. _troubleshoot openshift view-logs:
+   .. _troubleshoot k8s view-logs:
 
 #. View the Controller logs.
 

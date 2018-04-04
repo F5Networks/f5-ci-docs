@@ -36,6 +36,8 @@ When you use the |kctlr| as a `Router`_, you can
    =======  ===================================================================
    1.       :ref:`set up kctlr routes`
 
+            - :ref:`route existing virtual`
+
    2.       :ref:`create os route`
 
    3.       :ref:`deploy route resource`
@@ -52,22 +54,81 @@ When you use the |kctlr| as a `Router`_, you can
 
 .. _set up kctlr routes:
 
-Create a Kubernetes Deployment
-------------------------------
+Deploy the BIG-IP Controller
+----------------------------
 
 .. include:: /_static/reuse/kctlr-openshift-deployment-note.rst
 
-Create a Kubernetes Deployment using valid YAML or JSON. Define the |kctlr| `Route configuration parameters`_ as appropriate to suit your needs.
+#. Create a Kubernetes Deployment using valid YAML or JSON. Define the |kctlr| `Route configuration parameters`_ as appropriate to suit your needs.
 
-.. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift_routes.yaml
-   :linenos:
+   .. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift_routes.yaml
+      :linenos:
+
+   .. warning::
+
+      Use caution when setting the :code:`--route-vserver-addr` and :ref:`specifying a BIG-IP SNAT pool <kctlr-openshift snat deploy>`.
+
+      If you choose to set both options, make sure the IP address defined for the virtual server falls within the range of the selected SNAT pool.
+
+#. :ref:`upload openshift deployment`.
+
+.. _route existing virtual:
+
+Attach a Route to an Existing Virtual Server
+````````````````````````````````````````````
+
+.. include:: /_static/reuse/k8s-version-added-1_5.rst
+
+Take the steps below to attach a Route to an existing BIG-IP virtual server.
+
+.. important::
+
+   The virtual server must meet the following criteria:
+
+   - exists in the partition that you want the |kctlr| to manage;
+   - was not created by the |kctlr|.
+
+   This means that you must either
+
+   - deploy the |kctlr| **after** you create the virtual server you want it to manage --OR--
+   - remove the existing |kctlr| Deployment **before** you manually (in other words, using the BIG-IP config utility or TMOS) create a virtual server in its managed partition.
+
+#. In a TMOS shell, run the commands shown below.
+
+   - Make sure you're in the correct partition before running the commands (for example, :code:`user@(BIG-IP)(cfg-sync Standalone)(Active)(/myPartition)(tmos)`).
+   - Replace "myVirtual" with the name of the virtual server on your BIG-IP device.
+   - Replace "[route-vserver-addr]" with the IP address you want to assign to the Route (this is the :code:`--route-vserver-addr` arg in the Controller Deployment).
+
+   .. parsed-literal::
+
+      modify ltm virtual **myVirtual** metadata add { cccl-whitelist { value 1 }}
+      modify ltm virtual-address **[route-vserver-addr]** metadata add { cccl-whitelist { value 1 }}
+
+#. Add the name of the virtual server to the |kctlr| Deployment.
+
+   Use :code:`route-http-vserver` for an HTTP virtual server or :code:`route-https-vserver` for an HTTPS virtual server.
+
+   .. code-block:: YAML
+      :emphasize-lines: 9
+
+      args: [
+            "--bigip-username=$(BIGIP_USERNAME)",
+            "--bigip-password=$(BIGIP_PASSWORD)",
+            "--bigip-url=10.10.10.10",
+            "--bigip-partition=myPartition",
+            "--pool-member-type=cluster",
+            "--openshift-sdn-name=/Common/openshift_vxlan",
+            "--manage-routes=true",
+            "--route-http-vserver=myVirtual"
+            ]
+
+#. :ref:`upload openshift deployment`.
 
 .. warning::
 
-   Use caution when setting the :code:`--route-vserver-addr` and :ref:`specifying a BIG-IP SNAT pool <kctlr-openshift snat deploy>`.
+   When you attach an OpenShift Route to an existing BIG-IP virtual server, the |kctlr| attempts to merge its settings with the existing object configurations on the BIG-IP device. If conflicts occur, the Controller will attempt to replace the existing setting on the BIG-IP system with its own configuration. If the |kctlr| cannot create the requested objects, you can find the resulting error message in the |kctlr| logs.
 
-   If you choose to set both options, make sure the IP address defined for the virtual server falls within the range of the selected SNAT pool.
-
+   See :ref:`OpenShift troubleshooting <troubleshoot openshift view-logs>` for more information about viewing the Controller logs.
 
 .. _create os route:
 
