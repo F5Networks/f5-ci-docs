@@ -317,8 +317,9 @@ You should be able to resolve this error by either changing the default traffic 
 
 .. note::
 
-   The first option is preferred because it only requires a single config change on the BIG-IP system.
-   If you don't update this setting for your partition, you will have to specify the correct traffic group in the F5 Resource ConfigMap every time you use the |kctlr| to deploy an iApp.
+   The first option only requires a single config change on the BIG-IP system **[PREFERRED]**.
+
+   If you don't update the default traffic group for your partition, you will have to specify the correct traffic group in your F5 Resource ConfigMap every time you use the |kctlr| to deploy an iApp.
 
 Change the default traffic group for the partition on the BIG-IP system
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

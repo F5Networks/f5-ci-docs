@@ -239,8 +239,20 @@ When running in :ref:`cluster mode`, the |kctlr| has visibility into the health 
 
    In either mode of operation, it's good practice to :ref:`add a BIG-IP health monitor <k8s-config-bigip-health-monitor>` to the virtual server to ensure the BIG-IP system knows when resources go down.
 
+Prometheus Support :fonticon:`fa fa-flask`
+------------------------------------------
 
+.. include:: /_static/reuse/beta-announcement-k8s.rst
 
+The |kctlr| provides a basic integration with `Prometheus`_ that allows you to retrieve information about the running state of a Controller.
+Prometheus users can view the following Gauges for the |kctlr|:
+
+- monitored Nodes
+- managed Services
+- malformed configurations
+- Controller health
+
+Define the :code:`http-listen-address` arg in your Controller Deployment to tell Prometheus on which IP address and port it should listen.
 
 .. rubric:: **Footnotes**
 .. [#iapp] Custom configurations required. See `k8s-bigip-ctlr iApp configuration parameters` for more information.
@@ -248,3 +260,4 @@ When running in :ref:`cluster mode`, the |kctlr| has visibility into the health 
 .. [#traffic] See `BIG-IP Local Traffic Management - Getting Started with Policies`_ for more information.
 
 .. _Cluster Network: https://kubernetes.io/docs/concepts/cluster-administration/networking/
+.. _Prometheus: https://prometheus.io/
