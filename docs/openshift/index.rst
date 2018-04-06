@@ -49,6 +49,8 @@ Installation
 - You can :ref:`launch the k8s-bigip-ctlr application <install-kctlr-openshift>` in OpenShift using a Deployment.
 - If you use `helm`_ you can use the `f5-bigip-ctlr chart`_.
 
+.. include:: docs/_static/reuse/bigip-permissions-ctlr.rst
+
 OpenShift Node Health
 ---------------------
 

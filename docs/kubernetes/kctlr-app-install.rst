@@ -79,6 +79,8 @@ Define a Kubernetes Deployment using valid YAML or JSON. See the `k8s-bigip-ctlr
 
    Do not increase the :code:`replica` count in the Deployment. Running duplicate Controller instances may cause errors and/or service interruptions.
 
+.. include:: docs/_static/reuse/bigip-permissions-ctlr.rst
+
 .. _kctlr basic deploy:
 
 Basic Deployment

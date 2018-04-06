@@ -56,6 +56,9 @@ Create a new Application Manifest file containing your desired `cf-bigip-ctlr co
 Include the following in the :code:`env.BIGIP_CTLR_CFG.bigip` section of the manifest:
 
 - the IP address and user account credentials for the BIG-IP device;
+
+  .. include:: docs/_static/reuse/bigip-permissions-ctlr.rst
+
 - the BIG-IP partition you want the |cfctlr| to manage (must already exist on the BIG-IP device);
 - the load balancing method desired for all pools created by the |cfctlr|;
 - the poll interval at which the |cfctlr| should attempt to verify BIG-IP settings;

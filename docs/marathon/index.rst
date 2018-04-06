@@ -63,6 +63,8 @@ The F5 Container Integration for Mesos Marathon documentation set assumes that y
 - already have a BIG-IP device licensed and provisioned for your requirements; and
 - are familiar with BIG-IP Local Traffic Manager (LTM) concepts and ``tmsh`` commands.
 
+.. include:: docs/_static/reuse/bigip-permissions-ctlr.rst
+
 .. [#mgui] Per the Marathon documentation, the `Marathon Web Interface`_ is no longer actively developed. Use the Marathon REST API to access the latest Marathon features.
 
 .. _marathon bigip ha:

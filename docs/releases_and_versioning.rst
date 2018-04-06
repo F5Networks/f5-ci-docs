@@ -86,7 +86,11 @@ The tables below show the versions used in development testing. The F5 Container
 F5 schema
 ---------
 
-The `F5 schema`_ allows the |kctlr-long| & OpenShift to communicate with BIG-IP systems. While all versions of the BIG-IP Controllers are backwards-compatible, using an older schema may limit Controller functionality.
+bigip-virtual-server
+````````````````````
+
+The :code:`k8s-bigip-ctlr` project has a built in :code:`bigip-virtual-server` schema.
+All versions of the |kctlr-long| are backwards-compatible, but using an older version's schema may limit Controller functionality.
 
 Be sure to use the **most recent** schema version that corresponds to your Controller version to ensure access to the full feature set.
 
@@ -94,21 +98,21 @@ Be sure to use the **most recent** schema version that corresponds to your Contr
 
 .. table:: F5 schema and ``k8s-bigip-ctlr`` version compatibility
 
-   =============================================== =============================
-   Schema version                                  ``k8s-bigip-ctlr`` version(s)
-   =============================================== =============================
-   f5schemadb://bigip-virtual-server_v0.1.7.json   1.4.x
-   ----------------------------------------------- -----------------------------
+   =============================================== ===================
+   F5 Schema version                               ``k8s-bigip-ctlr``
+   =============================================== ===================
+   f5schemadb://bigip-virtual-server_v0.1.7.json   1.5.x, 1.4.x
+   ----------------------------------------------- -------------------
    f5schemadb://bigip-virtual-server_v0.1.6.json   1.4.x
-   ----------------------------------------------- -----------------------------
+   ----------------------------------------------- -------------------
    f5schemadb://bigip-virtual-server_v0.1.5.json   1.3.x
-   ----------------------------------------------- -----------------------------
+   ----------------------------------------------- -------------------
    f5schemadb://bigip-virtual-server_v0.1.4.json   1.3.x
-   ----------------------------------------------- -----------------------------
+   ----------------------------------------------- -------------------
    f5schemadb://bigip-virtual-server_v0.1.3.json   1.1.x, 1.2.x
-   ----------------------------------------------- -----------------------------
+   ----------------------------------------------- -------------------
    f5schemadb://bigip-virtual-server_v0.1.2.json   1.0.x
-   =============================================== =============================
+   =============================================== ===================
 
 
 Notice to Beta Customers

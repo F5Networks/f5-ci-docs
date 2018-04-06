@@ -61,6 +61,8 @@ The |kctlr-long| documentation set assumes that you:
 
    When using the |kctlr| in :ref:`cluster mode`, your BIG-IP license must include SDN services.
 
+.. include:: docs/_static/reuse/bigip-permissions-ctlr.rst
+
 .. _k8s-installation:
 
 Installation
