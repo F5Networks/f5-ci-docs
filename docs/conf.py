@@ -147,10 +147,13 @@ rst_epilog = """
 .. _F5 Docker registry: https://hub.docker.com/r/f5networks/
 .. _F5 schema: https://github.com/F5Networks/k8s-bigip-ctlr/tree/master/schemas
 .. _F5 virtual server properties: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#virtualserver-configmap-properties
+.. _f5-bigip-ctlr chart: https://github.com/F5Networks/charts/tree/master/src/stable/f5-bigip-ctlr
+.. _f5-bigip-ingress chart: https://github.com/F5Networks/charts/tree/master/src/stable/f5-bigip-ingress
 .. _f5-kube-proxy reference documentation: %(base_url)s/products/connectors/f5-kube-proxy/latest/
 .. _f5-kube-proxy: %(base_url)s/products/connectors/f5-kube-proxy/latest/
 .. _flannel: https://github.com/coreos/flannel
 .. _flannel manifest: https://github.com/coreos/flannel/blob/master/Documentation/kube-flannel.yml
+.. _helm: https://helm.sh
 .. _iApp Pool Member table: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#iapp-pool-member-table
 .. _Ingress annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#ingress-resources
 .. _Ingress controller: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-controllers

@@ -43,6 +43,12 @@ In OpenShift, you can use the |kctlr| to use a BIG-IP device(s) to:
 
 .. _openshift-origin-node-health:
 
+Installation
+------------
+
+- You can :ref:`launch the k8s-bigip-ctlr application <install-kctlr-openshift>` in OpenShift using a Deployment.
+- If you use `helm`_ you can use the `f5-bigip-ctlr chart`_.
+
 OpenShift Node Health
 ---------------------
 

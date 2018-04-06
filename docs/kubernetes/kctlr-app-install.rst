@@ -9,6 +9,8 @@ Install the BIG-IP Controller: Kubernetes
 The |kctlr-long| installs via a Kubernetes `Deployment`_.
 The Deployment creates a `ReplicaSet`_ that, in turn, launches a `Pod`_ running the |kctlr| app.
 
+If you use `helm`_ you can use the `f5-bigip-ctlr chart`_ to create and manage the resources below.
+
 .. attention::
 
    These instructions are for a standard Kubernetes environment.
