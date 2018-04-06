@@ -8,6 +8,8 @@ Install the BIG-IP Controller: OpenShift
 
 Use a `Deployment`_ to install the |octlr-long|.
 
+If you use `helm`_, you can use the `f5-bigip-ctlr chart`_ to create and manage the resources below.
+
 .. attention::
 
    These instructions are for the `Openshift`_ Kubernetes distribution.

@@ -66,7 +66,8 @@ The |kctlr-long| documentation set assumes that you:
 Installation
 ------------
 
-You can :ref:`launch the k8s-bigip-ctlr application <install-kctlr>` in Kubernetes using a Deployment.
+- You can :ref:`launch the k8s-bigip-ctlr application <install-kctlr>` in Kubernetes using a Deployment.
+- If you use `helm`_ you can use the `f5-bigip-ctlr chart`_.
 
 .. _k8s-upgrade:
 
