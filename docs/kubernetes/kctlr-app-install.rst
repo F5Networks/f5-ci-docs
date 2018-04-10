@@ -167,6 +167,10 @@ The example below shows one Pod running the :code:`k8s-bigip-ctlr` in a test clu
    NAME                                  READY     STATUS    RESTARTS   AGE
    k8s-bigip-ctlr-331478340-ke0h9        1/1       Running   0          1h
 
+.. note::
+
+   If you use flannel and :ref:`added your BIG-IP device to the Cluster network <use-bigip-k8s-flannel>`, you should now be able to send traffic through the BIG-IP system to and from endpoints within your Cluster.
+
 What's Next
 -----------
 

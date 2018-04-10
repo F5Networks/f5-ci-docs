@@ -203,14 +203,17 @@ Create a Kubernetes Node for the BIG-IP device
       k8s-worker-0   Ready     2d        v1.7.5
       k8s-worker-1   Ready     2d        v1.7.5
 
-You should now be able to send traffic through the BIG-IP system to and from endpoints within your Kubernetes Cluster.
+
+What's Next
+-----------
+
+Now that your BIG-IP device is part of the Cluster network, you'll need to :ref:`Deploy the BIG-IP Controller <install-kctlr>`.
 
 .. seealso::
 
-   - If you get a configuration error when trying to create a virtual server using an iApp, see :ref:`Troubleshoot Your Kubernetes Deployment <iapp traffic group>`.
-
    - If you're having trouble with your network setup, see :ref:`networking troubleshoot openshift`.
      (This troubleshooting issue references the OpenShift Cluster Network, but the concepts are the same.)
+   - If you get a traffic group configuration error when trying to create a virtual server with an iApp, see :ref:`Troubleshoot Your Kubernetes Deployment <iapp traffic group>`.
 
 
 .. _Deploy flannel: https://coreos.com/flannel/docs/latest/kubernetes.html

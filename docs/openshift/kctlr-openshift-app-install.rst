@@ -166,7 +166,9 @@ You should see one :code:`k8s-bigip-ctlr` `Pod`_ for each Node in the Cluster. T
    NAME                              READY     STATUS    RESTARTS   AGE
    k8s-bigip-ctlr-1962020886-s31l4   1/1       Running   0          1m
 
+.. note::
 
+   Once the Controller is running, you should be able to successfully send traffic through the BIG-IP system to and from endpoints within your OpenShift Cluster.
 
 .. _OpenShift: https://www.openshift.org/
 .. _ReplicaSet: https://kubernetes.io/docs/user-guide/replicasets/

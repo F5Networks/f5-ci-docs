@@ -154,10 +154,13 @@ You can use a TMOS shell or the BIG-IP configuration utility to verify object cr
    show /net running-config self **10.129.2.3/14**
    show /net running-config self **10.129.2.4/14**
 
-You should now be able to successfully send traffic through the BIG-IP system to and from endpoints within your OpenShift Cluster.
-
 .. seealso:: If you're having trouble with your network setup, see :ref:`networking troubleshoot openshift`.
 
+
+What's Next
+-----------
+
+- :ref:`Deploy the BIG-IP Controller <install-kctlr-openshift>`
 
 .. _OpenShift: https://www.openshift.org/
 .. _Create an OpenShift service account: https://docs.openshift.org/latest/admin_guide/service_accounts.html
