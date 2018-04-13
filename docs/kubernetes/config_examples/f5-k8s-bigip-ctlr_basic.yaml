@@ -42,8 +42,7 @@ spec:
             "--bigip-password=$(BIGIP_PASSWORD)",
             "--bigip-url=<ip_address-or-hostname>",
             "--bigip-partition=<name_of_partition>",
-            "--default-ingress-ip=1.2.3.4",
-            "--pool-member-type=cluster"
+            "--pool-member-type=nodeport"
             ]
       imagePullSecrets:
         # Secret that gives access to a private docker registry

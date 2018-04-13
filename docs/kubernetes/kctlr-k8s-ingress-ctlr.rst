@@ -61,8 +61,6 @@ See :ref:`bigip snats` for more information.
 Set a Default, Shared IP address
 ````````````````````````````````
 
-.. include:: /_static/reuse/k8s-version-added-1_4.rst
-
 When you set the |kctlr| to use a default IP address, you can share that IP address across Ingress resources. When you share the default IP address across Ingress resources, the |kctlr|
 
 - creates a shared virtual server with one pool for each Ingress resource, and
@@ -92,8 +90,6 @@ When the |kctlr| creates the virtual server on the BIG-IP system, it replaces "c
 Use DNS lookup
 ``````````````
 
-.. include:: /_static/reuse/k8s-version-added-1_3.rst
-
 The |kctlr| uses DNS lookup to resolve hostnames by default. The |kctlr| attempts to resolve the first hostname provided in the :code:`spec.rules.host` section of the Ingress resource. It then assigns the resolved host's IP address to the Ingress' virtual server.
 
 .. _kctlr-assign-ip-ipam:
@@ -101,11 +97,11 @@ The |kctlr| uses DNS lookup to resolve hostnames by default. The |kctlr| attempt
 Use an IPAM system
 ``````````````````
 
-.. include:: /_static/reuse/k8s-version-added-1_1.rst
-
 If you want to assign IP addresses using an IPAM system, use the |kctlr| to :ref:`create unattached pools <kctlr-pool-only>`. To do so, just omit the :code:`virtual-server.f5.com/ip=` annotation from your Ingress resource.
 
 You can then add the virtual-server annotation to the Ingress using the IP address selected by the IPAM system. The |kctlr| will create a new virtual server with the selected IP address and attach the previously-created pool(s) to it.
+
+.. rubric:: **Beta feature** :fonticon:`fa fa-flask`
 
 The `F5 IPAM Controller`_ can write the :code:`virtual-server.f5.com/ip` annotation for you. See the `f5-ipam-ctlr docs`_ for more information.
 

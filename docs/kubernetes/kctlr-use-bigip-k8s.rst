@@ -60,7 +60,7 @@ Create a VXLAN tunnel
 
    .. parsed-literal::
 
-      create /net tunnels vxlan **fl-vxlan** flooding-type **none**
+      create /net tunnels vxlan **fl-vxlan** port **8472** flooding-type **none**
 
 #. Create a VXLAN tunnel.
 

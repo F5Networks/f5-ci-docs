@@ -61,7 +61,7 @@ The |kctlr-long| documentation set assumes that you:
 
    When using the |kctlr| in :ref:`cluster mode`, your BIG-IP license must include SDN services.
 
-.. include:: docs/_static/reuse/bigip-permissions-ctlr.rst
+.. include:: /_static/reuse/bigip-permissions-ctlr.rst
 
 .. _k8s-installation:
 
@@ -215,8 +215,6 @@ It's important to understand the difference between the term "ingress" and the K
 
 Namespaces
 ``````````
-
-.. include:: /_static/reuse/k8s-version-added-1_1.rst
 
 The Kubernetes `Namespace`_ allows you to create/manage multiple cluster environments.
 The |kctlr-long| can manage all namespaces; a single namespace; or pretty much anything in between.

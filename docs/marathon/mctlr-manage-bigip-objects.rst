@@ -123,8 +123,6 @@ If you take down an Application and want to remove its corresponding BIG-IP LTM 
 Pools without Virtual Servers
 -----------------------------
 
-.. include:: /_static/reuse/marathon-version-added-1_1.rst
-
 You can use the |mctlr| to create BIG-IP pools that aren't attached to a front-end virtual server (:dfn:`unattached pools`).
 When you create unattached pools, the |mctlr-long| applies the following naming convention to BIG-IP pool members: ``<application-name>_<F5_{n}_PORT>``.
 For example, ``pool-only-0_8080``.
@@ -139,8 +137,6 @@ For example, ``pool-only-0_8080``.
 
 Use IPAM to assign IP addresses to BIG-IP virtual servers
 `````````````````````````````````````````````````````````
-
-.. include:: /_static/reuse/marathon-version-added-1_1.rst
 
 The |mctlr-long| has a built-in hook that allows you to integrate an IPAM system using a custom plugin.
 The basic elements required are:

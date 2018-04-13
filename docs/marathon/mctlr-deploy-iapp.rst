@@ -24,7 +24,7 @@ You can create iApp variables for any built-in or custom iApp.
 
 .. seealso::
 
-   The  `marathon-bigip-ctlr reference documentation`_ for detailed information about iApp labels.
+   See the  `marathon-bigip-ctlr reference documentation`_ for detailed information about iApp labels.
 
 Deploy the iApp
 ---------------
@@ -34,7 +34,7 @@ Deploy the iApp
    .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json
       :caption: Example F5 iApp Application Labels
 
-   :fonticon:`fa fa-download` :download:`Download f5-marathon-bigip-ctlr-vs-iApp-example.json </marathon/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json>`
+   :fonticon:`fa fa-download` :download:`f5-marathon-bigip-ctlr-vs-iApp-example.json </marathon/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json>`
 
 #. Send a PUT request to the Marathon API server to update the Application definition.
 

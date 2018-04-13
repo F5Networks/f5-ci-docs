@@ -44,7 +44,7 @@ Launch the BIG-IP Controller for Marathon
 
 Define a Marathon Application using valid JSON. See the `marathon-bigip-ctlr configuration parameters`_ reference for all supported configuration options.
 
-.. include:: docs/_static/reuse/bigip-permissions-ctlr.rst
+.. include:: /_static/reuse/bigip-permissions-ctlr.rst
 
 .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example.json
 

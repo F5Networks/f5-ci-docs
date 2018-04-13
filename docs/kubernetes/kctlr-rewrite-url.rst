@@ -44,6 +44,8 @@ When using the Annotation(s) in a Multi-Service Ingress, you can specify a singl
 Examples
 --------
 
+.. _rewrite app-root:
+
 Rewrite App-Root
 ````````````````
 
@@ -57,6 +59,11 @@ Rewrite App-Root
 
 Use the :code:`rewrite-app-root` Annotation to redirect requests for "/" to a different path.
 
+Your Ingress or Route resource must have either of the following defined in the spec:
+
+- host without paths **--OR--**
+- host with redirect path
+
 .. code-block:: YAML
    :caption: Redirect "/" to "/home" for all traffic
 
@@ -68,13 +75,9 @@ Use the :code:`rewrite-app-root` Annotation to redirect requests for "/" to a di
      name: home
      namespace: default
    spec:
-     rules:
-     - http:
-       paths:
-       - backend:
-           serviceName: http-svc
-           servicePort: 80
-           path: /home
+     backend:
+       serviceName: svc-home
+       servicePort: 80
 
 .. code-block:: YAML
    :caption: Rewrite "/" to "/en" for traffic with host "docs.example.com"
@@ -88,20 +91,22 @@ Use the :code:`rewrite-app-root` Annotation to redirect requests for "/" to a di
      namespace: default
    spec:
      rules:
-     - host: docs.example.com
-       http:
-         paths:
-         - backend:
-             serviceName: svc-docs
-             servicePort: 80
-             path: /docs-en
      - host: example.com
        http:
          paths:
-         - backend:
+         - path: /home
+           backend:
              serviceName: svc-home
              servicePort: 80
-             path: /home
+
+     - host: docs.example.com
+       http:
+         paths:
+         - path: /en
+           backend:
+             serviceName: svc-docs
+             servicePort: 80
+
 
 .. code-block:: YAML
    :caption: Rewrite multiple paths in a single annotation
@@ -110,7 +115,7 @@ Use the :code:`rewrite-app-root` Annotation to redirect requests for "/" to a di
    kind: Ingress
    metadata:
      annotations:
-       virtual-server.f5.com/rewrite-app-root: "example.com=/home,docs.example.com=docs.example.com/en"
+       virtual-server.f5.com/rewrite-app-root: "example.com=/home,docs.example.com=/en"
      name: photos-and-home
      namespace: default
    spec:
@@ -118,18 +123,20 @@ Use the :code:`rewrite-app-root` Annotation to redirect requests for "/" to a di
      - host: example.com
        http:
          paths:
-         - backend:
+         - path: /home
+           backend:
              serviceName: svc-home
              servicePort: 80
-           path: /
+
      - host: docs.example.com
        http:
          paths:
-         - backend:
+         - path: /en
+           backend:
              serviceName: svc-docs
              servicePort: 80
-           path: /docs-en
 
+.. _rewrite target url:
 
 Rewrite Target-URL
 ``````````````````
@@ -150,7 +157,7 @@ It can rewrite the :code:`host`, :code:`path`, or both to the specified target.
    kind: Ingress
    metadata:
      annotations:
-       virtual-server.f5.com/rewrite-target-url: "new.example.com"
+       virtual-server.f5.com/rewrite-target-url: "old.example.com=new.example.com"
      name: rewrite-siteurl
      namespace: default
    spec:
@@ -158,10 +165,11 @@ It can rewrite the :code:`host`, :code:`path`, or both to the specified target.
      - host: old.example.com
        http:
          paths:
-         - backend:
+         - path: /my-site
+           backend:
              serviceName: new-svc
              servicePort: 80
-             path: /my-site
+
 
 .. code-block:: YAML
    :caption: Rewrite from a specific host and path to a different host and path
@@ -178,17 +186,18 @@ It can rewrite the :code:`host`, :code:`path`, or both to the specified target.
      - host: old.example.com
        http:
          paths:
-         - backend:
+         - path: /contact
+           backend:
              serviceName: old-svc
              servicePort: 80
-             path: /contact
    - host: old.example.com
        http:
          paths:
-         - backend:
+         - path: /docs
+           backend:
              serviceName: docs-svc
              servicePort: 80
-             path: /docs
+
 
 .. code-block:: YAML
    :caption: Rewrite multiple paths in a single annotation
@@ -205,17 +214,14 @@ It can rewrite the :code:`host`, :code:`path`, or both to the specified target.
      - host: old.example.com
        http:
          paths:
-         - backend:
+         - path: /contact
+           backend:
              serviceName: old-svc
              servicePort: 80
-             path: /contact
    - host: old.example.com
        http:
          paths:
-         - backend:
+         - path: /docs
+           backend:
              serviceName: docs-svc
              servicePort: 80
-             path: /docs
-
-
-

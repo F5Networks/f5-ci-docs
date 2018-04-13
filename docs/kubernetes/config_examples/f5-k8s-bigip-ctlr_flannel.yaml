@@ -42,7 +42,6 @@ spec:
             "--bigip-password=$(BIGIP_PASSWORD)",
             "--bigip-url=<ip_address-or-hostname>",
             "--bigip-partition=<name_of_partition>",
-            "--default-ingress-ip=<ip_address>",
             "--pool-member-type=cluster",
             "--flannel-name=<bigip_tunnel>",
             ]

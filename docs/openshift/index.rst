@@ -49,7 +49,7 @@ Installation
 - You can :ref:`launch the k8s-bigip-ctlr application <install-kctlr-openshift>` in OpenShift using a Deployment.
 - If you use `helm`_ you can use the `f5-bigip-ctlr chart`_.
 
-.. include:: docs/_static/reuse/bigip-permissions-ctlr.rst
+.. include:: /_static/reuse/bigip-permissions-ctlr.rst
 
 OpenShift Node Health
 ---------------------
@@ -67,8 +67,6 @@ As a function of the BIG-IP VXLAN, the BIG-IP device only communicates with heal
 
 OpenShift Routes
 ----------------
-
-.. include:: /_static/reuse/k8s-version-added-1_2.rst
 
 In OpenShift, the |kctlr| can manage BIG-IP objects for routes.
 

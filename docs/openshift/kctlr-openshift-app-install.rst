@@ -74,7 +74,7 @@ At a minimum, all |kctlr| Deployments should include the following:
 
    Do not increase the :code:`replica` count in the Deployment. Running duplicate Controller instances may cause errors and/or service interruptions.
 
-.. include:: docs/_static/reuse/bigip-permissions-ctlr.rst
+.. include:: /_static/reuse/bigip-permissions-ctlr.rst
 
 .. _kctlr-openshift basic deploy:
 

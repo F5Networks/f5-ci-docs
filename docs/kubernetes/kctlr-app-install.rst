@@ -79,7 +79,7 @@ Define a Kubernetes Deployment using valid YAML or JSON. See the `k8s-bigip-ctlr
 
    Do not increase the :code:`replica` count in the Deployment. Running duplicate Controller instances may cause errors and/or service interruptions.
 
-.. include:: docs/_static/reuse/bigip-permissions-ctlr.rst
+.. include:: /_static/reuse/bigip-permissions-ctlr.rst
 
 .. _kctlr basic deploy:
 
@@ -87,12 +87,24 @@ Basic Deployment
 ````````````````
 
 The example below shows a Deployment with the basic config parameters required to run the |kctlr| in Kubernetes.
-With this basic configuration, you can :ref:`Create BIG-IP virtual servers for Services <kctlr-create-vs>`; :ref:`k8s-ingress-controller`; and :ref:`Deploy Application Services (iApps) <kctlr-deploy-iapps>`.
 
 .. literalinclude:: /kubernetes/config_examples/f5-k8s-bigip-ctlr_basic.yaml
    :linenos:
 
 :fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_basic.yaml </kubernetes/config_examples/f5-k8s-bigip-ctlr_basic.yaml>`
+
+.. _kctlr flannel deploy:
+
+Deployments for flannel BIG-IP Integrations
+```````````````````````````````````````````
+
+If :ref:`your BIG-IP device connects to the Cluster network via flannel VXLAN <use-bigip-k8s-flannel>`, you must include the following in your Deployment:
+
+- :code:`--pool-member-type=cluster` (See :ref:`cluster mode` for more information.)
+- :code:`--flannel-name=/Common/tunnel_name`
+
+:fonticon:`fa fa-download` :download:`Download example Deployment with flannel-name defined </kubernetes/config_examples/f5-k8s-bigip-ctlr_flannel.yaml>`
+
 
 .. _kctlr snat deploy:
 
@@ -113,19 +125,7 @@ To use a specific SNAT pool, add the following to the :code:`args` section of an
 
 Replace :code:`<snat-pool>` with the name of any SNAT pool that already exists in the :code:`/Common` partition on the BIG-IP device. The |kctlr| cannot define a new SNAT pool for you.
 
-:fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_snat.yaml </kubernetes/config_examples/f5-k8s-bigip-ctlr_snat.yaml>`
-
-.. _kctlr flannel deploy:
-
-Deployments for flannel BIG-IP Integrations
-```````````````````````````````````````````
-
-If :ref:`your BIG-IP device connects to the Cluster network via flannel VXLAN <use-bigip-k8s-flannel>`, you must include the following in your Deployment:
-
-- :code:`--pool-member-type=cluster` (See :ref:`cluster mode` for more information.)
-- :code:`--flannel-name=/Common/tunnel_name`
-
-:fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_flannel.yaml </kubernetes/config_examples/f5-k8s-bigip-ctlr_flannel.yaml>`
+:fonticon:`fa fa-download` :download:`Download example Deployment with vs-snat-pool-name defined </kubernetes/config_examples/f5-k8s-bigip-ctlr_snat.yaml>`
 
 
 .. _upload to k8s api:

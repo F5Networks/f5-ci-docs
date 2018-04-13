@@ -121,9 +121,9 @@ Use :command:`oc get` to retrieve information about your newly-created HostSubne
    oc get hostsubnet
    NAME	               HOST	               HOST IP	     SUBNET
 
-   f5-bigip-float       f5-bigip-float       **172.16.1.30**   **10.129.6.0/23**
-   f5-bigip-node01      f5-bigip-node01      **172.16.1.28**   **10.129.2.0/23**
-   f5-bigip-node02      f5-bigip-node02      **172.16.1.29**   **10.129.4.0/23**
+   f5-bigip-float       f5-bigip-float       **172.16.1.30**   **10.129.6.0/14**
+   f5-bigip-node01      f5-bigip-node01      **172.16.1.28**   **10.129.2.0/14**
+   f5-bigip-node02      f5-bigip-node02      **172.16.1.29**   **10.129.4.0/14**
    ...
 
 .. _openshift vxlan setup ha:

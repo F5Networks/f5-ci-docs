@@ -58,7 +58,7 @@ You can :ref:`deploy the F5 BIG-IP Controller for Cloud Foundry <deploy-cf-ctlr>
 - how to set up the BIG-IP device when you launch the |cfctlr| for the first time, and
 - how to access orchestration information from the environment.
 
-.. include:: docs/_static/reuse/bigip-permissions-ctlr.rst
+.. include:: /_static/reuse/bigip-permissions-ctlr.rst
 
 Upgrade
 -------

@@ -82,7 +82,7 @@ Verify creation of the HostSubnet(s)
 
    oc get hostsubnet
    NAME                  HOST                  HOST IP         SUBNET
-   f5-big-ip             f5-bigip-node         172.16.1.28     10.129.2.0/23
+   f5-big-ip             f5-bigip-node         172.16.1.28     10.129.2.0/14
 
 
 .. _openshift-bigip-setup:

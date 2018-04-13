@@ -120,8 +120,6 @@ If you need to take down a Service for maintenance and don't want to lose the Se
 Pools without Virtual Servers
 -----------------------------
 
-.. include:: /_static/reuse/k8s-version-added-1_1.rst
-
 You can use the |kctlr| to create BIG-IP pools that aren't attached to a front-end virtual server (:dfn:`unattached pools`).
 
 .. important::
@@ -153,8 +151,6 @@ Create an unattached pool
 
 Attach pools to a virtual server using IPAM
 ```````````````````````````````````````````
-
-.. include:: /_static/reuse/k8s-version-added-1_1.rst
 
 Set up your IPAM system to annotate the F5 resource ConfigMap with the allocated IP address. Use the Annotation shown below.
 

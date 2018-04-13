@@ -6,8 +6,6 @@
 Attach a Virtual Server to a Kubernetes Ingress
 ===============================================
 
-.. include:: /_static/reuse/k8s-version-added-1_1.rst
-
 Overview
 --------
 

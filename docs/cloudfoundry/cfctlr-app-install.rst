@@ -57,7 +57,7 @@ Include the following in the :code:`env.BIGIP_CTLR_CFG.bigip` section of the man
 
 - the IP address and user account credentials for the BIG-IP device;
 
-  .. include:: docs/_static/reuse/bigip-permissions-ctlr.rst
+  .. include:: /_static/reuse/bigip-permissions-ctlr.rst
 
 - the BIG-IP partition you want the |cfctlr| to manage (must already exist on the BIG-IP device);
 - the load balancing method desired for all pools created by the |cfctlr|;

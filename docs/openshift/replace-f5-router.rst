@@ -6,8 +6,6 @@
 Replace the F5 Router in OpenShift
 ==================================
 
-.. include:: /_static/reuse/k8s-version-added-1_2.rst
-
 Take the steps below to replace the `OpenShift F5 Router`_ with the |kctlr-long| in OpenShift deployments.
 
 .. table:: Task Summary
