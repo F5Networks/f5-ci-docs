@@ -156,9 +156,7 @@ Use the :command:`oc create` command to upload the Deployment to the OpenShift A
 Verify Pod(s)
 -------------
 
-You can verify that the Controller(s) created successfully using the :command:`oc get` command.
-
-You should see one :code:`k8s-bigip-ctlr` `Pod`_ for each Node in the Cluster. The example below shows one :code:`k8s-bigip-ctlr` Pod running in a test cluster that has one worker node.
+Use the :command:`oc get` command to verify that the :code:`k8s-bigip-ctlr` Pod launched successfully.
 
 .. code-block:: console
 

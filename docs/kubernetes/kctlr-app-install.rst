@@ -155,10 +155,7 @@ Upload the Deployment, Cluster Role, and Cluster Role Binding to the Kubernetes 
 Verify Pod creation
 -------------------
 
-Use :command:`kubectl get` to verify all of the objects launched successfully.
-
-You should see one :code:`k8s-bigip-ctlr` `Pod`_ for each Node in the Cluster.
-The example below shows one Pod running the :code:`k8s-bigip-ctlr` in a test cluster with one worker node.
+Use the :command:`kubectl get` command to verify that the :code:`k8s-bigip-ctlr` Pod launched successfully.
 
 .. code-block:: console
    :emphasize-lines: 3
