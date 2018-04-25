@@ -18,8 +18,8 @@ This documentation set applies to the following versions of each F5 Container In
 Component                   Version
 ===================         ==============
 |cf-long|                   v1.0.x-1.2.x
-|kctlr-long|                v1.0.x-1.4.x
-|mctlr-long|                v1.0.x-v1.2.x
+|kctlr-long|                v1.0.x-1.5.x
+|mctlr-long|                v1.0.x-v1.3.x
 ===================         ==============
 
 .. _connector compatibility:
