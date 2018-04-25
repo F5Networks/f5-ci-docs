@@ -8,9 +8,16 @@
 Use Ingress Resources to Expose Kubernetes Services to External Traffic
 =======================================================================
 
-.. include:: /_static/reuse/k8s-version-added-1_1.rst
+Overview
+--------
 
-You can use the |kctlr-long| as an Ingress Controller in Kubernetes.
+You can use the |kctlr-long| as an `Ingress Controller`_ in Kubernetes. To do so, add the |kctlr| `Ingress annotations`_ to a Kubernetes Ingress Resource. The annotations define the objects you want to create on the BIG-IP system.
+
+If you use `helm`_, you can use the `f5-bigip-ingress chart`_ to create and manage the resources below. You may also use the `f5-bigip-ctlr chart`_ to create and manage the resources for the |kctlr| itself.
+
+.. note::
+
+   This document provides set-up instructions for using the |kctlr| as a Kubernetes Ingress Controller. For a functionality overview, see :ref:`k8s-ingress-controller`.
 
 .. table:: Tasks
 
@@ -227,6 +234,36 @@ Kubernetes Secrets
 
 :fonticon:`fa fa-download` :download:`f5-k8s-ingress-tls-secret.yaml </kubernetes/config_examples/f5-k8s-ingress-tls-secret.yaml>`
 
+.. seealso::
+
+   Refer to the `Kubernetes TLS Ingress documentation <https://kubernetes.io/docs/concepts/services-networking/ingress/#tls>`_ for details regarding supported port(s) and termination.
+
+.. _k8s ingress url rewrite:
+
+Rewrite URLs
+------------
+
+.. include:: /_static/reuse/k8s-version-added-1_5.rst
+
+The |kctlr| can rewrite URLs for Routes. See :ref:`k8s url rewrite` for more information.
+
+.. _deploy ingress resource:
+
+Upload the Ingress to the API server
+------------------------------------
+
+Use the :command:`kubectl apply` command to upload your new or edited Ingress resource to the Kubernetes API server.
+
+.. include:: /_static/reuse/kubectl-apply.rst
+
+.. _verify-ingress-vs-created:
+
+Verify object creation on the BIG-IP system
+-------------------------------------------
+
+.. include:: /_static/reuse/verify-bigip-objects.rst
+
+.. _delete vs ingress:
 
 See Example Ingress Resources
 `````````````````````````````

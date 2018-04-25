@@ -12,4 +12,4 @@ metadata:
 spec:
   # Define the flannel subnet you want to assign to the BIG-IP device.
   # Be sure this subnet does not collide with any other Nodes' subnets.
-  podCIDR: 10.244.30.0/24
+  podCIDR: 10.129.3.0/24

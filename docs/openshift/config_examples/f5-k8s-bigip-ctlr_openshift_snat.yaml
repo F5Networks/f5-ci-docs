@@ -15,7 +15,8 @@ spec:
       serviceAccountName: bigip-ctlr
       containers:
         - name: k8s-bigip-ctlr
-          image: "f5networks/k8s-bigip-ctlr:1.4.2"
+          # replace the version as needed
+          image: "f5networks/k8s-bigip-ctlr:1.5"
           env:
             - name: BIGIP_USERNAME
               valueFrom:
@@ -33,27 +34,19 @@ spec:
                   key: password
           command: ["/app/bin/k8s-bigip-ctlr"]
           args: [
+            # See the k8s-bigip-ctlr documentation for information about
+            # all config options
+            # http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest
             "--bigip-username=$(BIGIP_USERNAME)",
             "--bigip-password=$(BIGIP_PASSWORD)",
-            # Replace with the IP address or hostname of your BIG-IP device
-            "--bigip-url=10.190.24.171",
-            # Replace with the name of the BIG-IP partition you want to manage
-            "--bigip-partition=openshift",
+            "--bigip-url=<ip_address-or-hostname>",
+            "--bigip-partition=<name_of_partition>",
             "--pool-member-type=cluster",
-            # Replace with the path to the BIG-IP VXLAN connected to the
-            # OpenShift HostSubnet
-            "--openshift-sdn-name=/Common/openshift_vxlan",
-            # Enables use of a BIG-IP device as an OpenShift Router
-            "--manage-routes=true",
-            # Assign an IP address to the BIG-IP virtual server
-            # Be sure to use an IP address from the HostSubnet to which the
-            # BIG-IP device connects
-            "--route-vserver-addr=1.2.3.4",
-            # OPTIONAL: Provide an "f5type" label you want the BIG-IP Controller
-            # to watch for. This information should be defined in a Route
-            # Resource (for example, "f5type: App1")
-            "--route-label=App1"
+            "--openshift-sdn-name=/Common/<tunnel>",
+            "--vs-snat-pool-name=<snat-pool>",
             ]
       imagePullSecrets:
+        # Secret that gives access to a private Docker registry
         - name: f5-docker-images
+        # Secret containing the BIG-IP system login credentials
         - name: bigip-login

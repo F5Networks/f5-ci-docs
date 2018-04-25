@@ -109,7 +109,7 @@ rst_epilog = """
 .. _BIG-IP Controller for Kubernetes: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest
 .. _BIG-IP Controller for Marathon: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest
 .. _BIG-IP partition: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-13-0-0/2.html
-.. _BIG-IP SNAT: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-13-1-0/8.html
+.. _BIG-IP Automap SNAT: https://support.f5.com/csp/article/K7820#types
 .. _BIG-IP SSL profile: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-profiles-reference-12-1-0/6.html
 .. _BIG-IP System User Account Administration -> Administrative Partitions: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-12-0-0/3.html
 .. _BIG-IP TMOS Routing Adminstration Guide: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-13-0-0/
@@ -143,12 +143,17 @@ rst_epilog = """
 .. _Express middleware: https://expressjs.com/en/guide/using-middleware.html
 .. _Express: https://expressjs.com/
 .. _F5 Docker registry: https://hub.docker.com/r/f5networks/
+.. _F5 IPAM Controller: https://github.com/F5Networks/f5-ipam-ctlr
+.. _f5-ipam-ctlr docs: %(base_url)s/products/ipam-ctlr/latest/
 .. _F5 schema: https://github.com/F5Networks/k8s-bigip-ctlr/tree/master/schemas
 .. _F5 virtual server properties: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#virtualserver-configmap-properties
+.. _f5-bigip-ctlr chart: https://github.com/F5Networks/charts/tree/master/src/stable/f5-bigip-ctlr
+.. _f5-bigip-ingress chart: https://github.com/F5Networks/charts/tree/master/src/stable/f5-bigip-ingress
 .. _f5-kube-proxy reference documentation: %(base_url)s/products/connectors/f5-kube-proxy/latest/
 .. _f5-kube-proxy: %(base_url)s/products/connectors/f5-kube-proxy/latest/
 .. _flannel: https://github.com/coreos/flannel
 .. _flannel manifest: https://github.com/coreos/flannel/blob/master/Documentation/kube-flannel.yml
+.. _helm: https://helm.sh
 .. _iApp Pool Member table: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#iapp-pool-member-table
 .. _Ingress annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#ingress-resources
 .. _Ingress controller: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-controllers
@@ -163,11 +168,13 @@ rst_epilog = """
 .. _k8s-bigip-ctlr v1.2.0: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.2/
 .. _k8s-bigip-ctlr v1.3.0: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.3/
 .. _k8s-bigip-ctlr v1.4.0: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.4/
+.. _k8s-bigip-ctlr v1.5.0: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.5/
 .. _kube-proxy: https://kubernetes.io/docs/admin/kube-proxy/
 .. _kubectl: https://kubernetes.io/docs/user-guide/kubectl-overview/
 .. _Kubernetes Dashboard: https://kubernetes.io/docs/user-guide/ui/
 .. _Kubernetes Ingress controller: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-controllers
 .. _Kubernetes node: https://kubernetes.io/docs/admin/node/
+.. _Kubernetes RBAC documentation: https://kubernetes.io/docs/admin/authorization/rbac/
 .. _Kubernetes Service: https://kubernetes.io/docs/user-guide/services/
 .. _Kubernetes: https://kubernetes.io/
 .. _local traffic management: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-basics-12-0-0.html
@@ -175,17 +182,20 @@ rst_epilog = """
 .. _Marathon Applications: https://mesosphere.github.io/marathon/docs/application-basics.html
 .. _Marathon Apps: https://mesosphere.github.io/marathon/docs/application-basics.html
 .. _Marathon Web Interface: https://mesosphere.github.io/marathon/docs/marathon-ui.html
+.. _marathon-bigip-ctlr configuration parameters: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/#configuration-parameters
 .. _marathon-bigip-ctlr iApp configuration parameters: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/#iApp
 .. _marathon-bigip-ctlr reference documentation: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/
 .. _marathon-bigip-ctlr: %(base_url)s/products/connectors/marathon-bigip-ctlr/latest/
 .. _marathon-bigip-ctlr v1.1.0-beta.1: %(base_url)s/products/connectors/marathon-bigip-ctlr/v1.1-beta/
 .. _marathon-bigip-ctlr v1.1.0: %(base_url)s/products/connectors/marathon-bigip-ctlr/v1.1/
+.. _marathon-bigip-ctlr v1.3.0: %(base_url)s/products/connectors/marathon-bigip-ctlr/v1.3/
 .. _Marathon: https://mesosphere.github.io/marathon/
 .. _namespace: https://kubernetes.io/docs/user-guide/namespaces/
 .. _namespaces: https://kubernetes.io/docs/user-guide/namespaces/
 .. _NATS bus: https://docs.cloudfoundry.org/concepts/architecture/router.html#use
 .. _oc: https://docs.openshift.com/enterprise/3.0/cli_reference/basic_cli_operations.html
-.. _OpenShift F5 Router: https://docs.openshift.org/1.4/install_config/router/f5_router.html
+.. _OpenShift F5 Router: https://docs.openshift.org/latest/install_config/router/f5_router.html
+.. _OpenShift Route Annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-route-annotations
 .. _OpenShift route resources: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-route-resources
 .. _Overview of SNAT features: https://support.f5.com/csp/article/K7820
 .. _Overview of the Standard Virtual Server: https://support.f5.com/csp/article/K93017176

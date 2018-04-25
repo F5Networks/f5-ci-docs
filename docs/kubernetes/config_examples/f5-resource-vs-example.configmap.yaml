@@ -13,7 +13,8 @@ metadata:
     # tells the k8s-bigip-ctlr to watch this ConfigMap
     f5type: virtual-server
 data:
-  # NOTE: schema v0.1.7 is required as of k8s-bigip-ctlr v1.4.0
+  # See the f5-schema table for schema-controller compatibility
+  # http://clouddocs.f5.com/containers/latest/releases_and_versioning.html#f5-schema
   schema: "f5schemadb://bigip-virtual-server_v0.1.7.json"
   data: |
     {
@@ -68,10 +69,7 @@ data:
           },
           "partition": "k8s",
           "balance": "least-connections-member",
-          "mode": "http",
-          "sslProfile": {
-          "f5ProfileName": "Common/clientssl"
-          }
+          "mode": "http"
         }
       }
     }

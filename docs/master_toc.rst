@@ -30,6 +30,7 @@ Container Connectors
    kubernetes/kctlr-ingress
    openshift/kctlr-openshift-routes
    kubernetes/kctlr-manage-bigip-objects
+   kubernetes/kctlr-rewrite-url
    kubernetes/kctlr-deploy-iapp
    openshift/kctlr-openshift-bigip-ha.rst
 

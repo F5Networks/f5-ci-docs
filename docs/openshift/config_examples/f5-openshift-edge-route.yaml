@@ -3,13 +3,17 @@ kind: Route
 metadata:
   labels:
     name: myService
+    # Tells the BIG-IP Controller to watch Routes with a specific label.
+    # Include the label in the k8s-bigip-ctlr Deployment under "args"
+    # (for example, "--route-label="App1")
+    f5type: App1
   name: myService-route-edge
   annotations:
-    # Specify a supported BIG-IP load balancing mode
+    # See the k8s-bigip-ctlr documentation for information about
+    # all Route Annotations
+    # http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/#supported-route-annotations
     virtual-server.f5.com/balance: least-connections-member
-    # Provide the name of an existing BIG-IP client SSL profile
     virtual-server.f5.com/clientssl: /Common/client-ssl
-    # Provide the name of an existing BIG-IP server SSL profile
     virtual-server.f5.com/serverssl: /Common/server-ssl
 spec:
   host: mysite.example.com
