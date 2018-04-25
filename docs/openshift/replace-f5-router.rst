@@ -7,8 +7,6 @@
 Replace the OpenShift F5 Router with the BIG-IP Controller
 ==========================================================
 
-.. include:: /_static/reuse/k8s-version-added-1_2.rst
-
 Take the steps below to replace the `OpenShift F5 Router`_ with the |kctlr-long| in OpenShift deployments.
 
 ===== ==================================================================================
@@ -52,11 +50,8 @@ Install the |kctlr|
 #. :ref:`Set up RBAC Authentication <openshift-rbac>`.
 #. :ref:`Create a Deployment <create-openshift-deployment>` for the |kctlr|.
 
-   Define the parameters highlighted below in your Deployment to set up the BIG-IP Controller to communicate with the BIG-IP device and set it to manage objects for OpenShift routes.
-
-   .. literalinclude:: /openshift/config_examples/f5-kctlr-openshift-routes.yaml
+   .. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift_routes.yaml
       :linenos:
-      :emphasize-lines: 44-56
 
 #. :ref:`Upload the Deployment <upload openshift deployment>` to the OpenShift API server.
 

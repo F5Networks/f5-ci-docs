@@ -1,4 +1,6 @@
-// REMOVE ALL COMMENTS FROM THIS FILE BEFORE USING
+// See marathon-bigip-ctlr docs for information about all available configuration
+// options
+// http://clouddocs.f5.com/products/marathon-bigip-ctlr/latest
 {
   "id": "marathon-bigip-ctlr",
   "cpus": 0.5,
@@ -7,21 +9,18 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      // replace the version as needed
-      "image": "f5networks/marathon-bigip-ctlr:1.2.0",
+      "image": "f5networks/marathon-bigip-ctlr:1.3.0",
       "network": "BRIDGE"
     }
   },
   "env": {
-    "MARATHON_URL": "http://10.190.25.75:8080",
+    "MARATHON_URL": "http://1.2.3.4:8080",
     "F5_CC_PARTITIONS": "mesos",
-    "F5_CC_BIGIP_HOSTNAME": "10.190.25.80",
+    "F5_CC_BIGIP_HOSTNAME": "10.11.12.13",
     "F5_CC_BIGIP_USERNAME": "admin",
     "F5_CC_BIGIP_PASSWORD": "admin",
-    // Mesos DC/OS Enterprise authentication
-    "F5_CC_DCOS_AUTH_CREDENTIALS": "{ \"scheme\": \"RS256\", \"uid\": \"my-dcos-account\", \"login_endpoint\": \"https://10.190.25.75:8080/acs/api/v1/auth/login\", \"private_key\": \"<my-private_key-string>\" }",
-    "F5_CC_MARATHON_CA_CERT": "<marathon_ca_cert>",
-    // Mesos DC/OS Open oath authentication
+    "F5_CC_DCOS_AUTH_CREDENTIALS": "{ \"scheme\": \"RS256\", \"uid\": \"my-dcos-account\", \"login_endpoint\": \"https://1.2.3.4:8080/acs/api/v1/auth/login\", \"private_key\": \"<my-private_key-string>\" }",
     "F5_CC_DCOS_AUTH_TOKEN": "<authentication-token>"
+    "F5_CC_MARATHON_CA_CERT": "<marathon_ca_cert>",
   }
 }

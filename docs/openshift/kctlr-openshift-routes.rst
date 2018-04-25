@@ -5,8 +5,8 @@
 
 .. _kctlr-openshift-routes:
 
-Use Route Resources to Expose OpenShift Services to External Traffic
-====================================================================
+Attach Virtual Servers to OpenShift Routes
+==========================================
 
 Overview
 --------
@@ -35,27 +35,122 @@ When you use the |kctlr| as a `Router`_, you can
    =======  ===================================================================
    1.       :ref:`set up kctlr routes`
 
+            - :ref:`route existing virtual`
+
    2.       :ref:`create os route`
 
-   3.       :ref:`route-TLS` (OPTIONAL)
+   3.       :ref:`deploy route resource`
 
-   4.       :ref:`add health monitor to route` (OPTIONAL)
+   4.       :ref:`verify BIG-IP route objects`
 
-   5.       :ref:`deploy route resource`
+   5.       :ref:`attach bigip objects routes`
 
-   6.       :ref:`verify BIG-IP route objects`
+            - :ref:`add health monitor to route`
+            - :ref:`route-TLS`
+            - :ref:`delete vs route`
+
    =======  ===================================================================
+
+
+.. _route existing virtual:
+
+Attach Routes to Existing BIG-IP Virtual Servers
+------------------------------------------------
+
+.. include:: /_static/reuse/k8s-version-added-1_5.rst
+
+If you need to use BIG-IP system functionality that isn't natively supported by the |kctlr|, you can attach a Route to an existing BIG-IP virtual server.
+Take the steps below **before** you deploy the |kctlr|.
+
+**If you want the |kctlr| to create a new virtual server for your Route,** :ref:`skip to the Basic Deployment section <kctlr routes basic>`.
+
+#. Create a virtual server in a BIG-IP partition that isn't already managed by a |kctlr| instance.
+
+#. Customize the virtual server as needed. Be sure the settings applied don't conflict with those you want the Controller to apply for the Route.
+
+#. In a TMOS shell, run the commands shown below to set the :code:`cccl-whitelist` metadata field. This field tells the Controller it should merge its configuration into the existing virtual instead of overwriting it.
+
+   - Make sure you're in the correct partition (for example, :code:`user@(BIG-IP)(cfg-sync Standalone)(Active)(/myPartition)(tmos)`).
+   - Replace "myVirtual" with the name of the virtual server on your BIG-IP device.
+
+   .. parsed-literal::
+
+      modify ltm virtual **myVirtual** metadata add { cccl-whitelist { value 1 }}
+
 
 .. _set up kctlr routes:
 
-Set up the |kctlr| to manage Routes
------------------------------------
+Deploy the BIG-IP Controller
+----------------------------
 
-If you haven't already done so, add the |kctlr| `Route configuration parameters`_ to the |kctlr| Deployment:
+.. include:: /_static/reuse/kctlr-openshift-deployment-note.rst
 
-.. literalinclude:: /openshift/config_examples/f5-kctlr-openshift-routes.yaml
+.. _kctlr routes basic:
+
+Basic Deployment
+````````````````
+
+Create a Kubernetes Deployment using valid YAML or JSON.
+Define the |kctlr| `Route configuration parameters`_ as appropriate to suit your needs.
+
+.. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift_routes.yaml
    :linenos:
-   :emphasize-lines: 47-56
+
+:fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_openshift_routes.yaml </openshift/config_examples/f5-k8s-bigip-ctlr_openshift_routes.yaml>`
+
+.. warning::
+
+   Use caution when setting the :code:`--route-vserver-addr` and :ref:`specifying a BIG-IP SNAT pool <kctlr-openshift snat deploy>`.
+
+   If you choose to set both options, make sure the IP address defined for the virtual server falls within the range of the selected SNAT pool.
+
+.. _kctlr routes existing virtual:
+
+Manage a Pre-Existing Virtual Server
+````````````````````````````````````
+
+Create a Kubernetes Deployment using valid YAML or JSON.
+
+- Define the |kctlr| `Route configuration parameters`_ as appropriate to suit your needs.
+- Provide the name of the BIG-IP virtual server to which you want to attach the Route to the |kctlr| Deployment. The config parameter to use depends on the type of virtual server (HTTP or HTTPS)
+
+  - :code:`route-http-vserver` -- HTTP virtual server.
+  - :code:`route-https-vserver` -- HTTPS virtual server.
+
+.. rubric:: Example :code:`k8s-bigip-ctlr` args:
+
+.. code-block:: YAML
+   :emphasize-lines: 9
+
+   args: [
+         "--bigip-username=$(BIGIP_USERNAME)",
+         "--bigip-password=$(BIGIP_PASSWORD)",
+         "--bigip-url=10.10.10.10",
+         "--bigip-partition=myPartition",
+         "--pool-member-type=cluster",
+         "--openshift-sdn-name=/Common/openshift_vxlan",
+         "--manage-routes=true",
+         "--route-http-vserver=myVirtual"
+         ]
+
+.. warning::
+
+   When you attach an OpenShift Route to an existing BIG-IP virtual server, the |kctlr| attempts to merge its settings with the existing object configurations on the BIG-IP device. If conflicts occur, the Controller will attempt to replace the existing setting on the BIG-IP system with its own configuration. If the |kctlr| cannot create the requested objects, you can find the resulting error message in the |kctlr| logs.
+
+   See :ref:`OpenShift troubleshooting <troubleshoot openshift view-logs>` for more information about viewing the Controller logs.
+
+
+Upload the Deployment to the OpenShift API Server
+`````````````````````````````````````````````````
+
+Use the :command:`oc create` command to upload the Deployment to the OpenShift API server.
+
+.. parsed-literal::
+
+   oc create -f **f5-k8s-bigip-ctlr_openshift-sdn.yaml** **[-n kube-system]**
+   deployment "k8s-bigip-ctlr" created
+
+.. seealso:: See :ref:`upload openshift deployment` for additional information.
 
 
 .. _create os route:
@@ -63,12 +158,22 @@ If you haven't already done so, add the |kctlr| `Route configuration parameters`
 Create a new OpenShift Route Resource
 -------------------------------------
 
-To use the BIG-IP device as an OpenShift Router, create a new `Route Resource`_. The |kctlr| supports use of the following Route Resource types:
+To use the BIG-IP device as an OpenShift Router, add the |kctlr| `OpenShift Route Annotations`_ to a `Route Resource`_.
+The |kctlr| supports the following types of Route Resource:
 
 - :ref:`unsecured`
 - :ref:`edge`
 - :ref:`passthrough`
 - :ref:`reencrypt`
+
+.. _openshift url rewrite:
+
+Rewrite URLs for Routes
+```````````````````````
+
+.. include:: /_static/reuse/k8s-version-added-1_5.rst
+
+The |kctlr| can rewrite URLs for Routes. See :ref:`k8s url rewrite` for more information.
 
 .. _unsecured:
 
@@ -118,10 +223,28 @@ Re-encryption Termination
 
 :fonticon:`fa fa-download` :download:`f5-openshift-reencrypt-route.yaml </openshift/config_examples/f5-openshift-reencrypt-route.yaml>`
 
+.. _deploy route resource:
+
+Upload the Route to the OpenShift API server
+--------------------------------------------
+
+Use the :command:`oc apply` command to upload your Route resource to the OpenShift API server.
+
+.. include:: /_static/reuse/oc-apply.rst
+
+
+.. _verify BIG-IP route objects:
+
+Verify creation of BIG-IP objects
+---------------------------------
+
+.. include:: /_static/reuse/verify-bigip-objects.rst
+
+
 .. _attach bigip objects routes:
 
-Attach BIG-IP objects to the Route virtual servers
---------------------------------------------------
+Manage BIG-IP objects for Routes
+--------------------------------
 
 Use the |kctlr| `Route annotations`_ to attach various types of BIG-IP objects to the virtual servers corresponding to OpenShift Routes.
 
@@ -131,9 +254,9 @@ Use the |kctlr| `Route annotations`_ to attach various types of BIG-IP objects t
 Health monitors
 ```````````````
 
-.. include:: /_static/reuse/k8s-version-added-1_3.rst
+You can use the :code:`k8s-bigip-ctlr` `Route annotations`_ to update/add health monitors to OpenShift Routes.
 
-#. Define the :code:`virtual-server.f5.com/health` annotation JSON blob using the |kctlr| supported `route annotations`_.
+#. Define the :code:`virtual-server.f5.com/health` annotation JSON blob.
 
 #. Add the health monitor annotation to the Route Resource.
 
@@ -147,9 +270,7 @@ Health monitors
 SSL Profiles
 ````````````
 
-.. include:: /_static/reuse/k8s-version-added-1_3.rst
-
-By default, the Controller creates custom BIG-IP SSL Profiles using the certificates and keys defined in the Route resource.
+By default, the |kctlr| creates custom BIG-IP SSL Profiles using the certificates and keys defined in the Route resource.
 You can also use an existing `BIG-IP SSL profile`_ to secure traffic for a Route.
 
 - For a Client SSL profile, annotate the Route resource as shown below:
@@ -171,27 +292,10 @@ You can also use an existing `BIG-IP SSL profile`_ to secure traffic for a Route
    and one server ssl profile for the https virtual server, called "default-client-ssl" and "default-server-ssl".
    **These are the default profiles used for SNI.**
 
+.. _delete vs route:
 
-.. _deploy route resource:
-
-Deploy the Route Resource
--------------------------
-
-Use :command:`oc create` to upload the Route Resource to the OpenShift API server.
-
-.. code-block:: console
-
-   oc create route -f <filename>.yaml
-   route myRoute created
-
-.. _verify BIG-IP route objects:
-
-Verify creation of BIG-IP objects
----------------------------------
-
-You can use TMOS or the BIG-IP configuration utility to verify that the |kctlr| created the requested BIG-IP objects for your Route.
-
-To verify using the BIG-IP configuration utility:
+Delete a Route's virtual server
+```````````````````````````````
 
 #. Log in to the configuration utility at the management IP address (for example: :code:`https://10.190.25.225/tmui/login.jsp?`).
 #. Select the correct partition from the :guilabel:`Partition` drop-down menu.

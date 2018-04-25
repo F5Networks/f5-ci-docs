@@ -1,3 +1,3 @@
 .. sidebar:: :fonticon:`fa fa-flask` Beta feature
 
-   Introduced in `k8s-bigip-ctlr v1.1.0-beta.1`_.
+   Introduced in `k8s-bigip-ctlr v1.5.0`_.

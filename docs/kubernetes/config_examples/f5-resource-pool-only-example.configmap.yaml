@@ -6,24 +6,26 @@ metadata:
   labels:
     f5type: virtual-server
 data:
-  # schema v0.1.7 required as of k8s-bigip-ctlr v1.4.0
+  # See the f5-schema table for schema-controller compatibility
+  # http://clouddocs.f5.com/containers/latest/releases_and_versioning.html#f5-schema
   schema: "f5schemadb://bigip-virtual-server_v0.1.7.json"
   data: |
     {
       "virtualServer": {
         "backend": {
-          "servicePort": 3000,
+          "servicePort": 80,
           "serviceName": "myService",
           "healthMonitors": [{
             "interval": 30,
             "protocol": "http",
-            "send": "GET",
-            "timeout": 86400
+            "send": "GET HTTP/1.1/\r\n",
+            "recv": "200|OK",
+            "timeout": 120
           }]
         },
         "frontend": {
           "virtualAddress": {
-            "port": 80
+            "port": 8080
           },
           "partition": "k8s",
           "balance": "ratio-member",

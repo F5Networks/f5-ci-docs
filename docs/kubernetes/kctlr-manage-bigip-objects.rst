@@ -213,9 +213,7 @@ You can use an IPAM system to assign IP addresses to BIG-IP virtual servers mana
 Pools without virtual servers
 -----------------------------
 
-.. include:: /_static/reuse/k8s-version-added-1_1.rst
-
-The |kctlr-long| can create and manage BIG-IP Local Traffic Manager (LTM) pools that aren't attached to a front-end BIG-IP virtual server (also referred to as "unattached pools"). The |kctlr-long| applies the following naming convention when creating pool members for unattached pools:
+You can use the |kctlr| to create BIG-IP pools that aren't attached to a front-end virtual server (:dfn:`unattached pools`).
 
 ``<namespace>_<configmap-name>``.
 
@@ -252,9 +250,7 @@ Create an unattached pool
       oc create -f f5-resource-pool-only-example.configmap.yaml
       configmap "http.pool_only" created
 
-.. important::
-
-   Don't forget to attach the pool to the iRule or traffic policy on the BIG-IP system that knows how to route traffic for the Service.
+Set up your IPAM system to annotate the F5 resource ConfigMap with the allocated IP address. Use the Annotation shown below.
 
 .. _kctlr-attach-pool-vs:
 

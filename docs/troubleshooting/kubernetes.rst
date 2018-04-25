@@ -70,7 +70,7 @@ I just deployed the Controller; how do I verify that it's running?
 
       Kubectl get pod k8s-bigip-ctlr-687734628-7fdds -o yaml --namespace=kube-system
 
-   .. _troubleshoot openshift view-logs:
+   .. _troubleshoot k8s view-logs:
 
 #. View the Controller logs.
 
@@ -171,7 +171,7 @@ In the examples below, the Namespace in the Service doesn't match that provided 
              args: [
                "--bigip-username=$(BIGIP_USERNAME)",
                "--bigip-password=$(BIGIP_PASSWORD)",
-               "--bigip-url=10.190.24.171",
+               "--bigip-url=10.10.10.10",
                "--bigip-partition=kubernetes",
                # THE LINE BELOW TELLS THE CONTROLLER WHAT NAMESPACE TO WATCH
                "--namespace=prod",
@@ -219,7 +219,7 @@ In the examples below, the servicePort and serviceName don't match the name and 
    apiVersion: v1
    ...
    data:
-    schema: "f5schemadb://bigip-virtual-server_v0.1.4.json"
+    schema: "f5schemadb://bigip-virtual-server_v0.1.7.json"
      data: |
        {
          "virtualServer": {
@@ -300,20 +300,55 @@ Are you using Annotations recommended for a different `Kubernetes Ingress Contro
 Why did I see a traffic group error when I deployed my iApp?
 ````````````````````````````````````````````````````````````
 
-When deploying an iApp with the |kctlr-long| and OpenShift, the iApp may create a virtual IP in the wrong traffic group. If this occurs, you will see an error message like that below.
+You may see the error below when deploying an iApp. This error means the iApp is attempting to create a vip in a traffic group that conflicts with the partition's default traffic group.
 
 .. code-block:: console
 
-   Configuration error: Unable to to create virtual address (/kubernetes/127.0.0.2) as part of application
-   (/k8s/default_k8s.http.app/default_k8s.http) because it matches the self ip (/Common/selfip.external)
+   Configuration error: Unable to to create virtual address (/myPartition/127.0.0.2) as part of application
+   (/myPartition/default_k8s.http.app/default_k8s.http) because it matches the self ip (/Common/selfip.external)
    which uses a conflicting traffic group (/Common/traffic-group-local-only)
 
-If you've seen this error, you can override or change the default traffic-group as follows:
+You should be able to resolve this error by either changing the default traffic group for the partition or specifying the desired traffic group in the F5 resource ConfigMap for the iApp. If these options do not resolve the issue, contact your F5 Support representative for assistance.
 
-- Set the specific traffic group you need in the ``iappOptions`` section of the virtual server F5 Resource definition.
-- **Preferred** Set the desired traffic group as the default for the partition you want the |kctlr| to manage. This option doesn't require Kubernetes/OpenShift to know about BIG-IP traffic groups.
+.. note::
 
-  .. code-block:: javascript
+   The first option only requires a single config change on the BIG-IP system **[PREFERRED]**.
 
-     "trafficGroup": "/Common/traffic-group-local-only"
+   If you don't update the default traffic group for your partition, you will have to specify the correct traffic group in your F5 Resource ConfigMap every time you use the |kctlr| to deploy an iApp.
 
+Change the default traffic group for the partition on the BIG-IP system
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can use a TMOS shell or the configuration utility to set the default traffic group for the partition the |kctlr| manages.
+
+- In a TMOS shell:
+
+  Run the commands shown below. Substitute the items in bold with the appropriate information for your environment.
+
+  .. parsed-literal::
+
+     modify /sys folder **/<partition>/** traffic-group **<desired-traffic-group>**
+     save /sys config partitions all
+
+- In the config utility:
+
+  #. Go to :menuselection:`System --> Users --> Partition List`.
+  #. Click on the partition you want to manage.
+  #. Select the correct traffic group.
+  #. Click :guilabel:`Update`.
+
+Set the desired traffic group in your F5 resource ConfigMap
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Include the following in the :code:`frontend` section of your :ref:`iApp F5 resource <f5-resource-iapp-blob>`:
+
+.. parsed-literal::
+
+   "iappOptions": {
+      "description": "os.routing-virtual iApp",
+      **"trafficGroup": "/Common/traffic-group-1"**
+   },
+
+.. note::
+
+   If you choose this option, you must specify the desired traffic group every time you use the |kctlr| to deploy an iApp.

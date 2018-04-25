@@ -31,7 +31,7 @@ spec:
           command: ["/app/bin/k8s-bigip-ctlr"]
           args: [
             "--bigip-partition=test",
-            "--bigip-url=10.190.24.171",
+            "--bigip-url=10.10.10.10",
             "--bigip-username=$(BIGIP_USERNAME)",
             "--bigip-password=$(BIGIP_PASSWORD)",
             "--use-secrets=true",
@@ -72,7 +72,7 @@ spec:
           command: ["/app/bin/k8s-bigip-ctlr"]
           args: [
             "--bigip-partition=prod",
-            "--bigip-url=10.190.24.171",
+            "--bigip-url=10.10.10.10",
             "--bigip-username=$(BIGIP_USERNAME)",
             "--bigip-password=$(BIGIP_PASSWORD)",
             "use-secrets=true",
