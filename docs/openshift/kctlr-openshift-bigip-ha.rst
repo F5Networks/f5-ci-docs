@@ -1,5 +1,5 @@
-.. index::
-    single: OpenShift; BIG-IP Controller
+:product: BIG IP Controller for Kubernetes
+:type: task
 
 .. _bigip ha openshift:
 
@@ -121,9 +121,9 @@ Use :command:`oc get` to retrieve information about your newly-created HostSubne
    oc get hostsubnet
    NAME	               HOST	               HOST IP	     SUBNET
 
-   f5-bigip-float       f5-bigip-float       **172.16.1.30**   **10.129.6.0/23**
-   f5-bigip-node01      f5-bigip-node01      **172.16.1.28**   **10.129.2.0/23**
-   f5-bigip-node02      f5-bigip-node02      **172.16.1.29**   **10.129.4.0/23**
+   f5-bigip-float       f5-bigip-float       **172.16.1.30**   **10.129.6.0/14**
+   f5-bigip-node01      f5-bigip-node01      **172.16.1.28**   **10.129.2.0/14**
+   f5-bigip-node02      f5-bigip-node02      **172.16.1.29**   **10.129.4.0/14**
    ...
 
 .. _openshift vxlan setup ha:
@@ -190,6 +190,7 @@ Create a self IP address in the VXLAN on each device.
 
    create /net self **10.129.4.3/14** allow-service **none** vlan **openshift_vxlan**
 
+
 .. seealso::
    :class: sidebar
 
@@ -244,26 +245,26 @@ Create an OpenShift Deployment for each Controller (one per BIG-IP device):
 
    If you launch multiple |kctlr| instances using a single manifest, they will run on the same Pod. This means that if the Pod goes down, you lose all of your Controllers.
 
-   The example Deployments below include the settings that the |kctlr| needs to manage OpenShift Routes.
-   If you don't need/want to manage Routes, exclude the following settings:
+The example Deployments below include the settings that the |kctlr| needs to manage OpenShift Routes.
+If you don't need/want to manage Routes, exclude the following settings:
 
-   - :code:`"--manage-routes=true"`
-   - :code:`"--route-vserver-addr=1.2.3.4"`
-   - :code:`"--route-label=App1"`
+- :code:`"--manage-routes=true"`
+- :code:`"--route-vserver-addr=1.2.3.4"`
+- :code:`"--route-label=App1"`
 
-   See :ref:`kctlr-openshift-routes` for additional information.
+See :ref:`kctlr-openshift-routes` for additional information.
 
-.. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift-node01-route.yaml
+.. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift_ha-node01.yaml
    :caption: BIG-IP Controller 1
    :linenos:
 
-:fonticon:`fa fa-download` :download:`Download f5-k8s-bigip-ctlr_openshift-node01-route.yaml </openshift/config_examples/f5-k8s-bigip-ctlr_openshift-node01-route.yaml>`
+:fonticon:`fa fa-download` :download:`Download f5-k8s-bigip-ctlr_openshift_ha-node01.yaml </openshift/config_examples/f5-k8s-bigip-ctlr_openshift_ha-node01.yaml>`
 
-.. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift-node02-route.yaml
+.. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift_ha-node02.yaml
    :caption: BIG-IP Controller 2
    :linenos:
 
-:fonticon:`fa fa-download` :download:`Download f5-k8s-bigip-ctlr_openshift-node02-route.yaml </openshift/config_examples/f5-k8s-bigip-ctlr_openshift-node02-route.yaml>`
+:fonticon:`fa fa-download` :download:`Download f5-k8s-bigip-ctlr_openshift_ha-node02.yaml </openshift/config_examples/f5-k8s-bigip-ctlr_openshift_ha-node02.yaml>`
 
 
 .. _openshift upload deployment ha:

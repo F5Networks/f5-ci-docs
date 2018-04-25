@@ -36,6 +36,7 @@ Container Connecters
    kubernetes/kctlr-f5-resource
    kubernetes/kctlr-create-service-vs
    openshift/kctlr-openshift-routes
+   kubernetes/kctlr-rewrite-url
    kubernetes/kctlr-deploy-iapp
    kubernetes/kctlr-secrets
 

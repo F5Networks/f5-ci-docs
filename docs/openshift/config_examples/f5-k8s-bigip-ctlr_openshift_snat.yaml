@@ -15,7 +15,8 @@ spec:
       serviceAccountName: bigip-ctlr
       containers:
         - name: k8s-bigip-ctlr
-          image: "f5networks/k8s-bigip-ctlr:1.4"
+          # replace the version as needed
+          image: "f5networks/k8s-bigip-ctlr:1.5"
           env:
             - name: BIGIP_USERNAME
               valueFrom:
@@ -33,17 +34,19 @@ spec:
                   key: password
           command: ["/app/bin/k8s-bigip-ctlr"]
           args: [
+            # See the k8s-bigip-ctlr documentation for information about
+            # all config options
+            # http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest
             "--bigip-username=$(BIGIP_USERNAME)",
             "--bigip-password=$(BIGIP_PASSWORD)",
-            # Replace with the IP address or hostname of your BIG-IP device
-            "--bigip-url=10.190.24.171",
-            # Replace with the name of the BIG-IP partition you want to manage
-            "--bigip-partition=openshift",
+            "--bigip-url=<ip_address-or-hostname>",
+            "--bigip-partition=<name_of_partition>",
             "--pool-member-type=cluster",
-            # Replace with the path to the BIG-IP VXLAN connected to the
-            # OpenShift HostSubnet
-            "--openshift-sdn-name=/Common/openshift_vxlan"
+            "--openshift-sdn-name=/Common/<tunnel>",
+            "--vs-snat-pool-name=<snat-pool>",
             ]
       imagePullSecrets:
+        # Secret that gives access to a private Docker registry
         - name: f5-docker-images
+        # Secret containing the BIG-IP system login credentials
         - name: bigip-login

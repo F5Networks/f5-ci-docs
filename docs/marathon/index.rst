@@ -63,6 +63,8 @@ The F5 Container Integration for Mesos Marathon documentation set assumes that y
 - already have a BIG-IP device licensed and provisioned for your requirements; and
 - are familiar with BIG-IP Local Traffic Manager (LTM) concepts and ``tmsh`` commands.
 
+.. include:: /_static/reuse/bigip-permissions-ctlr.rst
+
 .. [#mgui] Per the Marathon documentation, the `Marathon Web Interface`_ is no longer actively developed. Use the Marathon REST API to access the latest Marathon features.
 
 .. _marathon bigip ha:
@@ -74,8 +76,8 @@ If you want to manage a BIG-IP device pair or cluster with the |mctlr|, you shou
 
 The basic deployment steps are:
 
-#. :ref:`Set up RBAC <mesos-authentication>` as needed.
-#. :ref:`Deploy a JSON Application file <mctlr-deploy>` for each :code:`marathon-bigip-ctlr` instance.
+#. :ref:`Set up RBAC <mesos-authentication>`.
+#. :ref:`Deploy a JSON Application file <mctlr deploy>` for each :code:`marathon-bigip-ctlr` instance.
 
    - Provide a unique name for each Controller instance.
    - Use a different BIG-IP IP address/hostname for each Controller instance.
@@ -130,18 +132,14 @@ The code sample below defines an Application with three (3) port indices.
 
 .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
    :caption: Define an Application 3 port indices
-   :lines: 1-25
-   :linenos:
-   :emphasize-lines: 13-23
-
+   :lines: 4-27
 
 In the ``labels`` section, we specify that we want to create HTTP virtual servers on the BIG-IP device for port indices ``0`` and ``1``.
 In this example, ``0`` refers to the first mapping defined above (``"containerPort": "8088"``) and ``1`` refers to the second (``"containerPort": "8188"``).
 
 .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
-   :caption: |mctlr| labels defining BIG-IP objects for two (2) port indices
-   :lines: 26-40
-   :lineno-start: 26
+   :caption: |mctlr| labels defining BIG-IP objects for two port indices
+   :lines: 28-37
 
 .. [#dockerbridge] See the `Docker Networking <https://docs.docker.com/engine/userguide/networking/>`_ documentation for more information.
 
@@ -155,13 +153,9 @@ The |mctlr| provides compatibilty with existing Marathon `Health Checks`_. For p
 * creates corresponding BIG-IP health monitors;
 * checks the specified port's health status *before* adding it to a BIG-IP pool. [#setuphealthchecks]_
 
-.. rubric:: To continue the previous example:
-
 .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example_pm_hc.json
    :caption: Create health checks for each of the Application's port indices
-   :lines: 41-67
-   :lineno-start: 41
-
+   :lines: 38-64
 
 .. [#setuphealthchecks] Occurs when ``F5_CC_USE_HEALTHCHECK``'s value is "True".
 

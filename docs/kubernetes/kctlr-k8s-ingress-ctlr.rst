@@ -3,8 +3,8 @@
 
 .. _k8s-ingress-controller:
 
-Using the BIG-IP Controller as a Kubernetes Ingress Controller
-==============================================================
+Use the BIG-IP Controller as a Kubernetes Ingress Controller
+============================================================
 
 This document provides an overview of how you can use the |kctlr-long| as an `Ingress Controller`_ in Kubernetes.
 For set-up instructions, see :ref:`kctlr-ingress-config`.
@@ -47,12 +47,19 @@ The Controller creates one virtual server for each unique IP address listed in a
 
 See the `k8s-bigip-ctlr configuration parameters`_ table for more information about the required settings.
 
+Use BIG-IP SNAT Pools and SNAT automap
+``````````````````````````````````````
+
+.. include:: /_static/reuse/k8s-version-added-1_5.rst
+
+.. include:: /_static/reuse/kctlr-snat-note.rst
+
+See :ref:`bigip snats` for more information.
+
 .. _ingress default IP:
 
 Set a Default, Shared IP address
 ````````````````````````````````
-
-.. include:: /_static/reuse/k8s-version-added-1_4.rst
 
 When you set the |kctlr| to use a default IP address, you can share that IP address across Ingress resources. When you share the default IP address across Ingress resources, the |kctlr|
 
@@ -72,12 +79,16 @@ To share the default IP address across Ingress resources:
 
 When the |kctlr| creates the virtual server on the BIG-IP system, it replaces "controller-default" with the default IP address.
 
+.. warning::
+
+   Use caution when setting the :code:`--default-ingress-ip` and :ref:`specifying a BIG-IP SNAT pool <kctlr snat deploy>`.
+
+   If you choose to set both options, make sure the IP address defined for the virtual server falls within the range of the selected SNAT pool.
+
 .. _dns lookup ingress:
 
 Use DNS lookup
 ``````````````
-
-.. include:: /_static/reuse/k8s-version-added-1_3.rst
 
 The |kctlr| uses DNS lookup to resolve hostnames by default. The |kctlr| attempts to resolve the first hostname provided in the :code:`spec.rules.host` section of the Ingress resource. It then assigns the resolved host's IP address to the Ingress' virtual server.
 
@@ -86,14 +97,22 @@ The |kctlr| uses DNS lookup to resolve hostnames by default. The |kctlr| attempt
 Use an IPAM system
 ``````````````````
 
-.. include:: /_static/reuse/k8s-version-added-1_1.rst
-
 If you want to assign IP addresses using an IPAM system, use the |kctlr| to :ref:`create unattached pools <kctlr-pool-only>`. To do so, just omit the :code:`virtual-server.f5.com/ip=` annotation from your Ingress resource.
 
 You can then add the virtual-server annotation to the Ingress using the IP address selected by the IPAM system. The |kctlr| will create a new virtual server with the selected IP address and attach the previously-created pool(s) to it.
 
-.. add links/info about IPAM Controller for 1.5.0 release
+.. rubric:: **Beta feature** :fonticon:`fa fa-flask`
 
+The `F5 IPAM Controller`_ can write the :code:`virtual-server.f5.com/ip` annotation for you. See the `f5-ipam-ctlr docs`_ for more information.
+
+.. _k8s ingress-ctlr url rewrite:
+
+URL Rewrite
+-----------
+
+.. include:: /_static/reuse/k8s-version-added-1_5.rst
+
+The |kctlr| has Annotations that provide `Rewrite`_ functionality for Ingress resources. See :ref:`k8s url rewrite` for more information.
 
 What's Next
 -----------
@@ -101,3 +120,6 @@ What's Next
 - :ref:`kctlr-ingress-config`
 - :ref:`kctlr-manage-bigip-objects`
 - :ref:`kctlr-per-svc-vs` for L4 ingress and L7 ingress on non-standard ports
+
+
+.. _Rewrite: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/annotations.md#rewrite

@@ -2,7 +2,7 @@
   "virtualServer": {
     "backend": {
       "serviceName": "myService",
-      "servicePort": 3000
+      "servicePort": 80
     },
     "frontend": {
       "partition": "k8s",

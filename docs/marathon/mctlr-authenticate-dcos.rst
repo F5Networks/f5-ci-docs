@@ -6,7 +6,7 @@
 Set up Authentication to a Secure DC/OS cluster
 ===============================================
 
-If you're using the Apache Mesos DC/OS `cluster security features <https://docs.mesosphere.com/1.8/overview/features/#identity-access-mgmt>`_, you'll need to give |mctlr-long| access to your cluster.
+This document covers the basic steps you'll need to take to give the |mctlr-long| access to your cluster. See the `Mesosphere DC/OS Security documentation <https://docs.mesosphere.com/1.10/security/>`_ for more information.
 
 DC/OS Open
 ----------
@@ -17,12 +17,18 @@ Apache Mesos `DC/OS Open <https://dcos.io/>`_ uses `DC/OS oauth <https://dcos.io
 
 #. `Generate the HTTP API token <https://dcos.io/docs/1.8/administration/id-and-access-mgt/oss/iam-api/>`_ and record it in a safe place.
 
-#. Add the token to your |mctlr| App definition using the ``F5_CC_DCOS_AUTH_TOKEN`` configuration parameter.
+#. Add the token to the "env" section of your |mctlr| App definition using the ``F5_CC_DCOS_AUTH_TOKEN`` configuration parameter.
 
-   .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example.json
-      :linenos:
-      :lines: 1-18, 22-26
-      :emphasize-lines: 21-22
+   .. code-block:: bash
+
+        "env": {
+          "MARATHON_URL": "http://1.2.3.4:8080",
+          "F5_CC_PARTITIONS": "mesos",
+          "F5_CC_BIGIP_HOSTNAME": "10.11.12.13",
+          "F5_CC_BIGIP_USERNAME": "myUser",
+          "F5_CC_BIGIP_PASSWORD": "myPass",
+          "F5_CC_DCOS_AUTH_TOKEN": "<dcos-auth-token>"
+        }
 
 
 DC/OS Enterprise
@@ -72,10 +78,22 @@ DC/OS Enterprise
           \"private_key\": \"-----BEGIN PRIVATE KEY-----\\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC+qqT9WhKnWa9G\\nxeJ889v+uuvHs0QBnDC0FeqQXwNJdYoxjJBPFSBp2j82MrWA7llamKyZqZqPF69C\\nO2/PetkqzMMhPlhVbYqJ/yObqrTpjwREv8qHovnEyD7pZeOd87/UoT6Bb6pAITjW\\nJvtRkqrjzfpFM9oeu/Ln3+0lY45s3TcDhsE0Ytl1m9IzyUg23CkGWvg41c6K2yPa\\ng4zstnImgpr+Tont1Jt1Hz9skwtiUQgsswTrJ784F0iKGiFmx9zR5Up9iuYPTo+G\\nOHHwrOi0emxrNm9iFPRtnyzs16daDCBcfmWFJFHZeFJc/yDqWNvd9uNCZCNdBpHP\\nAy97Rh8tAgMBAAECggEBALCvO2NXY6/W6RkBaUd3R2c/Whzd32hKj8th/9K3aTla\\nhawy4MuX/Uh6KVeVGCMZPI46qr9ers5pGUyb/Znb8oC57RzSRFMtxlLortujDjDd\\nCgyXWhvlB+W11q68b3hAl4R3w494peD1qFCzIPNPobKmfoRAb6FJc+gx1vVt017G\\n6qRhwSU0GC0DQDvpe6Zr6cih0gzkEeaadfeNsHhPwfa4xgd5tagqfBl9jaW09bzn\\nJWJguEybfcj88bvQsQbW+goKYqPo/QeX4cuP4zxLSSUiZ6Nl3XCYLrnqHClJknEl\\nswj/CS3d6TKJNuxwT3dnWT72ntg/XpYtC63knHoR//UCgYEA35D9tg0woqOnuOt5\\nrm2Kbt9WNDUdH+ov5L8zQ9Lqop+3JBAAWcUHvUFx54ub0SYoonUZrLS3gqlWv9Vl\\noKu63ypN1uaNRwoWqCDByUAUeJ5NL3plViTLGVWpybEN+WJLB8l4IaIMmwe1vn42\\ntZQqlzpme/7bV9pHNqs+cCzWAKMCgYEA2lPKmQyO//ynHiNH15mhCqQ3Ce9i4WCK\\nNoL5SA0YLaKycHe/KGqXnFIll8Tly5iot/W7c7dW2sGV7URv23EgeGVfG1hi8MyW\\nB7aXu63VDVmCf3R0YAZx10Yr80XypSRhlJxw8PjrTBGogQVVyvH/CXvx54ClowZL\\n1PMl3uWzze8CgYEAq3OyXu92oQQJGJPd2ZtAUw8MOTWShGtBF5haZGVYdCcweIOd\\nATtNWCLci8pRUPCGsTBE5GIjah0b3jp1meaZhZQX5fsh1Z0zCvU0KHbwPCCK6SJg\\nnNPSvjcn4vnZ0atEB1DGxGRWbn5XLyP0KQTcNOYgum8VICbR/mcNl1GLPSkCgYAC\\nh0vmX93cGxn4YGI5nf7ed65ngA0+HPcc0IGAkx4/kQ3N/aUKG8nrtovW6SHcLMVv\\nc/oayfnIiMtqtwswmGvO2SWz1F84+LWYG0ZAly/LesjnHvsmDY0N+DMUGzBHN1el\\n9/Xa5JcdB2tTKzOmKQ1SF8xiaPwCGlWQfsxme3SMowKBgH+XXogAosJITFxZlIx0\\ngYPFWFCNDMpFrp5+hur8XPHQTf7N/6byVkNeUltdzXfkVepDJGaani+N05YpUi1o\\nt7PTl1fZrDNAhdU6mqNS1GjOZPsRWTm6g2Ful9vPwIst+HK5R+7jouneWGkOa/PP\\nLcmeSjG19SE4XX+SWUlzuDck\\n-----END PRIVATE KEY-----\"
       }"
 
+#. Add the ``F5_CC_DCOS_AUTH_CREDENTIALS`` and ``F5_CC_MARATHON_CA_CERT`` labels to the "env" section of the |mctlr| App definition.
 
-#. Add the ``F5_CC_DCOS_AUTH_CREDENTIALS`` and ``F5_CC_MARATHON_CA_CERT`` labels to the |mctlr| App definition.
+   .. code-block:: bash
 
-   .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-example.json
-      :lines: 1-23, 26-27
-      :linenos:
-      :emphasize-lines: 21-23
+        "env": {
+          "MARATHON_URL": "http://1.2.3.4:8080",
+          "F5_CC_PARTITIONS": "mesos",
+          "F5_CC_BIGIP_HOSTNAME": "10.11.12.13",
+          "F5_CC_BIGIP_USERNAME": "myUser",
+          "F5_CC_BIGIP_PASSWORD": "myPass",
+          "F5_CC_DCOS_AUTH_CREDENTIALS": "{
+             \"scheme\": \"RS256\",
+             \"uid\": \"my_example_service_account\",
+             \"login_endpoint\": \"https://my_example_mesos_master.com/acs/api/v1/auth/login\",
+             \"private_key\": \"-----BEGIN PRIVATE KEY-----\\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC+qqT9WhKnWa9G\\nxeJ889v+uuvHs0QBnDC0FeqQXwNJdYoxjJBPFSBp2j82MrWA7llamKyZqZqPF69C\\nO2/PetkqzMMhPlhVbYqJ/yObqrTpjwREv8qHovnEyD7pZeOd87/UoT6Bb6pAITjW\\nJvtRkqrjzfpFM9oeu/Ln3+0lY45s3TcDhsE0Ytl1m9IzyUg23CkGWvg41c6K2yPa\\ng4zstnImgpr+Tont1Jt1Hz9skwtiUQgsswTrJ784F0iKGiFmx9zR5Up9iuYPTo+G\\nOHHwrOi0emxrNm9iFPRtnyzs16daDCBcfmWFJFHZeFJc/yDqWNvd9uNCZCNdBpHP\\nAy97Rh8tAgMBAAECggEBALCvO2NXY6/W6RkBaUd3R2c/Whzd32hKj8th/9K3aTla\\nhawy4MuX/Uh6KVeVGCMZPI46qr9ers5pGUyb/Znb8oC57RzSRFMtxlLortujDjDd\\nCgyXWhvlB+W11q68b3hAl4R3w494peD1qFCzIPNPobKmfoRAb6FJc+gx1vVt017G\\n6qRhwSU0GC0DQDvpe6Zr6cih0gzkEeaadfeNsHhPwfa4xgd5tagqfBl9jaW09bzn\\nJWJguEybfcj88bvQsQbW+goKYqPo/QeX4cuP4zxLSSUiZ6Nl3XCYLrnqHClJknEl\\nswj/CS3d6TKJNuxwT3dnWT72ntg/XpYtC63knHoR//UCgYEA35D9tg0woqOnuOt5\\nrm2Kbt9WNDUdH+ov5L8zQ9Lqop+3JBAAWcUHvUFx54ub0SYoonUZrLS3gqlWv9Vl\\noKu63ypN1uaNRwoWqCDByUAUeJ5NL3plViTLGVWpybEN+WJLB8l4IaIMmwe1vn42\\ntZQqlzpme/7bV9pHNqs+cCzWAKMCgYEA2lPKmQyO//ynHiNH15mhCqQ3Ce9i4WCK\\nNoL5SA0YLaKycHe/KGqXnFIll8Tly5iot/W7c7dW2sGV7URv23EgeGVfG1hi8MyW\\nB7aXu63VDVmCf3R0YAZx10Yr80XypSRhlJxw8PjrTBGogQVVyvH/CXvx54ClowZL\\n1PMl3uWzze8CgYEAq3OyXu92oQQJGJPd2ZtAUw8MOTWShGtBF5haZGVYdCcweIOd\\nATtNWCLci8pRUPCGsTBE5GIjah0b3jp1meaZhZQX5fsh1Z0zCvU0KHbwPCCK6SJg\\nnNPSvjcn4vnZ0atEB1DGxGRWbn5XLyP0KQTcNOYgum8VICbR/mcNl1GLPSkCgYAC\\nh0vmX93cGxn4YGI5nf7ed65ngA0+HPcc0IGAkx4/kQ3N/aUKG8nrtovW6SHcLMVv\\nc/oayfnIiMtqtwswmGvO2SWz1F84+LWYG0ZAly/LesjnHvsmDY0N+DMUGzBHN1el\\n9/Xa5JcdB2tTKzOmKQ1SF8xiaPwCGlWQfsxme3SMowKBgH+XXogAosJITFxZlIx0\\ngYPFWFCNDMpFrp5+hur8XPHQTf7N/6byVkNeUltdzXfkVepDJGaani+N05YpUi1o\\nt7PTl1fZrDNAhdU6mqNS1GjOZPsRWTm6g2Ful9vPwIst+HK5R+7jouneWGkOa/PP\\nLcmeSjG19SE4XX+SWUlzuDck\\n-----END PRIVATE KEY-----\"
+          }",
+          "F5_CC_MARATHON_CA_CERT": "<marathon_ca_cert>",
+        }
+

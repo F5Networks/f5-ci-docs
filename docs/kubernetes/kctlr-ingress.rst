@@ -6,12 +6,12 @@
 Attach a Virtual Server to a Kubernetes Ingress
 ===============================================
 
-.. include:: /_static/reuse/k8s-version-added-1_1.rst
-
 Overview
 --------
 
 You can use the |kctlr-long| as an `Ingress Controller`_ in Kubernetes. To do so, add the |kctlr| `Ingress annotations`_ to a Kubernetes Ingress Resource. The annotations define the objects you want to create on the BIG-IP system.
+
+If you use `helm`_, you can use the `f5-bigip-ingress chart`_ to create and manage the resources below. You may also use the `f5-bigip-ctlr chart`_ to create and manage the resources for the |kctlr| itself.
 
 .. note::
 
@@ -149,10 +149,19 @@ The table below shows how the Controller behaves for different combinations of t
 
    Refer to the `Kubernetes TLS Ingress documentation <https://kubernetes.io/docs/concepts/services-networking/ingress/#tls>`_ for details regarding supported port(s) and termination.
 
+.. _k8s ingress url rewrite:
+
+Rewrite URLs
+------------
+
+.. include:: /_static/reuse/k8s-version-added-1_5.rst
+
+The |kctlr| can rewrite URLs for Routes. See :ref:`k8s url rewrite` for more information.
+
 .. _deploy ingress resource:
 
 Upload the Ingress to the API server
-````````````````````````````````````
+------------------------------------
 
 Use the :command:`kubectl apply` command to upload your new or edited Ingress resource to the Kubernetes API server.
 

@@ -24,7 +24,7 @@ You can create iApp variables for any built-in or custom iApp.
 
 .. seealso::
 
-   The  `marathon-bigip-ctlr reference documentation`_ for detailed information about iApp labels.
+   See the  `marathon-bigip-ctlr reference documentation`_ for detailed information about iApp labels.
 
 Deploy the iApp
 ---------------
@@ -33,16 +33,14 @@ Deploy the iApp
 
    .. literalinclude:: /marathon/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json
       :caption: Example F5 iApp Application Labels
-      :linenos:
-      :emphasize-lines: 23-33
 
-   :fonticon:`fa fa-download` :download:`Download f5-marathon-bigip-ctlr-vs-iApp-example.json </marathon/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json>`
+   :fonticon:`fa fa-download` :download:`f5-marathon-bigip-ctlr-vs-iApp-example.json </marathon/config_examples/f5-marathon-bigip-ctlr-vs-iApp-example.json>`
 
 #. Send a PUT request to the Marathon API server to update the Application definition.
 
    .. code-block:: bash
 
-      curl -X PUT -H 'Content-Type: application/json' http://10.190.25.75:8080/v2/apps/basic-3 -d @marathon-iapp-example.json
+      curl -X PUT -H 'Content-Type: application/json' http://1.2.3.4:8080/v2/apps/basic-3 -d @marathon-iapp-example.json
 
 #. Verify creation of the iApp, and its related objects, on the BIG-IP. This is most easily done via the configuration utility:
 
@@ -59,7 +57,7 @@ Delete iApp objects
 
    .. code-block:: bash
 
-      curl -X PUT -H 'Content-Type: application/json' http://10.190.25.75:8080/v2/apps/basic-3 -d @marathon-iapp-example.json
+      curl -X PUT -H 'Content-Type: application/json' http://1.2.3.4:8080/v2/apps/basic-3 -d @marathon-iapp-example.json
 
 #. Verify the iApp and its related objects no longer exist on the BIG-IP.
 
