@@ -122,4 +122,4 @@ What's Next
 - :ref:`kctlr-per-svc-vs` for L4 ingress and L7 ingress on non-standard ports
 
 
-.. _Rewrite: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/annotations.md#rewrite
+.. _Rewrite: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md#rewrite
