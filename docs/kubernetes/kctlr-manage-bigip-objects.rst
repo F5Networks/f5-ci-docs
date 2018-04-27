@@ -161,6 +161,9 @@ When the |kctlr| discovers the annotated resource, it:
 - creates a new BIG-IP virtual server with the designated IP address, and
 - attaches the existing pool to the virtual server.
 
+The `F5 IPAM Controller`_ can write the :code:`virtual-server.f5.com/ip` annotation for you. See the `f5-ipam-ctlr docs`_ 
+for more information.
+
 .. _kctlr-attach-pool-vs:
 
 .. note::
