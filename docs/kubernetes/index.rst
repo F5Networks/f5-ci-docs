@@ -83,6 +83,8 @@ To upgrade an existing :code:`k8s-bigip-ctlr` instance to a newer version, take 
    - Update the :code:`image` property to use the desired version.
    - Add/edit configuration parameters as desired.
 
+#. :ref:`If using ConfigMap resources, you may also need to update the f5schemadb version <schema-table>`.
+
 #. :ref:`Upload the Deployment to the Kubernetes API server <upload to k8s api>`.
 
 .. include:: /_static/reuse/upgrade-warning.rst
