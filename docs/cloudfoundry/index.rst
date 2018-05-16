@@ -115,7 +115,7 @@ When you deploy a new application with a mapped HTTP route in Cloud Foundry, the
 
 .. seealso::
 
-   The Pivotal Cloud Foundry documentation provides instructions for `adding an external load balancer <https://docs.pivotal.io/pivotalcf/1-7/opsguide/custom-load-balancer.html>`_ to your Cloud Foundry deployment.
+   The Pivotal Cloud Foundry documentation provides instructions for `adding an external load balancer <hhttps://docs.pivotal.io/pivotalcf/latest/customizing/custom-load-balancer.html>`_ to your Cloud Foundry deployment.
 
    See Cloud Foundry's `Routes and Domains documentation`_ for more information about how Gorouter creates and maps routes for applications.
 
