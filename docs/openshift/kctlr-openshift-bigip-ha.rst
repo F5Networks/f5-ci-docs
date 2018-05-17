@@ -167,6 +167,20 @@ Create a VXLAN tunnel
 
    create /net tunnels tunnel **openshift_vxlan** key **0** profile **ose-vxlan** local-address **172.16.1.30** secondary-address **172.16.1.29** traffic-group **traffic-group-1**
 
+.. note::
+
+   When using a non-zero Route Domain, add ``remote-address any`` to the command, as shown below.
+
+.. parsed-literal::
+
+   create /net tunnels tunnel openshift_vxlan key 0 profile ose-vxlan local-address 172.16.1.30 secondary-address 172.16.1.28 traffic-group traffic-group-1 **remote-address** **any**
+
+.. rubric:: BIG-IP Node 02
+
+.. parsed-literal::
+
+   create /net tunnels tunnel openshift_vxlan key 0 profile ose-vxlan local-address 172.16.1.30 secondary-address 172.16.1.29 traffic-group traffic-group-1 **remote-address** **any**
+
 .. _openshift vxlan selfIP ha:
 
 Create a self IP in the VXLAN
