@@ -25,8 +25,8 @@ In addition, NodePort mode doesn't have any specific BIG-IP licensing requiremen
 
 As shown in the diagram below, :code:`nodeport` mode uses 2-tier load balancing:
 
-#. The |kctlr| load balances requests to Nodes.
-#. Nodes load balance requests to Pods.
+#. The BIG-IP Platform load balances requests to Nodes (kube-proxy).
+#. Nodes (kube-proxy) load balance requests to Pods.
 
 .. figure:: /_static/media/k8s_nodeport.png
 
