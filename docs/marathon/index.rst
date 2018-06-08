@@ -162,7 +162,7 @@ The |mctlr| provides compatibilty with existing Marathon `Health Checks`_. For p
 .. _Marathon Application: https://docs.mesosphere.com/1.8/overview/concepts/#marathon-application
 .. _Marathon REST API: https://mesosphere.github.io/marathon/api-console/index.html
 .. _Mesos cluster: https://docs.mesosphere.com/1.8/overview/concepts/#dcos-cluster
-.. _HTTP methods: http://restfulapi.net/http-methods/
+.. _HTTP methods: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
 .. _associate labels with Application tasks: https://dcos.io/docs/1.7/usage/tutorials/task-labels/
 .. _port mappings: https://mesosphere.github.io/marathon/docs/ports.html
 .. _Health Checks: https://mesosphere.github.io/marathon/docs/health-checks.html
