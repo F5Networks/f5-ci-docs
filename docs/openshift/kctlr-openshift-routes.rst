@@ -61,7 +61,7 @@ Attach Routes to Existing BIG-IP Virtual Servers
 If you need to use BIG-IP system functionality that isn't natively supported by the |kctlr|, you can attach a Route to an existing BIG-IP virtual server.
 Take the steps below **before** you deploy the |kctlr|.
 
-**If you want the |kctlr| to create a new virtual server for your Route,** :ref:`skip to the Basic Deployment section <kctlr routes basic>`.
+**If you want the** |kctlr| **to create a new virtual server for your Route,** :ref:`skip to the Basic Deployment section <kctlr routes basic>`.
 
 #. Create a virtual server in a BIG-IP partition that isn't already managed by a |kctlr| instance.
 
