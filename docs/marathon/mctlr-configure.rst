@@ -6,7 +6,7 @@
 
    <script language=javascript>
       function redirect(){
-         window.location = "http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/#configuration-parameters";
+         window.location = "https://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/#configuration-parameters";
       }
    </script>
 
@@ -17,4 +17,4 @@
 Configure the BIG-IP Controller for Marathon
 ============================================
 
-This page has moved: http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/#configuration-parameters
+This page has moved: https://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest/#configuration-parameters

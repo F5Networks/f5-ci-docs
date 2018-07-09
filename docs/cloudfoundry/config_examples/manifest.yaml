@@ -66,7 +66,7 @@ applications:
 
       # Include the section below to use the cf-bigip-ctlr as a Service Broker
       # THE SETTINGS IN THIS SECTION ARE ROUTE-SPECIFIC
-      # See http://clouddocs.f5.com/containers/latest/cloudfoundry/cf-per-route-virtuals.html for more information
+      # See https://clouddocs.f5.com/containers/latest/cloudfoundry/cf-per-route-virtuals.html for more information
       SERVICE_BROKER_CONFIG: |
                              {
                                "plans": [

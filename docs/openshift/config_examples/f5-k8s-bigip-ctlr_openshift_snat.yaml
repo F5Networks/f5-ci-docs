@@ -36,7 +36,7 @@ spec:
           args: [
             # See the k8s-bigip-ctlr documentation for information about
             # all config options
-            # http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest
+            # https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest
             "--bigip-username=$(BIGIP_USERNAME)",
             "--bigip-password=$(BIGIP_PASSWORD)",
             "--bigip-url=<ip_address-or-hostname>",

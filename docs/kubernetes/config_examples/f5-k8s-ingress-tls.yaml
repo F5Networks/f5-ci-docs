@@ -6,7 +6,7 @@ metadata:
   annotations:
   # See the k8s-bigip-ctlr documentation for information about
   # all Ingress Annotations
-  # http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/#supported-ingress-annotations
+  # https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/#supported-ingress-annotations
     virtual-server.f5.com/ip: "1.2.3.4"
     virtual-server.f5.com/partition: "k8s"
     ingress.kubernetes.io/ssl-redirect: "true"

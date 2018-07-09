@@ -6,7 +6,7 @@ metadata:
   annotations:
   # See the k8s-bigip-ctlr documentation for information about
   # all Ingress Annotations
-  # http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/#supported-ingress-annotations
+  # https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/#supported-ingress-annotations
     virtual-server.f5.com/ip: "controller-default"
     virtual-server.f5.com/partition: "k8s"
     virtual-server.f5.com/health: |

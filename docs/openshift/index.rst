@@ -19,7 +19,7 @@ For deployment and usage instructions, please refer to the guides below.
    Deploy iApps <../kubernetes/kctlr-deploy-iapp>
    Expose Services using Routes <kctlr-openshift-routes>
    Troubleshooting <../troubleshooting/kubernetes>
-   k8s-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
+   k8s-bigip-ctlr reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
 
 Overview
 --------
