@@ -1,6 +1,6 @@
 // See marathon-bigip-ctlr docs for information about all available configuration
 // options
-// http://clouddocs.f5.com/products/marathon-bigip-ctlr/latest
+// https://clouddocs.f5.com/products/marathon-bigip-ctlr/latest
 {
   "id": "basic-3",
   "cmd": "python3 -m http.server 8080",

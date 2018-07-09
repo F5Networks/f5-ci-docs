@@ -17,7 +17,7 @@ Please refer to the guides below for deployment and usage instructions.
    mctlr-app-install
    mctlr-manage-bigip-objects
    mctlr-deploy-iapp
-   marathon-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest>
+   marathon-bigip-ctlr reference documentation <https://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest>
 
 Overview
 --------
