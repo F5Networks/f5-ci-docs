@@ -5,7 +5,7 @@ metadata:
   annotations:
     # See the k8s-bigip-ctlr documentation for information about
     # all Route Annotations
-    # http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/#supported-route-annotations
+    # https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/#supported-route-annotations
     virtual-server.f5.com/balance: fastest-node
     virtual-server.f5.com/clientssl: /Common/client-ssl
     virtual-server.f5.com/serverssl: /Common/server-ssl

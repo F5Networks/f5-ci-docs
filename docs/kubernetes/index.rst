@@ -27,7 +27,7 @@ User Guides
    kctlr-manage-bigip-objects
    kctlr-deploy-iapp
    ../troubleshooting/kubernetes
-   k8s-bigip-ctlr Reference documentation <http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
+   k8s-bigip-ctlr Reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
 
 .. _kctlr overview:
 

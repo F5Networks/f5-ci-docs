@@ -6,7 +6,7 @@
 
    <script language=javascript>
       function redirect(){
-         window.location = "http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/index.html#controller-configuration-parameters/";
+         window.location = "https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/index.html#controller-configuration-parameters/";
       }
    </script>
 
@@ -17,4 +17,4 @@
 Configure the BIG-IP Controller for Kubernetes and OpenShift
 ============================================================
 
-This page has moved: http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/index.html#controller-configuration-parameters/
+This page has moved: https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/index.html#controller-configuration-parameters/

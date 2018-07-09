@@ -12,7 +12,7 @@ For deployment and usage instructions, please refer to the guides below.
 
    cfctlr-app-install
    cf-per-route-virtuals
-   cf-bigip-ctlr reference documentation <http://clouddocs.f5.com/products/connectors/cf-bigip-ctlr/latest>
+   cf-bigip-ctlr reference documentation <https://clouddocs.f5.com/products/connectors/cf-bigip-ctlr/latest>
 
 .. _cf-overview:
 
