@@ -1,25 +1,40 @@
-env:
-  global:
-  - secure: NyLCqek6v2Kk+ARNwcaN6X9odromqQqXhWju6ZhwyYEYz1uIJkL6l3og379jnp8D8yY+6JnnH/xzNwzZuaM6jNuXe8G1wnL+hFrL4hyCVCXgmggiOf/3ieVzAJb2h4JSziKJxV3UOrMfM/AvYHHH0zfdHXwW5AkeRzLKdPJMHujM+pxYf6QvAaDcGfcYgEDaFjb6AR2QaXFM6xfcSlZgi2bvzw2dJyEn/uzR+WIfKdFUs9mk0E/HHZYh1vcKAxi7Lhf7UdiIC2qqm5d135AVPRrfMp9ONJ2pCWJKWfQHJV1FlqhFaQ5hZKX7PpxbbL5Q9mIUlDww8iXb9mnaphOpmXNKZHkCOOCyA577sJjy6EpYF0KydiR7+kS2vmtpmpfaPaH0OVb/3aopmnOTcplP+F48NiEjytLDAZHtVhcQYG52ifiSgpA19zfurqZYs1jMuxf3WcihSX/PNU6wY//W3q/ftMD92pJN5BXgJ1BAJ3BTAFs+2EIKH9yFi+hT7AT7UE9Gv/VEiuKT2Mz0kp2XTtS1UuPOI4yCxU8KdWbItmRdn0ieUDZ+zmSpGt16WgJJS/vQ7gbGzeUe5aaXlaDDmBTNfbDEwB6dWSM88VaomUoPu07ca+EGMeRtkc0PyHJTvfZD07JwEqQBpNVRqQle0TEbE9LeY1rrRhhlOogWm8Y=
-  - secure: mc2o9WmomC1mzrbn4A/yrNZgR7KjS7baZe6I9cjUT7UdlIFtLt6+eN//pPJ4vfUvrb68cFFOiVffNKGjFhM+fF53aW9iGW+jA/dIH6KRFSUBFUeiX3MAgOk/ZldF710k4aE5DH5V8KIq/CqpvK0Rds1UL0ixW/myfRYKt6zubG7gRcnfSIjUUv9LqKjvYyfIOZvdPIRDwQWfDFUcfPGTNt9cIgw3FhtZjR7o17uIz4A0iuKSdQirPqO4DwMX61x8zVj/PuB3fecB0YkW4uER47hQIig84wkJDCaO0hHKKL+iwljCmRPxOvn18gWh5eevQWAVsmtQCLktwH+AUfROtC+wOutVDbyNnQbf6pN8L2KjWDShQtIlztyjbpxSUB3fFkdS5HVe5YhfCjYqLZ6FnKyZPKOUTuhsZ3uMVMsF5oDZTpsu35GUOyn/hIqj+gCOg/uS9YKU7tdRP5EcdfSsr+xQGn4uG/P9t1JCK5OnxkQswusx6VryvF0giErES8ZcUE9b2nu52UBb8mb0rDimoILeSMasYz5N92KrhqM64se8Thyi+TOgEBvJkF6cnWMPTZE28zjl0QCJtDICZqntWDylimy7RHj9vmBVaqOxg8Risxc6a3BRHa3EgVDv5BfHp6juXjBms68SEi4WaBUEo+66nKwLC4KOBZyjtmc0OhA=
+language: python
 sudo: required
 services:
 - docker
 before_install:
-- docker pull f5devcentral/containthedocs
+- docker pull f5devcentral/containthedocs:latest
 install: 
-- pip install awscli --upgrade --user
+- pip install awscli --upgrade
 script:
 - ./scripts/docker-docs.sh ./scripts/test-docs.sh
 deploy:
-- provider: script
+# DEPLOY TO STAGING
+- provider: s3
   skip_cleanup: true
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
+  bucket: clouddocs.f5networks.net
+  local_dir: docs/_build/html
+  upload_dir: containers/v2
+  on:
+    branch: master
+    repo: F5Networks/f5-ci-docs
+# DEPLOY TO PRODUCTION
+- provider: s3
+  skip_cleanup: true
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
+  bucket: clouddocs.f5.com
+  local_dir: docs/_build/html
+  upload_dir: containers/v2
   on:
     branch: v2
     repo: F5Networks/f5-ci-docs
-  script:
-  - sh ./scripts/deploy-docs.sh publish-container-docs-to-prod containers v2
-  - aws cloudfront create-invalidation --distribution-id $AWS_DIST_ID --paths /containers/v2/
+
+after_deploy:
+  - aws cloudfront create-invalidation --distribution-id $AWS_DIST_ID --paths /containers/v2/  
+
 notifications:
   slack:
     secure: JPfhrjoJMHIolWfr+BggymfsuzcMq8hQrI6NgmbH9Op/1LnP7v0pzXabvePBX6jCzEpB6E/pizwrw/7D5r78+GD6gm2eiZ3NNupBSnVBwSQr51pfAH23RB1pafTgjyllrNJLAWia23ihB1oa+yj3ll/clOXke5o8436IJp+KRUk0q8F0HBbke7lLcGii/H2WqGZ9f6bqee0w6wVCjKL86o5EjbF/muBScw6npeGAyuShILsUybgQwJnCHG2Vn4o4L+ZzGga8FljhUJxEIx4v+m0wwTg7mIRrLQbZ0qCXQfc8hU858koa5+nVTt9Cj3fiLNIOtd0K6RujwTqdPTSMBrpbs7Gr1wzaejaKYsWUeJ1DG75MfpbHhTuUgNHNktgEVU6xiS8NL3RwsqfzU6vLbwe2e1EmAOQN6mTKkD+QU3dtJCPHr1tDydN5BSt+uVrd2EiGGuQMIfLGSPBJgCieu0dHgCAKOArKU0zn/gHJhwjxBALq2w0G75JR/wzz7agyQ4awCYZy866hLJPAMKtk+6Bl9qvmKfWBaXQDqrRpZBlhQqOKz2BL/wLPsP3/fVdubn98Ip3ZiTbXmxSRfNCCk4URsx1k9iWk9Qxs+oXIgBfvXuOJxAuwG7OYSbu6HCf18FbaZ2dmkU2hjicEL3BThHjWwf7V4aNdbtanJqkbh6s=
