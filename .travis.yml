@@ -5,7 +5,7 @@ services:
 before_install:
 - docker pull f5devcentral/containthedocs:latest
 install: 
-- pip install awscli --upgrade --user
+- pip install awscli --upgrade
 script:
 - ./scripts/docker-docs.sh ./scripts/test-docs.sh
 deploy:
