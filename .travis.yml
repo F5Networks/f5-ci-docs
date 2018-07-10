@@ -19,7 +19,7 @@ deploy:
   upload_dir: containers/v2
   on:
     branch: master
-    #repo: F5Networks/f5-ci-docs
+    repo: F5Networks/f5-ci-docs
 # DEPLOY TO PRODUCTION
 - provider: s3
   skip_cleanup: true
