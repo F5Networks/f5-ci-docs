@@ -14,7 +14,7 @@ deploy:
     branch: v2
     repo: F5Networks/f5-ci-docs
   script:
-  - "sh ./scripts/deploy-docs.sh publish-container-docs-to-prod containers v2"
+  - sh ./scripts/deploy-docs.sh 'publish-container-docs-to-prod' 'containers' 'v2'
   - aws cloudfront create-invalidation --distribution-id $AWS_DIST_ID --paths /containers/v2/
 - provider: script
   skip_cleanup: true
