@@ -31,6 +31,7 @@ deploy:
   on:
     branch: v2
     repo: F5Networks/f5-ci-docs
+
 after_deploy:
   - aws cloudfront create-invalidation --distribution-id $AWS_DIST_ID --paths /containers/v2/  
 
