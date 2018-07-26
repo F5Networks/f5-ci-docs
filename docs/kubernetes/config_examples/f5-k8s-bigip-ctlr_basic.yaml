@@ -17,7 +17,7 @@ spec:
       serviceAccountName: bigip-ctlr
       containers:
         - name: k8s-bigip-ctlr
-          image: "f5networks/k8s-bigip-ctlr:1.5"
+          image: "f5networks/k8s-bigip-ctlr"
           env:
             - name: BIGIP_USERNAME
               valueFrom:
