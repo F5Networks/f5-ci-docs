@@ -2,6 +2,7 @@
 :product: BIG-IP Controller for Kubernetes
 :product: BIG-IP Controller for Cloud Foundry
 :product: BIG-IP Controller for Marathon
+:product: BIG-IP Controller for OpenShift
 :type: concept
 
 .. _f5-csi_support-matrix:
@@ -20,6 +21,7 @@ Component                   Version
 |cf-long|                   v1.0.x-1.2.x
 |kctlr-long|                v1.0.x-1.6.x
 |mctlr-long|                v1.0.x-v1.3.x
+|octlr-long|                v1.0.x-1.6.x
 ===================         ==============
 
 .. _connector compatibility:
