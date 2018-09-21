@@ -101,11 +101,17 @@ How do I set the log level?
 
 To change the log level for the |kctlr|:
 
-#. Annotate the :ref:`Deployment <k8s-bigip-ctlr-deployment>` for the |kctlr|.
+#. Edit the :ref:`Deployment <k8s-bigip-ctlr-deployment>` yaml and add the following to the args section.
 
    .. code-block:: console
 
-      kubectl annotate k8s-bigip-ctlr.yaml "--log-level=DEBUG" --namespace=kube-system
+      "--log-level=DEBUG"
+
+#. Replace the |kctlr| deployment
+
+   .. code-block:: console
+
+      kubectl replace -f f5-k8s-bigip-ctlr.yaml
 
 #. Verify the Deployment updated successfully.
 
