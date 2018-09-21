@@ -86,11 +86,18 @@ How do I set the log level?
 
 To change the log level for the |kctlr|:
 
-#. Annotate the :ref:`Deployment <kctlr-configure-openshift>` for the |kctlr|.
+#. Edit the :ref:`Deployment <kctlr-configure-openshift>` yaml and add the following to the args section.
 
    .. code-block:: console
 
-      oc annotate k8s-bigip-ctlr.yaml "--log-level=DEBUG"
+      "--log-level=DEBUG"
+
+#. Replace the |kctlr| deployment
+
+   .. code-block:: console
+
+      oc replace -f f5-k8s-bigip-ctlr.yaml
+
 
 #. Verify the Deployment updated successfully.
 
