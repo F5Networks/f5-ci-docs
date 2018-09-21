@@ -86,7 +86,7 @@ How do I set the log level?
 
 To change the log level for the |kctlr|:
 
-#. Edit the Deloyment yaml and add the following to the args section.
+#. Edit the :ref:`Deployment <kctlr-configure-openshift>` yaml and add the following to the args section.
 
    .. code-block:: console
 
