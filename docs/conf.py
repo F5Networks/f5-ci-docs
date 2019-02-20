@@ -19,8 +19,6 @@
 import os
 import sys
 import f5_sphinx_theme
-import recommonmark
-import CommonMark
 
 sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath('../'))
@@ -36,6 +34,7 @@ from recommonmark.parser import CommonMarkParser
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'recommonmark',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
@@ -53,11 +52,11 @@ templates_path = ['_templates']
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
-source_suffix = ['.rst', '.md']
-
-source_parsers = {
-    '.md': CommonMarkParser,
-}
+source_suffix = {
+            '.rst': 'restructuredtext',
+            '.txt': 'markdown',
+            '.md': 'markdown',
+       }
 
 # The encoding of source files.
 #
