@@ -85,7 +85,7 @@ The tables below show the versions used in development testing. The F5 Container
    |                          +-----------------------+--------------------------------------------+--------------------------------------------+                          |
    |                          | v1.6.x                | OpenShift Origin                           | v3.7.x, v3.9.x                             |                          |
    |                          +-----------------------+--------------------------------------------+--------------------------------------------+                          |
-   |                          | v1.7.x                | Red Hat OpenShift Container Platform       | v3.7.x, v3.11x                             |                          |
+   |                          | v1.8.x                | Red Hat OpenShift Container Platform       | v3.7.x, v3.11x                             |                          |
    |                          |                       | OpenShift Origin                           |                                            |                          |
    |                          |                       +--------------------------------------------+                                            |                          |
    |                          |                       | Red Hat OpenShift Container Platform       |                                            |                          |
