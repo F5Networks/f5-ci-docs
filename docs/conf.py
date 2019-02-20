@@ -22,7 +22,6 @@ import f5_sphinx_theme
 
 sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath('../'))
-from recommonmark.parser import CommonMarkParser
 
 # -- General configuration ------------------------------------------------
 
@@ -35,6 +34,7 @@ from recommonmark.parser import CommonMarkParser
 # ones.
 extensions = [
     'recommonmark',
+    'sphinx_copybutton',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
