@@ -17,7 +17,7 @@ Define the F5 iApp Application Labels
 .. _f5-app-labels-iapp-blob:
 
 The example JSON blob shown below defines the ``f5.http`` iApp for a Marathon Application using :ref:`F5 Application Labels <app-labels>`.
-The ``F5_IAPP_VARIABLE`` labels correspond to fields in the `iApp template <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip_iapps_developer_11_4_0/2.html>`_ 's presentation section.
+The ``F5_IAPP_VARIABLE`` labels correspond to fields in the `iApp template <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-iapps-developer-11-4-0/2.html>`_ 's presentation section.
 You can create iApp variables for any built-in or custom iApp.
 
 .. todo:: add link to iApp variable 'How-to'
