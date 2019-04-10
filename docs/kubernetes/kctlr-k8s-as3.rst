@@ -3,19 +3,22 @@
 
 .. _kctlr-k8s-as3-use:
 
-F5 Container Ingress Services and AS3 Extension declarations
-============================================================
+BIG-IP Controller and AS3 Extension integration
+===============================================
 
 You can use the |kctlr| to expose services to external traffic using Application Services 3 (AS3) Extension declarations.
 
-Version support
-```````````````
-- BIG-IP version 12.1.x is compatible with AS3 Extenstion versions 3.1.0 or later.
-- BIG-IP version 13.0.x is compatible with all AS3 Extension versions after v3.1.0.  
+Prerequisites
+`````````````
+To use AS3 declarations with BIG-IP Controller, the following requirements must be met:
+
+- You must install BIG-IP version 12.1.x or later.
+- A BIG-IP user account with the Administrator role.
+- AS3 Extension 3.10.3 and above installed on BIG-IP.
 
 Limitations
 ```````````
-The F5 BIG-IP Controller has the following AS3 Extension limitations:
+The |kctlr| has the following AS3 Extension limitations:
 
 - AS3 pool class declarations support only one load balancing pool.
 - The BIG-IP Contoller supports only one AS3 ConfigMap instance.
@@ -42,5 +45,5 @@ AS3 Resources
 
 Example AS3 ConfigMap
 `````````````````````
-- :fonticon:`fa fa-download` :download:`example-as3-service.yaml </_static/config_examples/example-as3-service.yaml>`
+- :fonticon:`fa fa-download` :download:`f5-as3-service-example.yaml </kubernetes/config_examples/f5-as3-service-example.yaml>`
 
