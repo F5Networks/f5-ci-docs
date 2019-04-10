@@ -3,10 +3,10 @@
 
 .. _kctlr-as3-use:
 
-F5 Container Ingress Services and F5 AS3 declarations explained
-===============================================================
+F5 Container Ingress Services and AS3 Extension declarations
+============================================================
 
-You can use the |kctlr| to expose services to external traffic using AS3 Extension declarations.
+You can use the |kctlr| to expose services to external traffic using Application Services 3 (AS3) Extension declarations.
 
 Version support
 ```````````````
