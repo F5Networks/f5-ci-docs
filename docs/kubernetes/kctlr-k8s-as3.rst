@@ -10,7 +10,7 @@ You can use the |kctlr| to expose services to external traffic using Application
 
 Prerequisites
 `````````````
-To use AS3 declarations with BIG-IP Controller, the following requirements must be met:
+To use AS3 declarations with BIG-IP Controller, ensure you meet the following requirements:
 
 - You must install BIG-IP version 12.1.x or later.
 - A BIG-IP user account with the Administrator role.
