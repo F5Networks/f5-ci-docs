@@ -23,6 +23,7 @@ User Guides
    flannel-bigip-info
    kctlr-use-bigip-k8s
    kctlr-app-install
+   kctlr-k8s-as3
    kctlr-f5-resource
    kctlr-manage-bigip-objects
    kctlr-deploy-iapp
