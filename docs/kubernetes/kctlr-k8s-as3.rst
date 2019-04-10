@@ -1,7 +1,7 @@
 :product: BIG-IP Controller for Kubernetes
 :type: concept
 
-.. _kctlr-as3-use:
+.. _kctlr-k8s-as3-use:
 
 F5 Container Ingress Services and AS3 Extension declarations
 ============================================================

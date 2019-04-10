@@ -1,0 +1,47 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: pepsi-as3-template
+  namespace: default
+  labels:
+    f5type: virtual-server
+    as3: true
+data:
+  template: |
+    {
+        "class": "ADC",
+        "schemaVersion": "3.8.0",
+        "id": "123abc",
+        "label": "AS3",
+        "remark": "HTTPS with predictive-node pool",
+        "AS3": {
+            "class": "Tenant",
+            "pepsi": {
+                "class": "Application",
+                "template": "http",
+                "serviceMain": {
+                    "class": "Service_HTTP",
+                    "virtualAddresses": [
+                        "10.0.1.10"
+                    ],
+                    "pool": "web_pool",
+                    "policyWAF": {
+                        "bigip": "/Common/linux-high"
+                    }
+                },
+                "web_pool": {
+                    "class": "Pool",
+                    "monitors": [
+                        "http"
+                    ],
+                    "members": [
+                        {
+                            "servicePort": 80,
+                            "serverAddresses": [
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    }
