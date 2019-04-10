@@ -29,7 +29,7 @@ Component                   Version
 Container Connector compatibility
 ---------------------------------
 
-The tables below show the versions used in development testing. The F5 Container Connectors may work with versions not shown here; F5 has not verified functionality in those versions.
+The tables below show the versions used in development testing. The F5 Container Connectors may work with versions not shown here; F5 has not verified functionality in those versions. 
 
 .. table:: BIG-IP Controller/Platform compatibility
    :widths: 4 2 2 4 2
