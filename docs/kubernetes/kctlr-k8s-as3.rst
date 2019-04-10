@@ -12,9 +12,9 @@ Prerequisites
 `````````````
 To use AS3 declarations with BIG-IP Controller, ensure you meet the following requirements:
 
-- You must install BIG-IP version 12.1.x or later.
-- A BIG-IP user account with the Administrator role.
-- AS3 Extension 3.10.3 and above installed on BIG-IP.
+- The BIG-IP system is running software version 12.1.x or higher.
+- The BIG-IP sytem has AS3 Extension version 3.10.3 or higher installed.
+- A BIG-IP system user account with the Administrator role.
 
 Limitations
 ```````````
