@@ -27,7 +27,7 @@ The |kctlr| has the following AS3 Extension limitations:
 
 CIS service discovery
 
-Both AS3 and CIS can dynamically discover and update load balancing pool members using service discovery. However, when using CIS to process AS3 configMaps, CIS performs the service discovery. When using CIS, each pool definition in an AS3 template is mappped to a kubernetes Service resource using labels. To establish mapping, add the following labels to your Kubernetes Service:
+Both AS3 and CIS can dynamically discover and update load balancing pool members using service discovery. However, when using CIS to process AS3 configMaps, CIS performs the service discovery. When using CIS, map each pool definition in the AS3 template to a kubernetes Service resource using a label. To create this mapping, add the following labels to your Kubernetes Service:
 
 .. code-block:: yaml
 
