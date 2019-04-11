@@ -13,7 +13,7 @@ Prerequisites
 To use AS3 declarations with Container Ingress Services, ensure you meet the following requirements:
 
 - The BIG-IP system is running software version 12.1.x or higher.
-- The BIG-IP sytem has AS3 Extension version 3.10.3 or higher installed.
+- The BIG-IP sytem has AS3 Extension version 3.10 or higher installed.
 - A BIG-IP system user account with the Administrator role.
 
 Limitations
@@ -28,9 +28,7 @@ The |kctlr| has the following AS3 Extension limitations:
 CIS service discovery
 `````````````````````
 
-Both AS3 and CIS can dynamically discover and update load balancing pool members using service discovery. However, when using CIS to process AS3 declarations, CIS performs the service discovery. 
-
-CIS maps each pool definition in the AS3 template to a Kubernetes Service resource using a label. To create this mapping, add the following labels to your Kubernetes Service:
+CIS can dynamically discover and update load balancing pool members using service discovery. CIS maps each pool definition in the AS3 template to a Kubernetes Service resource using a label. To create this mapping, add the following labels to your Kubernetes Service:
 
 .. code-block:: yaml
 
