@@ -41,8 +41,7 @@ Each pool definition in an AS3 template should map to a kubernetes Service resou
 
 .. important::
 
-  Multiple Service resources tagged with same set of labels will cause a CIS error, and the AS3 template will not be updated.
-
+  Multiple Service resources tagged with same set of labels will cause a CIS service discovery to fail.
 
 CIS service discovery updates AS3 template configurations based on the controller mode.
 
