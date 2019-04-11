@@ -143,10 +143,10 @@ AS3 declaration processing involves these four steps:
 
 2. Once a AS3 configmap is available for processing CIS will perform service discovery as explained in the Service Discovery section.
 
-3. Once service discovery is complete, CIS modifies the serverAddresses array in the AS3 template to append discovered endpoints. CIS modify these two values in the AS3 template.
+3. Once service discovery is complete, CIS modifies the serverAddresses array in the AS3 template to append discovered endpoints. CIS only modify these two values in the AS3 template:
 
-   - serverAddresses array. If this array is not empty, CIS will treat them as static entries from User and it will not overwrite the content. 
-     This is usefull when some of your service deployments are reside outside of kubernetes or when you deploy to BIG-IP through CI/CD pipelines.
+   - serverAddresses array. If this array is not empty, CIS treats will not overwrite the entries. 
+
    - servicePort value
 
 4. CIS posts the generated AS3 declaration to the BIG-IP system.
@@ -169,7 +169,8 @@ AS3 Resources
 - See the `AS3 User Guide`_ to get started using F5 AS3 Extension declarations.
 - See the `AS3 Reference Guide`_ for an overview and list of F5 AS3 Extension declarations.
 
-Example AS3 ConfigMap
-`````````````````````
-- :fonticon:`fa fa-download` :download:`f5-as3-service-example.yaml </kubernetes/config_examples/f5-as3-service-example.yaml>`
+AS3 Examples
+````````````
+- :fonticon:`fa fa-download` :download:`f5-as3-template-example.yaml </kubernetes/config_examples/f5-as3-template-example.yaml>`
+- :fonticon:`fa fa-download` :download:`f5-as3-template-example.yaml </kubernetes/config_examples/f5-as3-declaration-example.yaml>`
 

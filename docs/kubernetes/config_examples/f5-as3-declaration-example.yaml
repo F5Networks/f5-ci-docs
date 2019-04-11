@@ -29,7 +29,11 @@
           "members":[
           {
             "servicePort":80,
-            "serverAddresses":[]
+            "serverAddresses":[
+              "172.16.31.201",
+              "172.16.32.202",
+              "172.16.33.203"
+            ]
           }
           ]
         }
