@@ -29,7 +29,7 @@ CIS service discovery
 `````````````````````
 .. note::
 
-  AS3 and CIS have thier own service discovery features. When using CIS to process AS3 configMaps, service discovery is performed by CIS. 
+  AS3 and CIS can dynamically discover and update load balancing pool members using service discovery. When using CIS to process AS3 configMaps, CIS performs service discovery. 
 
 Each pool definition in an AS3 template should map to a kubernetes Service resource. To establish mapping, add the following labels to your kubernetes service:
 
