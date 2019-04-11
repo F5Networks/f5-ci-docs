@@ -26,12 +26,8 @@ The |kctlr| has the following AS3 Extension limitations:
 - Static ARP entries remain after deleting an AS3 ConfigMap.
 
 CIS service discovery
-`````````````````````
-.. note::
 
-  AS3 and CIS can dynamically discover and update load balancing pool members using service discovery. When using CIS to process AS3 configMaps, CIS performs service discovery. 
-
-Each pool definition in an AS3 template should map to a kubernetes Service resource. To establish mapping, add the following labels to your kubernetes service:
+Both AS3 and CIS can dynamically discover and update load balancing pool members using service discovery. However, when using CIS to process AS3 configMaps, CIS performs the service discovery. When using CIS, map each pool definition in the AS3 template to a kubernetes Service resource using a label. To create this mapping, add the following labels to your Kubernetes Service:
 
 .. code-block:: yaml
 
@@ -43,7 +39,7 @@ Each pool definition in an AS3 template should map to a kubernetes Service resou
 
   Multiple Service resources tagged with same set of labels will cause a CIS service discovery to fail.
 
-An example Kubernetes Service defined using labels:
+An example Kubernetes Service using labels:
 
 .. code-block:: yaml
 
@@ -63,7 +59,7 @@ An example Kubernetes Service defined using labels:
         port: 80
         targetPort: 80
 
-The Kubernetes deployment created by the above Service:
+The Kubernetes deployment created by the Kubernetes Service:
 
 .. code-block:: yaml
 
