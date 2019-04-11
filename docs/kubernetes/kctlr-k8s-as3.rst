@@ -109,7 +109,7 @@ CIS service discovery adds IP address and service port information to AS3 declar
 |                  |  - Use the Kubernetes Service endpoint service ports to replace entries in the :code:`ServicePort` section. |
 +------------------+-------------------------------------------------------------------------------------------------------------+
 | Node Port        | - Add the Kubernetes cluster node IP addresses to the :code:`ServerAddresses` section.                      |
-|                  | - Use the Kubernetes cluster NodePort ports to replace entries in the code:`ServicePort` section.           | 
+|                  | - Use the Kubernetes cluster NodePort ports to replace entries in the :code:`ServicePort` section.          | 
 |                  | Ensure you expose Kubernetes services as type :code:`Nodeport`.                                             |
 +------------------+-------------------------------------------------------------------------------------------------------------+
 
