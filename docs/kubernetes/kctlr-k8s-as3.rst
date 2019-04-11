@@ -98,20 +98,20 @@ The Kubernetes deployment created by the Kubernetes Service:
             image: nginx
 
 
-Controller mode
-```````````````
-CIS service discovery adds IP address and service port information to AS3 declarations based on the controller mode.
+Service discovery and controller mode
+`````````````````````````````````````
+CIS service discovery adds IP address and service port information to AS3 declarations differently, depending on the controller mode.
 
-+------------------------------------------------------------------------------------------------------------------------+
-| Controller mode  | Configuration update                                                                                |
-+==================+=====================================================================================================+
-| Cluster IP       |  - Add the Kubernetes Service endpoint IP Addresses to the ServiceAddresses section.                |
-|                  |  - Use the Kubernetes Service endpoint service ports to replace entries in the ServicePort section. |
-+------------------+-----------------------------------------------------------------------------------------------------+
-| Node Port        | - Add the Kubernetes cluster node IP addresses to the ServerAddresses section.                      |
-|                  | - Use the Kubernetes cluster NodePort ports to replace entries in the ServicePort section.          | 
-|                  |  Ensure you expose Kubernetes services as type Nodeport.                                            |
-+------------------+-----------------------------------------------------------------------------------------------------+
++--------------------------------------------------------------------------------------------------------------------------------+
+| Controller mode  | Configuration update                                                                                        |
++==================+=============================================================================================================+
+| Cluster IP       |  - Add the Kubernetes Service endpoint IP Addresses to the :code:`ServiceAddresses` section.                |
+|                  |  - Use the Kubernetes Service endpoint service ports to replace entries in the :code:`ServicePort` section. |
++------------------+-------------------------------------------------------------------------------------------------------------+
+| Node Port        | - Add the Kubernetes cluster node IP addresses to the ServerAddresses section.                              |
+|                  | - Use the Kubernetes cluster NodePort ports to replace entries in the ServicePort section.                  | 
+|                  |  Ensure you expose Kubernetes services as type Nodeport.                                                    |
++------------------+-------------------------------------------------------------------------------------------------------------+
 
 AS3 declaration processing 
 ``````````````````````````
@@ -141,9 +141,9 @@ AS3 declaration processing involves these four steps:
             <YOUR AS3 DECLARATION>
       }
 
-2. Once a AS3 configmap is available for processing CIS will perform service discovery as explained in the Service Discovery section.
+2. The AS3 configmap becomes available for processing, CIS performs service discovery as described in the Service Discovery section.
 
-3. Once service discovery is complete, CIS modifies the serverAddresses array in the AS3 template to append discovered endpoints. CIS only modify these two values in the AS3 template:
+3. Service discovery completes, and CIS modifies the AS3 template to append discovered endpoints. CIS only modify these two values in the AS3 template:
 
    - serverAddresses array. If this array is not empty, CIS treats will not overwrite the entries. 
 
