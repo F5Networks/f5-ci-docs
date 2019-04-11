@@ -116,7 +116,7 @@ CIS service discovery adds IP address and service port information to AS3 declar
 AS3 declaration processing 
 ``````````````````````````
 
-For CIS to processes AS3 declarations, the f5type label must be set to virtual-server and the as3 label must be set to the true. 
+To processes AS3 declarations using CIS, set the f5type label to virtual-server and the as3 label to the true. 
 
 .. note::
   Ensure the value of the as3 label is a string value true, not the boolean True.
@@ -143,7 +143,7 @@ AS3 declaration processing involves these four steps:
 
 2. Once a AS3 configmap is available for processing CIS will perform service discovery as explained in the Service Discovery section.
 
-3. Once service discovery is complete, CIS modifies the serverAddresses array in the AS3 template to append discovered endpoints. Only two places are allowed for CIS to modify your AS3 template.
+3. Once service discovery is complete, CIS modifies the serverAddresses array in the AS3 template to append discovered endpoints. CIS modify these two values in the AS3 template.
 
    - serverAddresses array. If this array is not empty, CIS will treat them as static entries from User and it will not overwrite the content. 
      This is usefull when some of your service deployments are reside outside of kubernetes or when you deploy to BIG-IP through CI/CD pipelines.
