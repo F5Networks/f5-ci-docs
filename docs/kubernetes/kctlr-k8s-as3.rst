@@ -13,7 +13,7 @@ Prerequisites
 To use AS3 declarations with Container Ingress Services, ensure you meet the following requirements:
 
 - The BIG-IP system is running software version 12.1.x or higher.
-- The BIG-IP sytem has AS3 Extension version 3.10.3 or higher installed.
+- The BIG-IP sytem has AS3 Extension version 3.10 or higher installed.
 - A BIG-IP system user account with the Administrator role.
 
 Limitations
@@ -28,7 +28,7 @@ The |kctlr| has the following AS3 Extension limitations:
 CIS service discovery
 `````````````````````
 
-Both AS3 and CIS can dynamically discover and update load balancing pool members using service discovery. However, when using CIS to process AS3 declarations, CIS performs the service discovery. When using CIS, you must map each pool definition in the AS3 template to a Kubernetes Service resource using a label. To create this mapping, add the following labels to your Kubernetes Service:
+CIS can dynamically discover and update load balancing pool members using service discovery. CIS maps each pool definition in the AS3 template to a Kubernetes Service resource using a label. To create this mapping, add the following labels to your Kubernetes Service:
 
 .. code-block:: yaml
 
@@ -121,9 +121,7 @@ To process an AS3 declaration using CIS, set the :code:`f5type` label to :code:`
 .. note::
   Ensure the value of the as3 label is a string value true, not the boolean True.
 
-AS3 declaration processing involves these four steps:
-
-1. Submit the AS3 template inside the configMap resource and deploy it in Kubernetes. 
+Exampe AS3 declaration configured for CIS processing:
 
 .. code-block:: yaml
 
@@ -141,6 +139,11 @@ AS3 declaration processing involves these four steps:
             <YOUR AS3 DECLARATION>
       }
 
+
+AS3 declaration processing involves these four steps:
+
+1. You submit the AS3 template inside the configMap resource and deploy it in Kubernetes. 
+
 2. After the AS3 configMap becomes available for processing, CIS performs service discovery as described in the Service Discovery section.
 
 3. After Service discovery completes, CIS modifies the AS3 template to append discovered endpoints. CIS only modify these two values in the AS3 template:
@@ -149,7 +152,7 @@ AS3 declaration processing involves these four steps:
 
    - :code:`servicePort` value.
 
-4. CIS posts the generated AS3 declaration to the BIG-IP system.
+4. CIS posts the generated AS3 declaration to the BIG-IP system and begins processing traffic.
 
 Parameters
 ``````````
