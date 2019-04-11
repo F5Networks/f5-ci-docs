@@ -39,6 +39,23 @@ Each pool definition in an AS3 template should map to a kubernetes Service resou
   cis.f5.com/as3-app: <application_name>
   cis.f5.com/as3-pool: <pool_name>
 
+.. important::
+
+  Multiple Service resources tagged with same set of labels will cause a CIS service discovery to fail.
+
+CIS service discovery updates AS3 template configurations based on the controller mode.
+
++------------------------------------------------------------------------------------------------------------------------+
+| Controller mode  | Configuration update                                                                                |
++==================+=====================================================================================================+
+| Cluster IP       |  - Add the Kubernetes Service endpoint IP Addresses to the ServiceAddresses section.                |
+|                  |  - Use the Kubernetes Service endpoint service ports to replace entries in the ServicePort section. |
++------------------+-----------------------------------------------------------------------------------------------------+
+| Node Port        | - Add the Kubernetes cluster node IP addresses to the ServerAddresses section.                      |
+|                  | - Use the Kubernetes cluster NodePort ports to replace entries in the ServicePort section.          | 
+|                  |  Ensure you expose Kubernetes services as type Nodeport.                                               |
++------------------+-----------------------------------------------------------------------------------------------------+
+
 Parameters
 ``````````
 +-----------------+---------+----------+-------------------+-----------------------------------------+-----------------+
