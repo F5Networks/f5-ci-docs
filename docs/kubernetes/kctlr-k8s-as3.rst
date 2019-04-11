@@ -25,6 +25,20 @@ The |kctlr| has the following AS3 Extension limitations:
 - AS3 does not support moving BIG-IP nodes to new partitions.
 - Static ARP entries remain after deleting an AS3 ConfigMap.
 
+CIS service discovery
+`````````````````````
+.. note::
+
+  AS3 and CIS have thier own service discovery features. When using CIS to process AS3 configMaps, service discovery is performed by CIS. 
+
+Each pool definition in an AS3 template should map to a kubernetes Service resource. To establish mapping, add the following labels to your kubernetes service:
+
+.. code-block:: yaml
+
+  cis.f5.com/as3-tenant: <tenant_name>
+  cis.f5.com/as3-app: <application_name>
+  cis.f5.com/as3-pool: <pool_name>
+
 Parameters
 ``````````
 +-----------------+---------+----------+-------------------+-----------------------------------------+-----------------+
