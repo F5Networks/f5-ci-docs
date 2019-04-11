@@ -108,15 +108,15 @@ CIS service discovery adds IP address and service port information to AS3 declar
 | Cluster IP       |  - Add the Kubernetes Service endpoint IP Addresses to the :code:`ServiceAddresses` section.                |
 |                  |  - Use the Kubernetes Service endpoint service ports to replace entries in the :code:`ServicePort` section. |
 +------------------+-------------------------------------------------------------------------------------------------------------+
-| Node Port        | - Add the Kubernetes cluster node IP addresses to the ServerAddresses section.                              |
-|                  | - Use the Kubernetes cluster NodePort ports to replace entries in the ServicePort section.                  | 
-|                  |  Ensure you expose Kubernetes services as type Nodeport.                                                    |
+| Node Port        | - Add the Kubernetes cluster node IP addresses to the :code:`ServerAddresses` section.                      |
+|                  | - Use the Kubernetes cluster NodePort ports to replace entries in the code:`ServicePort` section.           | 
+|                  |  Ensure you expose Kubernetes services as type code:`Nodeport`.                                                    |
 +------------------+-------------------------------------------------------------------------------------------------------------+
 
 AS3 declaration processing 
 ``````````````````````````
 
-To processes AS3 declarations using CIS, set the f5type label to virtual-server and the as3 label to the true. 
+To process an AS3 declaration using CIS, set the :code:`f5type` label to :code:`virtual-server` and the :code:`as3` label to the :code:`true`. 
 
 .. note::
   Ensure the value of the as3 label is a string value true, not the boolean True.
@@ -141,13 +141,13 @@ AS3 declaration processing involves these four steps:
             <YOUR AS3 DECLARATION>
       }
 
-2. The AS3 configmap becomes available for processing, CIS performs service discovery as described in the Service Discovery section.
+2. After the AS3 configMap becomes available for processing, CIS performs service discovery as described in the Service Discovery section.
 
-3. Service discovery completes, and CIS modifies the AS3 template to append discovered endpoints. CIS only modify these two values in the AS3 template:
+3. After Service discovery completes, CIS modifies the AS3 template to append discovered endpoints. CIS only modify these two values in the AS3 template:
 
-   - serverAddresses array. If this array is not empty, CIS treats will not overwrite the entries. 
+   - :code:`serverAddresses` array. If this array is not empty, CIS treats will not overwrite the entries. 
 
-   - servicePort value
+   - :code:`servicePort` value.
 
 4. CIS posts the generated AS3 declaration to the BIG-IP system.
 
