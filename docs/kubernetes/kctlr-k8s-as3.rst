@@ -43,6 +43,64 @@ Each pool definition in an AS3 template should map to a kubernetes Service resou
 
   Multiple Service resources tagged with same set of labels will cause a CIS service discovery to fail.
 
+An example Kubernetes Service defined using labels:
+
+.. code-block:: yaml
+
+  kind: Service
+  apiVersion: v1
+  metadata:
+    name: stark-blog-frontend
+    labels:
+      cis.f5.com/as3-tenant: "stark"
+      cis.f5.com/as3-app: "blog"
+      cis.f5.com/as3-pool: "web_pool"
+  spec:
+    selector:
+      run: web-service
+      ports:
+      - protocol: TCP
+        port: 80
+        targetPort: 80
+
+The Kubernetes deployment created by the above Service:
+
+.. code-block:: yaml
+
+  kind: Service
+  apiVersion: v1
+  metadata:
+    name: stark-blog-frontend
+    labels:
+      cis.f5.com/as3-tenant: "stark"
+      cis.f5.com/as3-app: "blog"
+      cis.f5.com/as3-pool: "web_pool"
+  spec:
+    selector:
+      run: web-service
+    ports:
+      - protocol: TCP
+        port: 80
+        targetPort: 80
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: nginx-web-service
+  spec:
+    selector:
+      matchLabels:
+        run: web-service
+    replicas: 3
+    template:
+      metadata:
+        labels:
+          run: web-service
+      spec:
+        containers:
+          - name: nginx
+            image: nginx
+
+
 CIS service discovery updates AS3 template configurations based on the controller mode.
 
 +------------------------------------------------------------------------------------------------------------------------+
@@ -78,3 +136,37 @@ Example AS3 ConfigMap
 `````````````````````
 - :fonticon:`fa fa-download` :download:`f5-as3-service-example.yaml </kubernetes/config_examples/f5-as3-service-example.yaml>`
 
+kind: Service
+apiVersion: v1
+metadata:
+  name: stark-blog-frontend
+  labels:
+    cis.f5.com/as3-tenant: "stark"
+    cis.f5.com/as3-app: "blog"
+    cis.f5.com/as3-pool: "web_pool"
+spec:
+  selector:
+    run: web-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-web-service
+spec:
+  selector:
+    matchLabels:
+      run: web-service
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        run: web-service
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
