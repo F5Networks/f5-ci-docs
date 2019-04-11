@@ -28,7 +28,7 @@ The |kctlr| has the following AS3 Extension limitations:
 CIS service discovery
 `````````````````````
 
-Both AS3 and CIS can dynamically discover and update load balancing pool members using service discovery. However, when using CIS to process AS3 configMaps, CIS performs the service discovery. When using CIS, you must map each pool definition in the AS3 template to a kubernetes Service resource using a label. To create this mapping, add the following labels to your Kubernetes Service:
+Both AS3 and CIS can dynamically discover and update load balancing pool members using service discovery. However, when using CIS to process AS3 declarations, CIS performs the service discovery. When using CIS, you must map each pool definition in the AS3 template to a Kubernetes Service resource using a label. To create this mapping, add the following labels to your Kubernetes Service:
 
 .. code-block:: yaml
 
@@ -38,7 +38,7 @@ Both AS3 and CIS can dynamically discover and update load balancing pool members
 
 .. important::
 
-  Multiple Service resources tagged with same set of labels will cause a CIS service discovery to fail.
+  Multiple Kubernetes Service resources tagged with same set of labels will cause a CIS error, and service discovery failure.
 
 An example Kubernetes Service using labels:
 
@@ -98,7 +98,9 @@ The Kubernetes deployment created by the Kubernetes Service:
             image: nginx
 
 
-CIS service discovery updates AS3 template configurations based on the controller mode.
+Controller mode
+```````````````
+CIS service discovery adds IP address and service port information to AS3 declarations based on the controller mode.
 
 +------------------------------------------------------------------------------------------------------------------------+
 | Controller mode  | Configuration update                                                                                |
@@ -108,8 +110,46 @@ CIS service discovery updates AS3 template configurations based on the controlle
 +------------------+-----------------------------------------------------------------------------------------------------+
 | Node Port        | - Add the Kubernetes cluster node IP addresses to the ServerAddresses section.                      |
 |                  | - Use the Kubernetes cluster NodePort ports to replace entries in the ServicePort section.          | 
-|                  |  Ensure you expose Kubernetes services as type Nodeport.                                               |
+|                  |  Ensure you expose Kubernetes services as type Nodeport.                                            |
 +------------------+-----------------------------------------------------------------------------------------------------+
+
+AS3 declaration processing 
+``````````````````````````
+
+CIS processes AS3 declarations when the f5type label is set to virtual-server and the as3 label is set to the true. 
+
+.. note::
+  Ensure the value of the as3 label is a string value true, not the boolean True.
+
+AS3 declaration processing involves these four steps:
+
+1. Submit the AS3 template inside the configMap resource and deploy it in Kubernetes. 
+
+.. code-block:: yaml
+
+  kind: ConfigMap
+  apiVersion: v1
+  metadata:
+    name: as3-template
+    namespace: default
+    labels:
+      f5type: virtual-server
+      as3: "true"
+  data:
+    template: |
+      { 
+            <YOUR AS3 DECLARATION>
+      }
+
+2. Once a AS3 configmap is available for processing CIS will perform service discovery as explained in the Service Discovery section.
+
+3. Once service discovery is complete, CIS will modify serverAddresses array in the AS3 template to append discovered endpoints. Only two places are allowed for CIS to modify your AS3 template.
+
+   - serverAddresses array. If this array is not empty, CIS will treat them as static entries from User and it will not overwrite the content. 
+     This is usefull when some of your service deployments are reside outside of kubernetes or when you deploy to BIG-IP through CI/CD pipelines.
+   - servicePort value
+
+4. The generated AS3 Declaration is posted to BIG-IP by CIS.
 
 Parameters
 ``````````
@@ -133,37 +173,3 @@ Example AS3 ConfigMap
 `````````````````````
 - :fonticon:`fa fa-download` :download:`f5-as3-service-example.yaml </kubernetes/config_examples/f5-as3-service-example.yaml>`
 
-kind: Service
-apiVersion: v1
-metadata:
-  name: stark-blog-frontend
-  labels:
-    cis.f5.com/as3-tenant: "stark"
-    cis.f5.com/as3-app: "blog"
-    cis.f5.com/as3-pool: "web_pool"
-spec:
-  selector:
-    run: web-service
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-web-service
-spec:
-  selector:
-    matchLabels:
-      run: web-service
-  replicas: 3
-  template:
-    metadata:
-      labels:
-        run: web-service
-    spec:
-      containers:
-        - name: nginx
-          image: nginx
-          ports:
-            - containerPort: 80
