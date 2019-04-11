@@ -41,21 +41,21 @@ Each pool definition in an AS3 template should map to a kubernetes Service resou
 
 .. important::
 
-  If multiple Service resources are tagged with same set of labels, CIS will create an error message, and the AS3 template will not be updated.
+  Multiple Service resources tagged with same set of labels will cause a CIS error, and the AS3 template will not be updated.
 
 
 CIS service discovery updates AS3 template configurations based on the controller mode.
 
-+---------------------------------------------------------------------------------------------------------------+
-| Controller mode  | Configuration update                                                                       |
-+==================+============================================================================================+
-| Cluster IP       |  - Kubernetes Service endpoint IP Addresses are added to the ServiceAddresses section.     |
-|                  |  - Kubernetes Service endpoint service port replace entries in the ServicePort section.    |
-+------------------+--------------------------------------------------------------------------------------------+
-| Node Port        | - Kubernetes cluster node IP addresses are added to the ServerAddresses section.           |
-|                  | - Kubernetes cluster NodePort ports replace entries in the ServicePort section.            | 
-|                  | Kubernetes services must be exposed as type Nodeport.                                      |
-+------------------+--------------------------------------------------------------------------------------------+
++------------------------------------------------------------------------------------------------------------------------+
+| Controller mode  | Configuration update                                                                                |
++==================+=====================================================================================================+
+| Cluster IP       |  - Add the Kubernetes Service endpoint IP Addresses to the ServiceAddresses section.                |
+|                  |  - Use the Kubernetes Service endpoint service ports to replace entries in the ServicePort section. |
++------------------+-----------------------------------------------------------------------------------------------------+
+| Node Port        | - Add the Kubernetes cluster node IP addresses to the ServerAddresses section.                      |
+|                  | - Use the Kubernetes cluster NodePort ports to replace entries in the ServicePort section.          | 
+|                  |  Ensure you expose Kubernetes services as type Nodeport.                                               |
++------------------+-----------------------------------------------------------------------------------------------------+
 
 Parameters
 ``````````
