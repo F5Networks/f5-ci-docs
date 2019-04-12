@@ -1,4 +1,4 @@
-:product: Container Connectors
+:product: Container Ingress Services
 :product: BIG-IP Controller for Kubernetes
 :product: BIG-IP Controller for Cloud Foundry
 :product: BIG-IP Controller for Marathon
@@ -26,10 +26,10 @@ Component                   Version
 
 .. _connector compatibility:
 
-Container Connector compatibility
----------------------------------
+Container Ingress Service compatibility
+---------------------------------------
 
-The tables below show the versions used in development testing. The F5 Container Connectors may work with versions not shown here; F5 has not verified functionality in those versions. 
+The tables below show the versions used in development testing. The F5 Container Ingress Service may work with versions not shown here; F5 has not verified functionality in those versions. 
 
 .. table:: BIG-IP Controller/Platform compatibility
    :widths: 4 2 2 4 2
