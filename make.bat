@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=/docs
 set BUILDDIR=/docs/_build
-set SPHINXPROJ=F5 Container Connectors
+set SPHINXPROJ=F5 Container Ingress Services
 
 if "%1" == "" goto help
 
