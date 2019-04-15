@@ -1,10 +1,10 @@
-:product: BIG-IP Controller for Kubernetes
+:product: BIG-IP Container Ingress Services for Kubernetes
 :type: concept
 
 .. _k8s-home:
 
-F5 Container Connector - Kubernetes
-===================================
+F5 Container Ingress Services - Kubernetes
+==========================================
 
 .. seealso::
    :class: sidebar
