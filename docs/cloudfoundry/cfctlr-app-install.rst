@@ -173,6 +173,6 @@ What's Next
 
 .. _Enable Docker in Cloud Foundry: https://docs.cloudfoundry.org/adminguide/docker.html#enable
 .. _Create a read-only Admin user in Cloud Foundry: https://docs.cloudfoundry.org/concepts/roles.html
-.. _Add the BIG-IP device to Cloud Foundry: https://docs.pivotal.io/pivotalcf/latest/customizing/f5-lb.html
+.. _Add the BIG-IP device to Cloud Foundry: https://docs.pivotal.io/pivotalcf/2-4/customizing/f5-lb.html
 .. _Create a BIG-IP local traffic profile: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-profiles-reference-13-1-0/1.html
 .. _Create a BIG-IP local traffic policy: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-local-traffic-policies-getting-started-13-1-0/1.html
