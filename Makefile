@@ -5,7 +5,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
-SPHINXPROJ    = F5 Container Connectors
+SPHINXPROJ    = F5 Container Ingress Services 
 SOURCEDIR     = docs
 BUILDDIR      = docs/_build
 
