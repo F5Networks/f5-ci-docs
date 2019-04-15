@@ -1,4 +1,4 @@
-:product: Container Connectors
+:product: Container Ingress Services
 :product: BIG-IP Controller for Kubernetes
 :product: BIG-IP Controller for Cloud Foundry
 :product: BIG-IP Controller for Marathon
@@ -19,17 +19,17 @@ This documentation set applies to the following versions of each F5 Container In
 Component                   Version
 ===================         ==============
 |cf-long|                   v1.0.x-1.2.x
-|kctlr-long|                v1.0.x-1.8.x
+|kctlr-long|                v1.0.x-1.9.x
 |mctlr-long|                v1.0.x-v1.3.x
-|octlr-long|                v1.0.x-1.8.x
+|octlr-long|                v1.0.x-1.9.x
 ===================         ==============
 
 .. _connector compatibility:
 
-Container Connector compatibility
----------------------------------
+Container Ingress Service compatibility
+---------------------------------------
 
-The tables below show the versions used in development testing. The F5 Container Connectors may work with versions not shown here; F5 has not verified functionality in those versions.
+The tables below show the versions used in development testing. The F5 Container Ingress Service may work with versions not shown here; F5 has not verified functionality in those versions. 
 
 .. table:: BIG-IP Controller/Platform compatibility
    :widths: 4 2 2 4 2
@@ -51,7 +51,8 @@ The tables below show the versions used in development testing. The F5 Container
    |                          +-----------------------+                                            +--------------------------------------------+                          |
    |                          | v1.6.x                |                                            | v1.6.x, v1.7.x, v1.8.x, v1.9.x             |                          |
    |                          +-----------------------+                                            +--------------------------------------------+                          |
-   |                          | v1.7x, v1.8.x         |                                            | v1.6.x, v1.7.x, v1.8.x, v1.9.x, v1.12.3    |                          |
+   |                          | v1.7x, v1.8.x, v1.9.x |                                            | v1.6.x, v1.7.x, v1.8.x, v1.9.x,            |                          | 
+   |                          |                       |                                            | v1.12.3, v1.13.4                           |                          |
    +--------------------------+-----------------------+--------------------------------------------+--------------------------------------------+--------------------------+
    |                                                                                                                                                                       |
    +--------------------------+-----------------------+--------------------------------------------+--------------------------------------------+--------------------------+
@@ -83,7 +84,7 @@ The tables below show the versions used in development testing. The F5 Container
    |                          +-----------------------+--------------------------------------------+--------------------------------------------+                          |
    |                          | v1.6.x                | OpenShift Origin                           | v3.7.x, v3.9.x                             |                          |
    |                          +-----------------------+--------------------------------------------+--------------------------------------------+                          |
-   |                          | v1.7x, v1.8.x         | OpenShift Origin                           | v3.7.x, v3.11x                             |                          |
+   |                          | v1.7x, v1.8.x, v1.9.x | OpenShift Origin                           | v3.7.x, v3.11x                             |                          |
    |                          |                       +--------------------------------------------+                                            |                          |
    |                          |                       | Red Hat OpenShift Container Platform       |                                            |                          |
    +--------------------------+-----------------------+--------------------------------------------+--------------------------------------------+--------------------------+
@@ -108,21 +109,22 @@ Be sure to use the **most recent** schema version that corresponds to your Contr
 
 .. table:: F5 schema and ``k8s-bigip-ctlr`` version compatibility
 
-   =============================================== =================================
+   =============================================== =====================
    F5 Schema version                               ``k8s-bigip-ctlr``
-   =============================================== =================================
-   f5schemadb://bigip-virtual-server_v0.1.7.json   1.8.x, 1.7.x, 1.6.x, 1.5.x, 1.4.x
-   ----------------------------------------------- ---------------------------------
+   =============================================== =====================
+   f5schemadb://bigip-virtual-server_v0.1.7.json   1.9.x, 1.8.x, 1.7.x, 
+                                                   1.6.x, 1.5.x, 1.4.x
+   ----------------------------------------------- ---------------------
    f5schemadb://bigip-virtual-server_v0.1.6.json   1.4.x
-   ----------------------------------------------- ---------------------------------
+   ----------------------------------------------- ---------------------
    f5schemadb://bigip-virtual-server_v0.1.5.json   1.3.x
-   ----------------------------------------------- ---------------------------------
+   ----------------------------------------------- ---------------------
    f5schemadb://bigip-virtual-server_v0.1.4.json   1.3.x
-   ----------------------------------------------- ---------------------------------
+   ----------------------------------------------- ---------------------
    f5schemadb://bigip-virtual-server_v0.1.3.json   1.1.x, 1.2.x
-   ----------------------------------------------- ---------------------------------
+   ----------------------------------------------- ---------------------
    f5schemadb://bigip-virtual-server_v0.1.2.json   1.0.x
-   =============================================== =================================
+   =============================================== =====================
 
 
 Notice to Beta Customers

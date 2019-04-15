@@ -223,6 +223,10 @@ rst_epilog = """
 .. _supported Route configurations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-route-configurations
 .. _system configuration: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-system-initial-configuration-12-0-0/2.html#conceptid
 .. _Using flannel with Kubernetes: https://coreos.com/flannel/docs/latest/kubernetes.html
+.. _F5 AS3 Extension: %(base_url)s/products/extensions/f5-appsvcs-extension/latest/
+.. _F5 AS3 Installation: %(base_url)s/products/extensions/f5-appsvcs-extension/latest/userguide/installation.html
+.. _F5 AS3 User Guide: %(base_url)s/products/extensions/f5-appsvcs-extension/latest/userguide/
+.. _F5 AS3 Reference Guide: %(base_url)s/products/extensions/f5-appsvcs-extension/latest/refguide/
 """% {
     'base_url': 'https://clouddocs.f5.com'
 }

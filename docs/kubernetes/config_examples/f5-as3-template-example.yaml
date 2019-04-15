@@ -1,0 +1,39 @@
+{
+  "class":"AS3",
+  "action":"deploy",
+  "persist":true,
+  "declaration":{
+    "class":"ADC",
+    "schemaVersion":"3.10.0",
+    "id":"1847a369-5a25-4d1b-8cad-5740988d4423",
+    "label":"Sample AS3 Template",
+    "remark":"HTTP application",
+    "stark":{
+      "class":"Tenant",
+      "blog":{
+        "class":"Application",
+        "template":"http",
+        "serviceMain":{
+          "class":"Service_HTTP",
+          "virtualAddresses":[
+            "10.0.6.100"
+          ],
+          "virtualPort":8080,
+          "pool":"web_pool"
+        },
+        "web_pool":{
+          "class":"Pool",
+          "monitors":[
+            "http"
+          ],
+          "members":[
+          {
+            "servicePort":80,
+            "serverAddresses":[]
+          }
+          ]
+        }
+      }
+    }
+  }
+}
