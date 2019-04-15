@@ -1,4 +1,4 @@
-:product: Container Connectors
+:product: Container Ingress Services
 :product: BIG-IP Controller for Kubernetes
 :product: BIG-IP Controller for Cloud Foundry
 :product: BIG-IP Controller for Marathon
@@ -6,10 +6,10 @@
 
 .. _containers-home:
 
-Introduction to F5 Container Connectors
-=======================================
+Introduction to F5 Container Ingress Services
+=============================================
 
-The F5 Container Connectors ('CCs') provide platform-native integrations for BIG-IP devices from PaaS providers like Cloud Foundry, Kubernetes, Mesos, & OpenShift. The CCs make it possible to dynamically allocate BIG-IP L4-L7 services in container orchestration environments by translating native commands to F5 Python SDK/iControl REST calls. [#cccl]_
+The F5 Container Ingress Services ('CIS') provide platform-native integrations for BIG-IP devices from PaaS providers like Cloud Foundry, Kubernetes, Mesos, & OpenShift. The CCs make it possible to dynamically allocate BIG-IP L4-L7 services in container orchestration environments by translating native commands to F5 Python SDK/iControl REST calls. [#cccl]_
 
 =======================     ===================================================
 Container Connector         Environment
@@ -38,20 +38,20 @@ Container Connector         Environment
 Design
 ------
 
-Each Container Connector is uniquely suited to its specific container orchestration environment and purpose, utilizing the architecture and language appropriate for the environment. Application Developers interact with the platform's API; the CCs watch the API for certain events, then act accordingly.
+Each Container Ingress Services is uniquely suited to its specific container orchestration environment and purpose, utilizing the architecture and language appropriate for the environment. Application Developers interact with the platform's API; the CCs watch the API for certain events, then act accordingly.
 
-The Container Connector is stateless. The inputs are:
+The Container Ingress Services is stateless. The inputs are:
 
 - the container orchestration environment's config,
 - the BIG-IP device config, and
 - the CC config (provided via the appropriate means for the container orchestration environment).
 
-This means an instance of a Container Connector can be readily discarded. Migrating a CC is as easy as destroying it in one place and spinning up a new one somewhere else. Wherever a Container Connector runs, it always watches the API and attempts to bring the BIG-IP up-to-date with the latest applicable configurations.
+This means an instance of a Container Ingress Services can be readily discarded. Migrating a CC is as easy as destroying it in one place and spinning up a new one somewhere else. Wherever a Container Connector runs, it always watches the API and attempts to bring the BIG-IP up-to-date with the latest applicable configurations.
 
 Working with BIG-IP HA pairs or device groups
 ---------------------------------------------
 
-You can use the F5 Container Connectors to manage a BIG-IP HA active-standby pair or device group. The deployment details vary depending on the platform. For most, the basic principle is the same: You should run one |kctlr| instance for each BIG-IP device.
+You can use the F5 Container Ingress Services to manage a BIG-IP HA active-standby pair or device group. The deployment details vary depending on the platform. For most, the basic principle is the same: You should run one |kctlr| instance for each BIG-IP device.
 
 **For example**:
 

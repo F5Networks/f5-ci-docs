@@ -66,7 +66,7 @@ source_encoding = 'utf-8-sig'
 master_doc = 'index'
 
 # General information about the project.
-project = u'F5 Container Connectors'
+project = u'F5 Container Ingress Services'
 copyright = u'2018 F5 Networks Inc'
 author = u'F5 Networks'
 
