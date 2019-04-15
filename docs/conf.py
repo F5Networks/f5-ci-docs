@@ -315,11 +315,13 @@ html_sidebars = {
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-html_title = 'F5 Container Connectors'
+#html_title = 'F5 Container Connectors'
+html_title = 'F5 Container Ingress Services'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
-html_short_title = 'Container Connectors Home'
+#html_short_title = 'Container Connectors Home'
+html_short_title = 'Container Ingress Services Home'
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
