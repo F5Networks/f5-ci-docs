@@ -169,8 +169,8 @@ Parameters
 
 AS3 Resources
 `````````````
-- See the `AS3 User Guide`_ to get started using F5 AS3 Extension declarations.
-- See the `AS3 Reference Guide`_ for an overview and list of F5 AS3 Extension declarations.
+- See the `F5 AS3 User Guide`_ to get started using F5 AS3 Extension declarations.
+- See the `F5 AS3 Reference Guide`_ for an overview and list of F5 AS3 Extension declarations.
 
 AS3 Examples
 ````````````
