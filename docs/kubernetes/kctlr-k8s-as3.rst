@@ -6,11 +6,11 @@
 Container Ingress Services and AS3 Extension integration
 ========================================================
 
-You can use Container Ingress Services to expose services to external traffic using Application Services 3 (AS3) Extension declarations.
+You can use Container Ingress Services (CIS) to expose services to external traffic using Application Services 3 (AS3) Extension declarations.
 
 Prerequisites
 `````````````
-To use AS3 declarations with Container Ingress Services, ensure you meet the following requirements:
+To use AS3 declarations with CIS, ensure you meet the following requirements:
 
 - The BIG-IP system is running software version 12.1.x or higher.
 - The BIG-IP sytem has AS3 Extension version 3.10 or higher installed.
@@ -18,10 +18,10 @@ To use AS3 declarations with Container Ingress Services, ensure you meet the fol
 
 Limitations
 ```````````
-The |kctlr| has the following AS3 Extension limitations:
+CIS has the following AS3 Extension limitations:
 
 - AS3 pool class declarations support only one load balancing pool.
-- Container Ingress Services (CIS) supports only one AS3 ConfigMap instance.
+- CIS supports only one AS3 ConfigMap instance.
 - AS3 does not support moving BIG-IP nodes to new partitions.
 - Static ARP entries remain after deleting an AS3 ConfigMap.
 
