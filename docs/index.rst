@@ -9,7 +9,7 @@
 Introduction to F5 Container Ingress Services
 =============================================
 
-The F5 Container Ingress Services ('CIS') provide platform-native integrations for BIG-IP devices from PaaS providers like Cloud Foundry, Kubernetes, Mesos, & OpenShift. The CCs make it possible to dynamically allocate BIG-IP L4-L7 services in container orchestration environments by translating native commands to F5 Python SDK/iControl REST calls. [#cccl]_
+The F5 Container Ingress Services (CIS) provide platform-native integrations for BIG-IP devices from PaaS providers like Cloud Foundry, Kubernetes, Mesos, & OpenShift. The CCs make it possible to dynamically allocate BIG-IP L4-L7 services in container orchestration environments by translating native commands to F5 Python SDK/iControl REST calls. [#cccl]_
 
 =======================     ===================================================
 Container Connector         Environment
