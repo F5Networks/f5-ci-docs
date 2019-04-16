@@ -11,23 +11,23 @@ Introduction to F5 Container Ingress Services
 
 The F5 Container Ingress Services (CIS) provide platform-native integrations for BIG-IP devices from PaaS providers like Cloud Foundry, Kubernetes, Mesos, & OpenShift. The CCs make it possible to dynamically allocate BIG-IP L4-L7 services in container orchestration environments by translating native commands to F5 Python SDK/iControl REST calls. [#cccl]_
 
-=======================     ===================================================
-Container Connector         Environment
-=======================     ===================================================
-`cf-bigip-ctlr`_            `Cloud Foundry`_ and `Pivotal Cloud Foundry`_
------------------------     ---------------------------------------------------
-`k8s-bigip-ctlr`_           `Kubernetes`_ and `Red Hat OpenShift`_
------------------------     ---------------------------------------------------
-`marathon-bigip-ctlr`_      `Apache Mesos`_ `Marathon`_,
-                            `DC/OS and DC/OS Enterprise`_
-=======================     ===================================================
+=========================     ===================================================
+Container Ingress Service     Environment
+=========================     ===================================================
+`cf-bigip-ctlr`_              `Cloud Foundry`_ and `Pivotal Cloud Foundry`_
+-------------------------     ---------------------------------------------------
+`k8s-bigip-ctlr`_             `Kubernetes`_ and `Red Hat OpenShift`_
+-------------------------     ---------------------------------------------------
+`marathon-bigip-ctlr`_        `Apache Mesos`_ `Marathon`_,
+                              `DC/OS and DC/OS Enterprise`_
+=========================     ===================================================
 
 .. figure:: /_static/media/container_connectors_north-south.png
    :scale: 80%
    :align: center
    :alt: North-South architecture
 
-   Container Connector architecture
+   Container Ingress Services architecture
 
 .. [#cccl] See `Introduction to F5 Common Controller Core Library <https://devcentral.f5.com/articles/introduction-to-f5-common-controller-core-library-cccl-28355>`_ on DevCentral for more information.
 
