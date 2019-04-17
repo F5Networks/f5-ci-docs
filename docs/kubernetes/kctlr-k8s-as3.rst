@@ -167,6 +167,16 @@ Parameters
 |                 |         |          |                   | invalid SSL certificates.               | "true", "false" |
 +-----------------+---------+----------+-------------------+-----------------------------------------+-----------------+
 
+CIS and SSL certificate validation
+``````````````````````````````````
+CIS validates that the BIG-IP system's SSL certificate is valid. If the BIG-IP's SSL certificate is not valid, include the ``--insecure=true`` parameter when executing Kubernetes deployments.
+
+When SSL certificate validation fails, error messages similar to the following appear in the AS3 log file:
+
+.. code-block:: yaml
+
+  [ERROR] [as3_log] REST call error: Post https://10.10.10.100/mgmt/shared/appsvcs/declare: x509: cannot validate certificate for 10.10.10.100
+
 AS3 Resources
 `````````````
 - See the `F5 AS3 User Guide`_ to get started using F5 AS3 Extension declarations.
