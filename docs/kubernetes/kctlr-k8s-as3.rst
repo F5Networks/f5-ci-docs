@@ -163,7 +163,7 @@ CIS and SSL certificate validation
 ``````````````````````````````````
 CIS validates that the BIG-IP system's SSL certificate is valid. If the BIG-IP's SSL certificate is not valid, include the ``--insecure=true`` parameter when executing Kubernetes deployments.
 
-When CIS fails to validate the BIG-IP system's SSL certificate, an error message similar to the following is logged to the AS3 log file:
+When CIS fails to validate the BIG-IP system's SSL certificate, an error message similar to the following appears in the AS3 log file:
 
 .. code-block:: yaml
 
