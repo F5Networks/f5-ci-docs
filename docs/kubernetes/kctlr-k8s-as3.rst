@@ -169,9 +169,9 @@ Parameters
 
 CIS and SSL certificate validation
 ``````````````````````````````````
-CIS uses ___ to validate that the BIG-IP system's SSL certificate is signed by a well known root CA. If the BIG-IP's SSL certificate is not signed by a well known root CA, include the ``--insecure=true`` parameter when executing Kubernetes deployments.
+CIS validates that the BIG-IP system's SSL certificate is valid. If the BIG-IP's SSL certificate is not valid, include the ``--insecure=true`` parameter when executing Kubernetes deployments.
 
-When SSL certificate validation fails, An error message similar to the following appears in the AS3 log file:
+When SSL certificate validation fails, error messages similar to the following appear in the AS3 log file:
 
 .. code-block:: yaml
 
