@@ -103,7 +103,7 @@ Service discovery and controller mode
 `````````````````````````````````````
 CIS service discovery adds IP address and service port information to AS3 declarations differently, depending on the controller mode.
 
-+----------------------------------------------------------------------------------------------------------------------------------------+
++------------------+---------------------------------------------------------------------------------------------------------------------+
 | Controller mode  | Configuration update                                                                                                |
 +==================+=====================================================================================================================+
 | Cluster IP       |  - Add the Kubernetes :code:`Service endpoint IP Addresses` to the :code:`ServiceAddresses` section.                |
@@ -122,7 +122,7 @@ AS3 declaration processing
 To process an AS3 declaration using CIS, set the :code:`f5type` label to :code:`virtual-server` and the :code:`as3` label to the :code:`true`. 
 
 .. note::
-  Ensure the value of the as3 label is a string value true, not the boolean True.
+  Ensure the the AS3 label value is the string :code:`true`, and not the boolean :code:`True`.
 
 Exampe AS3 declaration configured for CIS processing:
 
