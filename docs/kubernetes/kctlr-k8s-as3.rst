@@ -158,6 +158,7 @@ AS3 declaration processing involves these four steps:
 4. CIS posts the generated AS3 declaration to the BIG-IP system and begins processing traffic.
 
 .. _kctlr-k8s-as3-params:
+
 Parameters
 ``````````
 +-----------------+---------+----------+-------------------+-------------------------------------------+-----------------+
@@ -170,7 +171,7 @@ Parameters
 |                 |         |          |                   | allow communication with BIG-IP using     |                 |
 |                 |         |          |                   | invalid SSL certificates.                 |                 |
 |                 |         |          |                   | For more info, refer to the next section; |                 |
-|                 |         |          |                   | CIS and SSL certificate validation        |                 |
+|                 |         |          |                   | CIS and SSL certificate validation.       |                 |
 +-----------------+---------+----------+-------------------+-------------------------------------------+-----------------+
 
 .. _kctlr-k8s-as3-ssl:
