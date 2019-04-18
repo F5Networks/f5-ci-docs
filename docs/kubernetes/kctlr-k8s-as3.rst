@@ -1,7 +1,7 @@
 :product: Container Ingress Services
 :type: concept
 
-.. _kctlr-k8s-as3-use:
+.. _kctlr-k8s-as3-int:
 
 Container Ingress Services and AS3 Extension integration
 ========================================================
@@ -97,6 +97,7 @@ The Kubernetes deployment created by the Kubernetes Service:
           - name: nginx
             image: nginx
 
+.. _kctlr-k8s-as3-discovery:
 
 Service discovery and controller mode
 `````````````````````````````````````
@@ -112,6 +113,8 @@ CIS service discovery adds IP address and service port information to AS3 declar
 |                  | - Use the Kubernetes :code:`cluster NodePort ports` to replace entries in the :code:`ServicePort` section.          | 
 |                  | Ensure you expose Kubernetes services as type :code:`Nodeport`.                                                     |
 +------------------+---------------------------------------------------------------------------------------------------------------------+
+
+.. _kctlr-k8s-as3-processing:
 
 AS3 declaration processing 
 ``````````````````````````
@@ -154,23 +157,43 @@ AS3 declaration processing involves these four steps:
 
 4. CIS posts the generated AS3 declaration to the BIG-IP system and begins processing traffic.
 
+.. _kctlr-k8s-as3-params:
+
 Parameters
 ``````````
-+-----------------+---------+----------+-------------------+-----------------------------------------+-----------------+
-| Parameter       | Type    | Required | Default           | Description                             | Allowed Values  |
-+=================+=========+==========+===================+=========================================+=================+
-| as3-validation  | Boolean | Optional | True              | Tells CIS whether or not to             |                 |
-|                 |         |          |                   | perform AS3 validation.                 | "true", "false" |  
-+-----------------+---------+----------+-------------------+-----------------------------------------+-----------------+
-| insecure        | Boolean | Optional | False             | Tells CIS whether or not to             |                 |
-|                 |         |          |                   | allow communication with BIG-IP using   |                 |
-|                 |         |          |                   | invalid SSL certificates.               | "true", "false" |
-+-----------------+---------+----------+-------------------+-----------------------------------------+-----------------+
++-----------------+---------+----------+-------------------+-------------------------------------------+-----------------+
+| Parameter       | Type    | Required | Default           | Description                               | Allowed Values  |
++=================+=========+==========+===================+===========================================+=================+
+| as3-validation  | Boolean | Optional | True              | Tells CIS whether or not to               | "true", "false" |
+|                 |         |          |                   | perform AS3 validation.                   |                 |
++-----------------+---------+----------+-------------------+-------------------------------------------+-----------------+
+| insecure        | Boolean | Optional | False             | Tells CIS whether or not to               | "true", "false" |
+|                 |         |          |                   | allow communication with BIG-IP using     |                 |
+|                 |         |          |                   | invalid SSL certificates.                 |                 |
+|                 |         |          |                   | For more info, refer to the next section; |                 |
+|                 |         |          |                   | CIS and SSL certificate validation.       |                 |
++-----------------+---------+----------+-------------------+-------------------------------------------+-----------------+
+
+.. _kctlr-k8s-as3-ssl:
+
+CIS and SSL certificate validation
+``````````````````````````````````
+CIS validates SSL certificates using the root CA certifictes bundled with the base Debian/Redhat image. Because of this, CIS will fail to validate a BIG-IP system's self-signed SSL certificate, and log an error message similar to the following in the AS3 log file:
+
+.. code-block:: bash
+
+  [ERROR] [as3_log] REST call error: Post https://10.10.10.100/mgmt/shared/appsvcs/declare: x509: cannot validate certificate for 10.10.10.100
+
+To avoid this issues, include the ``insecure=true`` parameter in your configuration when executing a Kubernetes deployment.
+
+.. _kctlr-k8s-as3-resource:
 
 AS3 Resources
 `````````````
 - See the `F5 AS3 User Guide`_ to get started using F5 AS3 Extension declarations.
 - See the `F5 AS3 Reference Guide`_ for an overview and list of F5 AS3 Extension declarations.
+
+.. _kctlr-k8s-as3-example:
 
 AS3 Examples
 ````````````
