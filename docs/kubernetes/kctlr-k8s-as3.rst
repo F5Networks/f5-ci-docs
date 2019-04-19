@@ -184,7 +184,7 @@ CIS validates SSL certificates using the root CA certifictes bundled with the ba
 
   [ERROR] [as3_log] REST call error: Post https://10.10.10.100/mgmt/shared/appsvcs/declare: x509: cannot validate certificate for 10.10.10.100
 
-To avoid this issue, include the ``insecure=true`` parameter in your configuration when executing a Kubernetes deployment.
+To avoid this issue, include the ``--insecure=true`` parameter in your configuration when executing a Kubernetes deployment.
 
 .. _kctlr-k8s-as3-resource:
 
