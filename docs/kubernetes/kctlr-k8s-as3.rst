@@ -25,6 +25,14 @@ CIS has the following AS3 Extension limitations:
 - AS3 does not support moving BIG-IP nodes to new partitions.
 - Static ARP entries remain after deleting an AS3 ConfigMap.
 
+.. important::
+
+  - A unique partition in the controller deployment configuration as it is used to manage the arp entries. 
+  - This partition cannot be used as a tenant in the AS3 config map."
+"--bigip-partition=<name_of_partition>" --> Should be Unqiue.
+
+  Multiple Kubernetes Service resources tagged with same set of labels will cause a CIS error, and service discovery failure.
+
 CIS service discovery
 `````````````````````
 
@@ -185,6 +193,16 @@ CIS validates SSL certificates using the root CA certifictes bundled with the ba
   [ERROR] [as3_log] REST call error: Post https://10.10.10.100/mgmt/shared/appsvcs/declare: x509: cannot validate certificate for 10.10.10.100
 
 To avoid this issue, include the ``--insecure=true`` parameter in your configuration when executing a Kubernetes deployment.
+
+.. _kctlr-k8s-as3-partition:
+
+CIS and partitions 
+``````````````````
+CIS requires a unique partition to manage ARP entries of discovered services. Ensure that you set the ``--bigip-partition=<name>`` to a unique value.
+
+.. important::
+  This partition cannot be used as a tenant in the AS3 configMap.
+
 
 .. _kctlr-k8s-as3-resource:
 
