@@ -190,7 +190,7 @@ To avoid this issue, include the ``--insecure=true`` parameter in your configura
 
 CIS and partitions 
 ``````````````````
-CIS requires a unique partition to manage the ARP entries of discovered services. Ensure that you set the ``--bigip-partition=<name>`` parameter to a unique value in your configuration.
+CIS requires a unique partition on the BIG-IP system to manage the ARP entries of discovered services. Ensure that you set the ``--bigip-partition=<name>`` parameter to a unique value when executing a Kubernetes deployment.
 
 .. important::
   This partition does not allow the use of the AS3 ``Tenant`` class.
