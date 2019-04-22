@@ -186,6 +186,16 @@ CIS validates SSL certificates using the root CA certifictes bundled with the ba
 
 To avoid this issue, include the ``--insecure=true`` parameter in your configuration when executing a Kubernetes deployment.
 
+.. _kctlr-k8s-as3-partition:
+
+CIS and partitions 
+``````````````````
+CIS requires a unique partition to manage the ARP entries of discovered services. Ensure that you set the ``--bigip-partition=<name>`` parameter to a unique value in your configuration.
+
+.. important::
+  This partition does not allow the use of the AS3 ``Tenant`` class.
+
+
 .. _kctlr-k8s-as3-resource:
 
 AS3 Resources
