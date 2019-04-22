@@ -25,14 +25,6 @@ CIS has the following AS3 Extension limitations:
 - AS3 does not support moving BIG-IP nodes to new partitions.
 - Static ARP entries remain after deleting an AS3 ConfigMap.
 
-.. important::
-
-  - A unique partition in the controller deployment configuration as it is used to manage the arp entries. 
-  - This partition cannot be used as a tenant in the AS3 config map."
-"--bigip-partition=<name_of_partition>" --> Should be Unqiue.
-
-  Multiple Kubernetes Service resources tagged with same set of labels will cause a CIS error, and service discovery failure.
-
 CIS service discovery
 `````````````````````
 
