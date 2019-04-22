@@ -201,7 +201,7 @@ CIS and partitions
 CIS requires a unique partition to manage ARP entries of discovered services. Ensure that you set the ``--bigip-partition=<name>`` to a unique value.
 
 .. important::
-  This partition cannot be used as a tenant in the AS3 configMap.
+  This partition does not allow the use of the AS3 ``Tenant`` class.
 
 
 .. _kctlr-k8s-as3-resource:
