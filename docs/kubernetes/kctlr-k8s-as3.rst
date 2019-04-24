@@ -157,7 +157,7 @@ AS3 declaration processing involves these four steps:
 
 4. CIS posts the generated AS3 declaration to the BIG-IP system and begins processing traffic.
 
-CIS declaration processing states:
+*CIS processing states:*
 
 .. image:: /_static/media/container_ingress_services.png
    :scale: 100%
