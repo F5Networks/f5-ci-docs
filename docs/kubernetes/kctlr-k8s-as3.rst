@@ -158,7 +158,7 @@ AS3 declaration processing involves these four steps:
 4. CIS posts the generated AS3 declaration to the BIG-IP system and begins processing traffic.
 
 .. image:: /_static/media/container_ingress_services.png
-   :scale: 80%
+   :scale: 100%
 
 .. _kctlr-k8s-as3-params:
 
@@ -191,9 +191,9 @@ To avoid this issue, include the ``--insecure=true`` parameter in your configura
 
 .. _kctlr-k8s-as3-partition:
 
-CIS and partitions 
-``````````````````
-CIS requires a unique partition on the BIG-IP system to manage the ARP entries of discovered services. Ensure that you set the ``--bigip-partition=<name>`` parameter to a unique value when executing a Kubernetes deployment.
+CIS and administrative partitions 
+`````````````````````````````````
+CIS requires a unique administrative partition on the BIG-IP system to manage the ARP entries of discovered services. Ensure that you set the ``--bigip-partition=<name>`` parameter to a unique value when executing a Kubernetes deployment.
 
 .. important::
   This unique BIG-IP partition does not allow the use of the AS3 ``Tenant`` class.
