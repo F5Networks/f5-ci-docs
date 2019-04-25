@@ -160,7 +160,6 @@ AS3 declaration processing involves these four steps:
 .. rubric:: **CIS processing states:**
 
 .. image:: /_static/media/container_ingress_services.png
-   :scale: 100%
 
 .. _kctlr-k8s-as3-params:
 
