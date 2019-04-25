@@ -49,12 +49,20 @@ The manifest file defines all of the resources required to deploy flannel in Kub
 Set up the BIG-IP system
 ------------------------
 
-.. include:: /_static/reuse/bigip-admin-permissions-reqd.rst
+.. important::
+
+   The steps in this section require Administrator or Resource Administrator access to the BIG-IP system's TMOS shell (tmsh).
 
 .. _k8s-flannel create bigip vxlan:
 
 Create a VXLAN tunnel
 `````````````````````
+
+#. Log in to the TMOS shell (tmsh).
+
+   .. parsed-literal::
+
+      tmsh
 
 #. Create a VXLAN profile with :code:`flooding-type none`.
 
