@@ -86,6 +86,12 @@ Create a self IP in the VXLAN
 
 #. Identify the flannel subnet you want to assign to the BIG-IP system. Make sure it doesn't overlap with a subnet that's already in use by existing Nodes in the Kubernetes Cluster. You will assign this subnet to a "dummy" Node for the BIG-IP device later.
 
+#. Log in to the TMOS shell (tmsh).
+
+   .. parsed-literal::
+
+      tmsh
+
 #. Create a self IP using an address from the subnet you want to assign to the BIG-IP device.
 
 .. important::
@@ -95,7 +101,7 @@ Create a self IP in the VXLAN
 
 .. parsed-literal::
 
-   create /net self **10.129.2.3/16** allow-service **none** vlan **flannel_vxlan**
+   create net self **10.129.2.3** address **10.129.2.3/16** allow-service **none** vlan **flannel_vxlan**
 
 .. _k8s-flannel create floating IP:
 
@@ -106,7 +112,7 @@ Create a floating IP address in the flannel subnet you assigned to the BIG-IP de
 
 .. parsed-literal::
 
-   create /net self **10.129.2.4/16** allow-service **none** traffic-group **traffic-group-1** vlan **flannel_vxlan**
+   create net self **10.129.2.4** address **10.129.2.4/16** allow-service **none** traffic-group **traffic-group-1** vlan **flannel_vxlan**
 
 .. include:: /_static/reuse/kctlr-snat-note.rst
 
@@ -119,9 +125,9 @@ You can use a TMOS shell or the BIG-IP configuration utility to verify object cr
 
 .. parsed-literal::
 
-   show /net tunnels tunnel **flannel_vxlan**
-   show /net running-config self **10.129.2.3/16**
-   show /net running-config self **10.129.2.4/16**
+   list net tunnels tunnel **flannel_vxlan**
+   list net self **10.129.2.3**
+   list net self **10.129.2.4**
 
 .. _add bigip to flannel overlay:
 .. _k8s-bigip-node:
@@ -141,7 +147,7 @@ You can find the MAC address of your BIG-IP VXLAN tunnel using a TMOS shell.
 
 .. parsed-literal::
 
-   show /net tunnels tunnel **flannel_vxlan all-properties**
+   show net tunnels tunnel **flannel_vxlan all-properties**
    -------------------------------------------------
    Net::Tunnel: flannel_vxlan
    -------------------------------------------------
