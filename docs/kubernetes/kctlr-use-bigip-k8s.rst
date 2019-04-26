@@ -68,7 +68,7 @@ Create a VXLAN tunnel
 
    .. parsed-literal::
 
-      create /net tunnels vxlan **fl-vxlan** port **8472** flooding-type **none**
+      create net tunnels vxlan **fl-vxlan** port **8472** flooding-type **none**
 
 #. Create a VXLAN tunnel.
 
@@ -77,7 +77,7 @@ Create a VXLAN tunnel
 
    .. parsed-literal::
 
-      create /net tunnels tunnel **flannel_vxlan** key **1** profile **fl-vxlan** local-address **172.16.1.28**
+      create net tunnels tunnel **flannel_vxlan** key **1** profile **fl-vxlan** local-address **172.16.1.28**
 
 .. _k8s-flannel create bigip self IP:
 
@@ -121,7 +121,7 @@ Create a floating IP address in the flannel subnet you assigned to the BIG-IP de
 Verify creation of the BIG-IP objects
 `````````````````````````````````````
 
-You can use a TMOS shell or the BIG-IP configuration utility to verify object creation.
+You can use a TMOS shell (tmsh) to verify object creation.
 
 .. parsed-literal::
 
