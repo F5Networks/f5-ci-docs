@@ -195,6 +195,7 @@ Create a Kubernetes Node for the BIG-IP device
 
    - Set the :code:`podCIDR` to the subnet you used to :ref:`create the self IP <k8s-flannel create bigip self IP>` and floating IP.
 
+
    .. literalinclude:: /kubernetes/config_examples/f5-kctlr-bigip-node.yaml
 
    :fonticon:`fa fa-download` :download:`f5-kctlr-bigip-node.yaml </kubernetes/config_examples/f5-kctlr-bigip-node.yaml>`
