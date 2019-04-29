@@ -109,6 +109,7 @@ When using F5 Resources or Kubernetes Ingresses, the definitions you provide tel
    - The |kctlr| cannot manage objects in the ``/Common`` partition.
    - The |KCTLR| cannot create or destroy BIG-IP partitions.
    - The partition(s) in which you want to manage objects for your Kubernetes cluster must exist on the BIG-IP system before you deploy the |kctlr|.
+   - CIS can use AS3 Extension declarations to create and use additional partitions. For more information, refer to `Container Ingress Services and AS3 Extension integration`_.
 
 What BIG-IP Objects can the Controller Manage?
 ``````````````````````````````````````````````
