@@ -8,7 +8,7 @@ metadata:
     flannel.alpha.coreos.com/backend-type: "vxlan"
     flannel.alpha.coreos.com/kube-subnet-manager: "true"
     # Provide the IP address you assigned as the BIG-IP VTEP
-    flannel.alpha.coreos.com/public-ip: 172.16.1.3
+    flannel.alpha.coreos.com/public-ip: 172.16.1.28
 spec:
   # Define the flannel subnet you want to assign to the BIG-IP device.
   # Be sure this subnet does not collide with any other Nodes' subnets.
