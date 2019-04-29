@@ -75,7 +75,7 @@ author = u'F5 Networks'
 # built documents.
 #
 # The short X.Y version.
-version = 'v2'
+version = ''
 # The full version, including alpha/beta/rc tags.
 release = ''
 
