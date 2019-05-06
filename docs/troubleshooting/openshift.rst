@@ -188,7 +188,7 @@ How do I verify connectivity between the BIG-IP VTEP and the OSE Node?
 
      .. code-block:: console
 
-        tcpdump -i <name-of-BIG-IP-VXLAN-tunnel>
+        tcpdump -i <name_of_vlan_used_for_VTEP>
 
      \
 
@@ -205,7 +205,7 @@ How do I verify connectivity between the BIG-IP VTEP and the OSE Node?
 
      .. code-block:: console
 
-        tcpdump -i <name-of-BIG-IP-VXLAN-tunnel>
+        tcpdump -i <name_of_VXLAN_tunnel_on_BIG-IP>
 
      \
 
