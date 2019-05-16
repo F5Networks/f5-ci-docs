@@ -107,5 +107,5 @@ Download the `F5 Analytics iApp`_ from DevCentral, then upload it to the Common 
 .. todo:: add instructions for deployment from Kubernetes and Marathon using the iApp variables
 
 .. _F5 Analytics iApp Deployment Guide: https://www.f5.com/pdf/deployment-guides/f5-analytics-dg.pdf
-.. _F5 Analytics iApp: https://devcentral.f5.com/codeshare/f5-analytics-iapp
+.. _F5 Analytics iApp: https://support.f5.com/csp/article/K07859431
 .. _F5 Analytics App: https://splunkbase.splunk.com/app/3161/

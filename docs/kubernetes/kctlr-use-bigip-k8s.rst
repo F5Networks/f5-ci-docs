@@ -101,7 +101,7 @@ Create a self IP in the VXLAN
 
 .. parsed-literal::
 
-   create net self **10.129.2.3** address **10.129.2.3/16** allow-service **none** vlan **flannel_vxlan**
+   create net self **10.129.2.3** address **10.129.2.3/24** allow-service **none** vlan **flannel_vxlan**
 
 .. _k8s-flannel create floating IP:
 
@@ -112,7 +112,7 @@ Create a floating IP address in the flannel subnet you assigned to the BIG-IP de
 
 .. parsed-literal::
 
-   create net self **10.129.2.4** address **10.129.2.4/16** allow-service **none** traffic-group **traffic-group-1** vlan **flannel_vxlan**
+   create net self **10.129.2.4** address **10.129.2.4/24** allow-service **none** traffic-group **traffic-group-1** vlan **flannel_vxlan**
 
 .. include:: /_static/reuse/kctlr-snat-note.rst
 
@@ -135,8 +135,7 @@ You can use a TMOS shell (tmsh) to verify object creation.
 Add the BIG-IP device to the flannel overlay network
 ----------------------------------------------------
 
-Flannel uses a set of custom Annotations to identify Nodes as part of the Cluster network.
-When you create a dummy Node resource for the BIG-IP that contains these Annotations, flannel can discover the BIG-IP device and monitor it as part of the VXLAN.
+Flannel uses a set of custom Annotations to identify Nodes as part of the Cluster network. When you create a dummy Node resource for the BIG-IP that contains these Annotations, flannel can discover the BIG-IP device and monitor it as part of the VXLAN.
 
 .. _find vtepMAC:
 

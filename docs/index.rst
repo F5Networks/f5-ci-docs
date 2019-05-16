@@ -29,7 +29,7 @@ Container Ingress Service     Environment
 
    Container Ingress Services architecture
 
-.. [#cccl] See `Introduction to F5 Common Controller Core Library <https://devcentral.f5.com/articles/introduction-to-f5-common-controller-core-library-cccl-28355>`_ on DevCentral for more information.
+.. [#cccl] See `Introduction to F5 Common Controller Core Library <https://Devcentral.f5.com/articles/introduction-to-f5-common-controller-core-library-cccl-28355>`_ on DevCentral for more information.
 
 ---------------------------------
 
@@ -40,7 +40,7 @@ Design
 
 Each Container Ingress Services is uniquely suited to its specific container orchestration environment and purpose, utilizing the architecture and language appropriate for the environment. Application Developers interact with the platform's API; the CCs watch the API for certain events, then act accordingly.
 
-The Container Ingress Services is stateless. The inputs are:
+
 
 - the container orchestration environment's config,
 - the BIG-IP device config, and
