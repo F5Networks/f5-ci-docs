@@ -126,7 +126,7 @@ You can use the |kctlr| to create BIG-IP pools that aren't attached to a front-e
 
    The primary use case for unattached pools is to allow the use of an IPAM system to allocate IP addresses for your virtual servers.
 
-   If you create unattached pools and are not using IPAM, the BIG-IP system must have another way to route traffic to the pools (such as `iRules <https://devcentral.f5.com/irules>`_ or `local traffic policies`_).
+   If you create unattached pools and are not using IPAM, the BIG-IP system must have another way to route traffic to the pools (such as `iRules <https://clouddocs.f5.com/api/irules/>`_ or `local traffic policies`_).
 
 .. _kctlr-create-unattached-pool:
 

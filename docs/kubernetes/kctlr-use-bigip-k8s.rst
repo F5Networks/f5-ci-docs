@@ -135,8 +135,7 @@ You can use a TMOS shell (tmsh) to verify object creation.
 Add the BIG-IP device to the flannel overlay network
 ----------------------------------------------------
 
-Flannel uses a set of custom Annotations to identify Nodes as part of the Cluster network.
-When you create a dummy Node resource for the BIG-IP that contains these Annotations, flannel can discover the BIG-IP device and monitor it as part of the VXLAN.
+Flannel uses a set of custom Annotations to identify Nodes as part of the Cluster network. When you create a dummy Node resource for the BIG-IP that contains these Annotations, flannel can discover the BIG-IP device and monitor it as part of the VXLAN.
 
 .. _find vtepMAC:
 
