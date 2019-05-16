@@ -101,7 +101,7 @@ Create a self IP in the VXLAN
 
 .. parsed-literal::
 
-   create net self **10.129.2.3** address **10.129.2.3/16** allow-service **none** vlan **flannel_vxlan**
+   create net self **10.129.2.3** address **10.129.2.3/24** allow-service **none** vlan **flannel_vxlan**
 
 .. _k8s-flannel create floating IP:
 
@@ -112,7 +112,7 @@ Create a floating IP address in the flannel subnet you assigned to the BIG-IP de
 
 .. parsed-literal::
 
-   create net self **10.129.2.4** address **10.129.2.4/16** allow-service **none** traffic-group **traffic-group-1** vlan **flannel_vxlan**
+   create net self **10.129.2.4** address **10.129.2.4/24** allow-service **none** traffic-group **traffic-group-1** vlan **flannel_vxlan**
 
 .. include:: /_static/reuse/kctlr-snat-note.rst
 
