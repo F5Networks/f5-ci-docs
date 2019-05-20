@@ -44,7 +44,7 @@ spec:
             "--openshift-sdn-name=/Common/openshift_vxlan",
             "--manage-routes=true",
             "--route-vserver-addr=1.2.3.4",
-            "--route-label="App1"
+            "--route-label=App1"
             ]
       imagePullSecrets:
         - name: f5-docker-images
