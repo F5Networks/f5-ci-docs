@@ -5,7 +5,7 @@ metadata:
     name: myService
     # Tells the BIG-IP Controller to watch Routes with a specific label.
     # Include the label in the k8s-bigip-ctlr Deployment under "args"
-    # (for example, "--route-label="App1")
+    # (for example, "--route-label=App1")
     f5type: App1
   name: myService-route-edge
   annotations:
