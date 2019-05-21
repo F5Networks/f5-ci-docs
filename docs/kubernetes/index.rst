@@ -11,25 +11,6 @@ F5 Container Ingress Services - Kubernetes
 
    :ref:`Learn about using the BIG-IP Controller in OpenShift <openshift-home>`.
 
-This document provides general information regarding the F5 Integration for Kubernetes.
-For deployment and usage instructions, please refer to the guides below.
-
-User Guides
------------
-
-.. toctree::
-   :maxdepth: 1
-
-   flannel-bigip-info
-   kctlr-use-bigip-k8s
-   kctlr-app-install
-   kctlr-k8s-as3
-   kctlr-f5-resource
-   kctlr-manage-bigip-objects
-   kctlr-deploy-iapp
-   ../troubleshooting/kubernetes
-   k8s-bigip-ctlr Reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
-
 .. _kctlr overview:
 
 Overview
@@ -90,7 +71,27 @@ To upgrade an existing :code:`k8s-bigip-ctlr` instance to a newer version, take 
 
 .. include:: /_static/reuse/upgrade-warning.rst
 
-.. _apply bigip services k8s:
+.. _k8s-usage:
+
+For deployment and usage instructions, please refer to the guides below.
+
+User Guides
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+   flannel-bigip-info
+   kctlr-use-bigip-k8s
+   kctlr-app-install
+   kctlr-k8s-as3
+   kctlr-f5-resource
+   kctlr-manage-bigip-objects
+   kctlr-deploy-iapp
+   ../troubleshooting/kubernetes
+   k8s-bigip-ctlr Reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
+
+.. _apply-bigip-services-k8s:
 
 Applying BIG-IP Services to Kubernetes Resources
 ------------------------------------------------
