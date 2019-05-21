@@ -11,7 +11,22 @@ F5 Container Ingress Services - Kubernetes
 
    :ref:`Learn about using the BIG-IP Controller in OpenShift <openshift-home>`.
 
-.. _kctlr overview:
+The F5 BIG-IP Controller for Kubernetes lets you manage your F5 BIG-IP device from Kubernetes or OpenShift, using either environment’s native API.
+
+.. _kctlr-features:
+
+Features
+--------
+
+- Dynamically creates, manages, and destroys BIG-IP objects.
+- Forwards traffic from the BIG-IP device to `Kubernetes clusters`_ via `NodePort`_ or `ClusterIP`_.
+- Support for `F5 AS3 Extension`_ declarations.
+- Support for F5 `iApps`_.
+- Handles F5-specific VirtualServer objects created in Kubernetes.
+- Handles standard `Kubernetes Ingress`_ objects using F5-specific extensions.
+- Handles OpenShift Route objects using F5-specific extensions.
+
+.. _kctlr-overview:
 
 Overview
 --------
@@ -29,8 +44,8 @@ The |kctlr| watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for 
 
 .. _k8s-prereqs:
 
-General Prerequisites
-`````````````````````
+Prerequisites
+-------------
 
 The |kctlr-long| documentation set assumes that you:
 
