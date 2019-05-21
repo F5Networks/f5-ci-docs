@@ -123,6 +123,7 @@ rst_epilog = """
 .. _CIDR format: https://tools.ietf.org/html/rfc4632
 .. _Cloud Foundry CLI: https://docs.cloudfoundry.org/cf-cli/getting-started.html
 .. _Cloud Foundry: https://cloudfoundry.org/why-cloud-foundry/
+.. _ClusterIP: https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/
 .. _Cluster network: https://kubernetes.io/docs/concepts/cluster-administration/networking/
 .. _Cluster Role Binding: https://kubernetes.io/docs/admin/authorization/rbac/#rolebinding-and-clusterrolebinding
 .. _Cluster Role: https://kubernetes.io/docs/admin/authorization/rbac/#role-and-clusterrole
@@ -155,6 +156,7 @@ rst_epilog = """
 .. _flannel: https://github.com/coreos/flannel
 .. _flannel manifest: https://github.com/coreos/flannel/blob/master/Documentation/kube-flannel.yml
 .. _helm: https://helm.sh
+.. _iApps: https://www.f5.com/products/f5-technologies
 .. _iApp Pool Member table: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#iapp-pool-member-table
 .. _Ingress annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#ingress-resources
 .. _Ingress controller: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-controllers
@@ -172,6 +174,7 @@ rst_epilog = """
 .. _k8s-bigip-ctlr v1.5.0: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.5/
 .. _kube-proxy: https://kubernetes.io/docs/admin/kube-proxy/
 .. _kubectl: https://kubernetes.io/docs/user-guide/kubectl-overview/
+.. _Kubernetes clusters: https://kubernetes.io/docs/concepts/cluster-administration/cluster-administration-overview/
 .. _Kubernetes Dashboard: https://kubernetes.io/docs/user-guide/ui/
 .. _Kubernetes Ingress controller: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-controllers
 .. _Kubernetes node: https://kubernetes.io/docs/admin/node/
@@ -194,6 +197,7 @@ rst_epilog = """
 .. _namespace: https://kubernetes.io/docs/user-guide/namespaces/
 .. _namespaces: https://kubernetes.io/docs/user-guide/namespaces/
 .. _NATS bus: https://docs.cloudfoundry.org/concepts/architecture/router.html#use
+.. _NodePort: https://kubernetes.io/docs/concepts/services-networking/service/#nodeport
 .. _oc: https://docs.openshift.com/enterprise/3.0/cli_reference/basic_cli_operations.html
 .. _OpenShift F5 Router: https://docs.openshift.org/latest/install_config/router/f5_router.html
 .. _OpenShift Route Annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-route-annotations
