@@ -49,9 +49,11 @@ Overview
 
 The |kctlr-long| (:code:`k8s-bigip-ctlr`) is a cloud-native connector that lets you manage BIG-IP devices using native Kubernetes or OpenShift APIs.
 
-The |kctlr-long| can use either `F5 Resources`_ or `F5 AS3 Extensions`_ to configure the BIG-IP system.
+The (:code:`k8s-bigip-ctlr`) can use either `F5 Resources`_ or `F5 AS3 Extensions`_ to configure the BIG-IP system.
 
-See the :ref:`connector compatibility` table for platform compatibility information.
+.. note::
+
+   See the :ref:`connector compatibility` table for platform compatibility information.
 
 The |kctlr| watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for specially-formatted resources and updates the BIG-IP system configurations accordingly.
 
@@ -188,11 +190,7 @@ The |kctlr| can create, update, remove, and/or manage BIG-IP objects as noted in
 Object Naming
 -------------
 
-.. note::
-
-   The |kctlr| prefaces all BIG-IP virtual server objects with :code:`[namespace]_[resource-name]`.
-
-   For example, if :code:`default` is the namespace and ``k8s.vs`` is the ConfigMap name, the object preface is :code:`default_k8s.vs_173.16.2.2:80`.
+The |kctlr| prefaces all BIG-IP virtual server objects with :code:`[namespace]_[resource-name]`. For example, if :code:`default` is the namespace and ``k8s.vs`` is the ConfigMap name, the object preface is :code:`default_k8s.vs_173.16.2.2:80`.
 
 High Availability and Multi-tenancy
 -----------------------------------
