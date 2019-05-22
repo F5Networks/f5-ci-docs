@@ -49,9 +49,9 @@ Prerequisites
 
 The |kctlr-long| documentation set assumes that you have:
 
-- A Kubernetes `Cluster`_ running;
-- Experience with the `Kubernetes dashboard`_ and `kubectl`_ ;
-- A BIG-IP device licensed and provisioned for your requirements; and
+- A running Kubernetes `Cluster`_.
+- Experience with the `Kubernetes dashboard`_ and `kubectl`_.
+- A BIG-IP device licensed and provisioned for your requirements.
 - Experience with BIG-IP LTM concepts and ``tmsh`` commands.
 
 .. note::
@@ -116,8 +116,8 @@ For all ingress traffic, the |kctlr| creates a front-end virtual server that pas
 
 When using F5 Resources or Kubernetes Ingresses, the definitions you provide tell the |kctlr|:
 
-- What Kubernetes resource(s) you want the |kctlr| to manage;
-- What objects to create on the BIG-IP device(s) for the specified resource(s); and
+- What Kubernetes resource(s) you want the |kctlr| to manage.
+- What objects to create on the BIG-IP device(s) for the specified resource(s).
 - How to configure those BIG-IP objects.
 
 .. important::
