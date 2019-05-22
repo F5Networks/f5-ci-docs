@@ -177,6 +177,7 @@ rst_epilog = """
 .. _Kubernetes clusters: https://kubernetes.io/docs/concepts/cluster-administration/cluster-administration-overview/
 .. _Kubernetes Dashboard: https://kubernetes.io/docs/user-guide/ui/
 .. _Kubernetes Ingress controller: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-controllers
+.. _Kubernetes Ingress: https://kubernetes.io/docs/concepts/services-networking/ingress/
 .. _Kubernetes node: https://kubernetes.io/docs/admin/node/
 .. _Kubernetes RBAC documentation: https://kubernetes.io/docs/admin/authorization/rbac/
 .. _Kubernetes Service: https://kubernetes.io/docs/user-guide/services/
