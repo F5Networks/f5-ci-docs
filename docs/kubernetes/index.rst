@@ -127,8 +127,8 @@ When using F5 Resources or Kubernetes Ingresses, the definitions you provide tel
    - The partition(s) in which you want to manage objects for your Kubernetes cluster must exist on the BIG-IP system before you deploy the |kctlr|.
    - CIS can use AS3 Extension declarations to create and use additional partitions. For more information, refer to `Container Ingress Services and AS3 Extension integration`_.
 
-What BIG-IP Objects can the Controller Manage?
-----------------------------------------------
+Managed BIG-IP Objects
+----------------------
 
 You can deploy BIG-IP objects for Services and Ingresses in Kubernetes. In OpenShift, you can deploy BIG-IP objects for Services and Routes.
 The |kctlr| can create, update, remove, and/or manage BIG-IP objects as noted in the table below.
