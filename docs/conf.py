@@ -147,6 +147,7 @@ rst_epilog = """
 .. _F5 Docker registry: https://hub.docker.com/r/f5networks/
 .. _F5 IPAM Controller: https://github.com/F5Networks/f5-ipam-ctlr
 .. _f5-ipam-ctlr docs: %(base_url)s/products/ipam-ctlr/latest/
+.. _F5 Resources: %(base_url)s/containers/v2/kubernetes/kctlr-f5-resource.html#f5-resource-properties
 .. _F5 schema: https://github.com/F5Networks/k8s-bigip-ctlr/tree/master/schemas
 .. _F5 virtual server properties: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#virtualserver-configmap-properties
 .. _f5-bigip-ctlr chart: https://github.com/F5Networks/charts/tree/master/src/stable/f5-bigip-ctlr
