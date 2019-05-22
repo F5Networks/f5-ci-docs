@@ -70,8 +70,8 @@ Installation
 
 .. _k8s-upgrade:
 
-Upgrading
----------
+Upgrades
+--------
 
 To upgrade an existing :code:`k8s-bigip-ctlr` instance to a newer version, take the steps below.
 
@@ -108,8 +108,8 @@ User Guides
 
 .. _apply-bigip-services-k8s:
 
-Applying BIG-IP Services to Kubernetes Resources
-------------------------------------------------
+Applying Services to Kubernetes Resources
+-----------------------------------------
 
 The |kctlr| enables :ref:`ingress <k8s-concept ingress>` into the cluster via :ref:`F5 Resources <k8s-f5-resources>` and :ref:`Kubernetes Ingress resources <kctlr-ingress-config>`.
 For all ingress traffic, the |kctlr| creates a front-end virtual server that passes incoming requests to the appropriate endpoint(s) within the Cluster.
@@ -127,8 +127,8 @@ When using F5 Resources or Kubernetes Ingresses, the definitions you provide tel
    - The partition(s) in which you want to manage objects for your Kubernetes cluster must exist on the BIG-IP system before you deploy the |kctlr|.
    - CIS can use AS3 Extension declarations to create and use additional partitions. For more information, refer to `Container Ingress Services and AS3 Extension integration`_.
 
-Managed BIG-IP Objects
-----------------------
+Managed Objects
+---------------
 
 You can deploy BIG-IP objects for Services and Ingresses in Kubernetes. In OpenShift, you can deploy BIG-IP objects for Services and Routes.
 The |kctlr| can create, update, remove, and/or manage BIG-IP objects as noted in the table below.
@@ -188,8 +188,8 @@ The |kctlr| can create, update, remove, and/or manage BIG-IP objects as noted in
 
 .. _k8s-vs-naming:
 
-BIG-IP Object Naming
---------------------
+Object Naming
+-------------
 
 .. note::
 
@@ -197,8 +197,8 @@ BIG-IP Object Naming
 
    For example, if :code:`default` is the namespace and ``k8s.vs`` is the ConfigMap name, the object preface is :code:`default_k8s.vs_173.16.2.2:80`.
 
-BIG-IP High Availability and Multi-tenancy
-------------------------------------------
+High Availability and Multi-tenancy
+-----------------------------------
 
 If you're using a BIG-IP device pair or cluster, F5 recommends deploying multiple |kctlr| instances -- one Controller per BIG-IP device. You can also deploy multiple Controller instances to manage separate BIG-IP partitions (for example, one Controller:one namespace:one partition).
 
