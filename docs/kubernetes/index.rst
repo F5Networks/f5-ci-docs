@@ -11,7 +11,23 @@ F5 Container Ingress Services - Kubernetes
 
    :ref:`Learn about using the BIG-IP Controller in OpenShift <openshift-home>`.
 
-The F5 BIG-IP Controller for Kubernetes lets you manage your F5 BIG-IP device from Kubernetes or OpenShift, using either environment’s native API.
+User Guides
+-----------
+
+This document provides general information regarding the F5 Integration for Kubernetes. For deployment and usage instructions, please refer to the guides below.
+
+.. toctree::
+   :maxdepth: 1
+
+   flannel-bigip-info
+   kctlr-use-bigip-k8s
+   kctlr-app-install
+   kctlr-k8s-as3
+   kctlr-f5-resource
+   kctlr-manage-bigip-objects
+   kctlr-deploy-iapp
+   ../troubleshooting/kubernetes
+   k8s-bigip-ctlr Reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
 
 .. _kctlr-features:
 
@@ -31,8 +47,9 @@ Features
 Overview
 --------
 
-The |kctlr-long| (:code:`k8s-bigip-ctlr`) is a cloud-native connector.
-It enables use of an F5 BIG-IP device as an Application Delivery Controller (ADC) serving North-South traffic in a Kubernetes `Cluster`_.
+The |kctlr-long| (:code:`k8s-bigip-ctlr`) is a cloud-native connector that lets you manage BIG-IP devices using native Kubernetes or OpenShift APIs.
+
+The |kctlr-long| can use either `F5 Resources`_ or `F5 AS3 Extensions`_ to configure the BIG-IP system.
 
 See the :ref:`connector compatibility` table for platform compatibility information.
 
@@ -181,28 +198,6 @@ High Availability and Multi-tenancy
 -----------------------------------
 
 If you're using a BIG-IP device pair or cluster, F5 recommends deploying multiple |kctlr| instances -- one Controller per BIG-IP device. You can also deploy multiple Controller instances to manage separate BIG-IP partitions (for example, one Controller:one namespace:one partition).
-
-
-.. _k8s-usage:
-
-User Guides
------------
-
-For deployment and usage instructions, please refer to the guides below.
-
-.. toctree::
-   :maxdepth: 1
-
-   flannel-bigip-info
-   kctlr-use-bigip-k8s
-   kctlr-app-install
-   kctlr-k8s-as3
-   kctlr-f5-resource
-   kctlr-manage-bigip-objects
-   kctlr-deploy-iapp
-   ../troubleshooting/kubernetes
-   k8s-bigip-ctlr Reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
-
 
 .. _k8s-concepts:
 
