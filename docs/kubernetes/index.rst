@@ -49,7 +49,7 @@ Overview
 
 The |kctlr-long| (:code:`k8s-bigip-ctlr`) is a cloud-native connector that lets you manage BIG-IP devices using native Kubernetes or OpenShift APIs.
 
-The (:code:`k8s-bigip-ctlr`) can use either `F5 Resources`_ or `F5 AS3 Extensions`_ to configure the BIG-IP system.
+The :code:`k8s-bigip-ctlr` can use either `F5 Resources`_ or `F5 AS3 Extensions`_ to configure the BIG-IP system.
 
 .. note::
 
