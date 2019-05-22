@@ -198,7 +198,7 @@ BIG-IP Object Naming
    For example, if :code:`default` is the namespace and ``k8s.vs`` is the ConfigMap name, the object preface is :code:`default_k8s.vs_173.16.2.2:80`.
 
 BIG-IP High Availability and Multi-tenancy
-``````````````````````````````````````````
+------------------------------------------
 
 If you're using a BIG-IP device pair or cluster, F5 recommends deploying multiple |kctlr| instances -- one Controller per BIG-IP device. You can also deploy multiple Controller instances to manage separate BIG-IP partitions (for example, one Controller:one namespace:one partition).
 
