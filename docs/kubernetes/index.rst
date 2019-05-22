@@ -47,12 +47,12 @@ The |kctlr| watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for 
 Prerequisites
 -------------
 
-The |kctlr-long| documentation set assumes that you:
+The |kctlr-long| documentation set assumes that you have:
 
-- already have a Kubernetes `Cluster`_ running;
-- are familiar with the `Kubernetes dashboard`_ and `kubectl`_ ;
-- already have a BIG-IP device licensed and provisioned for your requirements; and
-- are familiar with BIG-IP LTM concepts and ``tmsh`` commands.
+- A Kubernetes `Cluster`_ running;
+- Experience with the `Kubernetes dashboard`_ and `kubectl`_ ;
+- A BIG-IP device licensed and provisioned for your requirements; and
+- Experience with BIG-IP LTM concepts and ``tmsh`` commands.
 
 .. note::
 
@@ -70,8 +70,8 @@ Installation
 
 .. _k8s-upgrade:
 
-Upgrade
--------
+Upgrading
+---------
 
 To upgrade an existing :code:`k8s-bigip-ctlr` instance to a newer version, take the steps below.
 
@@ -116,9 +116,9 @@ For all ingress traffic, the |kctlr| creates a front-end virtual server that pas
 
 When using F5 Resources or Kubernetes Ingresses, the definitions you provide tell the |kctlr|:
 
-- what Kubernetes resource(s) you want the |kctlr| to manage;
-- what objects to create on the BIG-IP device(s) for the specified resource(s); and
-- how to configure those BIG-IP objects.
+- What Kubernetes resource(s) you want the |kctlr| to manage;
+- What objects to create on the BIG-IP device(s) for the specified resource(s); and
+- How to configure those BIG-IP objects.
 
 .. important::
 
@@ -128,7 +128,8 @@ When using F5 Resources or Kubernetes Ingresses, the definitions you provide tel
    - CIS can use AS3 Extension declarations to create and use additional partitions. For more information, refer to `Container Ingress Services and AS3 Extension integration`_.
 
 What BIG-IP Objects can the Controller Manage?
-``````````````````````````````````````````````
+----------------------------------------------
+
 You can deploy BIG-IP objects for Services and Ingresses in Kubernetes. In OpenShift, you can deploy BIG-IP objects for Services and Routes.
 The |kctlr| can create, update, remove, and/or manage BIG-IP objects as noted in the table below.
 
@@ -188,7 +189,7 @@ The |kctlr| can create, update, remove, and/or manage BIG-IP objects as noted in
 .. _k8s-vs-naming:
 
 BIG-IP Object Naming
-````````````````````
+--------------------
 
 .. note::
 
