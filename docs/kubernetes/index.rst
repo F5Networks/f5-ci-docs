@@ -11,10 +11,10 @@ F5 Container Ingress Services - Kubernetes
 
    :ref:`Learn about using the BIG-IP Controller in OpenShift <openshift-home>`.
 
+This document provides general information regarding the F5 Integration for Kubernetes. For deployment and usage instructions, please refer to the User Guides section.
+
 User Guides
 -----------
-
-This document provides general information regarding the F5 Integration for Kubernetes. For deployment and usage instructions, please refer to the guides below.
 
 .. toctree::
    :maxdepth: 1
