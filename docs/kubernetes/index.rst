@@ -86,26 +86,6 @@ To upgrade an existing :code:`k8s-bigip-ctlr` instance to a newer version, take 
 
 .. include:: /_static/reuse/upgrade-warning.rst
 
-.. _k8s-usage:
-
-For deployment and usage instructions, please refer to the guides below.
-
-User Guides
------------
-
-.. toctree::
-   :maxdepth: 1
-
-   flannel-bigip-info
-   kctlr-use-bigip-k8s
-   kctlr-app-install
-   kctlr-k8s-as3
-   kctlr-f5-resource
-   kctlr-manage-bigip-objects
-   kctlr-deploy-iapp
-   ../troubleshooting/kubernetes
-   k8s-bigip-ctlr Reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
-
 .. _apply-bigip-services-k8s:
 
 Applying Services to Kubernetes Resources
@@ -201,6 +181,28 @@ High Availability and Multi-tenancy
 -----------------------------------
 
 If you're using a BIG-IP device pair or cluster, F5 recommends deploying multiple |kctlr| instances -- one Controller per BIG-IP device. You can also deploy multiple Controller instances to manage separate BIG-IP partitions (for example, one Controller:one namespace:one partition).
+
+
+.. _k8s-usage:
+
+User Guides
+-----------
+
+For deployment and usage instructions, please refer to the guides below.
+
+.. toctree::
+   :maxdepth: 1
+
+   flannel-bigip-info
+   kctlr-use-bigip-k8s
+   kctlr-app-install
+   kctlr-k8s-as3
+   kctlr-f5-resource
+   kctlr-manage-bigip-objects
+   kctlr-deploy-iapp
+   ../troubleshooting/kubernetes
+   k8s-bigip-ctlr Reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
+
 
 .. _k8s-concepts:
 
