@@ -102,7 +102,7 @@ Prerequisites
 
 .. important::
 
-   If you access the BIG-IP system using an IP address, ensure the IP address is added to both the Common Name (CN), and a SAN field.
+   If you access the BIG-IP system using an IP address, ensure you add the IP address to both the Common Name (CN), and SAN field.
 
 Create a root CA and sign a new BIG-IP device certificate
 `````````````````````````````````````````````````````````
@@ -162,7 +162,7 @@ In this procedure, you will use OpenSSL to create a new Root CA signing certific
 
    .. important::
 
-      The CA certificate and private_key files are created in step 9. If you prefer a different name than bigipCa, modify the openssl.cnf file accordingly, and use the new name when creating the signing certificate and key in step 9.
+      You will create the CA certificate and private_key files in step 9. If you prefer to use a different name than bigipCa, modify the openssl.cnf file accordingly, and use the new name when creating the signing certificate and key in step 9.
 
    Example openssl.cnf
 
@@ -247,7 +247,7 @@ In this procedure, you will use OpenSSL to create a new Root CA signing certific
 
    .. note::
 
-      This command requires that you answer a series of questions. The pass phrase is used to protect the CA key, and is used each time to sign a new BIG-IP device certificate. Store the passphrase in a safe place. 
+      This command requires that you answer a series of questions. The pass phrase protects the CA key, and you must enter the passphrase each time you sign a new BIG-IP device certificate. Store the passphrase in a safe place. 
 
    .. parsed-literal::
 
@@ -324,7 +324,7 @@ In this procedure, you will back up and replace the BIG-IP system's self-signed 
 
 .. note::
 
-   If the BIG-IP system has the DNS module license, connectivity to peer BIG-IP DNS systems will fail until the new signed certificate is exchanged, refer to the Sync group peer section of `K16951115 Changing the BIG-IP DNS system device certificate using the Configuration utility`_.
+   If the BIG-IP system has the DNS module license, connectivity to peer BIG-IP DNS systems will fail. You must exchange the new certificate with the BIG-IP DNS peers. For more inforation, refer to the **Sync group peer** section of `K16951115 Changing the BIG-IP DNS system device certificate using the Configuration utility`_.
 
 #. From the workstation, change into the root CA working directory.
 
@@ -394,7 +394,7 @@ In this procedure, you will back up and replace the BIG-IP system's self-signed 
 
    .. note::
 
-      Some user accounts may be configured to log directly in to tmsh. If your current prompt shows **(tmos)**, you are already in the TMOS Shell (tmsh).
+      Some user accounts may log directly in to tmsh. If your current prompt shows **(tmos)**, you are already in the TMOS Shell (tmsh).
 
    .. parsed-literal::
 
@@ -424,7 +424,7 @@ In this procedure, you will back up and replace the BIG-IP system's self-signed 
 
       echo | openssl s_client -connect localhost:443 | openssl x509 -noout -text | less
 
-   The Not Before should represent the day the certificate was created. The CN and Subject Alternative Name should match if you connect to BIG-IP using an IP address.
+   The Not Before entry represents when you created the new certificate. The CN and Subject Alternative Name must match if you connect to BIG-IP using an IP address.
 
    .. parsed-literal::
 
