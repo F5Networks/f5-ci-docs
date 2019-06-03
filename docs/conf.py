@@ -235,7 +235,10 @@ rst_epilog = """
 .. _F5 AS3 User Guide: %(base_url)s/products/extensions/f5-appsvcs-extension/latest/userguide/
 .. _F5 AS3 Reference Guide: %(base_url)s/products/extensions/f5-appsvcs-extension/latest/refguide/
 .. _Container Ingress Services and AS3 Extension integration: %(base_url)s/containers/v2/kubernetes/kctlr-k8s-as3.html
-
+.. _Updating the CIS trusted certificate store: %(base_url)s/kubernetes/kctlr-as3-cert-trust.html
+.. _Overview of BIG-IP device certificates: https://support.f5.com/csp/article/K15664
+.. _K16951115 Changing the BIG-IP DNS system device certificate using the Configuration utility: https://support.f5.com/csp/article/K16951115
+.. _ReplicaSet: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 """% {
     'base_url': 'https://clouddocs.f5.com'
 }
