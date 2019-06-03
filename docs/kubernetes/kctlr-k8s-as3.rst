@@ -191,7 +191,7 @@ CIS validates SSL certificates using the root CA certifictes bundled with the ba
 To avoid this issue, you can perform one of the following:
 
 - Bypass certificate validation by including the ``--insecure=true`` option in your configuration when executing a Kubernetes deployment.
-- Establish trust with the BIG-IP system by `Updating the CIS trusted certificate store`_. 
+- Establish trust with the BIG-IP system by `Updating the CIS trusted certificate store <kctlr-as3-cert-trust.html>`_. 
 
 .. _kctlr-k8s-as3-partition:
 
