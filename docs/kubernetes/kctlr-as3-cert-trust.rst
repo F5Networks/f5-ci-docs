@@ -16,14 +16,14 @@ There are two available methods for establishing trust between CIS and BIG-IP sy
 Add a BIG-IP device certificate to the CIS trusted SSL certificate store
 ------------------------------------------------------------------------
 
-This method is an easy way to establish trust between CIS and a BIG-IP system. However, if you use CIS with multiple BIG-IP system, this method doesn't scale as well as using CA signed certificates. This method is also more likely to experience expired SSL certificate issues.
+This method is an easy way to establish trust between CIS and a BIG-IP system. However, if you use CIS to manage multiple BIG-IP systems, this method doesn't scale as well as using CA signed certificates. This method is also more likely to experience expired SSL certificate issues.
 
 Prerequisites
 `````````````
 - The ability to Secure copy (SCP) files from the BIG-IP system.
 - Command line access to your container orchestration environment (COE).
 
-In this procedure, you will Secure Copy (SCP) a BIG-IP system device certificate to your local COE, add it to the CIS trusted SSL certificate store, and reference the trusted certificate store when executing Kubernetes deployments.
+In this procedure, you will Secure copy (SCP) a BIG-IP system device certificate to your local COE, add it to the CIS trusted SSL certificate store, and restart the CIS controller.
 
 #. Log in to the command line of your container orchestration environment (COE).
 
@@ -92,7 +92,7 @@ In this procedure, you will Secure Copy (SCP) a BIG-IP system device certificate
 Create a Certificate Authority (CA) and sign a new BIG-IP device certificate
 ----------------------------------------------------------------------------
 
-This method for establishing trust between CIS and the BIG-IP system works well when you use CIS to manage mulitple BIG-IP systems. This method also improves SSL certificate management as you have more control over certificate attributes such as key sizes, message digest types, and expiration dates.
+This method for establishing trust between CIS and the BIG-IP system works well when you use CIS to manage mulitple BIG-IP systems. This method also improves SSL certificate management as you have more control over certificate attributes such as key size, message digest, and expiration date.
 
 Prerequisites
 `````````````
@@ -440,7 +440,7 @@ In this procedure, you will back up and replace the BIG-IP system's self-signed 
 Add the CA signing certificate to the CIS trusted SSL certificate store
 ```````````````````````````````````````````````````````````````````````
 
-In this procedure, you will Secure Copy (SCP) the CA signing certificate to your local COE, and add it to the CIS trusted SSL certificate store.
+In this procedure, you will Secure copy (SCP) the CA signing certificate to your local COE, add it to the CIS trusted SSL certificate store, and restart the CIS controller.
 
 #. Log in to the command line of your container orchestration environment (COE).
 
