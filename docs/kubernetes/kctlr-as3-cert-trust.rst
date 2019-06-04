@@ -495,7 +495,7 @@ In this procedure, you will Secure copy (SCP) the CA signing certificate to your
 
    .. note::
 
-      You can restart the controller by deleting the k8s-bigip-ctlr Pod. A new Pod deploys automatically, thanks to the `ReplicaSet`_.
+      You can restart the controller by deleting the k8s-bigip-ctlr Pod. A new Pod deploys automatically, thanks to the `ReplicaSet <https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/>`_.
 
    .. parsed-literal::
 
