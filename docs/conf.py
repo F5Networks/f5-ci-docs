@@ -211,7 +211,6 @@ rst_epilog = """
 .. _Pods: https://kubernetes.io/docs/concepts/workloads/pods/pod/
 .. _Projects: https://docs.openshift.org/latest/architecture/core_concepts/projects_and_users.html#projects
 .. _Red Hat OpenShift: https://www.openshift.com/container-platform/index.html
-.. _ReplicaSet: https://kubernetes.io/docs/user-guide/replicasets/
 .. _Route annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#supported-annotations
 .. _Route configuration parameters: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#openshift-routes
 .. _Route domain: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/tmos-routing-administration-13-0-0/8.html
