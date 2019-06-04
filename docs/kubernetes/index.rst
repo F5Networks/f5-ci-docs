@@ -55,7 +55,7 @@ The :code:`k8s-bigip-ctlr` can use either `F5 Resources`_ or `F5 AS3 Extensions`
 
    See the :ref:`connector compatibility` table for platform compatibility information.
 
-The |kctlr| watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for specially-formatted resources and updates the BIG-IP system configurations accordingly.
+The |kctlr| watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for specially formatted resources and updates the BIG-IP system configurations accordingly.
 
 .. image:: /_static/media/cc_solution.png
    :scale: 80%
