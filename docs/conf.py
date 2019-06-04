@@ -67,7 +67,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'F5 Container Ingress Services'
-copyright = u'2018 F5 Networks Inc'
+copyright = u'2019 F5 Networks Inc'
 author = u'F5 Networks'
 
 # The version info for the project you're documenting, acts as replacement for
