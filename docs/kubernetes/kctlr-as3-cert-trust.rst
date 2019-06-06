@@ -43,25 +43,25 @@ In this procedure, you will Secure copy (SCP) a BIG-IP system device certificate
 
    .. parsed-literal::
 
-      kubectl create configmap <configMap name> --from-file=<cert name>.crt
+      kubectl create configmap <configmap name> --from-file=<cert name>.crt
 
    For example, to add a single BIG-IP device cert:
 
    .. parsed-literal::
 
-      kubectl create configmap bigip1Cert --from-file=bigip1.crt
+      kubectl create configmap bigip1cert --from-file=bigip1.crt
 
    For example, to add multiple BIG-IP device certs:
 
    .. parsed-literal::
 
-      kubectl create configmap bigipCerts --from-file=bigip1.crt --from-file=bigip2.crt --from-file=bigip3.crt
+      kubectl create configmap bigipcerts --from-file=bigip1.crt --from-file=bigip2.crt --from-file=bigip3.crt
 
 #. Reference the CIS trusted certificate store in your configurations when executing Kubernetes deployments.
 
    .. parsed-literal::
 
-      --trusted-certs-cfgmap=<nameSpace>/<configMap name>
+      --trusted-certs-cfgmap=<nameSpace>/<configmap name>
 
    For example:
 
@@ -71,7 +71,7 @@ In this procedure, you will Secure copy (SCP) a BIG-IP system device certificate
               "--bigip-username=$(BIGIP_USERNAME)",
               "--bigip-password=$(BIGIP_PASSWORD)",
               "--bigip-url=192.168.10.100",
-              "--trusted-certs-cfgmap=default/bigipCerts"
+              "--trusted-certs-cfgmap=default/bigipcerts"
             ]
 
 #. Restart the controller.
@@ -460,25 +460,25 @@ In this procedure, you will Secure copy (SCP) the CA signing certificate to your
 
    .. parsed-literal::
 
-      kubectl create configmap <configMap name> --from-file=<cert name>.crt
+      kubectl create configmap <configmap name> --from-file=<cert name>.crt
 
    For example, to add a single CA signing certificate:
 
    .. parsed-literal::
 
-      kubectl create configmap bigipCaCert --from-file=bigipCa.crt
+      kubectl create configmap bigip-cacert --from-file=bigipCa.crt
 
    For example, to add multiple CA signing certificates:
 
    .. parsed-literal::
 
-      kubectl create configmap CaCerts --from-file=bigipCa.crt --from-file=anotherCaCert.crt
+      kubectl create configmap ca-certs --from-file=bigipCa.crt --from-file=anotherCaCert.crt
 
 #. Reference the CIS trusted SSL certificate store in your configurations when executing Kubernetes deployments.
 
    .. parsed-literal::
 
-      --trusted-certs-cfgmap=<nameSpace>/<configMap name>
+      --trusted-certs-cfgmap=<nameSpace>/<configmap name>
 
    For example:
 
@@ -488,7 +488,7 @@ In this procedure, you will Secure copy (SCP) the CA signing certificate to your
               "--bigip-username=$(BIGIP_USERNAME)",
               "--bigip-password=$(BIGIP_PASSWORD)",
               "--bigip-url=192.168.10.100",
-              "--trusted-certs-cfgmap=default/bigipCaCert"
+              "--trusted-certs-cfgmap=default/bigip-cacerts"
             ]
 
 #. Restart the controller.
