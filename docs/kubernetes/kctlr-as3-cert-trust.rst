@@ -488,7 +488,7 @@ In this procedure, you will Secure copy (SCP) the CA signing certificate to your
               "--bigip-username=$(BIGIP_USERNAME)",
               "--bigip-password=$(BIGIP_PASSWORD)",
               "--bigip-url=192.168.10.100",
-              "--trusted-certs-cfgmap=default/bigip-cacerts"
+              "--trusted-certs-cfgmap=default/bigip-cacert"
             ]
 
 #. Restart the controller.
