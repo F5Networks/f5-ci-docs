@@ -86,7 +86,7 @@ Installation
 
 `Current Release Notes <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/RELEASE-NOTES.html>`_
 
-- `Install using Kubernetes <install-kctlr>`.
+- `Install using Kubernetes <kctlr-app-install>`.
 - `Install using Helm Chart <f5-bigip-ctlr chart>`_.
 
 .. _k8s-upgrade:
@@ -94,7 +94,7 @@ Installation
 Upgrades
 --------
 
-To upgrade an existing :code:`k8s-bigip-ctlr` instance to a newer version, take the steps below.
+You can upgrade your current :code:`k8s-bigip-ctlr` instance.
 
 #. :ref:`Edit the Controller Deployment <k8s-bigip-ctlr-deployment>`.
 
