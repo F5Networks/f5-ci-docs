@@ -11,6 +11,8 @@ F5 Container Ingress Services - Kubernetes
 
    :ref:`Learn about using the BIG-IP Controller in OpenShift <openshift-home>`.
 
+`Current Release Notes <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/RELEASE-NOTES.html>`_
+
 This document provides general information regarding the F5 Integration for Kubernetes. For deployment and usage instructions, please refer to the User Guides section.
 
 User Guides
@@ -84,10 +86,7 @@ The |kctlr-long| documentation set assumes that you have:
 Installation
 ------------
 
-`Current Release Notes <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/RELEASE-NOTES.html>`_
-
-- :ref:`Install using Kubernetes <install-kctlr>`.
-- `Install using Helm Chart <f5-bigip-ctlr chart>`_.
+You can install the :code:`k8s-bigip-ctlr` using a :ref:`Kubernetes deployment<install-kctlr>`, or the `F5 Helm Chart <f5-bigip-ctlr chart>`_.
 
 .. _k8s-upgrade:
 
