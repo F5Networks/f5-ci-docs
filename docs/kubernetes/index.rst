@@ -86,7 +86,7 @@ The |kctlr-long| documentation set assumes that you have:
 Installation
 ------------
 
-You can install the :code:`k8s-bigip-ctlr` using a :ref:`Kubernetes deployment<install-kctlr>`, or the `F5 Helm Chart <f5-bigip-ctlr chart>`_.
+You can install the :code:`k8s-bigip-ctlr` using a :ref:`Kubernetes deployment<install-kctlr>`, or the `F5 Helm Chart`_.
 
 .. _k8s-upgrade:
 
