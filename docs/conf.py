@@ -150,7 +150,7 @@ rst_epilog = """
 .. _F5 Resources: %(base_url)s/containers/v2/kubernetes/kctlr-f5-resource.html#f5-resource-properties
 .. _F5 schema: https://github.com/F5Networks/k8s-bigip-ctlr/tree/master/schemas
 .. _F5 virtual server properties: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#virtualserver-configmap-properties
-.. _f5-bigip-ctlr chart: https://github.com/F5Networks/charts/tree/master/src/stable/f5-bigip-ctlr
+.. _F5 Helm Chart: https://github.com/F5Networks/charts/tree/master/src/stable/f5-bigip-ctlr
 .. _f5-bigip-ingress chart: https://github.com/F5Networks/charts/tree/master/src/stable/f5-bigip-ingress
 .. _f5-kube-proxy reference documentation: %(base_url)s/products/connectors/f5-kube-proxy/latest/
 .. _f5-kube-proxy: %(base_url)s/products/connectors/f5-kube-proxy/latest/
