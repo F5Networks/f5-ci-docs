@@ -86,7 +86,7 @@ Installation
 
 `Current Release Notes <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/RELEASE-NOTES.html>`_
 
-- `Install using Kubernetes <install-kctlr>`.
+- :ref:`Install using Kubernetes <install-kctlr>`.
 - `Install using Helm Chart <f5-bigip-ctlr chart>`_.
 
 .. _k8s-upgrade:
