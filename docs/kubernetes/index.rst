@@ -24,12 +24,12 @@ User Guides
    flannel-bigip-info
    kctlr-use-bigip-k8s
    kctlr-app-install
+   kctlr-managed-objects
    kctlr-k8s-as3
    kctlr-f5-resource
    kctlr-manage-bigip-objects
    kctlr-deploy-iapp
    ../troubleshooting/kubernetes
-   k8s-bigip-ctlr Reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
 
 .. _kctlr-features:
 
@@ -127,76 +127,7 @@ When using F5 Resources or Kubernetes Ingresses, the definitions you provide tel
    - The partition(s) in which you want to manage objects for your Kubernetes cluster must exist on the BIG-IP system before you deploy the |kctlr|.
    - CIS can use AS3 Extension declarations to create and use additional partitions. For more information, refer to `Container Ingress Services and AS3 Extension integration`_.
 
-Managed Objects List
-````````````````````
-
-You can deploy BIG-IP objects for Services and Ingresses in Kubernetes. In OpenShift, you can deploy BIG-IP objects for Services and Routes.
-The |kctlr| can create, update, remove, and/or manage BIG-IP objects as noted in the table below.
-
-+------------------------------+------------------------+---------------------------------+--------------------------------------------------------------------+
-| Type                         | Create New Object      | Use Existing Object             | Notes                                                              |
-+==============================+========================+=================================+====================================================================+
-| health monitor               | X                      | X                               | The |kctlr| can *use existing* health monitors for all supported   |
-|                              |                        |                                 | Kubernetes resources.                                              |
-|                              |                        |                                 |                                                                    |
-|                              |                        |                                 | The |kctlr| can *create* health monitors for certain types         |
-|                              |                        |                                 | of Kubernetes resources, as described in the deployment            |
-|                              |                        |                                 | guides.                                                            |
-+------------------------------+------------------------+---------------------------------+--------------------------------------------------------------------+
-| iApp                         |                        | X                               | The |kctlr| can deploy any iApp that already exists on             |
-|                              |                        |                                 | the BIG-IP system. [#iapp]_                                        |
-+------------------------------+------------------------+---------------------------------+--------------------------------------------------------------------+
-| node                         | X                      |                                 | Applies to all supported Kubernetes resources.                     |
-+------------------------------+------------------------+---------------------------------+--------------------------------------------------------------------+
-| partition                    |                        | X                               | The |kctlr| cannot create or destroy BIG-IP partitions.            |
-+------------------------------+------------------------+---------------------------------+--------------------------------------------------------------------+
-| pool                         | X                      |                                 | Applies to all supported Kubernetes resources.                     |
-+------------------------------+------------------------+---------------------------------+--------------------------------------------------------------------+
-| pool member                  | X                      |                                 | Applies to all supported Kubernetes resources.                     |
-+------------------------------+------------------------+---------------------------------+--------------------------------------------------------------------+
-| self IP                      |                        | X                               | Applies to all supported Kubernetes resources.                     |
-+------------------------------+------------------------+---------------------------------+--------------------------------------------------------------------+
-| profiles [#prof]_                                                                                                                                            |
-+---+--------------------------+------------------------+---------------------------------+--------------------------------------------------------------------+
-|   | HTTP                     |                        | X                               | :ref:`Kubernetes Ingress resources <kctlr-ingress-config>`         |
-|   |                          |                        |                                 | (L7) only                                                          |
-+---+--------------------------+------------------------+---------------------------------+--------------------------------------------------------------------+
-|   | SSL                      | X                      | X                               | Supported functionality varies by resource and platform. See note  |
-|   |                          |                        |                                 | below.                                                             |
-+---+--------------------------+------------------------+---------------------------------+--------------------------------------------------------------------+
-|   | TCP                      |                        | X                               | :ref:`F5 Resources <k8s-f5-resources>` (L4) only                   |
-+---+--------------------------+------------------------+---------------------------------+--------------------------------------------------------------------+
-|   | UDP                      |                        | X                               | :ref:`F5 Resources <k8s-f5-resources>` (L4) only                   |
-+---+--------------------------+------------------------+---------------------------------+--------------------------------------------------------------------+
-| traffic policy [#traffic]_   | X                      |                                 | :ref:`Kubernetes Ingress resources <kctlr-ingress-config>` (L7)    |
-|                              |                        |                                 | only; the Controller creates a BIG-IP traffic policy to            |
-|                              |                        |                                 | use for routing.                                                   |
-+------------------------------+------------------------+---------------------------------+--------------------------------------------------------------------+
-| virtual server               | X                      |                                 | Applies to all supported Kubernetes resources.                     |
-+------------------------------+------------------------+---------------------------------+--------------------------------------------------------------------+
-
-.. note::
-
-   The |kctlr| support for SSL profiles varies based on resource type:
-
-   - :ref:`F5 Resources <k8s-f5-resources>`: use existing client SSL profile
-   - :ref:`Kubernetes Ingress <kctlr-ingress-config>`: use existing client SSL profile
-   - :ref:`OpenShift Routes <kctlr-openshift-routes>`: create new client or server SSL profile; use existing client or server SSL profile
-
-   |kctlr| support for **all** profiles applies to basic profiles only. Optimized and/or customized versions aren't supported.
-
-
-.. _k8s-vs-naming:
-
-Object Naming Convention
-````````````````````````
-
-The |kctlr| prefaces all BIG-IP virtual server objects with :code:`[namespace]_[resource-name]`. For example, if :code:`default` is the namespace and ``k8s.vs`` is the ConfigMap name, the object preface is :code:`default_k8s.vs_173.16.2.2:80`.
-
-High-availability and Multi-tenancy
-```````````````````````````````````
-
-If you're using a BIG-IP device pair or cluster, F5 recommends deploying multiple |kctlr| instances -- one Controller per BIG-IP device. You can also deploy multiple Controller instances to manage separate BIG-IP partitions (for example, one Controller:one namespace:one partition).
+For the full list of managed BIG-IP objects, refer to :ref:`Managed BIG-IP objects <kctlr-managed-objects>`
 
 .. _k8s-concepts:
 
