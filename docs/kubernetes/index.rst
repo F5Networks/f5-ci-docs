@@ -59,10 +59,6 @@ The :code:`k8s-bigip-ctlr` can use either `F5 Resources`_ or `F5 AS3 Extensions`
 
 The |kctlr| watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for specially formatted resources and updates the BIG-IP system configurations accordingly.
 
-.. image:: /_static/media/cc_solution.png
-   :scale: 80%
-   :alt: Solution design: The Container Connector runs as an App within the cluster; it configures the BIG-IP device as needed to handle traffic for Apps in the cluster
-
 .. _k8s-prereqs:
 
 Prerequisites
