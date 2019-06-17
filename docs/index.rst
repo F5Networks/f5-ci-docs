@@ -22,10 +22,9 @@ Container Ingress Service     Environment
                               `DC/OS and DC/OS Enterprise`_
 =========================     ===================================================
 
-.. image:: /_static/media/cc_solution.png
-   :scale: 80%
-   :align: center
+.. figure:: /_static/media/cc_solution.png
    :alt: Solution design: The Container Connector runs as an App within the cluster; it configures the BIG-IP device as needed to handle traffic for Apps in the cluster
+   :scale: 80%
 
    Container Ingress Services architecture
 
