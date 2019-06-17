@@ -166,7 +166,7 @@ rst_epilog = """
 .. _k8s-bigip-ctlr iApp configuration parameters: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#iApp
 .. _k8s-bigip-ctlr reference documentation: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/
 .. _k8s-bigip-ctlr virtual server configuration parameters: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#virtualserver
-.. _k8s-bigip-ctlr: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/
+.. _k8s-bigip-ctlr: %(base_url)s/containers/v2/kubernetes/
 .. _k8s-bigip-ctlr v1.1.0-beta.1: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.1-beta/
 .. _k8s-bigip-ctlr v1.1.0: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.1/
 .. _k8s-bigip-ctlr v1.2.0: %(base_url)s/products/connectors/k8s-bigip-ctlr/v1.2/
