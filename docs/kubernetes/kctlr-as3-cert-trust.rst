@@ -6,24 +6,25 @@
 Updating the Container Ingress Service (CIS) trusted SSL certificate store
 ==========================================================================
 
-There are two available methods for establishing trust between CIS and BIG-IP systems:
+You can use the CIS trusted SSL certificate store to establish trust between CIS, and your remote BIG-IP systems.
 
-- Obtain and add the BIG-IP device certificate to the CIS trusted SSL certificate store.
-- Create a Certificate Authority (CA) to sign new BIG-IP device certificates, and add the CA signing certificate to the CIS trusted SSL certificate store.
+To establish trust, add the BIG-IP device certificate, or the Certificate Authority's (CA) signing certificate, to the CIS trusted SSL certificate store.
+
+.. important::
+
+If you connect to the BIG-IP system using an IP address, instead of a hostname, you must add the IP address to the Common Name (CN), and Subject Alternative Name (SAN) certificate attributes.
 
 .. _as3-add-device-cert:
 
-Add a BIG-IP device certificate to the CIS trusted SSL certificate store
-------------------------------------------------------------------------
+Add a certificate to the CIS trusted SSL certificate store
+----------------------------------------------------------
 
-This method is an easy way to establish trust between CIS and a BIG-IP system. However, if you use CIS to manage multiple BIG-IP systems, this method doesn't scale as well as using CA signed certificates. This method is also more likely to experience expired SSL certificate issues.
+You can add either a BIG-IP device certificate, or the CA signing certificate to the trusted SSL certificate store. In this procedure, you will Secure copy (SCP) a BIG-IP system device certificate to your local Container Orchestration Environment (COE), add it to the CIS trusted SSL certificate store, and restart the CIS controller.
 
 Prerequisites
 `````````````
 - The ability to Secure copy (SCP) files from the BIG-IP system.
 - Command line access to your container orchestration environment (COE).
-
-In this procedure, you will Secure copy (SCP) a BIG-IP system device certificate to your local COE, add it to the CIS trusted SSL certificate store, and restart the CIS controller.
 
 #. Log in to the command line of your container orchestration environment (COE).
 
@@ -43,25 +44,25 @@ In this procedure, you will Secure copy (SCP) a BIG-IP system device certificate
 
    .. parsed-literal::
 
-      kubectl create configmap <configmap name> --from-file=<cert name>.crt
+      kubectl create configmap <configmap name> --from-file=<cert name>.crt -n <name space>
 
    For example, to add a single BIG-IP device cert:
 
    .. parsed-literal::
 
-      kubectl create configmap bigip1cert --from-file=bigip1.crt
+      kubectl create configmap bigip1cert --from-file=bigip1.crt -n k8s
 
    For example, to add multiple BIG-IP device certs:
 
    .. parsed-literal::
 
-      kubectl create configmap bigipcerts --from-file=bigip1.crt --from-file=bigip2.crt --from-file=bigip3.crt
+      kubectl create configmap bigipcerts --from-file=bigip1.crt --from-file=bigip2.crt --from-file=bigip3.crt -n k8s
 
 #. Reference the CIS trusted certificate store in your configurations when executing Kubernetes deployments.
 
    .. parsed-literal::
 
-      --trusted-certs-cfgmap=<nameSpace>/<configmap name>
+      --trusted-certs-cfgmap=<name space>/<configmap name>
 
    For example:
 
@@ -71,8 +72,18 @@ In this procedure, you will Secure copy (SCP) a BIG-IP system device certificate
               "--bigip-username=$(BIGIP_USERNAME)",
               "--bigip-password=$(BIGIP_PASSWORD)",
               "--bigip-url=192.168.10.100",
-              "--trusted-certs-cfgmap=default/bigipcerts"
+              "--trusted-certs-cfgmap=k8s/bigipcerts"
             ]
+
+#. Apply the new configuration to the Kubernetes deployment.
+
+   .. parsed-literal:: 
+
+      kubectl apply -f <deployment name> -n <name space> 
+
+      For example:
+
+      kubectl apply -f k8scontroller.yaml -n <name space> 
 
 #. Restart the controller.
 
@@ -92,7 +103,7 @@ In this procedure, you will Secure copy (SCP) a BIG-IP system device certificate
 Create a Certificate Authority (CA) and sign a new BIG-IP device certificate
 ----------------------------------------------------------------------------
 
-This method for establishing trust between CIS and the BIG-IP system works well when you use CIS to manage mulitple BIG-IP systems. This method also improves SSL certificate management as you have more control over certificate attributes such as key size, message digest, and expiration date.
+This method for establishing trust between CIS and BIG-IP systems works well when you manage mulitple BIG-IP systems. This method also improves SSL certificate management, offering more control over certificate attributes such as key size, message digest, and expiration date.
 
 Prerequisites
 `````````````
@@ -504,6 +515,38 @@ In this procedure, you will Secure copy (SCP) the CA signing certificate to your
 
       kubectl delete pod k8s-bigip-ctlr-deployment-bf9c75877-zhzpp --namespace=kube-system
 
+.. _as3-device-san-cert:
+
+Create a new BIG-IP device certificate using the configuration utility
+----------------------------------------------------------------------
+
+The BIG-IP system's configuration utility offers an easy way to renew, and if necessary, add an IP address to the SAN attribute of the device certificate.
+
+In this procedure, you will renew the BIG-IP system's device certificate and add an IP address to both the CN, and SAN ceritificate attributes.
+
+.. note::
+
+   If the BIG-IP system has the DNS module license, connectivity to peer BIG-IP DNS systems will fail. You must exchange the new certificate with the BIG-IP DNS peers. For more inforation, refer to the **Sync group peer** section of `K16951115 Changing the BIG-IP DNS system device certificate using the Configuration utility`_.
+
+
+#. Log in to the BIG-IP system configuration utility.
+
+#. Navigate to *System &gt; Certificate Management &gt; Device Certificate Management &gt; Device Certificate*.
+
+#. Click *Renew*. 
+
+#. Fill out the Certificate Properties. If you connect to the BIG-IP systems using an IP address, add the IP address to the *Common Name*, and *Subject Alternative Name* fields.
+
+   For example:
+
+   +--------------------------+------------------+
+   | Common Name              | 10.10.10.100     |
+   +--------------------------+------------------+
+   | Subject Alternative Name | DNS:10.10.10.100 | 
+   +--------------------------+------------------+
+
+#. Click *Finished*.
+   
  
 Additional information
 ----------------------
