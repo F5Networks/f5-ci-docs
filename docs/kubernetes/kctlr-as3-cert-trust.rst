@@ -14,6 +14,7 @@ To establish trust, add the BIG-IP device certificate, or the Certificate Author
 
    If you connect to the BIG-IP system using an IP address, instead of a hostname, you must add the IP address to the Common Name (CN), and Subject Alternative Name (SAN) certificate attributes.
 
+----
 
 .. _as3-add-device-cert:
 
@@ -101,7 +102,8 @@ Prerequisites
 
       kubectl delete pod k8s-bigip-ctlr-deployment-bf9c75877-zhzpp --namespace=kube-system
                     
-         
+----         
+      
 .. _as3-add-root-cert:
 
 Create a Certificate Authority (CA) and sign a new BIG-IP device certificate
@@ -505,6 +507,16 @@ In this procedure, you will Secure copy (SCP) the CA signing certificate to your
               "--trusted-certs-cfgmap=default/bigip-cacert"
             ]
 
+#. Apply the new configuration to the Kubernetes deployment.
+
+   .. parsed-literal:: 
+
+      kubectl apply -f <deployment name> -n <name space> 
+
+      For example:
+
+      kubectl apply -f k8scontroller.yaml -n <name space> 
+
 #. Restart the controller.
 
    .. note::
@@ -517,6 +529,8 @@ In this procedure, you will Secure copy (SCP) the CA signing certificate to your
          k8s-bigip-ctlr-deployment-bf9c75877-zhzpp    1/1     Running             0          15d
 
       kubectl delete pod k8s-bigip-ctlr-deployment-bf9c75877-zhzpp --namespace=kube-system
+
+----
 
 .. _as3-device-san-cert:
 
