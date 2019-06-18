@@ -14,6 +14,7 @@ To establish trust, add the BIG-IP device certificate, or the Certificate Author
 
    If you connect to the BIG-IP system using an IP address, instead of a hostname, you must add the IP address to the Common Name (CN), and Subject Alternative Name (SAN) certificate attributes.
 
+
 .. _as3-add-device-cert:
 
 Add a certificate to the CIS trusted SSL certificate store
@@ -99,7 +100,8 @@ Prerequisites
          k8s-bigip-ctlr-deployment-bf9c75877-zhzpp    1/1     Running             0          15d
 
       kubectl delete pod k8s-bigip-ctlr-deployment-bf9c75877-zhzpp --namespace=kube-system
-
+                    
+         
 .. _as3-add-root-cert:
 
 Create a Certificate Authority (CA) and sign a new BIG-IP device certificate
@@ -330,7 +332,6 @@ In this procedure, you will use OpenSSL to create a new Root CA signing certific
 
 Repeat steps 12 and 13 this procedure to create, and sign additional BIG-IP device certificates.
 
-      
 Replace the BIG-IP system device certificate
 ````````````````````````````````````````````
 In this procedure, you will back up and replace the BIG-IP system's self-signed device certificate. The procedure assumes that you are working from the same workstation used in the previous procedure, and you have Secure Shell (SSH) access to the BIG-IP system.
@@ -541,11 +542,11 @@ In this procedure, you will renew the BIG-IP system's device certificate and add
 
    For example:
 
-   +------------------------------+----------------------+
-   | **Common Name**              | **10.10.10.100**     |
-   +------------------------------+----------------------+
-   | **Subject Alternative Name** | **DNS:10.10.10.100** | 
-   +------------------------------+----------------------+
+   +------------------------------+------------------------+
+   | **Common Name**              | **192.168.10.100**     |
+   +------------------------------+------------------------+
+   | **Subject Alternative Name** | **DNS:192.168.10.100** | 
+   +------------------------------+------------------------+
 
 #. Click **Finished**.
    
