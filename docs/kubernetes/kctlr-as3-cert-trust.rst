@@ -12,14 +12,16 @@ To establish trust, add the BIG-IP device certificate, or the Certificate Author
 
 .. important::
 
-If you connect to the BIG-IP system using an IP address, instead of a hostname, you must add the IP address to the Common Name (CN), and Subject Alternative Name (SAN) certificate attributes.
+   If you connect to the BIG-IP system using an IP address, instead of a hostname, you must add the IP address to the Common Name (CN), and Subject Alternative Name (SAN) certificate attributes.
 
 .. _as3-add-device-cert:
 
 Add a certificate to the CIS trusted SSL certificate store
 ----------------------------------------------------------
 
-You can add either a BIG-IP device certificate, or the CA signing certificate to the trusted SSL certificate store. In this procedure, you will Secure copy (SCP) a BIG-IP system device certificate to your local Container Orchestration Environment (COE), add it to the CIS trusted SSL certificate store, and restart the CIS controller.
+You can add either a BIG-IP device certificate, or the CA signing certificate to the trusted SSL certificate store. 
+
+In this procedure, you will Secure copy (SCP) a BIG-IP system device certificate to your local Container Orchestration Environment (COE), add it to the CIS trusted SSL certificate store, and restart the CIS controller.
 
 Prerequisites
 `````````````
@@ -531,21 +533,21 @@ In this procedure, you will renew the BIG-IP system's device certificate and add
 
 #. Log in to the BIG-IP system configuration utility.
 
-#. Navigate to *System &gt; Certificate Management &gt; Device Certificate Management &gt; Device Certificate*.
+#. Navigate to **System > Certificate Management > Device Certificate Management > Device Certificate**.
 
-#. Click *Renew*. 
+#. Click **Renew**. 
 
-#. Fill out the Certificate Properties. If you connect to the BIG-IP systems using an IP address, add the IP address to the *Common Name*, and *Subject Alternative Name* fields.
+#. Fill out the Certificate Properties. If you connect to the BIG-IP systems using an IP address, add the IP address to the **Common Name**, and **Subject Alternative Name** fields.
 
    For example:
 
-   +--------------------------+------------------+
-   | Common Name              | 10.10.10.100     |
-   +--------------------------+------------------+
-   | Subject Alternative Name | DNS:10.10.10.100 | 
-   +--------------------------+------------------+
+   +------------------------------+----------------------+
+   | **Common Name**              | **10.10.10.100**     |
+   +------------------------------+----------------------+
+   | **Subject Alternative Name** | **DNS:10.10.10.100** | 
+   +------------------------------+----------------------+
 
-#. Click *Finished*.
+#. Click **Finished**.
    
  
 Additional information
