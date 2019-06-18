@@ -8,11 +8,13 @@ Updating the Container Ingress Service (CIS) trusted SSL certificate store
 
 You can use the CIS trusted SSL certificate store to establish trust between CIS, and your remote BIG-IP systems.
 
-To establish trust, add the BIG-IP device certificate, or the Certificate Authority's (CA) signing certificate, to the CIS trusted SSL certificate store.
+To establish trust, add the BIG-IP device certificate, or the Certificate Authority's (CA) signing certificate to the CIS trusted SSL certificate store.
 
 .. important::
 
    If you connect to the BIG-IP system using an IP address, instead of a hostname, you must add the IP address to the Common Name (CN), and Subject Alternative Name (SAN) certificate attributes.
+
+   CIS cannot currently establish trust using Private IP addresses.
 
 ----
 
