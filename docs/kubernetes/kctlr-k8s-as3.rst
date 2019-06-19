@@ -23,7 +23,6 @@ CIS has the following AS3 Extension limitations:
 - AS3 pool class declarations support only one load balancing pool.
 - CIS supports only one AS3 ConfigMap instance.
 - AS3 does not support moving BIG-IP nodes to new partitions.
-- Static ARP entries remain after deleting an AS3 ConfigMap.
 
 CIS service discovery
 `````````````````````
@@ -177,6 +176,12 @@ Parameters
 |                 |         |          |                   | For more info, refer to the next section; |                 |
 |                 |         |          |                   | CIS and SSL certificate validation.       |                 |
 +-----------------+---------+----------+-------------------+-------------------------------------------+-----------------+
+
+.. _kctlr-k8s-delete-map:
+
+Deleting CIS configmaps
+```````````````````````
+Because CIS and AS3 use a Declarative API, the BIG-IP system configuration is not removed after you delete a configmap. To remove the BIG-IP system configuration objects created by an AS3 declaration, you must deploy a blank configmap, and restart the controller. Refer to `Deleting CIS AS3 configmaps <kctlr-as3-delete-configmap.html>`_.
 
 .. _kctlr-k8s-as3-ssl:
 
