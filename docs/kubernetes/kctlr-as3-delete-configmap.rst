@@ -3,8 +3,8 @@
 
 .. _kctlr-as3-delete-configmap:
 
-Deleting Container Ingress Service (CIS) AS3 config maps
-========================================================
+Deleting Container Ingress Service (CIS) AS3 configmaps
+=======================================================
 
 You can use this procedure to delete CIS AS3 configmaps, and also remove the associated configuration objects from your BIG-IP system.
 
@@ -18,7 +18,7 @@ You can use this procedure to delete CIS AS3 configmaps, and also remove the ass
 
    .. note::
 
-      The bold lines should be modified based on your currently deployed configmap. To help you understand how modiy the lines, view the deployed configmap example at the bottom of the page.
+      The bold lines should be modified based on your currently deployed configmap. To help you understand how to modify the lines, view the deployed configmap example at the bottom of the page.
 
    For example:
 
@@ -96,4 +96,4 @@ You can use this procedure to delete CIS AS3 configmaps, and also remove the ass
 
       kubectl apply -f k8scontroller.yaml -n <name space> 
 
-:fonticon:`fa fa-download` :download:`f5-as3-deployment-example.yaml </kubernetes/config_examples/f5-as3-deployment-example.yaml>`
+:download:`f5-as3-deployment-example.yaml </kubernetes/config_examples/f5-as3-deployment-example.yaml>`
