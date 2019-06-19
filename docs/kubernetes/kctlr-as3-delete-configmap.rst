@@ -98,4 +98,4 @@ You can use this procedure to delete CIS AS3 configmaps, and also remove the ass
 
 Example deployment
 ``````````````````
-- :fonticon:`fa fa-download` :download:`f5-as3-deployment-example.yaml </kubernetes/config_examples/f5-as3-deployment-example.yaml>`
+:fonticon:`fa fa-download` :download:`f5-as3-deployment-example.yaml </kubernetes/config_examples/f5-as3-deployment-example.yaml>`
