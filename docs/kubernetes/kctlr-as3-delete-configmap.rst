@@ -6,7 +6,7 @@
 Deleting Container Ingress Service (CIS) AS3 config maps
 ========================================================
 
-You can use this procedure to delete a CIS AS3 configmap, and remove the associated configuration objects from the BIG-IP systems.
+You can use this procedure to delete a CIS AS3 configmap, and also remove the associated configuration objects from the BIG-IP system.
 
 .. important::
 
@@ -14,11 +14,12 @@ You can use this procedure to delete a CIS AS3 configmap, and remove the associa
 
 #. Log in to the command line of your container orchestration environment (COE).
 
-#. To remove the objects created by the configmap from the BIG-IP system, create a blank configmap.
+#. To remove the associated configuration objects from the BIG-IP system, you much create a blank configmap.
 
    .. note::
 
-      The bold lines are the most important and should match the currently deployed configmap. To help you match these line, view the example configmap.
+      The bold lines are the most important and should match the currently deployed configmap. To help you match these line, view the example configmap: :fonticon:`fa fa-download` :download:`as3-declaration-1.yaml </kubernetes/config_examples/as3-declaration-1.yaml>`
+
 
    For example:
 
@@ -40,7 +41,7 @@ You can use this procedure to delete a CIS AS3 configmap, and remove the associa
               "class": "ADC",
               "schemaVersion": "3.10.0",
               **"id":"1847a369-5a25-4d1b-8cad-5740988d4423",**
-              "label":"Sample AS3 Template",
+              **"label":"Sample AS3 Template",**
               "remark": "Remove AS3 declaration",
               **"stark": {**
                 "class": "Tenant"
@@ -60,7 +61,7 @@ You can use this procedure to delete a CIS AS3 configmap, and remove the associa
 
       kubectl apply -f as3-declaration-1.yaml -n k8s
    
-#. Delete the configmap from the Kubernetes configuration.
+#. Delete the configmap from your Kubernetes configuration.
 
    .. parsed-literal::
 
@@ -96,7 +97,4 @@ You can use this procedure to delete a CIS AS3 configmap, and remove the associa
 
       kubectl apply -f k8scontroller.yaml -n <name space> 
 
-Example AS3 configmap
-````````````````````
-- :fonticon:`fa fa-download` :download:`as3-declaration-1.yaml </kubernetes/config_examples/as3-declaration-1.yaml>`
 
