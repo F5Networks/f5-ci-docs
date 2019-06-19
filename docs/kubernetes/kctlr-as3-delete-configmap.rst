@@ -18,11 +18,11 @@ You can use this procedure to delete CIS AS3 configmaps, and also remove the ass
 
    .. note::
 
-      The bold lines are the most important, and should match those in the currently deployed configmap. To help you understand how to match the lines, view the example deployed configmap at the bottom of the page.
+      The bold lines should be modified based on your currently deployed configmap. To help you understand how modiy the lines, view the deployed configmap example at the bottom of the page.
 
    For example:
 
-   .. parsed-literal::
+   .. code-block:: YAML
 
       kind: ConfigMap
       apiVersion: v1
@@ -96,4 +96,5 @@ You can use this procedure to delete CIS AS3 configmaps, and also remove the ass
 
       kubectl apply -f k8scontroller.yaml -n <name space> 
 
-- :fonticon:`fa fa-download` :download:`as3-declaration-1.yaml </kubernetes/config_examples/as3-declaration-1.yaml>`
+- :fonticon:`fa fa-download` :download:`f5-as3-deployment-example.yaml </kubernetes/config_examples/f5-as3-deployment-example.yaml>`
+
