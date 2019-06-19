@@ -96,5 +96,4 @@ You can use this procedure to delete CIS AS3 configmaps, and also remove the ass
 
       kubectl apply -f k8scontroller.yaml -n <name space> 
 
-- :fonticon:`fa fa-download` :download:`f5-as3-deployment-example.yaml </kubernetes/config_examples/f5-as3-deployment-example.yaml>`
-
+:fonticon:`fa fa-download` :download:`f5-as3-deployment-example.yaml </kubernetes/config_examples/f5-as3-deployment-example.yaml>`
