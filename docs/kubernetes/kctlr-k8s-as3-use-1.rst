@@ -5,7 +5,7 @@
 Container Ingress Services and AS3 Extensions - Use case 1
 ==========================================================
 
-This use case demonstrates how Container Ingress Services (CIS) uses Application Services 3 (AS3) declarations to:
+This use case demonstrates how Container Ingress Services (CIS) uses Application Services 3 (AS3) Extenstion declarations to:
 
 - Expose an HTTP or HTTPs service within Kubernetes Pods.
 - Configure the BIG-IP system to load balance across the Pods.
@@ -23,11 +23,14 @@ To complete this use case, ensure you meet the following requirements:
 
 Create and deploy the kuberenetes service
 `````````````````````````````````````````
-CIS can use service discovery, to dynamically create a load balancing pool on the BIG-IP system. CIS does this by mapping each pool member to a Kubernetes Service using labels. 
+CIS can use service discovery to dynamically create load balancing pools on the BIG-IP system. CIS does this by mapping pool member to Kubernetes Pods labels. 
 
-The first step will be to create a Kubernetes Service with the appropriate labels. 
+.. rubric:: **Services and Tags**
 
-To create this mapping, add the following labels to your Kubernetes Service. 
+.. image:: /_static/media/cis_as3_service.png
+   :scale: 70%
+
+The first step will be to create a Kubernetes Service with labels.  Add the following labels to your Kubernetes Service. 
 
 .. code-block:: YAML
 
@@ -37,11 +40,6 @@ To create this mapping, add the following labels to your Kubernetes Service.
        cis.f5.com/as3-app: A1SSL
        cis.f5.com/as3-pool: secure_ssl_pool
    name: f5-end-to-end-ssl
-
-.. rubric:: **Services and Tags**
-
-.. image:: /_static/media/cis_as3_service.png
-   :scale: 70%
 
 Example https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/deployment/f5-hello-world-service.yaml
 
