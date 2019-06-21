@@ -1,123 +1,47 @@
-:product: Container Ingress Services
-:type: concept
+:product: Container Ingress Services :type: concept
 
 .. _kctlr-k8s-as3-use-1:
 
-Container Ingress Services and AS3 Extensions - Declarative approach
-====================================================================
+Container Ingress Services and AS3 Extensions - Use case 1
+==========================================================
 
-An Imperative approach tells your application how to do something, while a Declarative approach tells your application what to do. 
+This use case demonstrates how Container Ingress Services (CIS) uses Application Services 3 (AS3) declarations to:
 
-This how to document demenstrates how CIS take advantage of an declarative API to configure and update a BIG-IP from a kuberenetes cluster. This configuration take advantage of cluster mode. In a cluster mode BIG-IP can reach the containers directly. 
+- Expose an HTTP or HTTPs service within Kubernetes Pods.
+- Configure the BIG-IP system to load balance across the Pods.
 
-You can use Container Ingress Services (CIS) to expose services to external traffic using Application Services 3 (AS3) Extension declarations.
 
 Prerequisites
 `````````````
-To use AS3 declarations with CIS, ensure you meet the following requirements:
+To complete this use case, ensure you meet the following requirements:
 
-- The BIG-IP system is running software version 12.1.x or higher.
-- The BIG-IP sytem has AS3 Extension version 3.10 or higher installed.
+- A functioning Kubernetes cluster.
+- A BIG-IP system running software version 12.1.x or higher.
+- AS3 Extension version 3.10 or higher installed on BIG-IP.
 - A BIG-IP system user account with the Administrator role.
 
-Limitations
-```````````
-CIS has the following AS3 Extension limitations:
 
-- AS3 pool class declarations support only one load balancing pool.
-- CIS supports only one AS3 ConfigMap instance.
-- AS3 does not support moving BIG-IP nodes to new partitions.
-- Static ARP entries remain after deleting an AS3 ConfigMap.
+Create and deploy the kuberenetes service
+`````````````````````````````````````````
+CIS can use service discovery, to dynamically create a load balancing pool on the BIG-IP system. CIS does this by mapping each pool member to a Kubernetes Service using labels. 
 
-CIS service discovery
-`````````````````````
+The first step will be to create a Kubernetes Service with the appropriate labels. 
 
-CIS can dynamically discover and update load balancing pool members using service discovery. CIS maps each pool definition in the AS3 template to a Kubernetes Service resource using a label. To create this mapping, add the following labels to your Kubernetes Service:
+To create this mapping, add the following labels to your Kubernetes Service. 
 
-.. code-block:: yaml
-
-  cis.f5.com/as3-tenant: <tenant_name>
-  cis.f5.com/as3-app: <application_name>
-  cis.f5.com/as3-pool: <pool_name>
-
-.. important::
-
-  Multiple Kubernetes Service resources tagged with same set of labels will cause a CIS error, and service discovery failure.
-
-An example Kubernetes Service using labels:
-
-.. code-block:: yaml
-
-  kind: Service
-  apiVersion: v1
-  metadata:
-    name: stark-blog-frontend
-    labels:
-      cis.f5.com/as3-tenant: "stark"
-      cis.f5.com/as3-app: "blog"
-      cis.f5.com/as3-pool: "web_pool"
-  spec:
-    selector:
-      run: web-service
-      ports:
-      - protocol: TCP
-        port: 80
-        targetPort: 80
-
-
-AS3 Examples
-````````````
-- :fonticon:`fa fa-download` :download:`f5-as3-template-example.yaml </kubernetes/config_examples/f5-as3-template-example.yaml>`
-- :fonticon:`fa fa-download` :download:`f5-as3-declaration-example.yaml </kubernetes/config_examples/f5-as3-declaration-example.yaml>`
-
-# Container Ingress Services using AS3 Declarative API
-This how to document demenstrates how CIS take advantage of an declarative API to configure and update a BIG-IP from a kuberenetes cluster. This configuration take advantage of cluster mode. In a cluster mode BIG-IP can reach the containers directly. 
-
-## Use Case
-Determinstate the following BIG-IP capabilties 
-
-* HTTP, HTTPS
-* Cookie persistence
-
-## Declarative API
-The Application Services 3 Extension uses a declarative model, meaning CIS sends a declaration file using a single Rest API call. An AS3 declaration describes the desired configuration of an Application Delivery Controller (ADC) such as F5 BIG-IP in tenant- and application-oriented terms. An AS3 tenant comprises a collection of AS3 applications and related resources responsive to a particular authority (the AS3 tenant becomes a partition on the BIG-IP system). An AS3 application comprises a collection of ADC resources relating to a particular network-based business application or system. AS3 declarations may also include resources shared by Applications in one Tenant or all Tenants as well as auxiliary resources of different kinds.
-
-**Note:** CIS uses the partition defined in the controller configuration by default to commincate with the F5 BIG-IP when adding static mac address and forwarding enteries for VXLAN
-
-## Prerequisites for using AS3
-
-* Install the AS3 RPM on the F5 BIG-IP. Following the link https://clouddocs.f5.com/products/extensions/f5-appsvcs-extension/latest/userguide/installation.html
-* If the F5 BIG-IP is using un-signed default ssl certificates add **insecure=true** as shown below to the controller deployment yaml file. Example https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/big-ip-98/f5-cluster-deployment.yaml
-    ```
-    args: [
-        "--bigip-username=$(BIGIP_USERNAME)",
-        "--bigip-password=$(BIGIP_PASSWORD)",
-        "--bigip-url=192.168.200.98",
-        "--bigip-partition=AS3",
-        "--namespace=default",
-        "--pool-member-type=cluster",
-        "--flannel-name=fl-vxlan",
-        "--log-level=INFO",
-        "--insecure=true"
-    ```
-* Add as3: "true" to any configmap applied so that CIS knows the data fields is AS3 and not legacy container connector input data. Please note that CIS will use gojsonschema to validate the AS3 data. If the declaration doesnt conform with the schema an error will be logged. Example https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/blank/f5-as3-configmap.yaml
-    ```
-    metadata:
-    name: f5-hello-world-https
-    namespace: default
-    labels:
-        f5type: virtual-server
-        as3: "true"
-    ```
-* Create and deploy the kuberenetes service discovery lables. CIS can dynamically discover and update load balancing pool members using service discovery. CIS maps each pool definition in the AS3 template to a Kubernetes Service resource using a label. To create this mapping, add the following labels to your Kubernetes Service. Example https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/deployment/f5-hello-world-service.yaml
-    ```
     labels:
         app: f5-hello-world-end-to-end-ssl
         cis.f5.com/as3-tenant: AS3
         cis.f5.com/as3-app: A5
         cis.f5.com/as3-pool: secure_ssl_waf_pool
     name: f5-hello-world-end-to-end-ssl-waf
-    ```
+
+.. rubric:: **Services and Tags**
+
+.. image:: /_static/media/cis_as3_service.png
+
+Example https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/deployment/f5-hello-world-service.yaml
+
 ## Using a configmap with AS3
 When using CIS with AS3 the behaviors are different The following needs to apply:
 
@@ -149,3 +73,9 @@ Note the declaration is already created. To deploy a new service simple apply de
 Warning: kubectl apply should be used on resource created by either kubectl create --save-config or kubectl apply
 configmap/f5-as3-declaration configured
 ```
+
+
+AS3 Examples
+````````````
+- :fonticon:`fa fa-download` :download:`f5-as3-template-example.yaml </kubernetes/config_examples/f5-as3-template-example.yaml>`
+- :fonticon:`fa fa-download` :download:`f5-as3-declaration-example.yaml </kubernetes/config_examples/f5-as3-declaration-example.yaml>`
