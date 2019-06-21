@@ -32,11 +32,11 @@ To create this mapping, add the following labels to your Kubernetes Service.
 .. code-block:: YAML
 
    labels:
-       app: f5-hello-world-end-to-end-ssl
+       app: f5-end-to-end-ssl
        cis.f5.com/as3-tenant: AS3
-       cis.f5.com/as3-app: A5
-       cis.f5.com/as3-pool: secure_ssl_waf_pool
-   name: f5-hello-world-end-to-end-ssl-waf
+       cis.f5.com/as3-app: A1SSL
+       cis.f5.com/as3-pool: secure_ssl_pool
+   name: f5-end-to-end-ssl
 
 .. rubric:: **Services and Tags**
 
