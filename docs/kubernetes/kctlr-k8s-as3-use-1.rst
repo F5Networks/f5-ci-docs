@@ -34,7 +34,7 @@ To create this mapping, add the following labels to your Kubernetes Service.
    labels:
        app: f5-end-to-end-ssl
        cis.f5.com/as3-tenant: AS3
-       cis.f5.com/as3-app: A1
+       cis.f5.com/as3-app: A1SSL
        cis.f5.com/as3-pool: secure_ssl_pool
    name: f5-end-to-end-ssl
 
