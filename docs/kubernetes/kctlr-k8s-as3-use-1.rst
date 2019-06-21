@@ -39,6 +39,7 @@ To create this mapping, add the following labels to your Kubernetes Service.
 .. rubric:: **Services and Tags**
 
 .. image:: /_static/media/cis_as3_service.png
+   :scale: 70%
 
 Example https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/deployment/f5-hello-world-service.yaml
 
