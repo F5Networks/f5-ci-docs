@@ -30,7 +30,7 @@ CIS can use service discovery to dynamically create load balancing pools on the 
 .. image:: /_static/media/cis_as3_service.png
    :scale: 70%
 
-The first step will be to create a Kubernetes Service with labels.  Add the following labels to your Kubernetes Service. 
+The first step will be to deploy a Kubernetes Service with labels. Add the following labels to your Kubernetes Service. 
 
 .. code-block:: YAML
 
