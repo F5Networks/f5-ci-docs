@@ -13,24 +13,23 @@ This use case demonstrates how Container Ingress Services (CIS) uses Application
 
 Prerequisites
 `````````````
-To complete this use case, ensure you meet the following requirements:
+To complete this use case, ensure you have:
 
 - A functioning Kubernetes cluster.
 - A BIG-IP system running software version 12.1.x or higher.
 - AS3 Extension version 3.10 or higher installed on BIG-IP.
 - A BIG-IP system user account with the Administrator role.
 
-
-Create and deploy the kuberenetes service
-`````````````````````````````````````````
-CIS can use service discovery to dynamically create load balancing pools on the BIG-IP system. CIS does this by mapping pool member to Kubernetes Pods labels. 
+I. Create and deploy the kuberenetes service
+````````````````````````````````````````````
+CIS can use service discovery to dynamically create load balancing pools on the BIG-IP system. CIS does this by mapping pool members to Kubernetes Pod labels. 
 
 .. rubric:: **Services and Tags**
 
 .. image:: /_static/media/cis_as3_service.png
    :scale: 70%
 
-The first step will be to deploy a Kubernetes Service with labels. Add the following labels to your Kubernetes Service. 
+The first step will be to deploy a Kubernetes Service with labels. Add these labels to your Kubernetes Service. 
 
 .. code-block:: YAML
 
