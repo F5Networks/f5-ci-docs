@@ -24,11 +24,6 @@ I. Deploy a labeled kuberenetes service
 ```````````````````````````````````````
 CIS can use service discovery to dynamically create load balancing pools on the BIG-IP system. CIS does this by mapping pool members to Kubernetes Pod labels. 
 
-.. rubric:: **Services and Tags**
-
-.. image:: /_static/media/cis_as3_service.png
-   :scale: 70%
-
 The first step will be to deploy a labeled Kubernetes Service. Add these labels to your Kubernetes Service. 
 
 .. code-block:: YAML
@@ -46,6 +41,11 @@ The first step will be to deploy a labeled Kubernetes Service. Add these labels 
        cis.f5.com/as3-tenant: AS3
        cis.f5.com/as3-app: A1SSL
        cis.f5.com/as3-pool: secure_ssl_pool
+
+.. rubric:: **Services and Tags**
+
+.. image:: /_static/media/cis_as3_service.png
+   :scale: 70%
 
 Example https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/deployment/f5-hello-world-service.yaml
 
