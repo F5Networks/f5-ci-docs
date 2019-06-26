@@ -13,47 +13,44 @@ This use case demonstrates how Container Ingress Services (CIS) uses Application
 
 Prerequisites
 `````````````
-To complete this use case, ensure you meet the following requirements:
+To complete this use case, ensure you have:
 
 - A functioning Kubernetes cluster.
 - A BIG-IP system running software version 12.1.x or higher.
 - AS3 Extension version 3.10 or higher installed on BIG-IP.
 - A BIG-IP system user account with the Administrator role.
 
-
-Create and deploy the kuberenetes service
-`````````````````````````````````````````
-CIS can use service discovery to dynamically create load balancing pools on the BIG-IP system. CIS does this by mapping pool member to Kubernetes Pods labels. 
+I. Deploy a labeled kuberenetes service
+```````````````````````````````````````
+CIS can use service discovery to dynamically create load balancing pools on the BIG-IP system. CIS does this by mapping pool members to Kubernetes Pod labels. 
 
 .. rubric:: **Services and Tags**
 
 .. image:: /_static/media/cis_as3_service.png
    :scale: 70%
 
-The first step will be to deploy a Kubernetes Service with labels. Add the following labels to your Kubernetes Service. 
+The first step will be to deploy a labeled Kubernetes Service. Add these labels to your Kubernetes Service. 
 
 .. code-block:: YAML
 
    labels:
-       app: f5-end-to-end-ssl
+       cis.f5.com/as3-tenant: <tenant name>
+       cis.f5.com/as3-app: <application name>
+       cis.f5.com/as3-pool: <pool_name>
+
+   For example:
+
+.. code-block:: YAML
+
+   labels:
        cis.f5.com/as3-tenant: AS3
        cis.f5.com/as3-app: A1SSL
        cis.f5.com/as3-pool: secure_ssl_pool
-   name: f5-end-to-end-ssl
 
 Example https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/deployment/f5-hello-world-service.yaml
 
-## Using a configmap with AS3
-When using CIS with AS3 the behaviors are different The following needs to apply:
-
-* CIS create one JSON declaration 
-* Service doesnt matter on the order inside the declaration 
-* Deleting a configmap doesnt remove the AS3 declaration. You need to remove the AS3 application first. Update the declaration and kube will post the changes
-* To remove the AS3 declaration from BIG-IP usu a blank declaration and displayed in this example: https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/blank/f5-as3-configmap.yaml
-* Once the declaration is blank the AS3 partition will be removed and you can now delete the configmap
-* When adding new services use the kubectl apply command
-
-### AS3 with HTTP application
+II. Deploying a ConfigMap with AS3
+``````````````````````````````````
 Deploying a application called A1 for http. Example of the declaration https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/A1/f5-as3-configmap.yaml
 
 **Note:** This is the first application to be deployed by kub. This example will deploy a simple http application on BIG-IP
