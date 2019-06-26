@@ -19,7 +19,7 @@ deploy:
   upload_dir: $AWS_DIR
   on:
     branch: master
-    repo: kkinch/f5-ci-docs
+    repo: F5Networks/f5-ci-docs
 # DEPLOY TO PRODUCTION
 - provider: s3
   skip_cleanup: true
