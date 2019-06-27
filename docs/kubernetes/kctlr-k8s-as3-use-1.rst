@@ -13,7 +13,7 @@ This use case demonstrates how you can use Container Ingress Services (CIS) and 
 
 .. rubric:: **HTTP application**
 
-.. image:: /_static/media/cis_as3_service.png
+.. image:: /_static/media/cis_http_as3_service.png
    :scale: 70%
 
 Prerequisites
