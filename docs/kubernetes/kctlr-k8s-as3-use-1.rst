@@ -33,6 +33,7 @@ To complete this use case, ensure you have:
 Your :code:`k8s-bigip-ctlr` deployment should resemble:
 
 .. code-block:: YAML
+
    args: [
       "--bigip-username=$(BIGIP_USERNAME)",
       "--bigip-password=$(BIGIP_PASSWORD)",
