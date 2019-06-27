@@ -11,7 +11,6 @@ This use case demonstrates how you can use Container Ingress Services (CIS) and 
 - Use the labels for Service Discovery.
 - Configure the BIG-IP system to load balance across PODs.
 
-
 Prerequisites
 `````````````
 To complete this use case, ensure you have:
@@ -23,7 +22,7 @@ To complete this use case, ensure you have:
 
 I. Deploy a labeled Kuberenetes Service
 ```````````````````````````````````````
-The first step will be to deploy a labeled Kubernetes Service. The following example labels identify this POD as f5-hello-world-web, the Tenent (partition) on BIG-IP as AS3, and the pool on BIG-IP as web_pool:
+The first step will be to deploy a labeled Kubernetes Service. This example creates a Kubernetes Service named f5-hello-world-web. The Services uses labels to identify the application as f5-hellow-world-web, the Tenent (partition) on BIG-IP as AS3, and a pool name on BIG-IP as web_pool:
 
 .. note::
 
@@ -53,22 +52,22 @@ The first step will be to deploy a labeled Kubernetes Service. The following exa
 
 - :fonticon:`fa fa-download` :download:`f5-hello-world-web-service.yaml </kubernetes/config_examples/f5-hello-world-web-service.yaml>`
 
-Deploy the Service using kubectl apply.
+Create the Kubernetes Service using kubectl apply.
 
-   .. parsed-literal::
+.. parsed-literal::
 
-      kubectl apply -f <service name>.yaml -n <name space>
+   kubectl apply -f <service name>.yaml -n <name space>
 
-   For example:
+For example:
 
-   .. parsed-literal::
+.. parsed-literal::
 
-      kubectl apply -f f5-hello-world-web-service.yaml -n k8s
+   kubectl apply -f f5-hello-world-web-service.yaml -n k8s
 
 
 II. Create a Deployment
 ```````````````````````
-Kubernetes Pod represent one or more containers that you create using a Kubernetes Deployment. To link specific Services with Deployments, ensure the same app labels are applied to each.
+A Kubernetes Pod represent one or more containers that you create using a Kubernetes Deployment. The following example creates a new application using named f5-hellow-world-web, using the f5-hello-world container. The deployment uses the f5-hellow-world-web label to identify the application. 
 
 .. code-block:: YAML
 
@@ -98,6 +97,10 @@ Kubernetes Pod represent one or more containers that you create using a Kubernet
            - containerPort: 8080
              protocol: TCP
 
+- :fonticon:`fa fa-download` :download:`f5-hello-world-web-deployment.yaml </kubernetes/config_examples/f5-hello-world-web-deployment.yaml>`
+
+Create the Deployment using kubectl apply:
+
 .. parsed-literal::
 
    kubectl apply -f <service name>.yaml -n <name space>
@@ -110,13 +113,64 @@ For example:
 
 Example https://raw.githubusercontent.com/mdditt2000/kubernetes/dev/cis-1-9/deployment/f5-hello-world-deployment.yaml
 
+
+
 III. Create an AS3 ConfigMap
 ````````````````````````````
-AS3 ConfigMaps represent the BIG-IP system configuration used to load balance across the PODs. Service discovery will create a load balancing pool of PODs based on labels.
+AS3 ConfigMaps represent the BIG-IP system configuration used to load balance across the PODs. CIS will use Service discovery to create a load balancing pool with all of the application's PODs as members.  This example will create a simple HTTP application the the BIG-IP system.
 
-This example will deploy a simple http application on BIG-IP
+.. code-block:: YAML
 
-Example https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/A1/f5-as3-configmap.yaml
+   kind: ConfigMap
+   apiVersion: v1
+   metadata:
+     name: f5-as3-declaration
+     namespace: kube-system
+     labels:
+       f5type: virtual-server
+       as3: "true"
+   data:
+     template: |
+       {
+           "class": "AS3",
+           "declaration": {
+               "class": "ADC",
+               "schemaVersion": "3.10.0",
+               "id": "urn:uuid:33045210-3ab8-4636-9b2a-c98d22ab915d",
+               "label": "http",
+               "remark": "A1 example",
+               "AS3": {
+                   "class": "Tenant",
+                   "A1": {
+                       "class": "Application",
+                       "template": "http",
+                       "serviceMain": {
+                           "class": "Service_HTTP",
+                           "virtualAddresses": [
+                               "10.192.75.101"
+                           ],
+                           "pool": "web_pool"
+                       },
+                       "web_pool": {
+                           "class": "Pool",
+                           "monitors": [
+                               "http"
+                           ],
+                           "members": [
+                               {
+                                   "servicePort": 8080,
+                                   "serverAddresses": []
+                               }
+                           ]
+                       }
+                   }
+               }
+           }
+       }
+
+- :fonticon:`fa fa-download` :download:`f5-hello-world-as3-configmap.yaml </kubernetes/config_examples/f5-hello-world-as3-configmap.yaml>`
+
+Deploy the ConfigMap using kubectl apply:
 
 .. parsed-literal::
 
@@ -127,34 +181,3 @@ For example:
 .. parsed-literal::
 
    kubectl create -f f5-as3-configmap.yaml -n k8s
-
-AS3 Examples
-````````````
-- :fonticon:`fa fa-download` :download:`f5-as3-template-example.yaml </kubernetes/config_examples/f5-as3-template-example.yaml>`
-- :fonticon:`fa fa-download` :download:`f5-as3-declaration-example.yaml </kubernetes/config_examples/f5-as3-declaration-example.yaml>`
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: f5-hello-world-web
-  namespace: kube-system
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: f5-hello-world-web
-  template:
-    metadata:
-      labels:
-        app: f5-hello-world-web
-    spec:
-      containers:
-      - env:
-        - name: service_name
-          value: f5-hello-world-web
-        image: f5devcentral/f5-hello-world:latest
-        imagePullPolicy: Always
-        name: f5-hello-world-web
-        ports:
-        - containerPort: 8080
-          protocol: TCP
----
