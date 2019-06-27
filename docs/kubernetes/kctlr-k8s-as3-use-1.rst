@@ -36,7 +36,7 @@ The first step will be to deploy a labeled Kubernetes Service. Add these labels 
 
 For example, the following labels identify the POD as f5-hello-world, the partition on BIG-IP as AS3, and the pool on BIG-IP as web_pool:
 
-   .. parsed-literal::
+.. parsed-literal::
 
    labels:
         app: f5-hello-world
@@ -46,7 +46,7 @@ For example, the following labels identify the POD as f5-hello-world, the partit
 
 Deploy the Service using kubectl apply.
 
-   .. parsed-literal::
+.. parsed-literal::
 
    kubectl apply -f <service name>.yaml -n <name space>
 
@@ -62,7 +62,7 @@ II. Create a Deployment
 ```````````````````````
 Kubernetes Pod represent one or more containers that you create using a Kubernetes Deployment. To link specific Services with Deployments, ensure the same app labels are applied to each.
 
-   .. parsed-literal::
+.. parsed-literal::
 
    kubectl apply -f <service name>.yaml -n <name space>
 
@@ -82,7 +82,7 @@ This example will deploy a simple http application on BIG-IP
 
 Example https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/A1/f5-as3-configmap.yaml
 
-   .. parsed-literal::
+.. parsed-literal::
 
    kubectl create -f <configMap name>.yaml -n <name space>
 
