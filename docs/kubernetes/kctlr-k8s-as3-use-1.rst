@@ -29,49 +29,73 @@ The first step will be to deploy a labeled Kubernetes Service. Add these labels 
 .. code-block:: YAML
 
    labels:
+       app: <pod label>
        cis.f5.com/as3-tenant: <tenant name>
        cis.f5.com/as3-app: <application name>
-       cis.f5.com/as3-pool: <pool_name>
+       cis.f5.com/as3-pool: <pool name>
 
-   For example:
-
-.. code-block:: YAML
+For example, the following labels identify the POD as f5-hello-world, the partition on BIG-IP as AS3, and the pool on BIG-IP as web_pool:
 
    labels:
-       cis.f5.com/as3-tenant: AS3
-       cis.f5.com/as3-app: A1SSL
-       cis.f5.com/as3-pool: secure_ssl_pool
+        app: f5-hello-world
+        cis.f5.com/as3-tenant: AS3
+        cis.f5.com/as3-app: A1
+        cis.f5.com/as3-pool: web_pool
 
 .. rubric:: **Services and Tags**
 
 .. image:: /_static/media/cis_as3_service.png
    :scale: 70%
 
+Deploy the service using kubectl apply.
+
+   .. parsed-literal::
+
+   kubectl apply -f <service name>.yaml -n <name space>
+
+   For example:
+
+   .. parsed-literal::
+
+   kubectl apply -f f5-hello-world-service.yaml -n k8s
+
 Example https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/deployment/f5-hello-world-service.yaml
 
-II. Deploying a ConfigMap with AS3
-``````````````````````````````````
-Deploying a application called A1 for http. Example of the declaration https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/A1/f5-as3-configmap.yaml
+II. Create a Deployment
+```````````````````````
+Kubernetes Pod represent one or more containers that you create using a Kubernetes Deployment. To link specific Services with Deployments, ensure the same app labels are applied to each.
+
+   .. parsed-literal::
+
+   kubectl apply -f <service name>.yaml -n <name space>
+
+   For example:
+
+   .. parsed-literal::
+
+   kubectl apply -f f5-hello-world-service.yaml -n k8s
+
+Example https://raw.githubusercontent.com/mdditt2000/kubernetes/dev/cis-1-9/deployment/f5-hello-world-deployment.yaml
+
+II. Create an AS3 ConfigMap
+```````````````````````````
+Creating an AS3 ConfigMap will configure the BIG-IP system to load balance across the PODs supporting the application. 
+
+This example will deploy a simple http application on BIG-IP
+
+Example of the declaration https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/A1/f5-as3-configmap.yaml
 
 **Note:** This is the first application to be deployed by kub. This example will deploy a simple http application on BIG-IP
 ```
-[kube@k8s-1-13-master A1]$ kubectl create -f f5-as3-configmap.yaml
-configmap/f5-as3-declaration created
-```
-### AS3 with HTTPs application
-Deploy a second appliction called A2 for https. Example of the declaration https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/A2/f5-as3-configmap.yaml
-```
-[kube@k8s-1-13-master A2]$ kubectl get cm
-NAME                 DATA   AGE
-f5-as3-declaration   1      24m
-```
-Note the declaration is already created. To deploy a new service simple apply declaration A1 + A2. AS3 running on BIP-IP will detect and implment the changes
-```
-[kube@k8s-1-13-master A2]$ kubectl apply -f f5-as3-configmap.yaml
-Warning: kubectl apply should be used on resource created by either kubectl create --save-config or kubectl apply
-configmap/f5-as3-declaration configured
-```
+   .. parsed-literal::
 
+   kubectl create -f <configMap name>.yaml -n <name space>
+
+   For example:
+
+   .. parsed-literal::
+
+   kubectl create -f f5-as3-configmap.yaml -n k8s
 
 AS3 Examples
 ````````````
