@@ -25,14 +25,14 @@ Add a certificate to the CIS trusted SSL certificate store
 
 You can add either a BIG-IP device certificate, or the CA signing certificate to the trusted SSL certificate store. 
 
-In this procedure, you will Secure copy (SCP) a BIG-IP system device certificate to your local Container Orchestration Environment (COE), add it to the CIS trusted SSL certificate store, and restart the CIS controller.
+In this procedure, you will Secure copy (SCP) a BIG-IP system device certificate to the Kubernetes master node, add it to the CIS trusted SSL certificate store, and restart the CIS controller.
 
 Prerequisites
 `````````````
 - The ability to Secure copy (SCP) files from the BIG-IP system.
-- Command line access to your container orchestration environment (COE).
+- Command line access to the Kubernetes master node.
 
-#. Log in to the command line of your container orchestration environment (COE).
+#. Log in to the command line of the master node.
 
 #. Secure copy (SCP) the BIG-IP device certificate to the local working directory. 
 
@@ -117,7 +117,7 @@ Prerequisites
 `````````````
 - A Linux based workstation with the OpenSSL package installed.
 - The ability to Secure copy (SCP) files to and from the BIG-IP system.
-- Command line access to your container orchestration environment (COE).
+- Command line access to Kubernetes master node.
 
 .. important::
 
@@ -127,7 +127,7 @@ Create a root CA and sign a new BIG-IP device certificate
 `````````````````````````````````````````````````````````
 In this procedure, you will use OpenSSL to create a new Root CA signing certificate, and sign a new BIG-IP device certificate.
 
-#. Log in to the workstation command line.
+#. Log in to the Linux workstation command line.
 
 #. Create a working directory to store the CA root certificate and key.
 
@@ -344,7 +344,7 @@ In this procedure, you will back up and replace the BIG-IP system's self-signed 
 
    If the BIG-IP system has the DNS module license, connectivity to peer BIG-IP DNS systems will fail. You must exchange the new certificate with the BIG-IP DNS peers. For more inforation, refer to the **Sync group peer** section of `K16951115 Changing the BIG-IP DNS system device certificate using the Configuration utility`_.
 
-#. From the workstation, change into the root CA working directory.
+#. From the Linux workstation, change into the root CA working directory.
 
    .. parsed-literal::
 
@@ -458,7 +458,7 @@ In this procedure, you will back up and replace the BIG-IP system's self-signed 
 Add the CA signing certificate to the CIS trusted SSL certificate store
 ```````````````````````````````````````````````````````````````````````
 
-In this procedure, you will Secure copy (SCP) the CA signing certificate to your local COE, add it to the CIS trusted SSL certificate store, and restart the CIS controller.
+In this procedure, you will Secure copy (SCP) the CA signing certificate to the master node, add it to the CIS trusted SSL certificate store, and restart the CIS controller.
 
 #. Log in to the command line of your container orchestration environment (COE).
 
