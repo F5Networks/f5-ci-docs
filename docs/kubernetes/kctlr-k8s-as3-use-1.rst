@@ -11,7 +11,7 @@ This use case demonstrates how you can use Container Ingress Services (CIS) and 
 - Deploy a simple HTTP application 
 - Configure the BIG-IP system to load balance across the application (PODs).
 
-.. rubric:: **HTTP application**
+.. rubric:: **CIS & AS3 HTTP application**
 
 .. image:: /_static/media/cis_http_as3_service.png
    :scale: 70%
@@ -25,13 +25,28 @@ To complete this use case, ensure you have:
 - AS3 Extension version 3.10 or higher installed on BIG-IP.
 - A BIG-IP system user account with the Administrator role.
 
+.. important::
+   If your BIG-IP system is using a self-signed certificate, include the `--insecure=true` option in your :code:`k8s-bigip-ctlr` deployment. Also, set the :code:`--pool-member-type=` option to :code:`cluster`, allowing  BIG-IP to reach containers directly. Your :code:`k8s-bigip-ctlr` deployment should resemble:
+
+.. code-block:: YAML
+   args: [
+      "--bigip-username=$(BIGIP_USERNAME)",
+      "--bigip-password=$(BIGIP_PASSWORD)",
+      "--bigip-url=10.10.10.100",
+      "--bigip-partition=AS3",
+      "--namespace=kube-system",
+      "--pool-member-type=cluster",
+      "--flannel-name=fl-vxlan",
+      "--insecure=true"
+         ]
+
 I. Create a Kuberenetes Service
 ```````````````````````````````
 Kubernetes Services expose applications to external clients. This example creates a new Kubernetes Service named :code:`f5-hello-world-web`. The Service uses labels to identify the application as :code:`f5-hello-world-web`, the Tenent (BIG-IP partition) as :code:`AS3,` and the BIG-IP pool as :code:`web_pool`:
 
 .. note::
 
-   If you need additional detail on labels, refer to . 
+   This configuration tage of cluster mode. In a cluster mode BIG-IP can reach the containers directly.
 
 .. code-block:: YAML
 
