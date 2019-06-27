@@ -28,9 +28,7 @@ To complete this use case, ensure you have:
 - A BIG-IP system user account with the Administrator role.
 
 .. important::
-   If your BIG-IP system is using a self-signed certificate (the default configuration), include the `--insecure=true` option in your :code:`k8s-bigip-ctlr` deployment. Also, to allow the BIG-IP system to reach containers directly, set the :code:`--pool-member-type=` option to :code:`cluster`.  
-
-Your :code:`k8s-bigip-ctlr` deployment should resemble:
+   If your BIG-IP system is using a self-signed certificate (the default configuration), include the `--insecure=true` option in your :code:`k8s-bigip-ctlr` deployment. Also, to allow the BIG-IP system to reach containers directly, set the :code:`--pool-member-type=` option to :code:`cluster`.  Your :code:`k8s-bigip-ctlr` deployment should resemble:
 
 .. code-block:: YAML
 
@@ -51,7 +49,7 @@ Kubernetes Services expose applications to external clients. This example create
 
 .. note::
 
-   This configuration tage of cluster mode. In a cluster mode BIG-IP can reach the containers directly.
+   Labels are simple key value pairs used to group a set of configuration objects. 
 
 .. code-block:: YAML
 
