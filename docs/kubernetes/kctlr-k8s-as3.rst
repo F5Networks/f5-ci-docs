@@ -39,12 +39,12 @@ CIS can dynamically discover and update load balancing pool members using servic
 
    Multiple Kubernetes Service resources tagged with same set of labels will cause a CIS error, and service discovery failure.
 
-.. rubric:: **Services and Tags**
+.. rubric:: **Services and Label**
 
 .. image:: /_static/media/cis_as3_service.png
    :scale: 70%
 
-An example Kubernetes Service using labels:
+.. rubric:: **Example Service with Labels**
 
 .. code-block:: yaml
 

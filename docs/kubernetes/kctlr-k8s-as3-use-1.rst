@@ -2,14 +2,19 @@
 
 .. _kctlr-k8s-as3-use-1:
 
-Container Ingress Services and AS3 Extensions - Use case 1
-==========================================================
+Container Ingress Services and AS3 Extension - HTTP use case
+=============================================================
 
 This use case demonstrates how you can use Container Ingress Services (CIS) and Application Services 3 (AS3) Extenstion declarations to:
 
 - Expose an HTTP Kubernetes Service.
 - Deploy a simple HTTP application 
 - Configure the BIG-IP system to load balance across the application (PODs).
+
+.. rubric:: **HTTP application**
+
+.. image:: /_static/media/cis_as3_service.png
+   :scale: 70%
 
 Prerequisites
 `````````````
@@ -22,7 +27,7 @@ To complete this use case, ensure you have:
 
 I. Create a Kuberenetes Service
 ```````````````````````````````
-Kubernetes Services expose applications to external clients. This example creates a new Kubernetes Service named :code:`f5-hello-world-web`. The Service uses labels to identify the application as :code:`f5-hello-world-web`, the Tenent (BIG-IP partition) :code:`AS3,` and the BIG-IP pool as :code:`web_pool`:
+Kubernetes Services expose applications to external clients. This example creates a new Kubernetes Service named :code:`f5-hello-world-web`. The Service uses labels to identify the application as :code:`f5-hello-world-web`, the Tenent (BIG-IP partition) as :code:`AS3,` and the BIG-IP pool as :code:`web_pool`:
 
 .. note::
 
