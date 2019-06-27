@@ -117,7 +117,7 @@ Example https://raw.githubusercontent.com/mdditt2000/kubernetes/dev/cis-1-9/depl
 
 III. Create an AS3 ConfigMap
 ````````````````````````````
-AS3 ConfigMaps represent the BIG-IP system configuration used to load balance across the PODs. CIS will use Service discovery to create a load balancing pool with all of the application's PODs as members.  This example will create a simple HTTP application the the BIG-IP system.
+AS3 ConfigMaps create the BIG-IP system configuration used to load balance across the PODs. This example will create an HTTP virtual server on the BIG-IP system with IP address 10.192.75.101, and CIS will use Service Discovery to create a load balancing pool using POD members as endpoints.
 
 .. code-block:: YAML
 
