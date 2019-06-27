@@ -31,13 +31,18 @@ CIS can dynamically discover and update load balancing pool members using servic
 
 .. code-block:: yaml
 
-  cis.f5.com/as3-tenant: <tenant_name>
-  cis.f5.com/as3-app: <application_name>
-  cis.f5.com/as3-pool: <pool_name>
+   cis.f5.com/as3-tenant: <tenant_name>
+   cis.f5.com/as3-app: <application_name>
+   cis.f5.com/as3-pool: <pool_name>
 
 .. important::
 
-  Multiple Kubernetes Service resources tagged with same set of labels will cause a CIS error, and service discovery failure.
+   Multiple Kubernetes Service resources tagged with same set of labels will cause a CIS error, and service discovery failure.
+
+.. rubric:: **Services and Tags**
+
+.. image:: /_static/media/cis_as3_service.png
+   :scale: 70%
 
 An example Kubernetes Service using labels:
 
