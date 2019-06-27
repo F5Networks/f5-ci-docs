@@ -23,33 +23,33 @@ To complete this use case, ensure you have:
 
 I. Deploy a labeled Kuberenetes Service
 ```````````````````````````````````````
-CIS can use Service discovery to dynamically create load balancing pools on the BIG-IP system. CIS does this by mapping pool members to Kubernetes Pod labels. 
+The first step will be to deploy a labeled Kubernetes Service. The following example labels identify this POD as f5-hello-world-web, the Tenent (partition) on BIG-IP as AS3, and the pool on BIG-IP as web_pool:
 
-The first step will be to deploy a labeled Kubernetes Service. Add these labels to your Kubernetes Service. 
+.. note::
 
-For example, the following labels identify the POD as f5-hello-world, the partition on BIG-IP as AS3, and the pool on BIG-IP as web_pool:
+   When you deploy an AS3 ConfigMap, CIS will perform Service Discovery, and map new BIG-IP pool members to Kubernetes Pods using these labels. 
 
-   .. code-block:: YAML
+.. code-block:: YAML
 
-      apiVersion: v1
-      kind: Service
-      metadata:
-        name: f5-hello-world-web
-        namespace: kube-system
-        labels:
-          app: f5-hello-world-web
-          cis.f5.com/as3-tenant: AS3
-          cis.f5.com/as3-app: A1
-          cis.f5.com/as3-pool: web_pool
-      spec:
-        ports:
-        - name: f5-hello-world-web
-          port: 8080
-          protocol: TCP
-          targetPort: 8080
-        type: NodePort
-        selector:
-          app: f5-hello-world-web
+   apiVersion: v1
+   kind: Service
+   metadata:
+     name: f5-hello-world-web
+      namespace: kube-system
+      labels:
+       app: f5-hello-world-web
+       cis.f5.com/as3-tenant: AS3
+       cis.f5.com/as3-app: A1
+       cis.f5.com/as3-pool: web_pool
+   spec:
+     ports:
+     - name: f5-hello-world-web
+       port: 8080
+       protocol: TCP
+       targetPort: 8080
+     type: NodePort
+     selector:
+       app: f5-hello-world-web
 
 - :fonticon:`fa fa-download` :download:`f5-hello-world-web-service.yaml </kubernetes/config_examples/f5-hello-world-web-service.yaml>`
 
@@ -70,15 +70,43 @@ II. Create a Deployment
 ```````````````````````
 Kubernetes Pod represent one or more containers that you create using a Kubernetes Deployment. To link specific Services with Deployments, ensure the same app labels are applied to each.
 
-   .. parsed-literal::
+.. code-block:: YAML
 
-      kubectl apply -f <service name>.yaml -n <name space>
+   apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     name: f5-hello-world-web
+     namespace: kube-system
+   spec:
+     replicas: 2
+     selector:
+       matchLabels:
+         app: f5-hello-world-web
+     template:
+       metadata:
+         labels:
+           app: f5-hello-world-web
+       spec:
+         containers:
+         - env:
+           - name: service_name
+             value: f5-hello-world-web
+             image: f5devcentral/f5-hello-world:latest
+           imagePullPolicy: Always
+           name: f5-hello-world-web
+           ports:
+           - containerPort: 8080
+             protocol: TCP
 
-   For example:
+.. parsed-literal::
 
-   .. parsed-literal::
+   kubectl apply -f <service name>.yaml -n <name space>
 
-      kubectl apply -f f5-hello-world-service.yaml -n k8s
+For example:
+
+.. parsed-literal::
+
+   kubectl apply -f f5-hello-world-service.yaml -n k8s
 
 Example https://raw.githubusercontent.com/mdditt2000/kubernetes/dev/cis-1-9/deployment/f5-hello-world-deployment.yaml
 
@@ -90,17 +118,43 @@ This example will deploy a simple http application on BIG-IP
 
 Example https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/A1/f5-as3-configmap.yaml
 
-   .. parsed-literal::
+.. parsed-literal::
 
-      kubectl create -f <configMap name>.yaml -n <name space>
+   kubectl create -f <configMap name>.yaml -n <name space>
 
-   For example:
+For example:
 
-   .. parsed-literal::
+.. parsed-literal::
 
-      kubectl create -f f5-as3-configmap.yaml -n k8s
+   kubectl create -f f5-as3-configmap.yaml -n k8s
 
 AS3 Examples
 ````````````
 - :fonticon:`fa fa-download` :download:`f5-as3-template-example.yaml </kubernetes/config_examples/f5-as3-template-example.yaml>`
 - :fonticon:`fa fa-download` :download:`f5-as3-declaration-example.yaml </kubernetes/config_examples/f5-as3-declaration-example.yaml>`
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: f5-hello-world-web
+  namespace: kube-system
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: f5-hello-world-web
+  template:
+    metadata:
+      labels:
+        app: f5-hello-world-web
+    spec:
+      containers:
+      - env:
+        - name: service_name
+          value: f5-hello-world-web
+        image: f5devcentral/f5-hello-world:latest
+        imagePullPolicy: Always
+        name: f5-hello-world-web
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+---
