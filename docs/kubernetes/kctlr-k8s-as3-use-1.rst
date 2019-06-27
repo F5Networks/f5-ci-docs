@@ -26,7 +26,9 @@ To complete this use case, ensure you have:
 - A BIG-IP system user account with the Administrator role.
 
 .. important::
-   If your BIG-IP system is using a self-signed certificate, include the `--insecure=true` option in your :code:`k8s-bigip-ctlr` deployment. Also, set the :code:`--pool-member-type=` option to :code:`cluster`, allowing  BIG-IP to reach containers directly. Your :code:`k8s-bigip-ctlr` deployment should resemble:
+   If your BIG-IP system is using a self-signed certificate (the default configuration), include the `--insecure=true` option in your :code:`k8s-bigip-ctlr` deployment. Also, to allow the BIG-IP system to reach containers directly, set the :code:`--pool-member-type=` option to :code:`cluster`. 
+   
+Your :code:`k8s-bigip-ctlr` deployment should resemble:
 
 .. code-block:: YAML
    args: [
