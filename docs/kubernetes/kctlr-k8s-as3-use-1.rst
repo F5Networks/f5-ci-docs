@@ -20,7 +20,7 @@ To complete this use case, ensure you have:
 - AS3 Extension version 3.10 or higher installed on BIG-IP.
 - A BIG-IP system user account with the Administrator role.
 
-I. Deploy a labeled kuberenetes service
+I. Deploy a labeled Kuberenetes Service
 ```````````````````````````````````````
 CIS can use service discovery to dynamically create load balancing pools on the BIG-IP system. CIS does this by mapping pool members to Kubernetes Pod labels. 
 
@@ -36,18 +36,15 @@ The first step will be to deploy a labeled Kubernetes Service. Add these labels 
 
 For example, the following labels identify the POD as f5-hello-world, the partition on BIG-IP as AS3, and the pool on BIG-IP as web_pool:
 
+   .. parsed-literal::
+
    labels:
         app: f5-hello-world
         cis.f5.com/as3-tenant: AS3
         cis.f5.com/as3-app: A1
         cis.f5.com/as3-pool: web_pool
 
-.. rubric:: **Services and Tags**
-
-.. image:: /_static/media/cis_as3_service.png
-   :scale: 70%
-
-Deploy the service using kubectl apply.
+Deploy the Service using kubectl apply.
 
    .. parsed-literal::
 
@@ -77,16 +74,14 @@ Kubernetes Pod represent one or more containers that you create using a Kubernet
 
 Example https://raw.githubusercontent.com/mdditt2000/kubernetes/dev/cis-1-9/deployment/f5-hello-world-deployment.yaml
 
-II. Create an AS3 ConfigMap
-```````````````````````````
-Creating an AS3 ConfigMap will configure the BIG-IP system to load balance across the PODs supporting the application. 
+III. Create an AS3 ConfigMap
+````````````````````````````
+AS3 ConfigMaps represent the BIG-IP system configuration used to load balance across the PODs. Service discovery will create a load balancing pool of PODs based on labels.
 
 This example will deploy a simple http application on BIG-IP
 
-Example of the declaration https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/A1/f5-as3-configmap.yaml
+Example https://github.com/mdditt2000/kubernetes/blob/dev/cis-1-9/A1/f5-as3-configmap.yaml
 
-**Note:** This is the first application to be deployed by kub. This example will deploy a simple http application on BIG-IP
-```
    .. parsed-literal::
 
    kubectl create -f <configMap name>.yaml -n <name space>
