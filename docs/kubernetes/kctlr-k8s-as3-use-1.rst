@@ -7,9 +7,9 @@ Container Ingress Services and AS3 Extensions - Use case 1
 
 This use case demonstrates how you can use Container Ingress Services (CIS) and Application Services 3 (AS3) Extenstion declarations to:
 
-- Expose an HTTP or HTTPs Kubernetes Service with labels.
-- Use the labels for Service Discovery.
-- Configure the BIG-IP system to load balance across PODs.
+- Expose an HTTP Kubernetes Service.
+- Deploy a simple HTTP application 
+- Configure the BIG-IP system to load balance across the application (PODs).
 
 Prerequisites
 `````````````
@@ -20,13 +20,13 @@ To complete this use case, ensure you have:
 - AS3 Extension version 3.10 or higher installed on BIG-IP.
 - A BIG-IP system user account with the Administrator role.
 
-I. Deploy a labeled Kuberenetes Service
-```````````````````````````````````````
-The first step will be to deploy a labeled Kubernetes Service. This example creates a Kubernetes Service named f5-hello-world-web. The Services uses labels to identify the application as f5-hellow-world-web, the Tenent (partition) on BIG-IP as AS3, and a pool name on BIG-IP as web_pool:
+I. Create a Kuberenetes Service
+```````````````````````````````
+Kubernetes Services expose applications to external clients. This example creates a new Kubernetes Service named :code:`f5-hello-world-web`. The Service uses labels to identify the application as :code:`f5-hello-world-web`, the Tenent (BIG-IP partition) :code:`AS3,` and the BIG-IP pool as :code:`web_pool`:
 
 .. note::
 
-   When you deploy an AS3 ConfigMap, CIS will perform Service Discovery, and map new BIG-IP pool members to Kubernetes Pods using these labels. 
+   If you need additional detail on labels, refer to . 
 
 .. code-block:: YAML
 
@@ -52,7 +52,7 @@ The first step will be to deploy a labeled Kubernetes Service. This example crea
 
 - :fonticon:`fa fa-download` :download:`f5-hello-world-web-service.yaml </kubernetes/config_examples/f5-hello-world-web-service.yaml>`
 
-Create the Kubernetes Service using kubectl apply.
+Create the Kubernetes Service using kubectl apply:
 
 .. parsed-literal::
 
@@ -62,12 +62,12 @@ For example:
 
 .. parsed-literal::
 
-   kubectl apply -f f5-hello-world-web-service.yaml -n k8s
+   kubectl apply -f f5-hello-world-web-service.yaml 
 
 
 II. Create a Deployment
 ```````````````````````
-A Kubernetes Pod represent one or more containers that you create using a Kubernetes Deployment. The following example creates a new application using named f5-hellow-world-web, using the f5-hello-world container. The deployment uses the f5-hellow-world-web label to identify the application. 
+Kubernetes Deployments are used to create Kubernetes PODs, or applications distributed across multiple hosts. The following example creates a new application named :code:`f5-hellow-world-web`, using the f5-hello-world Docker container. The deployment uses the :code:`f5-hellow-world-web` label to identify the application. 
 
 .. code-block:: YAML
 
@@ -109,15 +109,11 @@ For example:
 
 .. parsed-literal::
 
-   kubectl apply -f f5-hello-world-service.yaml -n k8s
-
-Example https://raw.githubusercontent.com/mdditt2000/kubernetes/dev/cis-1-9/deployment/f5-hello-world-deployment.yaml
-
-
+   kubectl apply -f f5-hello-world-service.yaml 
 
 III. Create an AS3 ConfigMap
 ````````````````````````````
-AS3 ConfigMaps create the BIG-IP system configuration used to load balance across the PODs. This example will create an HTTP virtual server on the BIG-IP system with IP address 10.192.75.101, and CIS will use Service Discovery to create a load balancing pool using POD members as endpoints.
+AS3 ConfigMaps create the BIG-IP system configuration used to load balance across the PODs. This example creates a ConfigMap named :code:`f5-as3-declaration`. CIS uses the AS3 ConfigMap to create a virtual server, and use Service Discovery, a load balancing pool named :code:`web_pool` using POD members as endpoints. The new configuration is created in the AS3 Tenant (BIG-IP partition) :code:`AS3`.
 
 .. code-block:: YAML
 
@@ -180,4 +176,4 @@ For example:
 
 .. parsed-literal::
 
-   kubectl create -f f5-as3-configmap.yaml -n k8s
+   kubectl create -f f5-hello-world-as3-configmap.yaml
