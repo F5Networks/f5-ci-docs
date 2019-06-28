@@ -51,8 +51,8 @@ Procedures
 
 .. _kctlr-as3-http-use-deploy:
 
-I. Deploy the application 
-`````````````````````````
+I. Deploy the HTTP application 
+``````````````````````````````
 Kubernetes Deployments are used to create Kubernetes PODs, or applications distributed across multiple hosts. The following example creates a new application named :code:`f5-hello-world-web`, using the f5-hello-world Docker Container. The Deployment uses the :code:`f5-hello-world-web` label to identify the application. 
 
 .. note::
