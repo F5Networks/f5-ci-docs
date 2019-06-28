@@ -11,7 +11,7 @@ This use case demonstrates how you can use Container Ingress Services (CIS), and
 - Expose the application using a Kubernetes Service.
 - Configure the BIG-IP system to load balance across the application (PODs).
 
-.. rubric:: **CIS & AS3 HTTP application diagram**
+.. rubric:: **HTTP application overview**
 
 .. image:: /_static/media/cis_http_as3_service.png
    :scale: 70%
@@ -26,7 +26,7 @@ To complete this use case, ensure you have:
 - A BIG-IP system user account with the Administrator role.
 
 .. important::
-   If your BIG-IP system is using a self-signed device certificate (the default configuration), include the `--insecure=true` option in your :code:`k8s-bigip-ctlr` deployment. Also, to allow the BIG-IP system to reach containers directly, set the :code:`--pool-member-type=` option to :code:`cluster`.  Your :code:`k8s-bigip-ctlr` deployment should resemble:
+   If your BIG-IP system is using a self-signed SSL device certificate (the default configuration), include the `--insecure=true` option in your :code:`k8s-bigip-ctlr` deployment. Also, to allow the BIG-IP system to reach containers directly, set the :code:`--pool-member-type=` option to :code:`cluster`.  Your :code:`k8s-bigip-ctlr` deployment should resemble:
 
 .. code-block:: YAML
 
@@ -211,7 +211,7 @@ AS3 ConfigMaps create the BIG-IP system configuration used to load balance acros
 
 - :fonticon:`fa fa-download` :download:`f5-hello-world-as3-configmap.yaml </kubernetes/config_examples/f5-hello-world-as3-configmap.yaml>`
 
-Deploy the ConfigMap using kubectl apply:
+To deploy the ConfigMap, run:
 
 .. parsed-literal::
 
@@ -228,9 +228,18 @@ To verify the BIG-IP system has been configured, run:
    curl -sk -u admin:admin https://10.10.10.100//mgmt/tm/ltm/virtual/~AS3~A1~serviceMain
    curl -sk -u admin:admin https://10.10.10.100/mgmt/tm/ltm/pool/~AS3~A1~web_pool
 
-AS3 Resources
-`````````````
-- See the `F5 AS3 User Guide`_ to get started using F5 AS3 Extension declarations.
-- See the `F5 AS3 Reference Guide`_ for an overview and list of F5 AS3 Extension declarations.
-- See `F5 AS3 Installation`_ for installation instructions.
+Deleting CIS ConfigMaps
+```````````````````````
+Because CIS and AS3 use a Declarative API, the BIG-IP system configuration is not removed after you delete a configmap. To remove the BIG-IP system configuration objects created by an AS3 declaration, you must deploy a blank configmap, and restart the controller. Refer to `Deleting CIS AS3 configmaps <kctlr-as3-delete-configmap.html>`_.
+
+You can use this blank ConfigMap to delete the use case ConfigMap and configuration from the BIG-IP system: 
+
+- :fonticon:`fa fa-download` :download:`f5-delete-hello-world-as3-configmap.yaml </kubernetes/config_examples/f5-delete-hello-world-as3-configmap.yaml>`
+
+Additional AS3 Resources
+````````````````````````
+- `F5 AS3 User Guide`_.
+- `F5 AS3 Reference Guide`_.
+- `F5 AS3 Installation`_.
+- `F5 CIS and AS3 integration  <kctlr-k8s-as3-int.html>`_.
 
