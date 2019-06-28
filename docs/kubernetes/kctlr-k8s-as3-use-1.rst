@@ -19,7 +19,8 @@ This use case demonstrates how you can use Container Ingress Services (CIS), and
 .. _kctlr-as3-http-use-pre:
 
 Prerequisites
-`````````````
+=============
+
 To complete this use case, ensure you have:
 
 - A functioning Kubernetes cluster.
@@ -42,6 +43,11 @@ To complete this use case, ensure you have:
       "--flannel-name=fl-vxlan",
       "--insecure=true"
          ]
+
+.. _kctlr-as3-http-use-steps:
+
+Procedures
+==========
 
 .. _kctlr-as3-http-use-deploy:
 
@@ -106,7 +112,7 @@ Kubernetes Services expose applications to external clients. This example create
 
 .. note::
 
-   CIS creates BIG-IP pool members using the information in the Kubernetes Service :code:`Endpoints` field. 
+   CIS creates BIG-IP pool members using the information in the Kubernetes Service :code:`Endpoints` field. You can view all of the Service fields by running the :code:`kubectl describe services` command.
 
 .. code-block:: YAML
 
