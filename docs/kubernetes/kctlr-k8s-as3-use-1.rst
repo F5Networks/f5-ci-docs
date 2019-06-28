@@ -151,7 +151,7 @@ To verify the Service, run:
    kubectl describe services f5-hello-world-web 
 
    Name:                     f5-hello-world-web
-   Namespace:                
+   Namespace:                default 
    Labels:                   app=f5-hello-world-web
                              cis.f5.com/as3-app=A1
                              cis.f5.com/as3-pool=web_pool
@@ -170,7 +170,7 @@ To verify the Service, run:
 
 III. Configure the BIG-IP system
 ````````````````````````````````
-AS3 ConfigMaps create the BIG-IP system configuration used to load balance across the PODs. This example ConfigMap creates a ConfigMap named :code:`f5-as3-declaration`. CIS uses the AS3 ConfigMap to create a virtual server, and use Service Discovery to create a load balancing pool named :code:`web_pool` of Service endpoints. The new configuration is created in the AS3 Tenant (BIG-IP partition) :code:`AS3`.
+AS3 ConfigMaps create the BIG-IP system configuration used to load balance across the PODs. This AS3 ConfigMap example creates a ConfigMap named :code:`f5-as3-declaration`. CIS uses this AS3 ConfigMap to create a virtual server, and use Service Discovery to create a load balancing pool named :code:`web_pool` of Service endpoints. The new configuration is created in the AS3 Tenant (BIG-IP partition) :code:`AS3`.
 
 .. code-block:: YAML
 
