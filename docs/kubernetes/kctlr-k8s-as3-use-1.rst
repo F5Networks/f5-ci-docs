@@ -7,8 +7,8 @@ Container Ingress Services and AS3 Extension - HTTP use case
 
 This use case demonstrates how you can use Container Ingress Services (CIS) and Application Services 3 (AS3) Extenstion declarations to:
 
-- Expose an HTTP Kubernetes Service.
-- Deploy a simple HTTP application 
+- Deploy a simple HTTP application (Container). 
+- Expose the application using a Kubernetes Service.
 - Configure the BIG-IP system to load balance across the application (PODs).
 
 .. rubric:: **CIS & AS3 HTTP application**
@@ -43,53 +43,8 @@ To complete this use case, ensure you have:
       "--insecure=true"
          ]
 
-I. Create a Kuberenetes Service
-```````````````````````````````
-Kubernetes Services expose applications to external clients. This example creates a new Kubernetes Service named :code:`f5-hello-world-web`. The Service uses labels to identify the application as :code:`f5-hello-world-web`, the Tenent (BIG-IP partition) as :code:`AS3,` and the BIG-IP pool as :code:`web_pool`:
-
-.. note::
-
-   Labels are simple key value pairs used to group a set of configuration objects. 
-
-.. code-block:: YAML
-
-   apiVersion: v1
-   kind: Service
-   metadata:
-     name: f5-hello-world-web
-      namespace: kube-system
-      labels:
-       app: f5-hello-world-web
-       cis.f5.com/as3-tenant: AS3
-       cis.f5.com/as3-app: A1
-       cis.f5.com/as3-pool: web_pool
-   spec:
-     ports:
-     - name: f5-hello-world-web
-       port: 8080
-       protocol: TCP
-       targetPort: 8080
-     type: NodePort
-     selector:
-       app: f5-hello-world-web
-
-- :fonticon:`fa fa-download` :download:`f5-hello-world-web-service.yaml </kubernetes/config_examples/f5-hello-world-web-service.yaml>`
-
-Create the Kubernetes Service using kubectl apply:
-
-.. parsed-literal::
-
-   kubectl apply -f <service name>.yaml -n <name space>
-
-For example:
-
-.. parsed-literal::
-
-   kubectl apply -f f5-hello-world-web-service.yaml 
-
-
-II. Create a Deployment
-```````````````````````
+I. Deploy the application 
+`````````````````````````
 Kubernetes Deployments are used to create Kubernetes PODs, or applications distributed across multiple hosts. The following example creates a new application named :code:`f5-hellow-world-web`, using the f5-hello-world Docker container. The deployment uses the :code:`f5-hellow-world-web` label to identify the application. 
 
 .. code-block:: YAML
@@ -134,8 +89,52 @@ For example:
 
    kubectl apply -f f5-hello-world-service.yaml 
 
-III. Create an AS3 ConfigMap
-````````````````````````````
+II. Expose the application
+``````````````````````````
+Kubernetes Services expose applications to external clients. This example creates a new Kubernetes Service named :code:`f5-hello-world-web`. The Service uses labels to identify the application as :code:`f5-hello-world-web`, the Tenent (BIG-IP partition) as :code:`AS3,` and the BIG-IP pool as :code:`web_pool`:
+
+.. note::
+
+   Labels are simple key value pairs used to group a set of configuration objects. In this example, Kubernets creates a Service, and CIS creates pool members by selecting PODS with the f5-hellow-world-web Label. 
+
+.. code-block:: YAML
+
+   apiVersion: v1
+   kind: Service
+   metadata:
+     name: f5-hello-world-web
+      namespace: kube-system
+      labels:
+       app: f5-hello-world-web
+       cis.f5.com/as3-tenant: AS3
+       cis.f5.com/as3-app: A1
+       cis.f5.com/as3-pool: web_pool
+   spec:
+     ports:
+     - name: f5-hello-world-web
+       port: 8080
+       protocol: TCP
+       targetPort: 8080
+     type: NodePort
+     selector:
+       app: f5-hello-world-web
+
+- :fonticon:`fa fa-download` :download:`f5-hello-world-web-service.yaml </kubernetes/config_examples/f5-hello-world-web-service.yaml>`
+
+Create the Kubernetes Service using kubectl apply:
+
+.. parsed-literal::
+
+   kubectl apply -f <service name>.yaml -n <name space>
+
+For example:
+
+.. parsed-literal::
+
+   kubectl apply -f f5-hello-world-web-service.yaml 
+
+III. Configure the BIG-IP system
+````````````````````````````````
 AS3 ConfigMaps create the BIG-IP system configuration used to load balance across the PODs. This example creates a ConfigMap named :code:`f5-as3-declaration`. CIS uses the AS3 ConfigMap to create a virtual server, and use Service Discovery, a load balancing pool named :code:`web_pool` using POD members as endpoints. The new configuration is created in the AS3 Tenant (BIG-IP partition) :code:`AS3`.
 
 .. code-block:: YAML
