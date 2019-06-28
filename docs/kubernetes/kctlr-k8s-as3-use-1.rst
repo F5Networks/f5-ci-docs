@@ -53,7 +53,7 @@ Procedures
 
 I. Deploy the HTTP application 
 ``````````````````````````````
-Kubernetes Deployments are used to create Kubernetes PODs, or applications distributed across multiple hosts. The following example creates a new application named :code:`f5-hello-world-web`, using the f5-hello-world Docker Container. The Deployment uses the :code:`f5-hello-world-web` label to identify the application. 
+Kubernetes Deployments are used to create Kubernetes PODs, or applications distributed across multiple hosts. The following Deployment example creates a new application named :code:`f5-hello-world-web`, using the f5-hello-world Docker Container, and the :code:`f5-hello-world-web` label to identify the application. 
 
 .. note::
 
@@ -89,7 +89,7 @@ Kubernetes Deployments are used to create Kubernetes PODs, or applications distr
 
 - :fonticon:`fa fa-download` :download:`f5-hello-world-web-deployment.yaml </kubernetes/config_examples/f5-hello-world-web-deployment.yaml>`
 
-To create the Deployment, run: 
+To create the Deployment, run the following command on the Kubernetes Master Node: 
 
 .. parsed-literal::
 
@@ -108,7 +108,7 @@ To verify the application is running on the PODs, run:
 
 II. Expose the application
 ``````````````````````````
-Kubernetes Services expose applications to external clients. This example creates a new Kubernetes Service named :code:`f5-hello-world-web`. The Service uses labels to identify the application as :code:`f5-hello-world-web`, the Tenent (BIG-IP partition) as :code:`AS3,` and the BIG-IP pool as :code:`web_pool`:
+Kubernetes Services expose applications to external clients. This Service example creates a new Kubernetes Service named :code:`f5-hello-world-web`, and uses labels to identify the application as :code:`f5-hello-world-web`, the Tenent (BIG-IP partition) as :code:`AS3,` and the BIG-IP pool as :code:`web_pool`:
 
 .. note::
 
@@ -138,7 +138,7 @@ Kubernetes Services expose applications to external clients. This example create
 
 - :fonticon:`fa fa-download` :download:`f5-hello-world-web-service.yaml </kubernetes/config_examples/f5-hello-world-web-service.yaml>`
 
-To create the Kubernetes Service, run:
+To create the Kubernetes Service, run the following command on the Kubernetes Master Node:
 
 .. parsed-literal::
 
@@ -170,7 +170,7 @@ To verify the Service, run:
 
 III. Configure the BIG-IP system
 ````````````````````````````````
-AS3 ConfigMaps create the BIG-IP system configuration used to load balance across the PODs. This example creates a ConfigMap named :code:`f5-as3-declaration`. CIS uses the AS3 ConfigMap to create a virtual server, and use Service Discovery, a load balancing pool named :code:`web_pool` using POD members as endpoints. The new configuration is created in the AS3 Tenant (BIG-IP partition) :code:`AS3`.
+AS3 ConfigMaps create the BIG-IP system configuration used to load balance across the PODs. This example ConfigMap creates a ConfigMap named :code:`f5-as3-declaration`. CIS uses the AS3 ConfigMap to create a virtual server, and use Service Discovery to create a load balancing pool named :code:`web_pool` of Service endpoints. The new configuration is created in the AS3 Tenant (BIG-IP partition) :code:`AS3`.
 
 .. code-block:: YAML
 
