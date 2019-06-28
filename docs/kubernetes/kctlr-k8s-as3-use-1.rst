@@ -16,6 +16,8 @@ This use case demonstrates how you can use Container Ingress Services (CIS), and
 .. image:: /_static/media/cis_http_as3_service.png
    :scale: 70%
            
+.. _kctlr-as3-http-use-pre:
+
 Prerequisites
 `````````````
 To complete this use case, ensure you have:
@@ -40,6 +42,8 @@ To complete this use case, ensure you have:
       "--flannel-name=fl-vxlan",
       "--insecure=true"
          ]
+
+.. _kctlr-as3-http-use-deploy:
 
 I. Deploy the application 
 `````````````````````````
@@ -94,6 +98,7 @@ To verify the application is running on the PODs, run:
     f5-hello-world-web-b48bd87d9-rj9fq            1/1     Running   0          70s
     f5-hello-world-web-b48bd87d9-v867b            1/1     Running   0          70s
 
+.. _kctlr-as3-http-use-expose:
 
 II. Expose the application
 ``````````````````````````
@@ -101,7 +106,7 @@ Kubernetes Services expose applications to external clients. This example create
 
 .. note::
 
-   CIS will create pool members by selecting PODS with the :code:`f5-hello-world-web` Label. 
+   CIS creates BIG-IP pool members using the information in the Kubernetes Service :code:`Endpoints` field. 
 
 .. code-block:: YAML
 
@@ -155,6 +160,7 @@ To verify the Service, run:
    Session Affinity:         None
    External Traffic Policy:  Cluster
 
+.. _kctlr-as3-http-use-bigip:
 
 III. Configure the BIG-IP system
 ````````````````````````````````
@@ -228,6 +234,8 @@ To verify the BIG-IP system has been configured, run:
    curl -sk -u admin:admin https://10.10.10.100//mgmt/tm/ltm/virtual/~AS3~A1~serviceMain
    curl -sk -u admin:admin https://10.10.10.100/mgmt/tm/ltm/pool/~AS3~A1~web_pool
 
+.. _kctlr-as3-http-use-delete:
+
 Deleting CIS ConfigMaps
 ```````````````````````
 Because CIS and AS3 use a Declarative API, the BIG-IP system configuration is not removed after you delete a configmap. To remove the BIG-IP system configuration objects created by an AS3 declaration, you must deploy a blank configmap, and restart the controller. Refer to `Deleting CIS AS3 configmaps <kctlr-as3-delete-configmap.html>`_.
@@ -235,6 +243,8 @@ Because CIS and AS3 use a Declarative API, the BIG-IP system configuration is no
 You can use this blank ConfigMap to delete the use case ConfigMap and configuration from the BIG-IP system: 
 
 - :fonticon:`fa fa-download` :download:`f5-delete-hello-world-as3-configmap.yaml </kubernetes/config_examples/f5-delete-hello-world-as3-configmap.yaml>`
+
+.. _kctlr-as3-http-use-resource:
 
 Additional AS3 Resources
 ````````````````````````

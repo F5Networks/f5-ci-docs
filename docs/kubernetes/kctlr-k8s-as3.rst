@@ -27,7 +27,7 @@ CIS has the following AS3 Extension limitations:
 CIS service discovery
 `````````````````````
 
-CIS can dynamically discover and update load balancing pool members using service discovery. CIS maps each pool definition in the AS3 template to a Kubernetes Service resource using a label. To create this mapping, add the following labels to your Kubernetes Service:
+CIS can dynamically discover, and update the BIG-IP system's load balancing pool members using Service Discovery. CIS maps each pool definition in the AS3 template to a Kubernetes Service resource using Labels. To create this mapping, add the following labels to your Kubernetes Service:
 
 .. code-block:: yaml
 
