@@ -243,7 +243,8 @@ To verify the BIG-IP system has been configured, run:
 .. _kctlr-as3-http-use-delete:
 
 Deleting CIS ConfigMaps
-```````````````````````
+=======================
+
 Because CIS and AS3 use a Declarative API, the BIG-IP system configuration is not removed after you delete a configmap. To remove the BIG-IP system configuration objects created by an AS3 declaration, you must deploy a blank configmap, and restart the controller. Refer to `Deleting CIS AS3 configmaps <kctlr-as3-delete-configmap.html>`_.
 
 You can use this blank ConfigMap to delete the use case ConfigMap and configuration from the BIG-IP system: 
@@ -253,7 +254,8 @@ You can use this blank ConfigMap to delete the use case ConfigMap and configurat
 .. _kctlr-as3-http-use-resource:
 
 Additional AS3 Resources
-````````````````````````
+========================
+
 - `F5 AS3 User Guide`_.
 - `F5 AS3 Reference Guide`_.
 - `F5 AS3 Installation`_.
