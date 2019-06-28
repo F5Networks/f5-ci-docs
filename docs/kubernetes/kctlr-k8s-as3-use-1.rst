@@ -45,15 +45,19 @@ To complete this use case, ensure you have:
 
 I. Deploy the application 
 `````````````````````````
-Kubernetes Deployments are used to create Kubernetes PODs, or applications distributed across multiple hosts. The following example creates a new application named :code:`f5-hellow-world-web`, using the f5-hello-world Docker container. The deployment uses the :code:`f5-hellow-world-web` label to identify the application. 
+Kubernetes Deployments are used to create Kubernetes PODs, or applications distributed across multiple hosts. The following example creates a new application named :code:`f5-hello-world-web`, using the f5-hello-world Docker container. The deployment uses the :code:`f5-hello-world-web` label to identify the application. 
 
+.. note::
+
+   Labels are simple key value pairs used to group a set of configuration objects.
+   
 .. code-block:: YAML
 
    apiVersion: apps/v1
    kind: Deployment
    metadata:
      name: f5-hello-world-web
-     namespace: kube-system
+     namespace: default
    spec:
      replicas: 2
      selector:
@@ -77,17 +81,21 @@ Kubernetes Deployments are used to create Kubernetes PODs, or applications distr
 
 - :fonticon:`fa fa-download` :download:`f5-hello-world-web-deployment.yaml </kubernetes/config_examples/f5-hello-world-web-deployment.yaml>`
 
-Create the Deployment using kubectl apply:
-
-.. parsed-literal::
-
-   kubectl apply -f <service name>.yaml -n <name space>
-
-For example:
+To create the Deployment, run: 
 
 .. parsed-literal::
 
    kubectl apply -f f5-hello-world-service.yaml 
+
+To verify the application is running on the PODs, run: 
+
+.. parsed-literal::
+
+    kubectl get pods | grep f5-hello
+
+    f5-hello-world-web-b48bd87d9-rj9fq            1/1     Running   0          70s
+    f5-hello-world-web-b48bd87d9-v867b            1/1     Running   0          70s
+
 
 II. Expose the application
 ``````````````````````````
@@ -95,7 +103,7 @@ Kubernetes Services expose applications to external clients. This example create
 
 .. note::
 
-   Labels are simple key value pairs used to group a set of configuration objects. In this example, Kubernets creates a Service, and CIS creates pool members by selecting PODS with the f5-hellow-world-web Label. 
+   CIS will create pool members by selecting PODS with the :code:`f5-hello-world-web` Label. 
 
 .. code-block:: YAML
 
@@ -103,7 +111,7 @@ Kubernetes Services expose applications to external clients. This example create
    kind: Service
    metadata:
      name: f5-hello-world-web
-      namespace: kube-system
+      namespace: default 
       labels:
        app: f5-hello-world-web
        cis.f5.com/as3-tenant: AS3
@@ -125,13 +133,30 @@ Create the Kubernetes Service using kubectl apply:
 
 .. parsed-literal::
 
-   kubectl apply -f <service name>.yaml -n <name space>
+   kubectl apply -f f5-hello-world-web-service.yaml 
 
-For example:
+To verify the Service, run:
 
 .. parsed-literal::
 
-   kubectl apply -f f5-hello-world-web-service.yaml 
+   kubectl describe services f5-hello-world-web 
+
+   Name:                     f5-hello-world-web
+   Namespace:                kube-system
+   Labels:                   app=f5-hello-world-web
+                             cis.f5.com/as3-app=A1
+                             cis.f5.com/as3-pool=web_pool
+                             cis.f5.com/as3-tenant=AS3
+   Selector:                 app=f5-hello-world-web
+   Type:                     NodePort
+   IP:                       10.105.126.114
+   Port:                     f5-hello-world-web  8080/TCP
+   TargetPort:               8080/TCP
+   NodePort:                 f5-hello-world-web  32225/TCP
+   Endpoints:                10.244.1.121:8080,10.244.2.38:8080
+   Session Affinity:         None
+   External Traffic Policy:  Cluster
+
 
 III. Configure the BIG-IP system
 ````````````````````````````````
@@ -143,7 +168,7 @@ AS3 ConfigMaps create the BIG-IP system configuration used to load balance acros
    apiVersion: v1
    metadata:
      name: f5-as3-declaration
-     namespace: kube-system
+     namespace: default
      labels:
        f5type: virtual-server
        as3: "true"
@@ -192,10 +217,15 @@ Deploy the ConfigMap using kubectl apply:
 
 .. parsed-literal::
 
-   kubectl create -f <configMap name>.yaml -n <name space>
+   kubectl create -f f5-hello-world-as3-configmap.yaml
 
-For example:
+To verify the BIG-IP system has been configured, run: 
+
+.. note::
+
+   Modify the :code:`admin` password, and :code:`https://10.10.10.100` for your BIG-IP system.
 
 .. parsed-literal::
 
-   kubectl create -f f5-hello-world-as3-configmap.yaml
+   curl -sk -u admin:admin https://10.10.10.100//mgmt/tm/ltm/virtual/~AS3~A1~serviceMain
+   curl -sk -u admin:admin https://10.10.10.100/mgmt/tm/ltm/pool/~AS3~A1~web_pool
