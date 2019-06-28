@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: f5-hello-world-web
-  namespace: kube-system
+  namespace: default
 spec:
   replicas: 2
   selector:
