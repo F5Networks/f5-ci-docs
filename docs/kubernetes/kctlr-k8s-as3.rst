@@ -24,15 +24,9 @@ CIS has the following AS3 Extension limitations:
 - CIS supports only one AS3 ConfigMap instance.
 - AS3 does not support moving BIG-IP nodes to new partitions.
 
-Declaritive Application Programming Interface (API)
-```````````````````````````````````````````````````
-AS3 Extensions use a declarative approach, meaning AS3 Extension declarations describe the desired configuration state of a BIG-IP system. When using AS3 Extenstions, CIS sends a declaration file using a single Rest API call. 
-
-AS3 tenants
-```````````
-AS3 tenants are BIG-IP administrative partitions used to group configurations that support specific AS3 applications. An AS3 application may support a network-based business application or system. AS3 tenants may also include resources shared by applications in other tenants.
-
-Note: You define the partition CIS uses to communicate with BIG-IP in the :code:`k8s-bigip-ctlr` Deployment. 
+Declaritive API
+```````````````
+AS3 Extensions use a declarative API, meaning AS3 Extension declarations describe the desired configuration state of a BIG-IP system. When using AS3 Extenstions, CIS sends declaration files using a single Rest API call. 
 
 CIS service discovery
 `````````````````````
@@ -220,6 +214,10 @@ CIS requires a unique administrative partition on the BIG-IP system to manage th
 
 .. important::
   This unique BIG-IP partition does not allow the use of the AS3 ``Tenant`` class.
+
+AS3 tenants
+```````````
+AS3 tenants are BIG-IP administrative partitions used to group configurations that support specific AS3 applications. An AS3 application may support a network-based business application or system. AS3 tenants may also include resources shared by applications in other tenants.
 
 
 .. _kctlr-k8s-as3-resource:
