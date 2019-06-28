@@ -2,21 +2,19 @@
 
 .. _kctlr-k8s-as3-use-1:
 
-Container Ingress Services and AS3 Extension - HTTP use case
-=============================================================
+Container Ingress Services and AS3 Extensions - HTTP application use case
+=========================================================================
 
-This use case demonstrates how you can use Container Ingress Services (CIS) and Application Services 3 (AS3) Extenstion declarations to:
+This use case demonstrates how you can use Container Ingress Services (CIS), and Application Services 3 (AS3) Extenstions to:
 
 - Deploy a simple HTTP application (Container). 
 - Expose the application using a Kubernetes Service.
 - Configure the BIG-IP system to load balance across the application (PODs).
 
-.. rubric:: **CIS & AS3 HTTP application**
+.. rubric:: **CIS & AS3 HTTP application diagram**
 
 .. image:: /_static/media/cis_http_as3_service.png
    :scale: 70%
-
-           
            
 Prerequisites
 `````````````
@@ -28,7 +26,7 @@ To complete this use case, ensure you have:
 - A BIG-IP system user account with the Administrator role.
 
 .. important::
-   If your BIG-IP system is using a self-signed certificate (the default configuration), include the `--insecure=true` option in your :code:`k8s-bigip-ctlr` deployment. Also, to allow the BIG-IP system to reach containers directly, set the :code:`--pool-member-type=` option to :code:`cluster`.  Your :code:`k8s-bigip-ctlr` deployment should resemble:
+   If your BIG-IP system is using a self-signed device certificate (the default configuration), include the `--insecure=true` option in your :code:`k8s-bigip-ctlr` deployment. Also, to allow the BIG-IP system to reach containers directly, set the :code:`--pool-member-type=` option to :code:`cluster`.  Your :code:`k8s-bigip-ctlr` deployment should resemble:
 
 .. code-block:: YAML
 
@@ -37,7 +35,7 @@ To complete this use case, ensure you have:
       "--bigip-password=$(BIGIP_PASSWORD)",
       "--bigip-url=10.10.10.100",
       "--bigip-partition=AS3",
-      "--namespace=kube-system",
+      "--namespace=default",
       "--pool-member-type=cluster",
       "--flannel-name=fl-vxlan",
       "--insecure=true"
@@ -45,7 +43,7 @@ To complete this use case, ensure you have:
 
 I. Deploy the application 
 `````````````````````````
-Kubernetes Deployments are used to create Kubernetes PODs, or applications distributed across multiple hosts. The following example creates a new application named :code:`f5-hello-world-web`, using the f5-hello-world Docker container. The deployment uses the :code:`f5-hello-world-web` label to identify the application. 
+Kubernetes Deployments are used to create Kubernetes PODs, or applications distributed across multiple hosts. The following example creates a new application named :code:`f5-hello-world-web`, using the f5-hello-world Docker Container. The Deployment uses the :code:`f5-hello-world-web` label to identify the application. 
 
 .. note::
 
@@ -129,7 +127,7 @@ Kubernetes Services expose applications to external clients. This example create
 
 - :fonticon:`fa fa-download` :download:`f5-hello-world-web-service.yaml </kubernetes/config_examples/f5-hello-world-web-service.yaml>`
 
-Create the Kubernetes Service using kubectl apply:
+To create the Kubernetes Service, run:
 
 .. parsed-literal::
 
@@ -142,7 +140,7 @@ To verify the Service, run:
    kubectl describe services f5-hello-world-web 
 
    Name:                     f5-hello-world-web
-   Namespace:                kube-system
+   Namespace:                
    Labels:                   app=f5-hello-world-web
                              cis.f5.com/as3-app=A1
                              cis.f5.com/as3-pool=web_pool
@@ -229,3 +227,10 @@ To verify the BIG-IP system has been configured, run:
 
    curl -sk -u admin:admin https://10.10.10.100//mgmt/tm/ltm/virtual/~AS3~A1~serviceMain
    curl -sk -u admin:admin https://10.10.10.100/mgmt/tm/ltm/pool/~AS3~A1~web_pool
+
+AS3 Resources
+`````````````
+- See the `F5 AS3 User Guide`_ to get started using F5 AS3 Extension declarations.
+- See the `F5 AS3 Reference Guide`_ for an overview and list of F5 AS3 Extension declarations.
+- See `F5 AS3 Installation`_ for installation instructions.
+
