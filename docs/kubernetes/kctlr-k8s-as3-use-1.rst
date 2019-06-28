@@ -223,7 +223,7 @@ AS3 ConfigMaps create the BIG-IP system configuration used to load balance acros
 
 - :fonticon:`fa fa-download` :download:`f5-hello-world-as3-configmap.yaml </kubernetes/config_examples/f5-hello-world-as3-configmap.yaml>`
 
-To deploy the ConfigMap, run:
+To deploy the ConfigMap, run the following command on the Kubernetes Master Node:
 
 .. parsed-literal::
 
