@@ -42,7 +42,7 @@ CIS can dynamically discover, and update the BIG-IP system's load balancing pool
 
    Multiple Kubernetes Service resources tagged with same set of labels will cause a CIS error, and service discovery failure.
 
-.. rubric:: **Services and Label**
+.. rubric:: **Service Discovery overview**
 
 .. image:: /_static/media/cis_as3_service.png
    :scale: 70%
