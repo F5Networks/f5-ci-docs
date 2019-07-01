@@ -14,7 +14,7 @@ You can use this procedure to delete CIS AS3 configmaps, and also remove the ass
 
 .. note::
 
-   The bold lines in the examples below should be modified based on your currently deployed ConfigMap. To help you understand how to modify the lines, view the example deployment at the bottom of the page.
+   The bold lines in the examples below should be modified based on your ConfigMap. 
 
 #. Log in to the command line of Kubernetes Master Node.
 
