@@ -28,7 +28,7 @@ roleRef:
   kind: ClusterRole
   name: bigip-ctlr-clusterrole
 subjects:
-- apiGroup: rbac.authorization.k8s.io
+- apiGroup: ""
   kind: ServiceAccount
   name: bigip-ctlr
   namespace: <controller_namespace>
