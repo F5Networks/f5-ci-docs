@@ -120,7 +120,7 @@ rst_epilog = """
 .. _cf-bigip-ctlr v1.1.0: %(base_url)s/products/connectors/cf-bigip-ctlr/v1.1/
 .. _cf-bigip-ctlr reference documentation: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/
 .. _cf-bigip-ctlr service broker config parameters: %(base_url)s/products/connectors/cf-bigip-ctlr/latest/#broker-configs
-.. _CIDR format: https://tools.ietf.org/html/rfc4632
+.. _CIDR format: https://www.rfc-editor.org/info/rfc4632
 .. _Cloud Foundry CLI: https://docs.cloudfoundry.org/cf-cli/getting-started.html
 .. _Cloud Foundry: https://cloudfoundry.org/why-cloud-foundry/
 .. _ClusterIP: https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/

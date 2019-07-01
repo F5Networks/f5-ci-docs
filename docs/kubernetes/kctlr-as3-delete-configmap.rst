@@ -12,7 +12,7 @@ You can use this procedure to delete CIS AS3 configmaps, and also remove the ass
 
    This procedure requires you to restart the :code:`k8s-bigip-ctlr`, and may briefly impact traffic processing.
 
-#. Log in to the command line of your container orchestration environment (COE).
+#. Log in to the command line of Kubernetes master node.
 
 #. To remove the associated configuration objects from the BIG-IP system, you must first create a blank configmap.
 

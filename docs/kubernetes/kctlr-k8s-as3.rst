@@ -24,22 +24,30 @@ CIS has the following AS3 Extension limitations:
 - CIS supports only one AS3 ConfigMap instance.
 - AS3 does not support moving BIG-IP nodes to new partitions.
 
+Declaritive API
+```````````````
+AS3 Extensions use a declarative API, meaning AS3 Extension declarations describe the desired configuration state of a BIG-IP system. When using AS3 Extenstions, CIS sends declaration files using a single Rest API call. 
+
 CIS service discovery
 `````````````````````
-
-CIS can dynamically discover and update load balancing pool members using service discovery. CIS maps each pool definition in the AS3 template to a Kubernetes Service resource using a label. To create this mapping, add the following labels to your Kubernetes Service:
+CIS can dynamically discover, and update the BIG-IP system's load balancing pool members using Service Discovery. CIS maps each pool definition in the AS3 template to a Kubernetes Service resource using Labels. To create this mapping, add the following labels to your Kubernetes Service:
 
 .. code-block:: yaml
 
-  cis.f5.com/as3-tenant: <tenant_name>
-  cis.f5.com/as3-app: <application_name>
-  cis.f5.com/as3-pool: <pool_name>
+   cis.f5.com/as3-tenant: <tenant_name>
+   cis.f5.com/as3-app: <application_name>
+   cis.f5.com/as3-pool: <pool_name>
 
 .. important::
 
-  Multiple Kubernetes Service resources tagged with same set of labels will cause a CIS error, and service discovery failure.
+   Multiple Kubernetes Service resources tagged with same set of labels will cause a CIS error, and service discovery failure.
 
-An example Kubernetes Service using labels:
+.. rubric:: **Service Discovery overview**
+
+.. image:: /_static/media/cis_as3_service.png
+   :scale: 70%
+
+.. rubric:: **Example Service with Labels**
 
 .. code-block:: yaml
 
@@ -121,7 +129,7 @@ AS3 declaration processing
 To process an AS3 declaration using CIS, set the :code:`f5type` label to :code:`virtual-server` and the :code:`as3` label to the :code:`true`. 
 
 .. note::
-  Ensure the the AS3 label value is the string :code:`true`, and not the boolean :code:`True`.
+  CIS uses :code:`gojsonschema` to validate AS3 data. If the data structure does not conform with the schema, an error will be logged. Also, ensure the the AS3 label value is the string :code:`true`, and not the boolean :code:`True`.
 
 Exampe AS3 declaration configured for CIS processing:
 
@@ -191,7 +199,7 @@ CIS validates SSL certificates using the root CA certifictes bundled with the ba
 
 .. code-block:: bash
 
-  [ERROR] [as3_log] REST call error: Post https://10.10.10.100/mgmt/shared/appsvcs/declare: x509: cannot validate certificate for 10.10.10.100
+   [ERROR] [as3_log] REST call error: Post https://10.10.10.100/mgmt/shared/appsvcs/declare: x509: cannot validate certificate for 10.10.10.100
 
 To avoid this issue, you can perform one of the following:
 
@@ -206,6 +214,10 @@ CIS requires a unique administrative partition on the BIG-IP system to manage th
 
 .. important::
   This unique BIG-IP partition does not allow the use of the AS3 ``Tenant`` class.
+
+AS3 tenants
+```````````
+AS3 tenants are BIG-IP administrative partitions used to group configurations that support specific AS3 applications. An AS3 application may support a network-based business application or system. AS3 tenants may also include resources shared by applications in other tenants.
 
 
 .. _kctlr-k8s-as3-resource:
