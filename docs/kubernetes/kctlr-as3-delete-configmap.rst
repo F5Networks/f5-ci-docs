@@ -6,7 +6,7 @@
 Deleting Container Ingress Service (CIS) AS3 configmaps
 =======================================================
 
-You can use this procedure to delete CIS AS3 configmaps, and also remove the associated configuration objects from your BIG-IP system.
+You can use this procedure to delete CIS AS3 configmaps, and also remove the associated configuration objects from your BIG-IP system. 
 
 .. important::
 
@@ -14,15 +14,11 @@ You can use this procedure to delete CIS AS3 configmaps, and also remove the ass
 
 .. note::
 
-   The bold lines in the examples below should be modified based on your ConfigMap. 
+   Modify the bold lines in the examples below based on your ConfigMap. 
 
 #. Log in to the command line of Kubernetes Master Node.
 
 #. To remove the associated configuration objects from the BIG-IP system, create a blank ConfigMap.
-
-   .. note::
-
-      To help you understand how to create a blank ConfigMap based on a deployment, review the examples at the bottom of the page.
 
    For example:
 
@@ -56,25 +52,25 @@ You can use this procedure to delete CIS AS3 configmaps, and also remove the ass
 
    .. parsed-literal::
 
-      kubectl apply -f **f5-as3-declaration-blank.yaml** 
+      kubectl apply -f **f5-as3-declaration-blank.yaml** -n **k8s**
    
 #. Delete the configmap from your Kubernetes configuration.
 
    .. parsed-literal::
 
-      kubectl delete configmap **f5-as3-declaration.yaml**
+      kubectl delete configmap **f5-as3-declaration.yaml** -n **k8s**
      
 #. Stop the :code:`k8s-bigip-ctlr`.
 
    .. parsed-literal::
 
-      kubectl delete deployment **f5-k8s-bigip-ctlr-deployment**
+      kubectl delete deployment **f5-k8s-bigip-ctlr-deployment** -n **k8s**
 
 #. Start the :code:`k8s-bigip-ctlr`.
 
    .. parsed-literal::
 
-      kubectl apply -f **f5-k8s-bigip-controller.yaml** 
+      kubectl apply -f **f5-k8s-bigip-controller.yaml**  -n **k8s**
 
 Example deployment and blank configmap
 ``````````````````````````````````````
