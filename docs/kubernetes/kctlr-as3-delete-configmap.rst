@@ -12,13 +12,17 @@ You can use this procedure to delete CIS AS3 configmaps, and also remove the ass
 
    This procedure requires you to restart the :code:`k8s-bigip-ctlr`, and may briefly impact traffic processing.
 
-#. Log in to the command line of Kubernetes master node.
+.. note::
 
-#. To remove the associated configuration objects from the BIG-IP system, you must first create a blank configmap.
+   The bold lines in the examples below should be modified based on your currently deployed ConfigMap. To help you understand how to modify the lines, view the example deployment at the bottom of the page.
+
+#. Log in to the command line of Kubernetes Master Node.
+
+#. To remove the associated configuration objects from the BIG-IP system, create a blank ConfigMap.
 
    .. note::
 
-      The bold lines should be modified based on your currently deployed configmap. To help you understand how to modify the lines, view the example deployment at the bottom of the page.
+      To help you understand how to create a blank ConfigMap based on a deployment, review the examples at the bottom of the page.
 
    For example:
 
@@ -48,53 +52,29 @@ You can use this procedure to delete CIS AS3 configmaps, and also remove the ass
             }
           }
 
-#. Deploy the blank configmap.
+#. Deploy the blank ConfigMap.
 
    .. parsed-literal::
 
-      kubectl apply -f <config map> -n <name space>
-
-   For example:
-
-   .. parsed-literal::
-
-      kubectl apply -f as3-declaration-1.yaml -n k8s
+      kubectl apply -f **f5-as3-declaration-blank.yaml** -n k8s
    
 #. Delete the configmap from your Kubernetes configuration.
 
    .. parsed-literal::
 
-      kubectl delete configmap <configmap name> -n <name space>
-
-   For example:
-
-   .. parsed-literal::
-
-      kubectl delete configmap as3-declaration-1.yaml -n k8s
+      kubectl delete configmap **f5-as3-declaration.yaml** -n k8s
      
 #. Stop the :code:`k8s-bigip-ctlr`.
 
    .. parsed-literal::
 
-      kubectl delete deployment <deployement name> -n <name space>
-
-   For example:
-
-   .. parsed-literal::
-
-      kubectl delete deployment k8s-bigip-ctlr-deployment -n k8s
+      kubectl delete deployment **k8s-bigip-ctlr-deployment** -n k8s
 
 #. Start the :code:`k8s-bigip-ctlr`.
 
    .. parsed-literal::
 
-      kubectl apply -f <deployment name> -n <name space> 
-
-   For example:
-
-   .. parsed-literal::
-
-      kubectl apply -f k8scontroller.yaml -n <name space> 
+      kubectl apply -f **k8scontroller.yaml** -n <name space> 
 
 Example deployment and blank configmap
 ``````````````````````````````````````
