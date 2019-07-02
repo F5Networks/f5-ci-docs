@@ -1,6 +1,15 @@
 :product: Container Ingress Services
 :type: concept
 
+.. meta::
+   :description: product
+   :keywords: CIS, Kubernetes, AS3, AS3 Extensions, BIG-IP Controller 
+
+.. meta::
+   :description: version
+   :keywords: 1.9.1, 1.9.0, 1.8.1, 1.8.0
+
+
 .. _kctlr-k8s-as3-int:
 
 Container Ingress Services and AS3 Extension integration
