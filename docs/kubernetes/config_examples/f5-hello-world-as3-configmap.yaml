@@ -15,13 +15,13 @@ data:
             "schemaVersion": "3.10.0",
             "id": "urn:uuid:33045210-3ab8-4636-9b2a-c98d22ab915d",
             "label": "http",
-            "remark": "A1 example",
+            "remark": "Simple HTTP application with RR pool",
             "AS3": {
                 "class": "Tenant",
                 "A1": {
                     "class": "Application",
-                    "template": "http",
-                    "serviceMain": {
+                    "template": "generic",
+                    "ingress": {
                         "class": "Service_HTTP",
                         "virtualAddresses": [
                             "10.192.75.101"
