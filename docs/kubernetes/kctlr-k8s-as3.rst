@@ -12,7 +12,7 @@
 .. seealso::
    :class: sidebar
 
-   :ref:`Deploy a simple HTTP appliction to BIG-IP with CIS and AS3: <kctlr-k8s-as3-use-1>_`.
+   :ref:`Deploy a simple HTTP application to BIG-IP <kctlr-k8s-as3-use-1>_`.
 
 
 .. _kctlr-k8s-as3-int:
