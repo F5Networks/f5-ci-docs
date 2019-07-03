@@ -10,7 +10,7 @@
 .. seealso::
    :class: sidebar
 
-   :ref:`Deploy a simple HTTP application to BIG-IP. <kctlr-k8s-as3-use-1>`_
+   :ref:`Deploy a simple HTTP application to BIG-IP. <kctlr-k8s-as3-use-1>`
 
 
 .. _kctlr-k8s-as3-int:
