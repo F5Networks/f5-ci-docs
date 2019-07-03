@@ -10,7 +10,7 @@
 .. seealso::
    :class: sidebar
 
-   :ref:`CIS and AS3 - HTTP app use case <kctlr-k8s-as3-use-1>`
+   :ref:`CIS and AS3 - HTTP app use case. <kctlr-k8s-as3-use-1>`
 
 
 .. _kctlr-k8s-as3-int:
