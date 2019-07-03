@@ -26,9 +26,7 @@ User Guides
    kctlr-app-install
    kctlr-managed-objects
    kctlr-k8s-as3
-   kctlr-f5-resource
-   kctlr-manage-bigip-objects
-   kctlr-deploy-iapp
+   kctlr-k8s-as3-use-1
    ../troubleshooting/kubernetes
 
 .. _kctlr-features:
