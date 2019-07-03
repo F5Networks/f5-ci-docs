@@ -9,6 +9,11 @@
    :description: version
    :keywords: 1.9.1, 1.9.0, 1.8.1, 1.8.0
 
+.. seealso::
+   :class: sidebar
+
+   :ref:`Try the CIS with AS3 HTTP application use case: <kctlr-k8s-as3-use-1>`.
+
 
 .. _kctlr-k8s-as3-int:
 
