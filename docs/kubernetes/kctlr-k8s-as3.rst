@@ -2,17 +2,15 @@
 :type: concept
 
 .. meta::
-   :description: product
-   :keywords: CIS, Kubernetes, AS3, AS3 Extensions, BIG-IP Controller 
+   :product: CIS, Kubernetes, AS3, AS3 Extensions, BIG-IP Controller 
 
 .. meta::
-   :description: version
-   :keywords: 1.9.1, 1.9.0, 1.8.1, 1.8.0
+   :version: 1.9.1, 1.9.0, 1.8.1, 1.8.0
 
 .. seealso::
    :class: sidebar
 
-   :ref:`Deploy a simple HTTP application to BIG-IP <kctlr-k8s-as3-use-1.html>`_.
+   :ref:`Deploy a simple HTTP application to BIG-IP. <kctlr-k8s-as3-use-1>`_
 
 
 .. _kctlr-k8s-as3-int:
