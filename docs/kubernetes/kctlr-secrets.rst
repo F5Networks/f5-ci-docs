@@ -43,21 +43,41 @@ If you need to pull images from a private Docker registry, follow the instructio
 
 .. _secret-bigip-login:
 
-Secure your BIG-IP Credentials
-------------------------------
+Create a generic Secret
+-----------------------
 
 Create a generic Secret containing your BIG-IP login information.
 
 .. code-block:: bash
 
    kubectl create secret generic bigip-login --namespace kube-system --from-literal=username=admin --from-literal=password=admin
+
    secret "bigip-login" created
 
 .. _secret verify:
 
-Verify that a Secret Exists
----------------------------
+Verify the  Secret 
+-------------------
 
-If using standard Kubernetes, see the `Kubernetes Secrets documentation <https://kubernetes.io/docs/concepts/configuration/secret/#creating-your-own-secrets>`_.
+.. code-block:: bash
 
-If using OpenShift, see the `OpenShift Secrets documentation <https://docs.openshift.org/1.4/dev_guide/secrets.html>`_.
+   kubectl describe secret bigip-login
+
+   Name:         bigip-login
+   Namespace:    default
+   Labels:       <none>
+   Annotations:  <none>
+
+   Type:  Opaque
+
+   Data
+   ====
+   password:  5 bytes
+   username:  5 bytes
+
+
+Additional resources
+--------------------
+
+- `Kubernetes Secrets documentation <https://kubernetes.io/docs/concepts/configuration/secret/#creating-your-own-secrets>`_
+- `OpenShift Secrets documentation <https://docs.openshift.org/1.4/dev_guide/secrets.html>`_
