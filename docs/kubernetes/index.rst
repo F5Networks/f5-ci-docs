@@ -13,7 +13,7 @@ F5 Container Ingress Services - Kubernetes
 
 `Current Release Notes <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/RELEASE-NOTES.html>`_
 
-This document provides general information regarding the F5 Integration for Kubernetes. For deployment and usage instructions, please refer to the User Guides section.
+This document provides general information regarding the F5 Integration for Kubernetes. For deployment and usage instructions, refer to the User Guides section.
 
 User Guides
 -----------
