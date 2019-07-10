@@ -6,6 +6,7 @@ before_install:
 - docker pull f5devcentral/containthedocs:latest
 install: 
 - pip install awscli --upgrade
+- pip install f5-sphinx-theme==2.0.2b2
 script:
 - ./scripts/docker-docs.sh ./scripts/test-docs.sh
 deploy:
