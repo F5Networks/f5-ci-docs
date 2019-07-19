@@ -68,7 +68,7 @@ Use the :command:`oc create` command to upload the HostSubnet file(s) to the Ope
 .. parsed-literal::
 
    oc create -f **f5-kctlr-openshift-hostsubnet.yaml**
-   hostsubnet "f5-bigip-01" created
+   hostsubnet "f5-bigip-node" created
 
 
 .. _k8s-openshift hostsubnet verify:
@@ -82,7 +82,7 @@ Verify creation of the HostSubnet(s)
 
    oc get hostsubnet
    NAME                  HOST                  HOST IP         SUBNET
-   f5-big-ip             f5-bigip-node         172.16.1.28     10.129.2.0/14
+   f5-bigip-node         f5-bigip-node         172.16.1.28     10.129.2.0/14
 
 
 .. _openshift-bigip-setup:
