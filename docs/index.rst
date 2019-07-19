@@ -39,7 +39,7 @@ Design
 
 When an applicaion developer modifies an application, CIS discovers the change event, and dynamically modifies the BIG-IP system configuration by translating orchestration commands into F5 SDK/iControl REST calls. 
 
-Migrating CIS is as easy as destroying it in one orchestration environment, and spinning it up a new in a new orchestration environment. Wherever CIS runs, it watches the orchestration API, and attempts to bring the BIG-IP up-to-date with the latest configuration.
+Migrating CIS is as easy as destroying it in one orchestration environment, and deploying it in a new environment. Wherever CIS runs, it watches the orchestration API, and attempts to bring the BIG-IP up-to-date with the latest configuration.
 
 Working with BIG-IP HA pairs or device groups
 ---------------------------------------------
