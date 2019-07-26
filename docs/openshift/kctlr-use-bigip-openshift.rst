@@ -90,7 +90,10 @@ Verify creation of the HostSubnet(s)
 Set up the BIG-IP system
 ------------------------
 
-.. include:: /_static/reuse/bigip-admin-permissions-reqd.rst
+.. important::
+
+   The steps in this section require Administrator or Resource Administrator access to the BIG-IP system's TMOS shell (tmsh).
+
 
 .. _k8s-openshift-vxlan-setup:
 
@@ -118,33 +121,45 @@ Create a VXLAN tunnel
 
       create net tunnels tunnel **openshift_vxlan** key **0** profile **ose-vxlan** local-address **172.16.1.28**
 
-#. Create a self IP address in the VXLAN tunnel.
+.. _k8s-openshift-self-vxlan:
 
-   - The self IP range must fall within the cluster subnet mask. Use the command :command:`oc get clusternetwork` to find the correct subnet mask for your cluster.
-   - If you use the BIG-IP configuration utility to create a self IP, you may need to provide the full netmask instead of the CIDR notation.
+Create a self IP in the VXLAN
+`````````````````````````````
 
-   .. parsed-literal::
+Create a self IP address in the VXLAN tunnel.
 
-      create net self **10.129.2.3/14** allow-service **none** vlan **openshift_vxlan**
+- The self IP range must fall within the cluster subnet mask. Use the command :command:`oc get clusternetwork` to find the correct subnet mask for your cluster.
+- If you use the BIG-IP configuration utility to create a self IP, you may need to provide the full netmask instead of the CIDR notation.
 
-#. Create a floating IP address on the BIG-IP device. Use an IP address from the subnet that the OpenShift SDN allocated to the BIG-IP's HostSubnet.
+.. parsed-literal::
 
-   .. parsed-literal::
+   create net self **10.129.2.3/14** allow-service **none** vlan **openshift_vxlan**
 
-      create net self **10.129.2.4/14** allow-service **none** traffic-group **traffic-group-1** vlan **openshift_vxlan**
+.. _k8s-openshift-floating-self-vxlan:
+
+Create a floating self IP in the VXLAN
+``````````````````````````````````````
+
+Create a floating IP address on the BIG-IP device. Use an IP address from the subnet that the OpenShift SDN allocated to the BIG-IP's HostSubnet.
+
+.. parsed-literal::
+
+   create net self **10.129.2.4/14** allow-service **none** traffic-group **traffic-group-1** vlan **openshift_vxlan**
 
 .. include:: /_static/reuse/kctlr-snat-note.rst
+
+.. _k8s-openshift-verify:
 
 Verify creation of the BIG-IP objects
 `````````````````````````````````````
 
-#. Verify object creation.
+You can use the TMOS shell (tmsh) to verify object creation.
 
    .. parsed-literal::
 
-      show net tunnels tunnel **openshift_vxlan**
-      show net self **10.129.2.3/14**
-      show net self **10.129.2.4/14**
+      tmsh show net tunnels tunnel **openshift_vxlan**
+      tmsh show net self **10.129.2.3/14**
+      tmsh show net self **10.129.2.4/14**
 
 .. seealso:: If you're having trouble with your network setup, see :ref:`networking troubleshoot openshift`.
 
