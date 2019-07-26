@@ -6,11 +6,12 @@
 F5 Container Connector - OpenShift
 ==================================
 
-This document provides general information regarding the F5 Integration for OpenShift.
-For deployment and usage instructions, please refer to the guides below.
+`Current Release Notes <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/RELEASE-NOTES.html>`_
+
+This document provides general information regarding the F5 Integration for OpenShift. For deployment and usage instructions, refer to the User Guides section.
 
 .. toctree::
-   :caption: BIG-IP Controller Guides
+   :caption: User Guides
    :maxdepth: 1
 
    Add BIG-IP device to OpenShift Cluster <kctlr-use-bigip-openshift>
