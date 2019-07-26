@@ -97,11 +97,17 @@ Set up the BIG-IP system
 Create a VXLAN tunnel
 `````````````````````
 
+#. Log in to the TMOS shell (tmsh).
+
+   .. parsed-literal::
+
+      tmsh
+
 #. Create a BIG-IP VXLAN profile with :code:`flooding-type multi-point`.
 
    .. parsed-literal::
 
-      create /net tunnels vxlan **ose-vxlan** flooding-type **multipoint**
+      create net tunnels vxlan **ose-vxlan** flooding-type **multipoint**
 
 #. Create a BIG-IP VXLAN tunnel.
 
@@ -110,52 +116,37 @@ Create a VXLAN tunnel
 
    .. parsed-literal::
 
-      create /net tunnels tunnel **openshift_vxlan** key **0** profile **ose-vxlan** local-address **172.16.1.28**
+      create net tunnels tunnel **openshift_vxlan** key **0** profile **ose-vxlan** local-address **172.16.1.28**
 
+#. Create a self IP address in the VXLAN tunnel.
 
-.. _k8s-openshift create bigip self IP:
-.. _k8s-openshift-assign-ip:
+   - The self IP range must fall within the cluster subnet mask. Use the command :command:`oc get clusternetwork` to find the correct subnet mask for your cluster.
+   - If you use the BIG-IP configuration utility to create a self IP, you may need to provide the full netmask instead of the CIDR notation.
 
-Create a self IP in the VXLAN
-`````````````````````````````
+   .. parsed-literal::
 
-Create a self IP address in the VXLAN tunnel.
+      create net self **10.129.2.3/14** allow-service **none** vlan **openshift_vxlan**
 
-- The self IP range must fall within the cluster subnet mask. Use the command :command:`oc get clusternetwork` to find the correct subnet mask for your cluster.
-- If you use the BIG-IP configuration utility to create a self IP, you may need to provide the full netmask instead of the CIDR notation.
+#. Create a floating IP address on the BIG-IP device. Use an IP address from the subnet that the OpenShift SDN allocated to the BIG-IP's HostSubnet.
 
-.. parsed-literal::
+   .. parsed-literal::
 
-   create /net self **10.129.2.3/14** allow-service **none** vlan **openshift_vxlan**
-
-.. _k8s-openshift create bigip floating IP:
-
-Create a floating self IP in the VXLAN
-``````````````````````````````````````
-
-Create a floating IP address on the BIG-IP device. Use an IP address from the subnet that the OpenShift SDN allocated to the BIG-IP's HostSubnet.
-
-.. parsed-literal::
-
-   create /net self **10.129.2.4/14** allow-service **none** traffic-group **traffic-group-1** vlan **openshift_vxlan**
+      create net self **10.129.2.4/14** allow-service **none** traffic-group **traffic-group-1** vlan **openshift_vxlan**
 
 .. include:: /_static/reuse/kctlr-snat-note.rst
-
-.. _os-sdn verify bigip:
 
 Verify creation of the BIG-IP objects
 `````````````````````````````````````
 
-You can use a TMOS shell or the BIG-IP configuration utility to verify object creation.
+#. Verify object creation.
 
-.. parsed-literal::
+   .. parsed-literal::
 
-   show /net tunnels tunnel **openshift_vxlan**
-   show /net running-config self **10.129.2.3/14**
-   show /net running-config self **10.129.2.4/14**
+      show net tunnels tunnel **openshift_vxlan**
+      show net self **10.129.2.3/14**
+      show net self **10.129.2.4/14**
 
 .. seealso:: If you're having trouble with your network setup, see :ref:`networking troubleshoot openshift`.
-
 
 What's Next
 -----------
