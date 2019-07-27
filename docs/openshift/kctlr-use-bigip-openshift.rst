@@ -121,7 +121,7 @@ Create a VXLAN tunnel
 
       create net tunnels tunnel **openshift_vxlan** key **0** profile **ose-vxlan** local-address **172.16.1.28**
 
-.. _k8s-openshift-self-vxlan:
+.. _k8s-openshift create bigip self IP:
 
 Create a self IP in the VXLAN
 `````````````````````````````
@@ -135,7 +135,7 @@ Create a self IP address in the VXLAN tunnel.
 
    create net self **10.129.2.3/14** allow-service **none** vlan **openshift_vxlan**
 
-.. _k8s-openshift-floating-self-vxlan:
+.. _k8s-openshift create bigip floating IP:
 
 Create a floating self IP in the VXLAN
 ``````````````````````````````````````
@@ -148,7 +148,7 @@ Create a floating IP address on the BIG-IP device. Use an IP address from the su
 
 .. include:: /_static/reuse/kctlr-snat-note.rst
 
-.. _k8s-openshift-verify:
+.. _os-sdn verify bigip:
 
 Verify creation of the BIG-IP objects
 `````````````````````````````````````
