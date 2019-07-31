@@ -10,8 +10,6 @@ metadata:
     # https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/#supported-route-annotations
     virtual-server.f5.com/balance: round-robin
     virtual-server.f5.com/clientssl: /Common/client-ssl
-    virtual-server.f5.com/serverssl: /Common/server-ssl
-    virtual-server.f5.com/secure-serverssl: True
 spec:
   host: mysite.example.com
   path: "/myApp"
