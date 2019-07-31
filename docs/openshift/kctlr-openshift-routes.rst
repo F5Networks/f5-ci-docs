@@ -281,7 +281,7 @@ You can also use an existing `BIG-IP SSL profile`_ to secure traffic for a Route
 .. note::
 
    - Each SSL profile applies to one Route.
-   - The |kctlr| creates a client ssl profile for the HTTPS virtual server. The new profiles, "default-client-ssl", is the **default profiles used for SNI.**
+   - The |kctlr| creates a client ssl profile for the HTTPS virtual server. The new profile, "default-client-ssl", is the **default profiles used for SNI.**
 
 .. _delete vs route:
 
