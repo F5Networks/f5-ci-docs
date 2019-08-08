@@ -278,16 +278,10 @@ You can also use an existing `BIG-IP SSL profile`_ to secure traffic for a Route
 
      oc annotate route <route_name> virtual-server.f5.com/clientssl=</BIG-IP-partition/SSL-profile-name>
 
-- For a Server SSL profile, annotate the Route resource as shown below:
-
-  .. code-block:: console
-
-     oc annotate route <route_name> virtual-server.f5.com/serverssl=</BIG-IP-partition/SSL-profile-name>
-
 .. note::
 
    - Each SSL profile applies to one Route.
-   - The |kctlr| creates one client ssl and one server ssl profile for the HTTPS virtual server. These profiles -- "default-client-ssl" and "default-server-ssl" -- are the **default profiles used for SNI.**
+   - The |kctlr| creates a client ssl profile for the HTTPS virtual server. The new profile, "default-client-ssl", is the **default profiles used for SNI.**
 
 .. _delete vs route:
 

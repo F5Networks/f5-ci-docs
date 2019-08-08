@@ -9,10 +9,10 @@
 Introduction to F5 Container Ingress Services
 =============================================
 
-The F5 Container Ingress Services (CIS) provide platform-native integrations for BIG-IP devices from PaaS providers like Cloud Foundry, Kubernetes, Mesos, & OpenShift. The CCs make it possible to dynamically allocate BIG-IP L4-L7 services in container orchestration environments by translating native commands to F5 Python SDK/iControl REST calls. [#cccl]_
+F5 Container Ingress Services (CIS) integrates with container orchestration environments to dynamically create L4/L7 services on F5 BIG-IP systems, and load balance network traffic across the services. Monitoring the orchstration API server, CIS is able to modify the BIG-IP system configuration based on changes made to containerized applications.  
 
 =========================     ===================================================
-Container Ingress Service     Environment
+Container Ingress Service     Orchestration environment
 =========================     ===================================================
 `cf-bigip-ctlr`_              `Cloud Foundry`_ and `Pivotal Cloud Foundry`_
 -------------------------     ---------------------------------------------------
@@ -37,15 +37,9 @@ Container Ingress Service     Environment
 Design
 ------
 
-Each Container Ingress Services is uniquely suited to its specific container orchestration environment and purpose, utilizing the architecture and language appropriate for the environment. Application Developers interact with the platform's API; the CCs watch the API for certain events, then act accordingly.
+When an applicaion developer modifies an application, CIS discovers the change event, and dynamically modifies the BIG-IP system configuration by translating orchestration commands into F5 SDK/iControl REST calls. 
 
-
-
-- the container orchestration environment's config,
-- the BIG-IP device config, and
-- the CC config (provided via the appropriate means for the container orchestration environment).
-
-This means an instance of a Container Ingress Services can be readily discarded. Migrating a CC is as easy as destroying it in one place and spinning up a new one somewhere else. Wherever a Container Connector runs, it always watches the API and attempts to bring the BIG-IP up-to-date with the latest applicable configurations.
+Migrating CIS is as easy as destroying it in one orchestration environment, and deploying it in a new environment. Wherever CIS runs, it watches the orchestration API, and updates the BIG-IP system's configuration.
 
 Working with BIG-IP HA pairs or device groups
 ---------------------------------------------
@@ -76,13 +70,13 @@ Notice for Kubernetes and OpenShift users
 
 .. danger::
 
-   The Container Connector for Kubernetes and OpenShift uses FDB entries and ARP records to identify the Cluster resources associated with BIG-IP Nodes. Because BIG-IP config sync doesn't include FDB entries or ARP records, F5 does not recommend using automatic configuration sync when managing a BIG-IP HA pair or cluster with the |kctlr|.
+   CIS uses FDB entries and ARP records to identify the Cluster resources associated with BIG-IP Nodes. Because BIG-IP config-sync doesn't include FDB entries or ARP records, F5 does not recommend using automatic configuration sync when managing a BIG-IP HA pair or cluster with the |kctlr|.
 
-If you use automatic config sync on devices managed by the |kctlr|, there will be a service interruption window when failover occurs. This window will occur between the standby device activating and the |kctlr| updating the FDB and ARP records on the device.
+If you use automatic config-sync on devices managed by the |kctlr|, there will be a service interruption window when failover occurs. This window will occur between the standby device activating and the |kctlr| updating the FDB and ARP records on the device.
 
-The length of time for the service interruption will be, at minumum, the length of the :code:`k8s-bigip-ctlr` :code:`--node-poll-interval` setting (the interval at which the Controller polls the Kubernetes or OpenShift API server for updates). You can reduce this window by setting the :code:`node-poll-interval` to 5-10 seconds instead of using the default (30).
+The length of time for the service interruption will be the default `--node-poll-interval` setting; 30 seconds. The `--node-poll-interval` setting is not currently configurable.
 
-When you deploy one Controller per device, both devices receive the same FDB record updates. This translates to a shorter potential delay if/when failover happens.
+To experience shorter shorter service interruption when failover events occurs, deploy one CIS instance per BIG-IP device. 
 
 If you choose to deploy one |kctlr| instance and manually sync configurations to the standby device, be sure to always sync *from* the BIG-IP device managed by the |kctlr| *to* the other device(s) in the group.
 

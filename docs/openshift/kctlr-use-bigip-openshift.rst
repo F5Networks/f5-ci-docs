@@ -68,7 +68,7 @@ Use the :command:`oc create` command to upload the HostSubnet file(s) to the Ope
 .. parsed-literal::
 
    oc create -f **f5-kctlr-openshift-hostsubnet.yaml**
-   hostsubnet "f5-bigip-01" created
+   hostsubnet "f5-bigip-node" created
 
 
 .. _k8s-openshift hostsubnet verify:
@@ -82,7 +82,7 @@ Verify creation of the HostSubnet(s)
 
    oc get hostsubnet
    NAME                  HOST                  HOST IP         SUBNET
-   f5-big-ip             f5-bigip-node         172.16.1.28     10.129.2.0/14
+   f5-bigip-node         f5-bigip-node         172.16.1.28     10.129.2.0/14
 
 
 .. _openshift-bigip-setup:
@@ -90,18 +90,27 @@ Verify creation of the HostSubnet(s)
 Set up the BIG-IP system
 ------------------------
 
-.. include:: /_static/reuse/bigip-admin-permissions-reqd.rst
+.. important::
+
+   The steps in this section require Administrator or Resource Administrator access to the BIG-IP system's TMOS shell (tmsh).
+
 
 .. _k8s-openshift-vxlan-setup:
 
 Create a VXLAN tunnel
 `````````````````````
 
+#. Log in to the TMOS shell (tmsh).
+
+   .. parsed-literal::
+
+      tmsh
+
 #. Create a BIG-IP VXLAN profile with :code:`flooding-type multi-point`.
 
    .. parsed-literal::
 
-      create /net tunnels vxlan **ose-vxlan** flooding-type **multipoint**
+      create net tunnels vxlan **ose-vxlan** flooding-type **multipoint**
 
 #. Create a BIG-IP VXLAN tunnel.
 
@@ -110,11 +119,9 @@ Create a VXLAN tunnel
 
    .. parsed-literal::
 
-      create /net tunnels tunnel **openshift_vxlan** key **0** profile **ose-vxlan** local-address **172.16.1.28**
-
+      create net tunnels tunnel **openshift_vxlan** key **0** profile **ose-vxlan** local-address **172.16.1.28**
 
 .. _k8s-openshift create bigip self IP:
-.. _k8s-openshift-assign-ip:
 
 Create a self IP in the VXLAN
 `````````````````````````````
@@ -126,7 +133,7 @@ Create a self IP address in the VXLAN tunnel.
 
 .. parsed-literal::
 
-   create /net self **10.129.2.3/14** allow-service **none** vlan **openshift_vxlan**
+   create net self **10.129.2.3/14** allow-service **none** vlan **openshift_vxlan**
 
 .. _k8s-openshift create bigip floating IP:
 
@@ -137,7 +144,7 @@ Create a floating IP address on the BIG-IP device. Use an IP address from the su
 
 .. parsed-literal::
 
-   create /net self **10.129.2.4/14** allow-service **none** traffic-group **traffic-group-1** vlan **openshift_vxlan**
+   create net self **10.129.2.4/14** allow-service **none** traffic-group **traffic-group-1** vlan **openshift_vxlan**
 
 .. include:: /_static/reuse/kctlr-snat-note.rst
 
@@ -146,16 +153,15 @@ Create a floating IP address on the BIG-IP device. Use an IP address from the su
 Verify creation of the BIG-IP objects
 `````````````````````````````````````
 
-You can use a TMOS shell or the BIG-IP configuration utility to verify object creation.
+You can use the TMOS shell (tmsh) to verify object creation.
 
-.. parsed-literal::
+   .. parsed-literal::
 
-   show /net tunnels tunnel **openshift_vxlan**
-   show /net running-config self **10.129.2.3/14**
-   show /net running-config self **10.129.2.4/14**
+      tmsh show net tunnels tunnel **openshift_vxlan**
+      tmsh show net self **10.129.2.3/14**
+      tmsh show net self **10.129.2.4/14**
 
 .. seealso:: If you're having trouble with your network setup, see :ref:`networking troubleshoot openshift`.
-
 
 What's Next
 -----------
