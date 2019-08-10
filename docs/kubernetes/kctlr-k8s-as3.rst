@@ -2,7 +2,7 @@
 :type: concept
 
 .. meta::
-   :product: CIS, Kubernetes, AS3, AS3 Extensions, BIG-IP Controller 
+   :product: CIS, Kubernetes, OpenShift, AS3, AS3 Extensions, BIG-IP Controller 
 
 .. meta::
    :version: 1.9.1, 1.9.0, 1.8.1, 1.8.0
