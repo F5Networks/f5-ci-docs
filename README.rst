@@ -1,8 +1,8 @@
 f5-ci-docs
 ==========
 
-.. image:: https://travis-ci.org/F5Networks/f5-ci-docs.svg?branch=master
-    :target: https://travis-ci.org/F5Networks/f5-ci-docs
+.. image:: https://travis-ci.com/F5Networks/f5-ci-docs.svg?branch=master
+    :target: https://travis-ci.com/F5Networks/f5-ci-docs
 
 Overview
 --------
