@@ -14,9 +14,9 @@ deploy:
   skip_cleanup: true
   access_key_id: $AWS_ACCESS_KEY_ID
   secret_access_key: $AWS_SECRET_ACCESS_KEY
-  bucket: $AWS_S3_STAGING
+  bucket: $AWS_S3_STAGE
   local_dir: docs/_build/html
-  upload_dir: $AWS_DIR
+  upload_dir: $AWS_S3_BUCKET
   on:
     branch: master
     repo: F5Networks/f5-ci-docs
@@ -25,9 +25,9 @@ deploy:
   skip_cleanup: true
   access_key_id: $AWS_ACCESS_KEY_ID
   secret_access_key: $AWS_SECRET_ACCESS_KEY
-  bucket: $AWS_S3_BUCKET
+  bucket: $AWS_S3_LIVE
   local_dir: docs/_build/html
-  upload_dir: $AWS_DIR
+  upload_dir: $AWS_S3_BUCKET
   on:
     branch: v2
     repo: F5Networks/f5-ci-docs
