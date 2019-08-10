@@ -3,10 +3,9 @@ sudo: required
 services:
 - docker
 before_install:
-- docker pull f5devcentral/containthedocs:latest
+- docker pull f5devcentral/containthedocs:v2.0.2-beta-rc2
 install: 
 - pip install awscli --upgrade
-- pip install f5-sphinx-theme==2.0.2b2
 script:
 - ./scripts/docker-docs.sh ./scripts/test-docs.sh
 deploy:

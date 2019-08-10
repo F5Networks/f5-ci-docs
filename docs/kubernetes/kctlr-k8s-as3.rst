@@ -44,11 +44,16 @@ CIS service discovery
 `````````````````````
 CIS can dynamically discover, and update the BIG-IP system's load balancing pool members using Service Discovery. CIS maps each pool definition in the AS3 template to a Kubernetes Service resource using Labels. To create this mapping, add the following labels to your Kubernetes Service:
 
-.. code-block:: yaml
-
-   cis.f5.com/as3-tenant: <tenant_name>
-   cis.f5.com/as3-app: <application_name>
-   cis.f5.com/as3-pool: <pool_name>
++---------------------------------+------------------------------------------------------------+
+| Label                           | Description                                                |
++=================================+============================================================+
+| cis.f5.com/as3-tenant: <string> | The name of the *partition* in your AS3 declaration.       |
+|                                 | Important: The string must not use a hyphen (-) character. |
++---------------------------------+------------------------------------------------------------+
+| cis.f5.com/as3-app: <string>    | The name of the *class* in your AS3 declaration.           |
++---------------------------------+------------------------------------------------------------+
+| cis.f5.com/as3-pool: <string>   | The name of the *pool* in your AS3 Declaration.            |
++---------------------------------+------------------------------------------------------------+
 
 .. important::
 
