@@ -2,7 +2,7 @@
 
 set -x
 
-: ${DOC_IMG:=f5devcentral/containthedocs:latest}
+: ${DOC_IMG:=f5devcentral/containthedocs:1.0.8}
 
 exec docker run --rm -it \
   -v $PWD:$PWD --workdir $PWD \
