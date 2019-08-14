@@ -1,7 +1,6 @@
 :product: BIG-IP Controller for Kubernetes
 :type: task
 
-
 .. _kctlr-openshift-routes:
 
 Attach Virtual Servers to OpenShift Routes
