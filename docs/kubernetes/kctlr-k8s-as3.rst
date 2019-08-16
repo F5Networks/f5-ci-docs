@@ -44,82 +44,82 @@ CIS service discovery
 `````````````````````
 CIS can dynamically discover, and update the BIG-IP system's load balancing pool members using Service Discovery. CIS maps each pool definition in the AS3 template to a Kubernetes Service resource using Labels. To create this mapping, add the following labels to your Kubernetes Service:
 
-+---------------------------------+------------------------------------------------------------+
-| Label                           | Description                                                |
-+=================================+============================================================+
-| cis.f5.com/as3-tenant: <string> | The name of the *partition* in your AS3 declaration.       |
-|                                 | Important: The string must not use a hyphen (-) character. |
-+---------------------------------+------------------------------------------------------------+
-| cis.f5.com/as3-app: <string>    | The name of the *class* in your AS3 declaration.           |
-+---------------------------------+------------------------------------------------------------+
-| cis.f5.com/as3-pool: <string>   | The name of the *pool* in your AS3 Declaration.            |
-+---------------------------------+------------------------------------------------------------+
++---------------------------------+-------------------------------------------------------------------+
+| Label                           | Description                                                       |
++=================================+===================================================================+
+| app: <string>                   | | This label associates the service with the deployment.          |
+|                                 | | *Important: This label must be included, and resolve in DNS.*   |            
++---------------------------------+-------------------------------------------------------------------+
+| cis.f5.com/as3-tenant: <string> | | The name of the **partition** in your AS3 declaration.          |
+|                                 | | *Important: The string must not use a hyphen (-) character.*    |
++---------------------------------+-------------------------------------------------------------------+
+| cis.f5.com/as3-app: <string>    | The name of the **class** in your AS3 declaration.                |
++---------------------------------+-------------------------------------------------------------------+
+| cis.f5.com/as3-pool: <string>   | The name of the **pool** in your AS3 Declaration.                 |
++---------------------------------+-------------------------------------------------------------------+
 
 .. important::
 
    Multiple Kubernetes Service resources tagged with same set of labels will cause a CIS error, and service discovery failure.
 
-.. rubric:: **Service Discovery overview**
+.. rubric:: **Service label overview**
 
-.. image:: /_static/media/cis_as3_service.png
+.. image:: /_static/media/k8s_service_labels.png
    :scale: 70%
 
-.. rubric:: **Example Service with Labels**
+.. rubric:: **Example Service**
 
 .. code-block:: yaml
 
-  kind: Service
   apiVersion: v1
-  metadata:
-    name: stark-blog-frontend
-    labels:
-      cis.f5.com/as3-tenant: "stark"
-      cis.f5.com/as3-app: "blog"
-      cis.f5.com/as3-pool: "web_pool"
-  spec:
-    selector:
-      run: web-service
-      ports:
-      - protocol: TCP
-        port: 80
-        targetPort: 80
-
-The Kubernetes deployment created by the Kubernetes Service:
-
-.. code-block:: yaml
-
   kind: Service
-  apiVersion: v1
   metadata:
-    name: stark-blog-frontend
+    name: f5-hello-world
+    namespace: kube-system
     labels:
-      cis.f5.com/as3-tenant: "stark"
-      cis.f5.com/as3-app: "blog"
-      cis.f5.com/as3-pool: "web_pool"
+      app: f5-hello-world
+      cis.f5.com/as3-tenant: AS3
+      cis.f5.com/as3-app: f5-hello-world
+      cis.f5.com/as3-pool: web_pool
   spec:
-    selector:
-      run: web-service
     ports:
-      - protocol: TCP
-        port: 80
-        targetPort: 80
+    - name: f5-hello-world
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    type: NodePort
+    selector:
+      app: f5-hello-world
+
+.. rubric:: **Example Deployment**
+
+.. code-block:: yaml
+
   apiVersion: apps/v1
   kind: Deployment
   metadata:
-    name: nginx-web-service
+    name: f5-hello-world
+    namespace: kube-system
   spec:
+    replicas: 2
     selector:
       matchLabels:
-        run: web-service
-    replicas: 3
+        app: f5-hello-world
     template:
       metadata:
         labels:
-          run: web-service
+          app: f5-hello-world
       spec:
         containers:
-          - name: nginx
-            image: nginx
+        - env:
+          - name: service_name
+            value: f5-hello-world
+          image: f5devcentral/f5-hello-world:latest
+          imagePullPolicy: Always
+          name: f5-hello-world
+          ports:
+          - containerPort: 80
+            protocol: TCP
 
 .. _kctlr-k8s-as3-discovery:
 
@@ -148,7 +148,7 @@ To process an AS3 declaration using CIS, set the :code:`f5type` label to :code:`
 .. note::
   CIS uses :code:`gojsonschema` to validate AS3 data. If the data structure does not conform with the schema, an error will be logged. Also, ensure the the AS3 label value is the string :code:`true`, and not the boolean :code:`True`.
 
-Exampe AS3 declaration configured for CIS processing:
+.. rubric:: **Example AS3 ConfigMap**
 
 .. code-block:: yaml
 
@@ -156,7 +156,7 @@ Exampe AS3 declaration configured for CIS processing:
   apiVersion: v1
   metadata:
     name: as3-template
-    namespace: default
+    namespace: kube-system
     labels:
       f5type: virtual-server
       as3: "true"
