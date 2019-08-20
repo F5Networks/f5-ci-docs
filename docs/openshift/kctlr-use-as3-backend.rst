@@ -37,16 +37,46 @@ Once AS3 package is installed in BIG-IP, restart the controller with the followi
          "--agent=as3"
          ]
 
++---------------------+---------------+---------+--------------------------------------------------------------+
+| Argument            | Values        | Default |                      Description                             |
++=====================+===============+=========+==============================================================+
+| --agent             | as3, cccl     | cccl    | If as3 is given CIS creates one additional partition with    |
+|                     |               |         | name <partition>_AS3 where <partition> is provided through   |
+|                     |               |         | argument --bigip-paritition                                  |
++---------------------+---------------+---------+--------------------------------------------------------------+
+
 Notable Changes
 ---------------
 When deployed to use AS3 as an orchestration backend, the controller will create a new partition named
 `<bigip-partition>_AS3` and put all the LTM objects in this partition. FDB entries and Static ARP entries continue to
 exist in `<bigip-partition>`. In the above example, the controller uses `myParition_AS3` for LTM objects such as pools,
-virtuals, policies. FDB and Static ARP entries will be in `myPartition`.
+virtuals, policies. FDB and Static ARP entries will be in `myPartition`. These partitions should not be controlled by
+users manually.
 
 Supported Openshift Route Features
 ----------------------------------
-
++-------+---------------+-------------------------------+---------------------------+
+| Route |  Termination  |          Option               |          Values           |
++=======+===============+===============================+===========================+
+| Host  |               |                               |                           |
++-------+---------------+-------------------------------+---------------------------+
+| Path  |               |                               |                           |
++-------+---------------+-------------------------------+---------------------------+
+|  TLS  | - Passthrough | insecureEdgeTerminatoinPolicy | - None                    |
++-------+---------------+-------------------------------+---------------------------+
+|       |  - Edge       | insecureEdgeTerminatoinPolicy | - None                    |
+|       |               |                               | - Allow                   |
+|       |               |                               | - Redirect                |
++-------+---------------+-------------------------------+---------------------------+
+|       | - Reencrypt   | insecureEdgeTerminatoinPolicy | - None                    |
++-------+---------------+-------------------------------+---------------------------+
 
 Known Issues
 ------------
+v1.10.0
+```````
+- Controller does not overwrite manual changes in controller manager partitions on BIG-IP. A restart is required.
+- Change in TLS Termination of a route is not detected by controller. A restart is required.
+- Changing insecureEdgeTerminationPolicy is not detected by controller. A restart is required.
+- Multiple ssl profiles are not supported through annotations.
+- Combination of user specified certificates and annotations are not supported.
