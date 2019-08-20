@@ -86,4 +86,4 @@ v1.10.0
 - Change in TLS Termination of a route is not detected by controller. A restart is required.
 - Changing insecureEdgeTerminationPolicy is not detected by controller. A restart is required.
 - Multiple ssl profiles are not supported through annotations.
-- Combination of user specified certificates and annotations are not supported.
+- Combination of user specified certificates and ssl profile annotations are not supported.
