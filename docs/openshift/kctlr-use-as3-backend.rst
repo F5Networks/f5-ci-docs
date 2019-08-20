@@ -71,6 +71,13 @@ Supported Openshift Route Features
 |       | - Reencrypt   | insecureEdgeTerminatoinPolicy | - None                    |
 +-------+---------------+-------------------------------+---------------------------+
 
+**Annotations**
+- virtual-server.f5.com/balance
+- virtual-server.f5.com/clientssl
+- virtual-server.f5.com/serverssl
+- virtual-server.f5.com/secure-serverssl
+- virtual-server.f5.com/balance
+
 Known Issues
 ------------
 v1.10.0
