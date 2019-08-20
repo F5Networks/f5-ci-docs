@@ -73,6 +73,7 @@ Supported Openshift Route Features
 
 **Annotations**
 - virtual-server.f5.com/balance
+- virtual-server.f5.com/health
 - virtual-server.f5.com/clientssl
 - virtual-server.f5.com/serverssl
 - virtual-server.f5.com/secure-serverssl
