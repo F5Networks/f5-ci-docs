@@ -95,11 +95,10 @@ v1.10.0
 - Controller does not overwrite manual changes in controller manager partitions on BIG-IP. A restart is required.
 - Change in TLS Termination of a route is not detected by controller. A restart is required.
 - Changing insecureEdgeTerminationPolicy is not detected by controller. A restart is required.
-- Multiple ssl profiles are not supported through annotations.
-- Combination of user specified certificates and ssl profile annotations are not supported.
+- Multiple SSL profiles are not supported through annotations.
+- A combination of user specified SSL certificates, and SSL profile annotations are not supported.
 
 AS3 Resources
 -------------
 - See the `F5 AS3 User Guide`_ to get started using F5 AS3 Extension declarations.
 - See the `F5 AS3 Reference Guide`_ for an overview and list of F5 AS3 Extension declarations.
-
