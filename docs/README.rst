@@ -124,6 +124,9 @@ General
 |                       |         |          |                                  | servers will reference. If it is not    |                |
 |                       |         |          |                                  | set, virtual servers use automap SNAT.  |                |
 +-----------------------+---------+----------+----------------------------------+-----------------------------------------+----------------+
+| agent                 | boolean | Optional | cccl                             | Orchestration backend that will be      | cccl,          |
+|                       |         |          |                                  | used by Controller                      | as3            |
++-----------------------+---------+----------+----------------------------------+-----------------------------------------+----------------+
 
 .. note::
 
@@ -280,6 +283,9 @@ Kubernetes
 |                       |         |          |                   | Secrets for Ingresses and ConfigMaps.   |                |
 |                       |         |          |                   | If false, the controller will only use  |                |
 |                       |         |          |                   | profiles from the BIG-IP system.        |                |
++-----------------------+---------+----------+-------------------+-----------------------------------------+----------------+
+| manage-ingress        | boolean | Optional | true              | Indicates if ``k8s-bigip-ctlr`` should  | true, false    |
+|                       |         |          |                   | handle Kubernetes Ingress objects.      |                |
 +-----------------------+---------+----------+-------------------+-----------------------------------------+----------------+
 
 .. note::
