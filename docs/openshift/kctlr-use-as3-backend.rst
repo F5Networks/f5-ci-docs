@@ -36,7 +36,7 @@ You can use these steps to enable AS3 for BIG-IP orchestration:
          "--pool-member-type=cluster",
          "--openshift-sdn-name=/Common/openshift_vxlan",
          "--manage-routes=true",
-         "--agent=as3"
+         **"--agent=as3"**
          ]
 
 2. Start the Controller: 
@@ -79,7 +79,7 @@ Supported Openshift Route Features
 +-------+---------------+-------------------------------+---------------------------+
 
 Annotations
------------
+```````````
 
 - virtual-server.f5.com/balance
 - virtual-server.f5.com/health
@@ -99,7 +99,7 @@ v1.10.0
 - Combination of user specified certificates and ssl profile annotations are not supported.
 
 AS3 Resources
-`````````````
+-------------
 - See the `F5 AS3 User Guide`_ to get started using F5 AS3 Extension declarations.
 - See the `F5 AS3 Reference Guide`_ for an overview and list of F5 AS3 Extension declarations.
 
