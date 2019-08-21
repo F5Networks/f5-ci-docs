@@ -17,6 +17,7 @@ This document provides general information regarding the F5 Integration for Open
    Add BIG-IP device to OpenShift Cluster <kctlr-use-bigip-openshift>
    Deploy the BIG-IP Controller <kctlr-openshift-app-install>
    Manage BIG-IP objects <../kubernetes/kctlr-manage-bigip-objects>
+   Use AS3 for BIG-IP orchestration <kctlr-use-as3-backend>
    Deploy iApps <../kubernetes/kctlr-deploy-iapp>
    Expose Services using Routes <kctlr-openshift-routes>
    Troubleshooting <../troubleshooting/kubernetes>

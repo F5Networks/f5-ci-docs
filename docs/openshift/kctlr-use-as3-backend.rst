@@ -1,7 +1,7 @@
 :product: BIG-IP Controller for Kubernetes
 :type: task
 
-.. _use_as3_backend:
+.. _kctlr-use-as3-backend:
 
 Using AS3 for BIG-IP Orchestration
 ==================================
