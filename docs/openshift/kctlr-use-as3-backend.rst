@@ -36,7 +36,7 @@ You can use these steps to enable AS3 for BIG-IP orchestration:
          "--pool-member-type=cluster",
          "--openshift-sdn-name=/Common/openshift_vxlan",
          "--manage-routes=true",
-         **"--agent=as3"**
+         "--agent=as3"
          ]
 
 2. Start the Controller: 
