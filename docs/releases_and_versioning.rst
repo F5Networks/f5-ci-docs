@@ -88,9 +88,9 @@ The tables below show the versions used in development testing. The F5 Container
    |                          |                       +--------------------------------------------+                                            |                          |
    |                          |                       | Red Hat OpenShift Container Platform       |                                            |                          |
    |                          +-----------------------+--------------------------------------------+--------------------------------------------+--------------------------+
-   |                          | v1.10x                | OpenShift Origin                           | v3.7.x, v3.11x                             | v12.x, v13.x, v14.x      |
-   |                          |                       +--------------------------------------------+                                            |                          |
-   |                          |                       | Red Hat OpenShift Container Platform       |                                            |                          |
+   |                          | v1.10x                | OpenShift Origin                           | v3.7.x, v3.11x                             | v12.x, v13.x, v14.x*     |
+   |                          |                       +--------------------------------------------+                                            | * v14.x only supported   |
+   |                          |                       | Red Hat OpenShift Container Platform       |                                            | when using AS3.          |
    +--------------------------+-----------------------+--------------------------------------------+--------------------------------------------+--------------------------+
 
 .. important::
