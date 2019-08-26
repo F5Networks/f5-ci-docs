@@ -4,8 +4,8 @@
 
 .. _kctlr-openshift-routes:
 
-Attach Virtual Servers to OpenShift Routes
-==========================================
+Attaching Virtual Servers to OpenShift Routes
+=============================================
 
 Overview
 --------
@@ -53,8 +53,8 @@ When you use the |kctlr| as a `Router`_, you can:
 
 .. _route existing virtual:
 
-Attach Routes to Existing BIG-IP Virtual Servers
-------------------------------------------------
+Attach a Route to an existing virtual server
+--------------------------------------------
 
 .. include:: /_static/reuse/k8s-version-added-1_5.rst
 
@@ -132,8 +132,8 @@ Define the |kctlr| `Route configuration parameters`_ as appropriate to suit your
 
 .. _kctlr routes existing virtual:
 
-Manage a Pre-Existing Virtual Server
-````````````````````````````````````
+Manage an existing virtual server
+`````````````````````````````````
 
 Create a Kubernetes Deployment using valid YAML or JSON.
 
@@ -166,7 +166,7 @@ Create a Kubernetes Deployment using valid YAML or JSON.
    See :ref:`OpenShift troubleshooting <troubleshoot openshift view-logs>` for more information about viewing the Controller logs.
 
 
-Upload the Deployment to the OpenShift API Server
+Upload the Deployment to the OpenShift API server
 `````````````````````````````````````````````````
 
 Use the :command:`oc create` command to upload the Deployment to the OpenShift API server.
