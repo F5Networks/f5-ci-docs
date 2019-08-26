@@ -78,7 +78,7 @@ If you need BIG-IP system functionality not supported by the |kctlr|, attach a R
 
       (tmos)# cd /myPartition
 
-#. Create a virtual server in the  BIG-IP partition that isn't already managed by a |kctlr| instance. For example:
+#. Create a virtual server in the unique partition. To create an HTTP virtual server named **myVirtual**, type:
 
    .. note::
    
@@ -88,7 +88,7 @@ If you need BIG-IP system functionality not supported by the |kctlr|, attach a R
 
       create ltm virtual myVirtual 1.2.3.4:http pool myPool profiles add { http tcp }
 
-#. Set the :code:`cccl-whitelist` metadata field. For example:
+#. Add the :code:`cccl-whitelist` metadata field to the virtual server. For example, to add the metadata to the **myVirtual** virtual server, type:
 
    .. note::
 
