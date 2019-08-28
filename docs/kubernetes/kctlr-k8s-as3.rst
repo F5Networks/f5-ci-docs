@@ -67,30 +67,6 @@ CIS can dynamically discover, and update the BIG-IP system's load balancing pool
 .. image:: /_static/media/k8s_service_labels.png
    :scale: 70%
 
-.. rubric:: **Example Service**
-
-.. code-block:: yaml
-
-  apiVersion: v1
-  kind: Service
-  metadata:
-    name: f5-hello-world
-    namespace: kube-system
-    labels:
-      app: f5-hello-world
-      cis.f5.com/as3-tenant: AS3
-      cis.f5.com/as3-app: f5-hello-world
-      cis.f5.com/as3-pool: web_pool
-  spec:
-    ports:
-    - name: f5-hello-world
-      port: 80
-      protocol: TCP
-      targetPort: 80
-    type: NodePort
-    selector:
-      app: f5-hello-world
-
 .. rubric:: **Example Deployment**
 
 .. code-block:: yaml
@@ -120,6 +96,30 @@ CIS can dynamically discover, and update the BIG-IP system's load balancing pool
           ports:
           - containerPort: 80
             protocol: TCP
+
+.. rubric:: **Example Service**
+
+.. code-block:: yaml
+
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: f5-hello-world
+    namespace: kube-system
+    labels:
+      app: f5-hello-world
+      cis.f5.com/as3-tenant: AS3
+      cis.f5.com/as3-app: f5-hello-world
+      cis.f5.com/as3-pool: web_pool
+  spec:
+    ports:
+    - name: f5-hello-world
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    type: NodePort
+    selector:
+      app: f5-hello-world
 
 .. _kctlr-k8s-as3-discovery:
 
