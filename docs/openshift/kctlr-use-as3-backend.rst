@@ -3,7 +3,7 @@
 
 .. _kctlr-use-as3-backend:
 
-Using AS3 for BIG-IP Orchestration in Openshift
+Using AS3 for BIG-IP Orchestration in OpenShift
 ===============================================
 
 The `k8s-bigip-ctlr`_ can use Application Services 3 (AS3) for BIG-IP orchestration. When using AS3 for BIG-IP orchestration, `k8s-bigip-ctlr`_ uses a declaritive API to create Local Traffic Management (LTM) objects such as virtual servers, pools, and policies in a unique administrative partition.
@@ -12,7 +12,7 @@ Prerequisites
 -------------
 Ensure you meet the following requirements:
 
-- BIG-IP Controller v1.10 or higher when used in Openshift.
+- BIG-IP Controller v1.10 or higher when used in OpenShift.
 - BIG-IP system running version v12.1.x or later.
 - BIG-IP system with AS3 v3.11 or higher.
 - A BIG-IP user account with **Administrator** role.
@@ -59,7 +59,7 @@ Orchestration modes
 |                  | This is the default setting.                                                 |
 +------------------+------------------------------------------------------------------------------+
 
-Supported Openshift Route Features
+Supported OpenShift Route Features
 ----------------------------------
 
 +-------+---------------+-------------------------------+---------------------------+
