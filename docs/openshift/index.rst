@@ -32,10 +32,10 @@ The |octlr-long| can use `OpenShift`_ as a BIG-IP orchestration platform. Becaus
    :scale: 60%
    :alt: Solution design: The Container Connector runs as an App within the cluster; it configures the BIG-IP device as needed to handle traffic for Apps in the cluster
 
-When using |kctlr| and Openshift, you can configured the BIG-IP system to process traffic using:
+When using |kctlr| and Openshift, you can configured the BIG-IP system to process traffic for:
 
-- :ref:`Virtual Servers <kctlr-per-svc-vs>`
-- :ref:`OpenShift routes <kctlr-openshift-routes>`
+- :ref:`OpenShift Services <kctlr-per-svc-vs>`
+- :ref:`OpenShift Routes <kctlr-openshift-routes>`
 
 .. _openshift-origin-prereqs:
 
