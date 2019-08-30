@@ -315,11 +315,11 @@ html_theme_path = f5_sphinx_theme.get_html_theme_path()
 # documentation.
 #
 html_theme_options = {
-    'next_prev_link': False
+    'next_prev_link': True
 }
 
 html_sidebars = {
-    '**': ['searchbox.html', 'localtoc.html', 'globaltoc.html' ]
+    '**': [ 'localtoc.html', 'globaltoc.html' ]
 }
 
 

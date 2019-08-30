@@ -26,16 +26,16 @@ This document provides general information regarding the F5 Integration for Open
 Overview
 --------
 
-The |octlr-long| enables use of a BIG-IP device in `OpenShift`_. Because OpenShift has a native Kubernetes integration, the F5 Integration for OpenShift utilizes the same controller as the :ref:`k8s-home` (``k8s-bigip-ctlr``). The |kctlr| configures BIG-IP objects for applications in an OpenShift `cluster`_, serving North-South traffic.
+The |octlr-long| can use `OpenShift`_ as a BIG-IP orchestration platform. Because OpenShift is a Kubernetes application platform, the F5 integration for OpenShift utilizes the same controller as the :ref:`k8s-home` (``k8s-bigip-ctlr``). 
 
 .. image:: /_static/media/cc_solution.png
    :scale: 60%
    :alt: Solution design: The Container Connector runs as an App within the cluster; it configures the BIG-IP device as needed to handle traffic for Apps in the cluster
 
-In OpenShift, you can use the |kctlr| to use a BIG-IP device(s) to:
+When using |kctlr| and Openshift, you can configured the BIG-IP system to process traffic using:
 
-- :ref:`proxy traffic for Services <kctlr-per-svc-vs>` --OR--
-- :ref:`proxy traffic for OpenShift routes <kctlr-openshift-routes>`.
+- :ref:`Virtual Servers <kctlr-per-svc-vs>`
+- :ref:`OpenShift routes <kctlr-openshift-routes>`
 
 .. _openshift-origin-prereqs:
 
@@ -48,8 +48,8 @@ In OpenShift, you can use the |kctlr| to use a BIG-IP device(s) to:
 Installation
 ------------
 
-- You can :ref:`launch the k8s-bigip-ctlr application <install-kctlr-openshift>` in OpenShift using a Deployment.
-- If you use `helm`_ you can use the `f5-bigip-ctlr chart`_.
+- You can deploy |kctlr| in OpenShift :ref:`using a Deployment <install-kctlr-openshift>`.
+- If you use `helm`_ you can use the `F5 Helm Chart`_.
 
 .. include:: /_static/reuse/bigip-permissions-ctlr.rst
 
