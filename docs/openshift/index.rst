@@ -91,8 +91,8 @@ This table shows how |kctlr| and OpenShift perform BIG-IP orchestration:
    ============================  ==========================================================
    Create OpenShift Route        - Creates two virtual servers:
 
-                                   - one (1) HTTP
-                                   - one (1) HTTPS
+                                   - One HTTP
+                                   - One HTTPS
 
                                  - Creates pools and pool members with policies attached.
                                  - Attaches defined policies to virtual servers.
@@ -107,19 +107,18 @@ This table shows how |kctlr| and OpenShift perform BIG-IP orchestration:
 Advanced Deployments
 ````````````````````
 
-The |octlr-long| supports the following OpenShift `Advanced Deployment Strategies`_:
+The |octlr-long| supports these OpenShift `Advanced Deployment Strategies`_:
 
 - `Blue-Green Deployment`_
 - `A/B Deployment`_
 
-Follow the instructions provided in the OpenShift documentation to use these deployment strategies with your BIG-IP Controller and BIG-IP device(s).
+Advantages over HAProxy
+```````````````````````
 
-.. important::
+The |octlr-long| provides a number of advantages over the native HAProxy when working with `alternate backends`_:
 
-   The |octlr-long| provides a number of advantages over the native HAProxy when working with `alternate backends`_:
-
-   - Use any of the BIG-IP load balancing algorithms the Controller supports, not just round robin. [#lb]_
-   - Weights assigned to a Service in an OpenShift Route, are assigned by |kctlr| to the Service's pool on BIG-IP. Weights are not split across the Service's endpoints, and there are no per-endpoint weight restrictions.
+- Use any of the BIG-IP load balancing algorithms the Controller supports, not just round robin. [#lb]_
+- Weights assigned to a Service in an OpenShift Route, are assigned by |kctlr| to the Service's pool on BIG-IP. Weights are not split across the Service's endpoints, and there are no per-endpoint weight restrictions.
 
 What's Next
 -----------
