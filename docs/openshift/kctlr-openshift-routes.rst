@@ -4,19 +4,19 @@
 
 .. _kctlr-openshift-routes:
 
-Attach Virtual Servers to OpenShift Routes
-==========================================
+Attaching Virtual Servers to OpenShift Routes
+=============================================
 
 Overview
 --------
 
 As described in the OpenShift documentation, the IP address assigned to an `OpenShift Pod`_ is only accessible from within the cluster network. You can use the |kctlr| for OpenShift as a router to expose Services to external traffic.
 
-When you use the |kctlr| as a `Router`_, you can
+When you use the |kctlr| as a `Router`_, you can:
 
-- create BIG-IP `Local Traffic Policies`_ for OpenShift Services;
-- :ref:`use BIG-IP SSL profiles to secure Routes <route-TLS>`; and
-- :ref:`add BIG-IP health monitors to Route resources <add health monitor to route>`.
+- Create BIG-IP `Local Traffic Policies`_ for OpenShift Services.
+- Use BIG-IP :ref:`SSL profiles <route-TLS>` to secure Routes.
+- Add BIG-IP :ref:`health monitors <add health monitor to route>` to Route resources.
 
 .. attention::
 
@@ -53,29 +53,56 @@ When you use the |kctlr| as a `Router`_, you can
 
 .. _route existing virtual:
 
-Attach Routes to Existing BIG-IP Virtual Servers
-------------------------------------------------
+Attach a Route to an existing virtual server
+--------------------------------------------
 
 .. include:: /_static/reuse/k8s-version-added-1_5.rst
 
-If you need to use BIG-IP system functionality that isn't natively supported by the |kctlr|, you can attach a Route to an existing BIG-IP virtual server.
-Take the steps below **before** you deploy the |kctlr|.
+If you need BIG-IP system functionality not supported by the |kctlr|, attach a Route to an existing BIG-IP virtual server. Take these steps **before** you deploy the |kctlr|.
 
-**If you want the** |kctlr| **to create a new virtual server for your Route,** :ref:`skip to the Basic Deployment section <kctlr routes basic>`.
+.. note::
 
-#. Create a virtual server in a BIG-IP partition that isn't already managed by a |kctlr| instance.
+   If you want the |kctlr| to create a new virtual server for your Route, skip to the :ref:`Basic Deployment <kctlr routes basic>` section.
 
-#. Customize the virtual server as needed. Be sure the settings applied don't conflict with those you want the Controller to apply for the Route.
+#. To enter the TMOS shell, type:
 
-#. In a TMOS shell, run the commands shown below to set the :code:`cccl-whitelist` metadata field. This field tells the Controller it should merge its configuration into the existing virtual instead of overwriting it.
+   .. parsed-literal::
 
-   - Make sure you're in the correct partition (for example, :code:`user@(BIG-IP)(cfg-sync Standalone)(Active)(/myPartition)(tmos)`).
-   - Replace "myVirtual" with the name of the virtual server on your BIG-IP device.
+      tmsh
+
+#. Create a unique partition not currently managed by a |kctlr| instance. To create, and change to a partition named **myPartition**, type:
+
+   .. parsed-literal::
+
+      (tmos)# create auth partition myPartition
+
+      (tmos)# cd /myPartition
+
+#. Create a virtual server in the unique partition. To create an HTTP virtual server named **myVirtual**, type:
+
+   .. note::
+   
+      Customize the virtual server as needed. Be sure the settings don't conflict with the |kctlr| Route settings.
+
+   .. parsed-literal::
+
+      create ltm virtual myVirtual 1.2.3.4:http pool myPool profiles add { http tcp }
+
+#. Add the :code:`cccl-whitelist` metadata field to the virtual server. For example, to add the metadata to the **myVirtual** virtual server, type:
+
+   .. note::
+
+      This field tells the Controller it should merge its configuration into the existing virtual instead of overwriting it.
 
    .. parsed-literal::
 
       modify ltm virtual **myVirtual** metadata add { cccl-whitelist { value 1 }}
 
+#. To save the configuration, type:
+
+   .. parsed-literal::
+
+      save sys config 
 
 .. _set up kctlr routes:
 
@@ -105,8 +132,8 @@ Define the |kctlr| `Route configuration parameters`_ as appropriate to suit your
 
 .. _kctlr routes existing virtual:
 
-Manage a Pre-Existing Virtual Server
-````````````````````````````````````
+Manage an existing virtual server
+`````````````````````````````````
 
 Create a Kubernetes Deployment using valid YAML or JSON.
 
@@ -139,7 +166,7 @@ Create a Kubernetes Deployment using valid YAML or JSON.
    See :ref:`OpenShift troubleshooting <troubleshoot openshift view-logs>` for more information about viewing the Controller logs.
 
 
-Upload the Deployment to the OpenShift API Server
+Upload the Deployment to the OpenShift API server
 `````````````````````````````````````````````````
 
 Use the :command:`oc create` command to upload the Deployment to the OpenShift API server.
