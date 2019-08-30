@@ -1,6 +1,4 @@
-.. tip::
-
-   When uploading resources that don't reside in the default namespace, specify the correct namespace using the :code:`--namespace` (or :code:`-n`) flag.
+When uploading resources that don't reside in the default namespace, specify the correct namespace using the :code:`--namespace` (or :code:`-n`) flag.
 
 .. code-block:: console
    :caption: kubectl

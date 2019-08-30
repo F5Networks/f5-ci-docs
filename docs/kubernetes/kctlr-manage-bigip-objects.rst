@@ -6,23 +6,22 @@
 Manage Your BIG-IP Virtual Servers
 ==================================
 
-.. tip:: You can use the |kctlr| to attach the BIG-IP virtual servers and pools to Services in Kubernetes and OpenShift environments.
+You can use the |kctlr| to attach the BIG-IP virtual servers, and pools to Services in Kubernetes and OpenShift environments.
 
-You can use the |kctlr-long| and OpenShift to :ref:`kctlr-per-svc-vs` using :ref:`F5 resource ConfigMaps <k8s-f5-resources>`.
-This document provides instructions for managing the virtual server(s) associated with your Service(s).
+This document provides instructions for managing existing virtual servers associated with your Services.
 
 .. _kctlr-update-vs:
 
 Edit an existing virtual server
 -------------------------------
 
-Take the steps below to apply changes to a BIG-IP virtual server associated with a Service, Ingress, or Route.
+Use these steps to modify BIG-IP virtual servers associated with Services, Ingresses, or Routes.
 
 .. _kctlr upload resource api server:
 
 - Make your desired changes to the resource YAML or JSON file.
 
-- Upload the updated file to the Kubernetes or OpenShift API server using the commands shown below.
+- Upload the file to the Kubernetes or OpenShift API server using:.
 
   .. rubric:: Kubernetes
 
@@ -36,7 +35,7 @@ Take the steps below to apply changes to a BIG-IP virtual server associated with
 Ingresses and Routes
 ````````````````````
 
-In addition to the steps listed above, you can use the :command:`annotate` command to add/change the |kctlr| Annotations for an Ingress or Route resource.
+In addition, you can use the :command:`annotate` command to add/change the |kctlr| Annotations for an Ingress or Route resource.
 
 For example, to change the load balancing mode to :code:`least-connections-member`:
 
@@ -56,6 +55,8 @@ For example, to change the load balancing mode to :code:`least-connections-membe
 
 Add/Edit health monitors
 ------------------------
+
+Use these steps to add or modify BIG-IP health monitors used to check the availability of your Services.
 
 #. Define/edit the desired health monitor(s).
 #. Add the health monitor(s) to the :code:`backend` section of the :ref:`F5 Resource <k8s-f5-resources>` ConfigMap.
