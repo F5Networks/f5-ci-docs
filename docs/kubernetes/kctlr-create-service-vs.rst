@@ -35,11 +35,11 @@ An :ref:`F5 Resource <k8s-f5-resources>` ConfigMap lets you expose individual Se
 Define a virtual server for a Service
 -------------------------------------
 
-Define the virtual server you want to create in an :ref:`F5 resource JSON blob <f5-resource-blob>`. Include the JSON blob in the :code:`data` section of a Kubernetes `ConfigMap`_ resource.
+Define the virtual server you want to create in an :ref:`F5 resource JSON blob <f5-resource-blob>`. Include the JSON blob in the **data** section of a Kubernetes `ConfigMap`_ resource.
 
-.. _kctlr configmap example:
+.. _kctlr service example:
 
-Service example
+Example Service
 ```````````````
 
 If your Service looks like this:
@@ -59,8 +59,11 @@ If your Service looks like this:
        targetPort: 9376
      type: clusterIP
 
-ConfigMap examples
+.. _kctlr configmap example:
+
+Example ConfigMaps
 ``````````````````
+
 Your HTTP ConfigMap might look like this:
 
 .. literalinclude:: /kubernetes/config_examples/f5-resource-vs-example.configmap.yaml
@@ -68,23 +71,24 @@ Your HTTP ConfigMap might look like this:
 
 :fonticon:`fa fa-download` :download:`f5-resource-vs-example.configmap.yaml </kubernetes/config_examples/f5-resource-vs-example.configmap.yaml>`
 
-.. seealso::
-   :class: sidebar
-
-   See :ref:`kctlr-manage-bigip-objects` for information about :ref:`adding health monitors <k8s-service healthmonitor>`, :ref:`using IPAM to assign virtual server IP addresses <kctlr-ipam>`, and more.
-
-- The **servicePort** property in the F5 resource maps to the **port** property in the Service definition. The |kctlr| uses this to relate the Pod Node Ports and Endpoints to the BIG-IP virtual server.
-
-- The **targetPort** setting is the Pod/Container port to which you want to send traffic.
-
-- You can replace **balance: round-robin** with any of the supported BIG-IP load balancing modes: [#lb]_
-
 Your HTTPS ConfigMap might look like this:
 
 .. literalinclude:: /kubernetes/config_examples/f5-resource-configmap-https.yaml
    :lines: 1-14,22-36
 
 :fonticon:`fa fa-download` :download:`f5-resource-configmap-https.yaml </kubernetes/config_examples/f5-resource-configmap-https.yaml>`
+
+
+.. _kctlr configmap example:
+
+F5 Resource options
+```````````````````
+
+- The ConfigMap **servicePort** option, maps to the Service **port** option. The |kctlr| uses this to relate the Pod Node Ports and Endpoints to the BIG-IP virtual server.
+
+- The Service **targetPort** option is the Pod/Container port to which you want to send traffic.
+
+- You can replace **balance: round-robin** with any of the supported BIG-IP load balancing modes: [#lb]_
 
 - You can define **sslProfile.f5ProfileName** using any existing BIG-IP client SSL profile.
 
@@ -128,7 +132,12 @@ If you remove a Service, you should also :ref:`delete the F5 Resource ConfigMap 
 
 When replacing a Service, you should create a new F5 resource ConfigMap that meets the new Service's needs.
 
-.. seealso:: See :ref:`kctlr-manage-bigip-objects` for instructions on managing your existing virtual servers.
+.. _kctlr-downed-services:
+
+Additional Resources
+--------------------
+
+- See :ref:`kctlr-manage-bigip-objects` for information about adding health monitors, using IPAM to assign virtual server IP addresses <kctlr-ipam>, and instructions for managing your existing virtual servers.
 
 .. rubric:: **Footnotes**
 .. [#lb] The |kctlr| supports BIG-IP load balancing algorithms that do not require additional configuration parameters. You can view the full list of supported algorithms in the `f5-cccl schema <https://github.com/f5devcentral/f5-cccl/blob/03e22c4779ceb88f529337ade3ca31ddcd57e4c8/f5_cccl/schemas/cccl-ltm-api-schema.yml#L515>`_. See the `BIG-IP Local Traffic Management Basics user guide <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-basics-13-0-0/4.html>`_ for information about each load balancing mode.
