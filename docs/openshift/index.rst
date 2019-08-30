@@ -32,7 +32,7 @@ The |octlr-long| can use `OpenShift`_ as a BIG-IP orchestration platform. Becaus
    :scale: 60%
    :alt: Solution design: The Container Connector runs as an App within the cluster; it configures the BIG-IP device as needed to handle traffic for Apps in the cluster
 
-When using |kctlr| and Openshift, you can configured the BIG-IP system to process traffic for:
+When using |kctlr| and Openshift, you can configure the BIG-IP system to process traffic for:
 
 - :ref:`OpenShift Services <kctlr-per-svc-vs>`
 - :ref:`OpenShift Routes <kctlr-openshift-routes>`
@@ -78,32 +78,30 @@ In OpenShift, the |kctlr| can manage BIG-IP objects for routes.
 
 Setting up `OpenShift Route resources`_ provides the following functionality:
 
-- listen for HTTP route events in OpenShift and create/delete/expire routes on BIG-IP devices (including L7 config policies such as wildcard routes, prefixes, etc.);
-- apply client SSL certificates from Kubernetes/OpenShift Secrets to BIG-IP LTM objects;
-- apply existing BIG-IP SSL certificates to BIG-IP LTM objects;
-- SSL termination using edge, passthrough, or re-encryption mode.
+- Listen for HTTP route events, and modify routes on BIG-IP. This includes L7 config policies such as wildcard routes, and prefixes.
+- Apply Client SSL certificates from Kubernetes/OpenShift Secrets to BIG-IP LTM objects.
+- Provide SSL termination using edge, passthrough, or re-encryption modes.
 
-The table below shows what BIG-IP configurations the |kctlr| applies for common admin tasks in OpenShift.
+This table shows how |kctlr| and OpenShift perform BIG-IP orchestration:
 
 .. table::
 
    ============================  ==========================================================
-   User action                   Controller action
+   |kctlr| and OpenShift         BIG-IP configuration
    ============================  ==========================================================
-   Create OpenShift Route        - Create two virtual servers:
+   Create OpenShift Route        - Creates two virtual servers:
 
                                    - one (1) HTTP
                                    - one (1) HTTPS
 
-                                 - Create pools and pool members with policies attached.
-                                 - Attach defined policies to virtual servers.
+                                 - Creates pools and pool members with policies attached.
+                                 - Attaches defined policies to virtual servers.
    ----------------------------  ----------------------------------------------------------
-   Add/remove endpoint(s)        - Add/remove the pool member(s) that correspond to the
-                                   endpoint(s) from the Route's pool.
+   Add/remove endpoints          - Adds/removes pool members correspondng to the
+                                   endpoints from the Route's pool.
    ----------------------------  ----------------------------------------------------------
-   Delete all Routes             - Remove all objects associated with the Routes
-                                   (virtual servers, pools, and pool members) from the
-                                   BIG-IP system.
+   Delete Routes                 - Removes all BIG-IP objects associated with the Routes:
+                                   Virtual servers, pools, and policies.
    ============================  ==========================================================
 
 Advanced Deployments
@@ -118,11 +116,10 @@ Follow the instructions provided in the OpenShift documentation to use these dep
 
 .. important::
 
-   The |octlr-long| provides the following advantages over the native HAProxy when working with `alternate backends`_:
+   The |octlr-long| provides a number of advantages over the native HAProxy when working with `alternate backends`_:
 
-   - You use any of the BIG-IP load balancing algorithms the Controller supports (not just round robin). [#lb]_
-   - When you assign a weight to a Service in an OpenShift Route, the |kctlr| assigns that weight to the Service's pool on the BIG-IP device. The weight isn't split across the Service's endpoints and there are no per-endpoint weight restrictions.
-
+   - Use any of the BIG-IP load balancing algorithms the Controller supports, not just round robin. [#lb]_
+   - Weights assigned to a Service in an OpenShift Route, are assigned by |kctlr| to the Service's pool on BIG-IP. Weights are not split across the Service's endpoints, and there are no per-endpoint weight restrictions.
 
 What's Next
 -----------
