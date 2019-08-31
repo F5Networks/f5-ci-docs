@@ -30,8 +30,8 @@ The |kctlr| watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for 
    Troubleshooting <../troubleshooting/kubernetes>
    k8s-bigip-ctlr reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
 
- BIG-IP Orchestration methods
------------------------------
+BIG-IP Orchestration methods
+----------------------------
 
 When using |kctlr| and Openshift, you can configure the BIG-IP system to process traffic for:
 
