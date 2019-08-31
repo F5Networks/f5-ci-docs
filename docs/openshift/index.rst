@@ -30,14 +30,8 @@ The |kctlr| watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for 
    Troubleshooting <../troubleshooting/kubernetes>
    k8s-bigip-ctlr reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
 
-Overview
---------
-
-The |octlr-long| can be used as a BIG-IP orchestration platform. Because OpenShift is a Kubernetes application platform, the F5 integration for OpenShift utilizes the same controller as the :ref:`k8s-home` (``k8s-bigip-ctlr``). 
-
-.. image:: /_static/media/cc_solution.png
-   :scale: 60%
-   :alt: Solution design: The Container Connector runs as an App within the cluster; it configures the BIG-IP device as needed to handle traffic for Apps in the cluster
+ BIG-IP Orchestration methods
+-----------------------------
 
 When using |kctlr| and Openshift, you can configure the BIG-IP system to process traffic for:
 
