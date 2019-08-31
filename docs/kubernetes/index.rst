@@ -13,7 +13,19 @@ F5 Container Ingress Services - Kubernetes
 
 `Current Release Notes <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/RELEASE-NOTES.html>`_
 
-This document provides general information regarding the F5 Integration for Kubernetes. For deployment and usage instructions, refer to the User Guides section.
+The F5 BIG-IP Controller, **k8s-bigip-ctlr**, is a cloud-native connector that can use either Kubernetes or OpenShift as a BIG-IP orchestration platform.
+
+The **k8s-bigip-ctlr** can use either `F5 Resources`_ or `F5 AS3 Extensions`_ to configure your BIG-IP systems.
+
+.. _kctlr-features:
+
+Features
+--------
+
+- Dynamically create, and manage BIG-IP objects.
+- Forward traffic from the BIG-IP device to `Kubernetes clusters`_ via `NodePort`_ or `ClusterIP`_.
+- Support `F5 AS3 Extension`_ declarations.
+- Support `F5 iApps`_.
 
 User Guides
 -----------
@@ -30,28 +42,6 @@ User Guides
    kctlr-manage-bigip-objects
    kctlr-deploy-iapp
    ../troubleshooting/kubernetes
-
-.. _kctlr-features:
-
-Features
---------
-
-- Dynamically creates, manages, and destroys BIG-IP objects.
-- Forwards traffic from the BIG-IP device to `Kubernetes clusters`_ via `NodePort`_ or `ClusterIP`_.
-- Support for `F5 AS3 Extension`_ declarations.
-- Support for F5 `iApps`_.
-- Handles F5-specific VirtualServer objects created in Kubernetes.
-- Handles standard `Kubernetes Ingress`_ objects using F5-specific extensions.
-- Handles OpenShift Route objects using F5-specific extensions.
-
-.. _kctlr-overview:
-
-Overview
---------
-
-The |kctlr-long| (:code:`k8s-bigip-ctlr`) is a cloud-native connector that lets you manage BIG-IP devices using native Kubernetes or OpenShift APIs.
-
-The :code:`k8s-bigip-ctlr` can use either `F5 Resources`_ or `F5 AS3 Extensions`_ to configure the BIG-IP system.
 
 .. note::
 

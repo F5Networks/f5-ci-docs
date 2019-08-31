@@ -158,6 +158,7 @@ rst_epilog = """
 .. _flannel manifest: https://github.com/coreos/flannel/blob/master/Documentation/kube-flannel.yml
 .. _helm: https://helm.sh
 .. _iApps: https://www.f5.com/products/f5-technologies
+.. _F5 iApps: https://www.f5.com/products/f5-technologies
 .. _iApp Pool Member table: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#iapp-pool-member-table
 .. _Ingress annotations: %(base_url)s/products/connectors/k8s-bigip-ctlr/latest/#ingress-resources
 .. _Ingress controller: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-controllers
