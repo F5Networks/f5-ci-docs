@@ -15,8 +15,8 @@
 
 .. _kctlr-k8s-as3-int:
 
-Container Ingress Services and AS3 Extension integration
-========================================================
+CIS and AS3 Extension integration
+=================================
 
 You can use Container Ingress Services (CIS) to expose services to external traffic using Application Services 3 (AS3) Extension declarations.
 
