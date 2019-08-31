@@ -17,8 +17,10 @@ The |kctlr| watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for 
 .. image:: /_static/media/cc_solution.png
    :scale: 60%
 
+User Guides
+-----------
+
 .. toctree::
-   :caption: User Guides
    :maxdepth: 1
 
    Add BIG-IP device to OpenShift Cluster <kctlr-use-bigip-openshift>
@@ -30,8 +32,8 @@ The |kctlr| watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for 
    Troubleshooting <../troubleshooting/kubernetes>
    k8s-bigip-ctlr reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>
 
-BIG-IP Orchestration methods
-----------------------------
+BIG-IP Orchestration
+--------------------
 
 When using |kctlr| and Openshift, you can configure the BIG-IP system to process traffic for:
 
