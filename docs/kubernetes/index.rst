@@ -15,8 +15,6 @@ F5 Container Ingress Services - Kubernetes
 
 The F5 BIG-IP Controller, **k8s-bigip-ctlr**, is a cloud-native connector that can use either Kubernetes or OpenShift as a BIG-IP orchestration platform.
 
-The **k8s-bigip-ctlr** can use either `F5 Resources`_ or `F5 AS3 Extensions`_ to configure your BIG-IP systems.
-
 .. image:: /_static/media/cc_solution.png
    :scale: 60%
 
