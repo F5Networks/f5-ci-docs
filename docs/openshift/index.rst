@@ -26,7 +26,7 @@ This document provides general information regarding the F5 Integration for Open
 Overview
 --------
 
-The |octlr-long| can use `OpenShift`_ as a BIG-IP orchestration platform. Because OpenShift is a Kubernetes application platform, the F5 integration for OpenShift utilizes the same controller as the :ref:`k8s-home` (``k8s-bigip-ctlr``). 
+The |octlr-long| can be used as a BIG-IP orchestration platform. Because OpenShift is a Kubernetes application platform, the F5 integration for OpenShift utilizes the same controller as the :ref:`k8s-home` (``k8s-bigip-ctlr``). 
 
 .. image:: /_static/media/cc_solution.png
    :scale: 60%
