@@ -8,7 +8,14 @@ F5 Container Connector - OpenShift
 
 `Current Release Notes <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/RELEASE-NOTES.html>`_
 
-This document provides general information regarding the F5 Integration for OpenShift. For deployment and usage instructions, refer to the User Guides section.
+`Releases and Versioning <https://clouddocs.f5networks.net/containers/v2/releases_and_versioning.html#connector-compatibility>`_
+
+The F5 BIG-IP Controller, **k8s-bigip-ctlr**, is a cloud-native connector that can use either Kubernetes or OpenShift as a BIG-IP orchestration platform.
+
+The |kctlr| watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for specially formatted resources and updates the BIG-IP system configurations accordingly.
+
+.. image:: /_static/media/cc_solution.png
+   :scale: 60%
 
 .. toctree::
    :caption: User Guides
