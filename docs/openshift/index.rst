@@ -33,7 +33,7 @@ User Guides
 BIG-IP Orchestration
 --------------------
 
-When using |kctlr| and Openshift, you can configure the BIG-IP system to process traffic for:
+When using |kctlr| and Openshift for BIG-IP orchestration, you can use either:
 
 - :ref:`OpenShift Services <kctlr-per-svc-vs>`
 - :ref:`OpenShift Routes <kctlr-openshift-routes>`
