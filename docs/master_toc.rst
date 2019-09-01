@@ -5,7 +5,7 @@ Container Ingress Services
 --------------------------
 
 .. toctree::
-   :caption: Kubernetes & OpenShift
+   :caption: Kubernetes
    :maxdepth: 1
    :glob:
 
