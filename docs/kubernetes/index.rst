@@ -8,8 +8,8 @@ F5 Container Ingress Services - Kubernetes
 
 ------------
 
-   - `Current Release Notes <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/RELEASE-NOTES.html>`_
-   - `Releases and Versioning <https://clouddocs.f5networks.net/containers/v2/releases_and_versioning.html#connector-compatibility>`_
+   `Current Release Notes <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/RELEASE-NOTES.html>`_
+   `Releases and Versioning <https://clouddocs.f5networks.net/containers/v2/releases_and_versioning.html#connector-compatibility>`_
 
 .. seealso::
    :class: sidebar
@@ -28,10 +28,10 @@ The |kctlr| watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for 
 Features
 --------
 
-   - Dynamically create, and manage BIG-IP objects.
-   - Forward traffic from the BIG-IP device to `Kubernetes clusters`_ via `NodePort`_ or `ClusterIP`_.
-   - Support `F5 AS3 Extension`_ declarations.
-   - Support `F5 iApps`_.
+- Dynamically create, and manage BIG-IP objects.
+- Forward traffic from the BIG-IP device to `Kubernetes clusters`_ via `NodePort`_ or `ClusterIP`_.
+- Support `F5 AS3 Extension`_ declarations.
+- Support `F5 iApps`_.
 
 User Guides
 -----------
@@ -56,10 +56,10 @@ Prerequisites
 
 The |kctlr-long| documentation set assumes that you have:
 
-   - A running Kubernetes `Cluster`_.
-   - Experience with the `Kubernetes dashboard`_ and `kubectl`_.
-   - A BIG-IP device licensed and provisioned for your requirements.
-   - Experience with BIG-IP LTM concepts and ``tmsh`` commands.
+- A running Kubernetes `Cluster`_.
+- Experience with the `Kubernetes dashboard`_ and `kubectl`_.
+- A BIG-IP device licensed and provisioned for your requirements.
+- Experience with BIG-IP LTM concepts and ``tmsh`` commands.
 
 .. note::
 
