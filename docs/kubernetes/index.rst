@@ -8,7 +8,7 @@ F5 Container Ingress Services - Kubernetes
 
 **|** `Current Release Notes <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/RELEASE-NOTES.html>`_  **|**  `Releases and Versioning <https://clouddocs.f5networks.net/containers/v2/releases_and_versioning.html#connector-compatibility>`_ **|**
 
-The F5 BIG-IP Controller |kctlr| is a cloud-native connector that can use either Kubernetes or OpenShift as a BIG-IP orchestration platform.
+The F5 BIG-IP Controller (:code:`k8s-bigip-ctlr`) is a cloud-native connector that can use either Kubernetes or OpenShift as a BIG-IP orchestration platform.
 
 The |kctlr| watches the `Kubernetes API <https://kubernetes.io/docs/api/>`_ for specially formatted resources, and updates the BIG-IP system configuration accordingly.
 
