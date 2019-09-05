@@ -21,7 +21,8 @@ CIS and AS3 Extension integration
 You can use Container Ingress Services (CIS) and Application Services 3 (AS3) Extensions as a BIG-IP orchestration platform.
 
 Prerequisites
-`````````````
+-------------
+
 To use AS3 Extensions with CIS, ensure you meet the following requirements:
 
 - The BIG-IP system is running software version 12.1.x or higher.
@@ -29,7 +30,8 @@ To use AS3 Extensions with CIS, ensure you meet the following requirements:
 - A BIG-IP system user account with the Administrator role.
 
 Limitations
-```````````
+-----------
+
 CIS has the following AS3 Extension limitations:
 
 - AS3 pool class declarations support only one load balancing pool.
@@ -37,11 +39,13 @@ CIS has the following AS3 Extension limitations:
 - AS3 does not support moving BIG-IP nodes to new partitions.
 
 Declaritive API
-```````````````
+---------------
+
 AS3 Extensions use a declarative API, meaning AS3 Extension declarations describe the desired configuration state of a BIG-IP system. When using AS3 Extenstions, CIS sends declaration files using a single Rest API call. 
 
 CIS service discovery
-`````````````````````
+---------------------
+
 CIS can dynamically discover, and update the BIG-IP system's load balancing pool members using Service Discovery. CIS maps each pool definition in the AS3 template to a Kubernetes Service resource using Labels. To create this mapping, add the following labels to your Kubernetes Service:
 
 +---------------------------------+-------------------------------------------------------------------+
@@ -124,7 +128,8 @@ CIS can dynamically discover, and update the BIG-IP system's load balancing pool
 .. _kctlr-k8s-as3-discovery:
 
 Service discovery and controller mode
-`````````````````````````````````````
+-------------------------------------
+
 CIS service discovery adds IP address and service port information to AS3 declarations differently, depending on the controller mode.
 
 +------------------+---------------------------------------------------------------------------------------------------------------------+
@@ -141,7 +146,7 @@ CIS service discovery adds IP address and service port information to AS3 declar
 .. _kctlr-k8s-as3-processing:
 
 AS3 declaration processing 
-``````````````````````````
+--------------------------
 
 To process an AS3 declaration using CIS, set the :code:`f5type` label to :code:`virtual-server` and the :code:`as3` label to the :code:`true`. 
 
@@ -169,17 +174,17 @@ To process an AS3 declaration using CIS, set the :code:`f5type` label to :code:`
 
 AS3 declaration processing involves these four steps:
 
-1. You submit the AS3 template inside the configMap resource and deploy it in Kubernetes. 
+1. Submit the AS3 template inside a configMap, and deploy it in Kubernetes. 
 
 2. After the AS3 configMap becomes available for processing, CIS performs service discovery as described in the Service Discovery section.
 
-3. After Service discovery completes, CIS modifies the AS3 template to append discovered endpoints. CIS only modify these two values in the AS3 template:
+3. After Service discovery completes, CIS modifies the AS3 template, and appends the discovered endpoints. CIS only modify these two values in the AS3 template:
 
    - :code:`serverAddresses` array. If this array is not empty, CIS treats will not overwrite the entries. 
 
    - :code:`servicePort` value.
 
-4. CIS posts the generated AS3 declaration to the BIG-IP system and begins processing traffic.
+4. CIS posts the generated AS3 declaration to the BIG-IP system to begin processing traffic.
 
 .. rubric:: **CIS and AS3 deployment workflow**
 
@@ -188,7 +193,7 @@ AS3 declaration processing involves these four steps:
 .. _kctlr-k8s-as3-params:
 
 Parameters
-``````````
+----------
 +-----------------+---------+----------+-------------------+-------------------------------------------+-----------------+
 | Parameter       | Type    | Required | Default           | Description                               | Allowed Values  |
 +=================+=========+==========+===================+===========================================+=================+
@@ -202,16 +207,27 @@ Parameters
 |                 |         |          |                   | CIS and SSL certificate validation.       |                 |
 +-----------------+---------+----------+-------------------+-------------------------------------------+-----------------+
 
+.. _kctlr-k8s-use-cases:
+
+Application use case
+--------------------
+
+You can use the HTTP application use case to better understand how CIS, and AS3 integrate.
+
+  - :ref:`CIS and AS3 - HTTP app use case <kctlr-k8s-as3-use-1>`
+
 .. _kctlr-k8s-delete-map:
 
 Deleting CIS configmaps
-```````````````````````
+-----------------------
+
 Because CIS and AS3 use a Declarative API, the BIG-IP system configuration is not removed after you delete a configmap. To remove the BIG-IP system configuration objects created by an AS3 declaration, you must deploy a blank configmap, and restart the controller. Refer to `Deleting CIS AS3 configmaps <kctlr-as3-delete-configmap.html>`_.
 
 .. _kctlr-k8s-as3-ssl:
 
-CIS and SSL certificate validation
-``````````````````````````````````
+SSL certificate validation
+--------------------------
+
 CIS validates SSL certificates using the root CA certifictes bundled with the base Debian/Redhat image. Because of this, CIS will fail to validate a BIG-IP system's self-signed SSL certificate, and log an error message similar to the following in the AS3 log file:
 
 .. code-block:: bash
@@ -225,14 +241,16 @@ To avoid this issue, you can perform one of the following:
 
 .. _kctlr-k8s-as3-partition:
 
-CIS and administrative partitions 
-`````````````````````````````````
+Administrative partitions 
+-------------------------
+
 CIS requires a unique administrative partition on the BIG-IP system to manage the ARP entries of discovered services. Ensure that you set the ``--bigip-partition=<name>`` parameter to a unique value when executing a Kubernetes deployment.
 
 .. important::
   This unique BIG-IP partition does not allow the use of the AS3 ``Tenant`` class.
 
 AS3 tenants
+-----------
 ```````````
 AS3 tenants are BIG-IP administrative partitions used to group configurations that support specific AS3 applications. An AS3 application may support a network-based business application or system. AS3 tenants may also include resources shared by applications in other tenants.
 
@@ -240,14 +258,15 @@ AS3 tenants are BIG-IP administrative partitions used to group configurations th
 .. _kctlr-k8s-as3-resource:
 
 AS3 Resources
-`````````````
+-------------
+
 - See the `F5 AS3 User Guide`_ to get started using F5 AS3 Extension declarations.
 - See the `F5 AS3 Reference Guide`_ for an overview and list of F5 AS3 Extension declarations.
 
 .. _kctlr-k8s-as3-example:
 
 AS3 Examples
-````````````
+------------
 - :fonticon:`fa fa-download` :download:`f5-as3-template-example.yaml </kubernetes/config_examples/f5-as3-template-example.yaml>`
 - :fonticon:`fa fa-download` :download:`f5-as3-declaration-example.yaml </kubernetes/config_examples/f5-as3-declaration-example.yaml>`
 
