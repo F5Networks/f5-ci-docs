@@ -214,7 +214,7 @@ Application use case
 
 You can use the HTTP application use case to better understand how CIS, and AS3 integrate.
 
-  - :ref:`CIS and AS3 - HTTP app use case <kctlr-k8s-as3-use-1>`
+- `CIS and AS3 - HTTP app use case <kctlr-k8s-as3-use-1>`
 
 .. _kctlr-k8s-delete-map:
 
