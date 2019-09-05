@@ -18,11 +18,11 @@
 CIS and AS3 Extension integration
 =================================
 
-You can use Container Ingress Services (CIS) to expose services to external traffic using Application Services 3 (AS3) Extension declarations.
+You can use Container Ingress Services (CIS) and Application Services 3 (AS3) Extensions as a BIG-IP orchestration platform.
 
 Prerequisites
 `````````````
-To use AS3 declarations with CIS, ensure you meet the following requirements:
+To use AS3 Extensions with CIS, ensure you meet the following requirements:
 
 - The BIG-IP system is running software version 12.1.x or higher.
 - The BIG-IP sytem has AS3 Extension version 3.10 or higher installed.
