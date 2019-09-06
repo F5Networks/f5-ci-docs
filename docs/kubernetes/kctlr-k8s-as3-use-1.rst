@@ -15,6 +15,8 @@ This use case demonstrates how you can use Container Ingress Services (CIS), and
 
 .. image:: /_static/media/cis_http_as3_service.png
    :scale: 70%
+
+Click image for larger view.
            
 .. _kctlr-as3-http-use-pre:
 
