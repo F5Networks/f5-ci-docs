@@ -52,8 +52,8 @@ Orchestration modes
 | --agent option   | Description                                                                  |
 +==================+==============================================================================+
 | as3              | Implements AS3 for BIG-IP orchestration. This option creates an additional   |
-|                  | partition as <partition>_AS3. The <partition> name is provided by the         |
-|                  | **--bigip-partition=<name>** argument.                                      |
+|                  | partition as <partition>_AS3. The <partition> name is provided by the        |
+|                  | **--bigip-partition=<name>** argument.                                       |
 +------------------+------------------------------------------------------------------------------+
 | cccl             | Implements Common Controller Core Library for BIG-IP orchestration.          |
 |                  | This is the default setting.                                                 |
