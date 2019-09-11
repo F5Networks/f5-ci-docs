@@ -46,11 +46,10 @@ If you're running the |kctlr| in :ref:`cluster mode <cluster mode>`, the IP addr
 
    If you intend to create unattached pools, refer to :ref:`Pools without virtual servers <kctlr-pool-only>`.
 
-.. _ingress-quick-start:
 .. _ingress annotate kubectl:
 
-Annotate the Ingress 
---------------------
+Add Annotations using kubectl
+-----------------------------
 
 Use :command:`kubectl annotate` to add the supported `Ingress annotations`_ to any existing Ingress.
 It's good practice to include all of your key-value pairs in a single :command:`kubectl annotate` command, to avoid piecemeal updates to the BIG-IP system.
@@ -66,17 +65,15 @@ The example below creates a virtual server on the BIG-IP with the following sett
 - Redirect HTTP requests to HTTPS.
 - Deny HTTP requests.
 
-.. code-block:: console
-
 .. literalinclude:: /kubernetes/config_examples/f5-k8s-ingress-kube-annotate.yaml
    :caption: Kubectl annotation example
 
 .. _create k8s ingress:
 
-Define a virtual server in the Ingress Annotation
--------------------------------------------------
+Add Annotations using an Ingress resource
+-----------------------------------------
 
-You can also define the virtual server settings when creating a new Ingress. 
+You can also define the virtual server settings in an Ingress resource. 
 
 .. literalinclude:: /kubernetes/config_examples/f5-k8s-ingress-annotation.yaml
    :caption: Ingress annotation example
