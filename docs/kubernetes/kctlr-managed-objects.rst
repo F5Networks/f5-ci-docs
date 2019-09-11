@@ -82,6 +82,6 @@ Configure the BIG-IP system to process application traffic, and load balance acr
 - :ref:`Create a BIG-IP Virtual Server for a Service <kctlr-create-service-vs>` (L4 ingress).
 - :ref:`Create a BIG-IP Virtual Server for an Ingress resource <kctlr-ingress-config>` (L7 ingress).
 
-Use F5 AS3 Extensions to configure the BIG-IP system.
+You can use F5 AS3 Extensions to configure the BIG-IP system. 
 
-- :ref: `AS3 Extension integration <kctlr-k8s-as3>`.
+- :ref:`AS3 Extension integration <kctlr-k8s-as3>`
