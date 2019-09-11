@@ -9,8 +9,22 @@ Container Ingress Services
    :maxdepth: 1
    :glob:
 
-   k8s-bigip-ctlr reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
-   kubernetes/*
+   Reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
+   KUbernetes/index
+   kubernetes/flannel-bigip-info
+   kubernetes/kctlr-use-bigip-k8s
+   kubernetes/kctlr-app-install
+   kubernetes/kctlr-managed-objects
+   kubernetes/kctlr-k8s-as3
+   kubernetes/kctlr-f5-resource
+   kubernetes/kctlr-manage-bigip-objects
+   kubernetes/kctlr-deploy-iapp
+   kubernetes/kctlr-modes
+   kubernetes/kctlr-k8s-ingress-ctlr
+   kubernetes/kctlr-ingress
+   kubernetes/kctlr-create-service-vs
+   kubernetes/kctlr-rewrite-url
+   kubernetes/kctlr-secrets
 
 .. toctree::
    :caption: OpenShift
@@ -18,7 +32,12 @@ Container Ingress Services
    :glob:
 
    k8s-bigip-ctlr reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
-   openshift/*
+   openshift/index
+   openshift/replace-f5-router
+   openshift/kctlr-use-bigip-openshift
+   openshift/kctlr-openshift-bigip-ha.rst
+   openshift/kctlr-openshift-app-install
+   openshift/kctlr-openshift-routes
 
 Support
 -------

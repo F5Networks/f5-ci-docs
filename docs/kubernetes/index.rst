@@ -35,9 +35,11 @@ User Guides
    kctlr-use-bigip-k8s
    kctlr-app-install
    kctlr-managed-objects
+   kctlr-create-service-vs
+   kctlr-ingress-config
    kctlr-k8s-as3
-   kctlr-f5-resource
    kctlr-manage-bigip-objects
+   kctlr-f5-resource
    kctlr-deploy-iapp
    ../troubleshooting/kubernetes
 
