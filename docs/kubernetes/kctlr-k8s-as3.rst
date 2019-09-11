@@ -239,9 +239,11 @@ CIS requires a unique administrative partition on the BIG-IP system to manage th
 .. important::
   This unique BIG-IP partition does not allow the use of the AS3 ``Tenant`` class.
 
+.. _kctlr-k8s-tenants:
+
 AS3 tenants
 -----------
-```````````
+
 AS3 tenants are BIG-IP administrative partitions used to group configurations that support specific AS3 applications. An AS3 application may support a network-based business application or system. AS3 tenants may also include resources shared by applications in other tenants.
 
 
