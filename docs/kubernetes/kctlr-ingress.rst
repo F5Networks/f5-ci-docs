@@ -68,25 +68,20 @@ The example below creates a virtual server on the BIG-IP with the following sett
 
 .. code-block:: console
 
-   kubectl annotate ingress myIngress kubernetes.io/ingress.class="f5" \
-                                      virtual-server.f5.com/ip="controller-default" \
-                                      virtual-server.f5.com/http-port="443" \
-                                      virtual-server.f5.com/partition="k8s" \
-                                      virtual-server.f5.com/balance="round-robin" \
-                                      virtual-server.f5.com/health='[{"path": "svc1.example.com/app1", "send": "HTTP GET /health/svc1", "interval": 5, "timeout": 10}]' \
-                                      ingress.kubernetes.io/ssl-redirect="true" \
-                                      ingress.kubernetes.io/allow-http="false"
+.. literalinclude:: /kubernetes/config_examples/f5-k8s-ingress-kube-annotate.yaml
+   :caption: Kubectl annotation example
 
 .. _create k8s ingress:
 
-Define a virtual server in the Ingress Annotations
---------------------------------------------------
+Define a virtual server in the Ingress Annotation
+-------------------------------------------------
 
 You can also define the virtual server settings when creating a new Ingress. 
 
 .. literalinclude:: /kubernetes/config_examples/f5-k8s-ingress-annotation.yaml
-   :caption: Annotation example
+   :caption: Ingress annotation example
    :emphasize-lines: 6-14
+
 .. _add health monitor to ingress:
 
 Health Monitors
