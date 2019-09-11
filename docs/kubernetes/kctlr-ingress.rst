@@ -236,11 +236,11 @@ What's Next
 
 You can modify your BIG-IP configuration using the BIG-IP Controller.
 
-- :ref:`Manage your BIG-IP virtual servers <kctlr-manage-bigip-objects>`.
+- :ref:`Manage your BIG-IP virtual servers <kctlr-manage-bigip-objects>`
 
 .. _additional-resource:
 
 Additional Resources
 --------------------
 
-- :ref:`Using the BIG-IP Controller as an Ingress controller overview: <kctlr-k8s-ingress-ctlr>`.
+- :ref:`Overview using of BIG-IP Controller as an Ingress controller <kctlr-k8s-ingress-ctlr>`
