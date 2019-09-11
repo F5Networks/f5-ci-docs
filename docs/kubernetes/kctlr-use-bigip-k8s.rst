@@ -218,10 +218,12 @@ Create a Kubernetes Node for the BIG-IP device
       k8s-worker-1   Ready     2d        v1.7.5
 
 
+.. _k8s-what-s-next:
+
 What's Next
 -----------
 
-Now that your BIG-IP device is part of the Cluster network, you'll need to :ref:`Deploy the BIG-IP Controller <install-kctlr>`.
+- :ref:`Install the F5 BIG-IP Controller in Kubernetes <install-kctlr>`
 
 .. seealso::
 

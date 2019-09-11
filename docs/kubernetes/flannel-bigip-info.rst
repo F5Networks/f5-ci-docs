@@ -90,6 +90,8 @@ Use BIG-IP SNAT Pools and SNAT automap
 
 See :ref:`bigip snats` for more information.
 
+.. _k8s-flannel-route-bigip:
+
 How flannel knows about the BIG-IP device
 -----------------------------------------
 
@@ -99,9 +101,10 @@ When you add a new Node to Kubernetes to represent the BIG-IP device, :ref:`add 
  
 With all of these pieces in place, you can successfully send traffic from (or through) a BIG-IP virtual server to a specific Kubernetes Pod!
 
+.. _k8s-what-s-next:
+
 What's Next
 -----------
 
 - :ref:`Add your BIG-IP device to the Kubernetes flannel Network <use-bigip-k8s-flannel>`.
-- :ref:`Install the F5 BIG-IP Controller in Kubernetes <install-kctlr>`
 

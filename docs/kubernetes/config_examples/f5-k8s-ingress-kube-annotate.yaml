@@ -1,4 +1,4 @@
-kubectl annotate ingress myIngress kubernetes.io/ingress.class="f5" \
+kubectl annotate ingress myingress kubernetes.io/ingress.class="f5" \
                                    virtual-server.f5.com/ip="controller-default" \
                                    virtual-server.f5.com/http-port="443" \
                                    virtual-server.f5.com/partition="k8s" \

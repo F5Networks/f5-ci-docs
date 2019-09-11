@@ -97,6 +97,13 @@ When the BIG-IP system processes connections from inside the Cluster network, it
 
    Refer to `Overview of SNAT features`_ and `SNAT Automap and self IP address selection`_ in the AskF5 Knowledge Base for more information.
 
+.. _k8s-what-s-next:
+
+What's Next
+-----------
+
+- :ref:`BIG-IP and flannel VXLAN Integration <flannel-bigip-info>`
+
 ---------------------------------
 
 .. include:: master_toc.rst
