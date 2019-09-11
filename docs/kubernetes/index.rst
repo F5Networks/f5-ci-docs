@@ -180,6 +180,13 @@ Prometheus users can view the following Gauges for the |kctlr|:
 
 Define the :code:`http-listen-address` arg in your Controller Deployment to tell Prometheus on which IP address and port it should listen.
 
+.. _k8s-what-s-next:
+
+What's Next
+-----------
+
+- :ref:`BIG-IP and flannel VXLAN Integration <flannel-bigip-info>`
+
 .. _Cluster Network: https://kubernetes.io/docs/concepts/cluster-administration/networking/
 .. _Prometheus: https://prometheus.io/
 
