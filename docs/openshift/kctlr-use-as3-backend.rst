@@ -27,6 +27,7 @@ You can use these steps to enable AS3 for BIG-IP orchestration:
    **Note:** In this example, `k8s-bigip-ctlr`_ will create partition **myParition_AS3** to store LTM objects such as pools, and virtual servers. FDB, and Static ARP entries are stored in **myPartition**. These partitions should not be managed manually.
 
 .. code-block:: YAML
+   :emphasize-lines: 9
 
    args: [
          "--bigip-username=$(BIGIP_USERNAME)",

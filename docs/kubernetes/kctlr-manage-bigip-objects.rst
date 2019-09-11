@@ -3,7 +3,7 @@
 
 .. _kctlr-manage-bigip-objects:
 
-Manage Your BIG-IP Virtual Servers
+Manage your BIG-IP virtual servers
 ==================================
 
 You can use the |kctlr| to attach the BIG-IP virtual servers, and pools to Services in Kubernetes and OpenShift environments.

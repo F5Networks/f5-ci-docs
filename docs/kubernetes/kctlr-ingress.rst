@@ -3,19 +3,19 @@
 
 .. _kctlr-ingress-config:
 
-Attach a Virtual Server to a Kubernetes Ingress
-===============================================
+Using the BIG-IP Controller as an Ingress controller
+====================================================
 
 Overview
 --------
 
-You can use the |kctlr-long| as an `Ingress Controller`_ in Kubernetes. To do so, add the |kctlr| `Ingress annotations`_ to a Kubernetes Ingress Resource. The annotations define the objects you want to create on the BIG-IP system.
+You can use the |kctlr-long| as an `Ingress Controller`_ in Kubernetes. The |kctlr| `Ingress annotations`_ define the necessary traffic management objects on the BIG-IP system.
 
-If you use `helm`_, you can use the `f5-bigip-ingress chart`_ to create and manage the resources below. You may also use the `f5-bigip-ctlr chart`_ to create and manage the resources for the |kctlr| itself.
+If you use `helm`_, you can use the `f5-bigip-ingress chart`_ to create and manage the resources below. You may also use the `F5 Helm chart`_ to create and manage the resources for the |kctlr| itself.
 
 .. note::
 
-   This document provides set-up instructions for using the |kctlr| as a Kubernetes Ingress Controller. For a functionality overview, see :ref:`k8s-ingress-controller`.
+   See :ref:`k8s-ingress-controller` for an overview of BIG-IP Controller and an Ingress controller.
 
 .. table:: Task summary
 
@@ -35,10 +35,7 @@ If you use `helm`_, you can use the `f5-bigip-ingress chart`_ to create and mana
 Initial Setup
 -------------
 
-**Skip this step if:**
-
-- You have already assigned a :ref:`default IP address <ingress default IP>` to the Controller **--OR--**
-- You are using :ref:`DNS lookup <dns lookup ingress>` to resolve host IP addresses.
+Skip this step if you have assigned a :ref:`default IP address <ingress default IP>` to the Controller, or you are using :ref:`DNS lookup <dns lookup ingress>` to resolve host IP addresses.
 
 .. _ingress self IP:
 
@@ -47,46 +44,40 @@ If you're running the |kctlr| in :ref:`cluster mode <cluster mode>`, the IP addr
 
 .. note::
 
-   If you intend to create :ref:`unattached pools <kctlr-pool-only>` (pools that aren't attached to a virtual server), you will need to set up another way to route traffic to the pools on the BIG-IP system *before* proceeding with the steps below.
+   If you intend to create unattached pools, refer to :ref:`Pools without virtual servers <kctlr-pool-only>`.
 
-.. _ingress-quick-start:
 .. _ingress annotate kubectl:
 
-Annotate Ingress Resources using kubectl
-----------------------------------------
+Add Annotations using kubectl
+-----------------------------
 
-Use :command:`kubectl annotate` to add the supported `Ingress annotations`_ to any existing Ingress resource.
+Use :command:`kubectl annotate` to add the supported `Ingress annotations`_ to any existing Ingress.
 It's good practice to include all of your key-value pairs in a single :command:`kubectl annotate` command, to avoid piecemeal updates to the BIG-IP system.
 
 The example below creates a virtual server on the BIG-IP with the following settings:
 
-- set the Ingress class to "f5" to avoid conflicts with other Ingress Controllers;
-- use the default IP address assigned in the :ref:`k8s-bigip-ctlr Deployment <k8s-bigip-ctlr-deployment>`;
-- listen on port 443;
-- create the virtual server in the "k8s" partition;
-- use the BIG-IP "round-robin" load balancing algorithm;
-- create a BIG-IP health monitor;
-- redirect HTTP requests to HTTPS; and
-- deny HTTP requests.
+- Set the Ingress class to "f5" to avoid conflicts with other Ingress controllers.
+- Use the default IP address in the :ref:`k8s-bigip-ctlr Deployment <k8s-bigip-ctlr-deployment>`.
+- Listen on port 443.
+- Create objects in the "k8s" partition.
+- Use round-robin load balancing.
+- Apply a BIG-IP pool health monitor.
+- Redirect HTTP requests to HTTPS.
+- Deny HTTP requests.
 
-.. code-block:: console
-
-   kubectl annotate ingress myIngress kubernetes.io/ingress.class="f5" \
-                                      myIngress virtual-server.f5.com/ip="controller-default" \
-                                      virtual-server.f5.com/http-port="443" \
-                                      virtual-server.f5.com/partition="k8s" \
-                                      virtual-server.f5.com/balance="round-robin" \
-                                      virtual-server.f5.com/health='[{"path": "svc1.example.com/app1", "send": "HTTP GET /health/svc1", "interval": 5, "timeout": 10}]' \
-                                      ingress.kubernetes.io/ssl-redirect="true" \
-                                      ingress.kubernetes.io/allow-http="false"
+.. literalinclude:: /kubernetes/config_examples/f5-k8s-ingress-kube-annotate.yaml
+   :caption: Kubectl annotation example
 
 .. _create k8s ingress:
 
-Define Virtual Server Ingress Annotations in an Ingress Resource
-----------------------------------------------------------------
+Add Annotations using an Ingress resource
+-----------------------------------------
 
-You can also define the virtual server settings when creating a new Ingress resource.
-Define the desired `Ingress annotations`_ using valid JSON.
+You can also define the virtual server settings in an Ingress resource. 
+
+.. literalinclude:: /kubernetes/config_examples/f5-k8s-ingress-annotation.yaml
+   :caption: Ingress annotation example
+   :emphasize-lines: 6-14
 
 .. _add health monitor to ingress:
 
@@ -96,7 +87,7 @@ Health Monitors
 Use the :code:`virtual-server.f5.com/health` annotation to add (or update) health monitors to the virtual server for a Kubernetes Ingress resource. You can include it in the resource definition, as shown below, or use the command line (shown in the previous example).
 
 .. literalinclude:: /kubernetes/config_examples/f5-k8s-ingress-health-monitor.yaml
-   :caption: Health Monitor Example
+   :caption: Health monitor example
    :lines: 1-6, 10-41
    :emphasize-lines: 9-22
 
@@ -239,9 +230,3 @@ A :dfn:`Name-based virtual hosting` ingress creates the following BIG-IP objects
 :fonticon:`fa fa-download` :download:`f5-k8s-ingress-virtual-hosting_all.yaml </kubernetes/config_examples/f5-k8s-ingress-virtual-hosting_all.yaml>`
 
 
-
-.. _TMSH Reference Guide: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-tmsh-reference-12-0-0.html
-.. _BIG-IP server pool: https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-basics-13-0-0/4.html
-.. _Host header: https://tools.ietf.org/html/rfc7230#section-5.4
-.. _Kubernetes documentation: https://kubernetes.io/docs/concepts/services-networking/ingress/#name-based-virtual-hosting
-.. _TLS ingress: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
