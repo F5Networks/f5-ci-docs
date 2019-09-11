@@ -217,6 +217,12 @@ Create a Kubernetes Node for the BIG-IP device
       k8s-worker-0   Ready     2d        v1.7.5
       k8s-worker-1   Ready     2d        v1.7.5
 
+.. seealso::
+
+   - If you're having trouble with your network setup, see :ref:`networking troubleshoot openshift`.
+     (This troubleshooting issue references the OpenShift Cluster Network, but the concepts are the same.)
+
+   - If you get a traffic group configuration error when trying to create a virtual server with an iApp, see :ref:`Troubleshoot Your Kubernetes Deployment <iapp traffic group>`.
 
 .. _k8s-what-s-next:
 
@@ -224,13 +230,6 @@ What's Next
 -----------
 
 - :ref:`Install the F5 BIG-IP Controller in Kubernetes <install-kctlr>`
-
-.. seealso::
-
-   - If you're having trouble with your network setup, see :ref:`networking troubleshoot openshift`.
-     (This troubleshooting issue references the OpenShift Cluster Network, but the concepts are the same.)
-   - If you get a traffic group configuration error when trying to create a virtual server with an iApp, see :ref:`Troubleshoot Your Kubernetes Deployment <iapp traffic group>`.
-
 
 .. _Deploy flannel: https://coreos.com/flannel/docs/latest/kubernetes.html
 .. _kube-flannel: https://github.com/coreos/flannel/blob/master/Documentation/kube-flannel.yml
