@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: myingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingresslass: "f5"
+    virtual-server.f5.com/ip: "controller-default"
+    virtual-server.f5.com/http-port: "443"
+    virtual-server.f5.com/partition: "k8s"
+    virtual-server.f5.com/balance: "round-robin"
+    virtual-server.f5.com/health: '[{"path": "svc1.example.com/app1", "send": "HTTP GET /health/svc1", "interval": 5, "timeout": 10}]'
+    ingress.kubernetes.io/ssl-redirect: "true"
+    ingress.kubernetes.io/allow-http: "false"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /testpath
+        backend:
+          serviceName: test
+          servicePort: 80

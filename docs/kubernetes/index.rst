@@ -36,7 +36,7 @@ User Guides
    kctlr-app-install
    kctlr-managed-objects
    kctlr-create-service-vs
-   kctlr-ingress-config
+   kctlr-ingress
    kctlr-k8s-as3
    kctlr-manage-bigip-objects
    kctlr-f5-resource

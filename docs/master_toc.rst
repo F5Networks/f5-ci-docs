@@ -15,16 +15,14 @@ Container Ingress Services
    kubernetes/kctlr-use-bigip-k8s
    kubernetes/kctlr-app-install
    kubernetes/kctlr-managed-objects
+   kubernetes/kctlr-create-service-vs
+   kubernetes/kctlr-ingress
    kubernetes/kctlr-k8s-as3
-   kubernetes/kctlr-f5-resource
    kubernetes/kctlr-manage-bigip-objects
+   kubernetes/kctlr-f5-resource
    kubernetes/kctlr-deploy-iapp
    kubernetes/kctlr-modes
    kubernetes/kctlr-k8s-ingress-ctlr
-   kubernetes/kctlr-ingress
-   kubernetes/kctlr-create-service-vs
-   kubernetes/kctlr-rewrite-url
-   kubernetes/kctlr-secrets
 
 .. toctree::
    :caption: OpenShift
