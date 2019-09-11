@@ -171,6 +171,4 @@ Use the :command:`kubectl get` command to verify that the :code:`k8s-bigip-ctlr`
 What's Next
 -----------
 
-Review the types of traffic management object the BIG-IP Controller supports.
-
 - :ref:`Managed BIG-IP objects <kctlr-managed-objects>`.
