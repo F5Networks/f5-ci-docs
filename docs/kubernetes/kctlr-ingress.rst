@@ -229,18 +229,4 @@ A :dfn:`Name-based virtual hosting` ingress creates the following BIG-IP objects
 
 :fonticon:`fa fa-download` :download:`f5-k8s-ingress-virtual-hosting_all.yaml </kubernetes/config_examples/f5-k8s-ingress-virtual-hosting_all.yaml>`
 
-.. _what-s-next:
 
-What's Next
------------
-
-You can modify your BIG-IP configuration using the BIG-IP Controller.
-
-- :ref:`Manage your BIG-IP virtual servers <kctlr-manage-bigip-objects>`
-
-.. _additional-resource:
-
-Additional Resources
---------------------
-
-- :ref:`Overview using of BIG-IP Controller as an Ingress controller <kctlr-k8s-ingress-ctlr>`
