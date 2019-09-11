@@ -29,7 +29,7 @@ Container Ingress Services
    :maxdepth: 1
    :glob:
 
-   k8s-bigip-ctlr reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
+   Reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
    openshift/index
    openshift/replace-f5-router
    openshift/kctlr-use-bigip-openshift
