@@ -79,7 +79,7 @@ What's Next
 
 Configure the BIG-IP system to process application traffic, and load balance across Kubernetes Pods. 
 
-- :ref:`Create a BIG-IP Virtual Server for a Service <kctlr-create-service-vs>` (L4 ingress).
+- :ref:`Create a BIG-IP Virtual Server for a Service <kctlr-per-svc-vs>` (L4 ingress).
 - :ref:`Create a BIG-IP Virtual Server for an Ingress resource <kctlr-ingress-config>` (L7 ingress).
 
 You can use F5 AS3 Extensions to configure the BIG-IP system. 
