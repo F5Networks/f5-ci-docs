@@ -7,7 +7,7 @@ BIG-IP Controller Modes
 =======================
 
 
-The :code:`pool-member-type` option determines what mode the Controller runs in, either :code:`nodeport` or :code:`cluster`.  This document describes each option to help you decide which Controller mode is best for your deployment.
+The **pool-member-type** option determines what mode the Controller runs in, either **nodeport** or **cluster**  This document describes each option to help you decide which Controller mode is best for your deployment.
 
 .. _nodeport mode:
 
@@ -16,7 +16,7 @@ Nodeport mode
 
 Nodeport mode is the default mode of operation for the |kctlr| in Kubernetes. This mode is easier to set up since it supports all Kubernetes `Cluster Networks`_, and has no specific BIG-IP licensing requirements.
 
-As shown in the diagram, :code:`nodeport` mode uses 2-tier load balancing:
+As shown in the diagram, **nodeport** mode uses 2-tier load balancing:
 
 #. The BIG-IP Platform load balances requests to Nodes (kube-proxy).
 #. Nodes (kube-proxy) load balance requests to Pods.
@@ -26,7 +26,7 @@ As shown in the diagram, :code:`nodeport` mode uses 2-tier load balancing:
 
 **Important limitations:**
 
-- The Kubernetes Services you manage must use :code:`type: NodePort`. [#servicetype]_
+- The Kubernetes Services you manage must use **type: NodePort**. [#servicetype]_
 - The BIG-IP system can't load balance directly to Pods, which means:
 
   - Some BIG-IP services, like L7 persistence, won't behave as expected.
@@ -40,7 +40,7 @@ To use NodePort mode, continue on to :ref:`Install the BIG-IP Controller in Kube
 Cluster mode
 ------------
 
-You should use :code:`cluster` mode if you intend to integrate your BIG-IP device into the Kubernetes cluster network.
+You should use **cluster** mode if you intend to integrate your BIG-IP device into the Kubernetes cluster network.
 
 .. important::
 
