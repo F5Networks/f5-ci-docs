@@ -124,6 +124,7 @@ rst_epilog = """
 .. _Cloud Foundry: https://cloudfoundry.org/why-cloud-foundry/
 .. _ClusterIP: https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/
 .. _Cluster network: https://kubernetes.io/docs/concepts/cluster-administration/networking/
+.. _Cluster networks: https://kubernetes.io/docs/concepts/cluster-administration/networking/
 .. _Cluster Role Binding: https://kubernetes.io/docs/admin/authorization/rbac/#rolebinding-and-clusterrolebinding
 .. _Cluster Role: https://kubernetes.io/docs/admin/authorization/rbac/#role-and-clusterrole
 .. _Cluster: https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/
