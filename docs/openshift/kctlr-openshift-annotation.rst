@@ -7,7 +7,7 @@
 Modifying HOST IP addresses using annotations
 =============================================
 
-When cluster members use an unexpected **HOST** IP address, you can use **annotation** to modify the cluster member's configuration. In this example, the cluster member **worker.example.net** should be using **HOST** IP address **172.16.1.20**.
+When a cluster member uses an unexpected **HOST** IP address, you can use **annotations** to modify the cluster member configuration. In this example, the cluster member **worker.example.net** should be using **HOST** IP address **172.16.1.20**.
 
 .. code-block:: console
    :emphasize-lines: 4
@@ -55,14 +55,14 @@ You can use this procedure to modify the **HOST** IP address of a cluster member
       host: worker.example.net
       hostIP: 172.16.1.20
 
-#. Apply the **HostSubnet** resource using the :command:`oc apply`.
+#. Apply the **HostSubnet** resource using the :command:`oc apply` command.
 
    .. parsed-literal::
 
       oc apply -f worker-hostsubnet.yml
       hostsubnet.network.openshift.io/worker.example.net configured
 
-#. Verify the **HOST** IP address is updated.
+#. Verify the cluster member **HOST** IP address is updated.
 
    .. code-block:: console
       :emphasize-lines: 4
