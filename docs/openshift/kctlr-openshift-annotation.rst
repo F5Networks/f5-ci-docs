@@ -57,10 +57,10 @@ You can use this procedure to modify the **HOST** IP address of a cluster member
 
 #. Apply the **HostSubnet** resource using the :command:`oc apply`.
 
-.. parsed-literal::
+   .. parsed-literal::
 
-   oc apply -f worker-hostsubnet.yml
-   hostsubnet.network.openshift.io/worker.example.net configured
+      oc apply -f worker-hostsubnet.yml
+      hostsubnet.network.openshift.io/worker.example.net configured
 
 #. Verify the **HOST** IP address is updated.
 
