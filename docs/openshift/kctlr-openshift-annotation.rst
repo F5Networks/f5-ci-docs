@@ -7,10 +7,7 @@
 Modifying HOST IP addresses using annotations
 =============================================
 
-Overview
---------
-
-Cluster members may a **HOST** IP address that you don't prefer. You can use **annotation** to modify the cluster member's **HOST** IP address. In this example, the cluster member **worker.example.net** should be using **HOST** IP address **172.16.2.20**.
+When cluster members use an unexpected **HOST** IP address, you can use **annotation** to modify the cluster member's configuration. In this example, the cluster member **worker.example.net** should be using **HOST** IP address **172.16.2.20**.
 
 .. code-block:: console
 
@@ -20,7 +17,7 @@ Cluster members may a **HOST** IP address that you don't prefer. You can use **a
    worker.example.net    worker.example.net    192.168.1.20    10.129.0.0/23
    master.example.net    master.example.net    172.16.1.10     10.128.0.0/23
 
-To modify the **HOST** IP address of a cluster member, you can apply IP and MAC address annotations to the cluster member configuration.
+You can use this procedure to modify the **HOST** IP address of a cluster member using annotations.
 
 #. Ensure the IP address exists on one of the cluster member interfaces. 
 
