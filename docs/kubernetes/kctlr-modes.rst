@@ -6,71 +6,62 @@
 BIG-IP Controller Modes
 =======================
 
-If you're setting up a Kubernetes or OpenShift cluster with the |kctlr| for the first time, you may be asking yourself,
 
-*"What is the pool-member-type setting and which mode should I choose?"*.
-
-This document clarifies the available options and provides vital information to take into account when making this decision.
-
-In brief: The :code:`pool-member-type` setting determines what mode the Controller runs in -- :code:`nodeport` or :code:`cluster`.
+The **pool-member-type** option determines what mode the Controller runs in, either **nodeport** or **cluster**  This document describes each option to help you decide which Controller mode is best for your deployment.
 
 .. _nodeport mode:
 
 Nodeport mode
 -------------
 
-Nodeport mode is the default mode of operation for the |kctlr| in Kubernetes.
-From a configuration standpoint, it's easier to set up since it doesn't matter what Kubernetes `Cluster Network`_ you use.
-In addition, NodePort mode doesn't have any specific BIG-IP licensing requirements.
+Nodeport mode is the default mode of operation for the |kctlr| in Kubernetes. This mode is easier to set up since it supports all Kubernetes `Cluster Networks`_, and has no specific BIG-IP licensing requirements.
 
-As shown in the diagram below, :code:`nodeport` mode uses 2-tier load balancing:
+As shown in the diagram, **nodeport** mode uses 2-tier load balancing:
 
 #. The BIG-IP Platform load balances requests to Nodes (kube-proxy).
 #. Nodes (kube-proxy) load balance requests to Pods.
 
 .. figure:: /_static/media/k8s_nodeport.png
+   :scale: 70%
 
+**Important limitations:**
 
-**Important limitations to consider:**
-
-- The Kubernetes Services you want to manage must use :code:`type: NodePort`. [#servicetype]_
+- The Kubernetes Services you manage must use **type: NodePort**. [#servicetype]_
 - The BIG-IP system can't load balance directly to Pods, which means:
 
-  - some BIG-IP services, like L7 persistence, won't behave as expected;
-  - there's extra latency; and
-  - |kctlr| has limited visibility into Pod health.
+  - Some BIG-IP services, like L7 persistence, won't behave as expected.
+  - Additional network latency.
+  - The |kctlr| has limited visibility into Pod health.
 
-If you want to use NodePort mode, continue on to :ref:`Install the BIG-IP Controller in Kubernetes <install-kctlr>`.
+To use NodePort mode, continue on to :ref:`Install the BIG-IP Controller in Kubernetes <install-kctlr>`.
 
 .. _cluster mode:
 
 Cluster mode
 ------------
 
-You should use :code:`cluster` mode if you intend to integrate your BIG-IP device into the Kubernetes cluster network.
+You should use **cluster** mode if you intend to integrate your BIG-IP device into the Kubernetes cluster network.
 
 .. important::
 
    OpenShift users must run the |kctlr| in cluster mode.
 
-Cluster mode requires a `Better or Best license`_ that includes SDN services and advanced routing.
-While there are additional networking configurations to make, cluster mode has distinct benefits over nodeport mode:
+Cluster mode requires a `Better or Best license`_ that includes SDN services, and advanced routing. While there are additional networking configurations, cluster mode has distinct benefits over nodeport mode:
 
-- You can use any type you like for your Kubernetes Services.
-- BIG-IP system can load balance directly to any Pod in the Cluster, which means:
+- You can use any type of Kubernetes Services.
+- The BIG-IP system can load balance directly to any Pod in the Cluster, providing:
 
-  - BIG-IP services - including L7 persistence - function as expected, and
-  - the |kctlr| has full visibility into Pod health via the Kubernetes API.
+  - BIG-IP services, including L7 persistence.
+  - The |kctlr| has full visibility into Pod health via the Kubernetes API.
 
 .. figure:: /_static/media/k8s_cluster.png
+   :scale: 70%
 
 .. _k8s-cluster-networks:
 
-If you want to run |kctlr| in cluster mode, continue on to :ref:`Network considerations`.
+To run |kctlr| in cluster mode, continue on to :ref:`Network considerations`.
 
 .. seealso::
-
-   The following guides provide relevant information and instructions:
 
    - The Kubernetes `Cluster Networking`_ Administration Guide -- provides information about Kubernetes Cluster Network types.
    - The `BIG-IP TMOS: ​Tunneling and IPsec <https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-tmos-tunnels-ipsec-13-0-0/2.html>`_ Guide -- provides instructions for setting up tunnels on your BIG-IP device.

@@ -76,13 +76,17 @@ Use the :command:`oc create` command to upload the HostSubnet file(s) to the Ope
 Verify creation of the HostSubnet(s)
 ````````````````````````````````````
 
-.. important:: Note the subnet that the OpenShift SDN assigned to the BIG-IP host Node.
+Use the :command:`oc get hostsubnet` command to display the **SUBNET** allocated to the BIG-IP system by OpenShift.
+
+.. important:: You can modify the **HOST IP** of any cluster member using annotations. See `Modifying a HOST IP address using annotations <kctlr-openshift-annotation.html>`_.
 
 .. code-block:: console
 
    oc get hostsubnet
    NAME                  HOST                  HOST IP         SUBNET
-   f5-bigip-node         f5-bigip-node         172.16.1.28     10.129.2.0/14
+   f5-bigip-node         f5-bigip-node         172.16.1.30     10.130.0.0/23
+   worker.example.net    worker.example.net    172.16.1.20     10.129.0.0/23
+   master.example.net    master.example.net    172.16.1.10     10.128.0.0/23
 
 
 .. _openshift-bigip-setup:
