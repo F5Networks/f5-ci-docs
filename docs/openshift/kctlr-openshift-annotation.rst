@@ -4,8 +4,8 @@
 
 .. _kctlr-openshift-annotation:
 
-Modify HOST IP addresses using annotations
-==========================================
+Modifying HOST IP addresses using annotations
+=============================================
 
 Overview
 --------
