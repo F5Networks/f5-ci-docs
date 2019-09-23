@@ -7,9 +7,10 @@
 Modifying HOST IP addresses using annotations
 =============================================
 
-When cluster members use an unexpected **HOST** IP address, you can use **annotation** to modify the cluster member's configuration. In this example, the cluster member **worker.example.net** should be using **HOST** IP address **172.16.2.20**.
+When cluster members use an unexpected **HOST** IP address, you can use **annotation** to modify the cluster member's configuration. In this example, the cluster member **worker.example.net** should be using **HOST** IP address **172.16.1.20**.
 
 .. code-block:: console
+   :emphasize-lines: 4
 
    oc get hostsubnet
    NAME                  HOST                  HOST IP         SUBNET
@@ -22,14 +23,16 @@ You can use this procedure to modify the **HOST** IP address of a cluster member
 #. Ensure the IP address exists on one of the cluster member interfaces. 
 
    .. code-block:: console
+      :emphasize-lines: 3
 
-   ifconfig ens33    
-   ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-          inet 172.16.1.20  netmask 255.255.255.0  
+      ifconfig ens33    
+      ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+             inet 172.16.1.20  netmask 255.255.255.0  
 
 #. Obtain the MAC address (ether) of the **tun0** interface.
 
    .. code-block:: console
+      :emphasize-lines: 4
 
       ifconfig tun0
       tun0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1450
@@ -39,6 +42,7 @@ You can use this procedure to modify the **HOST** IP address of a cluster member
 #. Create a **HostSubnet** resource with annotations for the new IP and MAC addresses.
 
    .. code-block:: console
+      :emphasize-lines: 6-7
 
       apiVersion: v1
       kind: HostSubnet
@@ -61,6 +65,7 @@ You can use this procedure to modify the **HOST** IP address of a cluster member
 #. Verify the **HOST** IP address is updated.
 
    .. code-block:: console
+      :emphasize-lines: 4
 
       oc get hostsubnet
       NAME                  HOST                  HOST IP         SUBNET
