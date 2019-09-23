@@ -78,7 +78,7 @@ Verify creation of the HostSubnet(s)
 
 Use the :command:`oc get hostsubnet` command to display the **SUBNET** allocated to the BIG-IP system by OpenShift.
 
-.. important:: You can modify the **HOST IP** of any cluster member using annotations. See `Modify HOST IP addresses using annotations <kctlr-openshift-annotation>`_.
+.. important:: You can modify the **HOST IP** of any cluster member using annotations. See `Modify HOST IP addresses using annotations <kctlr-openshift-annotation.html>`_.
 
 .. code-block:: console
 
