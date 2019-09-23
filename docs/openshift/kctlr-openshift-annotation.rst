@@ -4,8 +4,8 @@
 
 .. _kctlr-openshift-annotation:
 
-Modifying HOST IP addresses using annotations
-=============================================
+OpenShift: Modifying a HOST IP address using annotations
+========================================================
 
 When a cluster member uses an unexpected **HOST** IP address, you can use **annotations** to modify the cluster member configuration. In this example, the cluster member **worker.example.net** should be using **HOST** IP address **172.16.1.20**.
 
@@ -20,7 +20,7 @@ When a cluster member uses an unexpected **HOST** IP address, you can use **anno
 
 You can use this procedure to modify the **HOST** IP address of a cluster member using annotations.
 
-#. Ensure the IP address exists on one of the cluster member interfaces. 
+#. Ensure the new IP address exists on one of the cluster member interfaces. 
 
    .. code-block:: console
       :emphasize-lines: 3
