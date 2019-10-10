@@ -95,9 +95,9 @@ Known Issues
 
 v1.11.0
 ```````
-- CIS does not update the datagroup of alternate backend when one of the service/deployment is deleted
-- WAF Policy annotation is restricted to a single namespace
-- In combination with edge and reencrypt, edge route passes encrypted packets to the backend server instead of unencrypted
+- CIS does not update the datagroup of alternate backends when one of the service/deployments is deleted.
+- WAF Policy annotation is restricted to a single namespace.
+- In combination with edge and reencrypt, edge route passes encrypted packets to the backend server, instead of unencrypted packets.
 
 v1.10.0
 ```````
