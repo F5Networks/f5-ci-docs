@@ -88,9 +88,16 @@ Annotations
 - virtual-server.f5.com/clientssl
 - virtual-server.f5.com/serverssl
 - virtual-server.f5.com/secure-serverssl
+- virtual-server.f5.com/waf
 
 Known Issues
 ------------
+
+v1.11.0
+```````
+- CIS does not update the datagroup of alternate backend when one of the service/deployment is deleted
+- WAF Policy annotation is restricted to a single namespace
+- In combination with edge and reencrypt, edge route passes encrypted packets to the backend server instead of unencrypted
 
 v1.10.0
 ```````
