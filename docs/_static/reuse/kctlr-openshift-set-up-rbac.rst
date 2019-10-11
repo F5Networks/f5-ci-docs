@@ -37,8 +37,14 @@ Each Controller that manages a device in a cluster or active-standby pair can us
 
    .. parsed-literal::
 
-      oc create serviceaccount **bigip-ctlr** [**-n kube-system**]
-      serviceaccount **"bigip-ctlr"** created
+      oc create serviceaccount bigip-ctlr [-n kube-system]
+      serviceaccount "bigip-ctlr" created
+
+#. Apply the **cluster-admin** Cluster Role to the BIG-IP Controller Service Account.
+
+   .. parsed-literal::
+
+      oc adm policy add-cluster-role-to-user cluster-admin -z bigip-ctlr [-n kube-system]
 
 #. Create a `Cluster Role`_ and `Cluster Role Binding`_ with the required permissions.
 
