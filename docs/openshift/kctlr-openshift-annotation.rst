@@ -1,7 +1,6 @@
 :product: BIG-IP Controller for Kubernetes
 :type: task
 
-
 .. _kctlr-openshift-annotation:
 
 OpenShift: Modifying a HOST IP address using annotations

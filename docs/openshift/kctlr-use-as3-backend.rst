@@ -10,6 +10,7 @@ The `k8s-bigip-ctlr`_ can use Application Services 3 (AS3) for BIG-IP orchestrat
 
 Prerequisites
 -------------
+
 Ensure you meet the following requirements:
 
 - BIG-IP Controller v1.10 or higher when used in OpenShift.
@@ -87,9 +88,16 @@ Annotations
 - virtual-server.f5.com/clientssl
 - virtual-server.f5.com/serverssl
 - virtual-server.f5.com/secure-serverssl
+- virtual-server.f5.com/waf
 
 Known Issues
 ------------
+
+v1.11.0
+```````
+- CIS does not update the datagroup of alternate backends when one of the service/deployments is deleted.
+- WAF Policy annotation is restricted to a single namespace.
+- In combination with edge and reencrypt, edge route passes encrypted packets to the backend server, instead of unencrypted packets.
 
 v1.10.0
 ```````

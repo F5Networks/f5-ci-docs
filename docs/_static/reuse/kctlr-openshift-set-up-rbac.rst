@@ -37,13 +37,20 @@ Each Controller that manages a device in a cluster or active-standby pair can us
 
    .. parsed-literal::
 
-      oc create serviceaccount **bigip-ctlr** [**-n kube-system**]
-      serviceaccount **"bigip-ctlr"** created
+      oc create serviceaccount bigip-ctlr [-n kube-system]
+      serviceaccount "bigip-ctlr" created
+
+#. Apply the **cluster-admin** Cluster Role to the BIG-IP Controller Service Account.
+
+   .. parsed-literal::
+
+      oc adm policy add-cluster-role-to-user cluster-admin -z bigip-ctlr [-n kube-system]
 
 #. Create a `Cluster Role`_ and `Cluster Role Binding`_ with the required permissions.
 
    .. literalinclude:: /openshift/config_examples/f5-kctlr-openshift-clusterrole.yaml
-      :linenos:
+      :emphasize-lines: 16
+
 
    :fonticon:`fa fa-download` :download:`f5-kctlr-openshift-clusterrole.yaml </openshift/config_examples/f5-kctlr-openshift-clusterrole.yaml>`
 
@@ -51,8 +58,8 @@ Each Controller that manages a device in a cluster or active-standby pair can us
 
    .. parsed-literal::
 
-      oc create -f **f5-kctlr-openshift-clusterrole.yaml** [**-n kube-system**]
-      clusterrole **"system:bigip-ctlr"** created
-      clusterrolebinding **"bigip-ctlr-role"** created
+      oc create -f f5-kctlr-openshift-clusterrole.yaml [-n kube-system]
+      clusterrole "system:bigip-ctlr" created
+      clusterrolebinding "bigip-ctlr-role" created
 
 

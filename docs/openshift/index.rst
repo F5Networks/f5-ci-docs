@@ -21,7 +21,7 @@ User Guides
 .. toctree::
    :maxdepth: 1
 
-   Add BIG-IP device to OpenShift Cluster <kctlr-use-bigip-openshift>
+   Add BIG-IP device to an OpenShift Cluster <kctlr-use-bigip-openshift>
    Deploy the BIG-IP Controller <kctlr-openshift-app-install>
    Manage BIG-IP objects <../kubernetes/kctlr-manage-bigip-objects>
    Use AS3 for BIG-IP orchestration <kctlr-use-as3-backend>
