@@ -49,7 +49,8 @@ Each Controller that manages a device in a cluster or active-standby pair can us
 #. Create a `Cluster Role`_ and `Cluster Role Binding`_ with the required permissions.
 
    .. literalinclude:: /openshift/config_examples/f5-kctlr-openshift-clusterrole.yaml
-      :linenos:
+      :emphasize-lines: 16
+
 
    :fonticon:`fa fa-download` :download:`f5-kctlr-openshift-clusterrole.yaml </openshift/config_examples/f5-kctlr-openshift-clusterrole.yaml>`
 
