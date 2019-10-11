@@ -58,8 +58,8 @@ Each Controller that manages a device in a cluster or active-standby pair can us
 
    .. parsed-literal::
 
-      oc create -f **f5-kctlr-openshift-clusterrole.yaml** [**-n kube-system**]
-      clusterrole **"system:bigip-ctlr"** created
-      clusterrolebinding **"bigip-ctlr-role"** created
+      oc create -f f5-kctlr-openshift-clusterrole.yaml [-n kube-system]
+      clusterrole "system:bigip-ctlr" created
+      clusterrolebinding "bigip-ctlr-role" created
 
 
