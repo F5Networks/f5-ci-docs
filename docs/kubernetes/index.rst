@@ -116,7 +116,7 @@ Key Kubernetes Concepts
 Cluster Network
 ```````````````
 The basic assumption of the Kubernetes `Cluster Network`_ is that Pods can communicate with other Pods, regardless of what host they're on.
-You have a few different options when connecting your BIG-IP device (platform or Virtual Edition) to a Kubernetes cluster network and the |kctlr|.
+You have a few different options when connecting your BIG-IP device to a Kubernetes cluster network and the |kctlr|.
 How (or whether) you choose to integrate your BIG-IP device into the cluster network -- and the framework you use -- impacts how the BIG-IP system forwards traffic to your Kubernetes Services.
 
 See :ref:`Nodeport mode vs Cluster mode <kctlr modes>` for more information.
