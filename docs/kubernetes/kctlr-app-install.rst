@@ -157,7 +157,7 @@ To perform a probe, the kubelet sends an HTTP GET request to the server that is 
 
 To view the liveness and readiness of the deployed pod, run the command ``Kubectl describe pod <pod_name> -n kube-system``. Here is the example output:
 
-.. code-block:: 
+.. code-block:: YAML
 
            resources: {}
            terminationMessagePath: /dev/termination-log 
@@ -175,8 +175,8 @@ To view the liveness and readiness of the deployed pod, run the command ``Kubect
       Mounts:        <none>
    Volumes:          <none>
 
-``curl http://<self-ip>:<port no>/health`` shows a response of OK.                   
 
+``curl http://<self-ip>:<port no>/health`` shows a response of OK.                   
 
 
 .. _kctlr flannel deploy:
