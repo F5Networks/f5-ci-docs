@@ -155,9 +155,9 @@ To perform a probe, the kubelet sends an HTTP GET request to the server that is 
          timeoutSeconds: 15
 
 
-The command ``Kubectl describe pod <pod_name> -n kube-system`` shows the liveness and readiness for the deployed pod.
+To view the liveness and readiness of the deployed pod, run the command ``Kubectl describe pod <pod_name> -n kube-system``. Here is the example output:
 
-.. code-block:: YAML
+.. code-block:: 
 
            resources: {}
            terminationMessagePath: /dev/termination-log 
