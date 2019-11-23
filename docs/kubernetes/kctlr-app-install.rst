@@ -93,6 +93,92 @@ The example below shows a Deployment with the basic config parameters required t
 
 :fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_basic.yaml </kubernetes/config_examples/f5-k8s-bigip-ctlr_basic.yaml>`
 
+Run Health Checks
+`````````````````
+
+Kubernetes has two types of health checks:
+
+- Readiness Probes: To determine when a pod is ready
+- Liveness Probes: To determine when a pod is healthy or unhealthy after it has become ready
+
+Kubernetes uses readiness probes to decide when the container is available for accepting traffic. The readiness probe controls which pods to use as the backend for a service. A pod is considered ready when all of its containers are ready. If a pod is not ready, it is removed from service load balancers. For example, if a container loads a large cache at start-up and takes minutes to start, you do not want to send requests to this container until it is ready, or the requests will fail—you want to route requests to other pods, which are capable of servicing requests.
+
+Kubernetes uses liveness probes to know when to restart a container. If a container is unresponsive—perhaps the application is deadlocked due to a multi-threading defect—restarting the container can make the application more available.
+
+We can use variety of methods to ascertain container status.
+
+- HTTP request to the pod
+- Command execution to the pod
+- TCP request to the pod
+
+Probes are define on a container in a deployment.
+
+Here is an example of the deployment using HTTP method:
+
++------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+| Parameter                    | Description                                                                                                                                    |
++==============================+================================================================================================================================================+
+| periodSeconds                | specifies that the kubelet should perform a liveness probe every 3 seconds.                                                                    |
++------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+| initialDelaySeconds          | tells the kubelet that it should wait 3 seconds before performing the first probe                                                              |
++------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+| timeOutSeconds               | how long to wait for the probe to finish. If this time is exceeded, OpenShift Container Platform considers the probe to have failed.           |
++------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+The kubelet uses a web hook to determine the healthiness of the container. The check is deemed successful if the HTTP response code is between 200 and 399.
+
+To perform a probe, the kubelet sends an HTTP GET request to the server that is running in the Container and listening on port 8080. If the handler for the server’s /health path returns a success code.
+
+.. code-block:: YAML
+
+      livenessProbe:
+         failureThreshold: 3
+         httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+         initialDelaySeconds: 15
+         periodSeconds: 15
+         successThreshold: 1
+         timeoutSeconds: 15
+      readinessProbe:
+         failureThreshold: 3
+         httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+         initialDelaySeconds: 30
+         periodSeconds: 30
+         successThreshold: 1
+         timeoutSeconds: 15
+
+
+Kubectl describe pod <pod_name> -n kube-system
+Shows the liveness and readiness for the deployed pod.
+
+.. code-block:: YAML
+
+           resources: {}
+           terminationMessagePath: /dev/termination-log 
+           terminationMessagePolicy: File 
+           - --log-level=debug
+           terminationMessagePolicy: Fileermination-log
+         --log-level=debug
+         --namespace=default
+         --route-label=systest
+         --insecure=true
+         --agent=cccl
+      Liveness:      http-get http://:8080/health delay=15s timeout=15s period=15s #success=1 #failure=3
+      Readiness:     http-get http://:8080/health delay=30s timeout=15s period=30s #success=1 #failure=3
+      Environment:   <none>
+      Mounts:        <none>
+   Volumes:          <none>
+
+``curl http://<self-ip>:<port no>/health`` shows a response of OK
+                   
+
+
+
 .. _kctlr flannel deploy:
 
 Deployments for flannel BIG-IP Integrations
