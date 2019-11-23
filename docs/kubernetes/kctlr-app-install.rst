@@ -101,17 +101,19 @@ Kubernetes has two types of health checks:
 - Readiness Probes: To determine when a pod is ready
 - Liveness Probes: To determine when a pod is healthy or unhealthy after it has become ready
 
-Kubernetes uses readiness probes to decide when the container is available for accepting traffic. The readiness probe controls which pods to use as the backend for a service. A pod is considered ready when all of its containers are ready. If a pod is not ready, it is removed from service load balancers. For example, if a container loads a large cache at start-up and takes minutes to start, you do not want to send requests to this container until it is ready, or the requests will fail—you want to route requests to other pods, which are capable of servicing requests.
+**Readiness Probes**
+Kubernetes uses readiness probes to decide when the container is available for accepting traffic. The readiness probe controls which pods to use as the backend for a service. A pod is considered ready when all of its containers are ready. If a pod is not ready, it is removed from service load balancers. For example, if a container loads a large cache at start-up and takes minutes to start, you should not send requests to this container until it is ready, or the requests will fail. Instead, route requests to other pods, which are capable of servicing requests.
 
-Kubernetes uses liveness probes to know when to restart a container. If a container is unresponsive—perhaps the application is deadlocked due to a multi-threading defect—restarting the container can make the application more available.
+**Liveness Probes**
+Kubernetes uses liveness probes to know when to restart a container. If a container is unresponsive, the application could be deadlocked due to a multi-threading defect. Restarting the container can make the application more available.
 
-We can use variety of methods to ascertain container status.
+These are the methods you can use to check container status:
 
 - HTTP request to the pod
 - Command execution to the pod
 - TCP request to the pod
 
-Probes are define on a container in a deployment.
+Probes are defined on a container in a deployment.
 
 Here is an example of the deployment using HTTP method:
 
@@ -125,9 +127,9 @@ Here is an example of the deployment using HTTP method:
 | timeOutSeconds               | how long to wait for the probe to finish. If this time is exceeded, OpenShift Container Platform considers the probe to have failed.           |
 +------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
 
-The kubelet uses a web hook to determine the healthiness of the container. The check is deemed successful if the HTTP response code is between 200 and 399.
+The kubelet uses a web hook to determine the healthiness of the container. The check is successful if the HTTP response code is between ``200`` and ``399``.
 
-To perform a probe, the kubelet sends an HTTP GET request to the server that is running in the Container and listening on port 8080. If the handler for the server’s /health path returns a success code.
+To perform a probe, the kubelet sends an HTTP GET request to the server that is running in the Container and listening on port 8080. The handler for the server’s /health path returns a success code. For example:
 
 .. code-block:: YAML
 
@@ -153,8 +155,7 @@ To perform a probe, the kubelet sends an HTTP GET request to the server that is 
          timeoutSeconds: 15
 
 
-Kubectl describe pod <pod_name> -n kube-system
-Shows the liveness and readiness for the deployed pod.
+The command ``Kubectl describe pod <pod_name> -n kube-system`` shows the liveness and readiness for the deployed pod.
 
 .. code-block:: YAML
 
@@ -174,8 +175,7 @@ Shows the liveness and readiness for the deployed pod.
       Mounts:        <none>
    Volumes:          <none>
 
-``curl http://<self-ip>:<port no>/health`` shows a response of OK
-                   
+``curl http://<self-ip>:<port no>/health`` shows a response of OK.                   
 
 
 
