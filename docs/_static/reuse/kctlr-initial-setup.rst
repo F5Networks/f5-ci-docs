@@ -4,7 +4,7 @@
    .. note::
    
       - The |kctlr| can not manage objects in the ``/Common`` partition.
-      - **[Optional]** The Controller can decorate the IP addresses it configures on the BIG-IP with a `Route Domain`_ identifier.
+      - **[Optional]** The Controller can declare the IP addresses it configures on the BIG-IP with a `Route Domain`_ identifier.
         You may want to use route domains if you have many applications using the same IP address space that need isolation from one another.
         After you create the partition on your BIG-IP system, you can 1) create a route domain and 2) assign the route domain as the partition's default. See `create and set a non-zero default Route Domain for a partition`_ for setup instructions.
       - **[Optional]** If you're using a BIG-IP HA pair or cluster, sync your changes across the group.
