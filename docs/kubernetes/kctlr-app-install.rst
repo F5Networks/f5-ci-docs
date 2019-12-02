@@ -25,6 +25,7 @@ If you use `helm`_ you can use the `f5-bigip-ctlr chart`_ to create and manage t
    3.       :ref:`k8s-bigip-ctlr-deployment`
 
             - :ref:`kctlr basic deploy`
+            - :ref:`kctlr health checks`
             - :ref:`kctlr snat deploy`
             - :ref:`kctlr flannel deploy`
 
@@ -92,6 +93,8 @@ The example below shows a Deployment with the basic config parameters required t
    :linenos:
 
 :fonticon:`fa fa-download` :download:`f5-k8s-bigip-ctlr_basic.yaml </kubernetes/config_examples/f5-k8s-bigip-ctlr_basic.yaml>`
+
+.. _kctlr health checks:
 
 Run Health Checks
 `````````````````
