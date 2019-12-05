@@ -61,9 +61,6 @@ Each Container Connector monitors the BIG-IP partition it manages for configurat
 
 F5 does not recommend making configuration changes to objects in any partition managed by a |kctlr| via any other means (for example, the configuration utility, TMOS, or by syncing configuration from another device or service group). Doing so may result in disruption of service or unexpected behavior.
 
-.. important::
-
-   If you use tunnels to connect your BIG-IP device(s) to the Cluster network, you should `disable config sync for tunnels`_.
 
 Notice for Kubernetes and OpenShift users
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
