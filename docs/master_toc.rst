@@ -23,6 +23,7 @@ Container Ingress Services
    kubernetes/kctlr-deploy-iapp
    kubernetes/kctlr-modes
    kubernetes/kctlr-k8s-ingress-ctlr
+   kubernetes/kctlr-use-as3-backend.rst
 
 .. toctree::
    :caption: OpenShift
