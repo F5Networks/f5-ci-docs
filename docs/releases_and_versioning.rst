@@ -21,7 +21,7 @@ Component                   Version
 |cf-long|                   v1.0.x-1.2.x
 |kctlr-long|                v1.0.x-1.12.x
 |mctlr-long|                v1.0.x-v1.3.x
-|octlr-long|                v1.0.x-1.11.x
+|octlr-long|                v1.0.x-1.12.x
 ===================         ==============
 
 .. _connector compatibility:
