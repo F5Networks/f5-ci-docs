@@ -88,7 +88,7 @@ Create the config map by running the command ``#kubectl create configmap <config
    - When override config map is deployed post CIS with existing resources, the resources get overridden when at least one existing resource gets modified or new resource gets added
 
 
-There are three other ways to create ConfigMaps using the `kubectl create configmap command.
+There are three other ways to create configmaps using the kubectl create configmap command:
 
 1. Use the contents of an entire directory:
 
