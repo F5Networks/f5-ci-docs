@@ -10,6 +10,7 @@ Container Ingress Services
    :glob:
 
    Reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
+   releases_and_versioning
    Kubernetes/index
    faq
    kubernetes/flannel-bigip-info
@@ -33,6 +34,7 @@ Container Ingress Services
    :glob:
 
    Reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
+   releases_and_versioning
    openshift/index
    openshift/replace-f5-router
    openshift/kctlr-use-bigip-openshift
