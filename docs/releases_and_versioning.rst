@@ -18,8 +18,8 @@ This documentation set applies to the following versions of each F5 Container In
 ===================         ==============
 Component                   Version
 ===================         ==============
-|kctlr-long|                v1.0.x-1.12.x
-|octlr-long|                v1.0.x-1.12.x
+|kctlr-long|                v1.0.x-1.13.x
+|octlr-long|                v1.0.x-1.13.x
 ===================         ==============
 
 .. _connector compatibility:
@@ -64,7 +64,7 @@ The tables below show the versions used in development testing. The F5 Container
    |                          |                       +--------------------------------------------+                                            |                          |
    |                          |                       | Red Hat OpenShift Container Platform       |                                            |                          |
    |                          +-----------------------+--------------------------------------------+--------------------------------------------+--------------------------+
-   |                          | v1.10.x-v1.12.x       | OpenShift Origin                           | v3.7.x, v3.11.x, v4.1                      || v12.x, v13.x, v14.x     |
+   |                          | v1.10.x-v1.13.x       | OpenShift Origin                           | v3.7.x, v3.11.x, v4.1                      || v12.x, v13.x, v14.x     |
    |                          |                       +--------------------------------------------+                                            || v14.x is only supported |
    |                          |                       | Red Hat OpenShift Container Platform       |                                            || when using AS3.         |
    +--------------------------+-----------------------+--------------------------------------------+--------------------------------------------+--------------------------+
