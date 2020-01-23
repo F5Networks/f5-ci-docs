@@ -1,7 +1,5 @@
 :product: Container Ingress Services
 :product: BIG-IP Controller for Kubernetes
-:product: BIG-IP Controller for Cloud Foundry
-:product: BIG-IP Controller for Marathon
 :type: concept
  
 .. _containers-home:
