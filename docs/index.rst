@@ -14,12 +14,7 @@ F5 Container Ingress Services (CIS) integrates with container orchestration envi
 =========================     ===================================================
 Container Ingress Service     Orchestration environment
 =========================     ===================================================
-`cf-bigip-ctlr`_              `Cloud Foundry`_ and `Pivotal Cloud Foundry`_
--------------------------     ---------------------------------------------------
 `k8s-bigip-ctlr`_             `Kubernetes`_ and `Red Hat OpenShift`_
--------------------------     ---------------------------------------------------
-`marathon-bigip-ctlr`_        `Apache Mesos`_ `Marathon`_,
-                              `DC/OS and DC/OS Enterprise`_
 =========================     ===================================================
 
 .. figure:: /_static/media/cc_solution.png
