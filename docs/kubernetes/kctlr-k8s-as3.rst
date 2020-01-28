@@ -115,6 +115,35 @@ Click image for larger view.
     selector:
       app: f5-hello-world
 
+
+Enabling AS3 orchestration
+--------------------------
+
+You can use these steps to enable AS3 for BIG-IP orchestration:
+
+1. Include the **--agent=as3** option in your Deployment's argument section. For example:
+  
+   **Note:** In this example, `k8s-bigip-ctlr`_ will create partition **myParition_AS3** to store LTM objects such as pools, and virtual servers. FDB, and Static ARP entries are stored in **myPartition**. These partitions should not be managed manually.
+
+.. code-block:: YAML
+   :emphasize-lines: 7
+
+   args: [
+         "--bigip-username=$(BIGIP_USERNAME)",
+         "--bigip-password=$(BIGIP_PASSWORD)",
+         "--bigip-url=10.10.10.10",
+         "--bigip-partition=myPartition",
+         "--pool-member-type=cluster",
+         "--agent=as3"
+         ]
+
+2. Start the Controller: 
+
+.. parsed-literal::
+
+   kubectl apply -f f5-k8s-bigip-ctlr.yaml
+
+
 .. _kctlr-k8s-as3-discovery:
 
 Service discovery and controller mode
