@@ -26,7 +26,7 @@ CIS has the following AS3 Extension limitations:
 - CIS supports only one AS3 ConfigMap instance.
 - AS3 does not support moving BIG-IP nodes to new partitions.
 
-Declaritive API
+Declarative API
 ---------------
 
 AS3 Extensions use a declarative API, meaning AS3 Extension declarations describe the desired configuration state of a BIG-IP system. When using AS3 Extenstions, CIS sends declaration files using a single Rest API call. 
@@ -49,6 +49,10 @@ CIS can dynamically discover, and update the BIG-IP system's load balancing pool
 +---------------------------------+-------------------------------------------------------------------+
 | cis.f5.com/as3-pool: <string>   | The name of the **pool** in your AS3 Declaration.                 |
 +---------------------------------+-------------------------------------------------------------------+
+
+.. Note::
+
+   CIS K8s controller converts Ingress Routes into AS3 declarations and also dynamically discovers existing AS3 declarations. It then combines both of these AS3 declarations and generates a unified declaration, which causes certain fields to be discarded in the unified declaration. For example, the ``action`` field.
 
 .. important::
 
