@@ -9,11 +9,11 @@ Introduction to F5 Container Ingress Services
 
 F5 Container Ingress Services (CIS) integrates with container orchestration environments to dynamically create L4/L7 services on F5 BIG-IP systems, and load balance network traffic across the services. Monitoring the orchstration API server, CIS is able to modify the BIG-IP system configuration based on changes made to containerized applications.  
 
-====================================== ===========================================
-CIS Orchestration Environments
-----------------------------------------------------------------------------------
-`Kubernetes <kubernetes/index.html>`_  `Red Hat OpenShift <openshift/index.html>`_
--------------------------------------- -------------------------------------------
+=========================     ===================================================
+Container Ingress Service     Orchestration environment
+=========================     ===================================================
+`k8s-bigip-ctlr`_             `Kubernetes`_ and `Red Hat OpenShift`_
+=========================     ===================================================
 
 
 .. figure:: /_static/media/cc_solution.png
