@@ -22,7 +22,6 @@ Container Ingress Services
    kubernetes/kctlr-k8s-as3
    kubernetes/kctlr-manage-bigip-objects
    kubernetes/kctlr-f5-resource
-   kubernetes/kctlr-deploy-iapp
    kubernetes/kctlr-modes
    kubernetes/kctlr-k8s-ingress-ctlr
    kubernetes/kctlr-use-as3-backend
