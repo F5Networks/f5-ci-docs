@@ -61,51 +61,5 @@ Set up Splunk to receive data
 
       The event collector listens on port 8088 and requires HTTPS.
 
-Send stats from a BIG-IP device to Splunk
------------------------------------------
 
-Use the `F5 Analytics iApp`_ template to enable stats collection on your BIG-IP device and send the data to Splunk.
-
-.. seealso::
-
-   The instructions provided here cover the basics of iApp deployment. See the `F5 Analytics iApp Deployment Guide`_ for additional details
-
-Deploy the F5 Analytics iApp
-````````````````````````````
-
-Download the `F5 Analytics iApp`_ from DevCentral, then upload it to the Common partition on the BIG-IP device.
-
-#. Select :menuselection:`IApps/Templates --> Import`.
-
-#. Upload the iApp template (:file:`f5.analytics.tmpl`).
-
-#. Select :menuselection:`IApps/Application Services --> Create`.
-
-#. Choose the :file:`f5.analytics` template.
-
-#. Fill in the following fields; unspecified fields should use the default setting.
-
-   * Name - [user defined]
-   * Template - f5.analytics
-   * Module HSL Streams - ``No``
-   * Local System Logging (syslog) - ``No``
-   * System SNMP Alerts - ``No``
-   * iHealth Snapshot Information - ``No``
-   * Facility Name - [user defined]
-   * Default Tenant - [user defined]
-   * Alternative Device Group - [user defined]
-   * IP Address or Hostname - [SPLUNK_IP]
-   * Port - ``8088``
-   * Protocol - ``HTTPS``
-   * API Key - [SPLUNK_TOKEN]
-   * Push Interval - ``20``
-   * Mapping Table: 1 - ``Type=[App Name] From=[Virtual Name] Regex= (.*)_\d  Action=Map``
-   * Mapping Table: 2 - ``Type=[Tenant Name] From=[Partition] Regex=(.*) Action=Map``
-
-#. Click :guilabel:`Finished`.
-
-.. todo:: add instructions for deployment from Kubernetes and Marathon using the iApp variables
-
-.. _F5 Analytics iApp Deployment Guide: https://www.f5.com/pdf/deployment-guides/f5-analytics-dg.pdf
-.. _F5 Analytics iApp: https://support.f5.com/csp/article/K07859431
 .. _F5 Analytics App: https://splunkbase.splunk.com/app/3161/

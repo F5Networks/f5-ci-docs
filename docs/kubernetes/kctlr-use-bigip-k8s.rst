@@ -222,8 +222,6 @@ Create a Kubernetes Node for the BIG-IP device
    - If you're having trouble with your network setup, see :ref:`networking troubleshoot openshift`.
      (This troubleshooting issue references the OpenShift Cluster Network, but the concepts are the same.)
 
-   - If you get a traffic group configuration error when trying to create a virtual server with an iApp, see :ref:`Troubleshoot Your Kubernetes Deployment <iapp traffic group>`.
-
 .. _k8s-what-s-next:
 
 What's Next

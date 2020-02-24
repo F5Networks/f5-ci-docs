@@ -13,7 +13,7 @@ Creating a virtual server with an F5 Resource gives you the greatest degree of c
 You can use an F5 Resource ConfigMap to create custom virtual servers for your Applications. For example:
 
 - HTTP virtual servers that use non-standard ports;
-- HTTP virtual servers that needs customization beyond the |kctlr| `Ingress annotations`_ (like iApps);
+- HTTP virtual servers that needs customization beyond the |kctlr| `Ingress annotations`_ ;
 - virtual servers for TCP or UDP applications that require non-HTTP ingress.
 
 
@@ -49,14 +49,10 @@ Data.Frontend
 `````````````
 
 The :code:`data.frontend` property defines the objects you want to create on the BIG-IP system for a specific Service.
-In this section, you can :ref:`define a custom virtual server <kctlr-per-svc-vs>` using the :code:`virtualServer` properties or :ref:`deploy an iApp <kctlr-deploy-iapps>` using the :code:`iApp` properties.
+In this section, you can :ref:`define a custom virtual server <kctlr-per-svc-vs>` using the :code:`virtualServer` properties.
 
 - `k8s-bigip-ctlr virtual server configuration parameters`_
-- `k8s-bigip-ctlr iApp configuration parameters`_
 
-The iApp configuration parameters include a set of customizable ``iappVariables`` parameters. These custom user-defined parameters must correspond to fields in the iApp template you want to launch. You can also define the `iApp pool member table`_ that the iApp creates on the BIG-IP system.
-
-.. tip:: With the iApp configuration parameters, you can also deploy objects across BIG-IP modules (for example, ASM and LTM).
 
 .. _f5 resource backend:
 
@@ -104,11 +100,5 @@ The |kctlr| will create the virtual server in the :code:`k8s` partition, which a
 
 .. literalinclude:: /kubernetes/config_examples/f5-resource-vs-example.configmap.yaml
 
-.. _f5-resource-iapp:
 
-F5 iApp ConfigMap
-`````````````````
 
-The example below uses the |kctlr| to deploy the F5 iApp called :code:`f5.http`, which resides in the :code:`/Common` partition on the BIG-IP device.
-
-.. literalinclude:: /kubernetes/config_examples/f5-resource-vs-iApp-example.configmap.yaml

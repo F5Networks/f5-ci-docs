@@ -138,28 +138,6 @@ Here are a few basic things to check:
 .. todo:: Why didn't the |kctlr| create the pools/rules for my Ingress on the BIG-IP system?
 
 
-.. _iapp traffic group openshift:
-
-Why did I see a traffic group error when I deployed my iApp?
-````````````````````````````````````````````````````````````
-
-When deploying an iApp with the |octlr-long| , the iApp may create a virtual IP in the wrong traffic group. If this occurs, you will see an error message like that below.
-
-.. code-block:: console
-
-   Configuration error: Unable to to create virtual address (/openshift/127.0.0.2) as part of application
-   (/os/default_os.http.app/default_os.http) because it matches the self ip (/Common/selfip.external)
-   which uses a conflicting traffic group (/Common/traffic-group-local-only)
-
-If you've seen this error, you can override or change the default traffic-group as follows:
-
-- Set the specific traffic group you need in the ``iappOptions`` section of the virtual server F5 Resource definition.
-- **Preferred** Set the desired traffic group as the default for the partition you want the |kctlr| to manage. This option doesn't require OpenShift to know about BIG-IP traffic groups.
-
-  .. code-block:: javascript
-
-     "trafficGroup": "/Common/traffic-group-local-only"
-
 -----------------------------------------
 
 .. _networking troubleshoot openshift:
