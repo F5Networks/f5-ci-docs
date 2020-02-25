@@ -23,7 +23,6 @@ Features
 - Dynamically create, and manage BIG-IP objects.
 - Forward traffic from the BIG-IP device to `Kubernetes clusters`_ via `NodePort`_ or `ClusterIP`_.
 - Support `F5 AS3 Extension`_ declarations.
-- Support `F5 iApps`_.
 
 User Guides
 -----------
@@ -40,7 +39,6 @@ User Guides
    kctlr-k8s-as3
    kctlr-manage-bigip-objects
    kctlr-f5-resource
-   kctlr-deploy-iapp
    ../troubleshooting/kubernetes
 
 .. _k8s-prereqs:
