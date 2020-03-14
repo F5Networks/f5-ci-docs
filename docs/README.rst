@@ -171,6 +171,25 @@ BIG-IP system
 | credentials-directory | string  | Optional | n/a               | Directory that contains the BIG-IP         |                |
 |                       |         |          |                   | username, password, or url files           |                |
 +-----------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+| tls-version           | string  | Optional | 1.2               | Enable specific TLS version on BIG-IP.     |                |
++-----------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+| ciphers               | string  | Optional | DEFAULT           | Colon separated values. eg: ECDSA:ECDHE    |                |
+|                       |         |          |                   | Option valid for ``tls-version`` 1.2.      |                |
++-----------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+| cipher-groups         | string  | Optional | /Common/f5-default| Complete path to BIG-IP Cipher Group.      |                |
+|                       |         |          |                   | Option valid for ``tls-version`` 1.3.      |                |
++-----------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+| as3-post-delay        | integer | Optional | 0                 | Time (in seconds) that CIS waits to post   |                |
+|                       |         |          |                   | the available AS3 declaration.             |                |
++-----------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+
+
+.. note::
+
+     - TLS 1.3 support is enabled from BIG-IP 14.0+
+     - AS3 version 3.17.0 or later supports TLS 1.3
+     - Both :code:`ciphers` and :code:`cipher-group` are mutually exclusive based on the TLS version. 
+
 
 .. important::
 
@@ -217,76 +236,97 @@ VXLAN
 Kubernetes
 ``````````
 
-+-----------------------+---------+----------+-------------------+-----------------------------------------+----------------+
-| Parameter             | Type    | Required | Default           | Description                             | Allowed Values |
-+=======================+=========+==========+===================+=========================================+================+
-| default-ingress-ip    | string  | Optional | n/a               | The controller configures a virtual     |                |
-|                       |         |          |                   | server at this IP address for all       |                |
-|                       |         |          |                   | Ingresses with the annotation:          |                |
-|                       |         |          |                   | ``virtual-server.f5.com/ip:             |                |
-|                       |         |          |                   | 'controller-default'``                  |                |
-+-----------------------+---------+----------+-------------------+-----------------------------------------+----------------+
-| kubeconfig            | string  | Optional | ./config          | Path to the *kubeconfig* file           |                |
-+-----------------------+---------+----------+-------------------+-----------------------------------------+----------------+
-| manage-configmaps     | boolean | Optional | true              | Tells the controller whether or not     | true, false    |
-|                       |         |          |                   | to watch Kubernetes ConfigMaps and      |                |
-|                       |         |          |                   | apply their configuration.              |                |
-|                       |         |          |                   | If false, the controller will ignore    |                |
-|                       |         |          |                   | ConfigMap events.                       |                |
-+-----------------------+---------+----------+-------------------+-----------------------------------------+----------------+
-| namespace             | string  | Optional | All               | Kubernetes namespace(s) to watch        |                |
-|                       |         |          |                   |                                         |                |
-|                       |         |          |                   | - may be a comma-separated list         |                |
-|                       |         |          |                   | - watches all namespaces by default     |                |
-+-----------------------+---------+----------+-------------------+-----------------------------------------+----------------+
-| namespace-label       | string  | Optional | n/a               | Tells the ``k8s-bigip-ctlr`` to watch   |                |
-|                       |         |          |                   | any namespace with this label           |                |
-+-----------------------+---------+----------+-------------------+-----------------------------------------+----------------+
-| node-label-selector   | string  | Optional | n/a               | Tells the ``k8s-bigip-ctlr`` to watch   |                |
-|                       |         |          |                   | only nodes with this label              |                |
-+-----------------------+---------+----------+-------------------+-----------------------------------------+----------------+
-| pool-member-type      | string  | Optional | nodeport          | The type of BIG-IP pool members you want| cluster,       |
-|                       |         |          |                   | to create.                              | nodeport       |
-|                       |         |          |                   |                                         |                |
-|                       |         |          |                   | Use ``cluster`` to create pool members  |                |
-|                       |         |          |                   | for each of the endpoints for the       |                |
-|                       |         |          |                   | Service (the pod's InternalIP)          |                |
-|                       |         |          |                   |                                         |                |
-|                       |         |          |                   | Use ``nodeport`` to create pool members |                |
-|                       |         |          |                   | for each schedulable node using the     |                |
-|                       |         |          |                   | Service's NodePort.                     |                |
-+-----------------------+---------+----------+-------------------+-----------------------------------------+----------------+
-| resolve-ingress-names | string  | Optional | n/a               | Tells the controller to resolve the     |                |
-|                       |         |          |                   | first Host in an Ingress resource to an |                |
-|                       |         |          |                   | IP address. This IP address will be     |                |
-|                       |         |          |                   | used as the virtual server address for  |                |
-|                       |         |          |                   | the Ingress resource.                   |                |
-|                       |         |          |                   |                                         |                |
-|                       |         |          |                   | A value of "LOOKUP" will use local DNS  |                |
-|                       |         |          |                   | to resolve the Host. Any other value    |                |
-|                       |         |          |                   | is a custom DNS server and the          |                |
-|                       |         |          |                   | controller sends resolution queries     |                |
-|                       |         |          |                   | through that server instead.            |                |
-|                       |         |          |                   |                                         |                |
-|                       |         |          |                   | Specifying the flag with no argument    |                |
-|                       |         |          |                   | will default to LOOKUP.                 |                |
-+-----------------------+---------+----------+-------------------+-----------------------------------------+----------------+
-| running-in-cluster    | boolean | Optional | true              | Indicates whether or not a              | true, false    |
-|                       |         |          |                   | kubernetes cluster started              |                |
-|                       |         |          |                   | ``k8s-bigip-ctlr``                      |                |
-+-----------------------+---------+----------+-------------------+-----------------------------------------+----------------+
-| use-node-internal     | boolean | Optional | true              | filter Kubernetes InternalIP            | true, false    |
-|                       |         |          |                   | addresses for pool members              |                |
-+-----------------------+---------+----------+-------------------+-----------------------------------------+----------------+
-| use-secrets           | boolean | Optional | true              | Tells the controller whether or not     | true, false    |
-|                       |         |          |                   | to load SSL profiles from Kubernetes    |                |
-|                       |         |          |                   | Secrets for Ingresses and ConfigMaps.   |                |
-|                       |         |          |                   | If false, the controller will only use  |                |
-|                       |         |          |                   | profiles from the BIG-IP system.        |                |
-+-----------------------+---------+----------+-------------------+-----------------------------------------+----------------+
-| manage-ingress        | boolean | Optional | true              | Indicates if ``k8s-bigip-ctlr`` should  | true, false    |
-|                       |         |          |                   | handle Kubernetes Ingress objects.      |                |
-+-----------------------+---------+----------+-------------------+-----------------------------------------+----------------+
++---------------------------+---------+----------+-------------------+-------------------------------------------+----------------+
+| Parameter                 | Type    | Required | Default           | Description                               | Allowed Values |
++===========================+=========+==========+===================+===========================================+================+
+| default-ingress-ip        | string  | Optional | n/a               | The controller configures a virtual       |                |
+|                           |         |          |                   | server at this IP address for all         |                |
+|                           |         |          |                   | Ingresses with the annotation:            |                |
+|                           |         |          |                   | ``virtual-server.f5.com/ip:               |                |
+|                           |         |          |                   | 'controller-default'``                    |                |
++---------------------------+---------+----------+-------------------+-------------------------------------------+----------------+
+| kubeconfig                | string  | Optional | ./config          | Path to the *kubeconfig* file             |                |
++---------------------------+---------+----------+-------------------+-------------------------------------------+----------------+
+| manage-configmaps         | boolean | Optional | true              | Tells the controller whether or not       | true, false    |
+|                           |         |          |                   | to watch Kubernetes ConfigMaps and        |                |
+|                           |         |          |                   | apply their configuration.                |                |
+|                           |         |          |                   | If false, the controller will ignore      |                |
+|                           |         |          |                   | ConfigMap events.                         |                |
++---------------------------+---------+----------+-------------------+-------------------------------------------+----------------+
+| namespace                 | string  | Optional | All               | Kubernetes namespace(s) to watch          |                |
+|                           |         |          |                   |                                           |                |
+|                           |         |          |                   | - may be a comma-separated list           |                |
+|                           |         |          |                   | - watches all namespaces by default       |                |
++---------------------------+---------+----------+-------------------+-------------------------------------------+----------------+
+| namespace-label           | string  | Optional | n/a               | Tells the ``k8s-bigip-ctlr`` to watch     |                |
+|                           |         |          |                   | any namespace with this label             |                |
++---------------------------+---------+----------+-------------------+-------------------------------------------+----------------+
+| node-label-selector       | string  | Optional | n/a               | Tells the ``k8s-bigip-ctlr`` to watch     |                |
+|                           |         |          |                   | only nodes with this label                |                |
++---------------------------+---------+----------+-------------------+-------------------------------------------+----------------+
+| pool-member-type          | string  | Optional | nodeport          | The type of BIG-IP pool members you want  | cluster,       |
+|                           |         |          |                   | to create.                                | nodeport       |
+|                           |         |          |                   |                                           |                |
+|                           |         |          |                   | Use ``cluster`` to create pool members    |                |
+|                           |         |          |                   | for each of the endpoints for the         |                |
+|                           |         |          |                   | Service (the pod's InternalIP)            |                |
+|                           |         |          |                   |                                           |                |
+|                           |         |          |                   | Use ``nodeport`` to create pool members   |                |
+|                           |         |          |                   | for each schedulable node using the       |                |
+|                           |         |          |                   | Service's NodePort.                       |                |
++---------------------------+---------+----------+-------------------+-------------------------------------------+----------------+
+| resolve-ingress-names     | string  | Optional | n/a               | Tells the controller to resolve the       |                |
+|                           |         |          |                   | first Host in an Ingress resource to an   |                |
+|                           |         |          |                   | IP address. This IP address will be       |                |
+|                           |         |          |                   | used as the virtual server address for    |                |
+|                           |         |          |                   | the Ingress resource.                     |                |
+|                           |         |          |                   |                                           |                |
+|                           |         |          |                   | A value of "LOOKUP" will use local DNS    |                |
+|                           |         |          |                   | to resolve the Host. Any other value      |                |
+|                           |         |          |                   | is a custom DNS server and the            |                |
+|                           |         |          |                   | controller sends resolution queries       |                |
+|                           |         |          |                   | through that server instead.              |                |
+|                           |         |          |                   |                                           |                |
+|                           |         |          |                   | Specifying the flag with no argument      |                |
+|                           |         |          |                   | will default to LOOKUP.                   |                |
++---------------------------+---------+----------+-------------------+-------------------------------------------+----------------+
+| running-in-cluster        | boolean | Optional | true              | Indicates whether or not a                | true, false    |
+|                           |         |          |                   | kubernetes cluster started                |                |
+|                           |         |          |                   | ``k8s-bigip-ctlr``                        |                |
++---------------------------+---------+----------+-------------------+-------------------------------------------+----------------+
+| use-node-internal         | boolean | Optional | true              | filter Kubernetes InternalIP              | true, false    |
+|                           |         |          |                   | addresses for pool members                |                |
++---------------------------+---------+----------+-------------------+-------------------------------------------+----------------+
+| use-secrets               | boolean | Optional | true              | Tells the controller whether or not       | true, false    |
+|                           |         |          |                   | to load SSL profiles from Kubernetes      |                |
+|                           |         |          |                   | Secrets for Ingresses and ConfigMaps.     |                |
+|                           |         |          |                   | If false, the controller will only use    |                |
+|                           |         |          |                   | profiles from the BIG-IP system.          |                |
++---------------------------+---------+----------+-------------------+-------------------------------------------+----------------+
+| manage-ingress            | boolean | Optional | true              | Indicates if ``k8s-bigip-ctlr`` should    | true, false    |
+|                           |         |          |                   | handle Kubernetes Ingress objects.        |                |
++---------------------------+---------+----------+-------------------+-------------------------------------------+----------------+
+| ingress-class             | string  | Optional | f5                | A class of the Ingress controller.        |                |
+|                           |         |          |                   | The controller only processes ingress     |                |
+|                           |         |          |                   | resources that belong to its class.       |                |
+|                           |         |          |                   | - i.e. have the annotation                |                |
+|                           |         |          |                   | ``kubernetes.io/ingress.class`` equal to  |                |
+|                           |         |          |                   | the class. Additionally, controller       |                |
+|                           |         |          |                   | processes Ingress resources that donot    |                |
+|                           |         |          |                   | have that annotation, which can be        |                |
+|                           |         |          |                   | disabled with 'manage-ingress-class-only' |                |
+|                           |         |          |                   | flag set to 'true'.                       |                |
++---------------------------+---------+----------+-------------------+-------------------------------------------+----------------+
+| manage-ingress-class-only | boolean | Optional | false             | A flag to handle Ingresses that do not    |                |
+|                           |         |          |                   | have the class annotation and with        |                |
+|                           |         |          |                   | annotation 'kubernetes.io/ingress.class'  |                |
+|                           |         |          |                   | set to f5. When set to true, will only    |                |
+|                           |         |          |                   | process ingress resources with annotation |                |
+|                           |         |          |                   | 'kubernetes.io/ingress.class' set to f5   |                |
+|                           |         |          |                   | or a custom ingress class.                |                |
++---------------------------+---------+----------+-------------------+-------------------------------------------+----------------+
+
+ 
 
 .. note::
 
@@ -609,8 +649,8 @@ Supported Ingress Annotations
 | virtual-server.f5.com/partition               | string      | Optional  | The BIG-IP partition in which the Controller should create/update/delete            | N/A         |                                         |
 |                                               |             |           | objects for this Ingress.                                                           |             |                                         |
 +-----------------------------------------------+-------------+-----------+-------------------------------------------------------------------------------------+-------------+-----------------------------------------+
-| kubernetes.io/ingress.class                   | string      | Optional  | Tells the Controller it should only manage Ingress resources in the ``f5`` class.   | f5          | "f5"                                    |
-|                                               |             |           | If defined, the value must be ``f5``.                                               |             |                                         |
+| kubernetes.io/ingress.class                   | string      | Optional  | Tells the Controller it should only manage Ingress resources in the defined class.   | f5          |                                   |
+|                                               |             |           | To enforce this option, set ``manage-ingress-class-only`` to 'true'.                 |             |                                        |
 +-----------------------------------------------+-------------+-----------+-------------------------------------------------------------------------------------+-------------+-----------------------------------------+
 | virtual-server.f5.com/balance                 | string      | Optional  | Sets the load balancing mode.                                                       | round-robin | Any supported                           |
 |                                               |             |           |                                                                                     |             | load balancing algorithm [#lb]_         |
