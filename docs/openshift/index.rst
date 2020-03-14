@@ -25,7 +25,6 @@ User Guides
    Deploy the BIG-IP Controller <kctlr-openshift-app-install>
    Manage BIG-IP objects <../kubernetes/kctlr-manage-bigip-objects>
    Use AS3 for BIG-IP orchestration <kctlr-use-as3-backend>
-   Deploy iApps <../kubernetes/kctlr-deploy-iapp>
    Expose Services using Routes <kctlr-openshift-routes>
    Troubleshooting <../troubleshooting/kubernetes>
    k8s-bigip-ctlr reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest>

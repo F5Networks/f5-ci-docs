@@ -61,7 +61,7 @@ Verify the  Secret
 
 .. code-block:: bash
 
-   kubectl describe secret bigip-login
+   kubectl describe secret bigip-login -n kube-system
 
    Name:         bigip-login
    Namespace:    default

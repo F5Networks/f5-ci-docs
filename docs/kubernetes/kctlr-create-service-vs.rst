@@ -14,7 +14,6 @@ Overview
 An :ref:`F5 Resource <k8s-f5-resources>` ConfigMap lets you expose individual Services to external traffic. Use an F5 resource if you need:
 
 - Greater flexibility and customization than :ref:`Ingresses <kctlr-ingress-config>`, and :ref:`Routes <kctlr-openshift-routes>`.
-- To :ref:`deploy an iApp <kctlr-deploy-iapps>`.
 - L4 ingress (TCP or UDP).
 - L7 ingress on non-standard ports. For example 8080, or 8443.
 

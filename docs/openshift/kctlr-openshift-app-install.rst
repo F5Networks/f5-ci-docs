@@ -82,7 +82,7 @@ Basic Deployment
 ````````````````
 
 The example below shows a Deployment with the basic config parameters required to run the |kctlr| in OpenShift.
-With this configuration, you can :ref:`Create BIG-IP virtual servers for Services <kctlr-create-vs>` and :ref:`Deploy Application Services (iApps) <kctlr-deploy-iapps>`.
+With this configuration, you can :ref:`Create BIG-IP virtual servers for Services <kctlr-create-vs>`.
 
 .. literalinclude:: /openshift/config_examples/f5-k8s-bigip-ctlr_openshift_basic.yaml
    :caption: Example OpenShift Deployment

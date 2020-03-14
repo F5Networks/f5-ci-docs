@@ -68,7 +68,7 @@ Container Ingress Services has been validated on:
 
 **What is the customer value proposition for Container Ingress Services?**
 
- Container Ingress Services delivers F5 inline integration for app performance and security services orchestration and management by native integrations with container environments. CIS enables self-service selection within orchestration management for container applications, and automated discovery and services insertion based on app events. In addition, CIS easily creates appropriate service configurations of the inline BIG-IP for Ingress control within container environments for performance, security, and management of container app traffic. Finally, CIS simplifies deployment in Helm Charts with pre-configured Kubernetes resources, and enables flexible deployment of OpenShift Routes with pre-existing configurations. 
+Container Ingress Services delivers F5 inline integration for app performance and security services orchestration and management by native integrations with container environments. CIS enables self-service selection within orchestration management for container applications, and automated discovery and services insertion based on app events. In addition, CIS easily creates appropriate service configurations of the inline BIG-IP for Ingress control within container environments for performance, security, and management of container app traffic. Finally, CIS simplifies deployment in Helm Charts with pre-configured Kubernetes resources, and enables flexible deployment of OpenShift Routes with pre-existing configurations. 
 
 
 |
@@ -95,7 +95,7 @@ Network architects, Network operations, AppDev, DevOps & System Infrastructure. 
 |
 
 
-**What is Ingress and how is it different that ingress? **
+**What is Ingress and how is it different that ingress?**
 
 Ingress with a capital “I” refers to HTTP Routing or a collection of rules to reach the cluster services. In addition, ingress, many times with a lower-case “i”, refers to inbound connections, app load balancing, and security services.
 

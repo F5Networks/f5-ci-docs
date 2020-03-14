@@ -60,17 +60,7 @@ You can use this procedure to delete CIS AS3 configmaps, and also remove the ass
 
       kubectl delete configmap **f5-as3-declaration.yaml** -n **k8s**
      
-#. Stop the :code:`k8s-bigip-ctlr`.
 
-   .. parsed-literal::
-
-      kubectl delete deployment **f5-k8s-bigip-ctlr-deployment** -n **k8s**
-
-#. Start the :code:`k8s-bigip-ctlr`.
-
-   .. parsed-literal::
-
-      kubectl apply -f **f5-k8s-bigip-controller.yaml**  -n **k8s**
 
 Example deployment and blank configmap
 ``````````````````````````````````````

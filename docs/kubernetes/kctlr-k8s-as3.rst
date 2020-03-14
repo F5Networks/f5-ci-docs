@@ -26,7 +26,7 @@ CIS has the following AS3 Extension limitations:
 - CIS supports only one AS3 ConfigMap instance.
 - AS3 does not support moving BIG-IP nodes to new partitions.
 
-Declaritive API
+Declarative API
 ---------------
 
 AS3 Extensions use a declarative API, meaning AS3 Extension declarations describe the desired configuration state of a BIG-IP system. When using AS3 Extenstions, CIS sends declaration files using a single Rest API call. 
@@ -49,6 +49,10 @@ CIS can dynamically discover, and update the BIG-IP system's load balancing pool
 +---------------------------------+-------------------------------------------------------------------+
 | cis.f5.com/as3-pool: <string>   | The name of the **pool** in your AS3 Declaration.                 |
 +---------------------------------+-------------------------------------------------------------------+
+
+.. Note::
+
+   CIS K8s controller converts Ingress Routes into AS3 declarations and also dynamically discovers existing AS3 declarations. It then combines both of these AS3 declarations and generates a unified declaration, which causes certain fields to be discarded in the unified declaration. For example, the ``action`` field.
 
 .. important::
 
@@ -114,6 +118,35 @@ Click image for larger view.
     type: NodePort
     selector:
       app: f5-hello-world
+
+
+Enabling AS3 orchestration
+--------------------------
+
+You can use these steps to enable AS3 for BIG-IP orchestration:
+
+1. Include the **--agent=as3** option in your Deployment's argument section. For example:
+  
+   **Note:** In this example, `k8s-bigip-ctlr`_ will create partition **myParition_AS3** to store LTM objects such as pools, and virtual servers. FDB, and Static ARP entries are stored in **myPartition**. These partitions should not be managed manually.
+
+.. code-block:: YAML
+   :emphasize-lines: 7
+
+   args: [
+         "--bigip-username=$(BIGIP_USERNAME)",
+         "--bigip-password=$(BIGIP_PASSWORD)",
+         "--bigip-url=10.10.10.10",
+         "--bigip-partition=myPartition",
+         "--pool-member-type=cluster",
+         "--agent=as3"
+         ]
+
+2. Start the Controller: 
+
+.. parsed-literal::
+
+   kubectl apply -f f5-k8s-bigip-ctlr.yaml
+
 
 .. _kctlr-k8s-as3-discovery:
 

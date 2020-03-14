@@ -15,6 +15,7 @@ Container Ingress Service     Orchestration environment
 `k8s-bigip-ctlr`_             `Kubernetes`_ and `Red Hat OpenShift`_
 =========================     ===================================================
 
+
 .. figure:: /_static/media/cc_solution.png
    :alt: Solution design: The Container Connector runs as an App within the cluster; it configures the BIG-IP device as needed to handle traffic for Apps in the cluster
    :scale: 80%

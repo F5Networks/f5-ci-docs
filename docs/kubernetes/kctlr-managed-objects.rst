@@ -19,9 +19,6 @@ The |kctlr| can create, update, remove, and/or manage BIG-IP objects as noted in
 |                              |                        |                                 | of Kubernetes resources, as described in the deployment            |
 |                              |                        |                                 | guides.                                                            |
 +------------------------------+------------------------+---------------------------------+--------------------------------------------------------------------+
-| iApp                         |                        | X                               | The |kctlr| can deploy any iApp that already exists on             |
-|                              |                        |                                 | the BIG-IP system.                                                 |
-+------------------------------+------------------------+---------------------------------+--------------------------------------------------------------------+
 | node                         | X                      |                                 | Applies to all supported Kubernetes resources.                     |
 +------------------------------+------------------------+---------------------------------+--------------------------------------------------------------------+
 | partition                    |                        | X                               | The |kctlr| cannot create or destroy BIG-IP partitions.            |
