@@ -82,7 +82,7 @@ Your HTTP ConfigMap might look like this:
           "virtualServer": {
             "backend": {
               "servicePort": 80,
-              }]
+              }
             },
             "frontend": {
               "virtualAddress": {
