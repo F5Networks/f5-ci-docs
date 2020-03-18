@@ -65,6 +65,37 @@ Your HTTP ConfigMap might look like this:
 .. literalinclude:: /kubernetes/config_examples/f5-resource-vs-example.configmap.yaml
    :lines: 1-7,9-15,23-34
 
+
+::
+
+    kind: ConfigMap
+    apiVersion: v1
+    metadata:
+      name: myApp.vs
+      labels:
+        f5type: virtual-server
+    data:
+      # https://clouddocs.f5.com/containers/latest/releases_and_versioning.html#f5-schema
+      schema: "f5schemadb://bigip-virtual-server_v0.1.7.json"
+      data: |
+        {
+          "virtualServer": {
+            "backend": {
+              "servicePort": 80,
+              }]
+            },
+            "frontend": {
+              "virtualAddress": {
+                "port": 8080,
+                "bindAddr": "1.2.3.4"
+              },
+              "partition": "k8s",
+              "balance": "least-connections-member",
+              "mode": "http"
+            }
+          }
+
+
 :fonticon:`fa fa-download` :download:`f5-resource-vs-example.configmap.yaml </kubernetes/config_examples/f5-resource-vs-example.configmap.yaml>`
 
 .. _kctlr resource options:
