@@ -62,9 +62,6 @@ If your Service looks like this:
 
 Your HTTP ConfigMap might look like this:
 
-.. literalinclude:: /kubernetes/config_examples/f5-resource-vs-example.configmap.yaml
-   :lines: 1-7,9-15,23-34
-
 
 ::
 
