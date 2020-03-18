@@ -9,7 +9,6 @@ Container Ingress Services
    :maxdepth: 1
    :glob:
 
-   Reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
    releases_and_versioning
    Kubernetes/index
    faq
@@ -26,6 +25,7 @@ Container Ingress Services
    kubernetes/kctlr-k8s-ingress-ctlr
    kubernetes/kctlr-use-as3-backend
    kubernetes/kctlr-as3-override
+   Reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
 
 .. toctree::
    :caption: OpenShift
