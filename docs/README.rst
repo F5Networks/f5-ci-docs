@@ -186,9 +186,9 @@ BIG-IP system
 
 .. note::
 
-     - TLS 1.3 support is enabled from BIG-IP 14.0+
-     - AS3 version 3.17.0 or later supports TLS 1.3
-     - Both :code:`ciphers` and :code:`cipher-group` are mutually exclusive based on the TLS version. 
+   - TLS 1.3 support is enabled from BIG-IP 14.0+
+   - AS3 version 3.17.0 or later supports TLS 1.3
+   - Both :code:`ciphers` and :code:`cipher-group` are mutually exclusive based on the TLS version. 
 
 
 .. important::
