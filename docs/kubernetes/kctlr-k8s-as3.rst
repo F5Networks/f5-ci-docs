@@ -36,19 +36,19 @@ CIS service discovery
 
 CIS can dynamically discover, and update the BIG-IP system's load balancing pool members using Service Discovery. CIS maps each pool definition in the AS3 template to a Kubernetes Service resource using Labels. To create this mapping, add the following labels to your Kubernetes Service:
 
-+---------------------------------+-------------------------------------------------------------------+
-| Label                           | Description                                                       |
-+=================================+===================================================================+
-| app: <string>                   | | This label associates the service with the deployment.          |
-|                                 | | *Important: This label must be included, and resolve in DNS.*   |            
-+---------------------------------+-------------------------------------------------------------------+
-| cis.f5.com/as3-tenant: <string> | | The name of the **partition** in your AS3 declaration.          |
-|                                 | | *Important: The string must not use a hyphen (-) character.*    |
-+---------------------------------+-------------------------------------------------------------------+
-| cis.f5.com/as3-app: <string>    | The name of the **class** in your AS3 declaration.                |
-+---------------------------------+-------------------------------------------------------------------+
-| cis.f5.com/as3-pool: <string>   | The name of the **pool** in your AS3 Declaration.                 |
-+---------------------------------+-------------------------------------------------------------------+
++---------------------------------+----------------------------------------------------------------------------------------+
+| Label                           | Description                                                                            |
++=================================+========================================================================================+
+| app: <string>                   | | This label associates the service with the deployment.                               |
+|                                 | | *Important: This label must be included, and resolve in DNS.*                        |            
++---------------------------------+----------------------------------------------------------------------------------------+
+| cis.f5.com/as3-tenant: <string> | | The name of the **partition** in your AS3 declaration.                               |
+|                                 | | *Important: The string can use a hyphen (-) character if using AS3 17 and above.*    |
++---------------------------------+----------------------------------------------------------------------------------------+
+| cis.f5.com/as3-app: <string>    | The name of the **class** in your AS3 declaration.                                     |
++---------------------------------+----------------------------------------------------------------------------------------+
+| cis.f5.com/as3-pool: <string>   | The name of the **pool** in your AS3 Declaration.                                      |
++---------------------------------+----------------------------------------------------------------------------------------+
 
 .. Note::
 
