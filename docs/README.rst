@@ -649,7 +649,7 @@ Supported Ingress Annotations
 | virtual-server.f5.com/partition               | string      | Optional  | The BIG-IP partition in which the Controller should create/update/delete            | N/A         |                                         |
 |                                               |             |           | objects for this Ingress.                                                           |             |                                         |
 +-----------------------------------------------+-------------+-----------+-------------------------------------------------------------------------------------+-------------+-----------------------------------------+
-| kubernetes.io/ingress.class                   | string      | Optional  | Tells the Controller it should only manage Ingress resources in the defined class.   | f5          |                                   |
+| kubernetes.io/ingress.class                   | string      | Optional  | Tells the Controller it should only manage Ingress resources in the defined class.   | f5          |                                        |
 |                                               |             |           | To enforce this option, set ``manage-ingress-class-only`` to 'true'.                 |             |                                        |
 +-----------------------------------------------+-------------+-----------+-------------------------------------------------------------------------------------+-------------+-----------------------------------------+
 | virtual-server.f5.com/balance                 | string      | Optional  | Sets the load balancing mode.                                                       | round-robin | Any supported                           |
