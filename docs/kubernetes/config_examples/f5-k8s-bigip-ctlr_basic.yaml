@@ -42,7 +42,8 @@ spec:
             "--bigip-password=$(BIGIP_PASSWORD)",
             "--bigip-url=<ip_address-or-hostname>",
             "--bigip-partition=<name_of_partition>",
-            "--pool-member-type=nodeport"
+            "--pool-member-type=nodeport",
+            "--agent=as3",
             ]
       imagePullSecrets:
         # Secret that gives access to a private docker registry
