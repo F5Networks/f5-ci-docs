@@ -31,6 +31,10 @@ Declarative API
 
 AS3 Extensions use a declarative API, meaning AS3 Extension declarations describe the desired configuration state of a BIG-IP system. When using AS3 Extenstions, CIS sends declaration files using a single Rest API call. 
 
+.. Note::
+
+   To enable AS3 for BIG-IP orchestration, add **--agent=as3** option in your Deployment’s argument section.
+
 CIS service discovery
 ---------------------
 

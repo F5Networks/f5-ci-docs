@@ -88,45 +88,45 @@ All of the configuration parameters below are global.
 General
 ```````
 
-+-----------------------+---------+----------+----------------------------------+-----------------------------------------+----------------+
-| Parameter             | Type    | Required | Default                          | Description                             | Allowed Values |
-+=======================+=========+==========+==================================+=========================================+================+
-| http-listen-address   | string  | Optional | "0.0.0.0:8080"                   | Address at which to serve HTTP-based    |                |
-|                       |         |          |                                  | information (for example, ``/metrics``, |                |
-|                       |         |          |                                  | ``health``) to `Prometheus`_            |                |
-|                       |         |          |                                  |                                         |                |
-|                       |         |          |                                  | :fonticon:`fa fa-flask` Beta feature    |                |
-+-----------------------+---------+----------+----------------------------------+-----------------------------------------+----------------+
-| log-level             | string  | Optional | INFO                             | Log level                               | INFO,          |
-|                       |         |          |                                  |                                         | DEBUG,         |
-|                       |         |          |                                  |                                         | CRITICAL,      |
-|                       |         |          |                                  |                                         | WARNING,       |
-|                       |         |          |                                  |                                         | ERROR          |
-+-----------------------+---------+----------+----------------------------------+-----------------------------------------+----------------+
-| node-poll-interval    | integer | Optional | 30                               | In seconds, the interval at which the   |                |
-|                       |         |          |                                  | |kctlr| polls the cluster to find all   |                |
-|                       |         |          |                                  | node members.                           |                |
-+-----------------------+---------+----------+----------------------------------+-----------------------------------------+----------------+
-| python-basedir        | string  | Optional | /app/python                      | Path to the python utilities            |                |
-|                       |         |          |                                  | directory                               |                |
-+-----------------------+---------+----------+----------------------------------+-----------------------------------------+----------------+
-| schema-db-base-dir    | string  | Optional |file:///app/vendor/src/f5/schemas | Path to the directory containing the    |                |
-|                       |         |          |                                  | F5 schema db                            |                |
-+-----------------------+---------+----------+----------------------------------+-----------------------------------------+----------------+
-| .. _verify-interval:  |         |          |                                  |                                         |                |
-|                       |         |          |                                  |                                         |                |
-| verify-interval       | integer | Optional | 30                               | In seconds, the interval at which the   |                |
-|                       |         |          |                                  | |kctlr| verifies that the BIG-IP        |                |
-|                       |         |          |                                  | configuration matches the state of      |                |
-|                       |         |          |                                  | the orchestration system.               |                |
-+-----------------------+---------+----------+----------------------------------+-----------------------------------------+----------------+
-| vs-snat-pool-name     | string  | Optional | n/a                              | Name of the SNAT pool that all virtual  |                |
-|                       |         |          |                                  | servers will reference. If it is not    |                |
-|                       |         |          |                                  | set, virtual servers use automap SNAT.  |                |
-+-----------------------+---------+----------+----------------------------------+-----------------------------------------+----------------+
-| agent                 | boolean | Optional | cccl                             | Orchestration backend that will be      | cccl,          |
-|                       |         |          |                                  | used by Controller                      | as3            |
-+-----------------------+---------+----------+----------------------------------+-----------------------------------------+----------------+
++-----------------------+---------+----------+-----------------------------------+-----------------------------------------+----------------+
+| Parameter             | Type    | Required | Default                           | Description                             | Allowed Values |
++=======================+=========+==========+===================================+=========================================+================+
+| http-listen-address   | string  | Optional | "0.0.0.0:8080"                    | Address at which to serve HTTP-based    |                |
+|                       |         |          |                                   | information (for example, ``/metrics``, |                |
+|                       |         |          |                                   | ``health``) to `Prometheus`_            |                |
+|                       |         |          |                                   |                                         |                |
+|                       |         |          |                                   | :fonticon:`fa fa-flask` Beta feature    |                |
++-----------------------+---------+----------+-----------------------------------+-----------------------------------------+----------------+
+| log-level             | string  | Optional | INFO                              | Log level                               | INFO,          |
+|                       |         |          |                                   |                                         | DEBUG,         |
+|                       |         |          |                                   |                                         | CRITICAL,      |
+|                       |         |          |                                   |                                         | WARNING,       |
+|                       |         |          |                                   |                                         | ERROR          |
++-----------------------+---------+----------+-----------------------------------+-----------------------------------------+----------------+
+| node-poll-interval    | integer | Optional | 30                                | In seconds, the interval at which the   |                |
+|                       |         |          |                                   | |kctlr| polls the cluster to find all   |                |
+|                       |         |          |                                   | node members.                           |                |
++-----------------------+---------+----------+-----------------------------------+-----------------------------------------+----------------+
+| python-basedir        | string  | Optional | /app/python                       | Path to the python utilities            |                |
+|                       |         |          |                                   | directory                               |                |
++-----------------------+---------+----------+-----------------------------------+-----------------------------------------+----------------+
+| schema-db-base-dir    | string  | Optional | file:///app/vendor/src/f5/schemas | Path to the directory containing the    |                |
+|                       |         |          |                                   | F5 schema db                            |                |
++-----------------------+---------+----------+-----------------------------------+-----------------------------------------+----------------+
+| .. _verify-interval:  |         |          |                                   |                                         |                |
+|                       |         |          |                                   |                                         |                |
+| verify-interval       | integer | Optional | 30                                | In seconds, the interval at which the   |                |
+|                       |         |          |                                   | |kctlr| verifies that the BIG-IP        |                |
+|                       |         |          |                                   | configuration matches the state of      |                |
+|                       |         |          |                                   | the orchestration system.               |                |
++-----------------------+---------+----------+-----------------------------------+-----------------------------------------+----------------+
+| vs-snat-pool-name     | string  | Optional | n/a                               | Name of the SNAT pool that all virtual  |                |
+|                       |         |          |                                   | servers will reference. If it is not    |                |
+|                       |         |          |                                   | set, virtual servers use automap SNAT.  |                |
++-----------------------+---------+----------+-----------------------------------+-----------------------------------------+----------------+
+| agent                 | boolean | Optional | cccl                              | Orchestration backend that will be      | cccl,          |
+|                       |         |          |                                   | used by Controller                      | as3            |
++-----------------------+---------+----------+-----------------------------------+-----------------------------------------+----------------+
 
 .. note::
 
@@ -144,44 +144,65 @@ General
 BIG-IP system
 `````````````
 
-+-----------------------+---------+----------+-------------------+--------------------------------------------+----------------+
-| Parameter             | Type    | Required | Default           | Description                                | Allowed Values |
-+=======================+=========+==========+===================+============================================+================+
-| bigip-partition       | string  | Required | n/a               | The BIG-IP partition in which              |                |
-|                       |         |          |                   | to configure objects.                      |                |
-+-----------------------+---------+----------+-------------------+--------------------------------------------+----------------+
-| bigip-password        | string  | Required | n/a               | BIG-IP iControl REST password              |                |
-|                       |         |          |                   |                                            |                |
-|                       |         |          |                   | You can `secure your BIG-IP credentials`_  |                |
-|                       |         |          |                   | using a Kubernetes Secret.                 |                |
-+-----------------------+---------+----------+-------------------+--------------------------------------------+----------------+
-| bigip-url             | string  | Required | n/a               | BIG-IP admin IP address                    |                |
-+-----------------------+---------+----------+-------------------+--------------------------------------------+----------------+
-| bigip-username        | string  | Required | n/a               | BIG-IP iControl REST username              |                |
-|                       |         |          |                   |                                            |                |
-|                       |         |          |                   | The BIG-IP user account must have the      |                |
-|                       |         |          |                   | appropriate role defined:                  |                |
-|                       |         |          |                   |                                            |                |
-|                       |         |          |                   | For ``nodeport`` type pool members, the    |                |
-|                       |         |          |                   | role must be ``Administrator``.            |                |
-|                       |         |          |                   |                                            |                |
-|                       |         |          |                   | For ``cluster`` type pool members, the     |                |
-|                       |         |          |                   | role must be ``Administrator``.            |                |
-+-----------------------+---------+----------+-------------------+--------------------------------------------+----------------+
-| credentials-directory | string  | Optional | n/a               | Directory that contains the BIG-IP         |                |
-|                       |         |          |                   | username, password, or url files           |                |
-+-----------------------+---------+----------+-------------------+--------------------------------------------+----------------+
-| tls-version           | string  | Optional | 1.2               | Enable specific TLS version on BIG-IP.     |                |
-+-----------------------+---------+----------+-------------------+--------------------------------------------+----------------+
-| ciphers               | string  | Optional | DEFAULT           | Colon separated values. eg: ECDSA:ECDHE    |                |
-|                       |         |          |                   | Option valid for ``tls-version`` 1.2.      |                |
-+-----------------------+---------+----------+-------------------+--------------------------------------------+----------------+
-| cipher-groups         | string  | Optional | /Common/f5-default| Complete path to BIG-IP Cipher Group.      |                |
-|                       |         |          |                   | Option valid for ``tls-version`` 1.3.      |                |
-+-----------------------+---------+----------+-------------------+--------------------------------------------+----------------+
-| as3-post-delay        | integer | Optional | 0                 | Time (in seconds) that CIS waits to post   |                |
-|                       |         |          |                   | the available AS3 declaration.             |                |
-+-----------------------+---------+----------+-------------------+--------------------------------------------+----------------+
++--------------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+| Parameter                | Type    | Required | Default           | Description                                | Allowed Values |
++==========================+=========+==========+===================+============================================+================+
+| bigip-partition          | string  | Required | n/a               | The BIG-IP partition in which              |                |
+|                          |         |          |                   | to configure objects.                      |                |
++--------------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+| bigip-password           | string  | Required | n/a               | BIG-IP iControl REST password              |                |
+|                          |         |          |                   |                                            |                |
+|                          |         |          |                   | You can `secure your BIG-IP credentials`_  |                |
+|                          |         |          |                   | using a Kubernetes Secret.                 |                |
++--------------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+| bigip-url                | string  | Required | n/a               | BIG-IP admin IP address                    |                |
++--------------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+| bigip-username           | string  | Required | n/a               | BIG-IP iControl REST username              |                |
+|                          |         |          |                   |                                            |                |
+|                          |         |          |                   | The BIG-IP user account must have the      |                |
+|                          |         |          |                   | appropriate role defined:                  |                |
+|                          |         |          |                   |                                            |                |
+|                          |         |          |                   | For ``nodeport`` type pool members, the    |                |
+|                          |         |          |                   | role must be ``Administrator``.            |                |
+|                          |         |          |                   |                                            |                |
+|                          |         |          |                   | For ``cluster`` type pool members, the     |                |
+|                          |         |          |                   | role must be ``Administrator``.            |                |
++--------------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+| credentials-directory    | string  | Optional | n/a               | Directory that contains the BIG-IP         |                |
+|                          |         |          |                   | username, password, or url files           |                |
++--------------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+| tls-version              | string  | Optional | 1.2               | Enable specific TLS version on BIG-IP.     |                |
++--------------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+| ciphers                  | string  | Optional | DEFAULT           | Colon separated values. eg: ECDSA:ECDHE    |                |
+|                          |         |          |                   | Option valid for ``tls-version`` 1.2.      |                |
++--------------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+| cipher-groups            | string  | Optional | /Common/f5-default| Complete path to BIG-IP Cipher Group.      |                |
+|                          |         |          |                   | Option valid for ``tls-version`` 1.3.      |                |
++--------------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+| as3-post-delay           | integer | Optional | 0                 | Time (in seconds) that CIS waits to post   |                |
+|                          |         |          |                   | the available AS3 declaration.             |                |
++--------------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+| as3-validation           | boolean | Optional | true              | AS3 template validation. By default enabled| true, false    |
+|                          |         |          |                   | ``true``. Set to ``false`` to disable.     |                |
++--------------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+| insecure                 | boolean | Optional | false             | When set to true, enable insecure SSL      | true, false    |
+|                          |         |          |                   | communication to BIG-IP.                   |                | 
++--------------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+| log-as3-response         | boolean | Optional | false             | When set to true, add the body of AS3 API  | true, false    |
+|                          |         |          |                   | response in Controller DEBUG logs.         |                |
++--------------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+| override-as3-declaration |         | Optional |                   | Provide Namespace and Name of that         | true, false    |
+|                          |         |          |                   | ConfigMap as <namespace>/<configmap-name>. |                |
+|                          |         |          |                   |                                            |                |
+|                          |         |          |                   | The JSON key/values from this ConfigMap    |                |
+|                          |         |          |                   | will override key/values from internally   |                |
+|                          |         |          |                   | generated AS3 declaration.                 |                |
++--------------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+| filter-tenants           | boolean | Optional | false             | Specify whether or not to use tenant       | true, false    |
+|                          |         |          |                   | filtering API for AS3 declaration.         |                |
++--------------------------+---------+----------+-------------------+--------------------------------------------+----------------+
+
+         
 
 
 .. note::
