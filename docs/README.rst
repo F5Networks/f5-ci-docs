@@ -186,7 +186,7 @@ BIG-IP system
 |                          |         |          |                   | ``true``. Set to ``false`` to disable.     |                |
 +--------------------------+---------+----------+-------------------+--------------------------------------------+----------------+
 | insecure                 | boolean | Optional | false             | When set to true, enable insecure SSL      | true, false    |
-|                          |         |          |                   | communication to BIGIP.                    |                | 
+|                          |         |          |                   | communication to BIG-IP.                   |                | 
 +--------------------------+---------+----------+-------------------+--------------------------------------------+----------------+
 | log-as3-response         | boolean | Optional | false             | When set to true, add the body of AS3 API  | true, false    |
 |                          |         |          |                   | response in Controller DEBUG logs.         |                |
