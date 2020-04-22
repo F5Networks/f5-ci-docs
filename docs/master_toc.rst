@@ -25,6 +25,7 @@ Container Ingress Services
    kubernetes/kctlr-k8s-ingress-ctlr
    kubernetes/kctlr-use-as3-backend
    kubernetes/kctlr-as3-override
+   kubernetes/tls-1-3
    Reference documentation <https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/>
 
 .. toctree::
