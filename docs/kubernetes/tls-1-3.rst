@@ -20,21 +20,22 @@ See the `AS3 schema reference <https://clouddocs.f5.com/products/extensions/f5-a
 Configure TLS 1.3 in CIS
 ------------------------
 
-#. Configure TLS version to be enabled on BIG-IP with the following command. The default value is `1.2`.
+#. Configure TLS version to be enabled on BIG-IP with the following command. The default value is ``1.2``.
 
-    ::
+   ::
 
         --tls-version=<1.2 or 1.3>
 
 
-#. Configure a Cipher Group on the BIG-IP system and reference it using the following command. The default path is `/Common/f5-default`.
+#. Configure a Cipher Group on the BIG-IP system and reference it using the following command. The default path is ``/Common/f5-default``.
 
-    ::
+   ::
 
         --cipher-group=<Complete path to BIG-IP Cipher Group>
 
 
-#. Configure a ciphersuite selection string using the following command with colon-separated values, for example `ECDHE_ECDSA:ECDHE`. The default value is DEFAULT.
+#. Configure a ciphersuite selection string using the following command with colon-separated values, for example ``ECDHE_ECDSA:ECDHE``. The default value is DEFAULT.
 
-    ::
+   ::
+        
         --ciphers=<colon separated values. eg: ECDHE_ECDSA:ECDHE>
