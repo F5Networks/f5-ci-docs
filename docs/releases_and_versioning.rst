@@ -13,6 +13,8 @@ Releases and Versioning
 Documentation
 -------------
 
+.. important:: This page is for an older version of the Container Ingress Services documentation. `Go to the latest version of CIS documentation <https://clouddocs.f5.com/containers/latest/>`_.
+
 This documentation set applies to the following versions of each F5 Container Integrations component:
 
 ===================         =====================
