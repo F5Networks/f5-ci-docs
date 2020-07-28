@@ -7,6 +7,8 @@
 Introduction to F5 Container Ingress Services
 =============================================
 
+.. important:: This is an older version of the Container Ingress Services documentation. `Go to the latest version of CIS documentation <https://clouddocs.f5.com/containers/latest/>`_.
+
 F5 Container Ingress Services (CIS) integrates with container orchestration environments to dynamically create L4/L7 services on F5 BIG-IP systems, and load balance network traffic across the services. Monitoring the orchstration API server, CIS is able to modify the BIG-IP system configuration based on changes made to containerized applications.  
 
 =========================     ===================================================

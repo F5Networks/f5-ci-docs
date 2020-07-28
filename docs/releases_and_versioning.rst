@@ -13,14 +13,16 @@ Releases and Versioning
 Documentation
 -------------
 
+.. important:: This is an older version of the Container Ingress Services documentation. `Go to the latest version of CIS documentation <https://clouddocs.f5.com/containers/latest/>`_.
+
 This documentation set applies to the following versions of each F5 Container Integrations component:
 
-===================         ==============
+===================         =====================
 Component                   Version
-===================         ==============
-|kctlr-long|                v1.0.x-1.13.x
-|octlr-long|                v1.0.x-1.13.x
-===================         ==============
+===================         =====================
+|kctlr-long|                v1.0.x-1.14.x, v2.0.0
+|octlr-long|                v1.0.x-1.14.x, v2.0.0
+===================         =====================
 
 .. _connector compatibility:
 
@@ -35,12 +37,12 @@ The tables below show the versions used in development testing. The F5 Container
    +------------------------------------+-----------------------+-------------------------+--------------------------------------------+--------------------------+------------------------+
    | Connector                          | Version(s)            | Platform                | Version(s)                                 | BIG-IP version(s)        | AS3                    |
    +====================================+=======================+=========================+============================================+==========================+========================+
-   | |kctlr-long|                       | v1.10-v1.14           | Kubernetes              | v1.13-v1.16                                | v12.x-v14.x              | v3.13-v3.17            |
-   |                                    |                       |                         |                                            |                          |                        |
+   | |kctlr-long|                       | v1.10-v1.14           | Kubernetes              | v1.13-v1.18                                | v12.x-v15.x              | v3.13-v3.18            |
+   |                                    | v2.0.0                |                         |                                            |                          |                        |
    | ``k8s-bigip-ctlr``                 |                       |                         |                                            |                          |                        |
    +------------------------------------+-----------------------+-------------------------+--------------------------------------------+--------------------------+------------------------+
-   | |octlr-long|                       | v1.10-v1.14           | OpenShift               | v3.11-v4.2                                 | v12.x-v14.x              | v3.13-v3.17            |
-   |                                    |                       |                         |                                            |                          |                        |
+   | |octlr-long|                       | v1.10-v1.14           | OpenShift               | v3.11-v4.3                                 | v12.x-v15.x              | v3.13-v3.18            |
+   |                                    | v2.0.0                |                         |                                            |                          |                        |
    | ``k8s-bigip-ctlr`` using AS3       |                       |                         |                                            |                          |                        |
    +------------------------------------+-----------------------+-------------------------+--------------------------------------------+--------------------------+------------------------+
    | ``k8s-bigip-ctrl`` using CCCL      | v1.10-v1.14           | OpenShift               | v3.11-v4.2                                 | v12.x-v13.x              | none                   |
@@ -85,7 +87,7 @@ Be sure to use the **most recent** schema version that corresponds to your Contr
 
 
 Notice to Beta Customers
-========================
+------------------------
 
 .. sidebar:: :fonticon:`fa fa-flask` **Beta feature**
 
